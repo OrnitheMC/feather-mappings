@@ -2,14 +2,13 @@ name: Publish
 on: [push]
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     container:
-      image: openjdk:15-jdk
+      image: openjdk:11-jdk
       options: --user root
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: gradle/wrapper-validation-action@v1
-
-      - run: ./gradlew build javadocJar publish --stacktrace
+      - run: ./gradlew publish --stacktrace
         env:
           MAVEN_PUBLISH_TOKEN: ${{ secrets.MAVEN_PUBLISH_TOKEN }}
