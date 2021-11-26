@@ -21,12 +21,12 @@ plugins {
 	id 'java' // for jd gen
 }
 
-def minecraft_version = "1.7.10"
+def minecraft_version = "1.7.2"
 
 def ENV = System.getenv()
 // Fetch build number from Github Actions
 // Then completely ignore it
-def build_number = ENV.GITHUB_ACTIONS ? buildTime() : "local"
+def build_number = ENV.BUILD_NUMBER ?: "local"
 def yarnVersion = "${minecraft_version}+build.${build_number}"
 
 static def buildTime() {
@@ -207,14 +207,14 @@ task downloadMcJars(dependsOn: downloadWantedVersionManifest) {
 
 task downloadIntermediary(type: Download) {
 	group = buildMappingGroup
-	def url = "https://github.com/Legacy-Fabric/Legacy-Intermediaries/raw/master/mappings/${minecraft_version}.tiny"
+	def url = "https://github.com/Copetan/Legacy-Intermediaries/raw/master/mappings/${minecraft_version}.tiny"
 	src com.google.common.net.UrlEscapers.urlFragmentEscaper().escape(url)
 	dest new File(cacheFilesMinecraft, "${minecraft_version}-intermediary.tiny")
 }
 
 task downloadIntermediaryV2(type: Download) {
 	group = buildMappingGroup
-	def url = "https://maven.legacyfabric.net/net/fabricmc/intermediary/${minecraft_version}/intermediary-${minecraft_version}-v2.jar"
+	def url = "https://copetan.jfrog.io/artifactory/minecraft-maven/net/fabricmc/intermediary/${minecraft_version}/intermediary-${minecraft_version}-v2.jar"
 	src com.google.common.net.UrlEscapers.urlFragmentEscaper().escape(url)
 	dest new File(cacheFilesMinecraft, "${minecraft_version}-intermediary-v2.jar")
 }
@@ -810,9 +810,9 @@ publishing {
 	repositories {
 		if (ENV.MAVEN_PUBLISH_TOKEN) {
 			maven {
-				url 'https://maven.legacyfabric.net/'
+				url 'https://copetan.jfrog.io/artifactory/minecraft-maven/'
 				credentials {
-					username 'BobTheBuildSlave'
+					username 'copebot'
 					password ENV.MAVEN_PUBLISH_TOKEN
 				}
 				authentication {

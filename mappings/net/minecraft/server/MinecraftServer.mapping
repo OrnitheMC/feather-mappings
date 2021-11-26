@@ -1,4 +1,6 @@
 CLASS net/minecraft/server/MinecraftServer net/minecraft/server/MinecraftServer
+	FIELD field_11272 profiler Lnet/minecraft/class_1705;
+	FIELD field_11282 serverMetadata Lnet/minecraft/class_1596;
 	FIELD field_7048 spawnAnimals Z
 	FIELD field_7049 spawnNpcs Z
 	FIELD field_7050 pvpEnabled Z
@@ -34,9 +36,9 @@ CLASS net/minecraft/server/MinecraftServer net/minecraft/server/MinecraftServer
 	METHOD <init> (Ljava/io/File;Ljava/net/Proxy;)V
 		ARG 1 gameDir
 		ARG 2 proxy
-	METHOD getServerModName ()Ljava/lang/String;
 	METHOD main ([Ljava/lang/String;)V
 		ARG 0 args
+	METHOD method_10403 startServer ()V
 	METHOD method_5910 getIp ()Ljava/lang/String;
 	METHOD method_5911 getPort ()I
 	METHOD method_5912 getMotd ()Ljava/lang/String;
@@ -56,10 +58,9 @@ CLASS net/minecraft/server/MinecraftServer net/minecraft/server/MinecraftServer
 		ARG 1 message
 	METHOD method_5929 log (Ljava/lang/String;)V
 		ARG 1 message
-	METHOD method_6418 setupWorld ()V
-	METHOD method_6419 shutdown ()V
+	METHOD method_6418 tick ()V
+	METHOD method_6419 tickWorlds ()V
 	METHOD method_6420 isNetherAllowed ()Z
-	METHOD method_6422 getProfiles ()[Lcom/mojang/authlib/GameProfile;
 	METHOD method_6423 getServer ()Lnet/minecraft/server/MinecraftServer;
 	METHOD method_6425 getCommandManager ()Lnet/minecraft/class_1629;
 	METHOD method_6426 getKeyPair ()Ljava/security/KeyPair;
@@ -95,8 +96,6 @@ CLASS net/minecraft/server/MinecraftServer net/minecraft/server/MinecraftServer
 	METHOD method_6452 getPlayerIdleTimeout ()I
 	METHOD method_6453 shouldAnnouncePlayerAchievements ()Z
 	METHOD method_6454 getSessionService ()Lcom/mojang/authlib/minecraft/MinecraftSessionService;
-	METHOD method_6455 getGameProfileRepo ()Lcom/mojang/authlib/GameProfileRepository;
-	METHOD method_6456 getUserCache ()Lnet/minecraft/class_1649;
 	METHOD method_6457 getServerMetadata ()Lnet/minecraft/class_1596;
 	METHOD method_6458 forcePlayerSampleUpdate ()V
 	METHOD method_6464 logProgress (Ljava/lang/String;I)V
@@ -170,7 +169,6 @@ CLASS net/minecraft/server/MinecraftServer net/minecraft/server/MinecraftServer
 	METHOD method_6516 getDefaultDifficulty ()Lnet/minecraft/class_1721;
 	METHOD method_6517 isHardcore ()Z
 	METHOD method_6518 getOpPermissionLevel ()I
-	METHOD method_6519 shouldBroadcastRconToOps ()Z
 	METHOD method_6522 stopServer ()V
 	METHOD method_6523 getServerIp ()Ljava/lang/String;
 	METHOD method_6524 isRunning ()Z
