@@ -7,12 +7,24 @@ CLASS net/minecraft/class_2571 net/minecraft/server/world/ServerWorld
 	FIELD field_11227 allPlayersSleeping Z
 	FIELD field_11228 idleTimeout I
 	FIELD field_11229 portalTeleporter Lnet/minecraft/class_108;
-	FIELD field_11231 syncedBlockEventQueues [Lnet/minecraft/class_2573;
+	FIELD field_11230 spawnHelper Lnet/minecraft/class_107;
+	FIELD field_11231 blockEventQueues [Lnet/minecraft/class_2573;
 	FIELD field_11232 currentBlockEventQueueIndex I
 	FIELD field_11234 currentScheduledTicks Ljava/util/List;
 	FIELD field_11235 entitiesById Lnet/minecraft/class_2610;
+	FIELD field_11236 LOGGER Lorg/apache/logging/log4j/Logger;
+	FIELD field_11237 chunkCache Lnet/minecraft/class_1634;
+	FIELD field_11238 isSaving Z
+	METHOD <init> (Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/class_635;Ljava/lang/String;ILnet/minecraft/class_102;Lnet/minecraft/class_1705;)V
+		ARG 1 server
+		ARG 2 saveHandler
+		ARG 3 name
+		ARG 4 dimensionId
+		ARG 5 info
+		ARG 6 profiler
 	METHOD method_10363 setWeatherClear ()V
-	METHOD method_10364 processSyncedBlockEvents ()V
+	METHOD method_10364 processBlockEvents ()V
+	METHOD method_10365 saveLevel ()V
 	METHOD method_10366 getBlockEntities (IIIIII)Ljava/util/List;
 		ARG 1 minX
 		ARG 2 minY
@@ -35,7 +47,12 @@ CLASS net/minecraft/class_2571 net/minecraft/server/world/ServerWorld
 	METHOD method_10372 skipNightOrThunder ()V
 	METHOD method_10373 arePlayersSleptEnough ()Z
 	METHOD method_10374 resetIdleTimeout ()V
+	METHOD method_10376 getForcedSpawnPoint ()Lnet/minecraft/class_2614;
+	METHOD method_10377 saveChunks ()V
 	METHOD method_10379 getServer ()Lnet/minecraft/server/MinecraftServer;
 	METHOD method_10380 getEntityTracker ()Lnet/minecraft/class_1630;
 	METHOD method_10381 getPlayerWorldManager ()Lnet/minecraft/class_1632;
 	METHOD method_10382 getPortalTeleporter ()Lnet/minecraft/class_108;
+	METHOD method_11358 save (ZLnet/minecraft/class_1707;)V
+		ARG 1 saveEntities
+		ARG 2 progressListener

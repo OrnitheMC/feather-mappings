@@ -1,5 +1,7 @@
 CLASS net/minecraft/class_99 net/minecraft/world/World
 	FIELD field_251 scoreboard Lnet/minecraft/class_653;
+	FIELD field_254 allowAnimals Z
+	FIELD field_255 allowMonsters Z
 	FIELD field_261 isTickingBlockEntities Z
 	FIELD field_266 cloudColor J
 	FIELD field_275 lcgBlockSeed I
@@ -12,6 +14,7 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 	FIELD field_9118 zombieSiegeManager Lnet/minecraft/class_1843;
 	FIELD field_9119 profiler Lnet/minecraft/class_1705;
 	FIELD field_9120 isClient Z
+	FIELD field_9121 ChunkPositions Ljava/util/Set;
 	FIELD field_9123 calendar Ljava/util/Calendar;
 	FIELD field_9125 pendingBlockEntities Ljava/util/List;
 	FIELD field_9126 removedBlockEntities Ljava/util/List;
@@ -41,6 +44,7 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 	METHOD method_235 calculateAmbientDarkness ()V
 	METHOD method_237 initWeatherGradients ()V
 	METHOD method_245 disconnect ()V
+	METHOD method_246 readSessionLock ()V
 	METHOD method_247 getSeed ()J
 	METHOD method_248 getLastUpdateTime ()J
 	METHOD method_249 getTimeOfDay ()J
@@ -80,6 +84,7 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 7 sound
 		ARG 8 volume
 		ARG 9 pitch
+	METHOD method_267 calculateAmbientDarkness (F)I
 	METHOD method_269 getChunk (II)Lnet/minecraft/class_399;
 		ARG 1 x
 		ARG 2 y
@@ -148,6 +153,7 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 3 volume
 		ARG 4 pitch
 	METHOD method_340 executeScheduledTicks (Z)Z
+		ARG 1 allowFutureTicks
 	METHOD method_353 onRenderRegionUpdate (IIIIII)V
 		ARG 1 x1
 		ARG 2 y1
@@ -205,6 +211,7 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 	METHOD method_435 getMoonPhase ()I
 	METHOD method_437 getMoonSize ()F
 	METHOD method_8462 getEntityById (I)Lnet/minecraft/class_1745;
+		ARG 1 id
 	METHOD method_8463 isRegionLoaded (IIII)Z
 		ARG 1 x
 		ARG 2 y
@@ -245,6 +252,11 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 	METHOD method_8476 getEntitiesByClass (Ljava/lang/Class;Lnet/minecraft/class_646;)Ljava/util/List;
 	METHOD method_8479 playSound (Ljava/lang/String;DDDDDD)V
 	METHOD method_8483 getCollisions (Lnet/minecraft/class_1745;Lnet/minecraft/class_646;)Ljava/util/List;
+	METHOD method_8486 canInteract (Lnet/minecraft/class_2674;III)Z
+		ARG 1 player
+		ARG 2 x
+		ARG 3 y
+		ARG 4 z
 	METHOD method_8491 setBlock (IIILnet/minecraft/class_160;)Z
 		ARG 1 x
 		ARG 2 y
@@ -271,7 +283,7 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 2 y
 		ARG 3 z
 		ARG 4 fromBlock
-	METHOD method_8504 addSyncedBlockEvent (IIILnet/minecraft/class_160;II)V
+	METHOD method_8504 addBlockEvent (IIILnet/minecraft/class_160;II)V
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
@@ -294,6 +306,7 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
+		ARG 4 block
 		ARG 5 meta
 		ARG 6 flags
 	METHOD method_8512 updateNeighbor (IIILnet/minecraft/class_160;)V
@@ -342,6 +355,10 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 2 y
 		ARG 3 z
 	METHOD method_8536 setDefaultSpawn (III)V
+		ARG 1 x
+		ARG 2 y
+		ARG 3 z
+	METHOD method_8537 canSpawnLightning (III)Z
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z

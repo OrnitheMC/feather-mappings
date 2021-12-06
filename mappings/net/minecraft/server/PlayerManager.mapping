@@ -1,16 +1,37 @@
 CLASS net/minecraft/class_2599 net/minecraft/server/PlayerManager
 	FIELD field_11304 players Ljava/util/List;
-	FIELD field_11306 LOGGERR Lorg/apache/logging/log4j/Logger;
-		COMMENT TODO: why doesn't enigma allow duplicate names for private static fields?
+	FIELD field_11306 LOGGER Lorg/apache/logging/log4j/Logger;
+	FIELD field_11307 DATE_FORMAT Ljava/text/SimpleDateFormat;
 	FIELD field_11308 server Lnet/minecraft/server/MinecraftServer;
+	FIELD field_11315 whitelistEnabled Z
+	FIELD field_11317 defaultGamemode Lnet/minecraft/class_2087;
+	FIELD field_12158 bannedPlayers Lnet/minecraft/class_2754;
+	FIELD field_12159 bannedIps Lnet/minecraft/class_2754;
+	METHOD <init> (Lnet/minecraft/server/MinecraftServer;)V
+		ARG 1 server
 	METHOD method_10410 sendPacket (DDDDILnet/minecraft/class_2434;)V
+		ARG 1 x
+		ARG 3 y
+		ARG 5 z
+		ARG 7 maxDistance
+		ARG 9 dimensionId
+		ARG 10 packet
+	METHOD method_10412 setDefaultGamemode (Lnet/minecraft/class_2087;)V
+		ARG 1 gamemode
 	METHOD method_10414 onPlayerConnect (Lnet/minecraft/class_1432;Lnet/minecraft/class_1637;)V
 		ARG 1 connection
 		ARG 2 player
+	METHOD method_10415 broadcastChatMessage (Lnet/minecraft/class_1444;)V
+		ARG 1 message
 	METHOD method_10416 broadcastChatMessage (Lnet/minecraft/class_1444;Z)V
 		ARG 1 message
 	METHOD method_10417 sendToAll (Lnet/minecraft/class_2434;)V
+		ARG 1 packet
 	METHOD method_10418 sendToDimension (Lnet/minecraft/class_2434;I)V
+		ARG 1 packet
+		ARG 2 dimensionId
+	METHOD method_10419 getPlayer (Ljava/lang/String;)Lnet/minecraft/class_1637;
+		ARG 1 name
 	METHOD method_10421 loadPlayerData (Lnet/minecraft/class_1637;)Lnet/minecraft/class_1405;
 	METHOD method_10422 teleportToDimension (Lnet/minecraft/class_1637;I)V
 		ARG 1 player
@@ -20,13 +41,30 @@ CLASS net/minecraft/class_2599 net/minecraft/server/PlayerManager
 		ARG 2 dimensionId
 		ARG 3 alive
 	METHOD method_10425 setGameMode (Lnet/minecraft/class_1637;Lnet/minecraft/class_1637;Lnet/minecraft/class_99;)V
+		ARG 1 player
+		ARG 2 fromPlayer
+		ARG 3 world
 	METHOD method_10429 sendToAround (Lnet/minecraft/class_2674;DDDDILnet/minecraft/class_2434;)V
+		ARG 1 source
+		ARG 2 x
+		ARG 4 y
+		ARG 6 z
+		ARG 8 maxDistance
+		ARG 10 dimensionId
+		ARG 11 packet
 	METHOD method_10434 sendWorldInfo (Lnet/minecraft/class_1637;Lnet/minecraft/class_2571;)V
 	METHOD method_10443 remove (Lnet/minecraft/class_1637;)V
 		ARG 1 player
+	METHOD method_10444 getPlayerNames ()[Ljava/lang/String;
+	METHOD method_10449 getBannedPlayers ()Lnet/minecraft/class_2754;
+	METHOD method_10450 getBannedIps ()Lnet/minecraft/class_2754;
+	METHOD method_10451 savePlayerData ()V
+	METHOD method_10456 getPlayerCount ()I
+	METHOD method_10459 isWhitelistEnabled ()Z
 	METHOD method_6187 reloadWhitelist ()V
 	METHOD method_6198 checkCanJoin (Ljava/net/SocketAddress;Lcom/mojang/authlib/GameProfile;)Ljava/lang/String;
 	METHOD method_6210 setWhitelistEnabled (Z)V
+		ARG 1 enabled
 	METHOD method_6214 savePlayerData (Lnet/minecraft/class_1637;)V
 	METHOD method_6218 getServer ()Lnet/minecraft/server/MinecraftServer;
 	METHOD method_6246 getUserData ()Lnet/minecraft/class_1405;
