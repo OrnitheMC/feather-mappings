@@ -7,6 +7,7 @@ CLASS net/minecraft/class_1752 net/minecraft/entity/LivingEntity
 	FIELD field_7445 prevHeadYaw F
 	FIELD field_7446 UUID Ljava/util/UUID;
 	FIELD field_7448 player Lnet/minecraft/class_2674;
+	FIELD field_7451 despawnTimer I
 	FIELD field_7454 distanceTravelled F
 	FIELD field_7455 prevDistanceTravelled F
 	FIELD field_7460 sidewaysSpeed F
@@ -19,7 +20,9 @@ CLASS net/minecraft/class_1752 net/minecraft/entity/LivingEntity
 	FIELD field_7486 attributeContainer Lnet/minecraft/class_2635;
 	FIELD field_7487 damageTracker Lnet/minecraft/class_1732;
 	METHOD method_10570 getStatusEffects ()Ljava/util/Collection;
+	METHOD method_10572 isCustomNameVisible_CLIENT ()Z
 	METHOD method_10576 getRotationVec (F)Lnet/minecraft/class_649;
+	METHOD method_11365 mobTick ()V
 	METHOD method_6918 positAfterTeleport (DDD)V
 		ARG 1 x
 		ARG 3 y
@@ -39,6 +42,7 @@ CLASS net/minecraft/class_1752 net/minecraft/entity/LivingEntity
 		ARG 2 count
 	METHOD method_7095 initializeAttribute (Lnet/minecraft/class_1765;)Lnet/minecraft/class_1766;
 		ARG 1 attribute
+	METHOD method_7096 dropEquipment (ZI)V
 	METHOD method_7097 initializeAttributes ()V
 	METHOD method_7101 getEffectInstance (Lnet/minecraft/class_1741;)Lnet/minecraft/class_1742;
 		ARG 1 effect
@@ -46,8 +50,12 @@ CLASS net/minecraft/class_1752 net/minecraft/entity/LivingEntity
 		ARG 1 effect
 	METHOD method_7103 (Lnet/minecraft/class_1752;)V
 		ARG 1 entity
+	METHOD method_7104 getExperienceDropCount (Lnet/minecraft/class_2674;)I
+		ARG 1 playerEntity
+	METHOD method_7106 dropLoot (ZI)V
 	METHOD method_7107 getStackInHand ()Lnet/minecraft/class_2056;
 	METHOD method_7108 getSoundVolume ()F
+	METHOD method_7109 getSoundPitch ()F
 	METHOD method_7116 isSleeping ()Z
 	METHOD method_7120 getAbsorption ()F
 	METHOD method_7121 getScoreboardTeam ()Lnet/minecraft/class_655;
@@ -75,6 +83,7 @@ CLASS net/minecraft/class_1752 net/minecraft/entity/LivingEntity
 	METHOD method_7153 canHaveStatusEffect (Lnet/minecraft/class_1742;)Z
 		ARG 1 effect
 	METHOD method_7155 heal (F)V
+	METHOD method_7156 bodyMovement (FF)F
 	METHOD method_7158 setHealth (F)V
 	METHOD method_7161 damageArmor (F)V
 		ARG 1 value
@@ -98,3 +107,4 @@ CLASS net/minecraft/class_1752 net/minecraft/entity/LivingEntity
 		ARG 1 entity
 	METHOD method_7181 canSee (Lnet/minecraft/class_1745;)Z
 		ARG 1 entity
+	METHOD method_7186 tickAISetup ()V
