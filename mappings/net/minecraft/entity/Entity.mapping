@@ -42,6 +42,7 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 	FIELD field_7380 entityCount I
 	FIELD field_7384 entityId I
 	FIELD field_7388 fireTicks I
+	FIELD field_7389 renderDistanceScaling D
 	FIELD field_7390 inanimate Z
 	FIELD field_7391 rider Lnet/minecraft/class_1745;
 	FIELD field_7392 ridingEntity Lnet/minecraft/class_1745;
@@ -71,8 +72,13 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 		ARG 3 z
 		ARG 4 block
 	METHOD method_10542 dropStack (Lnet/minecraft/class_2056;F)Lnet/minecraft/class_1893;
+		ARG 1 itemStack
+		ARG 2 yOffset
 	METHOD method_10544 isInvulnerableTo ()Z
 	METHOD method_10546 updatePosition (DDD)V
+		ARG 1 x
+		ARG 3 y
+		ARG 5 z
 	METHOD method_11363 yShadowOrigin ()F
 	METHOD method_6261 getTranslationKey ()Ljava/lang/String;
 	METHOD method_6895 getEntityId ()I
@@ -132,6 +138,12 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 	METHOD method_6941 onLightningStrike (Lnet/minecraft/class_1890;)V
 		ARG 1 lightning
 	METHOD method_6943 dropItem (Lnet/minecraft/class_2054;I)Lnet/minecraft/class_1893;
+		ARG 1 item
+		ARG 2 count
+	METHOD method_6944 (Lnet/minecraft/class_2054;IF)Lnet/minecraft/class_1893;
+		ARG 1 item
+		ARG 2 count
+		ARG 3 yOffset
 	METHOD method_6946 toListTag ([D)Lnet/minecraft/class_1411;
 		ARG 1 values
 	METHOD method_6947 toListTag ([F)Lnet/minecraft/class_1411;
@@ -143,6 +155,7 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 	METHOD method_6957 getUuid ()Ljava/util/UUID;
 	METHOD method_6958 canFly ()Z
 	METHOD method_6970 getSplashSound ()Ljava/lang/String;
+	METHOD method_6971 isInLava ()Z
 	METHOD method_6972 scheduleVelocityUpdate ()V
 	METHOD method_6973 collides ()Z
 	METHOD method_6974 isPushable ()Z
@@ -176,6 +189,8 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 		ARG 2 value
 	METHOD method_7003 writeCustomDataToTag (Lnet/minecraft/class_1405;)V
 		ARG 1 tag
+	METHOD method_7005 onKillEntity (Lnet/minecraft/class_1745;I)V
+		ARG 1 killedEntity
 	METHOD method_7009 increaseTransforms (FF)V
 		ARG 1 yaw
 		ARG 2 pitch
