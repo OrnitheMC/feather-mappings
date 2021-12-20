@@ -1,4 +1,5 @@
 CLASS net/minecraft/class_1752 net/minecraft/entity/LivingEntity
+	FIELD field_11440 attackTime I
 	FIELD field_11442 statusEffects Ljava/util/HashMap;
 	FIELD field_7437 health I
 	FIELD field_7442 bodyYaw F
@@ -44,6 +45,9 @@ CLASS net/minecraft/class_1752 net/minecraft/entity/LivingEntity
 		ARG 1 attribute
 	METHOD method_7096 dropEquipment (ZI)V
 	METHOD method_7097 initializeAttributes ()V
+	METHOD method_7099 tickPostDeath ()V
+		COMMENT This method is called 20 times from {@link net.minecraft.entity.LivingEntity.baseTick()v} after the entity has died(when Health is 0), as the death animation lasts for 20ticks.
+		COMMENT In the 20th tick/call it marks the entity as removed
 	METHOD method_7101 getEffectInstance (Lnet/minecraft/class_1741;)Lnet/minecraft/class_1742;
 		ARG 1 effect
 	METHOD method_7102 onStatusEffectRemoved (Lnet/minecraft/class_1742;)V
@@ -59,6 +63,7 @@ CLASS net/minecraft/class_1752 net/minecraft/entity/LivingEntity
 	METHOD method_7116 isSleeping ()Z
 	METHOD method_7120 getAbsorption ()F
 	METHOD method_7121 getScoreboardTeam ()Lnet/minecraft/class_655;
+	METHOD method_7123 isMature ()Z
 	METHOD method_7125 getRandom ()Ljava/util/Random;
 	METHOD method_7127 getLastHurtTimestamp ()I
 	METHOD method_7133 clearStatusEffects ()V
