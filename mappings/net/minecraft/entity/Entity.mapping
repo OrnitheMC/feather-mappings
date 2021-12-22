@@ -19,12 +19,14 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 	FIELD field_7347 prevTickX D
 	FIELD field_7348 prevTickY D
 	FIELD field_7349 prevTickZ D
+	FIELD field_7350 stepHeight F
 	FIELD field_7351 noClip Z
 	FIELD field_7352 pushSpeedReduction F
 	FIELD field_7353 random Ljava/util/Random;
 	FIELD field_7354 ticksAlive I
 	FIELD field_7355 fireResistance I
 	FIELD field_7356 touchingWater Z
+	FIELD field_7357 maxHealth I
 	FIELD field_7359 firstUpdate Z
 	FIELD field_7360 isFireImmune Z
 	FIELD field_7361 dataTracker Lnet/minecraft/class_1761;
@@ -47,6 +49,7 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 	FIELD field_7390 inanimate Z
 	FIELD field_7391 rider Lnet/minecraft/class_1745;
 	FIELD field_7392 ridingEntity Lnet/minecraft/class_1745;
+	FIELD field_7393 teleporting Z
 	FIELD field_7394 world Lnet/minecraft/class_99;
 	FIELD field_7395 prevX D
 	FIELD field_7396 prevY D
@@ -90,14 +93,16 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 	METHOD method_6900 baseTick ()V
 	METHOD method_6901 getMaxNetherPortalTime ()I
 	METHOD method_6902 setOnFireFromLava ()V
-	METHOD method_6903 setInLava ()V
+	METHOD method_6903 extinguish ()V
 	METHOD method_6904 destroy ()V
 	METHOD method_6905 getSwimSound ()Ljava/lang/String;
 	METHOD method_6906 checkBlockCollision ()V
 	METHOD method_6908 getBox ()Lnet/minecraft/class_646;
 	METHOD method_6909 isFireImmune ()Z
+	METHOD method_6910 tickFire ()Z
 	METHOD method_6911 isTouchingWater ()Z
 		COMMENT Returns whether this entity's hitbox is touching water fluid.
+	METHOD method_6912 updateWaterState ()Z
 	METHOD method_6916 handleStatus (B)V
 		ARG 1 status
 	METHOD method_6917 shouldRender (D)Z
@@ -117,6 +122,7 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 		ARG 9 steps
 	METHOD method_6922 updateFall (DZ)V
 		ARG 1 y
+		ARG 3 onGround
 	METHOD method_6923 setDimensions (FF)V
 		ARG 1 width
 		ARG 2 height
@@ -157,10 +163,12 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 		ARG 1 values
 	METHOD method_6947 toListTag ([F)Lnet/minecraft/class_1411;
 		ARG 1 values
+	METHOD method_6948 slowdownMovementSpeed ()V
 	METHOD method_6950 getHeadRotation ()F
 	METHOD method_6951 isAttackable ()Z
 	METHOD method_6952 getSafeFallDistance ()I
 	METHOD method_6955 canAvoidTraps ()Z
+	METHOD method_6956 getOnFireForRendering ()Z
 	METHOD method_6957 getUuid ()Ljava/util/UUID;
 	METHOD method_6958 canFly ()Z
 	METHOD method_6970 getSplashSound ()Ljava/lang/String;
@@ -183,6 +191,7 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 	METHOD method_6991 isSneaking ()Z
 	METHOD method_6992 isSprinting ()Z
 	METHOD method_6993 isInvisible ()Z
+	METHOD method_6994 isSwimming ()Z
 	METHOD method_6995 getAir ()I
 	METHOD method_6997 refreshPositionAndAngles (DDDFF)V
 		ARG 1 x
