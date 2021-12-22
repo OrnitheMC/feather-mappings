@@ -8,9 +8,12 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 	FIELD field_1576 lightPopulated Z
 	FIELD field_1578 modified Z
 	FIELD field_1579 containsEntities Z
-	FIELD field_1581 minimumHeightMap I
+	FIELD field_1581 highestOpaqueBlockY I
+	FIELD field_9590 hasSkyLight Z
+	FIELD field_9591 heightMap [I
 	FIELD field_9592 blockEntities Ljava/util/Map;
 	FIELD field_9593 entitiesBySection [Ljava/util/List;
+	FIELD field_9594 lastSaveTime J
 	FIELD field_9597 sections [Lnet/minecraft/class_401;
 	METHOD <init> (Lnet/minecraft/class_99;II)V
 		ARG 1 world
@@ -24,15 +27,19 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 	METHOD <init> (Lnet/minecraft/class_99;[Lnet/minecraft/class_160;[BII)V
 		ARG 1 world
 		ARG 2 blocks
-		ARG 3 blockMeta
+		ARG 3 blockMetadata
 		ARG 4 chunkX
 		ARG 5 chunkZ
 	METHOD method_1344 isAtChunkPos (II)Z
 		ARG 1 chunkX
 		ARG 2 chunkZ
 	METHOD method_1347 getSlimeRandom (J)Ljava/util/Random;
-	METHOD method_1349 (Lnet/minecraft/class_106;IIII)V
+	METHOD method_1349 setLightLevel (Lnet/minecraft/class_106;IIII)V
 		ARG 1 type
+		ARG 2 sectionX
+		ARG 3 y
+		ARG 4 sectionZ
+		ARG 5 light
 	METHOD method_1351 (Lnet/minecraft/class_396;Lnet/minecraft/class_396;II)V
 		ARG 1 provider
 		ARG 3 chunkX
@@ -42,18 +49,27 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 	METHOD method_1361 removeEntity (Lnet/minecraft/class_1745;I)V
 		ARG 1 entity
 		ARG 2 chunkY
+	METHOD method_1363 shouldSave (Z)Z
+		ARG 1 saveEntities
+	METHOD method_1369 getHighestY (II)I
+		ARG 1 sectionX
+		ARG 2 sectionZ
 	METHOD method_1372 removeEntity (Lnet/minecraft/class_1745;)V
 		ARG 1 entity
 	METHOD method_1373 tick (Z)V
 		ARG 1 beFast
+	METHOD method_1374 load ()V
+	METHOD method_1380 unload ()V
 	METHOD method_1385 markDirty ()V
 	METHOD method_1386 updateLight (II)Z
+		ARG 1 sectionX
+		ARG 2 sectionZ
 	METHOD method_1387 getOpacity (III)I
 		ARG 1 sectionX
 		ARG 2 y
 		ARG 3 sectionZ
 	METHOD method_1390 isEmpty ()Z
-	METHOD method_1394 getHighestNonEmptySection ()I
+	METHOD method_1394 getHighestSectionYOffset ()I
 	METHOD method_1398 getSections ()[Lnet/minecraft/class_401;
 	METHOD method_1401 isPopulated ()Z
 	METHOD method_1403 getChunkPos ()Lnet/minecraft/class_92;
@@ -61,31 +77,46 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 		ARG 1 sectionX
 		ARG 2 y
 		ARG 3 sectionZ
-	METHOD method_8918 setBlockMeta (IIII)Z
+	METHOD method_8918 setBlockMetadata (IIII)Z
 		ARG 1 sectionX
 		ARG 2 y
 		ARG 3 sectionZ
-		ARG 4 meta
-	METHOD method_8919 setBlockWithMeta (IIILnet/minecraft/class_160;I)Z
+		ARG 4 metadata
+	METHOD method_8919 setBlockWithMetadata (IIILnet/minecraft/class_160;I)Z
 		ARG 1 sectionX
 		ARG 2 y
 		ARG 3 sectionZ
 		ARG 4 block
-		ARG 5 meta
+		ARG 5 metadata
 	METHOD method_8920 setBlockEntity (IIILnet/minecraft/class_2193;)V
 		ARG 1 sectionX
 		ARG 2 y
 		ARG 3 sectionZ
 		ARG 4 blockEntity
+	METHOD method_8922 getLightLevel (Lnet/minecraft/class_106;III)I
+		ARG 1 type
+		ARG 2 sectionX
+		ARG 3 y
+		ARG 4 sectionZ
 	METHOD method_8923 addBlockEntity (Lnet/minecraft/class_2193;)V
 		ARG 1 blockEntity
+	METHOD method_8925 (Lnet/minecraft/class_1745;Lnet/minecraft/class_646;Ljava/util/List;Lnet/minecraft/class_2625;)V
+		ARG 1 entity
 	METHOD method_8927 setSections ([Lnet/minecraft/class_401;)V
 		ARG 1 sections
-	METHOD method_8929 getBlockMeta (III)I
+	METHOD method_8928 getLightLevel (IIII)I
+		ARG 1 sectionX
+		ARG 2 y
+		ARG 3 sectionZ
+		ARG 4 skyDarkness
+	METHOD method_8929 getBlockMetadata (III)I
 		ARG 1 sectionX
 		ARG 2 y
 		ARG 3 sectionZ
 	METHOD method_8931 isTopOfColumn (III)Z
+		ARG 1 x
+		ARG 2 y
+		ARG 3 z
 	METHOD method_8932 getBlockEntity (III)Lnet/minecraft/class_2193;
 		ARG 1 sectionX
 		ARG 2 y
