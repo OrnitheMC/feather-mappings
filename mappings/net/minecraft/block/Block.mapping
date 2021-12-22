@@ -49,7 +49,7 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		COMMENT Stores the current block's resistance
 	FIELD field_615 stats Z
 		COMMENT Specifies whether the current block is tracked for stats
-	FIELD field_616 hasRandomTicks Z
+	FIELD field_616 ticksRandomly Z
 		COMMENT Specifies whether the current block ticks randomly
 	FIELD field_9198 minX D
 	FIELD field_9199 minY D
@@ -140,7 +140,7 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-		ARG 5 meta
+		ARG 5 metadata
 		ARG 6 destructionChance
 		ARG 7 id
 	METHOD method_647 onBlockEvent (Lnet/minecraft/class_99;IIIII)Z
@@ -238,14 +238,14 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 	METHOD method_674 getDropItem (ILjava/util/Random;I)Lnet/minecraft/class_2054;
 		COMMENT Returns the item that must be dropped when the block is broken
 		COMMENT @return The Item that drops after the block breaks
-		ARG 1 meta
+		ARG 1 metadata
 		ARG 2 random
 			COMMENT Random object
 		ARG 3 state
 	METHOD method_675 canCollide (IZ)Z
 		COMMENT Returns whether entities can collide with the block
 		COMMENT @return Whether the block has collision
-		ARG 1 meta
+		ARG 1 metadata
 		ARG 2 bl
 	METHOD method_676 (Lnet/minecraft/class_649;)Z
 		ARG 1 vec
@@ -284,10 +284,10 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 			COMMENT The ItemGroup that the item must be added to
 		ARG 3 stacks
 			COMMENT The list of currently added ItemStacks to the ItemGroup
-	METHOD method_683 setTickRandomly (Z)Lnet/minecraft/class_160;
+	METHOD method_683 setTicksRandomly (Z)Lnet/minecraft/class_160;
 		COMMENT Sets whether the current block has random ticks. Used in registering blocks.
 		COMMENT @return The current block
-		ARG 1 tickRandomly
+		ARG 1 ticksRandomly
 			COMMENT Whether the current block should have random ticks
 	METHOD method_684 getBlockType ()I
 	METHOD method_685 setResistance (F)Lnet/minecraft/class_160;
@@ -406,15 +406,15 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 1 id
 	METHOD method_8606 getSprite (II)Lnet/minecraft/class_2616;
 		ARG 1 dir
-		ARG 2 meta
+		ARG 2 metadata
 	METHOD method_8607 fromItem (Lnet/minecraft/class_2054;)Lnet/minecraft/class_160;
 		ARG 0 item
-	METHOD method_8608 setCollisionBox (Lnet/minecraft/class_99;III)Lnet/minecraft/class_646;
+	METHOD method_8608 getCollisionBox (Lnet/minecraft/class_99;III)Lnet/minecraft/class_646;
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-	METHOD method_8609 getPlacementBlockMeta (Lnet/minecraft/class_99;IIIIFFFI)I
+	METHOD method_8609 getPlacementMetadata (Lnet/minecraft/class_99;IIIIFFFI)I
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
@@ -423,20 +423,20 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 6 dx
 		ARG 7 dy
 		ARG 8 dz
-		ARG 9 prevMeta
+		ARG 9 prevMetadata
 	METHOD method_8610 (Lnet/minecraft/class_99;IIIILnet/minecraft/class_2056;)Z
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-		ARG 5 meta
+		ARG 5 metadata
 		ARG 6 stack
 	METHOD method_8611 onBrokenInCreative (Lnet/minecraft/class_99;IIIILnet/minecraft/class_2674;)V
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-		ARG 5 meta
+		ARG 5 metadata
 		ARG 6 player
 	METHOD method_8612 dropItem (Lnet/minecraft/class_99;IIILnet/minecraft/class_2056;)V
 		ARG 1 world
@@ -450,7 +450,7 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 3 y
 		ARG 4 z
 		ARG 5 block
-		ARG 6 meta
+		ARG 6 metadata
 	METHOD method_8614 appendCollisionBoxes (Lnet/minecraft/class_99;IIILnet/minecraft/class_646;Ljava/util/List;Lnet/minecraft/class_1745;)V
 		ARG 1 world
 		ARG 2 x
@@ -459,12 +459,13 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 5 box
 		ARG 6 list
 		ARG 7 entity
-	METHOD method_8615 (Lnet/minecraft/class_99;IIILnet/minecraft/class_1745;F)V
+	METHOD method_8615 onFallenOn (Lnet/minecraft/class_99;IIILnet/minecraft/class_1745;F)V
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
 		ARG 5 entity
+		ARG 6 fallDistance
 	METHOD method_8616 (Lnet/minecraft/class_99;IIILnet/minecraft/class_1745;Lnet/minecraft/class_649;)V
 		ARG 1 world
 		ARG 2 x
@@ -478,7 +479,7 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 3 x
 		ARG 4 y
 		ARG 5 z
-		ARG 6 meta
+		ARG 6 metadata
 	METHOD method_8618 updateBoundingBox (Lnet/minecraft/class_104;III)V
 		ARG 1 world
 		ARG 2 x
@@ -502,13 +503,13 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-		ARG 5 meta
+		ARG 5 metadata
 	METHOD method_8624 dropAsItem (Lnet/minecraft/class_99;IIIII)V
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-		ARG 5 meta
+		ARG 5 metadata
 	METHOD method_8625 canWalkThrough (Lnet/minecraft/class_104;III)Z
 		ARG 1 world
 		ARG 2 x
@@ -564,12 +565,12 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-	METHOD method_8637 getBlockState (Lnet/minecraft/class_104;IIII)Lnet/minecraft/class_2616;
+	METHOD method_8637 getSprite (Lnet/minecraft/class_104;IIII)Lnet/minecraft/class_2616;
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-		ARG 5 id
+		ARG 5 face
 	METHOD method_8638 getMaterialColor (I)Lnet/minecraft/class_592;
 		ARG 1 id
 	METHOD method_8639 getHardness (Lnet/minecraft/class_99;III)F
@@ -582,7 +583,7 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-		ARG 5 meta
+		ARG 5 metadata
 	METHOD method_8641 getSelectionBox (Lnet/minecraft/class_99;III)Lnet/minecraft/class_646;
 		ARG 1 world
 		ARG 2 x
@@ -593,7 +594,7 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-		ARG 5 meta
+		ARG 5 metadata
 	METHOD method_8643 getSprite (I)Lnet/minecraft/class_2616;
 		ARG 1 dir
 	METHOD method_8645 createItemStack (I)Lnet/minecraft/class_2056;
