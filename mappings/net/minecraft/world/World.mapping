@@ -118,6 +118,12 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 4 maxX
 		ARG 5 maxY
 		ARG 6 maxZ
+	METHOD method_275 syncWorldEvent (IIIII)V
+		ARG 1 type
+		ARG 2 x
+		ARG 3 y
+		ARG 4 z
+		ARG 5 data
 	METHOD method_277 setTime (J)V
 		ARG 1 time
 	METHOD method_278 addListener (Lnet/minecraft/class_101;)V
@@ -152,9 +158,14 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 4 block
 		ARG 5 delay
 		ARG 6 priority
+	METHOD method_321 loadMapData (Ljava/lang/Class;Ljava/lang/String;)Lnet/minecraft/class_625;
+		ARG 1 class_
+		ARG 2 id
 	METHOD method_322 getPlayerFromName (Ljava/lang/String;)Lnet/minecraft/class_2674;
 		ARG 1 playerName
-	METHOD method_323 setItemData (Ljava/lang/String;Lnet/minecraft/class_625;)V
+	METHOD method_323 setMapData (Ljava/lang/String;Lnet/minecraft/class_625;)V
+		ARG 1 id
+		ARG 2 persistentState
 	METHOD method_326 onEntitySpawned (Lnet/minecraft/class_1745;)V
 		ARG 1 entity
 	METHOD method_327 sendEntityStatus (Lnet/minecraft/class_1745;B)V
@@ -186,10 +197,13 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 	METHOD method_335 tickEntity (Lnet/minecraft/class_1745;Z)V
 		ARG 1 entity
 		ARG 2 requireLoaded
-	METHOD method_336 syncWorldEvent (Lnet/minecraft/class_2674;IIIII)V
+	METHOD method_336 syncSoundEvent (Lnet/minecraft/class_2674;IIIII)V
 		ARG 1 player
 		ARG 2 type
-		ARG 4 data
+		ARG 3 x
+		ARG 4 y
+		ARG 5 z
+		ARG 6 data
 	METHOD method_339 playSound (Lnet/minecraft/class_2674;Ljava/lang/String;FF)V
 		ARG 1 player
 		ARG 2 sound
@@ -210,7 +224,12 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 4 x2
 		ARG 5 y2
 		ARG 6 z2
-	METHOD method_354 syncWorldEvent (IIIII)V
+	METHOD method_354 syncSoundEvent (IIIII)V
+		ARG 1 type
+		ARG 2 x
+		ARG 3 y
+		ARG 4 z
+		ARG 5 data
 	METHOD method_355 setTimeOfDay (J)V
 		ARG 1 time
 	METHOD method_356 removeListener (Lnet/minecraft/class_101;)V
@@ -222,9 +241,17 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 	METHOD method_361 containsFluidBlockWithMaterial (Lnet/minecraft/class_646;Lnet/minecraft/class_591;)Z
 		ARG 1 area
 		ARG 2 material
+	METHOD method_369 getUniqueMapId (Ljava/lang/String;)I
+		ARG 1 prefix
 	METHOD method_372 onEntityRemoved (Lnet/minecraft/class_1745;)V
 		ARG 1 entity
 	METHOD method_374 tick ()V
+	METHOD method_378 updateBlockBreakingProgress (IIIII)V
+		ARG 1 id
+		ARG 2 x
+		ARG 3 y
+		ARG 4 z
+		ARG 5 progress
 	METHOD method_380 (Lnet/minecraft/class_646;)Z
 		ARG 1 boundingBox
 	METHOD method_386 addBlockEntities (Ljava/util/Collection;)V
@@ -312,11 +339,13 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-	METHOD method_8472 (Lnet/minecraft/class_160;IIIZILnet/minecraft/class_1745;Lnet/minecraft/class_2056;)Z
+	METHOD method_8472 replaceBlock (Lnet/minecraft/class_160;IIIZILnet/minecraft/class_1745;Lnet/minecraft/class_2056;)Z
 		ARG 1 block
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
+		ARG 7 entity
+		ARG 8 stack
 	METHOD method_8473 getBlocksIntersectingBox (Lnet/minecraft/class_646;)Ljava/util/List;
 		ARG 1 box
 	METHOD method_8474 rayTrace (Lnet/minecraft/class_649;Lnet/minecraft/class_649;ZZZ)Lnet/minecraft/class_2253;
@@ -342,6 +371,10 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 4 z
 	METHOD method_8481 addEntities (Ljava/util/List;)V
 		ARG 1 entities
+	METHOD method_8482 (Lnet/minecraft/class_1745;IIIFZZZZ)Lnet/minecraft/class_620;
+		ARG 2 x
+		ARG 3 y
+		ARG 4 z
 	METHOD method_8483 getCollisions (Lnet/minecraft/class_1745;Lnet/minecraft/class_646;)Ljava/util/List;
 	METHOD method_8486 canInteract (Lnet/minecraft/class_2674;III)Z
 		ARG 1 player
@@ -394,6 +427,11 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 3 y
 		ARG 4 z
 		ARG 5 light
+	METHOD method_8498 findNearestStructure (Ljava/lang/String;III)Lnet/minecraft/class_2082;
+		ARG 1 structureType
+		ARG 2 x
+		ARG 3 y
+		ARG 4 z
 	METHOD method_8499 removeEntities (Ljava/util/List;)V
 		ARG 1 entities
 	METHOD method_8501 getOtherEntities (Lnet/minecraft/class_1745;Lnet/minecraft/class_646;)Ljava/util/List;
@@ -446,6 +484,11 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 2 y
 		ARG 3 z
 		ARG 4 fromBlock
+	METHOD method_8513 (IIIZ)Z
+		ARG 1 x
+		ARG 2 y
+		ARG 3 z
+		ARG 4 cancel
 	METHOD method_8514 getHightestY (II)I
 		ARG 1 x
 		ARG 2 y
