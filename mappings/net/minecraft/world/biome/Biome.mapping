@@ -37,7 +37,9 @@ CLASS net/minecraft/class_113 net/minecraft/world/biome/Biome
 	FIELD field_384 temperatureNoise Lnet/minecraft/class_585;
 	FIELD field_385 foliageNoise Lnet/minecraft/class_585;
 	FIELD field_386 DOUBLE_PLANT_FEATURE Lnet/minecraft/class_440;
-	FIELD field_387 name Ljava/lang/String;
+	FIELD field_387 biomeName Ljava/lang/String;
+	FIELD field_388 biomeColor I
+	FIELD field_389 baseColor I
 	FIELD field_390 topBlock Lnet/minecraft/class_160;
 	FIELD field_391 baseBlock Lnet/minecraft/class_160;
 	FIELD field_393 baseHeightModifier F
@@ -49,7 +51,9 @@ CLASS net/minecraft/class_113 net/minecraft/world/biome/Biome
 	FIELD field_399 monsterEntries Ljava/util/List;
 	FIELD field_400 passiveEntries Ljava/util/List;
 	FIELD field_401 waterEntries Ljava/util/List;
-	FIELD field_402 flyingEntries Ljava/util/List;
+	FIELD field_402 caveEntries Ljava/util/List;
+	FIELD field_403 enableSnow Z
+	FIELD field_404 enableRain Z
 	FIELD field_405 id I
 	FIELD field_406 RIVER_HEIGHT Lnet/minecraft/class_114;
 	FIELD field_407 OCEAN_BIOME Lnet/minecraft/class_114;
@@ -82,17 +86,34 @@ CLASS net/minecraft/class_113 net/minecraft/world/biome/Biome
 		ARG 1 temperature
 		ARG 2 downfall
 	METHOD method_517 seedModifier (IZ)Lnet/minecraft/class_113;
+		ARG 1 color
+	METHOD method_518 (Lnet/minecraft/class_99;Ljava/util/Random;[Lnet/minecraft/class_160;[BIID)V
+		ARG 1 world
+		ARG 2 random
+		ARG 3 blockArray
+		ARG 4 byteArray
+		ARG 5 x
+		ARG 6 y
+		ARG 7 z
 	METHOD method_519 buildSurface (Lnet/minecraft/class_99;Ljava/util/Random;II)V
 		ARG 1 world
 		ARG 2 random
 	METHOD method_520 setHeight (Lnet/minecraft/class_114;)Lnet/minecraft/class_113;
 		ARG 1 height
-	METHOD method_521 (Lnet/minecraft/class_113;)Z
+	METHOD method_521 isThis (Lnet/minecraft/class_113;)Z
 		ARG 1 biome
 	METHOD method_523 setName (Ljava/lang/String;)Lnet/minecraft/class_113;
 		ARG 1 name
+	METHOD method_524 getRandomTFoliageFeature (Ljava/util/Random;)Lnet/minecraft/class_429;
+		ARG 1 random
+	METHOD method_527 disableRain ()Lnet/minecraft/class_113;
 	METHOD method_528 setSeedModifier (I)Lnet/minecraft/class_113;
 		ARG 1 modifier
+	METHOD method_531 getRandomTallGrassFeature (Ljava/util/Random;)Lnet/minecraft/class_441;
+		ARG 1 random
+	METHOD method_532 enableSnow ()Lnet/minecraft/class_113;
+	METHOD method_533 setBaseColor (I)Lnet/minecraft/class_113;
+		ARG 1 color
 	METHOD method_535 isMutatedBiome ()Z
 	METHOD method_539 hasHighHumidity ()Z
 	METHOD method_540 getMaxSpawnLimit ()F
@@ -106,9 +127,21 @@ CLASS net/minecraft/class_113 net/minecraft/world/biome/Biome
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
+	METHOD method_8566 pickFlower (Ljava/util/Random;III)Ljava/lang/String;
+		ARG 1 random
+		ARG 2 x
+		ARG 3 y
+		ARG 4 z
 	METHOD method_8567 getSpawnEntries (Lnet/minecraft/class_2631;)Ljava/util/List;
 		ARG 1 spawnGroup
 	METHOD method_8568 getGrassColorAt (III)I
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
+	METHOD method_8569 getFoliageColor (III)I
+		ARG 1 x
+		ARG 2 y
+		ARG 3 z
+	METHOD method_8570 getBiomeById (I)Lnet/minecraft/class_113;
+		ARG 0 id
+	METHOD method_8571 createMutatedBiome ()Lnet/minecraft/class_113;
