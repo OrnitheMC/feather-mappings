@@ -1,35 +1,60 @@
 CLASS net/minecraft/class_2672 net/minecraft/entity/passive/VillagerEntity
+	FIELD field_11692 tradeOfferSize F
+		COMMENT sqrt of (tradeOfferSize divided by 5) used to lower the chance to unlock more trades
+	FIELD field_11693 BUY_OFFER_MAP Ljava/util/Map;
+		COMMENT Items that the villager will buy from the player
+	FIELD field_11694 SELL_OFFER_MAP Ljava/util/Map;
+		COMMENT Items that the villager will sell to the player
 	FIELD field_11695 village Lnet/minecraft/class_1841;
+	FIELD field_11696 updateVillageCooldown I
 	FIELD field_11697 mating Z
 	FIELD field_11698 inCaravan Z
 	FIELD field_11699 customer Lnet/minecraft/class_2674;
 	FIELD field_11700 traderOffers Lnet/minecraft/class_86;
+	FIELD field_11701 levelUpCountdown I
+	FIELD field_11702 levelUp Z
 	FIELD field_11703 riches I
+	FIELD field_11704 tradingPlayer Ljava/lang/String;
+	FIELD field_11705 convertedZombie Z
+		COMMENT This field will be set to true when a villager gets created by the means of converting a zombie.
+		COMMENT In next mobTick() it will be set to false and awards all the players in the village with a reputation bonus.
 	METHOD <init> (Lnet/minecraft/class_99;I)V
 		ARG 1 world
 		ARG 2 profession
 	METHOD method_10819 getItemStack (Lnet/minecraft/class_2054;Ljava/util/Random;)Lnet/minecraft/class_2056;
 		ARG 0 item
 		ARG 1 random
-	METHOD method_10820 (Lnet/minecraft/class_86;Lnet/minecraft/class_2054;Ljava/util/Random;F)V
-		ARG 0 tradeOfferList
+	METHOD method_10820 makeBuyTradeOffer (Lnet/minecraft/class_86;Lnet/minecraft/class_2054;Ljava/util/Random;F)V
+		ARG 0 traderOfferList
 		ARG 1 item
 		ARG 2 random
-	METHOD method_10821 getItemAmount (Lnet/minecraft/class_2054;Ljava/util/Random;)I
+		ARG 3 chance
+	METHOD method_10821 getBuyItemAmount (Lnet/minecraft/class_2054;Ljava/util/Random;)I
 		ARG 0 item
 		ARG 1 random
+	METHOD method_10822 makeSellTradeOffer (Lnet/minecraft/class_86;Lnet/minecraft/class_2054;Ljava/util/Random;F)V
+		ARG 0 traderOfferList
+		ARG 1 item
+		ARG 2 random
+		ARG 3 chance
 	METHOD method_10823 addParticles (Ljava/lang/String;)V
 		ARG 1 particleName
 	METHOD method_10825 getProfession ()I
-	METHOD method_10826 (Lnet/minecraft/class_2054;Ljava/util/Random;)I
+	METHOD method_10826 getSellItemAmount (Lnet/minecraft/class_2054;Ljava/util/Random;)I
 		ARG 0 item
 		ARG 1 random
 	METHOD method_10827 getMating ()Z
 	METHOD method_10828 getInCaravan ()Z
 	METHOD method_10829 hasCustomer ()Z
+	METHOD method_10830 setConvertedZombie ()V
 	METHOD method_10831 setMating (Z)V
 		ARG 1 value
 	METHOD method_10832 setInCaravan (Z)V
 		ARG 1 value
+	METHOD method_10833 getChanceToCreateTrade (F)F
+		ARG 1 baseChance
 	METHOD method_10834 setProfession (I)V
 		ARG 1 profession
+	METHOD method_10835 addTradeOffers (I)V
+		ARG 1 i
+			COMMENT Unused param, it is always 1
