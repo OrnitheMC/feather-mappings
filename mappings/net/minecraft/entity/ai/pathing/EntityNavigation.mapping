@@ -5,6 +5,9 @@ CLASS net/minecraft/class_2651 net/minecraft/entity/ai/pathing/EntityNavigation
 	FIELD field_11606 speed D
 	FIELD field_11607 followRange Lnet/minecraft/class_1766;
 	FIELD field_11608 avoidSunlight Z
+	FIELD field_11609 tickCounter I
+	FIELD field_11610 lastUpdate I
+	FIELD field_11611 entityPosAboveWater Lnet/minecraft/class_649;
 	FIELD field_11612 willOpenWoodenDoor Z
 	FIELD field_11613 movementBlockAllowed Z
 	FIELD field_11614 inWater Z
@@ -24,9 +27,25 @@ CLASS net/minecraft/class_2651 net/minecraft/entity/ai/pathing/EntityNavigation
 		ARG 3 posY
 		ARG 5 posZ
 		ARG 7 speed
+	METHOD method_10666 pathNotBlocked (IIIIIILnet/minecraft/class_649;DD)Z
+		ARG 1 posX
+		ARG 2 posYAboveWater
+		ARG 3 posZ
+		ARG 4 mobEntityWidth
+		ARG 5 mobEntityHeight
+		ARG 6 mobEntityDepth
+		ARG 7 posAboveWater
+		ARG 8 deltaX
+		ARG 10 deltaZ
 	METHOD method_10667 startMovingAlong (Lnet/minecraft/class_620;D)Z
 		ARG 1 path
 		ARG 2 speed
+	METHOD method_10668 isCurrentPathNode (Lnet/minecraft/class_649;Lnet/minecraft/class_649;III)Z
+		ARG 1 posAboveWater
+		ARG 2 pathNode
+		ARG 3 mobEntityWidth
+		ARG 4 mobEntityHeight
+		ARG 5 mobEntityDepth
 	METHOD method_10669 getNavigation (Lnet/minecraft/class_1745;)Lnet/minecraft/class_620;
 		ARG 1 target
 	METHOD method_10670 startMovingTo (Lnet/minecraft/class_1745;D)Z
@@ -34,6 +53,16 @@ CLASS net/minecraft/class_2651 net/minecraft/entity/ai/pathing/EntityNavigation
 		ARG 2 speed
 	METHOD method_10671 setInWater (Z)V
 		ARG 1 value
+	METHOD method_10672 canWalkThrough (IIIIIILnet/minecraft/class_649;DD)Z
+		ARG 1 posX
+		ARG 2 posYAboveWater
+		ARG 3 posZ
+		ARG 4 mobEntityWidth
+		ARG 5 mobEntityHeight
+		ARG 6 mobEntityDepth
+		ARG 7 posAboveWater
+		ARG 8 deltaX
+		ARG 10 deltaZ
 	METHOD method_10673 setMovementBlockAllowed (Z)V
 		ARG 1 value
 	METHOD method_10674 getMovementBlockAllowed ()Z
@@ -48,5 +77,9 @@ CLASS net/minecraft/class_2651 net/minecraft/entity/ai/pathing/EntityNavigation
 	METHOD method_10680 tick ()V
 	METHOD method_10681 isIdle ()Z
 	METHOD method_10682 stopCurrentNavigation ()V
-	METHOD method_10684 getMobEntityPos ()Lnet/minecraft/class_649;
+	METHOD method_10683 updatePath ()V
+	METHOD method_10684 getEntityPosAboveWater ()Lnet/minecraft/class_649;
+	METHOD method_10685 getYAboveWater ()I
+	METHOD method_10686 canPathFind ()Z
 	METHOD method_10687 mobEntityInFluid ()Z
+	METHOD method_10688 avoidSunLight ()V
