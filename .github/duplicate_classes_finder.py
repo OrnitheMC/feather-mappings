@@ -1,10 +1,10 @@
-from os import listdir
-from typing import List
-from collections import defaultdict
+from os import listdir, path
 from os.path import isfile, join
+from collections import defaultdict
+from typing import List
 
 """---- Config ----"""
-path = "mappings"  # the path to the mappings folder
+mappings_folder = path.join("..", "mappings")  # the path to the mappings folder
 mappings = defaultdict(list)  # the dictionary to put the mappings in
 
 
