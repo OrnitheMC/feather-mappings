@@ -2,6 +2,7 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 	FIELD field_1562 chunkX I
 	FIELD field_1563 chunkZ I
 	FIELD field_1564 LOGGER Lorg/apache/logging/log4j/Logger;
+	FIELD field_1567 rainOrSnowHeightMap [I
 	FIELD field_1569 loaded Z
 	FIELD field_1570 world Lnet/minecraft/class_99;
 	FIELD field_1575 terrainPopulated Z
@@ -9,6 +10,7 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 	FIELD field_1578 modified Z
 	FIELD field_1579 containsEntities Z
 	FIELD field_1581 highestOpaqueBlockY I
+	FIELD field_1583 queuedLightUpdates I
 	FIELD field_9590 hasSkyLight Z
 	FIELD field_9591 heightMap [I
 	FIELD field_9592 blockEntities Ljava/util/Map;
@@ -76,6 +78,7 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 	METHOD method_1401 isPopulated ()Z
 	METHOD method_1403 getChunkPos ()Lnet/minecraft/class_92;
 	METHOD method_1404 getBiomes ()[B
+	METHOD method_1405 resetLightUpdates ()V
 	METHOD method_8917 getBlock (III)Lnet/minecraft/class_160;
 		ARG 1 sectionX
 		ARG 2 y
@@ -107,8 +110,22 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 		ARG 4 sectionZ
 	METHOD method_8923 addBlockEntity (Lnet/minecraft/class_2193;)V
 		ARG 1 blockEntity
-	METHOD method_8925 (Lnet/minecraft/class_1745;Lnet/minecraft/class_646;Ljava/util/List;Lnet/minecraft/class_2625;)V
+	METHOD method_8924 getFilteredEntitiesInBox (Ljava/lang/Class;Lnet/minecraft/class_646;Ljava/util/List;Lnet/minecraft/class_2625;)V
+		COMMENT gets all entities inside a bounding box that adhere to the filter and
+		COMMENT that can be assigned to the specific entity class that was passed.
+		ARG 1 entityClass
+		ARG 2 boundingBox
+		ARG 3 entityList
+		ARG 4 filter
+	METHOD method_8925 getFilteredEntitiesInBoxExclusive (Lnet/minecraft/class_1745;Lnet/minecraft/class_646;Ljava/util/List;Lnet/minecraft/class_2625;)V
+		COMMENT gets all entities inside a bounding box that:
+		COMMENT     - Are not the passed entity
+		COMMENT     - Adhere to the filter
+		COMMENT     - can be assigned to the passed entity class
 		ARG 1 entity
+		ARG 2 boundingBox
+		ARG 3 entityList
+		ARG 4 filter
 	METHOD method_8926 setBiomes ([B)V
 		ARG 1 biomes
 	METHOD method_8927 setSections ([Lnet/minecraft/class_401;)V
@@ -122,6 +139,9 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 		ARG 1 sectionX
 		ARG 2 y
 		ARG 3 sectionZ
+	METHOD method_8930 getRainOrSnowHeight (II)I
+		ARG 1 x
+		ARG 2 z
 	METHOD method_8931 isTopOfColumn (III)Z
 		ARG 1 x
 		ARG 2 y

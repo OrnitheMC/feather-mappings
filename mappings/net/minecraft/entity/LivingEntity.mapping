@@ -2,7 +2,12 @@ CLASS net/minecraft/class_1752 net/minecraft/entity/LivingEntity
 	FIELD field_11440 attackTime I
 	FIELD field_11441 currrentHelath F
 	FIELD field_11442 statusEffects Ljava/util/HashMap;
+	FIELD field_7434 prevHandSwingAmount F
+	FIELD field_7435 handSwingAmount F
+	FIELD field_7436 handSwing F
 	FIELD field_7437 defaultMaxHealth I
+	FIELD field_7438 prevCameraPitch F
+	FIELD field_7439 cameraPitch F
 	FIELD field_7440 randomLargeSeed F
 	FIELD field_7441 randomSmallSeed F
 	FIELD field_7442 bodyYaw F
@@ -19,11 +24,14 @@ CLASS net/minecraft/class_1752 net/minecraft/entity/LivingEntity
 	FIELD field_7453 stepBobbingAmount F
 	FIELD field_7454 distanceTravelled F
 	FIELD field_7455 prevDistanceTravelled F
+	FIELD field_7456 halfCircleDegrees F
+	FIELD field_7457 mobValue I
 	FIELD field_7458 damageAmount F
 	FIELD field_7459 jumping Z
 	FIELD field_7460 sidewaysSpeed F
 	FIELD field_7461 handSwinging Z
 	FIELD field_7462 handSwingTicks I
+	FIELD field_7463 arrowDespawnTimer I
 	FIELD field_7464 hurtTime I
 	FIELD field_7465 hurtAnimationTime I
 	FIELD field_7466 knockbackVelocity F
@@ -32,6 +40,7 @@ CLASS net/minecraft/class_1752 net/minecraft/entity/LivingEntity
 	FIELD field_7469 handSwingProgress F
 	FIELD field_7470 SPRINTING_SPEED_MODIFIER Lnet/minecraft/class_1767;
 	FIELD field_7471 forwardSpeed F
+	FIELD field_7472 randomYaw F
 	FIELD field_7473 bodyTrackingIncrements I
 	FIELD field_7474 serxerX D
 	FIELD field_7475 serxerY D
@@ -49,13 +58,27 @@ CLASS net/minecraft/class_1752 net/minecraft/entity/LivingEntity
 	FIELD field_7487 damageTracker Lnet/minecraft/class_1732;
 	FIELD field_7489 equippedItems [Lnet/minecraft/class_2056;
 	FIELD field_7490 effectsChanged Z
+	METHOD method_10568 rayTrace (DF)Lnet/minecraft/class_2253;
+		ARG 1 distance
+		ARG 3 tickDelta
 	METHOD method_10569 tickStatusEffects ()V
 	METHOD method_10570 getStatusEffects ()Ljava/util/Collection;
-	METHOD method_10572 isCustomNameVisible_CLIENT ()Z
+	METHOD method_10571 getIconSprite (Lnet/minecraft/class_2056;I)Lnet/minecraft/class_2616;
+		ARG 1 itemStack
+		ARG 2 stage
+	METHOD method_10573 hasAi ()Z
+	METHOD method_10574 getMovementSpeed ()F
 	METHOD method_10575 incrementDespawnTimer ()V
-	METHOD method_10576 getRotationVec (F)Lnet/minecraft/class_649;
+	METHOD method_10576 getCameraRotation (F)Lnet/minecraft/class_649;
+		ARG 1 modifier
+	METHOD method_10578 dismountRider (Lnet/minecraft/class_1745;)V
+		ARG 1 entity
+	METHOD method_10579 dropRareItem (I)V
+		ARG 1 id
 	METHOD method_11365 mobTick ()V
-	METHOD method_6918 positAfterTeleport (DDD)V
+	METHOD method_11366 lerpPosition (F)Lnet/minecraft/class_649;
+		ARG 1 tickDelta
+	METHOD method_6918 refreshPosition (DDD)V
 		ARG 1 x
 		ARG 3 y
 		ARG 5 z
@@ -69,16 +92,28 @@ CLASS net/minecraft/class_1752 net/minecraft/entity/LivingEntity
 		ARG 1 instance
 	METHOD method_7092 onStatusEffectUpgraded (Lnet/minecraft/class_1742;Z)V
 		ARG 1 instance
+		ARG 2 timerRanOut
+	METHOD method_7093 applyKnockback (Lnet/minecraft/class_1745;FDD)V
+		ARG 1 entity
+		ARG 2 amount
+		ARG 3 xVelocity
+		ARG 5 zVelocity
 	METHOD method_7094 sendPickup (Lnet/minecraft/class_1745;I)V
 		ARG 1 entity
 		ARG 2 count
 	METHOD method_7095 initializeAttribute (Lnet/minecraft/class_1765;)Lnet/minecraft/class_1766;
 		ARG 1 attribute
 	METHOD method_7096 dropEquipment (ZI)V
+		ARG 1 hasBeenHit
+		ARG 2 lootingLevel
 	METHOD method_7097 initializeAttributes ()V
+	METHOD method_7098 canBreathUnderwater ()Z
 	METHOD method_7099 tickPostDeath ()V
 		COMMENT This method is called 20 times from {@link net.minecraft.entity.LivingEntity.baseTick()v} after the entity has died(when Health is 0), as the death animation lasts for 20ticks.
 		COMMENT In the 20th tick/call it marks the entity as removed
+	METHOD method_7100 applyDamageArmourReduction (Lnet/minecraft/class_1733;F)F
+		ARG 1 damageSource
+		ARG 2 damage
 	METHOD method_7101 getEffectInstance (Lnet/minecraft/class_1741;)Lnet/minecraft/class_1742;
 		ARG 1 effect
 	METHOD method_7102 onStatusEffectRemoved (Lnet/minecraft/class_1742;)V
@@ -87,7 +122,7 @@ CLASS net/minecraft/class_1752 net/minecraft/entity/LivingEntity
 		ARG 1 entity
 	METHOD method_7104 getExperienceDropCount (Lnet/minecraft/class_2674;)I
 		ARG 1 playerEntity
-	METHOD method_7105 (Lnet/minecraft/class_2056;)V
+	METHOD method_7105 renderBrokenItem (Lnet/minecraft/class_2056;)V
 		ARG 1 itemStack
 	METHOD method_7106 dropLoot (ZI)V
 		ARG 1 allowDrops
@@ -95,6 +130,8 @@ CLASS net/minecraft/class_1752 net/minecraft/entity/LivingEntity
 	METHOD method_7107 getStackInHand ()Lnet/minecraft/class_2056;
 	METHOD method_7108 getSoundVolume ()F
 	METHOD method_7109 getSoundPitch ()F
+	METHOD method_7110 isDead ()Z
+	METHOD method_7114 jump ()V
 	METHOD method_7116 isSleeping ()Z
 	METHOD method_7118 pushAwayCollidingEntities ()V
 	METHOD method_7119 isServer ()Z
@@ -115,11 +152,16 @@ CLASS net/minecraft/class_1752 net/minecraft/entity/LivingEntity
 	METHOD method_7138 getDeathSound ()Ljava/lang/String;
 	METHOD method_7140 getArmorProtectionValue ()I
 	METHOD method_7141 getDamageTracker ()Lnet/minecraft/class_1732;
+	METHOD method_7142 determineAttacker ()Lnet/minecraft/class_1752;
 	METHOD method_7143 getMaxHealth ()F
 	METHOD method_7144 getStuckArrows ()I
 	METHOD method_7145 swingHand ()V
+	METHOD method_7146 updateHandSwing ()V
 	METHOD method_7147 getAttributeContainer ()Lnet/minecraft/class_2635;
 	METHOD method_7148 getDamageEnchantmentTarget ()Lnet/minecraft/class_1758;
+	METHOD method_7149 applyStatusEffectArmourReduction (Lnet/minecraft/class_1733;F)F
+		ARG 1 damageSource
+		ARG 2 damage
 	METHOD method_7150 addStatusEffect (Lnet/minecraft/class_1742;)V
 		ARG 1 instance
 	METHOD method_7151 isInSameTeam (Lnet/minecraft/class_1752;)Z
@@ -129,9 +171,14 @@ CLASS net/minecraft/class_1752 net/minecraft/entity/LivingEntity
 		ARG 2 damage
 	METHOD method_7153 canHaveStatusEffect (Lnet/minecraft/class_1742;)Z
 		ARG 1 effect
+	METHOD method_7154 moveEntityWithVelocity (FF)V
+		ARG 1 sidewaysVelocity
+		ARG 2 forwardVelocity
 	METHOD method_7155 heal (F)V
 		ARG 1 amount
 	METHOD method_7156 bodyMovement (FF)F
+		ARG 1 yaw
+		ARG 2 movement
 	METHOD method_7158 setHealth (F)V
 		ARG 1 amount
 	METHOD method_7159 setJumping (Z)V
@@ -146,6 +193,8 @@ CLASS net/minecraft/class_1752 net/minecraft/entity/LivingEntity
 	METHOD method_7165 hasStatusEffect (I)Z
 		ARG 1 id
 	METHOD method_7166 isClimbing ()Z
+	METHOD method_7167 getHandSwingProcess (F)F
+		ARG 1 tickDelta
 	METHOD method_7168 removeEffect (I)V
 		ARG 1 id
 	METHOD method_7169 tickAI ()V
@@ -158,9 +207,11 @@ CLASS net/minecraft/class_1752 net/minecraft/entity/LivingEntity
 		ARG 1 distance
 	METHOD method_7174 setStuckArrows (I)V
 		ARG 1 arrows
+	METHOD method_7175 getStackInInventory (I)Lnet/minecraft/class_2056;
+		ARG 1 id
 	METHOD method_7176 setAttacking (Lnet/minecraft/class_1745;)V
 		ARG 1 entity
-	METHOD method_7179 (Lnet/minecraft/class_1745;)Z
+	METHOD method_7179 entityAttacksEntity (Lnet/minecraft/class_1745;)Z
 		ARG 1 entity
 	METHOD method_7180 pushAway (Lnet/minecraft/class_1745;)V
 		ARG 1 entity
