@@ -4,7 +4,7 @@ from collections import defaultdict
 from typing import List
 
 """---- Config ----"""
-mappings_folder = join("..", "mappings")  # the path to the mappings folder
+mappings_folder = "mappings"  # the path to the mappings folder
 mappings = defaultdict(list)  # the dictionary to put the mappings in
 
 
