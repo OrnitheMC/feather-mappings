@@ -99,6 +99,7 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 7 sound
 		ARG 8 volume
 		ARG 9 pitch
+		ARG 10 delayed
 	METHOD method_267 calculateAmbientDarkness (F)I
 		ARG 1 time
 	METHOD method_269 getChunk (II)Lnet/minecraft/class_399;
@@ -108,7 +109,7 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 1 x
 		ARG 2 z
 		ARG 3 seed
-	METHOD method_271 (IIII)V
+	METHOD method_271 updateVerticalColumn (IIII)V
 		ARG 1 x
 		ARG 2 z
 		ARG 3 minY
@@ -149,12 +150,16 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 	METHOD method_293 hasEntityIn (Lnet/minecraft/class_646;Lnet/minecraft/class_1745;)Z
 		ARG 1 box
 		ARG 2 exclusion
+	METHOD method_294 (Lnet/minecraft/class_649;Lnet/minecraft/class_646;)F
+		ARG 1 vec
+		ARG 2 box
 	METHOD method_295 rayTrace (Lnet/minecraft/class_649;Lnet/minecraft/class_649;)Lnet/minecraft/class_2253;
 		ARG 1 start
 		ARG 2 end
 	METHOD method_296 rayTrace (Lnet/minecraft/class_649;Lnet/minecraft/class_649;Z)Lnet/minecraft/class_2253;
 		ARG 1 start
 		ARG 2 end
+		ARG 3 isLiving
 	METHOD method_298 addToCrashReport (Lnet/minecraft/class_825;)Lnet/minecraft/class_1364;
 		ARG 1 report
 	METHOD method_305 scheduleTick (IIILnet/minecraft/class_160;II)V
@@ -361,8 +366,8 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
-	METHOD method_8471 (Lnet/minecraft/class_106;III)I
-		ARG 1 type
+	METHOD method_8471 getBlockLightLevel (Lnet/minecraft/class_106;III)I
+		ARG 1 lightType
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
@@ -380,6 +385,7 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 	METHOD method_8474 rayTrace (Lnet/minecraft/class_649;Lnet/minecraft/class_649;ZZZ)Lnet/minecraft/class_2253;
 		ARG 1 start
 		ARG 2 end
+		ARG 3 isLiving
 	METHOD method_8475 getSpawnCap (Ljava/lang/Class;)I
 		ARG 1 groupClass
 	METHOD method_8476 getEntitiesByClassInBox (Ljava/lang/Class;Lnet/minecraft/class_646;)Ljava/util/List;
@@ -448,6 +454,11 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 1 x
 		ARG 3 y
 		ARG 5 z
+	METHOD method_8489 getClosestPlayerToAttack (DDDD)Lnet/minecraft/class_2674;
+		ARG 1 entityX
+		ARG 3 entityY
+		ARG 5 entityZ
+		ARG 7 sightDistance
 	METHOD method_8490 getBlockBelowFirstAirBlockAboveSealLevel (II)Lnet/minecraft/class_160;
 		ARG 1 x
 		ARG 2 z
@@ -497,6 +508,9 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 4 z
 	METHOD method_8499 removeEntities (Ljava/util/List;)V
 		ARG 1 entities
+	METHOD method_8500 getClosestPlayerToAttack (Lnet/minecraft/class_1745;D)Lnet/minecraft/class_2674;
+		ARG 1 entity
+		ARG 2 sightDistance
 	METHOD method_8501 getOtherEntities (Lnet/minecraft/class_1745;Lnet/minecraft/class_646;)Ljava/util/List;
 		ARG 1 entity
 		ARG 2 BoundingBox
@@ -554,12 +568,13 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 2 y
 		ARG 3 z
 		ARG 4 fromBlock
-	METHOD method_8513 (IIIZ)Z
+	METHOD method_8513 canHaveSnow (IIIZ)Z
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
 		ARG 4 cancel
 	METHOD method_8514 getHightestY (II)I
+		COMMENT @return The highest y value that has a opaque block
 		ARG 1 x
 		ARG 2 y
 	METHOD method_8515 removeBlock (III)Z
