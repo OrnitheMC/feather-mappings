@@ -1,7 +1,7 @@
 # Feather
 
-![Build](https://img.shields.io/github/workflow/status/Copetan/feather-mappings/Build/1.7.2?label=Build)
-![Publish](https://img.shields.io/github/workflow/status/Copetan/feather-mappings/Publish/1.7.2?label=Publish)
+![Build](https://img.shields.io/github/workflow/status/OrnitheMC/feather-mappings/Build/1.7.2?label=Build)
+![Publish](https://img.shields.io/github/workflow/status/OrnitheMC/feather-mappings/Publish/1.7.2?label=Publish)
 ![Discord](https://img.shields.io/discord/922262455453888542?color=5865F2&label=Discord&logo=Discord&logoColor=ffffff)
 
 Feather is a set of open, unencumbered Minecraft mappings, free for everyone to use under the Creative Commons Zero license. The intention is to let 
