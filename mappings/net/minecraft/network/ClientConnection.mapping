@@ -1,22 +1,47 @@
 CLASS net/minecraft/class_1432 net/minecraft/network/ClientConnection
+	FIELD field_10849 PROTOCOL Lio/netty/util/AttributeKey;
+	FIELD field_10850 RECEIVABLE_PACKETS Lio/netty/util/AttributeKey;
+	FIELD field_10851 SENDABLE_PACKETS Lio/netty/util/AttributeKey;
+	FIELD field_10852 IO Lio/netty/channel/nio/NioEventLoopGroup;
+	FIELD field_10854 isClient Z
+	FIELD field_10855 readQueue Ljava/util/Queue;
+	FIELD field_10856 state Lnet/minecraft/class_1434;
 	FIELD field_5952 MARKER_NETWORK Lorg/apache/logging/log4j/Marker;
 	FIELD field_5953 MARKER_NETWORK_PACKETS Lorg/apache/logging/log4j/Marker;
 	FIELD field_5958 LOGGER Lorg/apache/logging/log4j/Logger;
-	FIELD field_5960 packetQueue Ljava/util/Queue;
+	FIELD field_5960 sendQueue Ljava/util/Queue;
 	FIELD field_5962 channel Lio/netty/channel/Channel;
 	FIELD field_5963 address Ljava/net/SocketAddress;
+	FIELD field_5964 listener Lnet/minecraft/class_1438;
+	FIELD field_5965 disconnectReason Lnet/minecraft/class_1444;
+	METHOD <init> (Z)V
+		ARG 1 isClient
+	METHOD channelActive (Lio/netty/channel/ChannelHandlerContext;)V
+		ARG 1 context
+	METHOD channelInactive (Lio/netty/channel/ChannelHandlerContext;)V
+		ARG 1 context
+	METHOD channelRead0 (Lio/netty/channel/ChannelHandlerContext;Ljava/lang/Object;)V
+		ARG 1 context
+		ARG 2 packet
+	METHOD exceptionCaught (Lio/netty/channel/ChannelHandlerContext;Ljava/lang/Throwable;)V
+		ARG 1 context
+		ARG 2 t
 	METHOD method_5095 setState (Lnet/minecraft/class_1434;)V
 		ARG 1 state
 	METHOD method_5096 setPacketListener (Lnet/minecraft/class_1438;)V
 		ARG 1 listener
 	METHOD method_5097 disconnect (Lnet/minecraft/class_1444;)V
 		ARG 1 disconnectReason
+	METHOD method_5100 sendPacket (Lnet/minecraft/class_2434;[Lio/netty/util/concurrent/GenericFutureListener;)V
+		ARG 1 packet
+		ARG 2 listeners
 	METHOD method_5102 connect (Ljava/net/InetAddress;I)Lnet/minecraft/class_1432;
 		ARG 0 address
 		ARG 1 port
 	METHOD method_5103 connectLocal (Ljava/net/SocketAddress;)Lnet/minecraft/class_1432;
 		ARG 0 address
 	METHOD method_5104 setupEncryption (Ljavax/crypto/SecretKey;)V
+		ARG 1 key
 	METHOD method_5105 getAddress ()Ljava/net/SocketAddress;
 	METHOD method_5106 isLocal ()Z
 	METHOD method_5108 isOpen ()Z
@@ -24,4 +49,7 @@ CLASS net/minecraft/class_1432 net/minecraft/network/ClientConnection
 	METHOD method_5111 getDisconnectReason ()Lnet/minecraft/class_1444;
 	METHOD method_5112 disableAutoRead ()V
 	METHOD method_5114 sendQueuedPackets ()V
+	METHOD method_9850 readQueuedPackets ()V
 	METHOD method_9851 send (Lnet/minecraft/class_2434;[Lio/netty/util/concurrent/GenericFutureListener;)V
+		ARG 1 packet
+		ARG 2 listeners
