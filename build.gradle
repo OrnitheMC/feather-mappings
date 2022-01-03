@@ -207,13 +207,14 @@ task downloadMcJars(dependsOn: downloadWantedVersionManifest) {
 
 task downloadIntermediary(type: Download) {
 	group = buildMappingGroup
-	def url = "https://github.com/Copetan/Legacy-Intermediaries/raw/master/mappings/${minecraft_version}.tiny"
+	def url = "https://github.com/OrnitheMC/Intermediary/raw/main/mappings/${minecraft_version}.tiny"
 	src com.google.common.net.UrlEscapers.urlFragmentEscaper().escape(url)
 	dest new File(cacheFilesMinecraft, "${minecraft_version}-intermediary.tiny")
 }
 
 task downloadIntermediaryV2(type: Download) {
 	group = buildMappingGroup
+	// TODO Update Maven URL once new repository is made and group ID is updated
 	def url = "https://copetan.jfrog.io/artifactory/minecraft-maven/net/fabricmc/intermediary/${minecraft_version}/intermediary-${minecraft_version}-v2.jar"
 	src com.google.common.net.UrlEscapers.urlFragmentEscaper().escape(url)
 	dest new File(cacheFilesMinecraft, "${minecraft_version}-intermediary-v2.jar")
@@ -788,6 +789,7 @@ task javadocJar(type: Jar, dependsOn: ["javadoc"]) {
 publishing {
 	publications {
 		maven(MavenPublication) {
+			// TODO Make a new Maven repo for this, under the net.ornithemc group ID
 			groupId 'me.copetan'
 			artifactId "feather"
 			version featherVersion
@@ -810,6 +812,7 @@ publishing {
 	repositories {
 		if (ENV.MAVEN_PUBLISH_TOKEN) {
 			maven {
+				// TODO Make a new Maven repo for this, under the net.ornithemc group ID
 				url 'https://copetan.jfrog.io/artifactory/minecraft-maven/'
 				credentials {
 					username 'copebot'
