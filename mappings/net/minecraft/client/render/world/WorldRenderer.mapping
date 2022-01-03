@@ -1,5 +1,35 @@
 CLASS net/minecraft/class_2346 net/minecraft/client/render/world/WorldRenderer
 	FIELD field_10500 client Lnet/minecraft/class_669;
+	FIELD field_10501 blockRenderer Lnet/minecraft/class_2336;
+	FIELD field_10503 hasColorOcclusion Z
+	FIELD field_10508 minX I
+	FIELD field_10509 minY I
+	FIELD field_10510 minZ I
+	FIELD field_10511 maxX I
+	FIELD field_10512 maxY I
+	FIELD field_10513 maxZ I
+	FIELD field_10515 playingSongs Ljava/util/Map;
+	FIELD field_10517 hasRenderableEntities Z
+	FIELD field_10518 glCallList I
+	FIELD field_10519 renderDistance I
+	FIELD field_10520 entityRenderCooldown I
+	FIELD field_10521 entityCount I
+	FIELD field_10522 globalEntityCount I
+	FIELD field_10524 chunkCount I
+	FIELD field_10525 chunkSectionsOutOfView I
+	FIELD field_10526 blockEntities Ljava/util/List;
+	FIELD field_10527 chunkSectionsRemovedThroughOcclusionCulling I
+	FIELD field_10528 chunkSectionRenderPasses I
+	FIELD field_10529 emptyChunkSections I
+	FIELD field_10535 cameraX D
+	FIELD field_10536 cameraY D
+	FIELD field_10537 cameraZ D
+	FIELD field_10538 prevCameraX D
+	FIELD field_10539 prevCameraY D
+	FIELD field_10540 prevCameraZ D
+	FIELD field_10541 cameraChunkX I
+	FIELD field_10542 cameraChunkY I
+	FIELD field_10543 cameraChunkZ I
 	FIELD field_10545 LOGGER Lorg/apache/logging/log4j/Logger;
 	FIELD field_10546 MOON_PHASES_TEXTURE Lnet/minecraft/class_1605;
 	FIELD field_10547 SUN_TEXTURE Lnet/minecraft/class_1605;
@@ -7,6 +37,9 @@ CLASS net/minecraft/class_2346 net/minecraft/client/render/world/WorldRenderer
 	FIELD field_10549 END_SKY_TEXTURE Lnet/minecraft/class_1605;
 	FIELD field_10550 world Lnet/minecraft/class_2317;
 	FIELD field_10551 textureManager Lnet/minecraft/class_1232;
+	FIELD field_10555 chunkCountX I
+	FIELD field_10556 chunkSectionCount I
+	FIELD field_10557 chunkCountZ I
 	METHOD <init> (Lnet/minecraft/class_669;)V
 		ARG 1 client
 	METHOD method_9516 reload ()V
@@ -15,11 +48,34 @@ CLASS net/minecraft/class_2346 net/minecraft/client/render/world/WorldRenderer
 		ARG 3 y
 		ARG 5 z
 		ARG 7 tickDelta
+	METHOD method_9518 renderSky (F)V
+	METHOD method_9520 checkColorOcclusion (II)V
+	METHOD method_9522 renderHitbox (Lnet/minecraft/class_646;I)V
+		ARG 0 box
+		ARG 1 color
 	METHOD method_9523 setWorld (Lnet/minecraft/class_2317;)V
 		ARG 1 world
+	METHOD method_9524 renderMiningProgress (Lnet/minecraft/class_1002;Lnet/minecraft/class_2674;F)V
+	METHOD method_9527 renderTerrain (Lnet/minecraft/class_1752;ID)I
+		ARG 1 camera
+		ARG 2 type
+		ARG 3 tickDelta
+	METHOD method_9528 renderEntities (Lnet/minecraft/class_1752;Lnet/minecraft/class_1117;F)V
+		ARG 1 camera
+		ARG 2 view
+		ARG 3 tickDelta
 	METHOD method_9529 (Lnet/minecraft/class_1752;Z)Z
 		ARG 1 camera
+	METHOD method_9530 renderBlockOutline (Lnet/minecraft/class_2674;Lnet/minecraft/class_2253;IF)V
 	METHOD method_9531 renderClouds (F)V
 		ARG 1 tickDelta
 	METHOD method_9534 renderFancyClouds (F)V
 		ARG 1 tickDelta
+	METHOD method_9535 updateRenderBoundaries (III)V
+		ARG 1 cameraX
+		ARG 2 cameraY
+		ARG 3 cameraZ
+	METHOD method_9536 getChunkDebugString ()Ljava/lang/String;
+	METHOD method_9537 getEntityDebugString ()Ljava/lang/String;
+	METHOD method_9538 renderStaticEntities ()V
+	METHOD method_9541 drawNoise ()V
