@@ -3,10 +3,10 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 	FIELD field_11410 eyeHeight F
 	FIELD field_11411 eyeHeightSneakOffset F
 	FIELD field_11412 facing I
-	FIELD field_11413 entitySize Lnet/minecraft/class_2623;
-	FIELD field_11414 posXClient I
-	FIELD field_11415 posYClient I
-	FIELD field_11416 posZClient I
+	FIELD field_11413 size Lnet/minecraft/class_2623;
+	FIELD field_11414 spawnedX I
+	FIELD field_11415 spawnedY I
+	FIELD field_11416 spawnedZ I
 	FIELD field_7332 prevYaw F
 	FIELD field_7333 prevPitch F
 	FIELD field_7334 onGround Z
@@ -168,8 +168,8 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 		ARG 1 material
 	METHOD method_6930 populateCrashReport (Lnet/minecraft/class_1364;)V
 		ARG 1 section
-	METHOD method_6933 readCustomDataFromTag (Lnet/minecraft/class_1405;)V
-		ARG 1 tag
+	METHOD method_6933 readCustomNbt (Lnet/minecraft/class_1405;)V
+		ARG 1 nbt
 	METHOD method_6935 playSound (Ljava/lang/String;FF)V
 		ARG 1 id
 		ARG 2 volume
@@ -190,9 +190,9 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 		ARG 1 item
 		ARG 2 count
 		ARG 3 yOffset
-	METHOD method_6946 toListTag ([D)Lnet/minecraft/class_1411;
+	METHOD method_6946 toNbtList ([D)Lnet/minecraft/class_1411;
 		ARG 1 values
-	METHOD method_6947 toListTag ([F)Lnet/minecraft/class_1411;
+	METHOD method_6947 toNbtList ([F)Lnet/minecraft/class_1411;
 		ARG 1 values
 	METHOD method_6948 slowdownMovementSpeed ()V
 	METHOD method_6949 getDragonParts ()[Lnet/minecraft/class_1745;
@@ -200,7 +200,7 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 	METHOD method_6951 isAttackable ()Z
 	METHOD method_6952 getSafeFallDistance ()I
 	METHOD method_6955 canAvoidTraps ()Z
-	METHOD method_6956 getOnFireForRendering ()Z
+	METHOD method_6956 shouldRenderOnFire ()Z
 	METHOD method_6957 getUuid ()Ljava/util/UUID;
 	METHOD method_6958 canFly ()Z
 	METHOD method_6970 getSplashSound ()Ljava/lang/String;
@@ -241,8 +241,8 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 	METHOD method_7000 setFlag (IZ)V
 		ARG 1 index
 		ARG 2 value
-	METHOD method_7003 writeCustomDataToTag (Lnet/minecraft/class_1405;)V
-		ARG 1 tag
+	METHOD method_7003 writeCustomNbt (Lnet/minecraft/class_1405;)V
+		ARG 1 nbt
 	METHOD method_7005 onKillEntity (Lnet/minecraft/class_1745;I)V
 		ARG 1 killedEntity
 	METHOD method_7008 (F)F
@@ -255,8 +255,8 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 	METHOD method_7011 setItemSlot (ILnet/minecraft/class_2056;)V
 		ARG 1 slot
 		ARG 2 itemStack
-	METHOD method_7013 saveSelfToTag (Lnet/minecraft/class_1405;)Z
-		ARG 1 tag
+	METHOD method_7013 writeNbt (Lnet/minecraft/class_1405;)Z
+		ARG 1 nbt
 	METHOD method_7014 setSneaking (Z)V
 		ARG 1 sneaking
 	METHOD method_7015 move (DDD)V
@@ -265,8 +265,8 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 		ARG 5 velocityZ
 	METHOD method_7017 setEntityId (I)V
 		ARG 1 id
-	METHOD method_7020 toTag (Lnet/minecraft/class_1405;)Z
-		ARG 1 tag
+	METHOD method_7020 writeNbtNoRider (Lnet/minecraft/class_1405;)Z
+		ARG 1 nbt
 	METHOD method_7021 onPlayerCollision (Lnet/minecraft/class_2674;)V
 		ARG 1 player
 	METHOD method_7022 setSprinting (Z)V
@@ -279,8 +279,8 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 		ARG 1 fallDistance
 	METHOD method_7026 setOnFireFor (I)V
 		ARG 1 seconds
-	METHOD method_7027 writePlayerData (Lnet/minecraft/class_1405;)V
-		ARG 1 tag
+	METHOD method_7027 writeEntityNbt (Lnet/minecraft/class_1405;)V
+		ARG 1 nbt
 	METHOD method_7028 interact (Lnet/minecraft/class_2674;)Z
 		ARG 1 player
 	METHOD method_7029 setInvisible (Z)V
@@ -293,8 +293,8 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 		ARG 1 headYaw
 	METHOD method_7033 burn (I)V
 		ARG 1 time
-	METHOD method_7034 fromTag (Lnet/minecraft/class_1405;)V
-		ARG 1 tag
+	METHOD method_7034 readEntityNbt (Lnet/minecraft/class_1405;)V
+		ARG 1 nbt
 	METHOD method_7035 isInvisibleTo (Lnet/minecraft/class_2674;)Z
 		ARG 1 player
 	METHOD method_7036 setSwimming (Z)V
@@ -334,10 +334,10 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 		ARG 1 entity
 	METHOD method_7054 handleAttack (Lnet/minecraft/class_1745;)Z
 		ARG 1 attacker
-	METHOD method_7056 setPositionAndAnglesFromEntity (Lnet/minecraft/class_1745;)V
+	METHOD method_7056 copyPositionAndAnglesFromEntity (Lnet/minecraft/class_1745;)V
 		ARG 1 entity
-	METHOD method_7057 copyDataFromEntity (Lnet/minecraft/class_1745;Z)V
-		COMMENT Copies all values from sourceEntity via the NBT Tag serialiser. bool is unused as of at least 1.7.2.
+	METHOD method_7057 copyNbtFrom (Lnet/minecraft/class_1745;Z)V
+		COMMENT Copies all values from sourceEntity via the NBT serializer. bool is unused as of at least 1.7.2.
 		ARG 1 sourceEntity
 		ARG 2 bool
 	METHOD method_7059 canClimb ()Z

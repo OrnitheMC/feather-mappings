@@ -45,7 +45,7 @@ CLASS net/minecraft/class_669 net/minecraft/client/MinecraftClient
 	FIELD field_2582 height I
 	FIELD field_2583 world Lnet/minecraft/class_2317;
 	FIELD field_2585 player Lnet/minecraft/class_2322;
-	FIELD field_2586 facingEntity Lnet/minecraft/class_1745;
+	FIELD field_2586 targetEntity Lnet/minecraft/class_1745;
 	FIELD field_2587 particleManager Lnet/minecraft/class_959;
 	FIELD field_2588 textRenderer Lnet/minecraft/class_679;
 	FIELD field_2589 shadowTextRenderer Lnet/minecraft/class_679;
@@ -65,6 +65,7 @@ CLASS net/minecraft/class_669 net/minecraft/client/MinecraftClient
 	FIELD field_9856 serverIp Ljava/lang/String;
 	FIELD field_9857 port I
 	FIELD field_9860 worldRenderer Lnet/minecraft/class_2346;
+	FIELD field_9861 camera Lnet/minecraft/class_1752;
 	FIELD field_9862 inGameHud Lnet/minecraft/class_2283;
 	METHOD method_10936 tryTakeScreenshot ()V
 	METHOD method_2221 getInstance ()Lnet/minecraft/class_669;
@@ -89,6 +90,8 @@ CLASS net/minecraft/class_669 net/minecraft/client/MinecraftClient
 	METHOD method_2243 getSoundManager ()Lnet/minecraft/class_1328;
 	METHOD method_2244 getMusicType ()Lnet/minecraft/class_2391;
 	METHOD method_2247 run ()V
+	METHOD method_2248 teleportToDimension (I)V
+		ARG 1 dimensionId
 	METHOD method_2249 onResolutionChanged (II)V
 	METHOD method_2252 getVersion (Lnet/minecraft/class_669;)Ljava/lang/String;
 		ARG 0 client
@@ -100,6 +103,7 @@ CLASS net/minecraft/class_669 net/minecraft/client/MinecraftClient
 		ARG 1 world
 	METHOD method_2256 setWorld (Lnet/minecraft/class_2317;Ljava/lang/String;)V
 		ARG 1 world
+		ARG 2 title
 	METHOD method_2257 setCurrentServerEntry (Lnet/minecraft/class_2324;)V
 		ARG 1 info
 	METHOD method_2260 startGame (Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/class_102;)V
@@ -120,7 +124,8 @@ CLASS net/minecraft/class_669 net/minecraft/client/MinecraftClient
 		ARG 1 crashReport
 	METHOD method_2295 setGlErrorMessage (Ljava/lang/String;)V
 		ARG 1 message
-	METHOD method_2296 handleBlockBreaking (Z)V
+	METHOD method_2296 handleBlockMining (Z)V
+		ARG 1 holdingAttack
 	METHOD method_2298 printCrashReport (Lnet/minecraft/class_825;)V
 		ARG 1 crashReport
 	METHOD method_2301 getCurrentSave ()Lnet/minecraft/class_637;
@@ -137,7 +142,7 @@ CLASS net/minecraft/class_669 net/minecraft/client/MinecraftClient
 	METHOD method_2314 tick ()V
 	METHOD method_2315 isDemo ()Z
 	METHOD method_2316 getNetworkHandler ()Lnet/minecraft/class_2314;
-	METHOD method_2317 isHudEnabled ()Z
+	METHOD method_2317 isHudDisabled ()Z
 	METHOD method_2318 isFancyGraphicsEnabled ()Z
 	METHOD method_2319 isAmbientOcclusionEnabled ()Z
 	METHOD method_9141 useResourcePack ()V
