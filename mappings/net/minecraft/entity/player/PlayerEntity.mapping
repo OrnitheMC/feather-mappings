@@ -12,21 +12,30 @@ CLASS net/minecraft/class_2674 net/minecraft/entity/player/PlayerEntity
 	FIELD field_11724 playerScreenHandler Lnet/minecraft/class_1983;
 	FIELD field_11725 currentScreenHandler Lnet/minecraft/class_1983;
 	FIELD field_11726 hungerManager Lnet/minecraft/class_1982;
+	FIELD field_11728 prevStrideDistance F
+	FIELD field_11729 strideDistance F
 	FIELD field_11737 spawnPointPosition Lnet/minecraft/class_2614;
 	FIELD field_11739 hasSpawnpointSet Z
 	FIELD field_11741 heldItem Lnet/minecraft/class_2056;
+	FIELD field_11742 itemUseTimer I
 	FIELD field_11744 profiler Lcom/mojang/authlib/GameProfile;
 	METHOD <init> (Lnet/minecraft/class_99;Lcom/mojang/authlib/GameProfile;)V
 		ARG 1 world
 		ARG 2 profile
 	METHOD method_10840 addFatigue (F)V
-	METHOD method_10841 addXP (I)V
+		ARG 1 amount
+	METHOD method_10841 addXp (I)V
 		ARG 1 levels
 	METHOD method_10842 trySleep (III)Lnet/minecraft/class_2675;
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
-	METHOD method_10843 onUse (IIIILnet/minecraft/class_2056;)Z
+	METHOD method_10843 canUseItem (IIIILnet/minecraft/class_2056;)Z
+		ARG 1 x
+		ARG 2 y
+		ARG 3 z
+		ARG 4 face
+		ARG 5 stack
 	METHOD method_10844 openEnchantingScreen (IIILjava/lang/String;)V
 		ARG 1 x
 		ARG 2 y
@@ -34,12 +43,18 @@ CLASS net/minecraft/class_2674 net/minecraft/entity/player/PlayerEntity
 		ARG 4 name
 	METHOD method_10847 openTradingScreen (Lnet/minecraft/class_83;Ljava/lang/String;)V
 		ARG 1 trader
+		ARG 2 displayName
 	METHOD method_10848 openCommandBlockMinecartScreen (Lnet/minecraft/class_87;)V
 		ARG 1 executor
 	METHOD method_10849 getUpdatedSpawnpoint (Lnet/minecraft/class_99;Lnet/minecraft/class_2614;Z)Lnet/minecraft/class_2614;
 		ARG 0 world
 		ARG 1 oldSpawnpoint
 		ARG 2 hasSpawnpointSet
+	METHOD method_10850 canBreakBlock (Lnet/minecraft/class_160;)Z
+		ARG 1 block
+	METHOD method_10851 getMiningSpeed (Lnet/minecraft/class_160;Z)F
+		ARG 1 block
+		ARG 2 withEffectiveTool
 	METHOD method_10852 openBeaconScreen (Lnet/minecraft/class_2192;)V
 		ARG 1 beacon
 	METHOD method_10853 openBrewingStandScreen (Lnet/minecraft/class_349;)V
@@ -80,7 +95,9 @@ CLASS net/minecraft/class_2674 net/minecraft/entity/player/PlayerEntity
 	METHOD method_10880 isSleptEnough ()Z
 	METHOD method_10882 getSpawnPointPosition ()Lnet/minecraft/class_2614;
 	METHOD method_10883 isSpawnPointSet ()Z
+	METHOD method_10884 getXpAmount ()I
 	METHOD method_10885 getHungerManager ()Lnet/minecraft/class_1982;
+	METHOD method_10886 needsHealing ()Z
 	METHOD method_10887 getEnderChestInventory ()Lnet/minecraft/class_2007;
 	METHOD method_10889 getScoreboard ()Lnet/minecraft/class_653;
 	METHOD method_10890 getItemInHand ()Lnet/minecraft/class_2056;
@@ -92,7 +109,16 @@ CLASS net/minecraft/class_2674 net/minecraft/entity/player/PlayerEntity
 		ARG 3 z
 	METHOD method_10897 addEnchantedCritParticles (Lnet/minecraft/class_1745;)V
 		ARG 1 entity
+	METHOD method_10898 canMineBlock (III)Z
+		ARG 1 x
+		ARG 2 y
+		ARG 3 z
 	METHOD method_10901 canEat (Z)Z
+		ARG 1 ignoreHunger
+	METHOD method_10905 interactEntity (Lnet/minecraft/class_1745;)Z
+		ARG 1 entity
+	METHOD method_10906 getArmor (I)Lnet/minecraft/class_2056;
+		ARG 1 slot
 	METHOD method_10907 attackEntity (Lnet/minecraft/class_1745;)V
 		ARG 1 entity
 	METHOD method_7977 setGameMode (Lnet/minecraft/class_2087;)V
@@ -102,6 +128,8 @@ CLASS net/minecraft/class_2674 net/minecraft/entity/player/PlayerEntity
 		ARG 1 inventory
 	METHOD method_7993 copyFrom (Lnet/minecraft/class_2674;Z)V
 	METHOD method_7996 setUseItem (Lnet/minecraft/class_2056;I)V
+		ARG 1 stack
+		ARG 2 maxUseTime
 	METHOD method_8000 awaken (ZZZ)V
 	METHOD method_8003 addMessage (Lnet/minecraft/class_1444;)V
 		ARG 1 message
