@@ -75,7 +75,7 @@ dependencies {
 	javadocClasspath "com.google.code.findbugs:jsr305:3.0.2"
 	decompileClasspath "net.fabricmc:cfr:${project.cfr_version}"
 	decompileClasspath "org.quiltmc:quiltflower:${project.quiltflower_version}"
-	mappingPoetJar "net.fabricmc:mappingpoet:0.2.6"
+	mappingPoetJar "org.quiltmc:mapping-poet:${project.mapping_poet_version}"
 }
 
 def setupGroup = "jar setup"
@@ -595,10 +595,22 @@ task mapNamedJar(dependsOn: ["mergeV2", mapIntermediaryJar]) {
 	//Force the task to always run
 	outputs.upToDateWhen { false }
 
+	def jsrToJetbrains = [
+			"javax/annotation/Nullable": "org/jetbrains/annotations/Nullable",
+			"javax/annotation/Nonnull": "org/jetbrains/annotations/NotNull",
+			"javax/annotation/concurrent/Immutable": "org/jetbrains/annotations/Unmodifiable"
+	]
+
 	doLast {
 		logger.lifecycle(":mapping minecraft to named")
 
-		mapJar(namedJar, intermediaryJar, mergeV2.output, libraries, "intermediary", "named")
+		mapJar(namedJar, intermediaryJar, mergeV2.output, libraries, "intermediary", "named") {
+			it.withMappings { out ->
+				jsrToJetbrains.each { e ->
+					out.acceptClass e.key, e.value
+				}
+			}
+		}
 	}
 }
 
@@ -688,7 +700,7 @@ task genFakeSource(type: JavaExec, dependsOn: ["mergeV2", "mapNamedJar"]) {
 		}
 	}
 
-	main "net.fabricmc.mappingpoet.Main"
+	main "org.quiltmc.mappingpoet.Main"
 	classpath configurations.mappingPoet
 	// use merged v2 so we have all namespaces in jd
 	args mergeV2.output.getAbsolutePath(), namedJar.getAbsolutePath(), fakeSourceDir.getAbsolutePath(), libraries.getAbsolutePath()
@@ -709,10 +721,10 @@ task decompileCFR(type: JavaExec, dependsOn: [mapNamedJar]) {
 		classpath = configurations.decompileClasspath
 	}
 }
-
-task decompileQuiltflower(type: DecompileTask, dependsOn: [mapNamedJar]) {
+/*
+task decompileQuiltflower(type: JavaExec, dependsOn: [mapNamedJar]) {
 	classpath = configurations.decompileClasspath
-	mainClass = "org.quiltmc:quiltflower."
+	mainClass = "org.quiltmc:quiltflower.org.jetbrains.java.decompiler.main.decompiler.ConsoleDecompiler"
 
 	args namedJar.getAbsolutePath(), file("namedSrc").absolutePath
 
@@ -721,7 +733,7 @@ task decompileQuiltflower(type: DecompileTask, dependsOn: [mapNamedJar]) {
 		classpath = configurations.decompileClasspath
 	}
 }
-
+*/
 javadoc {
 	dependsOn genFakeSource
 	dependsOn downloadMcLibs
@@ -751,7 +763,7 @@ javadoc {
 				'implSpec:a:Implementation Requirements:',
 				'implNote:a:Implementation Note:'
 		)
-		taglets "net.fabricmc.mappingpoet.jd.MappingTaglet"
+		taglets "org.quiltmc.mappingpoet.jd.MappingTaglet"
 		// taglet path, header, extra stylesheet settings deferred
 
 		addBooleanOption "-allow-script-in-comments", true
