@@ -9,6 +9,7 @@ CLASS net/minecraft/class_2630 net/minecraft/entity/mob/MobEntity
 	FIELD field_11450 inventorySlots [Lnet/minecraft/class_2056;
 	FIELD field_11451 canPickupLoot Z
 	FIELD field_11452 persistent Z
+	FIELD field_11453 currentTarget Lnet/minecraft/class_1745;
 	FIELD field_11454 isLeashed Z
 	FIELD field_11455 holdingEntity Lnet/minecraft/class_1745;
 	FIELD field_11456 leashNbt Lnet/minecraft/class_1405;
@@ -16,6 +17,9 @@ CLASS net/minecraft/class_2630 net/minecraft/entity/mob/MobEntity
 	FIELD field_11458 targetSelector Lnet/minecraft/class_2641;
 	FIELD field_11459 inventoryDropChances [F
 		COMMENT This array holds the value for both armor drop chances and hand-held item drop chances.
+	FIELD field_11460 standardPitch F
+	FIELD field_11461 angryCountdown I
+		COMMENT The countdown that decids how long it should keep attacking the same target
 	FIELD field_11462 lookControl Lnet/minecraft/class_1775;
 	FIELD field_11463 motionControl Lnet/minecraft/class_1776;
 	METHOD method_10572 isCustomNameVisible_CLIENT ()Z
@@ -27,9 +31,18 @@ CLASS net/minecraft/class_2630 net/minecraft/entity/mob/MobEntity
 		ARG 0 slot
 		ARG 1 equipmentLevel
 	METHOD method_10582 setCustomName (Ljava/lang/String;)V
+		ARG 1 name
+	METHOD method_10583 lookAtEntity (Lnet/minecraft/class_1745;FF)V
+		ARG 1 target
+		ARG 2 maxYawChange
+		ARG 3 maxPitchChange
 	METHOD method_10584 detachLeash (ZZ)V
 		ARG 1 sendPacket
 		ARG 2 dropItem
+	METHOD method_10585 changeAngle (FFF)F
+		ARG 1 oldAngle
+		ARG 2 newAngle
+		ARG 3 maxChangeInAngle
 	METHOD method_10586 getSlotForEquipment (Lnet/minecraft/class_2056;)I
 		ARG 0 equipment
 	METHOD method_10587 attachLeash (Lnet/minecraft/class_1745;Z)V
@@ -48,6 +61,7 @@ CLASS net/minecraft/class_2630 net/minecraft/entity/mob/MobEntity
 	METHOD method_10598 readLeashNbt ()V
 	METHOD method_10599 getShadowScale ()F
 	METHOD method_10600 setCustomNameVisibility (Z)V
+		ARG 1 visibility
 	METHOD method_10601 setCanPickupLoot (Z)V
 		ARG 1 blValue
 	METHOD method_10602 getLookControl ()Lnet/minecraft/class_1775;
@@ -55,9 +69,12 @@ CLASS net/minecraft/class_2630 net/minecraft/entity/mob/MobEntity
 	METHOD method_10604 getJumpControl ()Lnet/minecraft/class_1774;
 	METHOD method_10605 getNavigation ()Lnet/minecraft/class_2651;
 	METHOD method_10606 getMobVisibilityCache ()Lnet/minecraft/class_1838;
-	METHOD method_10607 setForwardSpeed (F)V
+	METHOD method_10607 setForwardVelocity (F)V
+		ARG 1 velocity
 	METHOD method_10608 getTargetEntity ()Lnet/minecraft/class_1752;
 	METHOD method_10609 playAmbientSound ()V
+	METHOD method_10610 getEquipedStack (I)Lnet/minecraft/class_2056;
+		ARG 1 id
 	METHOD method_10611 doSpawnEffects ()V
 	METHOD method_7139 initSpawningEquipment ()V
 	METHOD method_7183 getDefaultDropLoot ()Lnet/minecraft/class_2054;
@@ -72,6 +89,7 @@ CLASS net/minecraft/class_2630 net/minecraft/entity/mob/MobEntity
 	METHOD method_7201 getLookPitchSpeed ()I
 	METHOD method_7202 canSpawn ()Z
 	METHOD method_7205 getLimitPerChunk ()I
+	METHOD method_7206 canBeControlledByRider ()Z
 	METHOD method_7212 isTameable ()Z
 	METHOD method_7216 setAttackTarget (Lnet/minecraft/class_1752;)V
 		ARG 1 targetEntity
