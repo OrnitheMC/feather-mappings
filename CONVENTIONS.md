@@ -40,7 +40,7 @@ Avoid abbreviations unless it's a common one everyone knows and other Feather Ma
 form. Full names are easier to read quickly and remember ("Which words were abbreviated?") and they often don't take more
 time to type thanks to IDE autocompletion. Common abbreviations you should use are:
 
-- "id` for "identifier"
+- "id" for "identifier"
 - "pos" for "position"
 - "nbt" for "named binary tag"
 - "init" for "initialize"
