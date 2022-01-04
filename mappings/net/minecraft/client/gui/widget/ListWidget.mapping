@@ -1,4 +1,9 @@
 CLASS net/minecraft/class_713 net/minecraft/client/gui/widget/ListWidget
+	FIELD field_10057 centerAlongY Z
+	FIELD field_10058 client Lnet/minecraft/class_669;
+	FIELD field_10059 mouseYStart F
+	FIELD field_11806 mouseX I
+	FIELD field_11807 mouseY I
 	FIELD field_2992 width I
 	FIELD field_2993 height I
 	FIELD field_2994 yStart I
@@ -6,12 +11,13 @@ CLASS net/minecraft/class_713 net/minecraft/client/gui/widget/ListWidget
 	FIELD field_2996 xEnd I
 	FIELD field_2997 xStart I
 	FIELD field_2998 entryHeight I
+	FIELD field_3003 scrollSpeedMultiplier F
 	FIELD field_3004 scrollAmount F
-	FIELD field_3008 renderSelection Z
+	FIELD field_3008 renderSelectionBox Z
 	FIELD field_3009 renderHeader Z
 	FIELD field_3010 headerHeight I
-	FIELD field_3011 homeButtonId I
-	FIELD field_3012 endButtonId I
+	FIELD field_3011 upButtonId I
+	FIELD field_3012 downButtonId I
 	FIELD field_3013 dragging Z
 	METHOD <init> (Lnet/minecraft/class_669;IIIII)V
 		ARG 1 client
@@ -39,7 +45,7 @@ CLASS net/minecraft/class_713 net/minecraft/client/gui/widget/ListWidget
 	METHOD method_2635 renderHeader (IILnet/minecraft/class_1002;)V
 		ARG 1 x
 		ARG 2 y
-		ARG 3 tessellator
+		ARG 3 bufferBuilder
 	METHOD method_2636 selectEntry (IZII)V
 		ARG 1 y
 		ARG 3 lastMouseX
@@ -65,7 +71,7 @@ CLASS net/minecraft/class_713 net/minecraft/client/gui/widget/ListWidget
 		ARG 3 topAlpha
 		ARG 4 bottomAlpha
 	METHOD method_2646 getScrollbarPosition ()I
-	METHOD method_2647 setButtonIds (II)V
+	METHOD method_2647 setScrollButtonIds (II)V
 		ARG 1 homeButtonId
 		ARG 2 endButtonId
 	METHOD method_2648 setDragging (Z)V
@@ -73,11 +79,13 @@ CLASS net/minecraft/class_713 net/minecraft/client/gui/widget/ListWidget
 	METHOD method_2649 isMouseInList (I)Z
 		ARG 1 mouseY
 	METHOD method_2650 scroll (I)V
-		ARG 1 offset
+		COMMENT scroll a given amount. A positive amount will scroll down and a negative one scroll up
+		ARG 1 amount
 	METHOD method_2651 setXPos (I)V
 		ARG 1 x
-	METHOD method_2652 getMaxPosition ()I
-	METHOD method_2653 capYPosition ()V
+	METHOD method_2652 getListSize ()I
+	METHOD method_2653 capScrolling ()V
+		COMMENT prevents you from scrolling outs too far
 	METHOD method_2654 getMaxScroll ()I
 	METHOD method_2655 getScrollAmount ()I
 	METHOD method_2657 isDragging ()Z
