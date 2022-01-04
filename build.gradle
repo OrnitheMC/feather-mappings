@@ -373,19 +373,25 @@ task mapIntermediaryJar(dependsOn: [downloadMcLibs, downloadIntermediary, mergeJ
 }
 
 
-task feather(dependsOn: mapIntermediaryJar, type: JavaExec) {
+task feather(dependsOn: mapIntermediaryJar) {
 	group = featherGroup
-	classpath = configurations.enigmaRuntime
-	mainClass = 'cuchaz.enigma.gui.Main'
-
-	args '-jar'
-	args intermediaryJar.getAbsolutePath()
-	args '-mappings'
-	args mappingsDir.getAbsolutePath()
-	args '-profile'
-	args 'enigma_profile.json'
-
-	jvmArgs "-Xmx2048m"
+	doLast {
+		ant.setLifecycleLogLevel "WARN"
+		ant.java(
+				classname: 'cuchaz.enigma.gui.Main',
+				classpath: configurations.enigmaRuntime.asPath,
+				fork: true,
+				spawn: true
+		) {
+			jvmarg(value: "-Xmx2048m")
+			arg(value: '-jar')
+			arg(value: intermediaryJar.getAbsolutePath())
+			arg(value: '-mappings')
+			arg(value: mappingsDir.getAbsolutePath())
+			arg(value: '-profile')
+			arg(value: 'enigma_profile.json')
+		}
+	}
 }
 
 task checkMappings(dependsOn: mapIntermediaryJar) {
