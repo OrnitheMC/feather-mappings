@@ -145,7 +145,7 @@ Use these if possible.
 - When a class contains a single instance of itself as a static field, name it `INSTANCE` (all capitalized, even if the field is not final)
 - Use `buffer` for `ByteBuf` and `PacketByteBuf` fields/parameters
 - Use `font` for `TextRenderer` fields/parameters
-- Use `clazz` for class fields/parameters only if using the class' name is not applicable
+- Use `clazz` for class fields/parameters only if using the class' name is not applicable and there is no applicable super class name
 
 ## Javadocs
 
