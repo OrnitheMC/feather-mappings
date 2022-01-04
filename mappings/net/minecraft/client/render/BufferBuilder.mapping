@@ -5,7 +5,7 @@ CLASS net/minecraft/class_1002 net/minecraft/client/render/BufferBuilder
 	FIELD field_10579 floatBuffer Ljava/nio/FloatBuffer;
 	FIELD field_10580 shortBuffer Ljava/nio/ShortBuffer;
 	FIELD field_10581 buffer [I
-	FIELD field_10582 vertices I
+	FIELD field_10582 vertexCount I
 	FIELD field_10583 u D
 	FIELD field_10584 v D
 	FIELD field_10585 brightness I
@@ -14,62 +14,69 @@ CLASS net/minecraft/class_1002 net/minecraft/client/render/BufferBuilder
 	FIELD field_10588 textured Z
 	FIELD field_10589 hasBrightness Z
 	FIELD field_10591 index I
+	FIELD field_10592 nextVertexCount I
 	FIELD field_10593 uncolored Z
+	FIELD field_10594 drawMode I
 	FIELD field_10595 xOffset D
 	FIELD field_10596 yOffset D
 	FIELD field_10597 zOffset D
-	FIELD field_10599 isRendering Z
+	FIELD field_10599 tessellating Z
 	FIELD field_10600 bufferSize I
 	METHOD <init> (I)V
 		ARG 1 initialCapacity
-	METHOD method_3306 setColorWithAlpa (FFFF)V
-		COMMENT sets a RGBA color
+	METHOD method_3306 color (FFFF)V
+		COMMENT
 		ARG 1 r
 		ARG 2 g
 		ARG 3 b
 		ARG 4 a
-	METHOD method_3308 setOpaqueColor (I)V
-		ARG 1 color
-	METHOD method_3321 setOpaqueColor (III)V
-		COMMENT sets a RGBA color with a certain RGB value and a max alpha value (i.e. opaque)
+	METHOD method_3308 color (I)V
+		ARG 1 rgb
+	METHOD method_3321 colorOpaque (III)V
+		COMMENT Set the color to the given rgb values and an alpha value of 0xFF.
 		ARG 1 r
 		ARG 2 g
 		ARG 3 b
-	METHOD method_3324 setOffset (DDD)V
+	METHOD method_3323 withoutColor ()V
+	METHOD method_3324 offset (DDD)V
 		ARG 1 xOffset
 		ARG 3 yOffset
 		ARG 5 zOffset
-	METHOD method_9550 render ()I
-	METHOD method_9552 setUV (DD)V
+	METHOD method_9550 draw ()I
+	METHOD method_9552 uv (DD)V
 		ARG 1 u
 		ARG 3 v
-	METHOD method_9553 createVertex (DDD)V
+	METHOD method_9553 vertex (DDD)V
 		ARG 1 x
 		ARG 3 y
 		ARG 5 z
-	METHOD method_9554 createVertexUV (DDDDD)V
+	METHOD method_9554 vertexUV (DDDDD)V
 		ARG 1 x
 		ARG 3 y
 		ARG 5 z
 		ARG 7 u
 		ARG 9 v
 	METHOD method_9556 start (I)V
-	METHOD method_9558 setColor (IIII)V
-		COMMENT set a certain RGBA color
+		ARG 1 drawMode
+	METHOD method_9557 color (II)V
+		ARG 1 rgb
+		ARG 2 a
+	METHOD method_9558 color (IIII)V
+		COMMENT
 		ARG 1 r
 		ARG 2 g
 		ARG 3 b
 		ARG 4 a
 	METHOD method_9559 start ()V
-		COMMENT GL11.GL_QUADS
-	METHOD method_9560 setColor (FFF)V
-		COMMENT set an RGBA color that is fully opaque
+		COMMENT Start with default draw mode GL11.GL_QUADS
+	METHOD method_9560 color (FFF)V
+		COMMENT
 		ARG 1 r
 		ARG 2 g
 		ARG 3 b
-	METHOD method_9561 setBrightness (I)V
+	METHOD method_9561 brightness (I)V
 		ARG 1 brightness
-	METHOD method_9564 offsetOffset (FFF)V
+	METHOD method_9564 addOffset (FFF)V
 		ARG 1 xOffset
 		ARG 2 yOffset
 		ARG 3 zOffset
