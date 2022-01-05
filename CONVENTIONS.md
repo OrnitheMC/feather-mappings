@@ -4,7 +4,7 @@
 
 Use `UpperCamelCase` for class names. Use `lowerCamelCase` for method names, variable names, and names of fields that are not
 both static and final. Use `UPPER_SNAKE_CASE` for names of fields that are both static and final, excluding atomics like
-`AtomicInteger`, `AtomicBoolean` or `AtomicReference`.
+`AtomicInteger`, `AtomicBoolean` or `AtomicReference`. If a field is static and effectively final `UPPER_SNAKE_CASE` may also be used.
 
 Method names should generally be verb phrases (`tick`, `getCarversForStep`), except for "withX", "toX", "fromX", "of" and
 builder methods. Class names and non-boolean field and variable names should be noun phrases (`ChunkRegion`, `color`).
@@ -133,7 +133,9 @@ Use these if possible.
 - Use `random`, not `rand`
 - Use `parentBlockEntity` for block entities owned by screens
 - Use `client` for `MinecraftClient` fields
+- Use `server` for `MinecraftServer` fields
 - Use `connection` for `ClientConnection` fields
+- Use `proxy` for `Proxy` fields
 - Use `TEXTURE` for static final `Identifier` fields which store the main/default texture used for a model/screen/similar thing
 - Use `<PREFIX>_TEXTURE` for static final `Identifier` fields which store non-default/-main textures or textures which would not make sense to name with the above convention (for example `INVULNERABLE_TEXTURE` in `WitherEntityRenderer` or `SHADOW_TEXTURE` in `EntityRenderer`)
 - Use `MODEL` for static final `Model` fields which store the main/default model of a class
