@@ -834,13 +834,13 @@ publishing {
 
 	}
 	repositories {
-		if (ENV.MAVEN_PUBLISH_TOKEN) {
+		if (ENV.MAVEN_URL) {
 			maven {
 				// TODO Make a new Maven repo for this, under the net.ornithemc group ID
-				url 'https://copetan.jfrog.io/artifactory/minecraft-maven/'
+				url ENV.MAVEN_URL
 				credentials {
-					username 'copebot'
-					password ENV.MAVEN_PUBLISH_TOKEN
+					username ENV.MAVEN_USERNAME
+					password ENV.MAVEN_PASSWORD
 				}
 				authentication {
 					basic(BasicAuthentication)
