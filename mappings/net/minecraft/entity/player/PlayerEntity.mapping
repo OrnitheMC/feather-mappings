@@ -7,13 +7,18 @@ CLASS net/minecraft/class_2674 net/minecraft/entity/player/PlayerEntity
 	FIELD field_11717 xpTotal I
 	FIELD field_11718 xp F
 	FIELD field_11719 sleepTimer I
+	FIELD field_11721 flyingSpeed F
 	FIELD field_11722 fishingBobber Lnet/minecraft/class_1887;
 	FIELD field_11723 inventory Lnet/minecraft/class_1962;
 	FIELD field_11724 playerScreenHandler Lnet/minecraft/class_1983;
 	FIELD field_11725 currentScreenHandler Lnet/minecraft/class_1983;
 	FIELD field_11726 hungerManager Lnet/minecraft/class_1982;
+	FIELD field_11727 pressedJumpTwiceTimer I
+		COMMENT A timer to check if the jump button was pressed twice. You need to press the jump button twice
+		COMMENT in a 7 tick interval for it to activate. Is used to make players fly in creative.
 	FIELD field_11728 prevStrideDistance F
 	FIELD field_11729 strideDistance F
+	FIELD field_11730 xpCooldown I
 	FIELD field_11737 spawnPointPosition Lnet/minecraft/class_2614;
 	FIELD field_11739 hasSpawnpointSet Z
 	FIELD field_11740 minecartTravelStartPos Lnet/minecraft/class_2614;
@@ -71,6 +76,7 @@ CLASS net/minecraft/class_2674 net/minecraft/entity/player/PlayerEntity
 	METHOD method_10856 openHopperScreen (Lnet/minecraft/class_362;)V
 		ARG 1 hopper
 	METHOD method_10857 getUuid (Lcom/mojang/authlib/GameProfile;)Ljava/util/UUID;
+		ARG 0 profile
 	METHOD method_10858 incrementStat (Lnet/minecraft/class_1681;)V
 		ARG 1 stat
 	METHOD method_10859 incrementStat (Lnet/minecraft/class_1681;I)V
@@ -86,12 +92,17 @@ CLASS net/minecraft/class_2674 net/minecraft/entity/player/PlayerEntity
 		ARG 1 item
 	METHOD method_10863 openHopperMinecartScreen (Lnet/minecraft/class_2659;)V
 		ARG 1 hopperMinecart
+	METHOD method_10864 canAttack (Lnet/minecraft/class_2674;)Z
+		ARG 1 player
 	METHOD method_10865 dropItem (Z)Lnet/minecraft/class_1893;
 		ARG 1 wholeStack
 	METHOD method_10866 openCraftingScreen (III)V
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
+	METHOD method_10867 setHidesCape (IZ)V
+		ARG 1 value
+		ARG 2 hideCape
 	METHOD method_10868 openEditBookScreen (Lnet/minecraft/class_2056;)V
 		ARG 1 book
 	METHOD method_10869 addCritParticles (Lnet/minecraft/class_1745;)V
@@ -100,6 +111,8 @@ CLASS net/minecraft/class_2674 net/minecraft/entity/player/PlayerEntity
 	METHOD method_10871 emptyHand ()V
 	METHOD method_10872 isHoldingSword ()Z
 	METHOD method_10873 getScore ()I
+	METHOD method_10874 getArmorEquippedRatio ()F
+		COMMENT @return the ratio of the number of the amount of armor equipped to the total armor slots
 	METHOD method_10875 getMainHandStack ()Lnet/minecraft/class_2056;
 	METHOD method_10876 clearSelectedSlot ()V
 	METHOD method_10878 getGameProfile ()Lcom/mojang/authlib/GameProfile;
@@ -134,6 +147,7 @@ CLASS net/minecraft/class_2674 net/minecraft/entity/player/PlayerEntity
 		ARG 3 z
 	METHOD method_10899 collideWithEntity (Lnet/minecraft/class_1745;)V
 		ARG 1 entity
+	METHOD method_10900 setEyeHeight ()V
 	METHOD method_10901 canEat (Z)Z
 		ARG 1 ignoreHunger
 	METHOD method_10902 isValidSleepingPos ()Z
@@ -153,7 +167,12 @@ CLASS net/minecraft/class_2674 net/minecraft/entity/player/PlayerEntity
 		ARG 1 entity
 	METHOD method_10908 addToScore (I)V
 		ARG 1 amount
+	METHOD method_10909 hidesCape (I)Z
+		ARG 1 value
+	METHOD method_10910 increaseXp (I)V
+		ARG 1 levels
 	METHOD method_7977 setGameMode (Lnet/minecraft/class_2087;)V
+		ARG 1 gameMode
 	METHOD method_7979 openEditSignScreen (Lnet/minecraft/class_2193;)V
 		ARG 1 sign
 	METHOD method_7987 openInventory (Lnet/minecraft/class_1718;)V
@@ -165,6 +184,9 @@ CLASS net/minecraft/class_2674 net/minecraft/entity/player/PlayerEntity
 		ARG 1 stack
 		ARG 2 maxUseTime
 	METHOD method_8000 awaken (ZZZ)V
+		ARG 1 resetSleepTimer
+		ARG 2 update
+		ARG 3 setSpawnPoint
 	METHOD method_8003 addMessage (Lnet/minecraft/class_1444;)V
 		ARG 1 message
 	METHOD method_8043 closeScreenHandler ()V
