@@ -13,6 +13,10 @@ To see the current version being targeted, check the branch name!
 To use feather-deobfuscated Minecraft for Minecraft modding or as a dependency in a Java project, you can use [loom](https://github.com/fabricmc/fabric-loom) Gradle plugin. See [fabric wiki tutorial](https://fabricmc.net/wiki/tutorial:setup) for more information.
 
 To obtain a deobfuscated Minecraft jar, [`./gradlew mapNamedJar`](#mapNamedJar) will generate a jar named like `<minecraft version>-named.jar`, which can be sent to a decompiler for deobfuscated code.
+You can also directly generate a mapped jar and decompile the code using one of the following commands (no need to run `./gradlew mapNamedJar` first):
+- CFR: `./gradlew decompileCFR`
+- Quiltflower: `./gradlew decompileQuiltflower`
+- Procyon: `./gradlew decompileProcyon`
 
 ## Contributing
 
