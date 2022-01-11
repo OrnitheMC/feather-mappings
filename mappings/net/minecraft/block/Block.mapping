@@ -191,7 +191,7 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 7 dx
 		ARG 8 dy
 		ARG 9 dz
-	METHOD method_655 (Lnet/minecraft/class_99;IIILnet/minecraft/class_649;Lnet/minecraft/class_649;)Lnet/minecraft/class_2253;
+	METHOD method_655 rayTrace (Lnet/minecraft/class_99;IIILnet/minecraft/class_649;Lnet/minecraft/class_649;)Lnet/minecraft/class_2253;
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
@@ -247,7 +247,7 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		COMMENT @return Whether the block has collision
 		ARG 1 metadata
 		ARG 2 bl
-	METHOD method_676 (Lnet/minecraft/class_649;)Z
+	METHOD method_676 isWithinPlaneYZ (Lnet/minecraft/class_649;)Z
 		ARG 1 vec
 	METHOD method_677 getDropCount (Ljava/util/Random;)I
 		COMMENT Returns the amount of items the block should drop on breaking without bonus rolls.
@@ -318,7 +318,7 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		COMMENT @return Whether the current block and the other block are equal
 		ARG 1 block
 			COMMENT The other block
-	METHOD method_697 (Lnet/minecraft/class_649;)Z
+	METHOD method_697 isWithinPlaneXZ (Lnet/minecraft/class_649;)Z
 		ARG 1 vec
 	METHOD method_699 hasTransparency ()Z
 	METHOD method_700 setStrength (F)Lnet/minecraft/class_160;
@@ -334,7 +334,7 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 3 y
 		ARG 4 z
 		ARG 5 rand
-	METHOD method_707 (Lnet/minecraft/class_649;)Z
+	METHOD method_707 isWithinPlaneXY (Lnet/minecraft/class_649;)Z
 		ARG 1 vec
 	METHOD method_708 setTranslationKey (Ljava/lang/String;)Lnet/minecraft/class_160;
 		COMMENT Sets the block's localization key. Used in registering blocks.
@@ -402,6 +402,8 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 	METHOD method_8601 getMinZ ()D
 	METHOD method_8602 getMaxZ ()D
 	METHOD method_8603 getBlockId ()Ljava/lang/String;
+	METHOD method_8604 getBlockName ()Ljava/lang/String;
+		COMMENT Only used by hoppers and skulls for some reason.
 	METHOD method_8605 blockVariationToDrop (I)I
 		ARG 1 id
 	METHOD method_8606 getSprite (II)Lnet/minecraft/class_2616;
@@ -424,7 +426,7 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 7 dy
 		ARG 8 dz
 		ARG 9 prevMetadata
-	METHOD method_8610 (Lnet/minecraft/class_99;IIIILnet/minecraft/class_2056;)Z
+	METHOD method_8610 canPlaceAt (Lnet/minecraft/class_99;IIIILnet/minecraft/class_2056;)Z
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
@@ -466,7 +468,7 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 4 z
 		ARG 5 entity
 		ARG 6 fallDistance
-	METHOD method_8616 (Lnet/minecraft/class_99;IIILnet/minecraft/class_1745;Lnet/minecraft/class_649;)V
+	METHOD method_8616 setFlowPosition (Lnet/minecraft/class_99;IIILnet/minecraft/class_1745;Lnet/minecraft/class_649;)V
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
@@ -493,6 +495,9 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 5 dir
 	METHOD method_8620 loadSprites (Lnet/minecraft/class_2617;)V
 		ARG 1 spriteLoader
+	METHOD method_8621 getTextureSprite (II)Lnet/minecraft/class_2616;
+		ARG 1 dir
+		ARG 2 metadata
 	METHOD method_8622 onBlockAdded (Lnet/minecraft/class_99;III)V
 		ARG 1 world
 		ARG 2 x
@@ -510,6 +515,7 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 3 y
 		ARG 4 z
 		ARG 5 metadata
+		ARG 6 id
 	METHOD method_8625 canWalkThrough (Lnet/minecraft/class_104;III)Z
 		ARG 1 world
 		ARG 2 x
@@ -550,7 +556,7 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 3 y
 		ARG 4 z
 		ARG 5 dir
-	METHOD method_8633 (Lnet/minecraft/class_104;IIII)Z
+	METHOD method_8633 getBlock (Lnet/minecraft/class_104;IIII)Z
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
@@ -560,11 +566,12 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 1 id
 	METHOD method_8635 fromRawId (I)Lnet/minecraft/class_160;
 		ARG 0 id
-	METHOD method_8636 (Lnet/minecraft/class_99;IIII)V
+	METHOD method_8636 update (Lnet/minecraft/class_99;IIII)V
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
+		ARG 5 metadata
 	METHOD method_8637 getSprite (Lnet/minecraft/class_104;IIII)Lnet/minecraft/class_2616;
 		ARG 1 world
 		ARG 2 x
@@ -597,6 +604,8 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 5 metadata
 	METHOD method_8643 getSprite (I)Lnet/minecraft/class_2616;
 		ARG 1 dir
+	METHOD method_8644 getColor (I)I
+		ARG 1 modifier
 	METHOD method_8645 createItemStack (I)Lnet/minecraft/class_2056;
 		ARG 1 damage
 	METHOD method_8646 isSupported (Lnet/minecraft/class_99;III)Z
@@ -614,6 +623,7 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
+	METHOD method_8649 setAlpha ()I
 	METHOD method_8650 getMinX ()D
 	METHOD method_8651 getMaxX ()D
 	METHOD method_8652 getMinY ()D
