@@ -1,4 +1,5 @@
-CLASS net/minecraft/class_34 net/minecraft/entity/effect/StatusEffectStrings
+CLASS net/minecraft/class_34 net/minecraft/entity/effect/PotionTypeHandler
+	COMMENT Class that handles everyting potion types, based on its metadata or recipe.
 	FIELD field_68 UNCRAFTABLE Ljava/lang/String;
 	FIELD field_69 SUGAR Ljava/lang/String;
 	FIELD field_70 GHAST_TEAR Ljava/lang/String;
@@ -12,14 +13,14 @@ CLASS net/minecraft/class_34 net/minecraft/entity/effect/StatusEffectStrings
 	FIELD field_78 GUNPOWDER Ljava/lang/String;
 	FIELD field_79 GOLDEN_CARROT Ljava/lang/String;
 	FIELD field_80 WATER_BREATHING Ljava/lang/String;
-	FIELD field_85 PotionTypes [Ljava/lang/String;
-	FIELD field_9054 PotionRecipies Ljava/util/HashMap;
-	FIELD field_9055 EfectCashe Ljava/util/HashMap;
-	FIELD field_9056 PotionColorCashe Ljava/util/HashMap;
-	METHOD method_32 pointlessFlagRemap (I)I
-		ARG 0 i
-	METHOD method_33 checkIntBit (II)Z
-		ARG 0 i
+	FIELD field_85 POTION_TYPES [Ljava/lang/String;
+	FIELD field_9054 POTION_RECIPES Ljava/util/HashMap;
+	FIELD field_9055 EFFECT_CACHE Ljava/util/HashMap;
+	FIELD field_9056 POTION_COLOR_CACHE Ljava/util/HashMap;
+	METHOD method_32 onlyKeepFiveFirstBits (I)I
+		ARG 0 integer
+	METHOD method_33 checkBit (II)Z
+		ARG 0 integer
 		ARG 1 bit
 	METHOD method_34 remapBits (IIIIII)I
 		ARG 0 i
@@ -28,7 +29,7 @@ CLASS net/minecraft/class_34 net/minecraft/entity/effect/StatusEffectStrings
 		ARG 3 thirdBit
 		ARG 4 secondBit
 		ARG 5 firstBit
-	METHOD method_35 potionRecipieCharMetadataUpdater (IIZZZ)I
+	METHOD method_35 updatePotionMetadataFromRecipeChar (IIZZZ)I
 		ARG 0 metadata
 		ARG 1 j
 		ARG 2 bl
@@ -36,18 +37,18 @@ CLASS net/minecraft/class_34 net/minecraft/entity/effect/StatusEffectStrings
 		ARG 4 bl3
 	METHOD method_36 updatePotionMetadata (ILjava/lang/String;)I
 		ARG 0 metadata
-		ARG 1 potionRecipie
+		ARG 1 potionRecipe
 	METHOD method_37 getPotionColor (IZ)I
 		ARG 0 metadata
 		ARG 1 bl
-	METHOD method_38 getStatusEfectFromRecipie (Ljava/lang/String;III)I
-		ARG 0 potionRecipie
+	METHOD method_38 getStatusEffectFromRecipe (Ljava/lang/String;III)I
+		ARG 0 potionRecipe
 		ARG 1 i
 		ARG 2 j
 		ARG 3 metadata
 	METHOD method_39 getPotionColor (Ljava/util/Collection;)I
 		ARG 0 potions
-	METHOD method_40 potionEfectMetadataUpdater (ZZZIIII)I
+	METHOD method_40 updatePotionEfectMetadata (ZZZIIII)I
 		ARG 0 bl
 		ARG 1 bl2
 		ARG 2 bl3
@@ -55,7 +56,7 @@ CLASS net/minecraft/class_34 net/minecraft/entity/effect/StatusEffectStrings
 		ARG 4 j
 		ARG 5 k
 		ARG 6 metadata
-	METHOD method_41 getEfectsFromMetadata (IZ)Ljava/util/List;
+	METHOD method_41 getEffectsFromMetadata (IZ)Ljava/util/List;
 		ARG 0 metadata
 		ARG 1 bl
 	METHOD method_42 containsOnlyAmbientEffects (Ljava/util/Collection;)Z
@@ -64,10 +65,10 @@ CLASS net/minecraft/class_34 net/minecraft/entity/effect/StatusEffectStrings
 	METHOD method_43 getPotionType (I)Ljava/lang/String;
 		ARG 0 i
 	METHOD method_44 getValueOfBit (II)I
-		ARG 0 i
+		ARG 0 integer
 		ARG 1 bit
 	METHOD method_45 getInverseValueOfBit (II)I
-		ARG 0 i
+		ARG 0 integer
 		ARG 1 bit
-	METHOD method_46 getAmountOfOnesInInt (I)I
+	METHOD method_46 getAmountOfOnes (I)I
 		ARG 0 i
