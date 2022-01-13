@@ -1,4 +1,5 @@
 CLASS net/minecraft/class_34 net/minecraft/entity/effect/PotionTypeHandler
+	COMMENT Class that handles everything potion types, based on its metadata or recipe.
 	FIELD field_68 UNCRAFTABLE Ljava/lang/String;
 	FIELD field_69 SUGAR Ljava/lang/String;
 	FIELD field_70 GHAST_TEAR Ljava/lang/String;
@@ -13,10 +14,47 @@ CLASS net/minecraft/class_34 net/minecraft/entity/effect/PotionTypeHandler
 	FIELD field_79 GOLDEN_CARROT Ljava/lang/String;
 	FIELD field_80 WATER_BREATHING Ljava/lang/String;
 	FIELD field_85 POTION_TYPES [Ljava/lang/String;
-	FIELD field_9054 REQUIREMENTS Ljava/util/HashMap;
-	FIELD field_9055 AMPLIFIERS Ljava/util/HashMap;
+	FIELD field_9054 POTION_RECIPES Ljava/util/HashMap;
+	FIELD field_9055 EFFECT_CACHE Ljava/util/HashMap;
+	FIELD field_9056 POTION_COLOR_CACHE Ljava/util/HashMap;
+	METHOD method_32 getPotionIndex (I)I
+		COMMENT Removes all bits except the first 5 in the int wich is the index of the potion
+		ARG 0 metadata
+	METHOD method_33 checkBit (II)Z
+		ARG 0 integer
+		ARG 1 bit
+	METHOD method_34 remapBits (IIIIII)I
+		ARG 0 metadata
+		ARG 1 fithBit
+		ARG 2 fourthBit
+		ARG 3 thirdBit
+		ARG 4 secondBit
+		ARG 5 firstBit
+	METHOD method_35 updatePotionMetadataFromRecipeChar (IIZZZ)I
+		ARG 0 metadata
+	METHOD method_36 updatePotionMetadata (ILjava/lang/String;)I
+		ARG 0 metadata
+		ARG 1 potionRecipe
+	METHOD method_37 getPotionColor (IZ)I
+		ARG 0 metadata
+	METHOD method_38 getStatusEffectFromRecipe (Ljava/lang/String;III)I
+		ARG 0 potionRecipe
+		ARG 3 metadata
 	METHOD method_39 getPotionColor (Ljava/util/Collection;)I
 		ARG 0 potionEffects
+	METHOD method_40 updatePotionEfectMetadata (ZZZIIII)I
+		ARG 6 metadata
+	METHOD method_41 getEffectsFromMetadata (IZ)Ljava/util/List;
+		ARG 0 metadata
 	METHOD method_42 containsOnlyAmbientEffects (Ljava/util/Collection;)Z
 		COMMENT Returns true if collection contains only ambient effects, false otherwise
 		ARG 0 collection
+	METHOD method_43 getPotionType (I)Ljava/lang/String;
+		ARG 0 metadata
+	METHOD method_44 getValueOfBit (II)I
+		ARG 0 integer
+		ARG 1 bit
+	METHOD method_45 getInverseValueOfBit (II)I
+		ARG 0 integer
+		ARG 1 bit
+	METHOD method_46 getAmountOfOnes (I)I
