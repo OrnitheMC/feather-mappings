@@ -2,23 +2,40 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 	FIELD field_1562 chunkX I
 	FIELD field_1563 chunkZ I
 	FIELD field_1564 LOGGER Lorg/apache/logging/log4j/Logger;
-	FIELD field_1567 rainOrSnowHeightMap [I
+	FIELD field_1567 minRainOrSnowHeight [I
+		COMMENT Stores the min y-value at which rain or snow can fall for a given (x, z) position
+	FIELD field_1568 updateLight [Z
+		COMMENT the (x, z) positions that need their skylight updated.
 	FIELD field_1569 loaded Z
+		COMMENT This value is true if the chunk is currently loaded into the world
 	FIELD field_1570 world Lnet/minecraft/class_99;
+	FIELD field_1572 recheckGap Z
 	FIELD field_1575 terrainPopulated Z
 	FIELD field_1576 lightPopulated Z
+	FIELD field_1577 gapsPopulated Z
 	FIELD field_1578 modified Z
+		COMMENT Used to mark the chunk dirty (i.e. needs to be updated)
 	FIELD field_1579 containsEntities Z
-	FIELD field_1581 highestOpaqueBlockY I
+		COMMENT If the chunk contains entities it is saved each chunk (to save the updated positions)
+	FIELD field_1581 highestOpaqueBlock I
 	FIELD field_1583 queuedLightUpdates I
 	FIELD field_9590 hasSkyLight Z
 	FIELD field_9591 heightMap [I
+		COMMENT A map containing the y-position of the highest block in a given xz column
 	FIELD field_9592 blockEntities Ljava/util/Map;
+		COMMENT A hashmap containing positions as a {@link  net.minecraft.util.math.Vec3i} as keys and the
+		COMMENT {@link net.minecraft.block.entity.BlockEntity} corresponding to that position as a value.
 	FIELD field_9593 entitiesBySection [Ljava/util/List;
+		COMMENT An array of 16 lists. Each list corresponds to a subchunk (A 16x16x16 volume inside the chunk).
+		COMMENT This list then contains all the entities inside that subchunk.
 	FIELD field_9594 lastSaveTime J
+	FIELD field_9595 sendPacket Z
+		COMMENT If this is true packets are sent to the client with updates about the chunk.
 	FIELD field_9596 inhabitedTime J
-	FIELD field_9597 sections [Lnet/minecraft/class_401;
+		COMMENT The time players have been in a chunk. Used for local difficulty.
+	FIELD field_9597 subchunks [Lnet/minecraft/class_401;
 	FIELD field_9598 biomes [B
+		COMMENT Stores the biome-ID for each (x, z) position
 	METHOD <init> (Lnet/minecraft/class_99;II)V
 		ARG 1 world
 		ARG 2 chunkX
@@ -34,18 +51,27 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 		ARG 3 blockMetadata
 		ARG 4 chunkX
 		ARG 5 chunkZ
+	METHOD method_1343 setHeightmap ()V
 	METHOD method_1344 isAtChunkPos (II)Z
 		ARG 1 chunkX
 		ARG 2 chunkZ
+	METHOD method_1346 checkSkylight (IIII)V
+		COMMENT Checks the skylight for a given (x, z) column between minY and maxY
+		ARG 1 x
+		ARG 2 z
+		ARG 3 minY
+		ARG 4 maxY
 	METHOD method_1347 getSlimeRandom (J)Ljava/util/Random;
+		ARG 1 seed
 	METHOD method_1349 setLightLevel (Lnet/minecraft/class_106;IIII)V
 		ARG 1 type
 		ARG 2 sectionX
 		ARG 3 y
 		ARG 4 sectionZ
 		ARG 5 light
-	METHOD method_1351 (Lnet/minecraft/class_396;Lnet/minecraft/class_396;II)V
+	METHOD method_1351 populate (Lnet/minecraft/class_396;Lnet/minecraft/class_396;II)V
 		ARG 1 provider
+		ARG 2 chunkGenerator
 		ARG 3 chunkX
 		ARG 4 chunkZ
 	METHOD method_1360 addEntity (Lnet/minecraft/class_1745;)V
@@ -55,6 +81,7 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 		ARG 2 chunkY
 	METHOD method_1363 shouldSave (Z)Z
 		ARG 1 saveEntities
+	METHOD method_1368 setSkylight ()V
 	METHOD method_1369 getHighestY (II)I
 		ARG 1 sectionX
 		ARG 2 sectionZ
@@ -63,11 +90,30 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 	METHOD method_1373 tick (Z)V
 		ARG 1 beFast
 	METHOD method_1374 load ()V
+	METHOD method_1375 areSubchunksEmpty (II)Z
+		COMMENT Checks if all subchunks inside the range [minY, maxY[ contain only air (i.e. are empty).
+		ARG 1 minY
+		ARG 2 maxY
+	METHOD method_1376 checkSkylight (III)V
+		COMMENT Checks the skylight of a given (x, z) column below a maximum y value
+		ARG 1 x
+		ARG 2 z
+		ARG 3 maxY
 	METHOD method_1380 unload ()V
+	METHOD method_1381 updateSkylight (II)V
+		ARG 1 x
+		ARG 2 z
+	METHOD method_1382 resetLight (III)V
+		ARG 1 x
+		ARG 2 y
+		ARG 3 z
 	METHOD method_1385 markDirty ()V
 	METHOD method_1386 updateLight (II)Z
-		ARG 1 sectionX
-		ARG 2 sectionZ
+		COMMENT updates the light withing the chunk.
+		COMMENT Important!! the variable chunkX and chunkZ refer to the x and z values relative to the chunk,
+		COMMENT and thus are limited to the interval [0, 16[.
+		ARG 1 chunkX
+		ARG 2 xhunkZ
 	METHOD method_1387 getOpacity (III)I
 		ARG 1 sectionX
 		ARG 2 y
@@ -75,10 +121,20 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 	METHOD method_1390 isEmpty ()Z
 	METHOD method_1394 getHighestSectionYOffset ()I
 	METHOD method_1398 getSections ()[Lnet/minecraft/class_401;
+	METHOD method_1400 recheckGaps (Z)V
+		ARG 1 checkAll
 	METHOD method_1401 isPopulated ()Z
 	METHOD method_1403 getChunkPos ()Lnet/minecraft/class_92;
 	METHOD method_1404 getBiomes ()[B
 	METHOD method_1405 resetLightUpdates ()V
+	METHOD method_1406 processQueuedLightUpdates ()V
+	METHOD method_8916 checkBorderLight (I)V
+		COMMENT Check the light around the border of a chunk. The border variable determines which border to check.
+		COMMENT     - border = 0 : south
+		COMMENT     - border = 1 : west
+		COMMENT     - border = 2 : north
+		COMMENT     - border = 3 : east
+		ARG 1 border
 	METHOD method_8917 getBlock (III)Lnet/minecraft/class_160;
 		ARG 1 sectionX
 		ARG 2 y
@@ -102,7 +158,7 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 	METHOD method_8921 getBiomeAt (IILnet/minecraft/class_123;)Lnet/minecraft/class_113;
 		ARG 1 x
 		ARG 2 z
-		ARG 3 BiomeSource
+		ARG 3 biomeSource
 	METHOD method_8922 getLightLevel (Lnet/minecraft/class_106;III)I
 		ARG 1 type
 		ARG 2 sectionX
