@@ -1,25 +1,158 @@
 CLASS net/minecraft/class_2709 net/minecraft/client/realms/gui/screen/RealmsMainScreen
+	FIELD field_11959 textPromptText Ljava/lang/String;
 	FIELD field_11960 selectionListInitialized Z
 	FIELD field_11961 serverList Ljava/util/List;
+	FIELD field_11962 realmsSubscriptionStatus I
+	FIELD field_11963 tick I
+	FIELD field_11964 configureRequesterId Ljava/util/concurrent/atomic/AtomicInteger;
 	FIELD field_11965 LOGGER Lorg/apache/logging/log4j/Logger;
 	FIELD field_11966 WIDGETS Lnet/minecraft/class_1605;
 	FIELD field_11967 MINECRAFT_TITLE_TEXTURE Lnet/minecraft/class_1605;
-	FIELD field_11969 connection Lnet/minecraft/class_2722;
+	FIELD field_11968 realmsServerList Lnet/minecraft/class_2719;
+	FIELD field_11969 realmsServerPinger Lnet/minecraft/class_2722;
 	FIELD field_11970 SERVER_PINGER_THREAD_POOL Ljava/util/concurrent/ThreadPoolExecutor;
+	FIELD field_11971 mainScreen Lnet/minecraft/class_2292;
 	FIELD field_11972 realmsSelectionList Lnet/minecraft/class_2711;
+	FIELD field_11973 serverId J
 	FIELD field_11974 configureButton Lnet/minecraft/class_685;
 	FIELD field_11975 buyOrCreateButton Lnet/minecraft/class_685;
 	FIELD field_11976 moreInfoButton Lnet/minecraft/class_2684;
 	FIELD field_11977 playButton Lnet/minecraft/class_685;
+	METHOD <init> (Lnet/minecraft/class_2292;)V
+		ARG 1 mainScreen
 	METHOD method_11052 findServer (J)Lnet/minecraft/class_2739;
-	METHOD method_11053 (Lnet/minecraft/class_2709;)J
+		ARG 1 id
+	METHOD method_11053 getServerId (Lnet/minecraft/class_2709;)J
 		ARG 0 screen
+	METHOD method_11054 renderServerExpiredPrompt (Lnet/minecraft/class_2709;IIII)V
+		ARG 0 mainScreen
+		ARG 1 width
+		ARG 2 height
+		ARG 3 mouseX
+		ARG 4 mouseY
+	METHOD method_11055 renderServerExpiresSoonPrompt (Lnet/minecraft/class_2709;IIIII)V
+		ARG 0 mainScreen
+		ARG 1 width
+		ARG 2 height
+		ARG 3 mouseX
+		ARG 4 mouseY
+		ARG 5 daysLeft
 	METHOD method_11056 findServer (Lnet/minecraft/class_2709;J)Lnet/minecraft/class_2739;
 		ARG 0 screen
 		ARG 1 id
-	METHOD method_11060 (Lnet/minecraft/class_2709;)Lnet/minecraft/class_669;
+	METHOD method_11057 drawTexture (II)V
+		ARG 1 x
+		ARG 2 y
+	METHOD method_11058 renderServerExpiresSoonPrompt (IIIII)V
+		ARG 1 width
+		ARG 2 height
+		ARG 3 mouseX
+		ARG 4 mouseY
+		ARG 5 daysLeft
+	METHOD method_11059 getServerListPosition (J)I
+		ARG 1 id
+	METHOD method_11060 getClient1 (Lnet/minecraft/class_2709;)Lnet/minecraft/class_669;
 		ARG 0 screen
+	METHOD method_11061 renderServerClosedPrompt (Lnet/minecraft/class_2709;IIII)V
+		ARG 0 mainScreen
+		ARG 1 width
+		ARG 2 height
+		ARG 3 mouseX
+		ARG 4 mouseY
+	METHOD method_11062 setServerId (Lnet/minecraft/class_2709;J)J
+		ARG 0 screen
+		ARG 1 id
+	METHOD method_11063 renderPrompt (Ljava/lang/String;II)V
+		ARG 1 prompt
+		ARG 2 mouseX
+		ARG 3 mouseY
+	METHOD method_11064 click (II)V
+		ARG 1 mouseX
+		ARG 2 mouseY
+	METHOD method_11065 renderServerExpiredPrompt (IIII)V
+		ARG 1 width
+		ARG 2 height
+		ARG 3 mouseX
+		ARG 4 mouseY
 	METHOD method_11066 getOwnWorld (J)Lnet/minecraft/class_2739;
 		ARG 1 worldId
+	METHOD method_11067 getServerList (Lnet/minecraft/class_2709;)Ljava/util/List;
+		ARG 0 screen
+	METHOD method_11068 renderServerOpenPrompt (Lnet/minecraft/class_2709;IIII)V
+		ARG 0 mainScreen
+		ARG 1 width
+		ARG 2 height
+		ARG 3 mouseX
+		ARG 4 mouseY
+	METHOD method_11069 openScreen (Lnet/minecraft/class_2709;J)V
+		ARG 0 screen
+		ARG 1 id
+	METHOD method_11070 clickedButton (II)Z
+		ARG 1 mouseX
+		ARG 2 mouseY
+	METHOD method_11071 renderServerOpenPrompt (IIII)V
+		ARG 1 width
+		ARG 2 height
+		ARG 3 mouseX
+		ARG 4 mouseY
+	METHOD method_11072 openScreen (J)V
+		ARG 1 serverId
+	METHOD method_11073 getServerListSize (Lnet/minecraft/class_2709;)V
+		ARG 0 screen
+	METHOD method_11074 renderServerLockedPrompt (Lnet/minecraft/class_2709;IIII)V
+		ARG 0 mainScreen
+		ARG 1 width
+		ARG 2 height
+		ARG 3 mouseX
+		ARG 4 mouseY
+	METHOD method_11075 getServerListPosition (Lnet/minecraft/class_2709;J)I
+		ARG 0 screen
+		ARG 1 id
+	METHOD method_11076 renderServerClosedPrompt (IIII)V
+		ARG 1 width
+		ARG 2 height
+		ARG 3 mouseX
+		ARG 4 mouseY
+	METHOD method_11077 getClient2 (Lnet/minecraft/class_2709;)Lnet/minecraft/class_669;
+		ARG 0 screen
+	METHOD method_11078 renderServerLockedPrompt (IIII)V
+		ARG 1 width
+		ARG 2 height
+		ARG 3 mouseX
+		ARG 4 lmouseY
+	METHOD method_11079 getClient3 (Lnet/minecraft/class_2709;)Lnet/minecraft/class_669;
+		ARG 0 screen
 	METHOD method_11080 addButtons ()V
+	METHOD method_11081 getConfigureButton (Lnet/minecraft/class_2709;)Lnet/minecraft/class_685;
+		ARG 0 screen
+	METHOD method_11082 resetServerId ()V
+	METHOD method_11083 getPlayButton (Lnet/minecraft/class_2709;)Lnet/minecraft/class_685;
+		ARG 0 screen
+	METHOD method_11084 getServerList ()Lnet/minecraft/class_2719;
+	METHOD method_11085 getClient4 (Lnet/minecraft/class_2709;)Lnet/minecraft/class_669;
+		ARG 0 screen
+	METHOD method_11086 getTextRenderer (Lnet/minecraft/class_2709;)Lnet/minecraft/class_679;
+		ARG 0 mainScreen
+	METHOD method_11087 getClient5 (Lnet/minecraft/class_2709;)Lnet/minecraft/class_669;
+		ARG 0 realmsMainScreen
+	METHOD method_11088 getTextRenderer1 (Lnet/minecraft/class_2709;)Lnet/minecraft/class_679;
+		ARG 0 screen
+	METHOD method_11089 getTextRenderer2 (Lnet/minecraft/class_2709;)Lnet/minecraft/class_679;
+		ARG 0 screen
+	METHOD method_11090 getTextRenderer3 (Lnet/minecraft/class_2709;)Lnet/minecraft/class_679;
+		ARG 0 screen
+	METHOD method_11091 getTextRenderer4 (Lnet/minecraft/class_2709;)Lnet/minecraft/class_679;
+		ARG 0 screen
 	METHOD method_11092 getLogger ()Lorg/apache/logging/log4j/Logger;
+	METHOD method_11093 getTextRenderer5 (Lnet/minecraft/class_2709;)Lnet/minecraft/class_679;
+		ARG 0 screen
+	METHOD method_11094 getServerPinger ()Lnet/minecraft/class_2722;
+	METHOD method_11095 getTextRenderer6 (Lnet/minecraft/class_2709;)Lnet/minecraft/class_679;
+		ARG 0 screen
+	METHOD method_11096 getServerPingerThreadPool ()Ljava/util/concurrent/ThreadPoolExecutor;
+	METHOD method_11097 getClient6 (Lnet/minecraft/class_2709;)Lnet/minecraft/class_669;
+		ARG 0 screen
+	METHOD method_11098 cancel ()V
+	METHOD method_11099 openQuestionScreen ()V
+	METHOD method_11100 openLeaveScreen ()V
+	METHOD method_11101 getServerListSize ()V

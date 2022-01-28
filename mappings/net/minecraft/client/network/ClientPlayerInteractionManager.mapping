@@ -16,28 +16,38 @@ CLASS net/minecraft/class_2316 net/minecraft/client/network/ClientPlayerInteract
 		ARG 2 networkHandler
 	METHOD method_9283 isInSpectatorMode ()Z
 	METHOD method_9284 clickButton (II)V
+		COMMENT Request a click on a graphical button
 		ARG 1 syncId
 		ARG 2 buttonId
 	METHOD method_9285 isBreakingBlock (III)Z
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
+		LOCAL 4 stack
+		LOCAL 5 isHoldingBreakingTool
 	METHOD method_9286 mineBlockImmediately (IIII)Z
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
 		ARG 4 face
+		LOCAL 5 world
+		LOCAL 6 block
+		LOCAL 7 metadata
+		LOCAL 8 removed
+		LOCAL 9 stack
 	METHOD method_9287 clickSlot (IIIILnet/minecraft/class_2674;)Lnet/minecraft/class_2056;
 		ARG 1 syncId
 		ARG 2 slotId
-		ARG 3 buttonId
-		ARG 4 actionId
+		ARG 3 clickData
+		ARG 4 actionType
 		ARG 5 player
+		LOCAL 6 actionId
+		LOCAL 7 stack
 	METHOD method_9288 dropStackFromCreativeInventory (Lnet/minecraft/class_2056;)V
 		ARG 1 stack
 	METHOD method_9289 clickStackFromCreativeInventory (Lnet/minecraft/class_2056;I)V
 		ARG 1 stack
-		ARG 2 slot
+		ARG 2 slotId
 	METHOD method_9290 createPlayerEntity (Lnet/minecraft/class_99;Lnet/minecraft/class_1688;)Lnet/minecraft/class_2322;
 		ARG 1 world
 		ARG 2 stateHandler
@@ -56,6 +66,8 @@ CLASS net/minecraft/class_2316 net/minecraft/client/network/ClientPlayerInteract
 		ARG 1 player
 		ARG 2 world
 		ARG 3 stack
+		LOCAL 4 count
+		LOCAL 5 newStack
 	METHOD method_9295 interactBlock (Lnet/minecraft/class_2674;Lnet/minecraft/class_99;Lnet/minecraft/class_2056;IIIILnet/minecraft/class_649;)Z
 		ARG 1 player
 		ARG 2 world
@@ -65,6 +77,13 @@ CLASS net/minecraft/class_2316 net/minecraft/client/network/ClientPlayerInteract
 		ARG 6 z
 		ARG 7 face
 		ARG 8 pos
+		LOCAL 9 dx
+		LOCAL 10 dy
+		LOCAL 11 dz
+		LOCAL 12 interactedWithBlock
+		LOCAL 13 metadata
+		LOCAL 14 count
+		LOCAL 15 usedItem
 	METHOD method_9296 attackEntity (Lnet/minecraft/class_2674;Lnet/minecraft/class_1745;)V
 		ARG 1 player
 		ARG 2 entity
@@ -74,6 +93,8 @@ CLASS net/minecraft/class_2316 net/minecraft/client/network/ClientPlayerInteract
 		ARG 2 y
 		ARG 3 z
 		ARG 4 face
+		LOCAL 5 block
+		LOCAL 6 isNotAir
 	METHOD method_9299 setFacingSouth (Lnet/minecraft/class_2674;)V
 		ARG 1 player
 	METHOD method_9300 interactEntity (Lnet/minecraft/class_2674;Lnet/minecraft/class_1745;)Z
@@ -85,13 +106,15 @@ CLASS net/minecraft/class_2316 net/minecraft/client/network/ClientPlayerInteract
 		ARG 2 y
 		ARG 3 z
 		ARG 4 face
+		LOCAL 5 block
 	METHOD method_9303 stopUsingHand (Lnet/minecraft/class_2674;)V
 		ARG 1 player
 	METHOD method_9304 getReach ()F
 	METHOD method_9305 tick ()V
-	METHOD method_9306 hasExpBar ()Z
+	METHOD method_9306 hasXpBar ()Z
 	METHOD method_9307 hasAttackCooldown ()Z
 	METHOD method_9308 hasCreativeInventory ()Z
 	METHOD method_9309 hasExtendedReach ()Z
 	METHOD method_9310 hasRidingInventory ()Z
 	METHOD method_9311 updateSelectedHotbarSlot ()V
+		LOCAL 1 slot
