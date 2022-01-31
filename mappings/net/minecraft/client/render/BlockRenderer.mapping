@@ -6,7 +6,7 @@ CLASS net/minecraft/class_2336 net/minecraft/client/render/BlockRenderer
 	FIELD field_10302 blockFacePosXNegYAmbientOcclusionLevel F
 	FIELD field_10303 blockFacePosXNegYPosZAmbientOcclusionLevel F
 	FIELD field_10304 blockFaceNegXPosYNegZAmbientOcclusonLevel F
-	FIELD field_10305 blockFaceNegXPosYAmbientOcclusonLevel F
+	FIELD field_10305 blockFaceNegXPosYAmbientOcclusionLevel F
 	FIELD field_10306 blockFaceNegXPosYZAmbientOcclusonLevel F
 	FIELD field_10307 blockFacePosYNegZAmbientOcclusonLevel F
 	FIELD field_10308 blockFacePosXYNegZAmbientOcclusonLevel F
@@ -59,19 +59,23 @@ CLASS net/minecraft/class_2336 net/minecraft/client/render/BlockRenderer
 	FIELD field_10355 blockSprite Lnet/minecraft/class_2616;
 	FIELD field_10356 textureUVsFliped Z
 	FIELD field_10358 rendering Z
+	FIELD field_10359 flipedTextureUVs Z
 	FIELD field_10360 blockMinX D
 	FIELD field_10361 blockMaxX D
 	FIELD field_10362 blockMinY D
 	FIELD field_10363 blockMaxY D
 	FIELD field_10364 blockMinZ D
 	FIELD field_10365 blockMaxZ D
+	FIELD field_10366 isItemFrame Z
+	FIELD field_10367 doAmbientOcclusionOverOne Z
 	FIELD field_10368 client Lnet/minecraft/class_669;
-	FIELD field_10369 tempRotVar1 I
-	FIELD field_10370 tempRotVar2 I
-	FIELD field_10371 tempRotVar3 I
-	FIELD field_10372 rempRotVal4 I
-	FIELD field_10373 rempRotVal5 I
-	FIELD field_10374 rempRotVal6 I
+	FIELD field_10369 negZFaceRotation I
+	FIELD field_10370 posZFaceRotation I
+	FIELD field_10371 posXFaceRotation I
+	FIELD field_10372 negXFaceRotation I
+	FIELD field_10373 topFaceRotation I
+	FIELD field_10374 bottomFaceRotation I
+	FIELD field_10375 doFancyColorRendering Z
 	FIELD field_10376 blockFaceNegXYZAmbientOcclusionLevel F
 	FIELD field_10377 blockFaceNegXYAmbientOcclusionLevel F
 	METHOD <init> (Lnet/minecraft/class_104;)V
@@ -179,7 +183,7 @@ CLASS net/minecraft/class_2336 net/minecraft/client/render/BlockRenderer
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-	METHOD method_9387 renderBlock2 (Lnet/minecraft/class_160;IIIFFF)Z
+	METHOD method_9387 blockRenderer2 (Lnet/minecraft/class_160;IIIFFF)Z
 		ARG 1 block
 		ARG 2 x
 		ARG 3 y
@@ -319,12 +323,15 @@ CLASS net/minecraft/class_2336 net/minecraft/client/render/BlockRenderer
 		ARG 3 y
 		ARG 4 z
 	METHOD method_9412 setSprite (Lnet/minecraft/class_2616;)V
+		ARG 1 sprite
 	METHOD method_9413 renderCrosedSprites (Lnet/minecraft/class_2616;DDDF)V
 		ARG 1 sprite
 		ARG 2 x
 		ARG 4 y
 		ARG 6 z
 		ARG 8 size
+	METHOD method_9414 setFlipedTextureUVs (Z)V
+		ARG 1 bool
 	METHOD method_9415 hasBlockSprite ()Z
 	METHOD method_9416 setItemFrameRendererProperties (DDDDDD)V
 		ARG 1 blockMinX
@@ -346,7 +353,7 @@ CLASS net/minecraft/class_2336 net/minecraft/client/render/BlockRenderer
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-	METHOD method_9421 renderBlock1 (Lnet/minecraft/class_160;IIIFFF)Z
+	METHOD method_9421 blockRenderer1 (Lnet/minecraft/class_160;IIIFFF)Z
 		ARG 1 block
 		ARG 2 x
 		ARG 3 y
@@ -362,6 +369,9 @@ CLASS net/minecraft/class_2336 net/minecraft/client/render/BlockRenderer
 		ARG 5 isFallingBlock
 	METHOD method_9423 textureLoadingErrorHandler (Lnet/minecraft/class_2616;)Lnet/minecraft/class_2616;
 		ARG 1 sprite
+	METHOD method_9424 setRendering (Z)V
+		ARG 1 bool
+	METHOD method_9425 setNotItemFrame ()V
 	METHOD method_9427 renderBlockFaceNegZ (Lnet/minecraft/class_160;DDDLnet/minecraft/class_2616;)V
 		ARG 1 block
 		ARG 2 x
@@ -390,7 +400,7 @@ CLASS net/minecraft/class_2336 net/minecraft/client/render/BlockRenderer
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-	METHOD method_9432 renderBlock3 (Lnet/minecraft/class_160;IIIFFF)Z
+	METHOD method_9432 blockRenderer3 (Lnet/minecraft/class_160;IIIFFF)Z
 		ARG 1 block
 		ARG 2 x
 		ARG 3 y
