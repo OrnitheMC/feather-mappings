@@ -17,14 +17,14 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 	FIELD field_9118 zombieSiegeManager Lnet/minecraft/class_1843;
 	FIELD field_9119 profiler Lnet/minecraft/class_1705;
 	FIELD field_9120 isClient Z
-	FIELD field_9121 ChunkPositions Ljava/util/Set;
+	FIELD field_9121 chunkPositions Ljava/util/Set;
 	FIELD field_9122 scheduledLightUpdates [I
 	FIELD field_9123 calendar Ljava/util/Calendar;
 	FIELD field_9124 collisions Ljava/util/ArrayList;
 	FIELD field_9125 pendingBlockEntities Ljava/util/List;
 	FIELD field_9126 removedBlockEntities Ljava/util/List;
 	FIELD field_9127 executeTicksImmediately Z
-		COMMENT If true, scheduled block updates will happen instantly
+		COMMENT If true, scheduled ticks will happen instantly
 	FIELD field_9128 entities Ljava/util/List;
 	FIELD field_9129 removedEntities Ljava/util/List;
 	FIELD field_9130 blockEntities Ljava/util/List;
@@ -581,7 +581,12 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
-	METHOD method_8516 hasPowerTo (IIII)Z
+	METHOD method_8516 isEmittingPower (IIII)Z
+		COMMENT Returns whether redstone power is emitted from the given position in the given direction.
+		COMMENT
+		COMMENT <p>
+		COMMENT NOTE: directions in redstone power related methods are backwards, so this method
+		COMMENT checks for power emitted in the direction <i>opposite</i> of the one given.
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
@@ -595,7 +600,12 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
-	METHOD method_8519 getPowerTo (IIII)I
+	METHOD method_8519 getEmittedPower (IIII)I
+		COMMENT Returns the emitted redstone power from the given position in the given direction.
+		COMMENT
+		COMMENT <p>
+		COMMENT NOTE: directions in redstone power related methods are backwards, so this method
+		COMMENT returns power emitted in the direction <i>opposite</i> of the one given.
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
@@ -648,15 +658,18 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 2 y
 		ARG 3 z
 	METHOD method_8532 getReceivedStrongPower (III)I
+		COMMENT Returns the strong redstone power the given position is receiving.
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
 	METHOD method_8533 getBiomeSource ()Lnet/minecraft/class_123;
 	METHOD method_8534 isReceivingPower (III)Z
+		COMMENT Returns whether the given position is receiving redstone power.
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
 	METHOD method_8535 getReceivedPower (III)I
+		COMMENT Returns the redstone power the given position is receiving.
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
@@ -672,3 +685,9 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
+	METHOD method_8558 getEmittedStrongPower (IIII)I
+		COMMENT Returns the emitted strong redstone power from the given position in the given direction.
+		COMMENT
+		COMMENT <p>
+		COMMENT NOTE: directions in redstone power related methods are backwards, so this method
+		COMMENT returns power emitted in the direction <i>opposite</i> of the one given.
