@@ -30,7 +30,8 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 	FIELD field_615 stats Z
 		COMMENT Specifies whether this block is tracked for stats
 	FIELD field_616 ticksRandomly Z
-		COMMENT Specifies whether this block accepts random ticks
+		COMMENT Specifies whether this block accepts random ticks.
+		COMMENT Note that while this field might be set to true the block might not do anything with the random tick.
 	FIELD field_9198 minX D
 	FIELD field_9199 minY D
 	FIELD field_9200 minZ D
@@ -82,9 +83,8 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 1 id
 		ARG 2 rand
 	METHOD method_641 shouldDropItemsOnExplosion (Lnet/minecraft/class_93;)Z
-		COMMENT Returns whether the block should drop as an Item when exploded.
+		COMMENT Returns whether the block should drop as an Item when destroyed by an explosion.
 		ARG 1 explosion
-			COMMENT The explosion that caused the block to break
 	METHOD method_642 getTickRate (Lnet/minecraft/class_99;)I
 		ARG 1 world
 	METHOD method_644 onDestroyedByExplosion (Lnet/minecraft/class_99;IIILnet/minecraft/class_93;)V
@@ -141,7 +141,8 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		COMMENT Handles a player interacting with this block, i.e. a player holding the <i>use</i> key
 		COMMENT while looking at this block.
 		COMMENT
-		COMMENT @return Whether the action was consumed.
+		COMMENT @return whether the interaction was consumed,
+		COMMENT i.e. whether further processing of the use action should be blocked.
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
@@ -226,6 +227,7 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		COMMENT Sets whether this block accepts random ticks. Random ticks are mostly used by plants
 		COMMENT and crops to update growth, but some other blocks are affected by random ticks as well,
 		COMMENT like e.g. leaves (to update decay).
+		COMMENT Note that while this field might be set to true the block might not do anything with the random tick.
 		COMMENT
 		COMMENT <p>
 		COMMENT NOTE: this method should only be used during the block's creation before it is registered.
@@ -309,7 +311,7 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		COMMENT Checks whether this block is a normal block.
 		COMMENT A normal block is one that blocks movement and can be rendered as a normal block.
 	METHOD method_739 conductsPower ()Z
-		COMMENT Returns whether the block conducts redstone power.
+		COMMENT Returns whether this block conducts redstone power.
 	METHOD method_741 setUnbreakable ()Lnet/minecraft/class_160;
 		COMMENT Sets this block as unbreakable by setting its strength to -1.
 		COMMENT Used by barriers and command blocks.
@@ -320,6 +322,7 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		COMMENT Returns whether this block accepts random ticks. Random ticks are mostly used by plants
 		COMMENT and crops to update growth, but some other blocks are affected by random ticks as well,
 		COMMENT like e.g. leaves (to update decay).
+		COMMENT Note that while this field might be set to true the block might not do anything with the random tick.
 	METHOD method_743 hasBlockEntity ()Z
 		COMMENT Returns whether this block has a block entity associated with it.
 	METHOD method_8600 getMaxY ()D
