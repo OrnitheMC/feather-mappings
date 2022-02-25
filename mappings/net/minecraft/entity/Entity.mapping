@@ -1,5 +1,5 @@
 CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
-	FIELD field_11408 boundingBox Lnet/minecraft/class_646;
+	FIELD field_11408 hitbox Lnet/minecraft/class_646;
 	FIELD field_11410 eyeHeight F
 	FIELD field_11411 eyeHeightSneakOffset F
 	FIELD field_11412 facing I
@@ -10,17 +10,17 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 	FIELD field_7332 prevYaw F
 	FIELD field_7333 prevPitch F
 	FIELD field_7334 onGround Z
-	FIELD field_7335 horizontalCollision Z
-	FIELD field_7336 verticalCollision Z
+	FIELD field_7335 collidingHorizontally Z
+	FIELD field_7336 collidingVertically Z
 	FIELD field_7337 colliding Z
-	FIELD field_7338 velocityModified Z
-	FIELD field_7339 inLava Z
+	FIELD field_7338 damaged Z
+	FIELD field_7339 inCobweb Z
 	FIELD field_7340 removed Z
 	FIELD field_7341 width F
 	FIELD field_7342 height F
 	FIELD field_7343 prevHorizontalSpeed F
-	FIELD field_7344 horizontalSpeed F
-	FIELD field_7345 distance F
+	FIELD field_7344 horizontalVelocity F
+	FIELD field_7345 distanceMoved F
 	FIELD field_7346 fallDistance F
 	FIELD field_7347 prevTickX D
 	FIELD field_7348 prevTickY D
@@ -29,12 +29,14 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 	FIELD field_7351 noClip Z
 	FIELD field_7352 pushSpeedReduction F
 	FIELD field_7353 random Ljava/util/Random;
-	FIELD field_7354 ticksAlive I
+	FIELD field_7354 time I
 	FIELD field_7355 fireResistance I
-	FIELD field_7356 touchingWater Z
+	FIELD field_7356 inWater Z
+		COMMENT True if this entity's hitbox is colliding with any water fluid blocks.
 	FIELD field_7357 maxHealth I
-	FIELD field_7359 firstUpdate Z
-	FIELD field_7360 isFireImmune Z
+	FIELD field_7359 inFirstTick Z
+		COMMENT True if the entity is in the first tick of its existence.
+	FIELD field_7360 immuneToFire Z
 	FIELD field_7361 dataTracker Lnet/minecraft/class_1761;
 	FIELD field_7362 isLoaded Z
 	FIELD field_7363 chunkX I
@@ -46,18 +48,20 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 	FIELD field_7369 changingDimension Z
 	FIELD field_7370 netherPortalTime I
 	FIELD field_7371 dimensionId I
-	FIELD field_7375 playerUuid Ljava/util/UUID;
+	FIELD field_7375 uuid Ljava/util/UUID;
 	FIELD field_7376 ridingEntityPitchDelta D
 	FIELD field_7377 ridingEntityYawDelta D
 	FIELD field_7378 invulnerable Z
-	FIELD field_7380 entityCount I
+	FIELD field_7380 idCounter I
 	FIELD field_7384 entityId I
+		COMMENT A number that uniquely identifies this entity. It is used for server-client communication.
 	FIELD field_7387 distanceOnNextBlock I
-	FIELD field_7388 fireTicks I
-	FIELD field_7389 renderDistanceScaling D
+	FIELD field_7388 onFireTimer I
+		COMMENT The number of ticks left for which this entity will be on fire.
+	FIELD field_7389 viewDistanceScaling D
 	FIELD field_7390 inanimate Z
 	FIELD field_7391 rider Lnet/minecraft/class_1745;
-	FIELD field_7392 ridingEntity Lnet/minecraft/class_1745;
+	FIELD field_7392 vehicle Lnet/minecraft/class_1745;
 	FIELD field_7393 teleporting Z
 	FIELD field_7394 world Lnet/minecraft/class_99;
 	FIELD field_7395 prevX D
@@ -84,69 +88,67 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 		ARG 2 y
 		ARG 3 z
 		ARG 4 block
-	METHOD method_10542 dropStackAsEntity (Lnet/minecraft/class_2056;F)Lnet/minecraft/class_1893;
-		ARG 1 itemStack
+	METHOD method_10542 dropItem (Lnet/minecraft/class_2056;F)Lnet/minecraft/class_1893;
+		ARG 1 stack
 		ARG 2 yOffset
-	METHOD method_10543 onIntersectPortal ()V
-		COMMENT Sets flag to send entity through portal only if portal cooldown is 0, otherwise it will reset
-	METHOD method_10544 isInvulnerableTo ()Z
+	METHOD method_10543 onPortalCollision ()V
+		COMMENT Called when this entity collides with a nether portal block.
+	METHOD method_10544 isInvulnerable ()Z
 	METHOD method_10545 getFacing ()I
-	METHOD method_10546 updatePosition (DDD)V
+	METHOD method_10546 setPosition (DDD)V
 		ARG 1 x
 		ARG 3 y
 		ARG 5 z
-	METHOD method_10547 isOffsetPositionColliding (DDD)Z
-		COMMENT returns False if after offsetting entities Box it does not intersect any fluids, blocks, or entities, otherwise True
-		ARG 1 x
-		ARG 3 y
-		ARG 5 z
+	METHOD method_10547 canMove (DDD)Z
+		ARG 1 dx
+		ARG 3 dy
+		ARG 5 dz
 	METHOD method_11363 yShadowOrigin ()F
 	METHOD method_11364 getEyeHeight ()F
-	METHOD method_6261 getTranslationKey ()Ljava/lang/String;
+	METHOD method_6261 getName ()Ljava/lang/String;
 	METHOD method_6895 getEntityId ()I
 	METHOD method_6897 getDataTracker ()Lnet/minecraft/class_1761;
-	METHOD method_6898 afterSpawn ()V
+	METHOD method_6898 postSpawn ()V
 	METHOD method_6899 remove ()V
 	METHOD method_6900 baseTick ()V
 	METHOD method_6901 getMaxNetherPortalTime ()I
 	METHOD method_6902 setOnFireFromLava ()V
 	METHOD method_6903 extinguish ()V
-	METHOD method_6904 destroy ()V
+	METHOD method_6904 tickVoid ()V
 	METHOD method_6905 getSwimSound ()Ljava/lang/String;
 	METHOD method_6906 checkBlockCollision ()V
 	METHOD method_6908 getBox ()Lnet/minecraft/class_646;
-	METHOD method_6909 isFireImmune ()Z
-	METHOD method_6910 tickFire ()Z
-	METHOD method_6911 isTouchingWater ()Z
-		COMMENT Returns whether this entity's hitbox is touching water fluid.
-	METHOD method_6912 updateWaterState ()Z
+	METHOD method_6909 isImmuneToFire ()Z
+	METHOD method_6910 isWet ()Z
+	METHOD method_6911 isInWater ()Z
+	METHOD method_6912 checkWaterCollision ()Z
 	METHOD method_6916 handleStatus (B)V
 		ARG 1 status
-	METHOD method_6917 shouldRender (D)Z
+	METHOD method_6917 isWithinViewDistance (D)Z
 		ARG 1 distance
-	METHOD method_6919 updatePositionAndAngles (DDDFF)V
+	METHOD method_6919 teleport (DDDFF)V
 		ARG 1 x
 		ARG 3 y
 		ARG 5 z
 		ARG 7 yaw
 		ARG 8 pitch
-	METHOD method_6920 setVelocityClient (DDDFFI)V
+	METHOD method_6920 updatePositionAndRotation (DDDFFI)V
 		ARG 1 x
 		ARG 3 y
 		ARG 5 z
 		ARG 7 yaw
 		ARG 8 pitch
 		ARG 9 steps
-	METHOD method_6922 updateFall (DZ)V
-		ARG 1 y
+	METHOD method_6922 onFall (DZ)V
+		ARG 1 dy
 		ARG 3 onGround
 	METHOD method_6923 setDimensions (FF)V
 		ARG 1 width
 		ARG 2 height
-	METHOD method_6924 flyMovement (FFF)V
-		ARG 1 sidewaysVelocity
-		ARG 2 forwardVelocity
-		ARG 3 speed
+	METHOD method_6924 updateVelocity (FFF)V
+		ARG 1 sideways
+		ARG 2 forward
+		ARG 3 factor
 	METHOD method_6925 getBlastResistance (Lnet/minecraft/class_93;Lnet/minecraft/class_99;IIILnet/minecraft/class_160;)F
 		ARG 1 explosion
 		ARG 2 world
@@ -155,6 +157,7 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 		ARG 5 z
 		ARG 6 block
 	METHOD method_6926 canExplodeBlock (Lnet/minecraft/class_93;Lnet/minecraft/class_99;IIILnet/minecraft/class_160;F)Z
+		COMMENT Check if an explosion caused by this entity can explode the given block.
 		ARG 1 explosion
 		ARG 2 world
 		ARG 3 x
@@ -165,7 +168,8 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 	METHOD method_6927 setWorld (Lnet/minecraft/class_99;)V
 		ARG 1 world
 	METHOD method_6928 isSubmergedIn (Lnet/minecraft/class_591;)Z
-		ARG 1 material
+		COMMENT Check if this entity is submerged in the given fluid, meaning the fluid covers its eyes.
+		ARG 1 fluid
 	METHOD method_6930 populateCrashReport (Lnet/minecraft/class_1364;)V
 		ARG 1 section
 	METHOD method_6933 readCustomNbt (Lnet/minecraft/class_1405;)V
@@ -179,14 +183,14 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 		ARG 2 amount
 	METHOD method_6938 startRiding (Lnet/minecraft/class_1745;)V
 		ARG 1 entity
-	METHOD method_6939 onKillLivingEntity (Lnet/minecraft/class_1752;)V
-		ARG 1 killedLivingEntity
+	METHOD method_6939 onKill (Lnet/minecraft/class_1752;)V
+		ARG 1 victim
 	METHOD method_6941 onLightningStrike (Lnet/minecraft/class_1890;)V
 		ARG 1 lightning
 	METHOD method_6943 dropItem (Lnet/minecraft/class_2054;I)Lnet/minecraft/class_1893;
 		ARG 1 item
 		ARG 2 count
-	METHOD method_6944 dropStack (Lnet/minecraft/class_2054;IF)Lnet/minecraft/class_1893;
+	METHOD method_6944 dropItem (Lnet/minecraft/class_2054;IF)Lnet/minecraft/class_1893;
 		ARG 1 item
 		ARG 2 count
 		ARG 3 yOffset
@@ -194,28 +198,30 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 		ARG 1 values
 	METHOD method_6947 toNbtList ([F)Lnet/minecraft/class_1411;
 		ARG 1 values
-	METHOD method_6948 slowdownMovementSpeed ()V
-	METHOD method_6949 getDragonParts ()[Lnet/minecraft/class_1745;
-	METHOD method_6950 getHeadRotation ()F
-	METHOD method_6951 isAttackable ()Z
+	METHOD method_6948 onCobwebCollision ()V
+	METHOD method_6949 getParts ()[Lnet/minecraft/class_1745;
+	METHOD method_6950 getHeadYaw ()F
+	METHOD method_6951 canBePunched ()Z
 	METHOD method_6952 getSafeFallDistance ()I
 	METHOD method_6955 canAvoidTraps ()Z
 	METHOD method_6956 shouldRenderOnFire ()Z
 	METHOD method_6957 getUuid ()Ljava/util/UUID;
-	METHOD method_6958 canFly ()Z
+	METHOD method_6958 hasFluidCollision ()Z
 	METHOD method_6970 getSplashSound ()Ljava/lang/String;
 	METHOD method_6971 isInLava ()Z
-	METHOD method_6972 scheduleVelocityUpdate ()V
-	METHOD method_6973 collides ()Z
+	METHOD method_6972 onDamaged ()V
+	METHOD method_6973 hasCollision ()Z
 	METHOD method_6974 isPushable ()Z
 	METHOD method_6975 shouldSetPositionOnLoad ()Z
-	METHOD method_6976 getSavedEntityId ()Ljava/lang/String;
+	METHOD method_6976 getTypeId ()Ljava/lang/String;
 	METHOD method_6978 isAlive ()Z
-	METHOD method_6979 isInsideWall ()Z
+	METHOD method_6979 isSuffocating ()Z
 	METHOD method_6980 tickRiding ()V
 	METHOD method_6981 updateRiderPositon ()V
-	METHOD method_6982 getHeightOffset ()D
-	METHOD method_6983 getMountedHeightOffset ()D
+	METHOD method_6982 getRideHeight ()D
+		COMMENT Return the height offset of this entity when riding another entity.
+	METHOD method_6983 getMountHeight ()D
+		COMMENT Return the height at which other entities sit when riding this entity.
 	METHOD method_6985 getCameraRotation ()Lnet/minecraft/class_649;
 	METHOD method_6986 getDefaultNetherPortalCooldown ()I
 	METHOD method_6987 animateDamage ()V
@@ -226,14 +232,14 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 	METHOD method_6992 isSprinting ()Z
 	METHOD method_6993 isInvisible ()Z
 	METHOD method_6994 isSwimming ()Z
-	METHOD method_6995 getAir ()I
-	METHOD method_6997 refreshPositionAndAngles (DDDFF)V
+	METHOD method_6995 getBreath ()I
+	METHOD method_6997 initPositionAndAngles (DDDFF)V
 		ARG 1 x
 		ARG 3 y
 		ARG 5 z
 		ARG 7 yaw
 		ARG 8 pitch
-	METHOD method_6998 getLightLevelAtSelf (F)I
+	METHOD method_6998 getLightLevel (F)I
 		ARG 1 tickDelta
 	METHOD method_6999 setRotation (FF)V
 		ARG 1 yaw
@@ -244,26 +250,26 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 	METHOD method_7003 writeCustomNbt (Lnet/minecraft/class_1405;)V
 		ARG 1 nbt
 	METHOD method_7005 onKillEntity (Lnet/minecraft/class_1745;I)V
-		ARG 1 killedEntity
+		ARG 1 entity
 		ARG 2 score
 	METHOD method_7008 getBrightnessAtEyes (F)F
 		ARG 1 tickDelta
-	METHOD method_7009 increaseTransforms (FF)V
+	METHOD method_7009 updateSmoothCamera (FF)V
 		ARG 1 yaw
 		ARG 2 pitch
 	METHOD method_7010 teleportToDimension (I)V
 		ARG 1 dimensionId
 	METHOD method_7011 setItemSlot (ILnet/minecraft/class_2056;)V
 		ARG 1 slot
-		ARG 2 itemStack
+		ARG 2 stack
 	METHOD method_7013 writeNbt (Lnet/minecraft/class_1405;)Z
 		ARG 1 nbt
 	METHOD method_7014 setSneaking (Z)V
 		ARG 1 sneaking
 	METHOD method_7015 move (DDD)V
-		ARG 1 velocityX
-		ARG 3 velocityY
-		ARG 5 velocityZ
+		ARG 1 dx
+		ARG 3 dy
+		ARG 5 dz
 	METHOD method_7017 setEntityId (I)V
 		ARG 1 id
 	METHOD method_7020 writeNbtNoRider (Lnet/minecraft/class_1405;)Z
@@ -272,12 +278,12 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 		ARG 1 player
 	METHOD method_7022 setSprinting (Z)V
 		ARG 1 sprinting
-	METHOD method_7023 getDistanceTo (DDD)D
+	METHOD method_7023 getSquaredDistanceTo (DDD)D
 		ARG 1 x
 		ARG 3 y
 		ARG 5 z
-	METHOD method_7025 handleFallDamage (F)V
-		ARG 1 fallDistance
+	METHOD method_7025 applyFallDamage (F)V
+		ARG 1 distance
 	METHOD method_7026 setOnFireFor (I)V
 		ARG 1 seconds
 	METHOD method_7027 writeEntityNbt (Lnet/minecraft/class_1405;)V
@@ -286,14 +292,14 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 		ARG 1 player
 	METHOD method_7029 setInvisible (Z)V
 		ARG 1 invisible
-	METHOD method_7030 squaredDistanceTo (DDD)D
+	METHOD method_7030 getDistanceTo (DDD)D
 		ARG 1 x
 		ARG 3 y
 		ARG 5 z
 	METHOD method_7031 setHeadYaw (F)V
 		ARG 1 headYaw
-	METHOD method_7033 burn (I)V
-		ARG 1 time
+	METHOD method_7033 applyFireDamage (I)V
+		ARG 1 amount
 	METHOD method_7034 readEntityNbt (Lnet/minecraft/class_1405;)V
 		ARG 1 nbt
 	METHOD method_7035 isInvisibleTo (Lnet/minecraft/class_2674;)Z
@@ -301,46 +307,44 @@ CLASS net/minecraft/class_1745 net/minecraft/entity/Entity
 	METHOD method_7036 setSwimming (Z)V
 		ARG 1 swimming
 	METHOD method_7037 addVelocity (DDD)V
-		ARG 1 x
-		ARG 3 y
-		ARG 5 z
+		ARG 1 velocityX
+		ARG 3 velocityY
+		ARG 5 velocityZ
 	METHOD method_7039 getFlag (I)Z
 		ARG 1 index
-	METHOD method_7041 squaredDistanceToEntity (Lnet/minecraft/class_1745;)F
+	METHOD method_7041 getDistanceTo (Lnet/minecraft/class_1745;)F
 		ARG 1 entity
 	METHOD method_7043 initDataTracker ()V
-	METHOD method_7044 shouldRender (DDD)Z
+	METHOD method_7044 isWithinViewDistanceOf (DDD)Z
 		ARG 1 x
 		ARG 3 y
 		ARG 5 z
-	METHOD method_7045 setAir (I)V
+	METHOD method_7045 setBreath (I)V
 		ARG 1 air
-	METHOD method_7046 squaredDistanceTo (Lnet/minecraft/class_1745;)D
+	METHOD method_7046 getSquaredDistanceTo (Lnet/minecraft/class_1745;)D
 		ARG 1 entity
-	METHOD method_7048 setVelocityClient (DDD)V
-		ARG 1 x
-		ARG 3 y
-		ARG 5 z
-	METHOD method_7049 onTrackedDataSet (I)V
+	METHOD method_7048 setVelocity (DDD)V
+		ARG 1 velocityX
+		ARG 3 velocityY
+		ARG 5 velocityZ
+	METHOD method_7049 onDataValueChanged (I)V
 		ARG 1 id
-	METHOD method_7050 pushAwayFrom (Lnet/minecraft/class_1745;)V
+	METHOD method_7050 push (Lnet/minecraft/class_1745;)V
 		ARG 1 entity
-	METHOD method_7051 pushAwayFromBlock (DDD)Z
+	METHOD method_7051 pushAwayFrom (DDD)Z
 		ARG 1 x
 		ARG 3 y
 		ARG 5 z
 	METHOD method_7052 getHardCollisionBox (Lnet/minecraft/class_1745;)Lnet/minecraft/class_646;
 		ARG 1 collidingEntity
-	METHOD method_7053 isPartOf (Lnet/minecraft/class_1745;)Z
+	METHOD method_7053 is (Lnet/minecraft/class_1745;)Z
 		ARG 1 entity
-	METHOD method_7054 handleAttack (Lnet/minecraft/class_1745;)Z
+	METHOD method_7054 onPunched (Lnet/minecraft/class_1745;)Z
 		ARG 1 attacker
-	METHOD method_7056 copyPositionAndAnglesFromEntity (Lnet/minecraft/class_1745;)V
+	METHOD method_7056 copyPositionAndRotationFrom (Lnet/minecraft/class_1745;)V
 		ARG 1 entity
 	METHOD method_7057 copyNbtFrom (Lnet/minecraft/class_1745;Z)V
-		COMMENT Copies all values from sourceEntity via the NBT serializer. bool is unused as of at least 1.7.2.
 		ARG 1 sourceEntity
-		ARG 2 bool
 	METHOD method_7059 canClimb ()Z
 	METHOD method_7060 tick ()V
-	METHOD method_8397 getName ()Lnet/minecraft/class_1444;
+	METHOD method_8397 getNameAsText ()Lnet/minecraft/class_1444;
