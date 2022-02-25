@@ -1,8 +1,9 @@
 CLASS net/minecraft/class_2056 net/minecraft/item/ItemStack
 	FIELD field_8652 MODIFIER_FORMAT Ljava/text/DecimalFormat;
 	FIELD field_8653 count I
+	FIELD field_8654 cooldown I
 	FIELD field_8655 item Lnet/minecraft/class_2054;
-	FIELD field_8656 tag Lnet/minecraft/class_1405;
+	FIELD field_8656 nbt Lnet/minecraft/class_1405;
 	FIELD field_8657 damage I
 	FIELD field_8658 itemFrame Lnet/minecraft/class_1883;
 	METHOD <init> (Lnet/minecraft/class_160;)V
@@ -29,6 +30,7 @@ CLASS net/minecraft/class_2056 net/minecraft/item/ItemStack
 	METHOD method_8332 getTranslationKey ()Ljava/lang/String;
 	METHOD method_8333 split (I)Lnet/minecraft/class_2056;
 		ARG 1 amount
+		LOCAL 2 stack
 	METHOD method_8334 damage (ILjava/util/Random;)Z
 		ARG 1 amount
 		ARG 2 random
@@ -41,6 +43,10 @@ CLASS net/minecraft/class_2056 net/minecraft/item/ItemStack
 	METHOD method_8337 onBlockBroken (Lnet/minecraft/class_99;Lnet/minecraft/class_160;IIILnet/minecraft/class_2674;)V
 		ARG 1 world
 		ARG 2 block
+		ARG 3 x
+		ARG 4 y
+		ARG 5 z
+		ARG 6 player
 	METHOD method_8338 inventoryTick (Lnet/minecraft/class_99;Lnet/minecraft/class_1745;IZ)V
 		ARG 1 world
 		ARG 2 entity
@@ -55,11 +61,12 @@ CLASS net/minecraft/class_2056 net/minecraft/item/ItemStack
 		ARG 3 amount
 	METHOD method_8341 getMiningSpeedMultiplier (Lnet/minecraft/class_160;)F
 		ARG 1 block
-	METHOD method_8342 fromTag (Lnet/minecraft/class_1405;)Lnet/minecraft/class_2056;
-		ARG 0 tag
-	METHOD method_8343 putSubTag (Ljava/lang/String;Lnet/minecraft/class_1419;)V
+	METHOD method_8342 fromNbt (Lnet/minecraft/class_1405;)Lnet/minecraft/class_2056;
+		ARG 0 nbt
+		LOCAL 1 stack
+	METHOD method_8343 addNbt (Ljava/lang/String;Lnet/minecraft/class_1419;)V
 		ARG 1 key
-		ARG 2 tag
+		ARG 2 nbt
 	METHOD method_8345 onEntityHit (Lnet/minecraft/class_1752;Lnet/minecraft/class_2674;)V
 		ARG 1 entity
 		ARG 2 attacker
@@ -68,12 +75,20 @@ CLASS net/minecraft/class_2056 net/minecraft/item/ItemStack
 	METHOD method_8347 use (Lnet/minecraft/class_2674;Lnet/minecraft/class_99;IIIIFFF)Z
 		ARG 1 player
 		ARG 2 world
+		ARG 3 x
+		ARG 4 y
+		ARG 5 z
+		ARG 6 dir
+		ARG 7 dx
+		ARG 8 dy
+		ARG 9 dz
+		LOCAL 10 success
 	METHOD method_8348 canUseOnEntity (Lnet/minecraft/class_2674;Lnet/minecraft/class_1752;)Z
 		ARG 1 player
 		ARG 2 entity
 	METHOD method_8350 setItem (Lnet/minecraft/class_2054;)V
 		ARG 1 item
-	METHOD method_8351 equalsIgnoreTags (Lnet/minecraft/class_2056;)Z
+	METHOD method_8351 equalsIgnoreNbt (Lnet/minecraft/class_2056;)Z
 		ARG 1 stack
 	METHOD method_8352 equalsIgnoreDamage (Lnet/minecraft/class_2056;Lnet/minecraft/class_2056;)Z
 		ARG 0 left
@@ -90,8 +105,8 @@ CLASS net/minecraft/class_2056 net/minecraft/item/ItemStack
 		ARG 3 timeLeft
 	METHOD method_8357 isEffectiveOn (Lnet/minecraft/class_160;)Z
 		ARG 1 block
-	METHOD method_8358 toTag (Lnet/minecraft/class_1405;)Lnet/minecraft/class_1405;
-		ARG 1 tag
+	METHOD method_8358 writeNbt (Lnet/minecraft/class_1405;)Lnet/minecraft/class_1405;
+		ARG 1 nbt
 	METHOD method_8359 copyOf (Lnet/minecraft/class_2056;)Lnet/minecraft/class_2056;
 		ARG 0 stack
 	METHOD method_8360 equalsAll (Lnet/minecraft/class_2056;Lnet/minecraft/class_2056;)Z
@@ -100,13 +115,13 @@ CLASS net/minecraft/class_2056 net/minecraft/item/ItemStack
 	METHOD method_8361 getMaxCount ()I
 	METHOD method_8362 setRepairCost (I)V
 		ARG 1 cost
-	METHOD method_8364 writeTag (Lnet/minecraft/class_1405;)V
-		ARG 1 tag
+	METHOD method_8364 readNbt (Lnet/minecraft/class_1405;)V
+		ARG 1 nbt
 	METHOD method_8365 setCustomName (Ljava/lang/String;)Lnet/minecraft/class_2056;
 		ARG 1 name
 	METHOD method_8368 isDamaged ()Z
-	METHOD method_8370 setTag (Lnet/minecraft/class_1405;)V
-		ARG 1 tag
+	METHOD method_8370 setNbt (Lnet/minecraft/class_1405;)V
+		ARG 1 nbt
 	METHOD method_8371 equalsAll (Lnet/minecraft/class_2056;)Z
 		ARG 1 stack
 	METHOD method_8372 isDamageable ()Z
@@ -118,8 +133,8 @@ CLASS net/minecraft/class_2056 net/minecraft/item/ItemStack
 	METHOD method_8378 copy ()Lnet/minecraft/class_2056;
 	METHOD method_8379 getMaxUseTime ()I
 	METHOD method_8380 getUseAction ()Lnet/minecraft/class_30;
-	METHOD method_8381 hasTag ()Z
-	METHOD method_8382 getTag ()Lnet/minecraft/class_1405;
+	METHOD method_8381 hasNbt ()Z
+	METHOD method_8382 getNbt ()Lnet/minecraft/class_1405;
 	METHOD method_8383 getEnchantments ()Lnet/minecraft/class_1411;
 	METHOD method_8384 getName ()Ljava/lang/String;
 	METHOD method_8385 removeCustomName ()V
@@ -131,3 +146,8 @@ CLASS net/minecraft/class_2056 net/minecraft/item/ItemStack
 	METHOD method_8391 hasSubTypes ()Z
 	METHOD method_8392 isInItemFrame ()Z
 	METHOD method_8393 getItemFrame ()Lnet/minecraft/class_1883;
+	METHOD method_8434 getItemTooltip (Lnet/minecraft/class_2674;Z)Ljava/util/List;
+		ARG 1 player
+		ARG 2 hasId
+	METHOD method_8435 getSprite ()Lnet/minecraft/class_2616;
+	METHOD method_8436 getItemId ()I

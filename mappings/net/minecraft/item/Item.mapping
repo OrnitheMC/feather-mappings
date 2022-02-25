@@ -12,14 +12,14 @@ CLASS net/minecraft/class_2054 net/minecraft/item/Item
 		COMMENT @see net.minecraft.item.PotionItem
 		COMMENT @see net.minecraft.item.BucketItem
 	FIELD field_8634 ATTACK_DAMAGE_MODIFIER_UUID Ljava/util/UUID;
-	FIELD field_8635 Random Ljava/util/Random;
+	FIELD field_8635 random Ljava/util/Random;
 	FIELD field_8636 maxCount I
 		COMMENT The maximum stack size of an item
 	FIELD field_8637 handheld Z
 		COMMENT Sets whether the item is handheld
 	FIELD field_8638 damageable Z
 		COMMENT Sets whether the item has durability
-	FIELD field_8639 statusEffectString Ljava/lang/String;
+	FIELD field_8639 brewingRecipeString Ljava/lang/String;
 		COMMENT A description of the brewing recipe for their ingredients
 	FIELD field_8640 translationKey Ljava/lang/String;
 		COMMENT The Item's translation key.
@@ -88,14 +88,14 @@ CLASS net/minecraft/class_2054 net/minecraft/item/Item
 		ARG 2 world
 		ARG 3 player
 		ARG 4 remainingTicks
-	METHOD method_8262 getMiningSpeedMultiplier (Lnet/minecraft/class_2056;Lnet/minecraft/class_160;)F
+	METHOD method_8262 getMiningSpeed (Lnet/minecraft/class_2056;Lnet/minecraft/class_160;)F
 		ARG 1 stack
 		ARG 2 block
 	METHOD method_8263 onEntityHit (Lnet/minecraft/class_2056;Lnet/minecraft/class_1752;Lnet/minecraft/class_1752;)Z
 		ARG 1 stack
 		ARG 2 entity1
 		ARG 3 entity2
-	METHOD method_8264 use (Lnet/minecraft/class_2056;Lnet/minecraft/class_2674;Lnet/minecraft/class_99;IIIIFFF)Z
+	METHOD method_8264 onUse (Lnet/minecraft/class_2056;Lnet/minecraft/class_2674;Lnet/minecraft/class_99;IIIIFFF)Z
 		ARG 1 itemStack
 		ARG 2 player
 		ARG 3 world
@@ -214,7 +214,7 @@ CLASS net/minecraft/class_2054 net/minecraft/item/Item
 	METHOD method_8292 getMaxCount ()I
 		COMMENT Returns the max stack size of an Item
 		COMMENT @return Max stack Size
-	METHOD method_8293 getStatusEffectString (Lnet/minecraft/class_2056;)Ljava/lang/String;
+	METHOD method_8293 getBrewingRecipeString (Lnet/minecraft/class_2056;)Ljava/lang/String;
 		COMMENT Returns the status effect string for the current item.
 		COMMENT @return The status effect string
 		ARG 1 stack
@@ -230,7 +230,7 @@ CLASS net/minecraft/class_2054 net/minecraft/item/Item
 	METHOD method_8296 getMaxDamage ()I
 		COMMENT Returns the maximum durability of the current Item.
 		COMMENT @return Max Durability
-	METHOD method_8297 hasStatusEffectString (Lnet/minecraft/class_2056;)Z
+	METHOD method_8297 hasBrewingRecipeString (Lnet/minecraft/class_2056;)Z
 		COMMENT Returns whether the current item has a status effect string
 		COMMENT @return Whether the current item has a status effect string
 		ARG 1 stack
@@ -254,13 +254,14 @@ CLASS net/minecraft/class_2054 net/minecraft/item/Item
 		COMMENT @see net.minecarft.item.Items
 	METHOD method_8305 isHandheld ()Z
 		COMMENT Returns whether the item is supposed to look as handheld.
-	METHOD method_8424 getSprite (II)Lnet/minecraft/class_2616;
+	METHOD method_8424 getSpriteWithStage (II)Lnet/minecraft/class_2616;
 		ARG 1 id
 		ARG 2 idUnused
 	METHOD method_8425 byBlock (Lnet/minecraft/class_160;)Lnet/minecraft/class_2054;
 		ARG 0 block
 	METHOD method_8426 addSpritesToLoad (Lnet/minecraft/class_2617;)V
 		ARG 1 loader
+	METHOD method_8427 hasMultipleRenderStages ()Z
 	METHOD method_8428 getSprite (I)Lnet/minecraft/class_2616;
 		ARG 1 id
 	METHOD method_8429 getId ()I
@@ -268,6 +269,6 @@ CLASS net/minecraft/class_2054 net/minecraft/item/Item
 		ARG 1 spriteName
 	METHOD method_8431 getSprite (Lnet/minecraft/class_2056;)Lnet/minecraft/class_2616;
 		ARG 1 itemStack
-	METHOD method_8432 (Lnet/minecraft/class_2056;)Z
+	METHOD method_8432 insertable (Lnet/minecraft/class_2056;)Z
 		ARG 1 itemStack
 	METHOD method_8433 getSpriteName ()Ljava/lang/String;

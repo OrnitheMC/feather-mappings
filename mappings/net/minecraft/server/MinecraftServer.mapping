@@ -1,11 +1,17 @@
 CLASS net/minecraft/server/MinecraftServer net/minecraft/server/MinecraftServer
 	FIELD field_11272 profiler Lnet/minecraft/class_1705;
-	FIELD field_11275 currentServer Lnet/minecraft/server/MinecraftServer;
+	FIELD field_11273 proxy Ljava/net/Proxy;
+	FIELD field_11274 serverTickTimes [J
+	FIELD field_11275 instance Lnet/minecraft/server/MinecraftServer;
+	FIELD field_11276 storageAccess Lnet/minecraft/class_637;
 	FIELD field_11277 snooper Lnet/minecraft/class_1728;
+	FIELD field_11278 gameDir Ljava/io/File;
 	FIELD field_11279 tickables Ljava/util/List;
 	FIELD field_11280 commandManager Lnet/minecraft/class_1629;
+	FIELD field_11281 networkIo Lnet/minecraft/class_2577;
 	FIELD field_11282 serverMetadata Lnet/minecraft/class_1596;
 	FIELD field_11283 random Ljava/util/Random;
+	FIELD field_12182 sessionService Lcom/mojang/authlib/minecraft/MinecraftSessionService;
 	FIELD field_7048 spawnAnimals Z
 	FIELD field_7049 spawnNpcs Z
 	FIELD field_7050 pvpEnabled Z
@@ -19,7 +25,7 @@ CLASS net/minecraft/server/MinecraftServer net/minecraft/server/MinecraftServer
 	FIELD field_7058 displayName Ljava/lang/String;
 	FIELD field_7059 demo Z
 	FIELD field_7060 forceWorldUpgrade Z
-	FIELD field_7061 shouldResetWorld Z
+	FIELD field_7061 stopping Z
 	FIELD field_7062 resourcePackUrl Ljava/lang/String;
 	FIELD field_7064 loading Z
 	FIELD field_7065 lastWarnTime J
@@ -30,6 +36,7 @@ CLASS net/minecraft/server/MinecraftServer net/minecraft/server/MinecraftServer
 	FIELD field_7079 worlds [Lnet/minecraft/class_2571;
 	FIELD field_7081 progressType Ljava/lang/String;
 	FIELD field_7082 progress I
+	FIELD field_7084 worldTickTimes [[J
 	FIELD field_7086 LOGGER Lorg/apache/logging/log4j/Logger;
 	FIELD field_7095 serverIp Ljava/lang/String;
 	FIELD field_7096 serverPort I
@@ -41,22 +48,27 @@ CLASS net/minecraft/server/MinecraftServer net/minecraft/server/MinecraftServer
 	METHOD <init> (Ljava/io/File;Ljava/net/Proxy;)V
 		ARG 1 gameDir
 		ARG 2 proxy
-	METHOD getServerModName getServerBrand ()Ljava/lang/String;
 	METHOD main ([Ljava/lang/String;)V
 		ARG 0 args
+	METHOD method_10400 getCommandSuggestions (Lnet/minecraft/class_1659;Ljava/lang/String;)Ljava/util/List;
+		ARG 1 source
+		ARG 2 command
 	METHOD method_10401 setDifficulty (Lnet/minecraft/class_1721;)V
 		ARG 1 difficulty
-	METHOD method_10403 startServer ()V
+	METHOD method_10402 setResourcePackUrl (Ljava/lang/String;)V
+		ARG 1 url
+	METHOD method_10403 start ()V
 	METHOD method_5910 getIp ()Ljava/lang/String;
 	METHOD method_5911 getPort ()I
-	METHOD method_5912 getMotd ()Ljava/lang/String;
-	METHOD method_5913 getVersion ()Ljava/lang/String;
+	METHOD method_5912 getServerMotd ()Ljava/lang/String;
+	METHOD method_5913 getGameVersion ()Ljava/lang/String;
 	METHOD method_5914 getCurrentPlayerCount ()I
 	METHOD method_5915 getMaxPlayerCount ()I
 	METHOD method_5916 getPlayerNames ()[Ljava/lang/String;
 	METHOD method_5917 isDebuggingEnabled ()Z
-	METHOD method_5918 getLevelName ()Ljava/lang/String;
+	METHOD method_5918 getWorldName ()Ljava/lang/String;
 	METHOD method_5923 executeRconCommand (Ljava/lang/String;)Ljava/lang/String;
+		ARG 1 command
 	METHOD method_5925 getPlugins ()Ljava/lang/String;
 	METHOD method_5926 info (Ljava/lang/String;)V
 		ARG 1 message
@@ -83,6 +95,10 @@ CLASS net/minecraft/server/MinecraftServer net/minecraft/server/MinecraftServer
 		ARG 1 id
 	METHOD method_6435 isSpawnProtected (Lnet/minecraft/class_99;IIILnet/minecraft/class_2674;)Z
 		ARG 1 world
+		ARG 2 posX
+		ARG 3 posY
+		ARG 4 posZ
+		ARG 5 playerEntity
 	METHOD method_6436 setDefaultGameMode (Lnet/minecraft/class_2087;)V
 		ARG 1 gamemode
 	METHOD method_6437 publish (Lnet/minecraft/class_2087;Z)Ljava/lang/String;
@@ -93,15 +109,21 @@ CLASS net/minecraft/server/MinecraftServer net/minecraft/server/MinecraftServer
 	METHOD method_6439 upgradeWorld (Ljava/lang/String;)V
 		ARG 1 name
 	METHOD method_6441 setupWorld (Ljava/lang/String;Ljava/lang/String;JLnet/minecraft/class_105;Ljava/lang/String;)V
-		ARG 1 world
+		ARG 1 worldName
+		ARG 2 serverName
+		ARG 3 seed
 		ARG 5 generatorType
+		ARG 6 generatorSettings
 	METHOD method_6442 setKeyPair (Ljava/security/KeyPair;)V
 		ARG 1 keyPair
-	METHOD method_6445 setServerMeta (Lnet/minecraft/class_1596;)V
+	METHOD method_6445 setServerMetadata (Lnet/minecraft/class_1596;)V
+		ARG 1 metadata
 	METHOD method_6446 addTickable (Lnet/minecraft/class_1618;)V
 		ARG 1 tickable
 	METHOD method_6447 setPlayerManager (Lnet/minecraft/class_2599;)V
 		ARG 1 playerManager
+	METHOD method_6449 getPlayerManager (Lnet/minecraft/server/MinecraftServer;)Lnet/minecraft/class_2599;
+		ARG 0 minecraftServer
 	METHOD method_6451 saveWorlds (Z)V
 		ARG 1 silent
 	METHOD method_6452 getPlayerIdleTimeout ()I
@@ -109,9 +131,11 @@ CLASS net/minecraft/server/MinecraftServer net/minecraft/server/MinecraftServer
 	METHOD method_6454 getSessionService ()Lcom/mojang/authlib/minecraft/MinecraftSessionService;
 	METHOD method_6457 getServerMetadata ()Lnet/minecraft/class_1596;
 	METHOD method_6458 forcePlayerSampleUpdate ()V
+	METHOD method_6463 getLogger ()Lorg/apache/logging/log4j/Logger;
 	METHOD method_6464 logProgress (Ljava/lang/String;I)V
 		ARG 1 progressType
-		ARG 2 worldProgress
+		ARG 2 progress
+	METHOD method_6466 deleteWorldAndStop ()V
 	METHOD method_6467 getResourcePackUrl ()Ljava/lang/String;
 	METHOD method_6469 isDedicated ()Z
 	METHOD method_6470 isOnlineMode ()Z
@@ -120,7 +144,7 @@ CLASS net/minecraft/server/MinecraftServer net/minecraft/server/MinecraftServer
 	METHOD method_6474 isPvpEnabled ()Z
 	METHOD method_6475 isFlightEnabled ()Z
 	METHOD method_6476 areCommandBlocksEnabled ()Z
-	METHOD method_6477 getServerMotd ()Ljava/lang/String;
+	METHOD method_6477 getMotd ()Ljava/lang/String;
 	METHOD method_6478 getWorldHeight ()I
 	METHOD method_6479 isStopped ()Z
 	METHOD method_6480 getPlayerManager ()Lnet/minecraft/class_2599;
@@ -151,7 +175,7 @@ CLASS net/minecraft/server/MinecraftServer net/minecraft/server/MinecraftServer
 	METHOD method_6498 setPlayerIdleTimeout (I)V
 		ARG 1 playerIdleTimeout
 	METHOD method_6499 getFile (Ljava/lang/String;)Ljava/io/File;
-		ARG 1 name
+		ARG 1 path
 	METHOD method_6500 setOnlineMode (Z)V
 		ARG 1 onlineMode
 	METHOD method_6501 setSpawnAnimals (Z)V
@@ -162,13 +186,13 @@ CLASS net/minecraft/server/MinecraftServer net/minecraft/server/MinecraftServer
 		ARG 1 pvpEnabled
 	METHOD method_6505 setFlightEnabled (Z)V
 		ARG 1 flightEnabled
-	METHOD method_6506 setupServer ()Z
+	METHOD method_6506 init ()Z
 	METHOD method_6507 setUserName (Ljava/lang/String;)V
 		ARG 1 userName
 	METHOD method_6508 setForceGameMode (Z)V
 		ARG 1 forceGameMode
 	METHOD method_6509 getServerOperation ()Ljava/lang/String;
-	METHOD method_6510 setLevelName (Ljava/lang/String;)V
+	METHOD method_6510 setWorldName (Ljava/lang/String;)V
 		ARG 1 levelName
 	METHOD method_6511 prepareWorlds ()V
 	METHOD method_6512 setServerName (Ljava/lang/String;)V
@@ -180,7 +204,8 @@ CLASS net/minecraft/server/MinecraftServer net/minecraft/server/MinecraftServer
 	METHOD method_6516 getDefaultDifficulty ()Lnet/minecraft/class_1721;
 	METHOD method_6517 isHardcore ()Z
 	METHOD method_6518 getOpPermissionLevel ()I
-	METHOD method_6522 stopServer ()V
+	METHOD method_6521 clearProgress ()V
+	METHOD method_6522 stop ()V
 	METHOD method_6523 getServerIp ()Ljava/lang/String;
 	METHOD method_6524 isRunning ()Z
 	METHOD method_6525 stopRunning ()V

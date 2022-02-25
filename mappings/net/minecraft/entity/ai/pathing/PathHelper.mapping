@@ -4,13 +4,13 @@ CLASS net/minecraft/class_2238 net/minecraft/entity/ai/pathing/PathHelper
 	FIELD field_9737 hashMap Lnet/minecraft/class_2610;
 	FIELD field_9738 pathNodes [Lnet/minecraft/class_618;
 	FIELD field_9739 willOpenWoodenDoor Z
-	FIELD field_9740 movementBlockAllowed Z
+	FIELD field_9740 blockPathAllowed Z
 	FIELD field_9741 inWater Z
 	FIELD field_9742 canSwim Z
 	METHOD <init> (Lnet/minecraft/class_104;ZZZZ)V
 		ARG 1 chunkCache
 		ARG 2 willOpenWoodenDoor
-		ARG 3 movementBlockAllowed
+		ARG 3 blockPathAllowed
 		ARG 4 inWater
 		ARG 5 canSwim
 	METHOD method_9027 getPathNode (III)Lnet/minecraft/class_618;
@@ -39,6 +39,7 @@ CLASS net/minecraft/class_2238 net/minecraft/entity/ai/pathing/PathHelper
 		ARG 4 z
 		ARG 5 increasedEntityHitBox
 	METHOD method_9032 getSafePathNode (Lnet/minecraft/class_1745;IIILnet/minecraft/class_618;I)Lnet/minecraft/class_618;
+		COMMENT @return path node with coords x and z, searches for a y that is safe and within reach
 		ARG 1 entity
 		ARG 2 x
 		ARG 3 y
@@ -46,13 +47,14 @@ CLASS net/minecraft/class_2238 net/minecraft/entity/ai/pathing/PathHelper
 		ARG 5 increasedEntityHitBox
 		ARG 6 verticalOffset
 	METHOD method_9033 getVerticalOffsetInPathHelper (Lnet/minecraft/class_1745;IIILnet/minecraft/class_618;ZZZ)I
+		COMMENT @return max vertical offset in path at x, y, z
 		ARG 0 entity
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
 		ARG 4 increasedEntityHitBox
 		ARG 5 canSwim
-		ARG 6 movementBlockAllowed
+		ARG 6 blockPathAllowed
 		ARG 7 willOpenWoodenDoor
 	METHOD method_9034 buildPath (Lnet/minecraft/class_1745;Lnet/minecraft/class_618;Lnet/minecraft/class_618;Lnet/minecraft/class_618;F)Lnet/minecraft/class_620;
 		ARG 1 entity
@@ -65,6 +67,8 @@ CLASS net/minecraft/class_2238 net/minecraft/entity/ai/pathing/PathHelper
 		ARG 2 target
 		ARG 3 pathRange
 	METHOD method_9036 getAmountOfSuccessors (Lnet/minecraft/class_1745;Lnet/minecraft/class_618;Lnet/minecraft/class_618;Lnet/minecraft/class_618;F)I
+		COMMENT Generate successor nodes from current path node
+		COMMENT @return the amount of valid successors
 		ARG 1 entity
 		ARG 2 currentPathNode
 		ARG 3 increasedEntityHitBox

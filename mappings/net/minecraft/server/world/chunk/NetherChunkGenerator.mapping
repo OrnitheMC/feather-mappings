@@ -1,0 +1,49 @@
+CLASS net/minecraft/class_422 net/minecraft/server/world/chunk/NetherChunkGenerator
+	FIELD field_1820 fortressGenerator Lnet/minecraft/class_484;
+	FIELD field_1821 caveGenerator Lnet/minecraft/class_424;
+	FIELD field_1822 scaleNoiseGenerator Lnet/minecraft/class_584;
+	FIELD field_1823 depthNoiseGenerator Lnet/minecraft/class_584;
+	FIELD field_1824 selectorNoise [D
+	FIELD field_1825 lowNoise [D
+	FIELD field_1826 highNoise [D
+	FIELD field_1827 scaleNoise [D
+	FIELD field_1828 depthNoise [D
+	FIELD field_1829 world Lnet/minecraft/class_99;
+	FIELD field_1831 random Ljava/util/Random;
+	FIELD field_1832 soulSandNoise [D
+	FIELD field_1833 gravelNoise [D
+	FIELD field_1834 lavaLakeNoise [D
+	FIELD field_1835 terrainNoise [D
+	FIELD field_1836 lowNoiseGenerator Lnet/minecraft/class_584;
+	FIELD field_1837 highNoiseGenerator Lnet/minecraft/class_584;
+	FIELD field_1838 selectorNoiseGenerator Lnet/minecraft/class_584;
+	FIELD field_1839 soulSandAndGravelNoiseGenerator Lnet/minecraft/class_584;
+	FIELD field_1840 lavaLakeNoiseGenerator Lnet/minecraft/class_584;
+	METHOD <init> (Lnet/minecraft/class_99;J)V
+		ARG 1 world
+		ARG 2 seed
+	METHOD method_1504 createTerrainNoise ([DIIIIII)[D
+		ARG 1 blockArray
+		ARG 2 xOffset
+		ARG 3 yOffset
+		ARG 4 zOffset
+		ARG 5 xSize
+		ARG 6 ySize
+		ARG 7 zSize
+	METHOD method_1505 generateTerrainVarriety (II[Lnet/minecraft/class_160;)V
+		COMMENT This method generates non netherack or lava blocks like bedrock, soul sand and gravel
+		COMMENT 2 for loops to loop between all 64 xz positions inside the chunk
+		COMMENT A second for loop to go over all 128 blocks in the column in that xz position
+		COMMENT Soul sand and gravel only generate between y=60 and y=65 inclusive
+		COMMENT If y < 64 and the lava lake noise gen spits out a number below 0 or the block is air, then that block will be filled with lava
+		ARG 1 x
+		ARG 2 z
+		ARG 3 blockArray
+	METHOD method_8949 generateBaseTerrain (II[Lnet/minecraft/class_160;)V
+		COMMENT Loops over the complete terrain noise array (4 x 16 x 4)
+		COMMENT it gets all values inside the 4x4 cube facing in pos xyz direction with the origin at the (0, 0, 0) position
+		COMMENT Then it loops 4x8x4 times, the number of 4x16x4 cubes there are in a 16x128x16 chunk and does some calculations
+		COMMENT finally depending on the generated numbers it either puts a lava block, a netherrack block or nothing on that position
+		ARG 1 x
+		ARG 2 z
+		ARG 3 blockArray

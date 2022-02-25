@@ -1,4 +1,6 @@
 CLASS net/minecraft/class_669 net/minecraft/client/MinecraftClient
+	FIELD field_11801 defaultResourcePack Lnet/minecraft/class_1249;
+	FIELD field_11802 hasTakenScreenshot Z
 	FIELD field_2508 profiler Lnet/minecraft/class_1705;
 	FIELD field_2509 running Z
 	FIELD field_2510 fpsDebugString Ljava/lang/String;
@@ -8,15 +10,16 @@ CLASS net/minecraft/class_669 net/minecraft/client/MinecraftClient
 	FIELD field_2520 DISPLAY_MODES Ljava/util/List;
 	FIELD field_2524 currentServerEntry Lnet/minecraft/class_2324;
 	FIELD field_2525 textureManager Lnet/minecraft/class_1232;
-	FIELD field_2526 instance Lnet/minecraft/class_669;
-	FIELD field_2527 windowFocused Z
+	FIELD field_2526 INSTANCE Lnet/minecraft/class_669;
+	FIELD field_2527 fullscreen Z
 	FIELD field_2529 crashed Z
 	FIELD field_2530 crashReport Lnet/minecraft/class_825;
 	FIELD field_2532 tracker Lnet/minecraft/class_676;
 	FIELD field_2533 snooper Lnet/minecraft/class_1728;
 	FIELD field_2536 loader Lnet/minecraft/class_2374;
 	FIELD field_2537 languageManager Lnet/minecraft/class_1270;
-	FIELD field_2539 fbo Lnet/minecraft/class_1040;
+	FIELD field_2539 frameBuffer Lnet/minecraft/class_1040;
+		COMMENT
 	FIELD field_2541 soundManager Lnet/minecraft/class_1328;
 	FIELD field_2542 musicTracker Lnet/minecraft/class_1322;
 	FIELD field_2551 openProfilerSection Ljava/lang/String;
@@ -27,7 +30,7 @@ CLASS net/minecraft/class_669 net/minecraft/client/MinecraftClient
 	FIELD field_2561 tempHeight I
 	FIELD field_2562 server Lnet/minecraft/class_1315;
 	FIELD field_2564 gameVersion Ljava/lang/String;
-	FIELD field_2565 networkProxy Ljava/net/Proxy;
+	FIELD field_2565 proxy Ljava/net/Proxy;
 	FIELD field_2566 currentSave Lnet/minecraft/class_637;
 	FIELD field_2567 currentFps I
 	FIELD field_2568 blockPlaceDelay I
@@ -38,14 +41,14 @@ CLASS net/minecraft/class_669 net/minecraft/client/MinecraftClient
 	FIELD field_2575 isIntegratedServerRunning Z
 	FIELD field_2576 f3CTime J
 	FIELD field_2577 resourceManager Lnet/minecraft/class_1256;
-	FIELD field_2578 metadataSerializer Lnet/minecraft/class_1275;
+	FIELD field_2578 resourceMetadataSerializerRegistry Lnet/minecraft/class_1275;
 	FIELD field_2579 memoryReservedForCrash [B
 	FIELD field_2580 interactionManager Lnet/minecraft/class_2316;
 	FIELD field_2581 width I
 	FIELD field_2582 height I
 	FIELD field_2583 world Lnet/minecraft/class_2317;
 	FIELD field_2585 player Lnet/minecraft/class_2322;
-	FIELD field_2586 facingEntity Lnet/minecraft/class_1745;
+	FIELD field_2586 targetEntity Lnet/minecraft/class_1745;
 	FIELD field_2587 particleManager Lnet/minecraft/class_959;
 	FIELD field_2588 textRenderer Lnet/minecraft/class_679;
 	FIELD field_2589 shadowTextRenderer Lnet/minecraft/class_679;
@@ -60,13 +63,35 @@ CLASS net/minecraft/class_669 net/minecraft/client/MinecraftClient
 	FIELD field_2599 runDirectory Ljava/io/File;
 	FIELD field_2600 focused Z
 	FIELD field_2601 sysTime J
+	FIELD field_9848 timeAtLastSecond J
+		COMMENT Time in miliseconds - only updates every second.
+	FIELD field_9849 timeAfterLastTick J
+	FIELD field_9850 resourcePacksFolder Ljava/io/File;
 	FIELD field_9852 session Lnet/minecraft/class_677;
-	FIELD field_9855 isUsingRessourcePack Z
+	FIELD field_9853 assetsFolder Ljava/io/File;
+	FIELD field_9855 hasServerResourcePack Z
 	FIELD field_9856 serverIp Ljava/lang/String;
 	FIELD field_9857 port I
+	FIELD field_9858 defaultResourcePacks Ljava/util/List;
+	FIELD field_9859 blocksSprite Lnet/minecraft/class_1230;
 	FIELD field_9860 worldRenderer Lnet/minecraft/class_2346;
+	FIELD field_9861 camera Lnet/minecraft/class_1752;
 	FIELD field_9862 inGameHud Lnet/minecraft/class_2283;
+	METHOD <init> (Lnet/minecraft/class_677;IIZZLjava/io/File;Ljava/io/File;Ljava/io/File;Ljava/net/Proxy;Ljava/lang/String;)V
+		ARG 1 session
+		ARG 2 width
+		ARG 3 height
+		ARG 4 fullscreen
+		ARG 5 isDemo
+		ARG 6 runDirectory
+		ARG 7 assetsFolder
+		ARG 8 resourcePacksFolder
+		ARG 9 proxy
+		ARG 10 gameVersion
+	METHOD method_10935 setToolkitAppClassName (Ljava/lang/String;)V
+		ARG 0 appClassName
 	METHOD method_10936 tryTakeScreenshot ()V
+	METHOD method_10937 reloadResources ()V
 	METHOD method_2221 getInstance ()Lnet/minecraft/class_669;
 	METHOD method_2223 getMaxTextureSize ()I
 	METHOD method_2224 getCurrentServerEntry ()Lnet/minecraft/class_2324;
@@ -89,7 +114,13 @@ CLASS net/minecraft/class_669 net/minecraft/client/MinecraftClient
 	METHOD method_2243 getSoundManager ()Lnet/minecraft/class_1328;
 	METHOD method_2244 getMusicType ()Lnet/minecraft/class_2391;
 	METHOD method_2247 run ()V
+	METHOD method_2248 teleportToDimension (I)V
+		ARG 1 dimensionId
 	METHOD method_2249 onResolutionChanged (II)V
+		ARG 1 width
+		ARG 2 height
+	METHOD method_2251 renderProfilerChart (J)V
+		ARG 1 tickTime
 	METHOD method_2252 getVersion (Lnet/minecraft/class_669;)Ljava/lang/String;
 		ARG 0 client
 	METHOD method_2253 openScreen (Lnet/minecraft/class_2292;)V
@@ -100,27 +131,34 @@ CLASS net/minecraft/class_669 net/minecraft/client/MinecraftClient
 		ARG 1 world
 	METHOD method_2256 setWorld (Lnet/minecraft/class_2317;Ljava/lang/String;)V
 		ARG 1 world
+		ARG 2 title
 	METHOD method_2257 setCurrentServerEntry (Lnet/minecraft/class_2324;)V
 		ARG 1 info
+	METHOD method_2259 readImageBuffer (Ljava/io/File;)Ljava/nio/ByteBuffer;
+		ARG 1 file
 	METHOD method_2260 startGame (Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/class_102;)V
 		ARG 1 worldName
-		ARG 3 levelInfo
+		ARG 2 displayName
+		ARG 3 worldInfo
 	METHOD method_2283 checkIs64Bit ()Z
-	METHOD method_2284 initializeTimerHackThread ()V
+	METHOD method_2284 initTimerHackThread ()V
 	METHOD method_2285 updateDisplayMode ()V
-	METHOD method_2286 runGameLoop ()V
+	METHOD method_2286 runGame ()V
 	METHOD method_2287 doAttack ()V
 	METHOD method_2288 doUse ()V
 	METHOD method_2289 onResolutionChanged ()V
 	METHOD method_2290 doPick ()V
 	METHOD method_2291 getFramebuffer ()Lnet/minecraft/class_1040;
+	METHOD method_2292 selectProfilerChartSection (I)V
+		ARG 1 section
 	METHOD method_2293 getLanguageManager (Lnet/minecraft/class_669;)Lnet/minecraft/class_1270;
 		ARG 0 client
 	METHOD method_2294 addSystemDetailsToCrashReport (Lnet/minecraft/class_825;)Lnet/minecraft/class_825;
 		ARG 1 crashReport
-	METHOD method_2295 setGlErrorMessage (Ljava/lang/String;)V
+	METHOD method_2295 logGlError (Ljava/lang/String;)V
 		ARG 1 message
-	METHOD method_2296 handleBlockBreaking (Z)V
+	METHOD method_2296 handleBlockMining (Z)V
+		ARG 1 holdingAttack
 	METHOD method_2298 printCrashReport (Lnet/minecraft/class_825;)V
 		ARG 1 crashReport
 	METHOD method_2301 getCurrentSave ()Lnet/minecraft/class_637;
@@ -137,11 +175,24 @@ CLASS net/minecraft/class_669 net/minecraft/client/MinecraftClient
 	METHOD method_2314 tick ()V
 	METHOD method_2315 isDemo ()Z
 	METHOD method_2316 getNetworkHandler ()Lnet/minecraft/class_2314;
-	METHOD method_2317 isHudEnabled ()Z
+	METHOD method_2317 isHudDisabled ()Z
 	METHOD method_2318 isFancyGraphicsEnabled ()Z
 	METHOD method_2319 isAmbientOcclusionEnabled ()Z
-	METHOD method_9141 useRessourcePack ()V
+	METHOD method_9141 onApplyServerResourcePack ()V
+	METHOD method_9143 renderMojangLogo (IIIIII)V
+		ARG 1 x
+		ARG 2 y
+		ARG 3 u
+		ARG 4 v
+		ARG 5 width
+		ARG 6 height
 	METHOD method_9145 setServerIpAndPort (Ljava/lang/String;I)V
 		ARG 1 ip
 		ARG 2 port
-	METHOD method_9147 initializeGame ()V
+	METHOD method_9147 init ()V
+	METHOD method_9148 addDefaultResourcePacks ()V
+	METHOD method_9149 renderLoadingScreen ()V
+	METHOD method_9150 getChunkDebugString ()Ljava/lang/String;
+	METHOD method_9151 getEntityDebugString ()Ljava/lang/String;
+	METHOD method_9152 getDebugString ()Ljava/lang/String;
+	METHOD method_9153 getParticleDebugString ()Ljava/lang/String;

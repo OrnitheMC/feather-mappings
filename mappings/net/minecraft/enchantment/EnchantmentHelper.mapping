@@ -5,13 +5,15 @@ CLASS net/minecraft/class_66 net/minecraft/enchantment/EnchantmentHelper
 	FIELD field_159 ON_DAMAGE_LISTENER Lnet/minecraft/class_68;
 	FIELD field_160 ON_ATTACK_LISTENER Lnet/minecraft/class_67;
 	METHOD method_100 applyProtection (Lnet/minecraft/class_69;Lnet/minecraft/class_2056;)V
+        ARG 0 enchantment
 		ARG 1 armorPiece
 	METHOD method_101 applyProtectionForEachArmorPiece (Lnet/minecraft/class_69;[Lnet/minecraft/class_2056;)V
+        ARG 0 enchantments
 		ARG 1 armor
 	METHOD method_102 setEnchantments (Ljava/util/Map;Lnet/minecraft/class_2056;)V
 		ARG 0 enchantments
 		ARG 1 stack
-	METHOD method_103 calculateRequiredXPLevel (Ljava/util/Random;IILnet/minecraft/class_2056;)I
+	METHOD method_103 getRequiredXpLevel (Ljava/util/Random;IILnet/minecraft/class_2056;)I
 		ARG 0 random
 		ARG 1 entry
 		ARG 2 max
@@ -19,18 +21,32 @@ CLASS net/minecraft/class_66 net/minecraft/enchantment/EnchantmentHelper
 	METHOD method_104 addRandomEnchantment (Ljava/util/Random;Lnet/minecraft/class_2056;I)Lnet/minecraft/class_2056;
 		ARG 0 random
 		ARG 1 stack
+		ARG 2 xpLevel
+	METHOD method_107 applyProtectionWildcard (Lnet/minecraft/class_1752;Lnet/minecraft/class_1745;)V
+		ARG 0 target
+		ARG 1 attacker
 	METHOD method_108 getEnchantments (Lnet/minecraft/class_2056;)Ljava/util/Map;
 		ARG 0 stack
-	METHOD method_110 EnchantmentResistance ([Lnet/minecraft/class_2056;Lnet/minecraft/class_1733;)I
+	METHOD method_109 modifyDamage (Lnet/minecraft/class_1752;Lnet/minecraft/class_1752;)F
+		COMMENT Returns the increase in damage to the target due to the attacker's enchantments.
+		ARG 0 attacker
+		ARG 1 target
+	METHOD method_110 getEnchantmentResistance ([Lnet/minecraft/class_2056;Lnet/minecraft/class_1733;)I
+		COMMENT Returns the increase in protection from the damage source due to the armor stacks' enchantments.
 		ARG 0 armor
-	METHOD method_111 getAvailableEnchantmentInfoEntries (ILnet/minecraft/class_2056;)Ljava/util/Map;
-		ARG 0 experience
+		ARG 1 source
+	METHOD method_111 getAvailableEnchantmentEntries (ILnet/minecraft/class_2056;)Ljava/util/Map;
+		ARG 0 xp
 		ARG 1 stack
-	METHOD method_112 getEnchantmentInfoEntries (Ljava/util/Random;Lnet/minecraft/class_2056;I)Ljava/util/List;
+	METHOD method_112 getEnchantmentEntries (Ljava/util/Random;Lnet/minecraft/class_2056;I)Ljava/util/List;
 		ARG 0 random
 		ARG 1 stack
+		ARG 2 xpLevel
 	METHOD method_114 getFireAspectLevel (Lnet/minecraft/class_1752;)I
 		ARG 0 entity
+	METHOD method_115 applyDamageWildcard (Lnet/minecraft/class_1752;Lnet/minecraft/class_1745;)V
+		ARG 0 attacker
+		ARG 1 target
 	METHOD method_117 getSilkTouchLevel (Lnet/minecraft/class_1752;)Z
 		ARG 0 entity
 	METHOD method_119 getLuckOfTheSeaLevel (Lnet/minecraft/class_1752;)I
@@ -44,18 +60,18 @@ CLASS net/minecraft/class_66 net/minecraft/enchantment/EnchantmentHelper
 	METHOD method_8446 getRespirationLevel (Lnet/minecraft/class_1752;)I
 		ARG 0 entity
 	METHOD method_8447 getKnockbackLevel (Lnet/minecraft/class_1752;Lnet/minecraft/class_1752;)I
-		ARG 0 entity1
-		ARG 1 entity2
+		ARG 0 attacker
+		ARG 1 target
 	METHOD method_8448 getEfficiencyLevel (Lnet/minecraft/class_1752;)I
 		ARG 0 entity
 	METHOD method_8449 getFortuneLevel (Lnet/minecraft/class_1752;)I
 		ARG 0 entity
-	METHOD method_97 getLevelOfEnchantment (ILnet/minecraft/class_2056;)I
+	METHOD method_97 getEnchantmentLevel (ILnet/minecraft/class_2056;)I
 		ARG 0 id
 		ARG 1 stack
-	METHOD method_98 getHighestLevelOfEnchantment (I[Lnet/minecraft/class_2056;)I
+	METHOD method_98 getHighestEnchantmentLevel (I[Lnet/minecraft/class_2056;)I
 		ARG 0 id
-		ARG 1 itemStack
-	METHOD method_99 getFirstStackWithEnchantment (Lnet/minecraft/class_64;Lnet/minecraft/class_1752;)Lnet/minecraft/class_2056;
+		ARG 1 stacks
+	METHOD method_99 getFirstArmorStackWithEnchantment (Lnet/minecraft/class_64;Lnet/minecraft/class_1752;)Lnet/minecraft/class_2056;
 		ARG 0 enchantment
 		ARG 1 entity

@@ -4,7 +4,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: openjdk:11-jdk
+      image: openjdk:17-jdk
       options: --user root
     steps:
       - uses: actions/checkout@v2
@@ -19,4 +19,6 @@ jobs:
 
       - run: ./gradlew publish --stacktrace
         env:
-          MAVEN_PUBLISH_TOKEN: ${{ secrets.MAVEN_PUBLISH_TOKEN }}
+          MAVEN_URL: ${{ secrets.MAVEN_URL }}
+          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
