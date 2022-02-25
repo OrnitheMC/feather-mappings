@@ -110,11 +110,13 @@ CLASS net/minecraft/class_1752 net/minecraft/entity/living/LivingEntity
 		ARG 1 hasBeenHit
 		ARG 2 lootingLevel
 	METHOD method_7097 initAttributes ()V
-	METHOD method_7098 canBreatheUnderWater ()Z
+	METHOD method_7098 isWaterCreature ()Z
 	METHOD method_7099 tickPostDeath ()V
-	METHOD method_7100 applyArmorProtection (Lnet/minecraft/class_1733;F)F
-		ARG 1 source
+		COMMENT This method is called 20 times from {@link net.minecraft.entity.LivingEntity.baseTick()v} after the entity has died(when Health is 0), as the death animation lasts for 20ticks.
+		COMMENT In the 20th tick/call it marks the entity as removed
+	METHOD method_7100 damageAfterArmorResistance (Lnet/minecraft/class_1733;F)F
 		ARG 2 damage
+		ARG 1 source
 	METHOD method_7101 getEffectInstance (Lnet/minecraft/class_1741;)Lnet/minecraft/class_1742;
 		ARG 1 effect
 	METHOD method_7102 onStatusEffectRemoved (Lnet/minecraft/class_1742;)V
@@ -153,14 +155,14 @@ CLASS net/minecraft/class_1752 net/minecraft/entity/living/LivingEntity
 	METHOD method_7138 getDeathSound ()Ljava/lang/String;
 	METHOD method_7140 getArmorProtection ()I
 	METHOD method_7141 getDamageTracker ()Lnet/minecraft/class_1732;
-	METHOD method_7142 determineAttacker ()Lnet/minecraft/class_1752;
+	METHOD method_7142 getLastAttacker ()Lnet/minecraft/class_1752;
 	METHOD method_7143 getMaxHealth ()F
 	METHOD method_7144 getStuckArrows ()I
 	METHOD method_7145 swingHand ()V
 	METHOD method_7146 updateHandSwing ()V
 	METHOD method_7147 getAttributes ()Lnet/minecraft/class_2635;
 	METHOD method_7148 getMobType ()Lnet/minecraft/class_1758;
-	METHOD method_7149 applyStatusEffectProtection (Lnet/minecraft/class_1733;F)F
+	METHOD method_7149 damageAfterEffectsAndEnchantments (Lnet/minecraft/class_1733;F)F
 		ARG 1 source
 		ARG 2 damage
 	METHOD method_7150 addStatusEffect (Lnet/minecraft/class_1742;)V
