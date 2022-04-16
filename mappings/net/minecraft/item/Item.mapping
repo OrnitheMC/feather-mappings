@@ -1,59 +1,31 @@
 CLASS net/minecraft/class_2054 net/minecraft/item/Item
-	COMMENT The Item class provides useful methods and fields for creation of Items.
-	COMMENT  All items extend the Item class.
-	COMMENT  The Item class also registers all items.
-	COMMENT @see net.minecraft.item.Items
 	FIELD field_8630 group Lnet/minecraft/class_2029;
-		COMMENT The Item's ItemGroup
 	FIELD field_8631 maxDamage I
-		COMMENT The maximum durability of an Item
 	FIELD field_8632 recipeRemainder Lnet/minecraft/class_2054;
-		COMMENT The item's recipe remainder. Used by Buckets and potions.
-		COMMENT @see net.minecraft.item.PotionItem
-		COMMENT @see net.minecraft.item.BucketItem
+		COMMENT The item that remains after this item is used up during crafting, smelting or brewing.
 	FIELD field_8634 ATTACK_DAMAGE_MODIFIER_UUID Ljava/util/UUID;
 	FIELD field_8635 random Ljava/util/Random;
-	FIELD field_8636 maxCount I
-		COMMENT The maximum stack size of an item
+	FIELD field_8636 maxStackSize I
 	FIELD field_8637 handheld Z
-		COMMENT Sets whether the item is handheld
-	FIELD field_8638 damageable Z
-		COMMENT Sets whether the item has durability
-	FIELD field_8639 brewingRecipeString Ljava/lang/String;
-		COMMENT A description of the brewing recipe for their ingredients
-	FIELD field_8640 translationKey Ljava/lang/String;
-		COMMENT The Item's translation key.
+	FIELD field_8638 stackable Z
+	FIELD field_8639 brewingRecipe Ljava/lang/String;
+	FIELD field_8640 name Ljava/lang/String;
 	FIELD field_8884 REGISTRY Lnet/minecraft/class_1393;
 	FIELD field_8885 sprite Lnet/minecraft/class_2616;
 	FIELD field_8886 spriteName Ljava/lang/String;
-	METHOD <init> ()V
-		COMMENT Sets the max stack size of an Item to 64
 	METHOD method_8246 getTranslationKey ()Ljava/lang/String;
-		COMMENT Returns the translation key of the current Item
-		COMMENT @return Translation key
-	METHOD method_8247 getMeta (I)I
-		ARG 1 i
-	METHOD method_8250 onHit (Lnet/minecraft/class_99;Lnet/minecraft/class_2674;Z)Lnet/minecraft/class_2253;
-		COMMENT Returns the HitResult for an item when the player's arm is swung while holding the item.
-		COMMENT @return HitResult
+	METHOD method_8247 getBlockMetadata (I)I
+		ARG 1 metadata
+	METHOD method_8250 onUse (Lnet/minecraft/class_99;Lnet/minecraft/class_2674;Z)Lnet/minecraft/class_2253;
 		ARG 1 world
-			COMMENT The world that the item is in
 		ARG 2 player
-			COMMENT The player holding the item
 		ARG 3 liquid
 	METHOD method_8254 setItemGroup (Lnet/minecraft/class_2029;)Lnet/minecraft/class_2054;
-		COMMENT Sets the itemgroup that the current item should be in
-		COMMENT @return The current Item
 		ARG 1 group
-			COMMENT The ItemGroup
-	METHOD method_8255 appendItemStacks (Lnet/minecraft/class_2054;Lnet/minecraft/class_2029;Ljava/util/List;)V
-		COMMENT Registers an item's sub items
+	METHOD method_8255 addStacks (Lnet/minecraft/class_2054;Lnet/minecraft/class_2029;Ljava/util/List;)V
 		ARG 1 item
-			COMMENT The Item instance
 		ARG 2 group
-			COMMENT The ItemGroup
 		ARG 3 list
-			COMMENT The list of sub items
 	METHOD method_8256 getDisplayName (Lnet/minecraft/class_2056;)Ljava/lang/String;
 		ARG 1 stack
 	METHOD method_8257 getDisplayColor (Lnet/minecraft/class_2056;I)I
@@ -67,23 +39,17 @@ CLASS net/minecraft/class_2054 net/minecraft/item/Item
 		ARG 5 y
 		ARG 6 z
 		ARG 7 entity
-	METHOD method_8259 inventoryTick (Lnet/minecraft/class_2056;Lnet/minecraft/class_99;Lnet/minecraft/class_1745;IZ)V
-		COMMENT Runs every tick when the item is in an inventory.
+	METHOD method_8259 tick (Lnet/minecraft/class_2056;Lnet/minecraft/class_99;Lnet/minecraft/class_1745;IZ)V
 		ARG 1 stack
-			COMMENT The item in an ItemStack form
 		ARG 2 world
-			COMMENT The world where the item is ticking
 		ARG 3 entity
-			COMMENT The entity whose inventory contains the item
 		ARG 4 slot
-			COMMENT The slot in which the item is placed
 		ARG 5 selected
-			COMMENT Whether the item is currently selected by the entity
 	METHOD method_8260 onStartUse (Lnet/minecraft/class_2056;Lnet/minecraft/class_99;Lnet/minecraft/class_2674;)Lnet/minecraft/class_2056;
 		ARG 1 stack
 		ARG 2 world
 		ARG 3 player
-	METHOD method_8261 onUseStopped (Lnet/minecraft/class_2056;Lnet/minecraft/class_99;Lnet/minecraft/class_2674;I)V
+	METHOD method_8261 onStopUse (Lnet/minecraft/class_2056;Lnet/minecraft/class_99;Lnet/minecraft/class_2674;I)V
 		ARG 1 stack
 		ARG 2 world
 		ARG 3 player
@@ -91,21 +57,21 @@ CLASS net/minecraft/class_2054 net/minecraft/item/Item
 	METHOD method_8262 getMiningSpeed (Lnet/minecraft/class_2056;Lnet/minecraft/class_160;)F
 		ARG 1 stack
 		ARG 2 block
-	METHOD method_8263 onEntityHit (Lnet/minecraft/class_2056;Lnet/minecraft/class_1752;Lnet/minecraft/class_1752;)Z
+	METHOD method_8263 onEntityAttack (Lnet/minecraft/class_2056;Lnet/minecraft/class_1752;Lnet/minecraft/class_1752;)Z
 		ARG 1 stack
-		ARG 2 entity1
-		ARG 3 entity2
+		ARG 2 target
+		ARG 3 attacker
 	METHOD method_8264 onUse (Lnet/minecraft/class_2056;Lnet/minecraft/class_2674;Lnet/minecraft/class_99;IIIIFFF)Z
-		ARG 1 itemStack
+		ARG 1 stack
 		ARG 2 player
 		ARG 3 world
 		ARG 4 x
 		ARG 5 y
 		ARG 6 z
 		ARG 7 dir
-		ARG 8 facingX
-		ARG 9 facingY
-		ARG 10 facingZ
+		ARG 8 dx
+		ARG 9 dy
+		ARG 10 dz
 	METHOD method_8265 appendTooltip (Lnet/minecraft/class_2056;Lnet/minecraft/class_2674;Ljava/util/List;Z)V
 		ARG 1 stack
 		ARG 2 player
@@ -115,148 +81,72 @@ CLASS net/minecraft/class_2054 net/minecraft/item/Item
 		ARG 1 stack
 		ARG 2 player
 		ARG 3 entity
-	METHOD method_8267 canRepair (Lnet/minecraft/class_2056;Lnet/minecraft/class_2056;)Z
-		COMMENT Returns whether the item can be repaired via an anvil or crafting table.
+	METHOD method_8267 isReparable (Lnet/minecraft/class_2056;Lnet/minecraft/class_2056;)Z
 		ARG 1 stack
 		ARG 2 ingredient
-	METHOD method_8268 setUnbreakable (Z)Lnet/minecraft/class_2054;
-		COMMENT Sets the current item as unbreakable.
-		COMMENT @return The current Item
-		ARG 1 unbreakable
-			COMMENT Unbreakable
+	METHOD method_8268 setStackable (Z)Lnet/minecraft/class_2054;
+		ARG 1 stackable
 	METHOD method_8269 getEnchantability ()I
-		COMMENT Returns the enchantability of an Item.
-		COMMENT Used by tools and armor
-		COMMENT @see net.minecraft.item.ToolItem
-		COMMENT @see net.minecraft.item.ArmorItem
-		COMMENT @return Enchantability
 	METHOD method_8270 byRawId (I)Lnet/minecraft/class_2054;
-		COMMENT Returns an Item for its numeric Id
-		COMMENT @return Item
 		ARG 0 id
 	METHOD method_8271 isEffectiveOn (Lnet/minecraft/class_160;)Z
 		ARG 1 block
 	METHOD method_8272 getRawId (Lnet/minecraft/class_2054;)I
-		COMMENT Returns a numeric id for an Item
-		COMMENT @return Numeric Id
 		ARG 0 item
-	METHOD method_8273 onFinishUse (Lnet/minecraft/class_2056;Lnet/minecraft/class_99;Lnet/minecraft/class_2674;)Lnet/minecraft/class_2056;
+	METHOD method_8273 onStopUse (Lnet/minecraft/class_2056;Lnet/minecraft/class_99;Lnet/minecraft/class_2674;)Lnet/minecraft/class_2056;
 		ARG 1 stack
 		ARG 2 world
 		ARG 3 player
 	METHOD method_8274 getItemGroup ()Lnet/minecraft/class_2029;
-		COMMENT Returns the itemgroup that the item is in
-	METHOD method_8275 setMaxCount (I)Lnet/minecraft/class_2054;
-		COMMENT Sets the max stack size of the Item
-		COMMENT @return The current Item
-		ARG 1 count
-			COMMENT Maximum stack size
-	METHOD method_8277 setTranslationKey (Ljava/lang/String;)Lnet/minecraft/class_2054;
-		COMMENT Sets the current item's translation key.
-		COMMENT @return The current Item
-		ARG 1 translationKey
-			COMMENT Translation key
+	METHOD method_8275 setMaxStackSize (I)Lnet/minecraft/class_2054;
+		ARG 1 size
+	METHOD method_8277 setName (Ljava/lang/String;)Lnet/minecraft/class_2054;
+		ARG 1 name
 	METHOD method_8278 setRecipeRemainder (Lnet/minecraft/class_2054;)Lnet/minecraft/class_2054;
-		COMMENT Sets the item's recipe remainder
-		COMMENT @return The current Item
-		ARG 1 recipeRemainder
+		ARG 1 item
 	METHOD method_8279 setMaxDamage (I)Lnet/minecraft/class_2054;
-		COMMENT Sets the maximum durability of the current Item.
-		COMMENT @return The current Item
 		ARG 1 damage
-			COMMENT Maximum durability
-	METHOD method_8281 getMaxUseTime (Lnet/minecraft/class_2056;)I
+	METHOD method_8281 getMaxDuration (Lnet/minecraft/class_2056;)I
 		ARG 1 stack
-	METHOD method_8282 onCraft (Lnet/minecraft/class_2056;Lnet/minecraft/class_99;Lnet/minecraft/class_2674;)V
-		COMMENT Runs when the item is crafted
+	METHOD method_8282 onResult (Lnet/minecraft/class_2056;Lnet/minecraft/class_99;Lnet/minecraft/class_2674;)V
 		ARG 1 stack
-			COMMENT The item in an ItemStack form
 		ARG 2 world
-			COMMENT The world where the crafting happened
 		ARG 3 player
-			COMMENT The player who crafted the item
 	METHOD method_8283 shouldRotate ()Z
-	METHOD method_8284 setStatusEffectString (Ljava/lang/String;)Lnet/minecraft/class_2054;
-		COMMENT Sets the status effect string for the current item.
-		COMMENT Used by glowstone, spider eye, sugar, etc.
-		COMMENT @return The current Item
-		ARG 1 statusEffectString
-			COMMENT The status effect string
+	METHOD method_8284 setBrewingRecipe (Ljava/lang/String;)Lnet/minecraft/class_2054;
+		ARG 1 recipe
 	METHOD method_8285 getUseAction (Lnet/minecraft/class_2056;)Lnet/minecraft/class_30;
-		COMMENT Returns the UseAction for an item when the item is used.
-		COMMENT Used by food, potions, bows, etc.
-		COMMENT @see net.minecraft.item.BowItem
-		COMMENT @see net.minecraft.item.PotionItem
 		ARG 1 stack
-			COMMENT The ItemStack that was used
 	METHOD method_8286 getTranslationKey (Lnet/minecraft/class_2056;)Ljava/lang/String;
 		ARG 1 stack
 	METHOD method_8287 isNetworkSynced ()Z
 	METHOD method_8288 hasEnchantmentGlint (Lnet/minecraft/class_2056;)Z
-		COMMENT Returns whether the current item has an enchantment glint.
-		COMMENT Used by enchanted golden apples and enchanted items.
-		COMMENT @see net.minecraft.item.GoldenAppleItem
 		ARG 1 stack
 	METHOD method_8289 isEnchantable (Lnet/minecraft/class_2056;)Z
-		COMMENT Returns whether the current item can have enchantments.
-		COMMENT It does this by verifying that the item's maximum stack size is 1 and the item can break.
 		ARG 1 stack
 	METHOD method_8290 getRarity (Lnet/minecraft/class_2056;)Lnet/minecraft/class_12;
-		COMMENT Returns the rarity of the current Item.
-		COMMENT Used by golden apples, enchanted items and potions.
-		COMMENT @see net.minecraft.item.GoldenAppleItem
-		COMMENT @see net.minecraft.item.PotionItem
-		COMMENT @return The rarity of the ItemStack
 		ARG 1 stack
-			COMMENT The item in an ItemStack form
-	METHOD method_8291 getAttributeModifierMap ()Lcom/google/common/collect/Multimap;
-		COMMENT Returns a map containing entity attributes that are modified by the item
-	METHOD method_8292 getMaxCount ()I
-		COMMENT Returns the max stack size of an Item
-		COMMENT @return Max stack Size
-	METHOD method_8293 getBrewingRecipeString (Lnet/minecraft/class_2056;)Ljava/lang/String;
-		COMMENT Returns the status effect string for the current item.
-		COMMENT @return The status effect string
+	METHOD method_8291 getAttributeModifiers ()Lcom/google/common/collect/Multimap;
+	METHOD method_8292 getMaxStackSize ()I
+	METHOD method_8293 getBrewingRecipe (Lnet/minecraft/class_2056;)Ljava/lang/String;
 		ARG 1 stack
-	METHOD method_8294 isUnbreakable ()Z
-		COMMENT Returns whether the item is unbreakable
-		COMMENT @return Whether the item is unbreakable
-	METHOD method_8295 getItemstackTranslatedName (Lnet/minecraft/class_2056;)Ljava/lang/String;
-		COMMENT Returns the translated name of an ItemStack
-		COMMENT @return Translated name
-		COMMENT @see net.minecraft.util.CommonI18n
+	METHOD method_8294 isStackable ()Z
+	METHOD method_8295 getTranslatedName (Lnet/minecraft/class_2056;)Ljava/lang/String;
 		ARG 1 stack
-			COMMENT The ItemStack
 	METHOD method_8296 getMaxDamage ()I
-		COMMENT Returns the maximum durability of the current Item.
-		COMMENT @return Max Durability
-	METHOD method_8297 hasBrewingRecipeString (Lnet/minecraft/class_2056;)Z
-		COMMENT Returns whether the current item has a status effect string
-		COMMENT @return Whether the current item has a status effect string
+	METHOD method_8297 hasBrewingRecipe (Lnet/minecraft/class_2056;)Z
 		ARG 1 stack
 	METHOD method_8298 isDamageable ()Z
-		COMMENT Returns whether the current item is damageable. Used by tools, armor, bows, etc.
-		COMMENT @see net.minecraft.item.Toolitem
-		COMMENT @see net.minecraft.item.BowItem
-		COMMENT @see net.minecraft.item.ArmorItem
 	METHOD method_8299 setHandheld ()Lnet/minecraft/class_2054;
-		COMMENT Sets the item to look as handheld.
-		COMMENT @return The current Item
-	METHOD method_8300 shouldSyncTagToClient ()Z
+	METHOD method_8300 shouldSyncNbt ()Z
 	METHOD method_8301 getRecipeRemainder ()Lnet/minecraft/class_2054;
-		COMMENT Returns the current Item's recipe remainder
-		COMMENT @return recipeRemainder
-	METHOD method_8302 isFood ()Z
-	METHOD method_8303 hasSubTypes ()Z
+	METHOD method_8302 hasRecipeRemainder ()Z
+	METHOD method_8303 canUse ()Z
 	METHOD method_8304 init ()V
-		COMMENT This is the main method in the Item class. Both Items and BlockItems get registered here.
-		COMMENT The Item Ids starts from 256. The fields in the class Items can not be accessed before this method is called.
-		COMMENT @see net.minecarft.item.Items
 	METHOD method_8305 isHandheld ()Z
-		COMMENT Returns whether the item is supposed to look as handheld.
 	METHOD method_8424 getSpriteWithStage (II)Lnet/minecraft/class_2616;
 		ARG 1 id
-		ARG 2 idUnused
+		ARG 2 stage
 	METHOD method_8425 byBlock (Lnet/minecraft/class_160;)Lnet/minecraft/class_2054;
 		ARG 0 block
 	METHOD method_8426 addSpritesToLoad (Lnet/minecraft/class_2617;)V
@@ -268,7 +158,7 @@ CLASS net/minecraft/class_2054 net/minecraft/item/Item
 	METHOD method_8430 setSpriteName (Ljava/lang/String;)Lnet/minecraft/class_2054;
 		ARG 1 spriteName
 	METHOD method_8431 getSprite (Lnet/minecraft/class_2056;)Lnet/minecraft/class_2616;
-		ARG 1 itemStack
+		ARG 1 stack
 	METHOD method_8432 insertable (Lnet/minecraft/class_2056;)Z
-		ARG 1 itemStack
+		ARG 1 stack
 	METHOD method_8433 getSpriteName ()Ljava/lang/String;
