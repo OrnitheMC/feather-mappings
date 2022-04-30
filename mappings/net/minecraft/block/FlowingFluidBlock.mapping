@@ -1,36 +1,90 @@
 CLASS net/minecraft/class_200 net/minecraft/block/FlowingFluidBlock
-	METHOD method_834 (Lnet/minecraft/class_99;IIII)I
+	FIELD field_897 adjacentFluidBlocksXZ I
+		COMMENT A counter that can have a value between 0 and 4.
+		COMMENT It stores the amount of adjacent fluid blocks along the X and Z direction.
+	FIELD field_9383 distanceToSlope [I
+		COMMENT The distance in direction 0 to 4 to the nearest slope.<br>
+		COMMENT <ul>
+		COMMENT <li>Direction 0: -x (West) </li>
+		COMMENT <li>Direction 1: +x (East) </li>
+		COMMENT <li>Direction 2: -z (North) </li>
+		COMMENT <li>Direction 3: +z (South) </li>
+		COMMENT </ul>
+		COMMENT @see net.minecraft.util.math.MathHelper Facings
+	FIELD field_9384 shouldFlowIntoDirection [Z
+		COMMENT If the fluid should flow in this direction.
+		COMMENT <ul>
+		COMMENT <li>Direction 0: -x (West) </li>
+		COMMENT <li>Direction 1: +x (East) </li>
+		COMMENT <li>Direction 2: -z (North) </li>
+		COMMENT <li>Direction 3: +z (South) </li>
+		COMMENT </ul>
+		COMMENT @see net.minecraft.util.math.MathHelper Facings
+	METHOD method_834 compareFluidMetadata (Lnet/minecraft/class_99;IIII)I
+		COMMENT Compares the fluid metadata with the adjacent block,
+		COMMENT if it is smaller than the value to compare it to,
+		COMMENT return this value to find the lowest neighbouring fluid metadata.
+		COMMENT @param comparable the metadata value to compare to
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
+		ARG 5 comparable
 	METHOD method_836 tryFlowInto (Lnet/minecraft/class_99;IIII)V
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
 		ARG 5 metadata
-	METHOD method_8713 (Lnet/minecraft/class_99;IIIII)I
+	METHOD method_8713 searchForSlope (Lnet/minecraft/class_99;IIIII)I
+		COMMENT Searches in a direction for a slope within 4 blocks (i.e. close enough to flow directly to the slope instead of spreading outwards).
+		COMMENT @param adjacentBlock which adjacent block it is targetting (0 = west, 1 = east, 2 = north, 3 = south)
+		COMMENT @param spreadNumber amount of times it has spread outwards
+		COMMENT @see shouldFlowIntoDirection
+		COMMENT @see net.minecraft.util.math.MathHelper Facings
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-	METHOD method_8714 (Lnet/minecraft/class_99;III)V
+		ARG 5 searchDistance
+		ARG 6 adjacentBlock
+	METHOD method_8714 convertToSource (Lnet/minecraft/class_99;III)V
+		COMMENT Converts a flowing water block to a water source block by incrementing it's blockId by 1.
+		COMMENT <ul>
+		COMMENT <li>minecraft: flowing_water = 8</li>
+		COMMENT <li>minecraft: water = 9</li>
+		COMMENT </ul>
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-	METHOD method_8715 (Lnet/minecraft/class_99;III)[Z
+	METHOD method_8715 getFlowingDirections (Lnet/minecraft/class_99;III)[Z
+		COMMENT Determines in which direction the liquid should flow. (spreading outwards or targetting a slope)
+		COMMENT @see shouldFlowIntoDirection
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
 	METHOD method_8716 blocksFlow (Lnet/minecraft/class_99;III)Z
+		COMMENT A block stops liquids from flowing if it's a solid block that blocks entity movement or if it's a portal block.<br>
+		COMMENT A liquid can flow through a select number of blocks being:
+		COMMENT <ul>
+		COMMENT <li>Doors (Iron and Wooden</li>
+		COMMENT <li>Signs</li>
+		COMMENT <li>Ladders</li>
+		COMMENT <li>Crops</li>
+		COMMENT </ul>
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
 	METHOD method_8717 canFlowInto (Lnet/minecraft/class_99;III)Z
+		COMMENT Checks if the flow to this block is blocked. This can happen in 3 cases:<br>
+		COMMENT <ol>
+		COMMENT <li>The ajacent block is of the same fluid type</li>
+		COMMENT <li>The ajacent block is lava</li>
+		COMMENT <li>the ajacent block is a solid block</li>
+		COMMENT </ol>
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
