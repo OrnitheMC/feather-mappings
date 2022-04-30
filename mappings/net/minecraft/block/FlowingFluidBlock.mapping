@@ -5,19 +5,21 @@ CLASS net/minecraft/class_200 net/minecraft/block/FlowingFluidBlock
 	FIELD field_9383 distanceToSlope [I
 		COMMENT The distance in direction 0 to 4 to the nearest slope.<br>
 		COMMENT <ul>
-		COMMENT <li>Direction 0: (x-1, y, z)</li>
-		COMMENT <li>Direction 1: (x+1, y, z)</li>
-		COMMENT <li>Direction 2: (x, y, z-1)</li>
-		COMMENT <li>Direction 3: (x, y, z+1)</li>
+		COMMENT <li>Direction 0: -x (West) </li>
+		COMMENT <li>Direction 1: +x (East) </li>
+		COMMENT <li>Direction 2: -z (North) </li>
+		COMMENT <li>Direction 3: +z (South) </li>
 		COMMENT </ul>
+		COMMENT @see net.minecraft.util.math.MathHelper Facings
 	FIELD field_9384 shouldFlowIntoDirection [Z
-		COMMENT If the fluid should flow in this direction
+		COMMENT If the fluid should flow in this direction.
 		COMMENT <ul>
-		COMMENT <li>Direction 0: (x-1, y, z)</li>
-		COMMENT <li>Direction 1: (x+1, y, z)</li>
-		COMMENT <li>Direction 2: (x, y, z-1)</li>
-		COMMENT <li>Direction 3: (x, y, z+1)</li>
-		COMMENT <ul>
+		COMMENT <li>Direction 0: -x (West) </li>
+		COMMENT <li>Direction 1: +x (East) </li>
+		COMMENT <li>Direction 2: -z (North) </li>
+		COMMENT <li>Direction 3: +z (South) </li>
+		COMMENT </ul>
+		COMMENT @see net.minecraft.util.math.MathHelper Facings
 	METHOD method_834 compareFluidMetadata (Lnet/minecraft/class_99;IIII)I
 		COMMENT Compares the fluid metadata with the adjacent block,
 		COMMENT if it is smaller than the value to compare it to,
@@ -36,8 +38,10 @@ CLASS net/minecraft/class_200 net/minecraft/block/FlowingFluidBlock
 		ARG 5 metadata
 	METHOD method_8713 searchForSlope (Lnet/minecraft/class_99;IIIII)I
 		COMMENT Searches in a direction for a slope within 4 blocks (i.e. close enough to flow directly to the slope instead of spreading outwards).
-		COMMENT @param adjacentBlock which adjacent block it is targetting (0 = x-1, z), (1 = x+1, z), (2 = x, z-1), (3 = x, z+1)
+		COMMENT @param adjacentBlock which adjacent block it is targetting (0 = west, 1 = east, 2 = north, 3 = south)
 		COMMENT @param spreadNumber amount of times it has spread outwards
+		COMMENT @see shouldFlowIntoDirection
+		COMMENT @see net.minecraft.util.math.MathHelper Facings
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
