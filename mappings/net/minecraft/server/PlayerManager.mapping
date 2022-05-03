@@ -17,7 +17,7 @@ CLASS net/minecraft/class_2599 net/minecraft/server/PlayerManager
 	FIELD field_12161 whitelist Ljava/util/Set;
 	METHOD <init> (Lnet/minecraft/server/MinecraftServer;)V
 		ARG 1 server
-	METHOD method_10410 sendPacket (DDDDILnet/minecraft/class_2434;)V
+	METHOD method_10410 send (DDDDILnet/minecraft/class_2434;)V
 		ARG 1 x
 		ARG 3 y
 		ARG 5 z
@@ -41,7 +41,7 @@ CLASS net/minecraft/class_2599 net/minecraft/server/PlayerManager
 		ARG 2 dimensionId
 	METHOD method_10419 getPlayer (Ljava/lang/String;)Lnet/minecraft/class_1637;
 		ARG 1 playerName
-	METHOD method_10420 sendScoreboard (Lnet/minecraft/class_1616;Lnet/minecraft/class_1637;)V
+	METHOD method_10420 updateScoreboard (Lnet/minecraft/class_1616;Lnet/minecraft/class_1637;)V
 		ARG 1 scoreboard
 		ARG 2 player
 	METHOD method_10421 loadPlayerData (Lnet/minecraft/class_1637;)Lnet/minecraft/class_1405;
@@ -49,14 +49,14 @@ CLASS net/minecraft/class_2599 net/minecraft/server/PlayerManager
 	METHOD method_10422 teleportToDimension (Lnet/minecraft/class_1637;I)V
 		ARG 1 player
 		ARG 2 dimensionId
-	METHOD method_10423 respawnPlayer (Lnet/minecraft/class_1637;IZ)Lnet/minecraft/class_1637;
+	METHOD method_10423 respawn (Lnet/minecraft/class_1637;IZ)Lnet/minecraft/class_1637;
 		ARG 1 player
 		ARG 2 dimensionId
 		ARG 3 alive
-	METHOD method_10424 onPlayerLeavesWorld (Lnet/minecraft/class_1637;Lnet/minecraft/class_2571;)V
+	METHOD method_10424 onPlayerChangedDimension (Lnet/minecraft/class_1637;Lnet/minecraft/class_2571;)V
 		ARG 1 player
-		ARG 2 world
-	METHOD method_10425 setGameMode (Lnet/minecraft/class_1637;Lnet/minecraft/class_1637;Lnet/minecraft/class_99;)V
+		ARG 2 prevWorld
+	METHOD method_10425 copyGameMode (Lnet/minecraft/class_1637;Lnet/minecraft/class_1637;Lnet/minecraft/class_99;)V
 		ARG 1 player
 		ARG 2 fromPlayer
 		ARG 3 world
@@ -72,7 +72,7 @@ CLASS net/minecraft/class_2599 net/minecraft/server/PlayerManager
 		ARG 9 name
 		ARG 10 team
 		ARG 11 world
-	METHOD method_10427 onEntityTeleport (Lnet/minecraft/class_1745;ILnet/minecraft/class_2571;Lnet/minecraft/class_2571;)V
+	METHOD method_10427 onEntityChangedDimension (Lnet/minecraft/class_1745;ILnet/minecraft/class_2571;Lnet/minecraft/class_2571;)V
 		ARG 1 entity
 		ARG 2 dimensionId
 		ARG 3 fromWorld
@@ -95,20 +95,20 @@ CLASS net/minecraft/class_2599 net/minecraft/server/PlayerManager
 	METHOD method_10434 sendWorldInfo (Lnet/minecraft/class_1637;Lnet/minecraft/class_2571;)V
 		ARG 1 player
 		ARG 2 world
-	METHOD method_10437 addPlayer (Lnet/minecraft/class_1637;)V
+	METHOD method_10437 add (Lnet/minecraft/class_1637;)V
 		ARG 1 player
 	METHOD method_10438 setAllowCommands (Z)V
 		ARG 1 allowCommands
 	METHOD method_10439 getViewDistance ()I
-	METHOD method_10441 updateServerPos (Lnet/minecraft/class_1637;)V
+	METHOD method_10441 updateTrackedPos (Lnet/minecraft/class_1637;)V
 		ARG 1 player
 	METHOD method_10442 tick ()V
 	METHOD method_10443 remove (Lnet/minecraft/class_1637;)V
 		ARG 1 player
 	METHOD method_10444 getPlayerNames ()[Ljava/lang/String;
-	METHOD method_10445 createPlayerEntity (Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_1637;
+	METHOD method_10445 create (Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_1637;
 		ARG 1 profile
-	METHOD method_10446 updateGUI (Lnet/minecraft/class_1637;)V
+	METHOD method_10446 sendPlayerInfo (Lnet/minecraft/class_1637;)V
 		ARG 1 player
 	METHOD method_10449 getBannedPlayers ()Lnet/minecraft/class_2754;
 	METHOD method_10450 getBannedIps ()Lnet/minecraft/class_2754;
@@ -133,8 +133,8 @@ CLASS net/minecraft/class_2599 net/minecraft/server/PlayerManager
 	METHOD method_11324 removeFromWhitelist (Ljava/lang/String;)V
 		ARG 1 playerName
 	METHOD method_11325 getWhitelist ()Ljava/util/Set;
-	METHOD method_11326 getOpList ()Ljava/util/Set;
-	METHOD method_11327 getStateHandler (Ljava/lang/String;)Lnet/minecraft/class_1680;
+	METHOD method_11326 getOpPlayers ()Ljava/util/Set;
+	METHOD method_11327 getStatHandler (Ljava/lang/String;)Lnet/minecraft/class_1680;
 		ARG 1 playerName
 	METHOD method_6187 reloadWhitelist ()V
 	METHOD method_6198 checkCanJoin (Ljava/net/SocketAddress;Lcom/mojang/authlib/GameProfile;)Ljava/lang/String;
