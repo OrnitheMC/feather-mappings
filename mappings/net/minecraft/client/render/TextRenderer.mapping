@@ -2,24 +2,57 @@ CLASS net/minecraft/class_679 net/minecraft/client/render/TextRenderer
 	FIELD field_2815 fontHeight I
 	FIELD field_2816 random Ljava/util/Random;
 	FIELD field_2817 PAGES [Lnet/minecraft/class_1605;
+	FIELD field_2818 specialCharacterWidth [I
+	FIELD field_2819 glyphSizes [B
+	FIELD field_2820 colors [I
 	FIELD field_2821 fontTexture Lnet/minecraft/class_1605;
 	FIELD field_2822 textureManager Lnet/minecraft/class_1232;
+	FIELD field_2823 xPos F
+	FIELD field_2824 zPos F
+	FIELD field_2825 unicode Z
 	FIELD field_2826 rightToLeft Z
+	FIELD field_2827 r F
+		COMMENT The amount of red in the texts (r, g, b, a) color.
+	FIELD field_2828 g F
+		COMMENT The amount of blue in the texts (r, g, b, a) color.
+	FIELD field_2829 b F
+		COMMENT The amount of green in the texts (r, g, b, a) color.
+	FIELD field_2830 a F
+		COMMENT The amount of alpha in the texts (r, g, b, a) color.
+	FIELD field_2831 color I
+	FIELD field_2832 obfuscated Z
+	FIELD field_2833 bold Z
+	FIELD field_2834 reset Z
+	FIELD field_2835 underline Z
+	FIELD field_2836 strikethrough Z
 	METHOD <init> (Lnet/minecraft/class_2277;Lnet/minecraft/class_1605;Lnet/minecraft/class_1232;Z)V
 		ARG 1 options
 		ARG 2 fontTexture
 		ARG 3 textureManager
+		ARG 4 unicode
+	METHOD method_2381 getUnicode ()Z
+	METHOD method_2382 getSpecialCharacterWidth (C)I
+		ARG 1 character
+	METHOD method_2383 renderText (ICZ)F
+		ARG 1 formattingChar
+		ARG 2 unicodeChar
+		ARG 3 reset
 	METHOD method_2384 getFontPage (I)Lnet/minecraft/class_1605;
 		ARG 1 page
+	METHOD method_2385 renderBasicText (IZ)F
+		ARG 1 formattingChar
+		ARG 2 reset
 	METHOD method_2386 getStringWidth (Ljava/lang/String;)I
 		ARG 1 text
 	METHOD method_2387 drawWithShadow (Ljava/lang/String;III)I
 		ARG 1 text
+		ARG 2 x
+		ARG 3 y
 		ARG 4 color
 	METHOD method_2389 trimToWidth (Ljava/lang/String;I)Ljava/lang/String;
 		ARG 1 text
 		ARG 2 width
-	METHOD method_2390 draw (Ljava/lang/String;III)I
+	METHOD method_2390 drawWithoutShadow (Ljava/lang/String;III)I
 		ARG 1 text
 		ARG 2 x
 		ARG 3 y
@@ -30,24 +63,102 @@ CLASS net/minecraft/class_679 net/minecraft/client/render/TextRenderer
 		ARG 3 y
 		ARG 4 maxWidth
 		ARG 5 color
+	METHOD method_2392 drawLayer (Ljava/lang/String;IIIIZ)I
+		ARG 1 line
+		ARG 2 x
+		ARG 3 y
+		ARG 4 maxWidth
+		ARG 5 color
+		ARG 6 colored
+	METHOD method_2393 drawText (Ljava/lang/String;IIIZ)V
+		ARG 1 text
+		ARG 2 x
+		ARG 3 y
+		ARG 4 maxWidth
+		ARG 5 color
 	METHOD method_2394 trimToWidth (Ljava/lang/String;IZ)Ljava/lang/String;
+		ARG 1 text
+		ARG 2 width
+		ARG 3 shouldInverse
+	METHOD method_2395 drawLine (Ljava/lang/String;Z)V
+		COMMENT 0 1 2 3 4 5 6 7 8 9 a  b  c  d  e  f  k  l  m  n  o  r
+		COMMENT 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21
+		ARG 1 text
+		ARG 2 hasShadow
+	METHOD method_2396 setUnicode (Z)V
+		ARG 1 unicode
 	METHOD method_2397 isRightToLeft ()Z
+	METHOD method_2399 renderUnicodeText (CZ)F
+		ARG 1 unicodeCharacter
+		ARG 2 reset
 	METHOD method_2400 bindFontPageTexture (I)V
 		ARG 1 page
+	METHOD method_2401 getAllFormatCharacters (Ljava/lang/String;)Ljava/lang/String;
+		COMMENT Strips all non formatting characters from a string and returns an string containing only chained formatting characters.
+		ARG 0 text
 	METHOD method_2402 drawLayer (Ljava/lang/String;IIIZ)I
 		ARG 1 text
+		ARG 2 x
+		ARG 3 y
 		ARG 4 color
+		ARG 5 colored
+	METHOD method_2403 getTextBoxHeight (Ljava/lang/String;I)I
+		ARG 1 text
+		ARG 2 lineLength
 	METHOD method_2404 setRightToLeft (Z)V
 		ARG 1 rightToLeft
 	METHOD method_2405 init ()V
+	METHOD method_2406 isColorCharacter (C)Z
+		COMMENT Checks if a certain formatting character is a color. The different colors are:
+		COMMENT <ul>
+		COMMENT <li><b>0:</b> <span style="color:#000000";>black</span></li>
+		COMMENT <li><b>1:</b> <span style="color:#0000AA";>dark blue</span></li>
+		COMMENT <li><b>2:</b> <span style="color:#00AA00";>dark green</span></li>
+		COMMENT <li><b>3:</b> <span style="color:#00AAAA";>dark aqua</span></li>
+		COMMENT <li><b>4:</b> <span style="color:#AA0000";>dark red</span></li>
+		COMMENT <li><b>5:</b> <span style="color:#AA00AA";>dark purple</span></li>
+		COMMENT <li><b>6:</b> <span style="color:#FFAA00";>gold</span></li>
+		COMMENT <li><b>7:</b> <span style="color:#AAAAAA";>gray</span></li>
+		COMMENT <li><b>8:</b> <span style="color:#555555";>dark gray</span></li>
+		COMMENT <li><b>9:</b> <span style="color:#5555FF";>blue</span></li>
+		COMMENT <li><b>a/A:</b> <span style="color:#55FF55";>green</span></li>
+		COMMENT <li><b>b/B:</b> <span style="color:#55FFFF";>aqua</span></li>
+		COMMENT <li><b>c/C:</b> <span style="color:#FF5555";>red</span></li>
+		COMMENT <li><b>d/D:</b> <span style="color:#FF55FF";>light_purple</span></li>
+		COMMENT <li><b>e/E:</b> <span style="color:#FFFF55";>yellow</span></li>
+		COMMENT <li><b>f/F:</b> <span style="color:#FFFFFF";>white</span></li>
+		COMMENT <li><b>g/G:</b> <span style="color:#DDD605";>minecoin gold</span></li>
+		COMMENT </ul>
+		ARG 0 formatChar
 	METHOD method_2407 mirror (Ljava/lang/String;)Ljava/lang/String;
 		ARG 1 text
 	METHOD method_2408 wrapLines (Ljava/lang/String;I)Ljava/util/List;
+		ARG 1 text
+		ARG 2 lineLength
+	METHOD method_2409 getGlyphSizes ()V
+	METHOD method_2410 isFormattinCharacter (C)Z
+		COMMENT Checks the type of formatting character.
+		COMMENT <ul>
+		COMMENT <li><b>k:</b> <span style="color:#000000";>obfuscated</span></li>
+		COMMENT <li><b>l:</b> <span style="color:#000000";><b>bold</b></span></li>
+		COMMENT <li><b>m:</b> <span style="color:#000000";><strike>strikethrough</strike></span></li>
+		COMMENT <li><b>n:</b> <span style="color:#000000";><u>underline</u></span></li>
+		COMMENT <li><b>o:</b> <span style="color:#000000";><i>italic</i></span></li>
+		COMMENT <li><b>r:</b> <span style="color:#000000";>reset</span></li>
+		COMMENT </ul>
+		ARG 0 formatChar
 	METHOD method_2411 trimEndNewlines (Ljava/lang/String;)Ljava/lang/String;
 		ARG 1 text
 	METHOD method_2412 wrapStringToWidth (Ljava/lang/String;I)Ljava/lang/String;
 		ARG 1 text
 		ARG 2 width
+	METHOD method_2413 reset ()V
 	METHOD method_2414 getCharacterCountForWidth (Ljava/lang/String;I)I
 		ARG 1 text
 		ARG 2 offset
+	METHOD method_9189 draw (Ljava/lang/String;IIIZ)I
+		ARG 1 text
+		ARG 2 x
+		ARG 3 y
+		ARG 4 color
+		ARG 5 shadow
