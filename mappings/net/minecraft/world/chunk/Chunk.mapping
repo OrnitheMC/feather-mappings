@@ -29,7 +29,7 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 		COMMENT Unused
 	FIELD field_9596 inhabitedTime J
 		COMMENT The number of ticks for which players have been present in this chunk - used for local difficulty.
-	FIELD field_9597 subchunks [Lnet/minecraft/class_401;
+	FIELD field_9597 sections [Lnet/minecraft/class_401;
 	FIELD field_9598 biomes [B
 		COMMENT The biome id for each column in this chunk.
 	METHOD <init> (Lnet/minecraft/class_99;II)V
@@ -48,11 +48,10 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 		ARG 4 chunkX
 		ARG 5 chunkZ
 	METHOD method_1343 setHeightmap ()V
-	METHOD method_1344 isAtChunkPos (II)Z
+	METHOD method_1344 isAt (II)Z
 		ARG 1 chunkX
 		ARG 2 chunkZ
 	METHOD method_1346 checkSkylight (IIII)V
-		COMMENT Checks the skylight for a given (x, z) column between minY and maxY
 		ARG 1 x
 		ARG 2 z
 		ARG 3 minY
@@ -77,6 +76,11 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 		ARG 2 chunkY
 	METHOD method_1363 shouldSave (Z)Z
 		ARG 1 saveEntities
+	METHOD method_1365 update ([BIIZ)V
+		ARG 1 rawChunkData
+		ARG 2 sectionsWithData
+		ARG 3 sectionsWithBlockIdsUpper
+		ARG 4 full
 	METHOD method_1368 setSkylight ()V
 	METHOD method_1369 getHighestY (II)I
 		ARG 1 sectionX
@@ -86,30 +90,26 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 	METHOD method_1373 tick (Z)V
 		ARG 1 beFast
 	METHOD method_1374 load ()V
-	METHOD method_1375 areSubchunksEmpty (II)Z
-		COMMENT Checks if all subchunks inside the range [minY, maxY[ contain only air (i.e. are empty).
+	METHOD method_1375 areSectionsEmpty (II)Z
 		ARG 1 minY
 		ARG 2 maxY
 	METHOD method_1376 checkSkylight (III)V
-		COMMENT Checks the skylight of a given (x, z) column below a maximum y value
 		ARG 1 x
 		ARG 2 z
 		ARG 3 maxY
 	METHOD method_1380 unload ()V
 	METHOD method_1381 updateSkylight (II)V
-		ARG 1 x
-		ARG 2 z
+		ARG 1 sectionX
+		ARG 2 sectionZ
 	METHOD method_1382 resetLight (III)V
-		ARG 1 x
+		ARG 1 sectionX
 		ARG 2 y
-		ARG 3 z
+		ARG 3 sectionZ
 	METHOD method_1385 markDirty ()V
 	METHOD method_1386 updateLight (II)Z
 		COMMENT updates the light withing the chunk.
-		COMMENT Important!! the variable chunkX and chunkZ refer to the x and z values relative to the chunk,
-		COMMENT and thus are limited to the interval [0, 16[.
-		ARG 1 chunkX
-		ARG 2 xhunkZ
+		ARG 1 sectionX
+		ARG 2 sectionZ
 	METHOD method_1387 getOpacity (III)I
 		ARG 1 sectionX
 		ARG 2 y
@@ -122,8 +122,9 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 	METHOD method_1401 isPopulated ()Z
 	METHOD method_1403 getChunkPos ()Lnet/minecraft/class_92;
 	METHOD method_1404 getBiomes ()[B
-	METHOD method_1405 resetLightUpdates ()V
+	METHOD method_1405 clearLightUpdates ()V
 	METHOD method_1406 processQueuedLightUpdates ()V
+	METHOD method_1407 populateLight ()V
 	METHOD method_8916 checkBorderLight (I)V
 		COMMENT Check the light around the border of a chunk. The border variable determines which border to check.
 		COMMENT     - border = 0 : south
@@ -152,9 +153,9 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 		ARG 3 sectionZ
 		ARG 4 blockEntity
 	METHOD method_8921 getBiomeAt (IILnet/minecraft/class_123;)Lnet/minecraft/class_113;
-		ARG 1 x
-		ARG 2 z
-		ARG 3 biomeSource
+		ARG 1 sectionX
+		ARG 2 sectionZ
+		ARG 3 source
 	METHOD method_8922 getLightLevel (Lnet/minecraft/class_106;III)I
 		ARG 1 type
 		ARG 2 sectionX
@@ -192,12 +193,12 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 		ARG 2 y
 		ARG 3 sectionZ
 	METHOD method_8930 getRainOrSnowHeight (II)I
-		ARG 1 x
-		ARG 2 z
+		ARG 1 sectionX
+		ARG 2 sectionZ
 	METHOD method_8931 isTopOfColumn (III)Z
-		ARG 1 x
+		ARG 1 sectionX
 		ARG 2 y
-		ARG 3 z
+		ARG 3 sectionZ
 	METHOD method_8932 getBlockEntity (III)Lnet/minecraft/class_2193;
 		ARG 1 sectionX
 		ARG 2 y
