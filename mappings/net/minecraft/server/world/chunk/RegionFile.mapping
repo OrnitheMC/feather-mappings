@@ -2,10 +2,16 @@ CLASS net/minecraft/class_407 net/minecraft/server/world/chunk/RegionFile
 	FIELD field_1618 BLOCK_BUFFER [B
 	FIELD field_1619 file Ljava/io/File;
 	FIELD field_1620 randomAccessFile Ljava/io/RandomAccessFile;
-	FIELD field_1621 lastBlockOffsets [I
-		COMMENT Contains the offsets of the last 4KB block that a chunk occupies in the region
-		COMMENT file, or zero if a chunk does not have any data. This array is also written to
-		COMMENT the region file starting at byte 0.
+	FIELD field_1621 chunkBlockInfo [I
+		COMMENT Contains the block offset and number of blocks that each chunk occupies. If
+		COMMENT a chunk does not store any data, then the array entry contains zero. The format
+		COMMENT of a non-empty entry in the array is as follows:
+		COMMENT <ul>
+		COMMENT     <li>bits[0:7] , the number of blocks that the chunk data occupies</li>
+		COMMENT     <li>bits[8:31], the block offset of the first byte in the chunk data</li>
+		COMMENT </ul>
+		COMMENT The above is specified in lsb first. This array is also written to the region
+		COMMENT file starting at byte 0.
 	FIELD field_1622 saveTimes [I
 		COMMENT Contains the times for the latest modification to each chunk. This array
 		COMMENT is also written to the region file starting at byte 4096.
@@ -23,15 +29,16 @@ CLASS net/minecraft/class_407 net/minecraft/server/world/chunk/RegionFile
 	METHOD method_1447 getChunkInputStream (II)Ljava/io/DataInputStream;
 		ARG 1 chunkX
 		ARG 2 chunkZ
-	METHOD method_1448 writeLastBlockOffset (III)V
-		COMMENT Writes the given block offset to the region file.
+	METHOD method_1448 writeChunkBlockInfo (III)V
+		COMMENT Writes the given chunk block info to the region file. See {@link #chunkBlockInfo}
+		COMMENT for information about the format of the block info.
 		COMMENT
 		COMMENT @param chunkX the x-coordinate of the chunk inside the region
 		COMMENT @param chunkY the y-coordinate of the chunk inside the region
-		COMMENT @param lastBlockOffset the offset of the last 4KB block that the chunk occupies
+		COMMENT @param blockInfo the block info for the specified chunk
 		ARG 1 chunkX
 		ARG 2 chunkZ
-		ARG 3 lastBlockOffset
+		ARG 3 blockInfo
 	METHOD method_1449 writeChunkData (II[BI)V
 		COMMENT Writes the chunk data at the given coordinates to the region file. Any
 		COMMENT previous chunk data at the same coordinates will be discarded.
@@ -68,6 +75,9 @@ CLASS net/minecraft/class_407 net/minecraft/server/world/chunk/RegionFile
 		ARG 3 timeSeconds
 	METHOD method_1453 close ()V
 	METHOD method_1454 hasChunkData (II)Z
+		COMMENT @param chunkX the x-coordinate of the chunk inside the region
+		COMMENT @param chunkY the y-coordinate of the chunk inside the region
+		COMMENT
 		COMMENT @return True, if this region file contains chunk data for the specified
 		COMMENT         coordinates, false otherwise.
 		ARG 1 chunkX
@@ -75,8 +85,12 @@ CLASS net/minecraft/class_407 net/minecraft/server/world/chunk/RegionFile
 	METHOD method_1455 isOutsideRegion (II)Z
 		ARG 1 chunkX
 		ARG 2 chunkZ
-	METHOD method_1456 getLastBlockOffset (II)I
-		COMMENT @return The offset of the last 4KB block that the chunk data at the
-		COMMENT         specified coordinates occupies.
+	METHOD method_1456 getChunkBlockInfo (II)I
+		COMMENT @param chunkX the x-coordinate of the chunk inside the region
+		COMMENT @param chunkY the y-coordinate of the chunk inside the region
+		COMMENT
+		COMMENT @return The chunk block info for the chunk at the specified location. See
+		COMMENT         {@link #chunkBlockInfo} for information about the format of the
+		COMMENT         block info.
 		ARG 1 chunkX
 		ARG 2 chunkZ
