@@ -2,6 +2,8 @@ CLASS net/minecraft/class_2674 net/minecraft/entity/living/player/PlayerEntity
 	FIELD field_11710 enderchest Lnet/minecraft/class_2007;
 	FIELD field_11711 sleeping Z
 	FIELD field_11712 sleepingPos Lnet/minecraft/class_2614;
+	FIELD field_11713 sleepOffsetX F
+	FIELD field_11714 sleepOffsetZ F
 	FIELD field_11715 abilities Lnet/minecraft/class_1961;
 	FIELD field_11716 xpLevel I
 	FIELD field_11717 xpTotal I
@@ -20,11 +22,19 @@ CLASS net/minecraft/class_2674 net/minecraft/entity/living/player/PlayerEntity
 	FIELD field_11728 prevStrideDistance F
 	FIELD field_11729 strideDistance F
 	FIELD field_11730 xpCooldown I
+	FIELD field_11731 lastCapeX D
+	FIELD field_11732 lastCapeY D
+	FIELD field_11733 lastCapeZ D
+	FIELD field_11734 capeX D
+	FIELD field_11735 capeY D
+	FIELD field_11736 capeZ D
 	FIELD field_11737 spawnPointPosition Lnet/minecraft/class_2614;
+	FIELD field_11738 sleepOffsetY F
 	FIELD field_11739 hasSpawnpointSet Z
 	FIELD field_11740 minecartTravelStartPos Lnet/minecraft/class_2614;
 	FIELD field_11741 heldItem Lnet/minecraft/class_2056;
 	FIELD field_11742 itemUseTimer I
+	FIELD field_11743 lastXpSoundTime I
 	FIELD field_11744 profiler Lcom/mojang/authlib/GameProfile;
 	METHOD <init> (Lnet/minecraft/class_99;Lcom/mojang/authlib/GameProfile;)V
 		ARG 1 world
@@ -119,6 +129,7 @@ CLASS net/minecraft/class_2674 net/minecraft/entity/living/player/PlayerEntity
 		COMMENT @return the ratio of the number of the amount of armor equipped to the total armor slots
 	METHOD method_10875 getMainHandStack ()Lnet/minecraft/class_2056;
 	METHOD method_10876 clearSelectedSlot ()V
+	METHOD method_10877 tryRespawn ()V
 	METHOD method_10878 getGameProfile ()Lcom/mojang/authlib/GameProfile;
 	METHOD method_10879 getRespawnDirection ()F
 	METHOD method_10880 isSleptEnough ()Z
@@ -176,6 +187,8 @@ CLASS net/minecraft/class_2674 net/minecraft/entity/living/player/PlayerEntity
 		ARG 1 value
 	METHOD method_10910 increaseXp (I)V
 		ARG 1 levels
+	METHOD method_10911 onEnterBed (I)V
+		ARG 1 facing
 	METHOD method_7977 setGameMode (Lnet/minecraft/class_2087;)V
 		ARG 1 gameMode
 	METHOD method_7979 openEditSignScreen (Lnet/minecraft/class_2193;)V
