@@ -1,42 +1,48 @@
 CLASS net/minecraft/class_1638 net/minecraft/server/ServerPlayerInteractionManager
-	FIELD field_11242 lastX I
-	FIELD field_11243 lastY I
-	FIELD field_11244 lastZ I
-	FIELD field_11245 x I
-	FIELD field_11246 y I
-	FIELD field_11247 z I
+	FIELD field_11241 miningStartTime I
+	FIELD field_11242 targetX I
+	FIELD field_11243 targetY I
+	FIELD field_11244 targetZ I
+	FIELD field_11245 prevTargetX I
+	FIELD field_11246 prevTargetY I
+	FIELD field_11247 prevTargetZ I
 	FIELD field_6663 world Lnet/minecraft/class_99;
 	FIELD field_6664 player Lnet/minecraft/class_1637;
 	FIELD field_6665 gameMode Lnet/minecraft/class_2087;
+	FIELD field_6666 isMiningBlock Z
+	FIELD field_6669 ticks I
+	FIELD field_6670 wasMiningBlock Z
+	FIELD field_6672 prevMiningStartTime I
+	FIELD field_6673 prevMiningProgress I
 	METHOD <init> (Lnet/minecraft/class_99;)V
 		ARG 1 world
-	METHOD method_10385 (III)V
+	METHOD method_10385 finishMiningBlock (III)V
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
-	METHOD method_10386 onLeftClick (IIII)V
+	METHOD method_10386 startMiningBlock (IIII)V
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
-		ARG 4 direction
-	METHOD method_10387 createBlockBreakingSounds (III)Z
+		ARG 4 face
+	METHOD method_10387 tryMineBlock (III)Z
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
-	METHOD method_10388 (III)V
+	METHOD method_10388 stopMiningBlock (III)V
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
-	METHOD method_10389 (III)Z
+	METHOD method_10389 mineBlock (III)Z
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
-	METHOD method_6085 update ()V
+	METHOD method_6085 tick ()V
 	METHOD method_6086 setGameMode (Lnet/minecraft/class_2087;)V
 		ARG 1 gameMode
 	METHOD method_6089 setWorld (Lnet/minecraft/class_2571;)V
-		ARG 1 serverWorld
-	METHOD method_6090 (Lnet/minecraft/class_2674;Lnet/minecraft/class_99;Lnet/minecraft/class_2056;)Z
+		ARG 1 world
+	METHOD method_6090 useItem (Lnet/minecraft/class_2674;Lnet/minecraft/class_99;Lnet/minecraft/class_2056;)Z
 		ARG 1 player
 		ARG 2 world
 		ARG 3 item
@@ -47,11 +53,11 @@ CLASS net/minecraft/class_1638 net/minecraft/server/ServerPlayerInteractionManag
 		ARG 4 x
 		ARG 5 y
 		ARG 6 z
-		ARG 7 dir
+		ARG 7 face
 		ARG 8 dx
 		ARG 9 dy
 		ARG 10 dz
 	METHOD method_6092 getGameMode ()Lnet/minecraft/class_2087;
-	METHOD method_6093 setGameModeIfNotPresent (Lnet/minecraft/class_2087;)V
+	METHOD method_6093 setGameModeIfNotSet (Lnet/minecraft/class_2087;)V
 		ARG 1 gameMode
 	METHOD method_6097 isCreative ()Z

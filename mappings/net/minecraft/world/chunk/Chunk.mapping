@@ -3,39 +3,35 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 	FIELD field_1563 chunkZ I
 	FIELD field_1564 LOGGER Lorg/apache/logging/log4j/Logger;
 	FIELD field_1567 minRainOrSnowHeight [I
-		COMMENT Stores the min y-value at which rain or snow can fall for a given (x, z) position
-	FIELD field_1568 updateLight [Z
-		COMMENT the (x, z) positions that need their skylight updated.
+		COMMENT The minimum y-coordinate at which snow or rain can fall for each column in this chunk.
+	FIELD field_1568 needsLightUpdate [Z
+		COMMENT Stores whether each column in this chunk needs a light update.
 	FIELD field_1569 loaded Z
-		COMMENT This value is true if the chunk is currently loaded into the world
+		COMMENT True if  this chunk is currently loaded into the world.
 	FIELD field_1570 world Lnet/minecraft/class_99;
 	FIELD field_1572 recheckGap Z
 	FIELD field_1575 terrainPopulated Z
 	FIELD field_1576 lightPopulated Z
 	FIELD field_1577 gapsPopulated Z
 	FIELD field_1578 modified Z
-		COMMENT Used to mark the chunk dirty (i.e. needs to be updated)
+		COMMENT Used to check if this chunk has changes that need to be saved to disk.
 	FIELD field_1579 containsEntities Z
-		COMMENT If the chunk contains entities it is saved each chunk (to save the updated positions)
+		COMMENT True if this chunk contains entities - used to decide how often to save this chunk to disk.
 	FIELD field_1581 highestOpaqueBlock I
 	FIELD field_1583 queuedLightUpdates I
 	FIELD field_9590 hasSkyLight Z
 	FIELD field_9591 heightMap [I
-		COMMENT A map containing the y-position of the highest block in a given xz column
+		COMMENT The y-coordinate of the highest non-air block for each column in this chunk.
 	FIELD field_9592 blockEntities Ljava/util/Map;
-		COMMENT A hashmap containing positions as a {@link  net.minecraft.util.math.Vec3i} as keys and the
-		COMMENT {@link net.minecraft.block.entity.BlockEntity} corresponding to that position as a value.
 	FIELD field_9593 entitiesBySection [Ljava/util/List;
-		COMMENT An array of 16 lists. Each list corresponds to a subchunk (A 16x16x16 volume inside the chunk).
-		COMMENT This list then contains all the entities inside that subchunk.
 	FIELD field_9594 lastSaveTime J
-	FIELD field_9595 sendPacket Z
-		COMMENT If this is true packets are sent to the client with updates about the chunk.
+	FIELD field_9595 Z
+		COMMENT Unused
 	FIELD field_9596 inhabitedTime J
-		COMMENT The time players have been in a chunk. Used for local difficulty.
-	FIELD field_9597 subchunks [Lnet/minecraft/class_401;
+		COMMENT The number of ticks for which players have been present in this chunk - used for local difficulty.
+	FIELD field_9597 sections [Lnet/minecraft/class_401;
 	FIELD field_9598 biomes [B
-		COMMENT Stores the biome-ID for each (x, z) position
+		COMMENT The biome id for each column in this chunk.
 	METHOD <init> (Lnet/minecraft/class_99;II)V
 		ARG 1 world
 		ARG 2 chunkX
@@ -52,11 +48,10 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 		ARG 4 chunkX
 		ARG 5 chunkZ
 	METHOD method_1343 setHeightmap ()V
-	METHOD method_1344 isAtChunkPos (II)Z
+	METHOD method_1344 isAt (II)Z
 		ARG 1 chunkX
 		ARG 2 chunkZ
 	METHOD method_1346 checkSkylight (IIII)V
-		COMMENT Checks the skylight for a given (x, z) column between minY and maxY
 		ARG 1 x
 		ARG 2 z
 		ARG 3 minY
@@ -81,6 +76,11 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 		ARG 2 chunkY
 	METHOD method_1363 shouldSave (Z)Z
 		ARG 1 saveEntities
+	METHOD method_1365 update ([BIIZ)V
+		ARG 1 rawChunkData
+		ARG 2 sectionsWithData
+		ARG 3 sectionsWithBlockIdsUpper
+		ARG 4 full
 	METHOD method_1368 setSkylight ()V
 	METHOD method_1369 getHighestY (II)I
 		ARG 1 sectionX
@@ -90,30 +90,26 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 	METHOD method_1373 tick (Z)V
 		ARG 1 beFast
 	METHOD method_1374 load ()V
-	METHOD method_1375 areSubchunksEmpty (II)Z
-		COMMENT Checks if all subchunks inside the range [minY, maxY[ contain only air (i.e. are empty).
+	METHOD method_1375 areSectionsEmpty (II)Z
 		ARG 1 minY
 		ARG 2 maxY
 	METHOD method_1376 checkSkylight (III)V
-		COMMENT Checks the skylight of a given (x, z) column below a maximum y value
 		ARG 1 x
 		ARG 2 z
 		ARG 3 maxY
 	METHOD method_1380 unload ()V
 	METHOD method_1381 updateSkylight (II)V
-		ARG 1 x
-		ARG 2 z
+		ARG 1 sectionX
+		ARG 2 sectionZ
 	METHOD method_1382 resetLight (III)V
-		ARG 1 x
+		ARG 1 sectionX
 		ARG 2 y
-		ARG 3 z
+		ARG 3 sectionZ
 	METHOD method_1385 markDirty ()V
 	METHOD method_1386 updateLight (II)Z
 		COMMENT updates the light withing the chunk.
-		COMMENT Important!! the variable chunkX and chunkZ refer to the x and z values relative to the chunk,
-		COMMENT and thus are limited to the interval [0, 16[.
-		ARG 1 chunkX
-		ARG 2 xhunkZ
+		ARG 1 sectionX
+		ARG 2 sectionZ
 	METHOD method_1387 getOpacity (III)I
 		ARG 1 sectionX
 		ARG 2 y
@@ -126,8 +122,9 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 	METHOD method_1401 isPopulated ()Z
 	METHOD method_1403 getChunkPos ()Lnet/minecraft/class_92;
 	METHOD method_1404 getBiomes ()[B
-	METHOD method_1405 resetLightUpdates ()V
+	METHOD method_1405 clearLightUpdates ()V
 	METHOD method_1406 processQueuedLightUpdates ()V
+	METHOD method_1407 populateLight ()V
 	METHOD method_8916 checkBorderLight (I)V
 		COMMENT Check the light around the border of a chunk. The border variable determines which border to check.
 		COMMENT     - border = 0 : south
@@ -156,9 +153,9 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 		ARG 3 sectionZ
 		ARG 4 blockEntity
 	METHOD method_8921 getBiomeAt (IILnet/minecraft/class_123;)Lnet/minecraft/class_113;
-		ARG 1 x
-		ARG 2 z
-		ARG 3 biomeSource
+		ARG 1 sectionX
+		ARG 2 sectionZ
+		ARG 3 source
 	METHOD method_8922 getLightLevel (Lnet/minecraft/class_106;III)I
 		ARG 1 type
 		ARG 2 sectionX
@@ -196,12 +193,12 @@ CLASS net/minecraft/class_399 net/minecraft/world/chunk/Chunk
 		ARG 2 y
 		ARG 3 sectionZ
 	METHOD method_8930 getRainOrSnowHeight (II)I
-		ARG 1 x
-		ARG 2 z
+		ARG 1 sectionX
+		ARG 2 sectionZ
 	METHOD method_8931 isTopOfColumn (III)Z
-		ARG 1 x
+		ARG 1 sectionX
 		ARG 2 y
-		ARG 3 z
+		ARG 3 sectionZ
 	METHOD method_8932 getBlockEntity (III)Lnet/minecraft/class_2193;
 		ARG 1 sectionX
 		ARG 2 y
