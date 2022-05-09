@@ -4,8 +4,8 @@ CLASS net/minecraft/class_407 net/minecraft/server/world/chunk/RegionFile
 	FIELD field_1619 file Ljava/io/File;
 	FIELD field_1620 randomAccessFile Ljava/io/RandomAccessFile;
 	FIELD field_1621 chunkBlockInfo [I
-		COMMENT Contains the block offset and number of blocks that each chunk occupies. If a
-		COMMENT chunk does not store any data, then the array entry contains zero. The format
+		COMMENT Contains the 4KB block offset and number of blocks that each chunk occupies. If
+		COMMENT a chunk does not store any data, then the array entry contains zero. The format
 		COMMENT of a non-zero entry in the array is as follows:
 		COMMENT <ul>
 		COMMENT     <li>bits[0:7] , the number of blocks that the chunk data occupies</li>
@@ -13,6 +13,9 @@ CLASS net/minecraft/class_407 net/minecraft/server/world/chunk/RegionFile
 		COMMENT </ul>
 		COMMENT The above is specified in lsb first. This array is also written to the region
 		COMMENT file starting at byte 0.
+		COMMENT <br><br>
+		COMMENT Note: A block in this context should be understood as 4096 continous bytes in
+		COMMENT the region file.
 	FIELD field_1622 chunkSaveTimes [I
 		COMMENT Contains the times for the latest modification to each chunk. This array
 		COMMENT is also written to the region file starting at byte 4096 (block offset 1).
