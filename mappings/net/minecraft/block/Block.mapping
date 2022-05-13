@@ -167,7 +167,7 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 3 y
 		ARG 4 z
 		ARG 5 entity
-	METHOD method_661 onMiningStart (Lnet/minecraft/class_99;IIILnet/minecraft/class_2674;)V
+	METHOD method_661 onStartMining (Lnet/minecraft/class_99;IIILnet/minecraft/class_2674;)V
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
@@ -209,7 +209,7 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 1 entity
 	METHOD method_679 getMiningSpeed (Lnet/minecraft/class_2674;Lnet/minecraft/class_99;III)F
 		COMMENT Calculates the mining speed of this block, taking into consideration the given
-		COMMENT player's status effects such as haste and mining fatigue.
+		COMMENT player's status effects such as haste and mining fatigue, in progress per tick.
 		ARG 1 player
 		ARG 2 world
 		ARG 3 x
@@ -307,13 +307,14 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 	METHOD method_733 getOpacity ()I
 	METHOD method_734 isTranslucent ()Z
 	METHOD method_735 getLightLevel ()I
-	METHOD method_736 usesNeighbourLight ()Z
+	METHOD method_736 usesNeighborLight ()Z
 	METHOD method_737 getMaterial ()Lnet/minecraft/class_591;
 	METHOD method_738 isNormalBlock ()Z
 		COMMENT Checks whether this block is a normal block.
 		COMMENT A normal block is one that blocks movement and can be rendered as a normal block.
-	METHOD method_739 conductsPower ()Z
-		COMMENT Returns whether this block conducts redstone power.
+	METHOD method_739 isSolid ()Z
+		COMMENT Returns whether this block is solid. Solid blocks conduct redstone,
+		COMMENT suffocate entities, and allow mobs to spawn.
 	METHOD method_741 setUnbreakable ()Lnet/minecraft/class_160;
 		COMMENT Sets this block as unbreakable by setting its strength to -1.
 		COMMENT Used by barriers and command blocks.
@@ -376,7 +377,7 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 3 y
 		ARG 4 z
 		ARG 5 stack
-	METHOD method_8613 onBlockRemoved (Lnet/minecraft/class_99;IIILnet/minecraft/class_160;I)V
+	METHOD method_8613 onRemoved (Lnet/minecraft/class_99;IIILnet/minecraft/class_160;I)V
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
@@ -428,7 +429,7 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 	METHOD method_8621 getTextureSprite (II)Lnet/minecraft/class_2616;
 		ARG 1 dir
 		ARG 2 metadata
-	METHOD method_8622 onBlockAdded (Lnet/minecraft/class_99;III)V
+	METHOD method_8622 onAdded (Lnet/minecraft/class_99;III)V
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
@@ -528,7 +529,7 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-	METHOD method_8640 beforeBlockRemoved (Lnet/minecraft/class_99;IIII)V
+	METHOD method_8640 beforeRemoved (Lnet/minecraft/class_99;IIII)V
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
