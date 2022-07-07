@@ -1,18 +1,18 @@
-CLASS net/minecraft/class_101 net/minecraft/world/WorldManager
-	METHOD method_445 onRenderRegionUpdate (IIIIII)V
-		ARG 1 x1
-		ARG 2 y1
-		ARG 3 z1
-		ARG 4 x2
-		ARG 5 y2
-		ARG 6 z2
-	METHOD method_446 syncWorldEvent (IIIII)V
-		ARG 1 eventId
+CLASS net/minecraft/class_101 net/minecraft/world/WorldEventListener
+	METHOD method_445 onRegionChanged (IIIIII)V
+		ARG 1 minX
+		ARG 2 minY
+		ARG 3 minZ
+		ARG 4 maxX
+		ARG 5 maxY
+		ARG 6 maxZ
+	METHOD method_446 doWorldEvent (IIIII)V
+		ARG 1 type
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
 		ARG 5 data
-	METHOD method_447 onParticleAdded (Ljava/lang/String;DDDDDD)V
+	METHOD method_447 addParticle (Ljava/lang/String;DDDDDD)V
 		ARG 1 particle
 		ARG 2 minX
 		ARG 4 minY
@@ -29,15 +29,15 @@ CLASS net/minecraft/class_101 net/minecraft/world/WorldManager
 		ARG 9 pitch
 	METHOD method_451 onEntitySpawned (Lnet/minecraft/class_1745;)V
 		ARG 1 entity
-	METHOD method_452 syncGlobalSoundEvent (Lnet/minecraft/class_2674;IIIII)V
-		ARG 1 player
-		ARG 2 eventId
+	METHOD method_452 doWorldEvent (Lnet/minecraft/class_2674;IIIII)V
+		ARG 1 source
+		ARG 2 type
 		ARG 3 x
 		ARG 4 y
 		ARG 5 z
 		ARG 6 data
 	METHOD method_453 playSound (Lnet/minecraft/class_2674;Ljava/lang/String;DDDFF)V
-		ARG 1 except
+		ARG 1 source
 		ARG 2 name
 		ARG 3 x
 		ARG 5 y
@@ -45,14 +45,14 @@ CLASS net/minecraft/class_101 net/minecraft/world/WorldManager
 		ARG 9 volume
 		ARG 10 pitch
 	METHOD method_454 updateBlockMiningProgress (IIIII)V
-		ARG 1 id
+		ARG 1 playerId
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
 		ARG 5 progress
 	METHOD method_456 onEntityRemoved (Lnet/minecraft/class_1745;)V
 		ARG 1 entity
-	METHOD method_8540 onBlockChange (III)V
+	METHOD method_8540 onBlockChanged (III)V
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
@@ -61,8 +61,8 @@ CLASS net/minecraft/class_101 net/minecraft/world/WorldManager
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-	METHOD method_8542 update ()V
-	METHOD method_8543 onLightLevelChange (III)V
+	METHOD method_8542 onEntityChanged ()V
+	METHOD method_8543 onLightLevelChanged (III)V
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z

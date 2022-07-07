@@ -35,7 +35,7 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 	FIELD field_9135 difficulty Lnet/minecraft/class_1721;
 	FIELD field_9136 random Ljava/util/Random;
 	FIELD field_9137 dimension Lnet/minecraft/class_411;
-	FIELD field_9138 worldManagers Ljava/util/List;
+	FIELD field_9138 worldEventListeners Ljava/util/List;
 	FIELD field_9139 chunkProvider Lnet/minecraft/class_396;
 	FIELD field_9140 saveHandler Lnet/minecraft/class_635;
 	FIELD field_9141 properties Lnet/minecraft/class_2243;
@@ -109,7 +109,7 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 1 x
 		ARG 2 z
 		ARG 3 seed
-	METHOD method_271 updateVerticalColumn (IIII)V
+	METHOD method_271 checkLight (IIII)V
 		ARG 1 x
 		ARG 2 z
 		ARG 3 minY
@@ -125,7 +125,7 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 1 x
 		ARG 2 z
 		ARG 3 chunk
-	METHOD method_275 syncWorldEvent (IIIII)V
+	METHOD method_275 doWorldEvent (IIIII)V
 		ARG 1 type
 		ARG 2 x
 		ARG 3 y
@@ -204,22 +204,22 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 1 entity
 		ARG 2 time
 	METHOD method_334 playSound (Lnet/minecraft/class_1745;Ljava/lang/String;FF)V
-		ARG 1 entity
+		ARG 1 source
 		ARG 2 sound
 		ARG 3 volume
 		ARG 4 pitch
 	METHOD method_335 tickEntity (Lnet/minecraft/class_1745;Z)V
 		ARG 1 entity
 		ARG 2 requireLoaded
-	METHOD method_336 syncSoundEvent (Lnet/minecraft/class_2674;IIIII)V
-		ARG 1 player
+	METHOD method_336 doWorldEvent (Lnet/minecraft/class_2674;IIIII)V
+		ARG 1 source
 		ARG 2 type
 		ARG 3 x
 		ARG 4 y
 		ARG 5 z
 		ARG 6 data
 	METHOD method_339 playSound (Lnet/minecraft/class_2674;Ljava/lang/String;FF)V
-		ARG 1 player
+		ARG 1 source
 		ARG 2 sound
 		ARG 3 volume
 		ARG 4 pitch
@@ -233,14 +233,14 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 	METHOD method_352 getHighestOpaqueBlockY (II)I
 		ARG 1 x
 		ARG 2 z
-	METHOD method_353 onRenderRegionUpdate (IIIIII)V
-		ARG 1 x1
-		ARG 2 y1
-		ARG 3 z1
-		ARG 4 x2
-		ARG 5 y2
-		ARG 6 z2
-	METHOD method_354 syncSoundEvent (IIIII)V
+	METHOD method_353 onRegionChanged (IIIIII)V
+		ARG 1 minX
+		ARG 2 minY
+		ARG 3 minZ
+		ARG 4 maxX
+		ARG 5 maxY
+		ARG 6 maxZ
+	METHOD method_354 doWorldEventNoSource (IIIII)V
 		ARG 1 type
 		ARG 2 x
 		ARG 3 y
@@ -321,7 +321,7 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 2 y
 		ARG 3 z
 	METHOD method_8460 maxSpawnHeight ()I
-	METHOD method_8461 updateWorldManagers ()V
+	METHOD method_8461 onEntityChanged ()V
 	METHOD method_8462 getEntityById (I)Lnet/minecraft/class_1745;
 		ARG 1 id
 	METHOD method_8463 isRegionLoaded (IIII)Z
@@ -399,7 +399,7 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 1 entityClass
 		ARG 2 boundingBox
 		ARG 3 filter
-	METHOD method_8479 onParticleAdded (Ljava/lang/String;DDDDDD)V
+	METHOD method_8479 addParticle (Ljava/lang/String;DDDDDD)V
 		ARG 1 name
 		ARG 2 minX
 		ARG 4 minY
@@ -471,7 +471,7 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
-		ARG 4 fromBlock
+		ARG 4 block
 		ARG 5 dir
 	METHOD method_8493 loadScheduledTick (IIILnet/minecraft/class_160;II)V
 		ARG 1 x
@@ -514,14 +514,14 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 	METHOD method_8501 getOtherEntities (Lnet/minecraft/class_1745;Lnet/minecraft/class_646;)Ljava/util/List;
 		ARG 1 entity
 		ARG 2 box
-	METHOD method_8502 doesChunkExist (II)Z
+	METHOD method_8502 isChunkLoaded (II)Z
 		ARG 1 chunkX
 		ARG 2 chunkZ
-	METHOD method_8503 updateNeighbors (IIILnet/minecraft/class_160;)V
+	METHOD method_8503 onBlockChanged (IIILnet/minecraft/class_160;)V
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
-		ARG 4 fromBlock
+		ARG 4 block
 	METHOD method_8504 addBlockEvent (IIILnet/minecraft/class_160;II)V
 		ARG 1 x
 		ARG 2 y
@@ -542,15 +542,15 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 	METHOD method_8507 getChunkAt (II)Lnet/minecraft/class_399;
 		ARG 1 x
 		ARG 2 y
-	METHOD method_8508 isInsideWorld (III)Z
+	METHOD method_8508 isPosLoaded (III)Z
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
-	METHOD method_8509 updateNeighborsAlways (IIILnet/minecraft/class_160;)V
+	METHOD method_8509 updateNeighbors (IIILnet/minecraft/class_160;)V
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
-		ARG 4 fromBlock
+		ARG 4 block
 	METHOD method_8510 setBlockWithMetadata (IIILnet/minecraft/class_160;II)Z
 		ARG 1 x
 		ARG 2 y
@@ -567,7 +567,7 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
-		ARG 4 fromBlock
+		ARG 4 block
 	METHOD method_8513 canHaveSnow (IIIZ)Z
 		ARG 1 x
 		ARG 2 y
@@ -596,7 +596,7 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 2 y
 		ARG 3 z
 		ARG 4 fromBlock
-	METHOD method_8518 onBlockChange (III)V
+	METHOD method_8518 onBlockChanged (III)V
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
@@ -629,7 +629,7 @@ CLASS net/minecraft/class_99 net/minecraft/world/World
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
-	METHOD method_8525 onLightLevelChange (III)V
+	METHOD method_8525 onLightLevelChanged (III)V
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z

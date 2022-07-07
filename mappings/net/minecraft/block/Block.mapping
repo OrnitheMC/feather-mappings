@@ -104,7 +104,7 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 5 metadata
 		ARG 6 destructionChance
 		ARG 7 id
-	METHOD method_647 onBlockEvent (Lnet/minecraft/class_99;IIIII)Z
+	METHOD method_647 blockEvent (Lnet/minecraft/class_99;IIIII)Z
 		COMMENT Performs a block event. Block events are queued on the server, and executed once per
 		COMMENT tick. Successful block events are synced with clients that are within range. Block events
 		COMMENT are most notably used by pistons to handle extension and retraction, but note blocks
@@ -117,14 +117,14 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 4 z
 		ARG 5 type
 		ARG 6 data
-	METHOD method_648 onBlockUpdate (Lnet/minecraft/class_99;IIILnet/minecraft/class_160;)V
+	METHOD method_648 blockUpdate (Lnet/minecraft/class_99;IIILnet/minecraft/class_160;)V
 		COMMENT Performs a block update. This method is called when a neighboring block has updated
 		COMMENT (i.e. placed, broken, or otherwise changed state).
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-		ARG 5 fromBlock
+		ARG 5 neighborBlock
 	METHOD method_651 onEntityCollision (Lnet/minecraft/class_99;IIILnet/minecraft/class_1745;)V
 		ARG 1 world
 		ARG 2 x
@@ -247,7 +247,7 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		ARG 3 y
 		ARG 4 z
 		ARG 5 size
-	METHOD method_690 onScheduledTick (Lnet/minecraft/class_99;IIILjava/util/Random;)V
+	METHOD method_690 scheduledTick (Lnet/minecraft/class_99;IIILjava/util/Random;)V
 		COMMENT Performs a scheduled tick. Blocks that want to perform some action after a delay can
 		COMMENT tell the world to schedule the update, which is then executed by calling this method.
 		ARG 1 world
@@ -267,7 +267,7 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		COMMENT <p>
 		COMMENT NOTE: this method should only be used during the block's creation before it is registered.
 		ARG 1 strength
-	METHOD method_704 onRandomDisplayTick (Lnet/minecraft/class_99;IIILjava/util/Random;)V
+	METHOD method_704 randomDisplayTick (Lnet/minecraft/class_99;IIILjava/util/Random;)V
 		COMMENT Performs a random display tick. Random display ticks are mostly used to spawn particles
 		COMMENT around a block. The client does 1000 random display tick attempts within a radius of
 		COMMENT 16 blocks of the player each tick.
@@ -298,7 +298,7 @@ CLASS net/minecraft/class_160 net/minecraft/block/Block
 		COMMENT Returns whether this block is capable of emitting redstone power.
 	METHOD method_725 setBlockItemBounds ()V
 		COMMENT Sets the bounds for the BlockItem
-	METHOD method_728 getPistonInteractionType ()I
+	METHOD method_728 getPistonMoveBehavior ()I
 		COMMENT Returns how this block interacts with pistons. The following values are accepted:
 		COMMENT <br>- 0: this block can be pushed and pulled by pistons.
 		COMMENT <br>- 1: this block is broken when pushed.
