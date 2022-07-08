@@ -13,11 +13,11 @@ CLASS net/minecraft/class_2599 net/minecraft/server/PlayerManager
 	FIELD field_12157 viewDistance I
 	FIELD field_12158 bannedPlayers Lnet/minecraft/class_2754;
 	FIELD field_12159 bannedIps Lnet/minecraft/class_2754;
-	FIELD field_12160 opPlayerNames Ljava/util/Set;
+	FIELD field_12160 ops Ljava/util/Set;
 	FIELD field_12161 whitelist Ljava/util/Set;
 	METHOD <init> (Lnet/minecraft/server/MinecraftServer;)V
 		ARG 1 server
-	METHOD method_10410 send (DDDDILnet/minecraft/class_2434;)V
+	METHOD method_10410 sendToAround (DDDDILnet/minecraft/class_2434;)V
 		ARG 1 x
 		ARG 3 y
 		ARG 5 z
@@ -26,12 +26,12 @@ CLASS net/minecraft/class_2599 net/minecraft/server/PlayerManager
 		ARG 10 packet
 	METHOD method_10412 setDefaultGamemode (Lnet/minecraft/class_2087;)V
 		ARG 1 gamemode
-	METHOD method_10414 onPlayerConnect (Lnet/minecraft/class_1432;Lnet/minecraft/class_1637;)V
+	METHOD method_10414 onConnect (Lnet/minecraft/class_1432;Lnet/minecraft/class_1637;)V
 		ARG 1 connection
 		ARG 2 player
-	METHOD method_10415 broadcastChatMessage (Lnet/minecraft/class_1444;)V
+	METHOD method_10415 broadcastSystemMessage (Lnet/minecraft/class_1444;)V
 		ARG 1 message
-	METHOD method_10416 broadcastChatMessage (Lnet/minecraft/class_1444;Z)V
+	METHOD method_10416 broadcastMessage (Lnet/minecraft/class_1444;Z)V
 		ARG 1 message
 		ARG 2 isSystemMessage
 	METHOD method_10417 sendToAll (Lnet/minecraft/class_2434;)V
@@ -39,12 +39,12 @@ CLASS net/minecraft/class_2599 net/minecraft/server/PlayerManager
 	METHOD method_10418 sendToDimension (Lnet/minecraft/class_2434;I)V
 		ARG 1 packet
 		ARG 2 dimensionId
-	METHOD method_10419 getPlayer (Ljava/lang/String;)Lnet/minecraft/class_1637;
+	METHOD method_10419 get (Ljava/lang/String;)Lnet/minecraft/class_1637;
 		ARG 1 playerName
 	METHOD method_10420 updateScoreboard (Lnet/minecraft/class_1616;Lnet/minecraft/class_1637;)V
 		ARG 1 scoreboard
 		ARG 2 player
-	METHOD method_10421 loadPlayerData (Lnet/minecraft/class_1637;)Lnet/minecraft/class_1405;
+	METHOD method_10421 loadSinglePlayerData (Lnet/minecraft/class_1637;)Lnet/minecraft/class_1405;
 		ARG 1 player
 	METHOD method_10422 teleportToDimension (Lnet/minecraft/class_1637;I)V
 		ARG 1 player
@@ -53,14 +53,14 @@ CLASS net/minecraft/class_2599 net/minecraft/server/PlayerManager
 		ARG 1 player
 		ARG 2 dimensionId
 		ARG 3 alive
-	METHOD method_10424 onPlayerChangedDimension (Lnet/minecraft/class_1637;Lnet/minecraft/class_2571;)V
+	METHOD method_10424 onChangedDimension (Lnet/minecraft/class_1637;Lnet/minecraft/class_2571;)V
 		ARG 1 player
 		ARG 2 prevWorld
 	METHOD method_10425 copyGameMode (Lnet/minecraft/class_1637;Lnet/minecraft/class_1637;Lnet/minecraft/class_99;)V
 		ARG 1 player
 		ARG 2 fromPlayer
 		ARG 3 world
-	METHOD method_10426 getMatchingPlayers (Lnet/minecraft/class_2614;IIIIIILjava/util/Map;Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/class_99;)Ljava/util/List;
+	METHOD method_10426 getMatching (Lnet/minecraft/class_2614;IIIIIILjava/util/Map;Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/class_99;)Ljava/util/List;
 		ARG 1 pos
 		ARG 2 rMin
 		ARG 3 rMax
@@ -69,10 +69,10 @@ CLASS net/minecraft/class_2599 net/minecraft/server/PlayerManager
 		ARG 6 levelsMin
 		ARG 7 levelsMax
 		ARG 8 scoreboardScores
-		ARG 9 name
-		ARG 10 team
+		ARG 9 playerName
+		ARG 10 teamName
 		ARG 11 world
-	METHOD method_10427 onEntityChangedDimension (Lnet/minecraft/class_1745;ILnet/minecraft/class_2571;Lnet/minecraft/class_2571;)V
+	METHOD method_10427 teleportEntityToDimension (Lnet/minecraft/class_1745;ILnet/minecraft/class_2571;Lnet/minecraft/class_2571;)V
 		ARG 1 entity
 		ARG 2 dimensionId
 		ARG 3 fromWorld
@@ -88,9 +88,9 @@ CLASS net/minecraft/class_2599 net/minecraft/server/PlayerManager
 	METHOD method_10430 doesPlayerMatchScores (Lnet/minecraft/class_2674;Ljava/util/Map;)Z
 		ARG 1 player
 		ARG 2 scoreboardScores
-	METHOD method_10431 setPlayerDataHandler ([Lnet/minecraft/class_2571;)V
+	METHOD method_10431 setDataHandler ([Lnet/minecraft/class_2571;)V
 		ARG 1 worlds
-	METHOD method_10433 getPlayersAtIp (Ljava/lang/String;)Ljava/util/List;
+	METHOD method_10433 getAtIp (Ljava/lang/String;)Ljava/util/List;
 		ARG 1 ip
 	METHOD method_10434 sendWorldInfo (Lnet/minecraft/class_1637;Lnet/minecraft/class_2571;)V
 		ARG 1 player
@@ -105,17 +105,17 @@ CLASS net/minecraft/class_2599 net/minecraft/server/PlayerManager
 	METHOD method_10442 tick ()V
 	METHOD method_10443 remove (Lnet/minecraft/class_1637;)V
 		ARG 1 player
-	METHOD method_10444 getPlayerNames ()[Ljava/lang/String;
+	METHOD method_10444 getNames ()[Ljava/lang/String;
 	METHOD method_10445 create (Lcom/mojang/authlib/GameProfile;)Lnet/minecraft/class_1637;
 		ARG 1 profile
 	METHOD method_10446 sendPlayerInfo (Lnet/minecraft/class_1637;)V
 		ARG 1 player
 	METHOD method_10449 getBannedPlayers ()Lnet/minecraft/class_2754;
 	METHOD method_10450 getBannedIps ()Lnet/minecraft/class_2754;
-	METHOD method_10451 savePlayerData ()V
-	METHOD method_10456 getPlayerCount ()I
-	METHOD method_10457 getMaxPlayerCount ()I
-	METHOD method_10458 getSavedPlayerIds ()[Ljava/lang/String;
+	METHOD method_10451 saveData ()V
+	METHOD method_10456 getCount ()I
+	METHOD method_10457 getMaxCount ()I
+	METHOD method_10458 getSavedIds ()[Ljava/lang/String;
 	METHOD method_10459 isWhitelistEnabled ()Z
 	METHOD method_10460 getChunkViewDistance ()I
 	METHOD method_10461 disconnectAll ()V
@@ -123,7 +123,7 @@ CLASS net/minecraft/class_2599 net/minecraft/server/PlayerManager
 		ARG 1 playerName
 	METHOD method_11319 removeOp (Ljava/lang/String;)V
 		ARG 1 playerName
-	METHOD method_11320 getPlayerNamesAsString ()Ljava/lang/String;
+	METHOD method_11320 getNamesAsString ()Ljava/lang/String;
 	METHOD method_11321 isWhitelisted (Ljava/lang/String;)Z
 		ARG 1 playerName
 	METHOD method_11322 isOp (Ljava/lang/String;)Z
@@ -142,7 +142,7 @@ CLASS net/minecraft/class_2599 net/minecraft/server/PlayerManager
 		ARG 2 profile
 	METHOD method_6210 setWhitelistEnabled (Z)V
 		ARG 1 enabled
-	METHOD method_6214 savePlayerData (Lnet/minecraft/class_1637;)V
+	METHOD method_6214 saveData (Lnet/minecraft/class_1637;)V
 		ARG 1 player
 	METHOD method_6218 getServer ()Lnet/minecraft/server/MinecraftServer;
-	METHOD method_6246 getPlayerData ()Lnet/minecraft/class_1405;
+	METHOD method_6246 getSinglePlayerData ()Lnet/minecraft/class_1405;
