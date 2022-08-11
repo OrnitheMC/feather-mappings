@@ -1,9 +1,8 @@
 buildscript {
 	repositories {
-		// TODO Make a new Maven repo for this, under the net.ornithemc group ID
 		maven {
-			name = 'copetan'
-			url = 'https://copetan.jfrog.io/artifactory/minecraft-maven/'
+			name "Ornithe"
+			url "https://maven.ornithemc.net/releases"
 		}
 		maven {
 			name 'Quilt Repository'
@@ -21,7 +20,8 @@ buildscript {
 	}
 	dependencies {
 		classpath "net.ornithemc:enigma-cli:${project.enigma_version}"
-		classpath "net.fabricmc:stitch:${project.stitch_version}"
+		classpath "net.ornithemc:stitch:${project.stitch_version}"
+		classpath "net.ornithemc:nester:0.2.5"
 		classpath "commons-io:commons-io:2.8.0"
 		classpath 'de.undercouch:gradle-download-task:4.1.1'
 		classpath 'net.fabricmc:tiny-remapper:0.7.0'
@@ -56,10 +56,9 @@ static def buildTime() {
 
 repositories {
 	mavenCentral()
-	// TODO Make a new Maven repo for this, under the net.ornithemc group ID
 	maven {
-		name = 'copetan'
-		url = 'https://copetan.jfrog.io/artifactory/minecraft-maven/'
+		name "Ornithe"
+		url "https://maven.ornithemc.net/releases"
 	}
 	maven {
 		name "Mojang"
@@ -120,11 +119,12 @@ def setupGroup = "jar setup"
 def featherGroup = "feather"
 def buildMappingGroup = "mapping build"
 def mapJarGroup = "jar mapping"
-def mappingsDir = file("mappings")
+def mappingsDir = file("mappings/${minecraft_version}")
 def cacheFilesMinecraft = file(".gradle/minecraft")
 def tempDir = file(".gradle/temp")
 def mergedFile = file("${minecraft_version}-merged.jar")
-def intermediaryJar = file("${minecraft_version}-intermediary.jar")
+def nestedJar = file("${minecraft_version}-mn.jar")
+def calamusJar = file("${minecraft_version}-calamus.jar")
 def namedJar = file("${minecraft_version}-named.jar")
 def versionFile = new File(cacheFilesMinecraft, "${minecraft_version}.json")
 def clientJar = new File(cacheFilesMinecraft, "${minecraft_version}-client.jar")
@@ -143,7 +143,7 @@ import groovy.json.JsonSlurper
 import net.fabricmc.stitch.commands.CommandMergeTiny
 import net.fabricmc.stitch.commands.CommandProposeFieldNames
 import net.fabricmc.stitch.commands.CommandReorderTiny
-import net.fabricmc.stitch.commands.CommandRewriteIntermediary
+import net.fabricmc.stitch.commands.CommandRewriteCalamus
 import net.fabricmc.stitch.commands.tinyv2.CommandMergeTinyV2
 import net.fabricmc.stitch.commands.tinyv2.CommandProposeV2FieldNames
 import net.fabricmc.stitch.commands.tinyv2.CommandReorderTinyV2
@@ -151,12 +151,14 @@ import net.fabricmc.stitch.merge.JarMerger
 import net.fabricmc.tinyremapper.OutputConsumerPath
 import net.fabricmc.tinyremapper.TinyRemapper
 import net.fabricmc.tinyremapper.TinyUtils
+import net.ornithemc.nester.Nester
 import org.apache.commons.io.FileUtils
 import com.strobel.decompiler.Decompiler
 import com.strobel.decompiler.DecompilerSettings
 import com.strobel.assembler.metadata.JarTypeLoader
 import com.strobel.decompiler.PlainTextOutput
 import java.nio.charset.StandardCharsets
+import java.nio.file.Paths
 import java.util.zip.GZIPOutputStream
 import java.util.jar.JarFile
 import java.util.zip.ZipEntry
@@ -253,33 +255,40 @@ task downloadMcJars(dependsOn: downloadWantedVersionManifest) {
 	}
 }
 
-task downloadIntermediary(type: Download) {
+task downloadNesterMappings(type: Download) {
 	group = buildMappingGroup
-	def url = "https://github.com/OrnitheMC/Intermediary/raw/main/mappings/${minecraft_version}.tiny"
+	def url = "https://github.com/OrnitheMC/calamus/raw/main/nests/${minecraft_version}.nest"
 	src com.google.common.net.UrlEscapers.urlFragmentEscaper().escape(url)
-	dest new File(cacheFilesMinecraft, "${minecraft_version}-intermediary.tiny")
+	dest new File(cacheFilesMinecraft, "${minecraft_version}.nest")
 }
 
-task downloadIntermediaryV2(type: Download) {
-	group = buildMappingGroup
-	// TODO Update Maven URL once new repository is made and group ID is updated
-	def url = "https://copetan.jfrog.io/artifactory/minecraft-maven/net/fabricmc/intermediary/${minecraft_version}/intermediary-${minecraft_version}-v2.jar"
-	src com.google.common.net.UrlEscapers.urlFragmentEscaper().escape(url)
-	dest new File(cacheFilesMinecraft, "${minecraft_version}-intermediary-v2.jar")
+task downloadCalamus() {
+//	group = buildMappingGroup
+//	def url = "https://github.com/OrnitheMC/calamus/raw/main/mappings/${minecraft_version}.tiny"
+//	src com.google.common.net.UrlEscapers.urlFragmentEscaper().escape(url)
+//	dest new File(cacheFilesMinecraft, "${minecraft_version}-calamus.tiny")
+}
 
-	def output = new File(cacheFilesMinecraft, "${minecraft_version}-intermediary-v2.tiny")
-	outputs.file output
-
-	doLast {
-		copy {
-			from({ zipTree(downloadIntermediaryV2.dest) }) {
-				from 'mappings/mappings.tiny'
-				rename 'mappings.tiny', "../${output.name}"
-			}
-
-			into output.parentFile
-		}
-	}
+task downloadCalamusV2() {
+//	group = buildMappingGroup
+//	// TODO Update Maven URL once new repository is made and group ID is updated
+//	def url = "https://copetan.jfrog.io/artifactory/minecraft-maven/net/fabricmc/intermediary/${minecraft_version}/intermediary-${minecraft_version}-v2.jar"
+//	src com.google.common.net.UrlEscapers.urlFragmentEscaper().escape(url)
+//	dest new File(cacheFilesMinecraft, "${minecraft_version}-calamus-v2.jar")
+//
+//	def output = new File("${minecraft_version}-calamus-v2.tiny")
+//	outputs.file output
+//
+//	doLast {
+//		copy {
+//			from({ zipTree(downloadCalamusV2.dest) }) {
+//				from 'mappings/mappings.tiny'
+//				rename 'mappings.tiny', "../${output.name}"
+//			}
+//
+//			into output.parentFile
+//		}
+//	}
 }
 
 task mergeJars(dependsOn: downloadMcJars) {
@@ -304,6 +313,24 @@ task mergeJars(dependsOn: downloadMcJars) {
 
 }
 
+task nestJar(dependsOn: [mergeJars, downloadNesterMappings]) {
+	group = setupGroup
+	inputs.file mergedFile
+	outputs.file(nestedJar)
+
+	doLast {
+		logger.lifecycle(":nesting jar")
+
+		if (nestedJar.exists()) {
+			return
+		}
+
+		Nester.fixJar(Paths.get(mergedFile.getAbsolutePath()), Paths.get(nestedJar.getAbsolutePath()), Paths.get(downloadNesterMappings.dest.getAbsolutePath()))
+	}
+
+}
+
+
 task downloadMcLibs(dependsOn: downloadWantedVersionManifest) {
 	group = setupGroup
 	inputs.files versionFile
@@ -327,8 +354,8 @@ task downloadMcLibs(dependsOn: downloadWantedVersionManifest) {
 
 		version.libraries.each {
 			def artifact = it.downloads.artifact
-            if(artifact == null) return
-            def downloadUrl = artifact.url
+			if(artifact == null) return
+			def downloadUrl = artifact.url
 
 			download {
 				src downloadUrl
@@ -341,89 +368,89 @@ task downloadMcLibs(dependsOn: downloadWantedVersionManifest) {
 	}
 }
 
-task invertIntermediary(dependsOn: downloadIntermediary, type: FileOutput) {
+task invertCalamus(dependsOn: downloadCalamus, type: FileOutput) {
 	group = buildMappingGroup
-	def v1Input = downloadIntermediary.dest
+	def v1Input = new File("${minecraft_version}-calamus.tiny")
 
-	output = new File(cacheFilesMinecraft, "${minecraft_version}-intermediary-inverted.tiny")
+	output = new File(cacheFilesMinecraft, "${minecraft_version}-calamus-inverted.tiny")
 	outputs.file(output)
 
 	outputs.upToDateWhen { false }
 
 	doLast {
-		logger.lifecycle(":building inverted intermediary")
+		logger.lifecycle(":building inverted calamus")
 
 		String[] v1Args = [
 				v1Input.getAbsolutePath(),
 				output.getAbsolutePath(),
-				"intermediary", "official"
+				"calamus", "official"
 		]
 
 		new CommandReorderTiny().run(v1Args)
 	}
 }
 
-task invertIntermediaryv2(dependsOn: downloadIntermediaryV2, type: FileOutput) {
+task invertCalamusV2(dependsOn: downloadCalamusV2, type: FileOutput) {
 	group = buildMappingGroup
-	def v2Input = new File(cacheFilesMinecraft, "${minecraft_version}-intermediary-v2.tiny")
+	def v2Input = new File("${minecraft_version}-calamus-v2.tiny")
 
-	output = new File(cacheFilesMinecraft, "${minecraft_version}-intermediary-inverted-v2.tiny")
+	output = new File(cacheFilesMinecraft, "${minecraft_version}-calamus-inverted-v2.tiny")
 	outputs.file(output)
 
 	outputs.upToDateWhen { false }
 
 	doLast {
-		logger.lifecycle(":building inverted intermediary v2")
+		logger.lifecycle(":building inverted calamus v2")
 
 		String[] v2Args = [
 				v2Input.getAbsolutePath(),
 				output.getAbsolutePath(),
-				"intermediary", "official"
+				"calamus", "official"
 		]
 
 		new CommandReorderTinyV2().run(v2Args)
 	}
 }
 
-task patchIntermediary(dependsOn: [mergeJars, downloadIntermediary]) {
+task patchCalamus(dependsOn: [nestJar, downloadCalamus]) {
 	group = buildMappingGroup
-	def intermediaryTinyInput = downloadIntermediary.outputs.files.singleFile
+	def calamusTinyInput = new File("${minecraft_version}-calamus.tiny")
 
-	def outputFile = new File(cacheFilesMinecraft, "${minecraft_version}-intermediary-full.tiny")
+	def outputFile = new File(cacheFilesMinecraft, "${minecraft_version}-calamus-full.tiny")
 	outputs.file(outputFile)
 
 	outputs.upToDateWhen { false }
 
 	doLast {
-		logger.lifecycle(":patching intermediary")
+		logger.lifecycle(":patching calamus")
 		String[] args = [
-				mergedFile.getAbsolutePath(),
-				intermediaryTinyInput.getAbsolutePath(),
+				nestedJar.getAbsolutePath(),
+				calamusTinyInput.getAbsolutePath(),
 				outputFile.getAbsolutePath(),
 				"--writeAll"
 		]
 
-		new CommandRewriteIntermediary().run(args)
+		new CommandRewriteCalamus().run(args)
 	}
 }
 
-task mapIntermediaryJar(dependsOn: [downloadMcLibs, downloadIntermediary, mergeJars]) {
+task mapCalamusJar(dependsOn: [downloadMcLibs, downloadCalamus, nestJar]) {
 	group = mapJarGroup
 	inputs.files downloadMcLibs.outputs.files.files
-	outputs.file(intermediaryJar)
+	outputs.file(calamusJar)
 
 	//Force the task to always run
 	outputs.upToDateWhen { false }
 
 	doLast {
-		logger.lifecycle(":mapping minecraft to intermediary")
-		def tinyInput = downloadIntermediary.dest
-		mapJar(intermediaryJar, mergedFile, tinyInput, libraries, "official", "intermediary")
+		logger.lifecycle(":mapping minecraft to calamus")
+		def tinyInput = new File("${minecraft_version}-calamus.tiny")
+		mapJar(calamusJar, nestedJar, tinyInput, libraries, "official", "calamus")
 	}
 }
 
 
-task feather(dependsOn: mapIntermediaryJar) {
+task feather(dependsOn: mapCalamusJar) {
 	group = featherGroup
 	doLast {
 		ant.setLifecycleLogLevel "WARN"
@@ -435,7 +462,7 @@ task feather(dependsOn: mapIntermediaryJar) {
 		) {
 			jvmarg(value: "-Xmx2048m")
 			arg(value: '-jar')
-			arg(value: intermediaryJar.getAbsolutePath())
+			arg(value: calamusJar.getAbsolutePath())
 			arg(value: '-mappings')
 			arg(value: mappingsDir.getAbsolutePath())
 			arg(value: '-profile')
@@ -444,14 +471,14 @@ task feather(dependsOn: mapIntermediaryJar) {
 	}
 }
 
-task checkMappings(dependsOn: mapIntermediaryJar) {
+task checkMappings(dependsOn: mapCalamusJar) {
 	group = buildMappingGroup
 	inputs.dir mappingsDir
 	doLast {
 		logger.lifecycle(":checking mappings")
 
 		String[] args = [
-				mergedFile.getAbsolutePath(),
+				nestedJar.getAbsolutePath(),
 				mappingsDir.getAbsolutePath()
 		]
 		try {
@@ -462,7 +489,7 @@ task checkMappings(dependsOn: mapIntermediaryJar) {
 	}
 }
 
-task buildFeatherTiny(dependsOn: mapIntermediaryJar, type: WithV2FileOutput) {
+task buildFeatherTiny(dependsOn: mapCalamusJar, type: WithV2FileOutput) {
 	group = buildMappingGroup
 	inputs.dir mappingsDir
 	if (!libs.exists()) {
@@ -478,25 +505,25 @@ task buildFeatherTiny(dependsOn: mapIntermediaryJar, type: WithV2FileOutput) {
 		logger.lifecycle(":generating tiny mappings")
 
 		new MapSpecializedMethodsCommand().run(
-			intermediaryJar.getAbsolutePath(),
+			calamusJar.getAbsolutePath(),
 			"enigma",
 			mappingsDir.getAbsolutePath(),
-			"tinyv2:intermediary:named",
+			"tinyv2:calamus:named",
 			v2Output.getAbsolutePath()
 		)
 
 		new ConvertMappingsCommand().run(
 			"tinyv2",
 			v2Output.getAbsolutePath(),
-			"tiny:intermediary:named",
+			"tiny:calamus:named",
 			v1Output.getAbsolutePath())
 	}
 }
 
-task mergeTiny(dependsOn: ["buildFeatherTiny", "invertIntermediary"], type: FileOutput) {
+task mergeTiny(dependsOn: ["buildFeatherTiny", "invertCalamus"], type: FileOutput) {
 	group = buildMappingGroup
 	def featherTinyInput = buildFeatherTiny.v1Output
-	def intermediaryTinyInput = invertIntermediary.output
+	def calamusTinyInput = invertCalamus.output
 
 	def unorderedResultMappings = new File(tempDir, "mappings-unordered.tiny")
 	output = new File(tempDir, "mappings.tiny")
@@ -505,22 +532,22 @@ task mergeTiny(dependsOn: ["buildFeatherTiny", "invertIntermediary"], type: File
 	outputs.upToDateWhen { false }
 
 	doLast {
-		logger.lifecycle(":merging feather and intermediary")
+		logger.lifecycle(":merging feather and calamus")
 		String[] args = [
-				intermediaryTinyInput.getAbsolutePath(),
+				calamusTinyInput.getAbsolutePath(),
 				featherTinyInput.getAbsolutePath(),
 				unorderedResultMappings.getAbsolutePath(),
-				"intermediary",
+				"calamus",
 				"official"
 		]
 
 		new CommandMergeTiny().run(args)
 
-		logger.lifecycle(":reordering merged intermediary")
+		logger.lifecycle(":reordering merged calamus")
 		String[] args2 = [
 				unorderedResultMappings.getAbsolutePath(),
 				output.getAbsolutePath(),
-				"official", "intermediary", "named"
+				"official", "calamus", "named"
 		]
 
 		new CommandReorderTiny().run(args2)
@@ -573,8 +600,8 @@ clean.doFirst {
 
 tasks.build.dependsOn "compressTiny","tinyJar","v2UnmergedFeatherJar", "v2MergedFeatherJar"
 
-task exportMappingsOfficial(dependsOn: downloadIntermediary) {
-	def composeInput = downloadIntermediary.dest
+task exportMappingsOfficial(dependsOn: downloadCalamus) {
+	def composeInput = new File("${minecraft_version}-calamus.tiny")
 
 	doLast {
 		logger.lifecycle(":exporting mappings")
@@ -592,8 +619,8 @@ task exportMappingsOfficial(dependsOn: downloadIntermediary) {
 	}
 }
 
-task importMappingsOfficial(dependsOn: invertIntermediary) {
-	def composeInput = invertIntermediary.output
+task importMappingsOfficial(dependsOn: invertCalamus) {
+	def composeInput = invertCalamus.output
 
 	doLast {
 		logger.lifecycle(":importing mappings")
@@ -622,7 +649,7 @@ task buildTinyWithEnum(dependsOn: "mergeTiny", type: FileOutput) {
 	doLast {
 		logger.lifecycle(":seeking auto-mappable fields")
 		String[] argsPropose = [
-				mergedFile.getAbsolutePath(), // must use official jar
+				nestedJar.getAbsolutePath(), // must use official jar
 				noEnum.getAbsolutePath(),
 				output.getAbsolutePath()
 		]
@@ -631,7 +658,7 @@ task buildTinyWithEnum(dependsOn: "mergeTiny", type: FileOutput) {
 	}
 }
 
-task mapNamedJar(dependsOn: ["mergeV2", mapIntermediaryJar]) {
+task mapNamedJar(dependsOn: ["mergeV2", mapCalamusJar]) {
 	group = mapJarGroup
 	inputs.files downloadMcLibs.outputs.files.files
 	outputs.file(namedJar)
@@ -642,11 +669,11 @@ task mapNamedJar(dependsOn: ["mergeV2", mapIntermediaryJar]) {
 	doLast {
 		logger.lifecycle(":mapping minecraft to named")
 
-		mapJar(namedJar, intermediaryJar, mergeV2.output, libraries, "intermediary", "named")
+		mapJar(namedJar, calamusJar, mergeV2.output, libraries, "calamus", "named")
 	}
 }
 
-task insertAutoGeneratedEnumMappings(dependsOn : [buildFeatherTiny,mapIntermediaryJar], type : FileOutput){
+task insertAutoGeneratedEnumMappings(dependsOn : [buildFeatherTiny,mapCalamusJar], type : FileOutput){
 	group = buildMappingGroup
 	def noEnumV2 = buildFeatherTiny.v2Output
 	output = new File(tempDir, "unmerged-named-v2-with-enum.tiny")
@@ -657,7 +684,7 @@ task insertAutoGeneratedEnumMappings(dependsOn : [buildFeatherTiny,mapIntermedia
 		logger.lifecycle(":seeking auto-mappable fields for unmerged mappings")
 
 		String[] argsProposeV2 = [
-				intermediaryJar.getAbsolutePath(), // must use intermediary jar
+				calamusJar.getAbsolutePath(), // must use calamus jar
 				noEnumV2.getAbsolutePath(),
 				output.getAbsolutePath(),
 				"false" // don't replace existing names right now
@@ -667,19 +694,19 @@ task insertAutoGeneratedEnumMappings(dependsOn : [buildFeatherTiny,mapIntermedia
 	}
 }
 
-task mergeV2(dependsOn: ["v2UnmergedFeatherJar", "invertIntermediaryv2"], type: FileOutput) {
+task mergeV2(dependsOn: ["v2UnmergedFeatherJar", "invertCalamusV2"], type: FileOutput) {
 	def mergedV2 = new File(tempDir, "merged-v2.tiny");
 
 	output = new File(tempDir, "merged-reordered-v2.tiny")
 	outputs.upToDateWhen { false }
 
 	doLast {
-		logger.lifecycle(":merging feather and intermediary v2")
+		logger.lifecycle(":merging feather and calamus v2")
 		String[] args = [
-				invertIntermediaryv2.output.getAbsolutePath(),
+				invertCalamusV2.output.getAbsolutePath(),
 				insertAutoGeneratedEnumMappings.output.getAbsolutePath(),
 				mergedV2.getAbsolutePath(),
-				"intermediary",
+				"calamus",
 				"official"
 		]
 
@@ -690,7 +717,7 @@ task mergeV2(dependsOn: ["v2UnmergedFeatherJar", "invertIntermediaryv2"], type: 
 				mergedV2.getAbsolutePath(),
 				output.getAbsolutePath(),
 				"official",
-				"intermediary",
+				"calamus",
 				"named"
 		]
 		new CommandReorderTinyV2().run(args)
