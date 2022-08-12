@@ -1,5 +1,7 @@
 CLASS net/minecraft/C_82xmdfbms net/minecraft/block/AbstractRailBlock
 	FIELD f_50wspnusa allowCurves Z
+	METHOD <init> (Z)V
+		ARG 1 allowCurves
 	METHOD m_00jnqarjx allowCurves ()Z
 	METHOD m_16uesfetl isRail (Lnet/minecraft/C_88rbsxznd;)Z
 		ARG 0 block
@@ -22,9 +24,7 @@ CLASS net/minecraft/C_82xmdfbms net/minecraft/block/AbstractRailBlock
 		ARG 5 metadata
 		ARG 6 curveDir
 		ARG 7 fromBlock
-	METHOD null <init> (Z)V
-		ARG 1 allowCurves
-	CLASS C_80mpbaare RailHandler
+	CLASS C_80mpbaare ConnectionHandler
 		FIELD f_19xmgjqtt z I
 		FIELD f_20nmkobhk y I
 		FIELD f_24srlzjei x I
@@ -32,12 +32,17 @@ CLASS net/minecraft/C_82xmdfbms net/minecraft/block/AbstractRailBlock
 		FIELD f_55kworiac allowCurves Z
 		FIELD f_70zzhmfve connections Ljava/util/List;
 		FIELD f_80bdgrgeu world Lnet/minecraft/C_72mqkrkao;
+		METHOD <init> (Lnet/minecraft/C_82xmdfbms;Lnet/minecraft/C_72mqkrkao;III)V
+			ARG 2 world
+			ARG 3 x
+			ARG 4 y
+			ARG 5 z
 		METHOD m_10siyljyp updateState (ZZ)V
 			ARG 1 powered
 			ARG 2 force
 		METHOD m_29mjhsyqp updateConnections (I)V
 			ARG 1 metadata
-		METHOD m_38avoutrz cleanConnections ()V
+		METHOD m_38avoutrz cleanUpConnections ()V
 		METHOD m_45uyugbtj calculateConnectionCount ()I
 		METHOD m_47dbdtjoj isConnectedTo (III)Z
 			ARG 1 x
@@ -51,17 +56,11 @@ CLASS net/minecraft/C_82xmdfbms net/minecraft/block/AbstractRailBlock
 			ARG 1 x
 			ARG 2 y
 			ARG 3 z
-		METHOD m_62mdkizwr getRailHelper (Lnet/minecraft/C_58ioeszna;)Lnet/minecraft/C_82xmdfbms$C_80mpbaare;
+		METHOD m_62mdkizwr forPos (Lnet/minecraft/C_58ioeszna;)Lnet/minecraft/C_82xmdfbms$C_80mpbaare;
 			ARG 1 pos
 		METHOD m_63mjopkhz isConnectedTo (Lnet/minecraft/C_82xmdfbms$C_80mpbaare;)Z
-			ARG 1 helper
+			ARG 1 connectionHandler
 		METHOD m_79idndgez updateState (Lnet/minecraft/C_82xmdfbms$C_80mpbaare;)V
-			ARG 1 helper
+			ARG 1 connectionHandler
 		METHOD m_91icrkkgm shouldUpdate (Lnet/minecraft/C_82xmdfbms$C_80mpbaare;)Z
-			ARG 1 helper
-		METHOD null <init> (Lnet/minecraft/C_82xmdfbms;Lnet/minecraft/C_72mqkrkao;III)V
-			ARG 1 rail
-			ARG 2 world
-			ARG 3 x
-			ARG 4 y
-			ARG 5 z
+			ARG 1 connectionHandler

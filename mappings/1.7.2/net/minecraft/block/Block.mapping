@@ -8,7 +8,7 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 	FIELD f_18exrgxmi WOOD Lnet/minecraft/C_88rbsxznd$C_90mwyvraq;
 	FIELD f_21fuiysvx stats Z
 		COMMENT Specifies whether this block is tracked for stats
-	FIELD f_23fkhrpro field_9210 Z
+	FIELD f_23fkhrpro Z
 		COMMENT Unused
 	FIELD f_23ovjqmrl LADDER Lnet/minecraft/C_88rbsxznd$C_90mwyvraq;
 	FIELD f_24jpaylrk minY D
@@ -29,7 +29,7 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 	FIELD f_59prsxsun slipperiness F
 		COMMENT Stores this block's slipperiness
 		COMMENT Used By Ice and Packed Ice
-	FIELD f_63rknvpsf strength F
+	FIELD f_63rknvpsf miningSpeed F
 	FIELD f_66dzstoix maxZ D
 	FIELD f_66irqqoom maxX D
 	FIELD f_68egjpewr minZ D
@@ -46,6 +46,8 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 	FIELD f_93jhzlvuo SAND Lnet/minecraft/C_88rbsxznd$C_90mwyvraq;
 	FIELD f_93wifqoov CLOTH Lnet/minecraft/C_88rbsxznd$C_90mwyvraq;
 	FIELD f_98eqkuyby GRASS Lnet/minecraft/C_88rbsxznd$C_90mwyvraq;
+	METHOD <init> (Lnet/minecraft/C_20jrxdumg;)V
+		ARG 1 material
 	METHOD m_00lxufiui beforeRemoved (Lnet/minecraft/C_72mqkrkao;IIII)V
 		ARG 1 world
 		ARG 2 x
@@ -159,13 +161,13 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		ARG 3 y
 		ARG 4 z
 		ARG 5 entity
-	METHOD m_24ghyuzef setStrength (F)Lnet/minecraft/C_88rbsxznd;
-		COMMENT Sets this block's strength and updates its resistance if needed.
-		COMMENT A block's resistance cannot be less than 5 times its strength.
+	METHOD m_24ghyuzef setMiningSpeed (F)Lnet/minecraft/C_88rbsxznd;
+		COMMENT Sets this block's mining speed and updates its resistance if needed.
+		COMMENT A block's resistance cannot be less than 5 times its mining speed.
 		COMMENT
 		COMMENT <p>
 		COMMENT NOTE: this method should only be used during the block's creation before it is registered.
-		ARG 1 strength
+		ARG 1 miningSpeed
 	METHOD m_24gkpyytk getBlastResistance (Lnet/minecraft/C_98tnijqnf;)F
 		COMMENT Returns this block's blast resistance for the given entity.
 		ARG 1 entity
@@ -394,7 +396,7 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		ARG 3 y
 		ARG 4 z
 	METHOD m_72cghuffw setUnbreakable ()Lnet/minecraft/C_88rbsxznd;
-		COMMENT Sets this block as unbreakable by setting its strength to -1.
+		COMMENT Sets this block as unbreakable by setting its mining speed to -1.
 		COMMENT Used by barriers and command blocks.
 		COMMENT
 		COMMENT <p>
@@ -459,7 +461,7 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		ARG 3 y
 		ARG 4 z
 	METHOD m_81bcgxlli getMinY ()D
-	METHOD m_81elniepp getHardness (Lnet/minecraft/C_72mqkrkao;III)F
+	METHOD m_81elniepp getMiningSpeed (Lnet/minecraft/C_72mqkrkao;III)F
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
@@ -571,21 +573,19 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		ARG 1 metadata
 		ARG 2 bl
 	METHOD m_98ixxsbjo getMinX ()D
-	METHOD null <init> (Lnet/minecraft/C_20jrxdumg;)V
-		ARG 1 material
 	CLASS 1 1
 	CLASS 2 2
 	CLASS 3 3
-	CLASS C_90mwyvraq BlockSound
+	CLASS C_90mwyvraq Sound
 		FIELD f_33mytrsvd volume F
 		FIELD f_39bitajgf id Ljava/lang/String;
 		FIELD f_94gbbazuh pitch F
+		METHOD <init> (Ljava/lang/String;FF)V
+			ARG 1 id
+			ARG 2 volume
+			ARG 3 pitch
 		METHOD m_10qoujbrq getDigSound ()Ljava/lang/String;
 		METHOD m_20fpwktbq getStepSound ()Ljava/lang/String;
 		METHOD m_61ndvsygq getSound ()Ljava/lang/String;
 		METHOD m_61xdfavkn getVolume ()F
 		METHOD m_62uivklje getPitch ()F
-		METHOD null <init> (Ljava/lang/String;FF)V
-			ARG 1 id
-			ARG 2 volume
-			ARG 3 pitch
