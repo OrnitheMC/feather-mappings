@@ -275,7 +275,7 @@ task downloadCalamusV2(type: Download) {
 	src com.google.common.net.UrlEscapers.urlFragmentEscaper().escape(url)
 	dest new File(cacheFilesMinecraft, "${minecraft_version}-calamus-v2.jar")
 
-	def output = downloadCalamusV2.dest
+	def output = new File(cacheFilesMinecraft, "${minecraft_version}-calamus-v2.tiny")
 	outputs.file output
 
 	doLast {
@@ -391,7 +391,7 @@ task invertCalamus(dependsOn: downloadCalamus, type: FileOutput) {
 
 task invertCalamusV2(dependsOn: downloadCalamusV2, type: FileOutput) {
 	group = buildMappingGroup
-	def v2Input = downloadCalamusV2.dest
+	def v2Input = new File(cacheFilesMinecraft, "${minecraft_version}-calamus-v2.tiny")
 
 	output = new File(cacheFilesMinecraft, "${minecraft_version}-calamus-inverted-v2.tiny")
 	outputs.file(output)
