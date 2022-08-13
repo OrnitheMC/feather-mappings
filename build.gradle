@@ -40,9 +40,8 @@ plugins {
 	id 'net.fabricmc.filament' version '0.3.0'
 }
 
-def minecraft_version = "1.7.2"
-
 def ENV = System.getenv()
+def minecraft_version = ENV.MC_VERSION
 // Fetch build number from Github Actions
 // Then completely ignore it
 def build_number = ENV.BUILD_NUMBER ?: "local"
@@ -214,7 +213,7 @@ task downloadWantedVersionManifest(dependsOn: downloadVersionsManifest) {
 				FileUtils.copyURLToFile(new URL(manifestVersion.get().url), versionFile)
 			}
 		} else {
-			throw new RuntimeException("No version data for Minecraft version ${minecraft_version}")
+			throw new RuntimeException("No version data for Minecraft version ${minecraft_version} (Did you forget to set the MC_VERSION environment variable?)")
 		}
 	}
 
@@ -255,21 +254,21 @@ task downloadMcJars(dependsOn: downloadWantedVersionManifest) {
 	}
 }
 
-task downloadNesterMappings(type: Download) {
+task downloadNesterMappings(dependsOn: downloadMcJars, type: Download) {
 	group = buildMappingGroup
 	def url = "https://github.com/OrnitheMC/calamus/raw/main/nests/${minecraft_version}.nest"
 	src com.google.common.net.UrlEscapers.urlFragmentEscaper().escape(url)
 	dest new File(cacheFilesMinecraft, "${minecraft_version}.nest")
 }
 
-task downloadCalamus(type: Download) {
+task downloadCalamus(dependsOn: downloadMcJars, type: Download) {
 	group = buildMappingGroup
 	def url = "https://github.com/OrnitheMC/calamus/raw/main/mappings/${minecraft_version}.tiny"
 	src com.google.common.net.UrlEscapers.urlFragmentEscaper().escape(url)
 	dest new File(cacheFilesMinecraft, "${minecraft_version}-calamus.tiny")
 }
 
-task downloadCalamusV2(type: Download) {
+task downloadCalamusV2(dependsOn: downloadMcJars, type: Download) {
 	group = buildMappingGroup
 	def url = "https://maven.ornithemc.net/releases/net/ornithemc/calamus/${minecraft_version}/calamus-${minecraft_version}-v2.jar"
 	src com.google.common.net.UrlEscapers.urlFragmentEscaper().escape(url)
@@ -324,7 +323,11 @@ task nestJar(dependsOn: [mergeJars, downloadNesterMappings]) {
 			return
 		}
 
-		Nester.fixJar(Paths.get(mergedFile.getAbsolutePath()), Paths.get(nestedJar.getAbsolutePath()), Paths.get(downloadNesterMappings.dest.getAbsolutePath()))
+		File nests = downloadNesterMappings.dest
+
+		if (nests.exists()) {
+			Nester.fixJar(Paths.get(mergedFile.getAbsolutePath()), Paths.get(nestedJar.getAbsolutePath()), Paths.get(nests.getAbsolutePath()))
+		}
 	}
 
 }
@@ -422,8 +425,10 @@ task patchCalamus(dependsOn: [nestJar, downloadCalamus]) {
 
 	doLast {
 		logger.lifecycle(":patching calamus")
+
+		File jarFile = nestedJar.exists() ? nestedJar : mergedFile
 		String[] args = [
-				nestedJar.getAbsolutePath(),
+				jarFile.getAbsolutePath(),
 				calamusTinyInput.getAbsolutePath(),
 				outputFile.getAbsolutePath(),
 				"--writeAll"
@@ -443,8 +448,11 @@ task mapCalamusJar(dependsOn: [downloadMcLibs, downloadCalamus, nestJar]) {
 
 	doLast {
 		logger.lifecycle(":mapping minecraft to calamus")
+
+		File jarFile = nestedJar.exists() ? nestedJar : mergedFile
 		def tinyInput = downloadCalamus.dest
-		mapJar(calamusJar, nestedJar, tinyInput, libraries, "official", "calamus")
+
+		mapJar(calamusJar, jarFile, tinyInput, libraries, "official", "calamus")
 	}
 }
 
@@ -476,10 +484,12 @@ task checkMappings(dependsOn: mapCalamusJar) {
 	doLast {
 		logger.lifecycle(":checking mappings")
 
+		File jarFile = nestedJar.exists() ? nestedJar : mergedFile
 		String[] args = [
-				nestedJar.getAbsolutePath(),
+				jarFile.getAbsolutePath(),
 				mappingsDir.getAbsolutePath()
 		]
+
 		try {
 			new CheckMappingsCommand().run(args)
 		} catch (IllegalStateException ignored) {
@@ -647,8 +657,10 @@ task buildTinyWithEnum(dependsOn: "mergeTiny", type: FileOutput) {
 
 	doLast {
 		logger.lifecycle(":seeking auto-mappable fields")
+
+		File jarFile = nestedJar.exists() ? nestedJar : mergedFile
 		String[] argsPropose = [
-				nestedJar.getAbsolutePath(), // must use official jar
+				jarFile.getAbsolutePath(), // must use official jar
 				noEnum.getAbsolutePath(),
 				output.getAbsolutePath()
 		]
