@@ -262,33 +262,32 @@ task downloadNesterMappings(type: Download) {
 	dest new File(cacheFilesMinecraft, "${minecraft_version}.nest")
 }
 
-task downloadCalamus() {
-//	group = buildMappingGroup
-//	def url = "https://github.com/OrnitheMC/calamus/raw/main/mappings/${minecraft_version}.tiny"
-//	src com.google.common.net.UrlEscapers.urlFragmentEscaper().escape(url)
-//	dest new File(cacheFilesMinecraft, "${minecraft_version}-calamus.tiny")
+task downloadCalamus(type: Download) {
+	group = buildMappingGroup
+	def url = "https://github.com/OrnitheMC/calamus/raw/main/mappings/${minecraft_version}.tiny"
+	src com.google.common.net.UrlEscapers.urlFragmentEscaper().escape(url)
+	dest new File(cacheFilesMinecraft, "${minecraft_version}-calamus.tiny")
 }
 
-task downloadCalamusV2() {
-//	group = buildMappingGroup
-//	// TODO Update Maven URL once new repository is made and group ID is updated
-//	def url = "https://copetan.jfrog.io/artifactory/minecraft-maven/net/fabricmc/intermediary/${minecraft_version}/intermediary-${minecraft_version}-v2.jar"
-//	src com.google.common.net.UrlEscapers.urlFragmentEscaper().escape(url)
-//	dest new File(cacheFilesMinecraft, "${minecraft_version}-calamus-v2.jar")
-//
-//	def output = new File("${minecraft_version}-calamus-v2.tiny")
-//	outputs.file output
-//
-//	doLast {
-//		copy {
-//			from({ zipTree(downloadCalamusV2.dest) }) {
-//				from 'mappings/mappings.tiny'
-//				rename 'mappings.tiny', "../${output.name}"
-//			}
-//
-//			into output.parentFile
-//		}
-//	}
+task downloadCalamusV2(type: Download) {
+	group = buildMappingGroup
+	def url = "https://maven.ornithemc.net/#/releases/net/ornithemc/calamus/${minecraft_version}/calamus-${minecraft_version}-v2.jar"
+	src com.google.common.net.UrlEscapers.urlFragmentEscaper().escape(url)
+	dest new File(cacheFilesMinecraft, "${minecraft_version}-calamus-v2.jar")
+
+	def output = downloadCalamusV2.dest
+	outputs.file output
+
+	doLast {
+		copy {
+			from({ zipTree(downloadCalamusV2.dest) }) {
+				from 'mappings/mappings.tiny'
+				rename 'mappings.tiny', "../${output.name}"
+			}
+
+			into output.parentFile
+		}
+	}
 }
 
 task mergeJars(dependsOn: downloadMcJars) {
@@ -370,7 +369,7 @@ task downloadMcLibs(dependsOn: downloadWantedVersionManifest) {
 
 task invertCalamus(dependsOn: downloadCalamus, type: FileOutput) {
 	group = buildMappingGroup
-	def v1Input = new File("${minecraft_version}-calamus.tiny")
+	def v1Input = downloadCalamus.dest
 
 	output = new File(cacheFilesMinecraft, "${minecraft_version}-calamus-inverted.tiny")
 	outputs.file(output)
@@ -392,7 +391,7 @@ task invertCalamus(dependsOn: downloadCalamus, type: FileOutput) {
 
 task invertCalamusV2(dependsOn: downloadCalamusV2, type: FileOutput) {
 	group = buildMappingGroup
-	def v2Input = new File("${minecraft_version}-calamus-v2.tiny")
+	def v2Input = downloadCalamusV2.dest
 
 	output = new File(cacheFilesMinecraft, "${minecraft_version}-calamus-inverted-v2.tiny")
 	outputs.file(output)
@@ -414,7 +413,7 @@ task invertCalamusV2(dependsOn: downloadCalamusV2, type: FileOutput) {
 
 task patchCalamus(dependsOn: [nestJar, downloadCalamus]) {
 	group = buildMappingGroup
-	def calamusTinyInput = new File("${minecraft_version}-calamus.tiny")
+	def calamusTinyInput = downloadCalamus.dest
 
 	def outputFile = new File(cacheFilesMinecraft, "${minecraft_version}-calamus-full.tiny")
 	outputs.file(outputFile)
@@ -444,7 +443,7 @@ task mapCalamusJar(dependsOn: [downloadMcLibs, downloadCalamus, nestJar]) {
 
 	doLast {
 		logger.lifecycle(":mapping minecraft to calamus")
-		def tinyInput = new File("${minecraft_version}-calamus.tiny")
+		def tinyInput = downloadCalamus.dest
 		mapJar(calamusJar, nestedJar, tinyInput, libraries, "official", "calamus")
 	}
 }
@@ -601,7 +600,7 @@ clean.doFirst {
 tasks.build.dependsOn "compressTiny","tinyJar","v2UnmergedFeatherJar", "v2MergedFeatherJar"
 
 task exportMappingsOfficial(dependsOn: downloadCalamus) {
-	def composeInput = new File("${minecraft_version}-calamus.tiny")
+	def composeInput = downloadCalamus.dest
 
 	doLast {
 		logger.lifecycle(":exporting mappings")
