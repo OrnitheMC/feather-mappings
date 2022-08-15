@@ -1,15 +1,15 @@
 CLASS net/minecraft/C_89drqxuck net/minecraft/world/gen/structure/fortress/FortressPieces
-	FIELD f_67uosbvkb PRIMARY_PIECES [Lnet/minecraft/C_89drqxuck$C_72pnaurfi;
-	FIELD f_85ymaoyrc SECUNDARY_PIECES [Lnet/minecraft/C_89drqxuck$C_72pnaurfi;
-	METHOD m_12rgtcrdh getNewPieceInstance (Lnet/minecraft/C_89drqxuck$C_72pnaurfi;Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_90qcseqme;
-		ARG 0 pieceData
-		ARG 1 piecesList
+	FIELD f_67uosbvkb BRIDGE_PIECE_WEIGHTS [Lnet/minecraft/C_89drqxuck$C_72pnaurfi;
+	FIELD f_85ymaoyrc CASTLE_PIECE_WEIGHTS [Lnet/minecraft/C_89drqxuck$C_72pnaurfi;
+	METHOD m_12rgtcrdh createPiece (Lnet/minecraft/C_89drqxuck$C_72pnaurfi;Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_90qcseqme;
+		ARG 0 weight
+		ARG 1 entries
 		ARG 2 random
 		ARG 3 x
 		ARG 4 y
 		ARG 5 z
-		ARG 6 direction
-		ARG 7 type
+		ARG 6 facing
+		ARG 7 generationDepth
 	METHOD m_22moakgik getPrimaryFortressPieces ()[Lnet/minecraft/C_89drqxuck$C_72pnaurfi;
 	METHOD m_35cevmmcl getSecondaryFortressFeatures ()[Lnet/minecraft/C_89drqxuck$C_72pnaurfi;
 	METHOD m_42khdlvwy getAFortressPiece (Lnet/minecraft/C_89drqxuck$C_72pnaurfi;Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_90qcseqme;
@@ -22,200 +22,278 @@ CLASS net/minecraft/C_89drqxuck net/minecraft/world/gen/structure/fortress/Fortr
 		ARG 6 direction
 		ARG 7 type
 	METHOD m_86tqiacyo registerPieces ()V
-	CLASS C_10eaukxqd StraightPathPiece
-		METHOD m_08idbnfis getNewInstance (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_10eaukxqd;
-			ARG 0 piecesList
+	CLASS C_10eaukxqd StraightBridge
+		METHOD <init> (ILjava/util/Random;Lnet/minecraft/C_56geqvdbi;I)V
+			ARG 1 generationDepth
+			ARG 2 random
+			ARG 3 box
+			ARG 4 facing
+		METHOD m_08idbnfis of (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_10eaukxqd;
+			ARG 0 pieces
 			ARG 1 random
 			ARG 2 x
 			ARG 3 y
 			ARG 4 z
-			ARG 5 dacing
-			ARG 6 type
+			ARG 5 facing
+			ARG 6 generationDepth
 	CLASS C_38ajkksdd BridgeCrossing
-		METHOD m_31umzhpfo getNewInstance (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_38ajkksdd;
-			ARG 0 pieceList
+		METHOD <init> (ILjava/util/Random;Lnet/minecraft/C_56geqvdbi;I)V
+			ARG 1 generationDepth
+			ARG 2 random
+			ARG 3 box
+			ARG 4 facing
+		METHOD <init> (Ljava/util/Random;II)V
+			ARG 1 random
+			ARG 2 chunkX
+			ARG 3 chunkZ
+		METHOD m_31umzhpfo of (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_38ajkksdd;
+			ARG 0 pieces
 			ARG 1 random
 			ARG 2 x
 			ARG 3 y
 			ARG 4 z
-			ARG 5 direction
-			ARG 6 type
-	CLASS C_49zloazbg EntrancePiece
-		METHOD m_62icnftot getNewInstance (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_49zloazbg;
-			ARG 0 piecesList
+			ARG 5 facing
+			ARG 6 generationDepth
+	CLASS C_49zloazbg CastleEntrance
+		METHOD <init> (ILjava/util/Random;Lnet/minecraft/C_56geqvdbi;I)V
+			ARG 1 generationDepth
+			ARG 2 random
+			ARG 3 box
+			ARG 4 facing
+		METHOD m_62icnftot of (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_49zloazbg;
+			ARG 0 pieces
 			ARG 1 random
 			ARG 2 x
 			ARG 3 y
 			ARG 4 z
-			ARG 5 direction
-			ARG 6 type
-	CLASS C_54chzuguf BlazeSpawnerPiece
+			ARG 5 facing
+			ARG 6 generationDepth
+	CLASS C_54chzuguf BlazeSpawner
 		FIELD f_86eabzkqx shouldGenerateMobSpawner Z
-		METHOD m_19hgrebqr getNewInstance (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_54chzuguf;
-			ARG 0 piecesList
+		METHOD <init> (ILjava/util/Random;Lnet/minecraft/C_56geqvdbi;I)V
+			ARG 1 generationDepth
+			ARG 2 random
+			ARG 3 box
+			ARG 4 facing
+		METHOD m_19hgrebqr of (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_54chzuguf;
+			ARG 0 pieces
 			ARG 1 random
 			ARG 2 x
 			ARG 3 y
 			ARG 4 z
-			ARG 5 direction
-			ARG 6 facing
-	CLASS C_55yfvjjxe CorridorPiece
-		METHOD m_88bjyggib getNewInstance (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_55yfvjjxe;
-			ARG 0 piecesList
+			ARG 5 facing
+			ARG 6 generationDepth
+	CLASS C_55yfvjjxe StairsCorridor
+		METHOD <init> (ILjava/util/Random;Lnet/minecraft/C_56geqvdbi;I)V
+			ARG 1 generationDepth
+			ARG 2 random
+			ARG 3 box
+			ARG 4 facing
+		METHOD m_88bjyggib of (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_55yfvjjxe;
+			ARG 0 pieces
 			ARG 1 random
 			ARG 2 x
 			ARG 3 y
 			ARG 4 z
-			ARG 5 direction
-			ARG 6 type
-	CLASS C_56rigeowf TinyCrossingPiece
+			ARG 5 facing
+			ARG 6 generationDepth
+	CLASS C_56rigeowf SmallCorridorRightTurn
 		FIELD f_62ivotufa hasLootChest Z
-		METHOD m_35ktnvsrn getNewInstance (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_56rigeowf;
-			ARG 0 piecesList
+		METHOD <init> (ILjava/util/Random;Lnet/minecraft/C_56geqvdbi;I)V
+			ARG 1 generationDepth
+			ARG 2 random
+			ARG 3 box
+			ARG 4 facing
+		METHOD m_35ktnvsrn of (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_56rigeowf;
+			ARG 0 pieces
 			ARG 1 random
 			ARG 2 x
 			ARG 3 y
 			ARG 4 z
-			ARG 5 direction
-			ARG 6 type
-	CLASS C_56ywfxlqz LargeCrossingPiece
-		METHOD m_66jrpkzwj getNewInstance (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_56ywfxlqz;
-			ARG 0 piecesList
+			ARG 5 facing
+			ARG 6 generationDepth
+	CLASS C_56ywfxlqz LargeCrossing
+		METHOD <init> (ILjava/util/Random;Lnet/minecraft/C_56geqvdbi;I)V
+			ARG 1 generationDepth
+			ARG 2 random
+			ARG 3 box
+			ARG 4 facing
+		METHOD m_66jrpkzwj of (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_56ywfxlqz;
+			ARG 0 pieces
 			ARG 1 random
 			ARG 2 x
 			ARG 3 y
 			ARG 4 z
-			ARG 5 direction
-			ARG 6 type
-	CLASS C_58kwlnhft StairsPiece
-		METHOD m_09yutwjbx getNewInstance (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_58kwlnhft;
-			ARG 0 piecesList
+			ARG 5 facing
+			ARG 6 generationDepth
+	CLASS C_58kwlnhft BridgeStairs
+		METHOD <init> (ILjava/util/Random;Lnet/minecraft/C_56geqvdbi;I)V
+			ARG 1 generationDepth
+			ARG 2 random
+			ARG 3 box
+			ARG 4 facing
+		METHOD m_09yutwjbx of (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_58kwlnhft;
+			ARG 0 pieces
 			ARG 1 random
 			ARG 2 x
 			ARG 3 y
 			ARG 4 z
-			ARG 5 direction
+			ARG 5 facing
 			ARG 6 type
-	CLASS C_62agmrbif PathEndPiece
+	CLASS C_62agmrbif BridgeEnd
 		FIELD f_63ejgjsdt seed I
-		METHOD m_77gsgbwxr generate (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_62agmrbif;
-			ARG 0 piecesList
+		METHOD <init> (ILjava/util/Random;Lnet/minecraft/C_56geqvdbi;I)V
+			ARG 1 generationDepth
+			ARG 2 seed
+			ARG 3 box
+			ARG 4 facing
+		METHOD m_77gsgbwxr of (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_62agmrbif;
+			ARG 0 pieces
 			ARG 1 random
 			ARG 2 x
 			ARG 3 y
 			ARG 4 z
-			ARG 5 direction
-			ARG 6 type
-	CLASS C_63mjbvbem LargeCorridorPiece
-		METHOD m_92aufmoji getNewInstance (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_63mjbvbem;
-			ARG 0 piecesList
+			ARG 5 facing
+			ARG 6 generationDepth
+	CLASS C_63mjbvbem CorridorBalcony
+		METHOD <init> (ILjava/util/Random;Lnet/minecraft/C_56geqvdbi;I)V
+			ARG 1 generationDepth
+			ARG 2 random
+			ARG 3 box
+			ARG 4 facing
+		METHOD m_92aufmoji of (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_63mjbvbem;
+			ARG 0 pieces
 			ARG 1 random
 			ARG 2 x
 			ARG 3 y
 			ARG 4 z
-			ARG 5 direction
-			ARG 6 type
-	CLASS C_67qmpwbwp SmallCrossingPiece
-		METHOD m_64hqbjhhz getNewInstance (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_67qmpwbwp;
-			ARG 0 piecesList
+			ARG 5 facing
+			ARG 6 generationDepth
+	CLASS C_67qmpwbwp SmallCorridorCrossing
+		METHOD <init> (ILjava/util/Random;Lnet/minecraft/C_56geqvdbi;I)V
+			ARG 1 generationDepth
+			ARG 2 random
+			ARG 3 box
+			ARG 4 facing
+		METHOD m_64hqbjhhz of (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_67qmpwbwp;
+			ARG 0 pieces
 			ARG 1 random
 			ARG 2 x
 			ARG 3 y
 			ARG 4 z
-			ARG 5 direction
-			ARG 6 type
-	CLASS C_72pnaurfi WeightedFortressPiece
+			ARG 5 facing
+			ARG 6 generationDepth
+	CLASS C_72pnaurfi FortressPieceWeight
 		FIELD f_18kljpwfd maxAmount I
 		FIELD f_32dwcjssz type Ljava/lang/Class;
-		FIELD f_34xifayxq Weight I
+		FIELD f_34xifayxq weight I
 		FIELD f_49fxnsslj amountGenerated I
 		FIELD f_97dzqbxwc isConnectorPiece Z
-		METHOD m_13wbhqfmc isLimitReached ()Z
-		METHOD m_28swhwqfo isLimitReached (I)Z
-			ARG 1 direction
-	CLASS C_76iqmybfr TinyCorridorPiece
+		METHOD <init> (Ljava/lang/Class;II)V
+			ARG 1 type
+			ARG 2 weight
+			ARG 3 maxAmount
+		METHOD <init> (Ljava/lang/Class;IIZ)V
+			ARG 1 type
+			ARG 2 weight
+			ARG 3 maxAmount
+			ARG 4 isConnectorPiece
+		METHOD m_13wbhqfmc isValid ()Z
+		METHOD m_28swhwqfo isValid (I)Z
+			ARG 1 generationDepth
+	CLASS C_76iqmybfr SmallCorridorLeftTurn
 		FIELD f_99ayjjgmh hasChest Z
-		METHOD m_72dlvjxjf getNewInstance (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_76iqmybfr;
-			ARG 0 piecesList
+		METHOD <init> (ILjava/util/Random;Lnet/minecraft/C_56geqvdbi;I)V
+			ARG 1 generationDepth
+			ARG 2 random
+			ARG 3 box
+			ARG 4 facing
+		METHOD m_72dlvjxjf of (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_76iqmybfr;
+			ARG 0 pieces
 			ARG 1 random
 			ARG 2 x
 			ARG 3 y
 			ARG 4 z
-			ARG 5 direction
-			ARG 6 type
-	CLASS C_78vebffim NetherWartFarmPiece
-		METHOD m_46burcyny getNewInstance (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_78vebffim;
-			ARG 0 piecesList
+			ARG 5 facing
+			ARG 6 generationDepth
+	CLASS C_78vebffim NetherwartFarm
+		METHOD <init> (ILjava/util/Random;Lnet/minecraft/C_56geqvdbi;I)V
+			ARG 1 generationDepth
+			ARG 2 random
+			ARG 3 box
+			ARG 4 facing
+		METHOD m_46burcyny of (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_78vebffim;
+			ARG 0 pieces
 			ARG 1 random
 			ARG 2 x
 			ARG 3 y
 			ARG 4 z
-			ARG 5 direction
-			ARG 6 type
-	CLASS C_90qcseqme AbstractFortressPiece
-		FIELD f_57ofpcqki CHEST_INVENTORY [Lnet/minecraft/C_44bayizle;
-		METHOD m_10yalrllz selectPieceNegative (Lnet/minecraft/C_89drqxuck$C_97uiraznn;Ljava/util/List;Ljava/util/Random;IIZ)Lnet/minecraft/C_41vkpmdqe;
-			COMMENT Selects the next piece that faces in a negative X or Z direction depending on the current direction
+			ARG 5 facing
+			ARG 6 generationDepth
+	CLASS C_90qcseqme FortressPiece
+		FIELD f_57ofpcqki LOOT_PICKERS [Lnet/minecraft/C_44bayizle;
+		METHOD m_10yalrllz generatePieceLeft (Lnet/minecraft/C_89drqxuck$C_97uiraznn;Ljava/util/List;Ljava/util/Random;IIZ)Lnet/minecraft/C_41vkpmdqe;
 			ARG 1 startPiece
-			ARG 2 piecesList
+			ARG 2 pieces
 			ARG 3 random
 			ARG 4 yOffset
 			ARG 5 offset
-			ARG 6 generateSecondaryPieces
-		METHOD m_12mritjpo selectPieceContinuing (Lnet/minecraft/C_89drqxuck$C_97uiraznn;Ljava/util/List;Ljava/util/Random;IIZ)Lnet/minecraft/C_41vkpmdqe;
-			COMMENT Selects the next piece along the current direction
+			ARG 6 pickCastlePiece
+		METHOD m_12mritjpo generatePieceForward (Lnet/minecraft/C_89drqxuck$C_97uiraznn;Ljava/util/List;Ljava/util/Random;IIZ)Lnet/minecraft/C_41vkpmdqe;
 			ARG 1 startPiece
-			ARG 2 piecesList
+			ARG 2 pieces
 			ARG 3 random
 			ARG 4 offset
 			ARG 5 yOffset
-			ARG 6 generateSecondaryPieces
+			ARG 6 pickCastlePiece
 		METHOD m_19jtkbrww getTotalWeight (Ljava/util/List;)I
-			COMMENT Will return the total weight of the piecesList if more pieces can still be generated.
-			COMMENT When the max amount of pieces have generated, the method will return -1.
-			ARG 1 piecesList
-		METHOD m_27hfvygji getNextPiece (Lnet/minecraft/C_89drqxuck$C_97uiraznn;Ljava/util/List;Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_90qcseqme;
+			COMMENT Will return the total weight of the given piece weights if more pieces can still be generated, or -1.
+			ARG 1 pieceWeights
+		METHOD m_27hfvygji generateNextPiece (Lnet/minecraft/C_89drqxuck$C_97uiraznn;Ljava/util/List;Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_90qcseqme;
 			ARG 1 startPiece
-			ARG 2 piecesList
-			ARG 3 piecesSelectionList
+			ARG 2 weights
+			ARG 3 pieces
 			ARG 4 random
 			ARG 5 x
 			ARG 6 y
 			ARG 7 z
-			ARG 8 direction
-			ARG 9 type
+			ARG 8 facing
+			ARG 9 generationDepth
 		METHOD m_49rxkomhq isValidStructureBox (Lnet/minecraft/C_56geqvdbi;)Z
-			ARG 0 structureBox
-		METHOD m_75vralocu selectNextPiece (Lnet/minecraft/C_89drqxuck$C_97uiraznn;Ljava/util/List;Ljava/util/Random;IIIIIZ)Lnet/minecraft/C_41vkpmdqe;
-			COMMENT Select a random next piece to be generated
+			ARG 0 box
+		METHOD m_75vralocu generateNextPiece (Lnet/minecraft/C_89drqxuck$C_97uiraznn;Ljava/util/List;Ljava/util/Random;IIIIIZ)Lnet/minecraft/C_41vkpmdqe;
 			ARG 1 startPiece
-			ARG 2 piecesList
+			ARG 2 pieces
 			ARG 3 random
 			ARG 4 x
 			ARG 5 y
 			ARG 6 z
-			ARG 7 direction
-			ARG 8 tyoe
-			ARG 9 generateSecondaryPieces
-		METHOD m_91dnxzoes selectPiecePositive (Lnet/minecraft/C_89drqxuck$C_97uiraznn;Ljava/util/List;Ljava/util/Random;IIZ)Lnet/minecraft/C_41vkpmdqe;
-			COMMENT Selects the next piece that faces in a positive X or Z direction depending on the current direction
+			ARG 7 facing
+			ARG 8 generationDepth
+			ARG 9 pickCastlePiece
+		METHOD m_91dnxzoes generatePieceRight (Lnet/minecraft/C_89drqxuck$C_97uiraznn;Ljava/util/List;Ljava/util/Random;IIZ)Lnet/minecraft/C_41vkpmdqe;
 			ARG 1 startPiece
-			ARG 2 piecesList
+			ARG 2 pieces
 			ARG 3 random
 			ARG 4 yOffset
 			ARG 5 offset
-			ARG 6 generateSecondaryPieces
-	CLASS C_95abhtsyp SmallCorridorPiece
-		METHOD m_81tclowca getNewInstance (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_95abhtsyp;
-			ARG 0 piecesList
+			ARG 6 pickCastlePiece
+	CLASS C_95abhtsyp SmallCorridor
+		METHOD <init> (ILjava/util/Random;Lnet/minecraft/C_56geqvdbi;I)V
+			ARG 1 generationDepth
+			ARG 2 random
+			ARG 3 box
+			ARG 4 facing
+		METHOD m_81tclowca of (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_89drqxuck$C_95abhtsyp;
+			ARG 0 pieces
 			ARG 1 random
 			ARG 2 x
 			ARG 3 y
 			ARG 4 z
-			ARG 5 direction
-			ARG 6 type
-	CLASS C_97uiraznn FortressStartPiece
-		FIELD f_22bipffjh startPiece Ljava/util/ArrayList;
-		FIELD f_24gnyuzhb primaryPieces Ljava/util/List;
-		FIELD f_51vulpdea secondaryPieces Ljava/util/List;
-		FIELD f_62ouslbfw fortressPieceData Lnet/minecraft/C_89drqxuck$C_72pnaurfi;
+			ARG 5 facing
+			ARG 6 generationDepth
+	CLASS C_97uiraznn Start
+		FIELD f_22bipffjh children Ljava/util/ArrayList;
+		FIELD f_24gnyuzhb bridgePieces Ljava/util/List;
+		FIELD f_51vulpdea castlePieces Ljava/util/List;
+		FIELD f_62ouslbfw previous Lnet/minecraft/C_89drqxuck$C_72pnaurfi;

@@ -1,23 +1,23 @@
 CLASS net/minecraft/C_22gbuvoha net/minecraft/world/gen/structure/mineshaft/MineshaftPieces
-	FIELD f_76qraxvcw lootChestContents [Lnet/minecraft/C_44bayizle;
-	METHOD m_04qlawumq addPiece (Lnet/minecraft/C_41vkpmdqe;Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_41vkpmdqe;
-		ARG 0 piece
-		ARG 1 piecesList
+	FIELD f_76qraxvcw LOOT_PICKERS [Lnet/minecraft/C_44bayizle;
+	METHOD m_04qlawumq generateNextPiece (Lnet/minecraft/C_41vkpmdqe;Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_41vkpmdqe;
+		ARG 0 startPiece
+		ARG 1 pieces
 		ARG 2 random
 		ARG 3 x
 		ARG 4 y
 		ARG 5 z
 		ARG 6 facing
-		ARG 7 type
+		ARG 7 generationDepth
 	METHOD m_76nzfooqk getLootChestContent ()[Lnet/minecraft/C_44bayizle;
-	METHOD m_83diixmba addRandomPiece (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_41vkpmdqe;
-		ARG 0 piecesList
+	METHOD m_83diixmba createPiece (Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_41vkpmdqe;
+		ARG 0 pieces
 		ARG 1 random
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
 		ARG 5 facing
-		ARG 6 type
+		ARG 6 generationDepth
 	METHOD m_91bausedo registerPieces ()V
 	METHOD m_91zhasbah syntheticAddPiece (Lnet/minecraft/C_41vkpmdqe;Ljava/util/List;Ljava/util/Random;IIIII)Lnet/minecraft/C_41vkpmdqe;
 		ARG 0 piece
@@ -28,35 +28,55 @@ CLASS net/minecraft/C_22gbuvoha net/minecraft/world/gen/structure/mineshaft/Mine
 		ARG 5 z
 		ARG 6 facing
 		ARG 7 type
-	CLASS C_17emnmojt RoomPiece
-		FIELD f_72jcdnoky roomPieces Ljava/util/List;
-	CLASS C_28rtyroxt StairsPiece
-		METHOD m_10pitrjep getStructureBox (Ljava/util/List;Ljava/util/Random;IIII)Lnet/minecraft/C_56geqvdbi;
+	CLASS C_17emnmojt Room
+		FIELD f_72jcdnoky entrances Ljava/util/List;
+		METHOD <init> (ILjava/util/Random;II)V
+			ARG 1 generationDepth
+			ARG 2 random
+			ARG 3 x
+			ARG 4 z
+	CLASS C_28rtyroxt Stairs
+		METHOD <init> (ILjava/util/Random;Lnet/minecraft/C_56geqvdbi;I)V
+			ARG 1 generationDepth
+			ARG 2 random
+			ARG 3 box
+			ARG 4 facing
+		METHOD m_10pitrjep findSize (Ljava/util/List;Ljava/util/Random;IIII)Lnet/minecraft/C_56geqvdbi;
 			ARG 0 piecesList
 			ARG 1 random
 			ARG 2 x
 			ARG 3 y
 			ARG 4 z
-			ARG 5 direction
+			ARG 5 facing
 	CLASS C_66aujlkvl Corridor
-		FIELD f_30rxsvijh shouldGenerateRails Z
-		FIELD f_38neeygdy shouldGenerateCobwebs Z
-		FIELD f_43arisynl hasSpawnerPlaced Z
-		FIELD f_70euofafe corridorLength I
-		METHOD m_58nvmblex getStructureBox (Ljava/util/List;Ljava/util/Random;IIII)Lnet/minecraft/C_56geqvdbi;
+		FIELD f_30rxsvijh hasRails Z
+		FIELD f_38neeygdy hasCobwebs Z
+		FIELD f_43arisynl hasSpiderSpawner Z
+		FIELD f_70euofafe sections I
+		METHOD <init> (ILjava/util/Random;Lnet/minecraft/C_56geqvdbi;I)V
+			ARG 1 generationDepth
+			ARG 2 random
+			ARG 3 box
+			ARG 4 facing
+		METHOD m_58nvmblex findSize (Ljava/util/List;Ljava/util/Random;IIII)Lnet/minecraft/C_56geqvdbi;
 			ARG 0 pieces
 			ARG 1 random
 			ARG 2 x
 			ARG 3 y
 			ARG 4 z
 			ARG 5 facing
-	CLASS C_90zhcbkbk CrossingPiece
-		FIELD f_31vgksjlg isMultipleFloored Z
+	CLASS C_90zhcbkbk Crossing
+		FIELD f_31vgksjlg hasTwoFloors Z
 		FIELD f_37hgpxvcb direction I
-		METHOD m_79phxlxgu getStructureBox (Ljava/util/List;Ljava/util/Random;IIII)Lnet/minecraft/C_56geqvdbi;
+		METHOD <init> (ILjava/util/Random;Lnet/minecraft/C_56geqvdbi;I)V
+			ARG 1 generationDepth
+			ARG 2 random
+			ARG 3 box
+			ARG 4 direction
+		METHOD m_79phxlxgu findSize (Ljava/util/List;Ljava/util/Random;IIII)Lnet/minecraft/C_56geqvdbi;
 			ARG 0 piecesList
 			ARG 1 random
 			ARG 2 x
 			ARG 3 y
 			ARG 4 z
-			ARG 5 direction
+			ARG 5 facing
