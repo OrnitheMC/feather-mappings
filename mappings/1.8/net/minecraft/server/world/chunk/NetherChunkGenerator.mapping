@@ -1,0 +1,49 @@
+CLASS net/minecraft/C_49wdwzfxm net/minecraft/server/world/chunk/NetherChunkGenerator
+	FIELD f_01hgetjxv terrainNoise [D
+	FIELD f_06ieicyym world Lnet/minecraft/C_72mqkrkao;
+	FIELD f_10fdirwdo lowNoise [D
+	FIELD f_17kkylmrc highNoiseGenerator Lnet/minecraft/C_78ppxtveu;
+	FIELD f_17sxvnnxy lowNoiseGenerator Lnet/minecraft/C_78ppxtveu;
+	FIELD f_23obehgol soulSandAndGravelNoiseGenerator Lnet/minecraft/C_78ppxtveu;
+	FIELD f_38zpaqngy depthNoise [D
+	FIELD f_40wtkpkjn random Ljava/util/Random;
+	FIELD f_41sncswty selectorNoise [D
+	FIELD f_45fvwftxj highNoise [D
+	FIELD f_45kfklacx fortressGenerator Lnet/minecraft/C_95rlchxxo;
+	FIELD f_45nnwwlvz lavaLakeNoise [D
+	FIELD f_47quawtqt lavaLakeNoiseGenerator Lnet/minecraft/C_78ppxtveu;
+	FIELD f_48ugzrerz selectorNoiseGenerator Lnet/minecraft/C_78ppxtveu;
+	FIELD f_59tiurknw scaleNoise [D
+	FIELD f_62duavpwb scaleNoiseGenerator Lnet/minecraft/C_78ppxtveu;
+	FIELD f_80unfpwop depthNoiseGenerator Lnet/minecraft/C_78ppxtveu;
+	FIELD f_88uiicoyl soulSandNoise [D
+	FIELD f_88wicwlmr caveGenerator Lnet/minecraft/C_05weluacs;
+	FIELD f_94flmkmjb gravelNoise [D
+	METHOD <init> (Lnet/minecraft/C_72mqkrkao;ZJ)V
+		ARG 1 world
+		ARG 2 seed
+	METHOD m_45tdredsv generateBaseTerrain (IILnet/minecraft/C_76ycjmrbl;)V
+		COMMENT Loops over the complete terrain noise array (4 x 16 x 4)
+		COMMENT it gets all values inside the 4x4 cube facing in pos xyz direction with the origin at the (0, 0, 0) position
+		COMMENT Then it loops 4x8x4 times, the number of 4x16x4 cubes there are in a 16x128x16 chunk and does some calculations
+		COMMENT finally depending on the generated numbers it either puts a lava block, a netherrack block or nothing on that position
+		ARG 1 x
+		ARG 2 z
+		ARG 3 blockArray
+	METHOD m_46sfqgnpl createTerrainNoise ([DIIIIII)[D
+		ARG 1 blockArray
+		ARG 2 xOffset
+		ARG 3 yOffset
+		ARG 4 zOffset
+		ARG 5 xSize
+		ARG 6 ySize
+		ARG 7 zSize
+	METHOD m_91jhupssq generateTerrainVarriety (IILnet/minecraft/C_76ycjmrbl;)V
+		COMMENT This method generates non netherack or lava blocks like bedrock, soul sand and gravel
+		COMMENT 2 for loops to loop between all 64 xz positions inside the chunk
+		COMMENT A second for loop to go over all 128 blocks in the column in that xz position
+		COMMENT Soul sand and gravel only generate between y=60 and y=65 inclusive
+		COMMENT If y < 64 and the lava lake noise gen spits out a number below 0 or the block is air, then that block will be filled with lava
+		ARG 1 x
+		ARG 2 z
+		ARG 3 blockArray
