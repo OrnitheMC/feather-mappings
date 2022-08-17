@@ -2,9 +2,10 @@ CLASS net/minecraft/C_29tuwvijg net/minecraft/world/chunk/WorldChunk
 	FIELD f_00uckydux terrainPopulated Z
 	FIELD f_05oedaapi inhabitedTime J
 		COMMENT The number of ticks for which players have been present in this chunk - used for local difficulty.
-	FIELD f_09rifyvyr minRainOrSnowHeight [I
+	FIELD f_09rifyvyr precipitationHeight [I
 		COMMENT The minimum y-coordinate at which snow or rain can fall for each column in this chunk.
-	FIELD f_17hrzfgge queuedLightUpdates I
+	FIELD f_17hrzfgge lightUpdateCount I
+	FIELD f_25bauslpd entitiesBySection [Lnet/minecraft/C_89zjxrijz;
 	FIELD f_28ugcjogj blockEntities Ljava/util/Map;
 	FIELD f_30ertgujm LOGGER Lorg/apache/logging/log4j/Logger;
 	FIELD f_32jhpnsmt biomes [B
@@ -22,7 +23,9 @@ CLASS net/minecraft/C_29tuwvijg net/minecraft/world/chunk/WorldChunk
 	FIELD f_75vqhtxnq containsEntities Z
 		COMMENT True if this chunk contains entities - used to decide how often to save this chunk to disk.
 	FIELD f_76gsriajg world Lnet/minecraft/C_72mqkrkao;
+	FIELD f_76jisowww blockEntityCreationQueue Ljava/util/concurrent/ConcurrentLinkedQueue;
 	FIELD f_83mpmpufj lastSaveTime J
+	FIELD f_86eqqayxk heightmap [I
 	FIELD f_88xdowrpe loaded Z
 		COMMENT True if  this chunk is currently loaded into the world.
 	FIELD f_96ixshjwk lightPopulated Z
@@ -30,21 +33,33 @@ CLASS net/minecraft/C_29tuwvijg net/minecraft/world/chunk/WorldChunk
 		ARG 1 world
 		ARG 2 chunkX
 		ARG 3 chunkZ
+	METHOD <init> (Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_76ycjmrbl;II)V
+		ARG 1 world
+		ARG 2 storage
+		ARG 3 chunkX
+		ARG 4 chunkZ
+	METHOD m_00dpwuops getBlockAt (III)Lnet/minecraft/C_88rbsxznd;
+		ARG 1 sectionX
+		ARG 2 y
+		ARG 3 sectionZ
 	METHOD m_03pvwszun load ()V
+	METHOD m_03zmvxvii setTerrainPopulated (Z)V
+		ARG 1 populated
 	METHOD m_04yafswyk recheckGaps (Z)V
 		ARG 1 checkAll
+	METHOD m_05aofquvu getBlockState (Lnet/minecraft/C_98mwkxlqj;)Lnet/minecraft/C_95jkivfww;
+		ARG 1 pos
 	METHOD m_06dnctszf unload ()V
 	METHOD m_07iaitcns checkBorderLight (Lnet/minecraft/C_08cjfgfvj;)V
-		COMMENT Check the light around the border of a chunk. The border variable determines which border to check.
-		COMMENT     - border = 0 : south
-		COMMENT     - border = 1 : west
-		COMMENT     - border = 2 : north
-		COMMENT     - border = 3 : east
-		ARG 1 border
-	METHOD m_10eksolnu getBiomeAt (Lnet/minecraft/C_98mwkxlqj;Lnet/minecraft/C_80dcurlre;)Lnet/minecraft/C_33fapnocc;
-		ARG 1 sectionX
-		ARG 2 sectionZ
-	METHOD m_11nyjkult markDirty ()V
+		ARG 1 side
+	METHOD m_09vlwbwzn getBlockEntities ()Ljava/util/Map;
+	METHOD m_10eksolnu getBiome (Lnet/minecraft/C_98mwkxlqj;Lnet/minecraft/C_80dcurlre;)Lnet/minecraft/C_33fapnocc;
+		ARG 1 pos
+		ARG 2 source
+	METHOD m_11nyjkult setModified ()V
+	METHOD m_11oiqtypr setContainsEntities (Z)V
+		ARG 1 containsEntities
+	METHOD m_13csokcig queueLightUpdates ()V
 	METHOD m_13fqfqgqw isPopulated ()Z
 	METHOD m_14kmjxnhg isAt (II)Z
 		ARG 1 chunkX
@@ -56,110 +71,150 @@ CLASS net/minecraft/C_29tuwvijg net/minecraft/world/chunk/WorldChunk
 		ARG 1 x
 		ARG 2 z
 		ARG 3 maxY
+	METHOD m_20gywxnxw createBlockEntity (Lnet/minecraft/C_98mwkxlqj;)Lnet/minecraft/C_41cvuyzpf;
+		ARG 1 pos
 	METHOD m_21wjrhvgb isTopOfColumn (Lnet/minecraft/C_98mwkxlqj;)Z
-		ARG 1 sectionX
+		ARG 1 pos
+	METHOD m_22iuntytp getHeightMap ()[I
 	METHOD m_24ttdzpmy getHighestSectionYOffset ()I
+	METHOD m_26fkfwydp isLightPopulated ()Z
 	METHOD m_26ugdpjbz checkSkylight (IIII)V
 		ARG 1 x
 		ARG 2 z
 		ARG 3 minY
 		ARG 4 maxY
 	METHOD m_27cimrrmo getSections ()[Lnet/minecraft/C_74gfaprel;
-	METHOD m_28vdznlqn resetLight (III)V
+	METHOD m_28vdznlqn resetLightAt (III)V
 		ARG 1 sectionX
 		ARG 2 y
 		ARG 3 sectionZ
-	METHOD m_30kajqqkn getOpacity (III)I
+	METHOD m_29wvpaiuw getBlock (III)Lnet/minecraft/C_88rbsxznd;
+		ARG 1 x
+		ARG 2 y
+		ARG 3 z
+	METHOD m_30kajqqkn getOpacityAt (III)I
 		ARG 1 sectionX
 		ARG 2 y
 		ARG 3 sectionZ
-	METHOD m_30uqhqich setBlockMetadata (Lnet/minecraft/C_98mwkxlqj;Lnet/minecraft/C_95jkivfww;)Lnet/minecraft/C_95jkivfww;
-		ARG 1 sectionX
-		ARG 2 y
+	METHOD m_30uqhqich setBlockState (Lnet/minecraft/C_98mwkxlqj;Lnet/minecraft/C_95jkivfww;)Lnet/minecraft/C_95jkivfww;
+		ARG 1 pos
+		ARG 2 state
 	METHOD m_32ujkqovg getBiomes ()[B
+	METHOD m_32zawgjlp setHeightmap ([I)V
+		ARG 1 heightmap
+	METHOD m_33pchthjr setInhabitedTime (J)V
+		ARG 1 time
 	METHOD m_35xfpwvsb getLightLevel (Lnet/minecraft/C_98mwkxlqj;I)I
-		ARG 1 sectionX
-		ARG 2 y
+		ARG 1 pos
+		ARG 2 skyDarkness
 	METHOD m_36ofkafbh addBlockEntity (Lnet/minecraft/C_41cvuyzpf;)V
 		ARG 1 blockEntity
 	METHOD m_38ogmyfec getLightLevel (Lnet/minecraft/C_90rtvsfeu;Lnet/minecraft/C_98mwkxlqj;)I
 		ARG 1 type
-		ARG 2 sectionX
+		ARG 2 pos
+	METHOD m_40hzakaqh isLoaded ()Z
+	METHOD m_41lpjbhah setLoaded (Z)V
+		ARG 1 loaded
 	METHOD m_43hrvzrdr populate (Lnet/minecraft/C_83hkyqngm;Lnet/minecraft/C_83hkyqngm;II)V
-		ARG 1 provider
-		ARG 2 chunkGenerator
+		ARG 1 source
+		ARG 2 generator
 		ARG 3 chunkX
 		ARG 4 chunkZ
 	METHOD m_45tyombfk setLightLevel (Lnet/minecraft/C_90rtvsfeu;Lnet/minecraft/C_98mwkxlqj;I)V
 		ARG 1 type
-		ARG 2 sectionX
-		ARG 3 y
+		ARG 2 pos
+		ARG 3 light
 	METHOD m_46clnuxac getBlockEntity (Lnet/minecraft/C_98mwkxlqj;Lnet/minecraft/C_29tuwvijg$C_52argmlon;)Lnet/minecraft/C_41cvuyzpf;
-		ARG 1 sectionX
+		ARG 1 pos
+		ARG 2 creationType
+	METHOD m_47hlhakgv getHighestY (Lnet/minecraft/C_98mwkxlqj;)I
+		ARG 1 pos
 	METHOD m_49usbavep removeEntity (Lnet/minecraft/C_98tnijqnf;I)V
 		ARG 1 entity
 		ARG 2 chunkY
+	METHOD m_51twftwnp setLastSaveTime (J)V
+		ARG 1 lastSaveTime
 	METHOD m_52sizqvbv getBlock (Lnet/minecraft/C_98mwkxlqj;)Lnet/minecraft/C_88rbsxznd;
-		ARG 1 sectionX
-	METHOD m_53vkkdvfs areSectionsEmpty (II)Z
+		ARG 1 pos
+	METHOD m_53vkkdvfs isEmpty (II)Z
 		ARG 1 minY
 		ARG 2 maxY
-	METHOD m_55erqryri getFilteredEntitiesInBoxExclusive (Lnet/minecraft/C_98tnijqnf;Lnet/minecraft/C_68qygpazz;Ljava/util/List;Lcom/google/common/base/Predicate;)V
-		COMMENT gets all entities inside a bounding box that:
-		COMMENT     - Are not the passed entity
-		COMMENT     - Adhere to the filter
-		COMMENT     - can be assigned to the passed entity class
-		ARG 1 entity
-		ARG 2 boundingBox
-		ARG 3 entityList
+	METHOD m_55erqryri getEntities (Lnet/minecraft/C_98tnijqnf;Lnet/minecraft/C_68qygpazz;Ljava/util/List;Lcom/google/common/base/Predicate;)V
+		ARG 1 exclude
+		ARG 2 box
+		ARG 3 entities
 		ARG 4 filter
-	METHOD m_55noxhmsl getChunkPos ()Lnet/minecraft/C_77sszozrk;
+	METHOD m_55noxhmsl getPos ()Lnet/minecraft/C_77sszozrk;
 	METHOD m_56zeyarlt isEmpty ()Z
 	METHOD m_57uupipro update ([BIZ)V
 		ARG 1 rawChunkData
 		ARG 2 sectionsWithData
-		ARG 3 sectionsWithBlockIdsUpper
+		ARG 3 full
 	METHOD m_59nzohhzl tick (Z)V
 		ARG 1 beFast
-	METHOD m_62fttnupe updateSkylight (II)V
+	METHOD m_62fttnupe queueLightUpdateAt (II)V
 		ARG 1 sectionX
 		ARG 2 sectionZ
 	METHOD m_63elebvha removeEntity (Lnet/minecraft/C_98tnijqnf;)V
 		ARG 1 entity
-	METHOD m_65woixlmx getFilteredEntitiesInBox (Ljava/lang/Class;Lnet/minecraft/C_68qygpazz;Ljava/util/List;Lcom/google/common/base/Predicate;)V
-		COMMENT gets all entities inside a bounding box that adhere to the filter and
-		COMMENT that can be assigned to the specific entity class that was passed.
-		ARG 1 entityClass
-		ARG 2 boundingBox
-		ARG 3 entityList
+	METHOD m_63lvqbdzv getOpacity (Lnet/minecraft/C_98mwkxlqj;)I
+		ARG 1 pos
+	METHOD m_65woixlmx getEntities (Ljava/lang/Class;Lnet/minecraft/C_68qygpazz;Ljava/util/List;Lcom/google/common/base/Predicate;)V
+		ARG 1 type
+		ARG 2 box
+		ARG 3 entities
 		ARG 4 filter
 	METHOD m_66fswwnsv setBlockEntity (Lnet/minecraft/C_98mwkxlqj;Lnet/minecraft/C_41cvuyzpf;)V
-		ARG 1 sectionX
-		ARG 2 y
-	METHOD m_66zqikjlk setSkylight ()V
+		ARG 1 pos
+		ARG 2 blockEntity
+	METHOD m_66zqikjlk populateSkylight ()V
 	METHOD m_66zqoeubb addEntity (Lnet/minecraft/C_98tnijqnf;)V
 		ARG 1 entity
-	METHOD m_67rkxthkc processQueuedLightUpdates ()V
-	METHOD m_74dgeiymo getSlimeRandom (J)Ljava/util/Random;
+	METHOD m_67rkxthkc updateLight ()V
+	METHOD m_69xkaerhd getEntities ()[Lnet/minecraft/C_89zjxrijz;
+	METHOD m_70ufsbtaa getInhabitedTime ()J
+	METHOD m_71uvqlnaj getHightestOpaqueBlockY ()I
+	METHOD m_74dgeiymo getRandomForSlime (J)Ljava/util/Random;
 		ARG 1 seed
-	METHOD m_75lrnasrv getRainOrSnowHeight (Lnet/minecraft/C_98mwkxlqj;)Lnet/minecraft/C_98mwkxlqj;
-		ARG 1 sectionX
-	METHOD m_76mmszxpg getHighestY (II)I
+	METHOD m_75lrnasrv getPrecipitationHeight (Lnet/minecraft/C_98mwkxlqj;)Lnet/minecraft/C_98mwkxlqj;
+		ARG 1 pos
+	METHOD m_76mmszxpg getHighestYAt (II)I
 		ARG 1 sectionX
 		ARG 2 sectionZ
 	METHOD m_78bymertd removeBlockEntity (Lnet/minecraft/C_98mwkxlqj;)V
-		ARG 1 sectionX
-	METHOD m_78vpalcwg updateLight (II)Z
-		COMMENT updates the light withing the chunk.
+		ARG 1 pos
+	METHOD m_78gifjmdn setModified (Z)V
+		ARG 1 modified
+	METHOD m_78vpalcwg updateLightAt (II)Z
 		ARG 1 sectionX
 		ARG 2 sectionZ
-	METHOD m_79ofvkezi setHeightmap ()V
+	METHOD m_78vwtkpej setSections ([Lnet/minecraft/C_74gfaprel;)V
+		ARG 1 sections
+	METHOD m_79ofvkezi populateHeightmap ()V
+	METHOD m_80lezfiuo setLightPopulated (Z)V
+		ARG 1 populated
 	METHOD m_83yrxmnhh getBlockMetadata (Lnet/minecraft/C_98mwkxlqj;)I
-		ARG 1 sectionX
+		ARG 1 pos
 	METHOD m_84qshofeo populateLight ()V
+	METHOD m_86ngmlabu getBlockMetadataAt (III)I
+		ARG 1 sectionX
+		ARG 2 y
+		ARG 3 sectionZ
+	METHOD m_86zlpghmg getWorld ()Lnet/minecraft/C_72mqkrkao;
+	METHOD m_94rtsehgy setBiomes ([B)V
+		ARG 1 biomes
+	METHOD m_95dlchgzq isTerrainPopulated ()Z
 	CLASS 1 1
 		FIELD f_01vepunif chunk Lnet/minecraft/C_29tuwvijg;
 		FIELD f_13lpbvouz z I
 		FIELD f_35mjctgzg y I
 		FIELD f_92inzubqp x I
 		METHOD call call ()Ljava/lang/Object;
+	CLASS 2
+		METHOD call call ()Ljava/lang/Object;
+	CLASS 3
+		METHOD call call ()Ljava/lang/Object;
+	CLASS C_52argmlon BlockEntityCreationType
+		FIELD f_08uedriil CHECK Lnet/minecraft/C_29tuwvijg$C_52argmlon;
+		FIELD f_48yuesygf QUEUED Lnet/minecraft/C_29tuwvijg$C_52argmlon;
+		FIELD f_85gxnvgux IMMEDIATE Lnet/minecraft/C_29tuwvijg$C_52argmlon;

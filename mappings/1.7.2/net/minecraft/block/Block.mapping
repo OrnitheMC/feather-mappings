@@ -67,14 +67,14 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-		ARG 5 dir
+		ARG 5 face
 	METHOD m_03hugxnyr setResistance (F)Lnet/minecraft/C_88rbsxznd;
 		COMMENT Sets this block's resistance.
 		COMMENT
 		COMMENT <p>
 		COMMENT NOTE: this method should only be used during the block's creation before it is registered.
 		ARG 1 resistance
-	METHOD m_04dewkkna canPlaceAt (Lnet/minecraft/C_72mqkrkao;IIII)Z
+	METHOD m_04dewkkna canPlace (Lnet/minecraft/C_72mqkrkao;IIII)Z
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
@@ -134,7 +134,7 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-		ARG 5 rand
+		ARG 5 random
 	METHOD m_18jqwbuit getColor ()I
 	METHOD m_18lhulyvp renderAsNormalBlock ()Z
 	METHOD m_18oaplexk getMaxX ()D
@@ -172,12 +172,11 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		COMMENT Returns this block's blast resistance for the given entity.
 		ARG 1 entity
 	METHOD m_24hszplqu getDropItem (ILjava/util/Random;I)Lnet/minecraft/C_85numzecy;
-		COMMENT Returns the item that must be dropped when this block is broken.
 		ARG 1 metadata
 		ARG 2 random
-		ARG 3 state
+		ARG 3 fortuneLevel
 	METHOD m_26pnpeaxv requiresSilkTouch ()Z
-	METHOD m_26xxjvmub dropItem (Lnet/minecraft/C_72mqkrkao;IIILnet/minecraft/C_17gpkxmuh;)V
+	METHOD m_26xxjvmub dropItems (Lnet/minecraft/C_72mqkrkao;IIILnet/minecraft/C_17gpkxmuh;)V
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
@@ -197,20 +196,20 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		ARG 3 y
 		ARG 4 z
 		ARG 5 player
-		ARG 6 dir
+		ARG 6 face
 		ARG 7 dx
 		ARG 8 dy
 		ARG 9 dz
 	METHOD m_28xkqbmvz fromItem (Lnet/minecraft/C_85numzecy;)Lnet/minecraft/C_88rbsxznd;
 		COMMENT Returns the block associated with the given item.
 		ARG 0 item
-	METHOD m_29imwauux dropAsItem (Lnet/minecraft/C_72mqkrkao;IIIII)V
+	METHOD m_29imwauux dropItems (Lnet/minecraft/C_72mqkrkao;IIIII)V
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
 		ARG 5 metadata
-		ARG 6 id
+		ARG 6 fortuneLevel
 	METHOD m_29uqnhaiz setAlpha ()I
 	METHOD m_30mnnkfsi getBlockName ()Ljava/lang/String;
 		COMMENT Only used by hoppers and skulls for some reason.
@@ -221,7 +220,7 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		COMMENT Returns the translation of this block's translation key.
 	METHOD m_35pzgjhzc hasComparatorOutput ()Z
 		COMMENT Returns whether this block has contents that can be read by a comparator.
-	METHOD m_35sowvruy onRandomRainTick (Lnet/minecraft/C_72mqkrkao;III)V
+	METHOD m_35sowvruy precipitationTick (Lnet/minecraft/C_72mqkrkao;III)V
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
@@ -234,11 +233,10 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-		ARG 5 rand
+		ARG 5 random
 	METHOD m_36ameodkx getItemGroup ()Lnet/minecraft/C_30sdcpaeq;
-	METHOD m_36igytydm getDropCount (Ljava/util/Random;)I
-		COMMENT Returns the amount of items this block should drop on breaking without bonus rolls.
-		ARG 1 rand
+	METHOD m_36igytydm getBaseDropCount (Ljava/util/Random;)I
+		ARG 1 random
 	METHOD m_38tcigdua isTranslucent ()Z
 	METHOD m_38wekkija isSolid ()Z
 		COMMENT Returns whether this block is solid. Solid blocks conduct redstone,
@@ -264,7 +262,7 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-		ARG 5 dir
+		ARG 5 face
 	METHOD m_48xbopjyi getBlockId ()Ljava/lang/String;
 	METHOD m_50gqctfum update (Lnet/minecraft/C_72mqkrkao;IIILnet/minecraft/C_88rbsxznd;)V
 		COMMENT Performs a block update. This method is called when a neighboring block has updated
@@ -275,7 +273,7 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		ARG 4 z
 		ARG 5 neighborBlock
 	METHOD m_50whqbmai getMaxZ ()D
-	METHOD m_53petcyum onDestroyedByExplosion (Lnet/minecraft/C_72mqkrkao;IIILnet/minecraft/C_25eizizno;)V
+	METHOD m_53petcyum onBrokenByExplosion (Lnet/minecraft/C_72mqkrkao;IIILnet/minecraft/C_25eizizno;)V
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
@@ -298,15 +296,14 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		ARG 6 vec2
 	METHOD m_56svhwdrk isEqual (Lnet/minecraft/C_88rbsxznd;)Z
 		ARG 1 block
-	METHOD m_56sxbyrwf randomDropAsItem (Lnet/minecraft/C_72mqkrkao;IIIIFI)V
-		COMMENT Called when the block must be dropped as an item by {@code dropAsItem}, but luck is taken into consideration here.
+	METHOD m_56sxbyrwf dropItems (Lnet/minecraft/C_72mqkrkao;IIIIFI)V
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
 		ARG 5 metadata
-		ARG 6 destructionChance
-		ARG 7 id
+		ARG 6 luck
+		ARG 7 fortuneLevel
 	METHOD m_58wrkqrzs isSupported (Lnet/minecraft/C_72mqkrkao;III)Z
 		ARG 1 world
 		ARG 2 x
@@ -321,8 +318,7 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		ARG 6 dx
 		ARG 7 dy
 		ARG 8 dz
-		ARG 9 prevMetadata
-	METHOD m_61blvjidt isFlowerPot ()Z
+		ARG 9 metadata
 	METHOD m_61cottjut disableStats ()Lnet/minecraft/C_88rbsxznd;
 		COMMENT Disables tracking by stats for this block.
 		COMMENT
@@ -332,7 +328,7 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		ARG 1 item
 		ARG 2 group
 		ARG 3 stacks
-	METHOD m_64dbnyhst getItem (Lnet/minecraft/C_72mqkrkao;III)Lnet/minecraft/C_85numzecy;
+	METHOD m_64dbnyhst getDropItem (Lnet/minecraft/C_72mqkrkao;III)Lnet/minecraft/C_85numzecy;
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
@@ -343,7 +339,7 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 	METHOD m_64rikopij isFullBlock ()Z
 	METHOD m_64stvknbh hasStats ()Z
 	METHOD m_64wfcmjos getOpacity ()I
-	METHOD m_65iiwnllw canExistAt (Lnet/minecraft/C_72mqkrkao;III)Z
+	METHOD m_65iiwnllw canExist (Lnet/minecraft/C_72mqkrkao;III)Z
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
@@ -411,7 +407,6 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		COMMENT Returns the given block's numerical id.
 		ARG 0 block
 	METHOD m_73vhkbokd shouldDropItemsOnExplosion (Lnet/minecraft/C_25eizizno;)Z
-		COMMENT Returns whether the block should drop as an Item when destroyed by an explosion.
 		ARG 1 explosion
 	METHOD m_74wmqupjs isWithinPlaneYZ (Lnet/minecraft/C_54nvtxdqe;)Z
 		ARG 1 vec
@@ -455,7 +450,7 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		ARG 4 z
 		ARG 5 type
 		ARG 6 data
-	METHOD m_80uhgqgpr getPlantType (Lnet/minecraft/C_72mqkrkao;III)I
+	METHOD m_80uhgqgpr getDropItemMetadata (Lnet/minecraft/C_72mqkrkao;III)I
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
@@ -512,7 +507,6 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		ARG 5 metadata
 		ARG 6 stack
 	METHOD m_88vnwexop setBlockItemBounds ()V
-		COMMENT Sets the bounds for the BlockItem
 	METHOD m_89yrbqqai fromId (Ljava/lang/String;)Lnet/minecraft/C_88rbsxznd;
 		COMMENT Returns the block registered to the given id.
 		ARG 0 id
@@ -532,8 +526,8 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		ARG 3 y
 		ARG 4 z
 		ARG 5 dir
-	METHOD m_92pkakshj createItemStack (I)Lnet/minecraft/C_17gpkxmuh;
-		ARG 1 damage
+	METHOD m_92pkakshj getDropStack (I)Lnet/minecraft/C_17gpkxmuh;
+		ARG 1 metadata
 	METHOD m_93jtpbowb isPowerSource ()Z
 		COMMENT Returns whether this block is capable of emitting redstone power.
 	METHOD m_93ooidefw ticksRandomly ()Z
@@ -541,20 +535,19 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		COMMENT and crops to update growth, but some other blocks are affected by random ticks as well,
 		COMMENT like e.g. leaves (to update decay).
 		COMMENT Note that while this field might be set to true the block might not do anything with the random tick.
-	METHOD m_94kcnhzop blockVariationToDrop (I)I
-		ARG 1 id
+	METHOD m_94kcnhzop getDropItemMetadata (I)I
+		ARG 1 metadata
 	METHOD m_94ssijhyn setBlockId (Ljava/lang/String;)Lnet/minecraft/C_88rbsxznd;
 		ARG 1 id
-	METHOD m_95viqthfa getBonusDrops (ILjava/util/Random;)I
-		COMMENT Returns the number bonus drops for a block when broken.
-		ARG 1 id
-		ARG 2 rand
+	METHOD m_95viqthfa getDropCount (ILjava/util/Random;)I
+		ARG 1 fortuneLevel
+		ARG 2 random
 	METHOD m_96kadiwkq getSelectionBox (Lnet/minecraft/C_72mqkrkao;III)Lnet/minecraft/C_68qygpazz;
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-	METHOD m_97fxlrzkd harvest (Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_29wvrnpbz;IIII)V
+	METHOD m_97fxlrzkd afterMinedByPlayer (Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_29wvrnpbz;IIII)V
 		ARG 1 world
 		ARG 2 player
 		ARG 3 x
@@ -569,9 +562,8 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		ARG 5 block
 		ARG 6 metadata
 	METHOD m_97umieajz canCollide (IZ)Z
-		COMMENT Returns whether entities can collide with this block, given its current state (metadata).
 		ARG 1 metadata
-		ARG 2 bl
+		ARG 2 isLiving
 	METHOD m_98ixxsbjo getMinX ()D
 	CLASS 1 1
 	CLASS 2 2

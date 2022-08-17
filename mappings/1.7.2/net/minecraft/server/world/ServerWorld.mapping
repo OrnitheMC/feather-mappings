@@ -13,7 +13,7 @@ CLASS net/minecraft/C_87ssrefqi net/minecraft/server/world/ServerWorld
 	FIELD f_74xhdyopd currentScheduledTicks Ljava/util/List;
 	FIELD f_81anyhhwh scheduledTicksInOrder Ljava/util/TreeSet;
 	FIELD f_84ypebggf LOGGER Lorg/apache/logging/log4j/Logger;
-	FIELD f_88cvgqxut serverChunkCache Lnet/minecraft/C_40hefbrgh;
+	FIELD f_88cvgqxut chunkCache Lnet/minecraft/C_40hefbrgh;
 	FIELD f_92ponouoa BONUS_CHEST_LOOT_TABLE [Lnet/minecraft/C_44bayizle;
 	FIELD f_93qstqmya blockEvents [Lnet/minecraft/C_87ssrefqi$C_36mdxzkne;
 	METHOD <init> (Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/C_84iwxwflg;Ljava/lang/String;ILnet/minecraft/C_10yycgwfx;Lnet/minecraft/C_10dmbgqch;)V
@@ -23,16 +23,16 @@ CLASS net/minecraft/C_87ssrefqi net/minecraft/server/world/ServerWorld
 		ARG 4 dimensionId
 		ARG 5 info
 		ARG 6 profiler
-	METHOD m_00zyvxxxn spawnParticles (Ljava/lang/String;DDDIDDDD)V
+	METHOD m_00zyvxxxn addParticle (Ljava/lang/String;DDDIDDDD)V
 		ARG 1 type
 		ARG 2 x
 		ARG 4 y
 		ARG 6 z
 		ARG 8 count
-		ARG 9 deltaX
-		ARG 11 deltaY
-		ARG 13 deltaZ
-		ARG 15 speed
+		ARG 9 velocityX
+		ARG 11 velocityY
+		ARG 13 velocityZ
+		ARG 15 velocityScale
 	METHOD m_05idtadys getServer ()Lnet/minecraft/server/MinecraftServer;
 	METHOD m_09hvyecjy saveChunks ()V
 	METHOD m_10tqqnxqj getBlockEntities (IIIIII)Ljava/util/List;
@@ -53,7 +53,7 @@ CLASS net/minecraft/C_87ssrefqi net/minecraft/server/world/ServerWorld
 	METHOD m_41ixklypx generateBonusChest ()V
 	METHOD m_44efsbcwv threadDataFile ()V
 	METHOD m_46jldaifc pickSpawnEntry (Lnet/minecraft/C_16jtfekny;III)Lnet/minecraft/C_33fapnocc$C_38hfalndj;
-		ARG 1 spawnGroup
+		ARG 1 group
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
@@ -64,7 +64,7 @@ CLASS net/minecraft/C_87ssrefqi net/minecraft/server/world/ServerWorld
 	METHOD m_68imkhzyk getEntityTracker ()Lnet/minecraft/C_69nlvgblf;
 	METHOD m_75ayybumr clearWeather ()V
 	METHOD m_76umngbkn findSpawnPosition (Lnet/minecraft/C_10yycgwfx;)V
-		ARG 1 info
+		ARG 1 settings
 	METHOD m_86ewketcb wakeSleepingPlayers ()V
 	CLASS 1 1
 	CLASS C_36mdxzkne BlockEventQueue
