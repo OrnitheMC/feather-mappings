@@ -13,11 +13,15 @@ def main():
     Main function checking for duplicates inside the mappings folder. If duplicates
     are found an error is raised and the duplicates are printed.
     """
-    dirs = unpack_directory(mappings_folder)
-    travel_directory(dirs)
-    duplicates = dict(filter(lambda elem: len(elem[1]) > 1, mappings.items()))
-    if duplicates:
-        raise DuplicateMappings(len(duplicates), duplicates)
+    for version in unpack_directory(mappings_folder):
+        if isfile(version):
+            continue
+        dirs = unpack_directory(version)
+        travel_directory(dirs)
+        duplicates = dict(filter(lambda elem: len(elem[1]) > 1, mappings.items()))
+        if duplicates:
+            raise DuplicateMappings(len(duplicates), duplicates)
+        mappings.clear()
 
 
 def travel_directory(dirs: list):
