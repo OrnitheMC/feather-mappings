@@ -1,5 +1,6 @@
 import os
 import sys
+import subprocess
 
 MAPPINGS_DIR = "mappings"
 GRADLE_TASKS = ["feather", "build", "javadoc", "javadocJar", "checkMappings", "mapNamedJar"]
@@ -34,11 +35,13 @@ def main():
     if len(tasks) == 0:
         raise Exception("no gradle tasks given!")
     
-    command = GRADLEW + " " + " ".join(tasks) + " --stacktrace"
+    command = [GRADLEW]
+    command.extend(tasks)
+    command.append("--stacktrace")
     
     for version in versions:
         os.environ['MC_VERSION'] = version
-        os.system(command)
+        subprocess.run(command)
 
 def is_minecraft_version(string):
     path = os.path.join(MAPPINGS_DIR, string)
