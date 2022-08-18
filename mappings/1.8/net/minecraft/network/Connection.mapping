@@ -1,5 +1,6 @@
 CLASS net/minecraft/C_17vjviahn net/minecraft/network/Connection
 	FIELD f_01ikmvxog LOGGER Lorg/apache/logging/log4j/Logger;
+	FIELD f_10trhequo flow Lnet/minecraft/C_08xaajvgt;
 	FIELD f_12udvrson listener Lnet/minecraft/C_94vigqard;
 	FIELD f_17yrhsopz sendQueue Ljava/util/Queue;
 	FIELD f_22boajzpk MARKER_NETWORK Lorg/apache/logging/log4j/Marker;
@@ -8,6 +9,8 @@ CLASS net/minecraft/C_17vjviahn net/minecraft/network/Connection
 	FIELD f_50yadhpbj PROTOCOL Lio/netty/util/AttributeKey;
 	FIELD f_66zusvgit disconnectReason Lnet/minecraft/C_10utpymwr;
 	FIELD f_87ngpmuqb channel Lio/netty/channel/Channel;
+	METHOD <init> (Lnet/minecraft/C_08xaajvgt;)V
+		ARG 1 flow
 	METHOD channelActive channelActive (Lio/netty/channel/ChannelHandlerContext;)V
 		ARG 1 context
 	METHOD channelInactive channelInactive (Lio/netty/channel/ChannelHandlerContext;)V
@@ -19,6 +22,8 @@ CLASS net/minecraft/C_17vjviahn net/minecraft/network/Connection
 		ARG 1 context
 		ARG 2 t
 	METHOD m_00qlpfmxu getAddress ()Ljava/net/SocketAddress;
+	METHOD m_02dpsozbz send (Lnet/minecraft/C_53hiiajnl;)V
+		ARG 1 packet
 	METHOD m_03oxlltzq getDisconnectReason ()Lnet/minecraft/C_10utpymwr;
 	METHOD m_03ziwqctg setupEncryption (Ljavax/crypto/SecretKey;)V
 		ARG 1 key
@@ -44,9 +49,11 @@ CLASS net/minecraft/C_17vjviahn net/minecraft/network/Connection
 		ARG 0 address
 		ARG 1 port
 	METHOD m_77gtqaoqj isOpen ()Z
+	METHOD m_87wgkbint hasChannel ()Z
 	METHOD m_93ezhekjg send (Lnet/minecraft/C_53hiiajnl;Lio/netty/util/concurrent/GenericFutureListener;[Lio/netty/util/concurrent/GenericFutureListener;)V
 		ARG 1 packet
-		ARG 2 listeners
+		ARG 2 listener
+		ARG 3 listeners
 	CLASS 3 3
 		FIELD f_06zlzmycq packet Lnet/minecraft/C_53hiiajnl;
 		FIELD f_08uncdkmv packetNetworkState Lnet/minecraft/C_88leilgqs;
