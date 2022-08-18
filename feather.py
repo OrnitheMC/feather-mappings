@@ -41,7 +41,7 @@ def main():
     
     for version in versions:
         os.environ['MC_VERSION'] = version
-        subprocess.run(command, check = True)
+        subprocess.run(" ".join(command), shell = True, check = True)
 
 def is_minecraft_version(string):
     path = os.path.join(MAPPINGS_DIR, string)
