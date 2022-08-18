@@ -2,9 +2,9 @@ import os
 import sys
 import subprocess
 
-MAPPINGS_DIR = "mappings"
-GRADLE_TASKS = ["feather", "build", "javadoc", "javadocJar", "checkMappings", "mapNamedJar"]
-GRADLEW = "gradlew" if os.name == "nt" else "./gradlew"
+MAPPINGS_DIR = 'mappings'
+GRADLE_TASKS = ['feather', 'build', 'javadoc', 'javadocJar', 'checkMappings', 'mapNamedJar']
+GRADLEW = 'gradlew' if os.name == 'nt' else './gradlew'
 
 def main():
     versions = []
@@ -20,7 +20,7 @@ def main():
         elif arg in GRADLE_TASKS:
             tasks.append(arg)
         else:
-            raise Exception("unrecognized arg " + arg + "!")
+            raise Exception('unrecognized arg ' + arg + '!')
     
     if len(versions) == 0:
         if 'MC_VERSION' in os.environ:
@@ -29,19 +29,19 @@ def main():
             if is_minecraft_version(version):
                 versions.append(version)
             else:
-                raise Exception("no minecraft version given!")
+                raise Exception('no minecraft version given!')
         else:
             find_minecraft_versions(versions)
     if len(tasks) == 0:
-        raise Exception("no gradle tasks given!")
+        raise Exception('no gradle tasks given!')
     
     command = [GRADLEW]
     command.extend(tasks)
-    command.append("--stacktrace")
+    command.append('--stacktrace')
     
     for version in versions:
         os.environ['MC_VERSION'] = version
-        subprocess.run(command)
+        subprocess.run(command, check = True)
 
 def is_minecraft_version(string):
     path = os.path.join(MAPPINGS_DIR, string)
