@@ -1,6 +1,10 @@
 import os
 import sys
 
+MAPPINGS_DIR = "mappings"
+GRADLE_TASKS = ["feather", "build", "javadoc", "javadocJar", "checkMappings", "mapNamedJar"]
+GRADLEW = "gradlew" if os.name == "nt" else "./gradlew"
+
 def main():
     versions = []
     tasks = []
@@ -12,7 +16,7 @@ def main():
         
         if is_minecraft_version(arg):
             versions.append(arg)
-        elif is_gradle_task(arg):
+        elif arg in GRADLE_TASKS:
             tasks.append(arg)
         else:
             raise Exception("unrecognized arg " + arg + "!")
@@ -30,21 +34,22 @@ def main():
     if len(tasks) == 0:
         raise Exception("no gradle tasks given!")
     
-    command = "gradlew" if os.name == "nt" else "./gradlew"
-    command += " " + " ".join(tasks)
+    command = GRADLEW + " " + " ".join(tasks) + " --stacktrace"
     
     for version in versions:
         os.environ['MC_VERSION'] = version
         os.system(command)
 
 def is_minecraft_version(string):
-    return string == "1.7.2"
-
-def is_gradle_task(string):
-    return string == "build"
+    path = os.path.join(MAPPINGS_DIR, string)
+    return os.path.isdir(path)
 
 def find_minecraft_versions(versions):
-    versions.append("1.7.2")
+    for version in os.listdir(MAPPINGS_DIR):
+        path = os.path.join(MAPPINGS_DIR, version)
+        
+        if os.path.isdir(path):
+            versions.append(version)
 
 if __name__ == '__main__':
     main()
