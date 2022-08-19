@@ -109,8 +109,8 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 11 velocityY
 		ARG 13 velocityZ
 		ARG 15 parameters
-	METHOD m_10jwqvpuo getOtherEntities (Lnet/minecraft/C_98tnijqnf;Lnet/minecraft/C_68qygpazz;)Ljava/util/List;
-		ARG 1 entity
+	METHOD m_10jwqvpuo getEntities (Lnet/minecraft/C_98tnijqnf;Lnet/minecraft/C_68qygpazz;)Ljava/util/List;
+		ARG 1 exclude
 		ARG 2 box
 	METHOD m_10oogpssw getAmbientDarkness ()I
 	METHOD m_10rsuczvz getTicksSinceLightning ()I
@@ -198,9 +198,9 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 2 end
 	METHOD m_31afrgpck getSpawnPos ()Lnet/minecraft/C_98mwkxlqj;
 	METHOD m_31myqvaws getMoonPhase ()I
-	METHOD m_32aiuhcxo getNearestEntityInBoundingBox (Ljava/lang/Class;Lnet/minecraft/C_68qygpazz;Lnet/minecraft/C_98tnijqnf;)Lnet/minecraft/C_98tnijqnf;
-		ARG 1 entityClass
-		ARG 2 boundingBox
+	METHOD m_32aiuhcxo getClosestEntity (Ljava/lang/Class;Lnet/minecraft/C_68qygpazz;Lnet/minecraft/C_98tnijqnf;)Lnet/minecraft/C_98tnijqnf;
+		ARG 1 type
+		ARG 2 box
 		ARG 3 entity
 	METHOD m_32ggygkfd createExplosion (Lnet/minecraft/C_98tnijqnf;DDDFZZ)Lnet/minecraft/C_25eizizno;
 		ARG 1 entity
@@ -231,9 +231,9 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 	METHOD m_36sbyixsx canFreezeNaturally (Lnet/minecraft/C_98mwkxlqj;)Z
 		ARG 1 pos
 	METHOD m_37juuazjj getBiomeSource ()Lnet/minecraft/C_80dcurlre;
-	METHOD m_37lnqmdln getEntitiesInBoundingBox (Ljava/lang/Class;Lnet/minecraft/C_68qygpazz;Lcom/google/common/base/Predicate;)Ljava/util/List;
-		ARG 1 entityClass
-		ARG 2 boundingBox
+	METHOD m_37lnqmdln getEntities (Ljava/lang/Class;Lnet/minecraft/C_68qygpazz;Lcom/google/common/base/Predicate;)Ljava/util/List;
+		ARG 1 type
+		ARG 2 box
 		ARG 3 filter
 	METHOD m_39avhmmgq extinguishFire (Lnet/minecraft/C_29wvrnpbz;Lnet/minecraft/C_98mwkxlqj;Lnet/minecraft/C_08cjfgfvj;)Z
 		ARG 1 player
@@ -242,6 +242,9 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 	METHOD m_39uybyekc getBlockLight (Lnet/minecraft/C_98mwkxlqj;Z)I
 		ARG 1 pos
 		ARG 2 allowNeighborLight
+	METHOD m_40sbvnmth getEntities (Ljava/lang/Class;Lcom/google/common/base/Predicate;)Ljava/util/List;
+		ARG 1 type
+		ARG 2 filter
 	METHOD m_40uoiqrdb contains (Lnet/minecraft/C_98mwkxlqj;)Z
 		ARG 1 pos
 	METHOD m_41eujqdxc checkLight (IIII)V
@@ -305,9 +308,9 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 	METHOD m_50tjgdlhc updateNeighbor (Lnet/minecraft/C_98mwkxlqj;Lnet/minecraft/C_88rbsxznd;)V
 		ARG 1 pos
 		ARG 2 block
-	METHOD m_50uhjlavg getEntitiesInBoundingBoxExclusive (Lnet/minecraft/C_98tnijqnf;Lnet/minecraft/C_68qygpazz;Lcom/google/common/base/Predicate;)Ljava/util/List;
-		ARG 1 entity
-		ARG 2 boundingBox
+	METHOD m_50uhjlavg getEntities (Lnet/minecraft/C_98tnijqnf;Lnet/minecraft/C_68qygpazz;Lcom/google/common/base/Predicate;)Ljava/util/List;
+		ARG 1 exclude
+		ARG 2 box
 		ARG 3 filter
 	METHOD m_51krefnyn getChunk (Lnet/minecraft/C_98mwkxlqj;)Lnet/minecraft/C_29tuwvijg;
 		ARG 1 pos
@@ -347,6 +350,9 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 	METHOD m_56omosxjh unloadEntities (Ljava/util/Collection;)V
 		ARG 1 entities
 	METHOD m_56pijldqz getChunkSource ()Lnet/minecraft/C_83hkyqngm;
+	METHOD m_57hvugsgm getPlayers (Ljava/lang/Class;Lcom/google/common/base/Predicate;)Ljava/util/List;
+		ARG 1 type
+		ARG 2 filter
 	METHOD m_57kjvzbhc setLightLevel (Lnet/minecraft/C_90rtvsfeu;Lnet/minecraft/C_98mwkxlqj;I)V
 		ARG 1 type
 		ARG 2 pos
@@ -412,9 +418,9 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 7 sound
 		ARG 8 volume
 		ARG 9 pitch
-	METHOD m_69gxkwvdh getEntitiesOfType (Ljava/lang/Class;Lnet/minecraft/C_68qygpazz;)Ljava/util/List;
-		ARG 1 entityClass
-		ARG 2 boundingBox
+	METHOD m_69gxkwvdh getEntities (Ljava/lang/Class;Lnet/minecraft/C_68qygpazz;)Ljava/util/List;
+		ARG 1 type
+		ARG 2 box
 	METHOD m_70ixprrpg getEmittedPower (Lnet/minecraft/C_98mwkxlqj;Lnet/minecraft/C_08cjfgfvj;)I
 		COMMENT Returns the emitted redstone power from the given position in the given direction.
 		COMMENT
