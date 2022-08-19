@@ -1,9 +1,9 @@
-CLASS net/minecraft/C_79fehsval net/minecraft/server/world/chunk/ThreadedAnvilChunkStorage
-	FIELD f_14isokpmi chunkNbtCache Ljava/util/List;
+CLASS net/minecraft/C_79fehsval net/minecraft/world/chunk/storage/AnvilChunkStorage
+	FIELD f_14isokpmi chunkSaveQueue Ljava/util/List;
 	FIELD f_19ngensko lock Ljava/lang/Object;
 	FIELD f_22etkkdze file Ljava/io/File;
 	FIELD f_59yoxrgrg LOGGER Lorg/apache/logging/log4j/Logger;
-	FIELD f_73kcnxefd chunkPosCache Ljava/util/Set;
+	FIELD f_73kcnxefd queuedChunks Ljava/util/Set;
 	METHOD <init> (Ljava/io/File;)V
 		ARG 1 file
 	METHOD m_23hocywjq loadChunk (Lnet/minecraft/C_72mqkrkao;IILnet/minecraft/C_85dsbsqaq;)Lnet/minecraft/C_29tuwvijg;
@@ -14,12 +14,12 @@ CLASS net/minecraft/C_79fehsval net/minecraft/server/world/chunk/ThreadedAnvilCh
 	METHOD m_30thbgofz createChunkFromNbt (Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_85dsbsqaq;)Lnet/minecraft/C_29tuwvijg;
 		ARG 1 world
 		ARG 2 nbt
-	METHOD m_48rvwpwse write (Lnet/minecraft/C_79fehsval$C_55vadianl;)V
+	METHOD m_48rvwpwse saveChunk (Lnet/minecraft/C_79fehsval$C_55vadianl;)V
 		ARG 1 chunkNbt
-	METHOD m_69zosftqr cacheChunkNbt (Lnet/minecraft/C_77sszozrk;Lnet/minecraft/C_85dsbsqaq;)V
+	METHOD m_69zosftqr queueChunkSave (Lnet/minecraft/C_77sszozrk;Lnet/minecraft/C_85dsbsqaq;)V
 		ARG 1 pos
 		ARG 2 nbt
-	METHOD m_97gffrvgd writeChunkNbt (Lnet/minecraft/C_29tuwvijg;Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_85dsbsqaq;)V
+	METHOD m_97gffrvgd writeChunkToNbt (Lnet/minecraft/C_29tuwvijg;Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_85dsbsqaq;)V
 		ARG 1 chunk
 		ARG 2 world
 		ARG 3 nbt
