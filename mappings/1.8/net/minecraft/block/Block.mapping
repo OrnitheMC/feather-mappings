@@ -1,6 +1,6 @@
 CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 	FIELD f_04wjijzaz lightLevel I
-	FIELD f_09odlopro fullBlock Z
+	FIELD f_09odlopro solid Z
 	FIELD f_13itotkcw useNeighborLight Z
 	FIELD f_14szzobir isTranslucent Z
 	FIELD f_16ejbamvc maxY D
@@ -8,17 +8,14 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 	FIELD f_16qvtstcd GLASS Lnet/minecraft/C_88rbsxznd$C_90mwyvraq;
 	FIELD f_18exrgxmi WOOD Lnet/minecraft/C_88rbsxznd$C_90mwyvraq;
 	FIELD f_21fuiysvx stats Z
-		COMMENT Specifies whether this block is tracked for stats
 	FIELD f_23ovjqmrl LADDER Lnet/minecraft/C_88rbsxznd$C_90mwyvraq;
 	FIELD f_24jpaylrk minY D
 	FIELD f_30nmdoqgs SNOW Lnet/minecraft/C_88rbsxznd$C_90mwyvraq;
 	FIELD f_30yinjqxl REGISTRY Lnet/minecraft/C_66iswzhlz;
 	FIELD f_35bxkuhdl sound Lnet/minecraft/C_88rbsxznd$C_90mwyvraq;
-		COMMENT Stores this block's sound type
 	FIELD f_36xjfuaoi RAIL Lnet/minecraft/C_88rbsxznd$C_90mwyvraq;
 	FIELD f_40qysyqfg STONE Lnet/minecraft/C_88rbsxznd$C_90mwyvraq;
 	FIELD f_43oqeftvx translationKey Ljava/lang/String;
-		COMMENT Stores this block's translation key
 	FIELD f_44dimfqiy ticksRandomly Z
 		COMMENT Specifies whether this block accepts random ticks.
 		COMMENT Note that while this field might be set to true the block might not do anything with the random tick.
@@ -27,8 +24,6 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 	FIELD f_53pentpld minX D
 	FIELD f_56vtrbgpm stateDefinition Lnet/minecraft/C_53oaygomo;
 	FIELD f_59prsxsun slipperiness F
-		COMMENT Stores this block's slipperiness
-		COMMENT Used By Ice and Packed Ice
 	FIELD f_63rknvpsf miningSpeed F
 	FIELD f_66dzstoix maxZ D
 	FIELD f_66irqqoom maxX D
@@ -39,7 +34,6 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 	FIELD f_74qfqckuz GRAVEL Lnet/minecraft/C_88rbsxznd$C_90mwyvraq;
 	FIELD f_80idjdczh material Lnet/minecraft/C_20jrxdumg;
 	FIELD f_80lnflxjp opacity I
-		COMMENT Stores the light opacity of this block
 	FIELD f_84rvkajau itemGroup Lnet/minecraft/C_30sdcpaeq;
 	FIELD f_90qegrlkt STATE_REGISTRY Lnet/minecraft/C_49gmukjhv;
 	FIELD f_91ogcjvav ORE Lnet/minecraft/C_88rbsxznd$C_90mwyvraq;
@@ -56,6 +50,7 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		COMMENT NOTE: this method should only be used during the block's creation before it is registered.
 		ARG 1 lightLevel
 	METHOD m_01dtroeim serialize (Lnet/minecraft/C_95jkivfww;)I
+		COMMENT Converts the given block state into legacy block data.
 		ARG 0 state
 	METHOD m_01onjprzc isSideVisible (Lnet/minecraft/C_85kncnihp;Lnet/minecraft/C_98mwkxlqj;Lnet/minecraft/C_08cjfgfvj;)Z
 		ARG 1 world
@@ -131,6 +126,7 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		ARG 3 state
 		ARG 4 random
 	METHOD m_18jqwbuit getColor ()I
+	METHOD m_18lhulyvp isCollisionBoxFullCube ()Z
 	METHOD m_18oaplexk getMaxX ()D
 	METHOD m_19pfvjyat addFluidFlow (Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_98mwkxlqj;Lnet/minecraft/C_98tnijqnf;Lnet/minecraft/C_54nvtxdqe;)Lnet/minecraft/C_54nvtxdqe;
 		ARG 1 world
@@ -190,7 +186,6 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		ARG 7 dy
 		ARG 8 dz
 	METHOD m_28xkqbmvz fromItem (Lnet/minecraft/C_85numzecy;)Lnet/minecraft/C_88rbsxznd;
-		COMMENT Returns the block associated with the given item.
 		ARG 0 item
 	METHOD m_29imwauux dropItems (Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_98mwkxlqj;Lnet/minecraft/C_95jkivfww;I)V
 		ARG 1 world
@@ -206,7 +201,7 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		ARG 2 pos
 		ARG 3 state
 		ARG 4 random
-	METHOD m_34vlhzvqu getTranslatedName ()Ljava/lang/String;
+	METHOD m_34vlhzvqu getDisplayName ()Ljava/lang/String;
 		COMMENT Returns the translation of this block's translation key.
 	METHOD m_35pzgjhzc hasComparatorOutput ()Z
 		COMMENT Returns whether this block has contents that can be read by a comparator.
@@ -225,9 +220,8 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 	METHOD m_36igytydm getBaseDropCount (Ljava/util/Random;)I
 		ARG 1 random
 	METHOD m_38tcigdua isTranslucent ()Z
-	METHOD m_38wekkija isSolid ()Z
-		COMMENT Returns whether this block is solid. Solid blocks conduct redstone,
-		COMMENT suffocate entities, and allow mobs to spawn.
+	METHOD m_38wekkija isConductor ()Z
+		COMMENT Returns whether this block conducts redstone signals.
 	METHOD m_38wsmrbvi onSteppedOn (Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_98mwkxlqj;Lnet/minecraft/C_98tnijqnf;)V
 		ARG 1 world
 		ARG 2 pos
@@ -277,7 +271,8 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		ARG 3 vec1
 		ARG 4 vec2
 	METHOD m_54zxvkwng deserialize (I)Lnet/minecraft/C_95jkivfww;
-		ARG 0 state
+		COMMENT Converts the given legacy block data into a block state.
+		ARG 0 blockdata
 	METHOD m_56svhwdrk isEqual (Lnet/minecraft/C_88rbsxznd;)Z
 		ARG 1 block
 	METHOD m_56sxbyrwf dropItems (Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_98mwkxlqj;Lnet/minecraft/C_95jkivfww;FI)V
@@ -298,6 +293,7 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 	METHOD m_60uhuqgyv canBeReplaced (Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_98mwkxlqj;)Z
 		ARG 1 world
 		ARG 2 pos
+	METHOD m_61blvjidt hasPickItemMetadata ()Z
 	METHOD m_61cottjut disableStats ()Lnet/minecraft/C_88rbsxznd;
 		COMMENT Disables tracking by stats for this block.
 		COMMENT
@@ -309,13 +305,12 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		ARG 1 item
 		ARG 2 group
 		ARG 3 stacks
-	METHOD m_64dbnyhst getDropItem (Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_98mwkxlqj;)Lnet/minecraft/C_85numzecy;
+	METHOD m_64dbnyhst getPickItem (Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_98mwkxlqj;)Lnet/minecraft/C_85numzecy;
 		ARG 1 world
 		ARG 2 pos
-	METHOD m_64gldfgda isNormalBlock ()Z
-		COMMENT Checks whether this block is a normal block.
-		COMMENT A normal block is one that blocks movement and can be rendered as a normal block.
-	METHOD m_64rikopij isFullBlock ()Z
+	METHOD m_64gldfgda hasAmbientOcclusion ()Z
+	METHOD m_64rikopij isSolid ()Z
+		COMMENT A solid block is a full cube with no transparency.
 	METHOD m_64stvknbh hasStats ()Z
 	METHOD m_64wfcmjos getOpacity ()I
 	METHOD m_65iiwnllw canSurvive (Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_98mwkxlqj;)Z
@@ -345,7 +340,6 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 	METHOD m_70fgqkvto isWithinPlaneXZ (Lnet/minecraft/C_54nvtxdqe;)Z
 		ARG 1 vec
 	METHOD m_70nhigcbh fromRawId (I)Lnet/minecraft/C_88rbsxznd;
-		COMMENT Returns the block registered to the given numerical id.
 		ARG 0 id
 	METHOD m_71bjeifti getLightLevel ()I
 	METHOD m_71ygzrdjk getMiningSpeed (Lnet/minecraft/C_29wvrnpbz;Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_98mwkxlqj;)F
@@ -368,7 +362,6 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		ARG 2 pos
 		ARG 3 state
 	METHOD m_73tmbcnyl getRawId (Lnet/minecraft/C_88rbsxznd;)I
-		COMMENT Returns the given block's numerical id.
 		ARG 0 block
 	METHOD m_73vhkbokd shouldDropItemsOnExplosion (Lnet/minecraft/C_25eizizno;)Z
 		ARG 1 explosion
@@ -425,6 +418,9 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		ARG 1 opacity
 	METHOD m_82pxmxjqc getAmbientOcclusionLightLevel ()F
 	METHOD m_82ynthukh defaultState ()Lnet/minecraft/C_95jkivfww;
+	METHOD m_85rayyqaw beforeCollision (Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_98tnijqnf;)V
+		ARG 1 world
+		ARG 2 pos
 	METHOD m_85wmoqeip setSound (Lnet/minecraft/C_88rbsxznd$C_90mwyvraq;)Lnet/minecraft/C_88rbsxznd;
 		COMMENT Sets this block's sound type.
 		COMMENT
@@ -443,13 +439,12 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 	METHOD m_88dmmarco suffocatesEntities ()Z
 	METHOD m_88pwqmujm canPlace (Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_98mwkxlqj;Lnet/minecraft/C_08cjfgfvj;Lnet/minecraft/C_17gpkxmuh;)Z
 		ARG 1 world
-		ARG 2 x
-		ARG 3 y
-		ARG 4 z
+		ARG 2 pos
+		ARG 3 dir
+		ARG 4 stack
 	METHOD m_88vnwexop setBlockItemBounds ()V
 		COMMENT Sets the bounds for the BlockItem
 	METHOD m_89yrbqqai fromId (Ljava/lang/String;)Lnet/minecraft/C_88rbsxznd;
-		COMMENT Returns the block registered to the given id.
 		ARG 0 id
 	METHOD m_90ztvkbdj canWalkThrough (Lnet/minecraft/C_85kncnihp;Lnet/minecraft/C_98mwkxlqj;)Z
 		ARG 1 world
@@ -473,6 +468,8 @@ CLASS net/minecraft/C_88rbsxznd net/minecraft/block/Block
 		COMMENT and crops to update growth, but some other blocks are affected by random ticks as well,
 		COMMENT like e.g. leaves (to update decay).
 		COMMENT Note that while this field might be set to true the block might not do anything with the random tick.
+	METHOD m_93vdfpzht getStateForRendering (Lnet/minecraft/C_95jkivfww;)Lnet/minecraft/C_95jkivfww;
+		ARG 1 state
 	METHOD m_95viqthfa getDropCount (ILjava/util/Random;)I
 		ARG 1 fortuneLevel
 		ARG 2 random
