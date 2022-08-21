@@ -1,12 +1,53 @@
 CLASS net/minecraft/C_27jlxouyn net/minecraft/block/DoorBlock
-	METHOD m_12xgrqjxz getDoorStateView (Lnet/minecraft/C_85kncnihp;Lnet/minecraft/C_98mwkxlqj;)Z
-		ARG 1 world
+	FIELD f_00cikgvdr POWERED Lnet/minecraft/C_84dnxmsvt;
+	FIELD f_19caniirt OPEN Lnet/minecraft/C_84dnxmsvt;
+	FIELD f_25gauhthi HINGE Lnet/minecraft/C_90sbjacmf;
+	FIELD f_60busulch HALF Lnet/minecraft/C_90sbjacmf;
+	FIELD f_90qsxobhf FACING Lnet/minecraft/C_51kkyfsnc;
+	METHOD m_12xgrqjxz getOpenFromMetadata (Lnet/minecraft/C_85kncnihp;Lnet/minecraft/C_98mwkxlqj;)Z
+		ARG 0 world
+		ARG 1 pos
 		ARG 2 x
-	METHOD m_39twcmjoc getDoorState (Lnet/minecraft/C_85kncnihp;Lnet/minecraft/C_98mwkxlqj;)Lnet/minecraft/C_08cjfgfvj;
-		ARG 1 world
+	METHOD m_16pedvfzh getHalfFromMetadata (I)Z
+		COMMENT Returns true if the metadata represents the upper half.
+		ARG 0 metadata
+	METHOD m_19elgiyyh getLowerHalfMetadata (I)I
+		ARG 0 metadata
+	METHOD m_39twcmjoc getFacingFromMetadata (Lnet/minecraft/C_85kncnihp;Lnet/minecraft/C_98mwkxlqj;)Lnet/minecraft/C_08cjfgfvj;
+		ARG 0 world
+		ARG 1 pos
 		ARG 2 x
+	METHOD m_56aqhmzro getHingeFromMetadata (I)Z
+		COMMENT Returns true if the metadata represents the right-side hinge.
+		ARG 0 metadata
 	METHOD m_71mcvfvdk updateBoundingBox (I)V
-		ARG 1 id
-	METHOD m_71sfwgrcb getCompleteDoorState (Lnet/minecraft/C_85kncnihp;Lnet/minecraft/C_98mwkxlqj;)I
-		ARG 1 world
+		ARG 1 metadata
+	METHOD m_71sfwgrcb getCombinedMetadata (Lnet/minecraft/C_85kncnihp;Lnet/minecraft/C_98mwkxlqj;)I
+		COMMENT Returns the combined metadata of both halves of the door. The information is laid
+		COMMENT out as follows:
+		COMMENT
+		COMMENT <p>  bit   property
+		COMMENT <br> 1     facing
+		COMMENT <br> 2
+		COMMENT <br> 3     open
+		COMMENT <br> 4     half (0 = lower, 1 = upper)
+		COMMENT <br> 5     hinge (0 = left, 1 = right)
+		COMMENT <br> 6     powered
+		ARG 0 world
+		ARG 1 pos
 		ARG 2 x
+	METHOD m_71thtlbae getOpenFromMetadata (I)Z
+		ARG 0 metadata
+	METHOD m_72akjbcwa updateOpenState (Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_98mwkxlqj;Z)V
+		ARG 1 world
+		ARG 2 pos
+		ARG 3 open
+	METHOD m_95pyscjhb getFacingFromMetadata (I)Lnet/minecraft/C_08cjfgfvj;
+		ARG 0 metadata
+	METHOD m_96fgazjyf getItem ()Lnet/minecraft/C_85numzecy;
+	CLASS C_05lhdzibg Half
+		FIELD f_36cyiymwy LOWER Lnet/minecraft/C_27jlxouyn$C_05lhdzibg;
+		FIELD f_63jqgtqdl UPPER Lnet/minecraft/C_27jlxouyn$C_05lhdzibg;
+	CLASS C_56ijskzoo Hinge
+		FIELD f_48zcivmkq LEFT Lnet/minecraft/C_27jlxouyn$C_56ijskzoo;
+		FIELD f_54kvxyupl RIGHT Lnet/minecraft/C_27jlxouyn$C_56ijskzoo;

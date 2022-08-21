@@ -6,13 +6,14 @@ CLASS net/minecraft/C_82xmdfbms net/minecraft/block/AbstractRailBlock
 		ARG 0 block
 	METHOD m_20nusgoqm isRail (Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_98mwkxlqj;)Z
 		ARG 0 world
-		ARG 1 x
+		ARG 1 pos
 		ARG 2 y
 	METHOD m_27ozfjegh getShapeProperty ()Lnet/minecraft/C_76ierrbhc;
 	METHOD m_87bhtxxoe updateShape (Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_98mwkxlqj;Lnet/minecraft/C_95jkivfww;Z)Lnet/minecraft/C_95jkivfww;
 		ARG 1 world
-		ARG 2 x
-		ARG 3 y
+		ARG 2 pos
+		ARG 3 state
+		ARG 4 force
 	METHOD m_87ksauthx updatePowered (Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_98mwkxlqj;Lnet/minecraft/C_95jkivfww;Lnet/minecraft/C_88rbsxznd;)V
 		ARG 1 world
 		ARG 2 pos
@@ -39,7 +40,7 @@ CLASS net/minecraft/C_82xmdfbms net/minecraft/block/AbstractRailBlock
 		METHOD m_73nsscmxw byIndex (I)Lnet/minecraft/C_82xmdfbms$C_56subqfbo;
 			ARG 0 index
 		METHOD m_81iqrbbec isAscending ()Z
-	CLASS C_80mpbaare ConnectionHandler
+	CLASS C_80mpbaare RailNode
 		FIELD f_15chqshoa pos Lnet/minecraft/C_98mwkxlqj;
 		FIELD f_38epgtxca anonBlock Lnet/minecraft/C_82xmdfbms;
 		FIELD f_46wiazwej block Lnet/minecraft/C_82xmdfbms;
@@ -57,19 +58,19 @@ CLASS net/minecraft/C_82xmdfbms net/minecraft/block/AbstractRailBlock
 		METHOD m_29mjhsyqp updateConnections (Lnet/minecraft/C_82xmdfbms$C_56subqfbo;)V
 			ARG 1 shape
 		METHOD m_38avoutrz cleanUpConnections ()V
-		METHOD m_45uyugbtj calculateConnectionCount ()I
-		METHOD m_47dbdtjoj isConnectedTo (Lnet/minecraft/C_98mwkxlqj;)Z
+		METHOD m_45uyugbtj countConnections ()I
+		METHOD m_47dbdtjoj isConnected (Lnet/minecraft/C_98mwkxlqj;)Z
 			ARG 1 pos
-		METHOD m_50ztbuwfx shouldUpdate (Lnet/minecraft/C_98mwkxlqj;)Z
+		METHOD m_50ztbuwfx hasNeighborRail (Lnet/minecraft/C_98mwkxlqj;)Z
 			ARG 1 pos
 		METHOD m_57xmqnvaw shouldConnectTo (Lnet/minecraft/C_98mwkxlqj;)Z
 			ARG 1 pos
-		METHOD m_62mdkizwr forPos (Lnet/minecraft/C_98mwkxlqj;)Lnet/minecraft/C_82xmdfbms$C_80mpbaare;
+		METHOD m_62mdkizwr getNeighborRail (Lnet/minecraft/C_98mwkxlqj;)Lnet/minecraft/C_82xmdfbms$C_80mpbaare;
 			ARG 1 pos
-		METHOD m_63mjopkhz isConnectedTo (Lnet/minecraft/C_82xmdfbms$C_80mpbaare;)Z
-			ARG 1 connectionHandler
+		METHOD m_63mjopkhz isConnected (Lnet/minecraft/C_82xmdfbms$C_80mpbaare;)Z
+			ARG 1 rail
 		METHOD m_67ptbrvhj getState ()Lnet/minecraft/C_95jkivfww;
-		METHOD m_79idndgez updateState (Lnet/minecraft/C_82xmdfbms$C_80mpbaare;)V
-			ARG 1 connectionHandler
-		METHOD m_91icrkkgm shouldUpdate (Lnet/minecraft/C_82xmdfbms$C_80mpbaare;)Z
-			ARG 1 connectionHandler
+		METHOD m_79idndgez addConnection (Lnet/minecraft/C_82xmdfbms$C_80mpbaare;)V
+			ARG 1 rail
+		METHOD m_91icrkkgm canConnect (Lnet/minecraft/C_82xmdfbms$C_80mpbaare;)Z
+			ARG 1 rail

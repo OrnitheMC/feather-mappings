@@ -1,90 +1,49 @@
 CLASS net/minecraft/C_05hdzuzwm net/minecraft/block/FlowingFluidBlock
-	FIELD f_18xtqigzp adjacentFluidBlocksXZ I
-		COMMENT A counter that can have a value between 0 and 4.
-		COMMENT It stores the amount of adjacent fluid blocks along the X and Z direction.
-	FIELD f_59mrlaxal distanceToSlope [I
-		COMMENT The distance in direction 0 to 4 to the nearest slope.<br>
-		COMMENT <ul>
-		COMMENT <li>Direction 0: -x (West) </li>
-		COMMENT <li>Direction 1: +x (East) </li>
-		COMMENT <li>Direction 2: -z (North) </li>
-		COMMENT <li>Direction 3: +z (South) </li>
-		COMMENT </ul>
+	FIELD f_18xtqigzp adjacentSources I
+		COMMENT A counter that stores the amount of adjacent source fluids along the X and Z axes.
+	FIELD f_59mrlaxal distanceToGap [I
+		COMMENT The distance to the nearest gap to flow into for each horizontal direction.<br>
+		COMMENT
 		COMMENT @see net.minecraft.util.math.MathHelper Facings
-	FIELD f_60dhxzdvo shouldFlowIntoDirection [Z
-		COMMENT If the fluid should flow in this direction.
-		COMMENT <ul>
-		COMMENT <li>Direction 0: -x (West) </li>
-		COMMENT <li>Direction 1: +x (East) </li>
-		COMMENT <li>Direction 2: -z (North) </li>
-		COMMENT <li>Direction 3: +z (South) </li>
-		COMMENT </ul>
+	FIELD f_60dhxzdvo spreadDirections [Z
+		COMMENT Whether this fluid should flow in each direction.<br>
+		COMMENT
 		COMMENT @see net.minecraft.util.math.MathHelper Facings
-	METHOD m_08qxyfuio canFlowInto (Lnet/minecraft/C_72mqkrkao;III)Z
-		COMMENT Checks if the flow to this block is blocked. This can happen in 3 cases:<br>
-		COMMENT <ol>
-		COMMENT <li>The ajacent block is of the same fluid type</li>
-		COMMENT <li>The ajacent block is lava</li>
-		COMMENT <li>the ajacent block is a solid block</li>
-		COMMENT </ol>
+	METHOD m_08qxyfuio canSpreadTo (Lnet/minecraft/C_72mqkrkao;III)Z
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-	METHOD m_37ydswcik searchForSlope (Lnet/minecraft/C_72mqkrkao;IIIII)I
-		COMMENT Searches in a direction for a slope within 4 blocks (i.e. close enough to flow directly to the slope instead of spreading outwards).
-		COMMENT @param adjacentBlock which adjacent block it is targetting (0 = west, 1 = east, 2 = north, 3 = south)
-		COMMENT @param spreadNumber amount of times it has spread outwards
-		COMMENT @see shouldFlowIntoDirection
-		COMMENT @see net.minecraft.util.math.MathHelper Facings
+	METHOD m_37ydswcik getDistanceToGap (Lnet/minecraft/C_72mqkrkao;IIIII)I
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-		ARG 5 searchDistance
-		ARG 6 adjacentBlock
-	METHOD m_39rcbtqaa getFlowingDirections (Lnet/minecraft/C_72mqkrkao;III)[Z
-		COMMENT Determines in which direction the liquid should flow. (spreading outwards or targetting a slope)
-		COMMENT @see shouldFlowIntoDirection
+		ARG 5 distance
+		ARG 6 fromDir
+	METHOD m_39rcbtqaa getSpreadDirections (Lnet/minecraft/C_72mqkrkao;III)[Z
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-	METHOD m_39tpdhqus compareFluidMetadata (Lnet/minecraft/C_72mqkrkao;IIII)I
-		COMMENT Compares the fluid metadata with the adjacent block,
-		COMMENT if it is smaller than the value to compare it to,
-		COMMENT return this value to find the lowest neighbouring fluid metadata.
-		COMMENT @param comparable the metadata value to compare to
+	METHOD m_39tpdhqus decreaseLevel (Lnet/minecraft/C_72mqkrkao;IIII)I
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-		ARG 5 comparable
+		ARG 5 level
 	METHOD m_56bvzodyp convertToSource (Lnet/minecraft/C_72mqkrkao;III)V
-		COMMENT Converts a flowing water block to a water source block by incrementing it's blockId by 1.
-		COMMENT <ul>
-		COMMENT <li>minecraft: flowing_water = 8</li>
-		COMMENT <li>minecraft: water = 9</li>
-		COMMENT </ul>
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-	METHOD m_68iipwymk tryFlowInto (Lnet/minecraft/C_72mqkrkao;IIII)V
+	METHOD m_68iipwymk spreadTo (Lnet/minecraft/C_72mqkrkao;IIII)V
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-		ARG 5 metadata
-	METHOD m_97lsarlpg blocksFlow (Lnet/minecraft/C_72mqkrkao;III)Z
-		COMMENT A block stops liquids from flowing if it's a solid block that blocks entity movement or if it's a portal block.<br>
-		COMMENT A liquid can flow through a select number of blocks being:
-		COMMENT <ul>
-		COMMENT <li>Doors (Iron and Wooden</li>
-		COMMENT <li>Signs</li>
-		COMMENT <li>Ladders</li>
-		COMMENT <li>Crops</li>
-		COMMENT </ul>
+		ARG 5 level
+	METHOD m_97lsarlpg blocksSpreading (Lnet/minecraft/C_72mqkrkao;III)Z
 		ARG 1 world
 		ARG 2 x
 		ARG 3 y
