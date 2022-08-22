@@ -1,3 +1,39 @@
+import com.google.common.hash.Hashing
+import com.google.common.io.Files
+import com.google.common.net.UrlEscapers
+import com.strobel.assembler.metadata.JarTypeLoader
+import com.strobel.decompiler.Decompiler
+import com.strobel.decompiler.DecompilerSettings
+import com.strobel.decompiler.PlainTextOutput
+import cuchaz.enigma.command.CheckMappingsCommand
+import cuchaz.enigma.command.ComposeMappingsCommand
+import cuchaz.enigma.command.ConvertMappingsCommand
+import cuchaz.enigma.command.MapSpecializedMethodsCommand
+import groovy.io.FileType
+import groovy.json.JsonSlurper
+import groovy.xml.XmlSlurper
+import net.fabricmc.stitch.commands.CommandMergeTiny
+import net.fabricmc.stitch.commands.CommandProposeFieldNames
+import net.fabricmc.stitch.commands.CommandReorderTiny
+import net.fabricmc.stitch.commands.CommandRewriteCalamus
+import net.fabricmc.stitch.commands.tinyv2.CommandMergeTinyV2
+import net.fabricmc.stitch.commands.tinyv2.CommandProposeV2FieldNames
+import net.fabricmc.stitch.commands.tinyv2.CommandReorderTinyV2
+import net.fabricmc.stitch.merge.JarMerger
+import net.fabricmc.tinyremapper.OutputConsumerPath
+import net.fabricmc.tinyremapper.TinyRemapper
+import net.fabricmc.tinyremapper.TinyUtils
+import net.ornithemc.nester.Nester
+import org.apache.commons.io.FileUtils
+
+import java.nio.charset.Charset
+import java.nio.charset.StandardCharsets
+import java.nio.file.Paths
+import java.util.jar.JarFile
+import java.util.zip.GZIPOutputStream
+import java.util.zip.ZipEntry
+import java.util.zip.ZipInputStream
+
 buildscript {
 	repositories {
 		maven {
@@ -21,13 +57,15 @@ buildscript {
 	dependencies {
 		classpath "net.ornithemc:enigma-cli:${project.enigma_version}"
 		classpath "net.ornithemc:stitch:${project.stitch_version}"
+		classpath "net.ornithemc:tiny-remapper:0.8.4"
 		classpath "net.ornithemc:nester:0.2.5"
 		classpath "commons-io:commons-io:2.8.0"
 		classpath 'de.undercouch:gradle-download-task:4.1.1'
-		classpath 'net.fabricmc:tiny-remapper:0.7.0'
 		classpath "net.fabricmc:name-proposal:${project.name_proposal_version}"
 		classpath "net.fabricmc.unpick:unpick:${project.unpick_version}"
 		classpath "net.fabricmc.unpick:unpick-format-utils:${project.unpick_version}"
+		classpath "org.codehaus.groovy:groovy-json:3.0.9"
+		classpath "org.codehaus.groovy:groovy-xml:3.0.9"
 	}
 }
 
@@ -42,15 +80,40 @@ plugins {
 
 def ENV = System.getenv()
 def minecraft_version = ENV.MC_VERSION
-// Fetch build number from Github Actions
-// Then completely ignore it
-def build_number = ENV.BUILD_NUMBER ?: "local"
+def build_number = nextBuildNumber(ENV, minecraft_version)
 def featherVersion = "${minecraft_version}+build.${build_number}"
 
-static def buildTime() {
-	def df = new java.text.SimpleDateFormat("yyyyMMddHHmm")
-	df.setTimeZone(TimeZone.getTimeZone("UTC"))
-	return df.format(new Date())
+static def nextBuildNumber(ENV, minecraft_version) {
+	if (ENV.MAVEN_URL) {
+		def build = 0
+
+		def xml = new URL("https://maven.ornithemc.net/releases/net/ornithemc/feather/maven-metadata.xml").text
+		def metadata = new XmlSlurper().parseText(xml)
+
+		def version_build = "${minecraft_version}+build."
+		def i = version_build.length()
+
+		metadata.versioning.versions.version.each {
+			def version = it.text()
+
+			if (version.startsWith(version_build)) {
+				def number_text = version.substring(i)
+				try {
+					def number = Integer.parseInt(number_text)
+
+					if (number > build) {
+						build = number
+					}
+				} catch (NumberFormatException ignored) {
+
+				}
+			}
+		}
+
+		return build + 1
+	} else {
+		return "local"
+	}
 }
 
 repositories {
@@ -131,46 +194,15 @@ def serverJar = new File(cacheFilesMinecraft, "${minecraft_version}-server.jar")
 def libraries = new File(cacheFilesMinecraft, "libraries")
 def libs = new File("build/libs/")
 
-
-import com.google.common.hash.Hashing
-import cuchaz.enigma.command.CheckMappingsCommand
-import cuchaz.enigma.command.ComposeMappingsCommand
-import cuchaz.enigma.command.ConvertMappingsCommand
-import cuchaz.enigma.command.MapSpecializedMethodsCommand
-import groovy.io.FileType
-import groovy.json.JsonSlurper
-import net.fabricmc.stitch.commands.CommandMergeTiny
-import net.fabricmc.stitch.commands.CommandProposeFieldNames
-import net.fabricmc.stitch.commands.CommandReorderTiny
-import net.fabricmc.stitch.commands.CommandRewriteCalamus
-import net.fabricmc.stitch.commands.tinyv2.CommandMergeTinyV2
-import net.fabricmc.stitch.commands.tinyv2.CommandProposeV2FieldNames
-import net.fabricmc.stitch.commands.tinyv2.CommandReorderTinyV2
-import net.fabricmc.stitch.merge.JarMerger
-import net.fabricmc.tinyremapper.OutputConsumerPath
-import net.fabricmc.tinyremapper.TinyRemapper
-import net.fabricmc.tinyremapper.TinyUtils
-import net.ornithemc.nester.Nester
-import org.apache.commons.io.FileUtils
-import com.strobel.decompiler.Decompiler
-import com.strobel.decompiler.DecompilerSettings
-import com.strobel.assembler.metadata.JarTypeLoader
-import com.strobel.decompiler.PlainTextOutput
-import java.nio.charset.StandardCharsets
-import java.nio.file.Paths
-import java.util.zip.GZIPOutputStream
-import java.util.jar.JarFile
-import java.util.zip.ZipEntry
-import java.util.zip.ZipInputStream
-
-boolean validateChecksum(File file, String checksum) {
+static boolean validateChecksum(File file, String checksum) {
 	if (file != null) {
-		def hash = com.google.common.io.Files.asByteSource(file).hash(Hashing.sha1())
+		//noinspection GrDeprecatedAPIUsage
+		def hash = Files.asByteSource(file).hash(Hashing.sha1())
 		def builder = new StringBuilder()
 		hash.asBytes().each {
 			builder.append(Integer.toString((it & 0xFF) + 0x100, 16).substring(1))
 		}
-		return builder.toString().equals(checksum)
+		return builder.toString() == checksum
 	}
 	return false
 }
@@ -187,10 +219,10 @@ task downloadVersionsManifest {
 	}
 }
 
-def getManifestVersion(File manifestFile, String minecraft_version) {
-	def manifest = manifestFile.exists() ? new JsonSlurper().parseText(FileUtils.readFileToString(manifestFile)) : null
+static def getManifestVersion(File manifestFile, String minecraft_version) {
+	def manifest = manifestFile.exists() ? new JsonSlurper().parseText(FileUtils.readFileToString(manifestFile, Charset.defaultCharset())) : null
 	return manifest != null ? manifest.versions.stream().filter({
-		it.id.equals(minecraft_version)
+		(it.id == minecraft_version)
 	}).findFirst() : java.util.Optional.empty()
 }
 
@@ -226,7 +258,7 @@ task downloadMcJars(dependsOn: downloadWantedVersionManifest) {
 	outputs.files(clientJar, serverJar)
 
 	outputs.upToDateWhen {
-		def version = new JsonSlurper().parseText(FileUtils.readFileToString(versionFile))
+		def version = new JsonSlurper().parseText(FileUtils.readFileToString(versionFile, Charset.defaultCharset()))
 		return clientJar.exists() && serverJar.exists() && validateChecksum(clientJar, version.downloads.client.sha1) && validateChecksum(serverJar, version.downloads.server.sha1)
 	}
 
@@ -236,7 +268,7 @@ task downloadMcJars(dependsOn: downloadWantedVersionManifest) {
 		}
 
 		//reload in case it changed
-		def version = new JsonSlurper().parseText(FileUtils.readFileToString(versionFile))
+		def version = new JsonSlurper().parseText(FileUtils.readFileToString(versionFile, Charset.defaultCharset()))
 
 		logger.lifecycle(":downloading minecraft jars")
 
@@ -257,21 +289,21 @@ task downloadMcJars(dependsOn: downloadWantedVersionManifest) {
 task downloadNesterMappings(dependsOn: downloadMcJars, type: Download) {
 	group = buildMappingGroup
 	def url = "https://github.com/OrnitheMC/calamus/raw/main/nests/${minecraft_version}.nest"
-	src com.google.common.net.UrlEscapers.urlFragmentEscaper().escape(url)
+	src UrlEscapers.urlFragmentEscaper().escape(url)
 	dest new File(cacheFilesMinecraft, "${minecraft_version}.nest")
 }
 
 task downloadCalamus(dependsOn: downloadMcJars, type: Download) {
 	group = buildMappingGroup
 	def url = "https://github.com/OrnitheMC/calamus/raw/main/mappings/${minecraft_version}.tiny"
-	src com.google.common.net.UrlEscapers.urlFragmentEscaper().escape(url)
+	src UrlEscapers.urlFragmentEscaper().escape(url)
 	dest new File(cacheFilesMinecraft, "${minecraft_version}-calamus.tiny")
 }
 
 task downloadCalamusV2(dependsOn: downloadMcJars, type: Download) {
 	group = buildMappingGroup
 	def url = "https://maven.ornithemc.net/releases/net/ornithemc/calamus/${minecraft_version}/calamus-${minecraft_version}-v2.jar"
-	src com.google.common.net.UrlEscapers.urlFragmentEscaper().escape(url)
+	src UrlEscapers.urlFragmentEscaper().escape(url)
 	dest new File(cacheFilesMinecraft, "${minecraft_version}-calamus-v2.jar")
 
 	def output = new File(cacheFilesMinecraft, "${minecraft_version}-calamus-v2.tiny")
@@ -356,7 +388,7 @@ task downloadMcLibs(dependsOn: downloadWantedVersionManifest) {
 
 		version.libraries.each {
 			def artifact = it.downloads.artifact
-			if(artifact == null) return
+			if (artifact == null) return
 			def downloadUrl = artifact.url
 
 			download {
@@ -514,18 +546,18 @@ task buildFeatherTiny(dependsOn: mapCalamusJar, type: WithV2FileOutput) {
 		logger.lifecycle(":generating tiny mappings")
 
 		new MapSpecializedMethodsCommand().run(
-			calamusJar.getAbsolutePath(),
-			"enigma",
-			mappingsDir.getAbsolutePath(),
-			"tinyv2:calamus:named",
-			v2Output.getAbsolutePath()
+				calamusJar.getAbsolutePath(),
+				"enigma",
+				mappingsDir.getAbsolutePath(),
+				"tinyv2:calamus:named",
+				v2Output.getAbsolutePath()
 		)
 
 		new ConvertMappingsCommand().run(
-			"tinyv2",
-			v2Output.getAbsolutePath(),
-			"tiny:calamus:named",
-			v1Output.getAbsolutePath())
+				"tinyv2",
+				v2Output.getAbsolutePath(),
+				"tiny:calamus:named",
+				v1Output.getAbsolutePath())
 	}
 }
 
@@ -568,7 +600,7 @@ task tinyJar(type: Jar, dependsOn: mergeTiny) {
 	outputs.upToDateWhen { false }
 	archiveFileName = "feather-${featherVersion}.jar"
 	destinationDirectory.set(file("build/libs"))
-	classifier = ""
+	archiveClassifier.set("")
 	from(mergeTiny.output) {
 		rename { "mappings/mappings.tiny" }
 	}
@@ -607,7 +639,7 @@ clean.doFirst {
 	delete tempDir, cacheFilesMinecraft
 }
 
-tasks.build.dependsOn "compressTiny","tinyJar","v2UnmergedFeatherJar", "v2MergedFeatherJar"
+tasks.build.dependsOn "compressTiny", "tinyJar", "v2UnmergedFeatherJar", "v2MergedFeatherJar"
 
 task exportMappingsOfficial(dependsOn: downloadCalamus) {
 	def composeInput = downloadCalamus.dest
@@ -684,7 +716,7 @@ task mapNamedJar(dependsOn: ["mergeV2", mapCalamusJar]) {
 	}
 }
 
-task insertAutoGeneratedEnumMappings(dependsOn : [buildFeatherTiny,mapCalamusJar], type : FileOutput){
+task insertAutoGeneratedEnumMappings(dependsOn: [buildFeatherTiny, mapCalamusJar], type: FileOutput) {
 	group = buildMappingGroup
 	def noEnumV2 = buildFeatherTiny.v2Output
 	output = new File(tempDir, "unmerged-named-v2-with-enum.tiny")
@@ -706,7 +738,7 @@ task insertAutoGeneratedEnumMappings(dependsOn : [buildFeatherTiny,mapCalamusJar
 }
 
 task mergeV2(dependsOn: ["v2UnmergedFeatherJar", "invertCalamusV2"], type: FileOutput) {
-	def mergedV2 = new File(tempDir, "merged-v2.tiny");
+	def mergedV2 = new File(tempDir, "merged-v2.tiny")
 
 	output = new File(tempDir, "merged-reordered-v2.tiny")
 	outputs.upToDateWhen { false }
@@ -765,9 +797,9 @@ task genFakeSource(type: JavaExec, dependsOn: ["mergeV2", "mapNamedJar"]) {
 	outputs.upToDateWhen { false }
 
 	if (!JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_17)) {
-		javaLauncher = javaToolchains.launcherFor {
+		javaLauncher.set(javaToolchains.launcherFor {
 			languageVersion = JavaLanguageVersion.of(17)
-		}
+		})
 	}
 
 	main "net.fabricmc.mappingpoet.Main"
@@ -782,7 +814,7 @@ task genFakeSource(type: JavaExec, dependsOn: ["mergeV2", "mapNamedJar"]) {
 
 task decompileCFR(type: JavaExec, dependsOn: "mapNamedJar") {
 	classpath = configurations.decompileClasspath
-	mainClass = "org.benf.cfr.reader.Main"
+	mainClass.set("org.benf.cfr.reader.Main")
 
 	args namedJar.getAbsolutePath(), "--outputdir", file("namedSrc").absolutePath
 
@@ -793,7 +825,7 @@ task decompileCFR(type: JavaExec, dependsOn: "mapNamedJar") {
 
 task decompileQuiltFlower(type: JavaExec, dependsOn: "mapNamedJar") {
 	classpath = configurations.decompileClasspath
-	mainClass = "org.jetbrains.java.decompiler.main.decompiler.ConsoleDecompiler"
+	mainClass.set("org.jetbrains.java.decompiler.main.decompiler.ConsoleDecompiler")
 
 	args namedJar.getAbsolutePath(), file("namedSrc").absolutePath
 
@@ -803,12 +835,12 @@ task decompileQuiltFlower(type: JavaExec, dependsOn: "mapNamedJar") {
 }
 
 static List<String> getFilesInJar(String jarPath) {
-	List<String> classNames = new ArrayList<String>();
-	ZipInputStream zip = new ZipInputStream(new FileInputStream(jarPath));
+	List<String> classNames = new ArrayList<String>()
+	ZipInputStream zip = new ZipInputStream(new FileInputStream(jarPath))
 	for (ZipEntry entry = zip.getNextEntry(); entry != null; entry = zip.getNextEntry()) {
 		if (!entry.isDirectory() && entry.getName().endsWith(".class")) {
 			String className = entry.getName()
-			classNames.add(className.substring(0, className.length() - ".class".length()));
+			classNames.add(className.substring(0, className.length() - ".class".length()))
 		}
 	}
 	return classNames
@@ -822,7 +854,7 @@ static def decompileUsingProcyon(String jarPath, String outputDir) {
 
 	List<String> classNames = getFilesInJar(jarPath)
 	for (String name : classNames) {
-		String dirPath = (outputDir +  File.separator + name.substring(0, name.lastIndexOf('/'))).replace('/', File.separator)
+		String dirPath = (outputDir + File.separator + name.substring(0, name.lastIndexOf('/'))).replace('/', File.separator)
 		String filePath = (dirPath + name.substring(name.lastIndexOf('/')) + ".java").replace('/', File.separator)
 		File dir = new File(dirPath)
 		dir.mkdirs()
@@ -870,9 +902,9 @@ javadoc {
 	maxMemory = '2G'
 
 	if (!JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_17)) {
-		javadocTool = javaToolchains.javadocToolFor {
+		javadocTool.set(javaToolchains.javadocToolFor {
 			languageVersion = JavaLanguageVersion.of(17)
-		}
+		})
 	}
 	// verbose = true // enable to debug
 	options {
@@ -898,7 +930,7 @@ javadoc {
 				// jsr305 need to come before jdk or the anno links are broken
 				'https://www.javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.2/',
 				'https://javadoc.lwjgl.org/',
-				'http://fastutil.di.unimi.it/docs/',
+				'https://fastutil.di.unimi.it/docs/',
 				'https://netty.io/4.1/api/',
 				'https://commons.apache.org/proper/commons-logging/javadocs/api-1.1.3/',
 				'https://commons.apache.org/proper/commons-lang/javadocs/api-3.5',
@@ -930,7 +962,8 @@ javadoc {
 		// lazy setting
 		options {
 			tagletPath configurations.mappingPoet.files.toList()
-			header mappingPoetJar.get().filter { it.name == 'javadoc_header.txt' }.singleFile.text.trim() // cannot include line breaks
+			header mappingPoetJar.get().filter { it.name == 'javadoc_header.txt' }.singleFile.text.trim()
+			// cannot include line breaks
 			addFileOption "-add-stylesheet", mappingPoetJar.get().filter { it.name == 'forms.css' }.singleFile
 		}
 	}
@@ -942,14 +975,13 @@ task javadocJar(type: Jar, dependsOn: ["javadoc"]) {
 	from javadoc.destinationDir
 
 	archiveVersion.set featherVersion
-	archiveClassifier = 'javadoc'
+	archiveClassifier.set('javadoc')
 }
 
 publishing {
 	publications {
 		maven(MavenPublication) {
-			// TODO Make a new Maven repo for this, under the net.ornithemc group ID
-			groupId 'me.copetan'
+			groupId 'net.ornithemc'
 			artifactId "feather"
 			version featherVersion
 
@@ -969,9 +1001,8 @@ publishing {
 
 	}
 	repositories {
-		if (ENV.MAVEN_URL) {
+		if (ENV.MAVEN_URL && shouldPublishBuild(tinyJar, minecraft_version, build_number)) {
 			maven {
-				// TODO Make a new Maven repo for this, under the net.ornithemc group ID
 				url ENV.MAVEN_URL
 				credentials {
 					username ENV.MAVEN_USERNAME
@@ -985,9 +1016,21 @@ publishing {
 	}
 }
 
+static def shouldPublishBuild(jar, minecraft_version, build) {
+	try {
+		def prev_build = build - 1
+		def prev_version = "${minecraft_version}+build.${build}"
+		def prev_checksum = new URL("https://maven.ornithemc.net/releases/net/ornithemc/feather/${prev_version}/feather-${prev_version}.jar.md5").text
 
-void mapJar(File output, File input, File mappings, File libraries, String from, String to,
-			Action<TinyRemapper.Builder> action = { }) {
+		return !validateChecksum(jar, prev_checksum)
+	} catch (FileNotFoundException ignored) {
+		return true
+	}
+}
+
+
+static void mapJar(File output, File input, File mappings, File libraries, String from, String to,
+				   Action<TinyRemapper.Builder> action = {}) {
 	if (output.exists()) {
 		output.delete()
 	}
@@ -1001,7 +1044,8 @@ void mapJar(File output, File input, File mappings, File libraries, String from,
 			.build()
 
 	try {
-		def outputConsumer = new OutputConsumerPath(output.toPath())
+		def outputConsumerBuilder = new OutputConsumerPath.Builder(output.toPath())
+		def outputConsumer = outputConsumerBuilder.build()
 		outputConsumer.addNonClassFiles(input.toPath())
 		remapper.readInputs(input.toPath())
 
@@ -1017,12 +1061,12 @@ void mapJar(File output, File input, File mappings, File libraries, String from,
 	}
 }
 
-class FileOutput extends DefaultTask {
+abstract class FileOutput extends DefaultTask {
 	@OutputFile
 	File output
 }
 
-class FileOutputInput extends DefaultTask {
+abstract class FileOutputInput extends DefaultTask {
 	@InputFile
 	File input
 
@@ -1030,7 +1074,7 @@ class FileOutputInput extends DefaultTask {
 	File output
 }
 
-class WithV2FileOutput extends DefaultTask {
+abstract class WithV2FileOutput extends DefaultTask {
 	@OutputFile
 	File v1Output
 	@OutputFile
