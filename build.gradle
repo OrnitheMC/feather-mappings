@@ -1005,7 +1005,7 @@ publishing {
 
 	}
 	repositories {
-		if (ENV.MAVEN_URL && shouldPublishBuild(tinyJar.outputs.files.singleFile, minecraft_version, build_number)) {
+		if (ENV.MAVEN_URL) {
 			maven {
 				url ENV.MAVEN_URL
 				credentials {
@@ -1017,20 +1017,6 @@ publishing {
 				}
 			}
 		}
-	}
-}
-
-static def shouldPublishBuild(tinyBuild, minecraft_version, build_number) {
-	try {
-		def prev_build = build_number - 1
-		def prev_version = "${minecraft_version}+build.${prev_build}"
-		def prev_checksum = new URL("https://maven.ornithemc.net/releases/net/ornithemc/feather/${prev_version}/feather-${prev_version}.jar.sha1").text
-
-		return !validateChecksum(tinyBuild, prev_checksum)
-	} catch (NumberFormatException e) {
-		return false
-	} catch (FileNotFoundException e) {
-		return true
 	}
 }
 
