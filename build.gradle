@@ -85,7 +85,7 @@ def featherVersion = "${minecraft_version}+build.${build_number}"
 
 static def nextBuildNumber(ENV, minecraft_version) {
 	if (ENV.MAVEN_URL) {
-		def build = 0
+		def build_number = 0
 
 		try {
 			def xml = new URL("https://maven.ornithemc.net/releases/net/ornithemc/feather/maven-metadata.xml").text
@@ -102,8 +102,8 @@ static def nextBuildNumber(ENV, minecraft_version) {
 					try {
 						def number = Integer.parseInt(number_text)
 
-						if (number > build) {
-							build = number
+						if (number > build_number) {
+							build_number = number
 						}
 					} catch (NumberFormatException ignored) {
 
@@ -114,7 +114,7 @@ static def nextBuildNumber(ENV, minecraft_version) {
 
 		}
 
-		return build + 1
+		return build_number + 1
 	} else {
 		return "local"
 	}
@@ -1020,13 +1020,13 @@ publishing {
 	}
 }
 
-static def shouldPublishBuild(jar, minecraft_version, build) {
+static def shouldPublishBuild(tinyJar, minecraft_version, build_number) {
 	try {
-		def prev_build = build - 1
+		def prev_build = build_number - 1
 		def prev_version = "${minecraft_version}+build.${prev_build}"
 		def prev_checksum = new URL("https://maven.ornithemc.net/releases/net/ornithemc/feather/${prev_version}/feather-${prev_version}.jar.sha1").text
 
-		return !validateChecksum(jar, prev_checksum)
+		return !validateChecksum(tinyJar, prev_checksum)
 	} catch (FileNotFoundException ignored) {
 		return true
 	}
