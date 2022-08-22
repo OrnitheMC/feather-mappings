@@ -87,27 +87,31 @@ static def nextBuildNumber(ENV, minecraft_version) {
 	if (ENV.MAVEN_URL) {
 		def build = 0
 
-		def xml = new URL("https://maven.ornithemc.net/releases/net/ornithemc/feather/maven-metadata.xml").text
-		def metadata = new XmlSlurper().parseText(xml)
+		try {
+			def xml = new URL("https://maven.ornithemc.net/releases/net/ornithemc/feather/maven-metadata.xml").text
+			def metadata = new XmlSlurper().parseText(xml)
 
-		def version_build = "${minecraft_version}+build."
-		def i = version_build.length()
+			def version_build = "${minecraft_version}+build."
+			def i = version_build.length()
 
-		metadata.versioning.versions.version.each {
-			def version = it.text()
+			metadata.versioning.versions.version.each {
+				def version = it.text()
 
-			if (version.startsWith(version_build)) {
-				def number_text = version.substring(i)
-				try {
-					def number = Integer.parseInt(number_text)
+				if (version.startsWith(version_build)) {
+					def number_text = version.substring(i)
+					try {
+						def number = Integer.parseInt(number_text)
 
-					if (number > build) {
-						build = number
+						if (number > build) {
+							build = number
+						}
+					} catch (NumberFormatException ignored) {
+
 					}
-				} catch (NumberFormatException ignored) {
-
 				}
 			}
+		} catch (FileNotFoundException e) {
+
 		}
 
 		return build + 1
