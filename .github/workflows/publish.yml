@@ -2,23 +2,26 @@ name: Publish
 on: [workflow_dispatch]
 jobs:
   build:
-    runs-on: ubuntu-latest
-    container:
-      image: openjdk:17-jdk
-      options: --user root
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
       - uses: gradle/wrapper-validation-action@v1
 
-      - name: Generate build number
-        id: buildnumber
-        uses: einaregilsson/build-number@v3
+      - name: set up python
+        uses: actions/setup-python@v4
         with:
-          token: ${{ secrets.github_token }}
-          prefix: ${{ github.ref }}
+          python-version: '3.10'
 
-      - run: ./gradlew publish --stacktrace
+      - name: install python packages
+        run: python -m pip install --upgrade pip
+
+      - name: run feather script
+        run: python feather.py publish
         env:
-          MAVEN_URL: ${{ secrets.MAVEN_URL }}
-          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
-          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+          MAVEN_URL: ${{ secrets.NEW_MAVEN_URL }}
+          MAVEN_USERNAME: ${{ secrets.NEW_MAVEN_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.NEW_MAVEN_PASSWORD }}
