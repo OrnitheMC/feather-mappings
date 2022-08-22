@@ -3,7 +3,7 @@ import sys
 import subprocess
 
 MAPPINGS_DIR = 'mappings'
-GRADLE_TASKS = ['feather', 'build', 'javadoc', 'javadocJar', 'checkMappings', 'mapNamedJar']
+GRADLE_TASKS = ['feather', 'build', 'javadoc', 'javadocJar', 'checkMappings', 'mapNamedJar', 'publish']
 GRADLEW = 'gradlew' if os.name == 'nt' else './gradlew'
 
 def main():
