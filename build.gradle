@@ -81,7 +81,7 @@ plugins {
 def ENV = System.getenv()
 def minecraft_version = ENV.MC_VERSION
 def build_number = nextBuildNumber(ENV, minecraft_version)
-def featherVersion = "${minecraft_version}+build.${build_number}"
+def featherVersion = getFeatherVersion(minecraft_version, build_number)
 
 static def nextBuildNumber(ENV, minecraft_version) {
 	if (ENV.MAVEN_URL) {
@@ -116,8 +116,13 @@ static def nextBuildNumber(ENV, minecraft_version) {
 
 		return build_number + 1
 	} else {
-		return "local"
+		return -1
 	}
+}
+
+static def getFeatherVersion(minecraft_version, build_number) {
+	def build_number_text = (build_number < 0) ? build_number : "local"
+	return "${minecraft_version}+build.${build_number_text}"
 }
 
 repositories {
@@ -1023,7 +1028,7 @@ publishing {
 static def shouldPublishBuild(tinyJar, minecraft_version, build_number) {
 	try {
 		def prev_build = build_number - 1
-		def prev_version = "${minecraft_version}+build.${prev_build}"
+		def prev_version = getFeatherVersion(minecraft_version, prev_build)
 		def prev_checksum = new URL("https://maven.ornithemc.net/releases/net/ornithemc/feather/${prev_version}/feather-${prev_version}.jar.sha1").text
 
 		return !validateChecksum(tinyJar, prev_checksum)
