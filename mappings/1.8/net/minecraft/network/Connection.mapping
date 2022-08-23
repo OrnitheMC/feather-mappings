@@ -5,10 +5,14 @@ CLASS net/minecraft/C_17vjviahn net/minecraft/network/Connection
 	FIELD f_17yrhsopz sendQueue Ljava/util/Queue;
 	FIELD f_22boajzpk MARKER_NETWORK Lorg/apache/logging/log4j/Marker;
 	FIELD f_30ralvsie address Ljava/net/SocketAddress;
+	FIELD f_42fcylafo LOCAL_NETWORK_GROUP Lnet/minecraft/C_65ukqyaml;
 	FIELD f_45yzyhifm MARKER_NETWORK_PACKETS Lorg/apache/logging/log4j/Marker;
 	FIELD f_50yadhpbj PROTOCOL Lio/netty/util/AttributeKey;
 	FIELD f_66zusvgit disconnectReason Lnet/minecraft/C_10utpymwr;
+	FIELD f_80ohossfu encrypted Z
+	FIELD f_82suqeoih NETWORK_GROUP Lnet/minecraft/C_65ukqyaml;
 	FIELD f_87ngpmuqb channel Lio/netty/channel/Channel;
+	FIELD f_92xzfgnut disconnected Z
 	METHOD <init> (Lnet/minecraft/C_08xaajvgt;)V
 		ARG 1 flow
 	METHOD channelActive channelActive (Lio/netty/channel/ChannelHandlerContext;)V
@@ -28,17 +32,21 @@ CLASS net/minecraft/C_17vjviahn net/minecraft/network/Connection
 	METHOD m_03ziwqctg setupEncryption (Ljavax/crypto/SecretKey;)V
 		ARG 1 key
 	METHOD m_11okeomsh sendQueuedPackets ()V
-	METHOD m_14ysinmso readQueuedPackets ()V
+	METHOD m_12rkkfvbk isEncrypted ()Z
+	METHOD m_14ysinmso tick ()V
+	METHOD m_19oopzdpi disconnect ()V
 	METHOD m_19qcmardb getListener ()Lnet/minecraft/C_94vigqard;
 	METHOD m_24hanjzcf getChannel (Lnet/minecraft/C_17vjviahn;)Lio/netty/channel/Channel;
 		ARG 0 connection
+	METHOD m_27fmqargq setCompressionThreshold (I)V
+		ARG 1 threshold
 	METHOD m_27xziinkq isLocal ()Z
 	METHOD m_30yrnblwa setListener (Lnet/minecraft/C_94vigqard;)V
 		ARG 1 listener
 	METHOD m_48rsyozeg disconnect (Lnet/minecraft/C_10utpymwr;)V
 		ARG 1 reason
 	METHOD m_53fqovtyo disableAutoRead ()V
-	METHOD m_62pqnifpm connect (Ljava/net/SocketAddress;)Lnet/minecraft/C_17vjviahn;
+	METHOD m_62pqnifpm connectLocal (Ljava/net/SocketAddress;)Lnet/minecraft/C_17vjviahn;
 		ARG 0 address
 	METHOD m_69hcugezl sendPacket (Lnet/minecraft/C_53hiiajnl;[Lio/netty/util/concurrent/GenericFutureListener;)V
 		ARG 1 packet
