@@ -1,7 +1,7 @@
 CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 	FIELD f_01hsvkved thunderGradient F
 	FIELD f_03sbvwfpj storage Lnet/minecraft/C_84iwxwflg;
-	FIELD f_04ehujzor unloadedEntities Ljava/util/List;
+	FIELD f_04ehujzor entitiesToUnload Ljava/util/List;
 	FIELD f_04onykbfi calendar Ljava/util/Calendar;
 	FIELD f_07ndpykzs removedBlockEntities Ljava/util/List;
 	FIELD f_13fanncif isSearchingSpawnPoint Z
@@ -190,7 +190,7 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 3 z
 		ARG 4 metadata
 		ARG 5 flags
-	METHOD m_25lvohvxp removeBlockEntity (Lnet/minecraft/C_41cvuyzpf;)V
+	METHOD m_25lvohvxp unloadBlockEntity (Lnet/minecraft/C_41cvuyzpf;)V
 		ARG 1 blockEntity
 	METHOD m_26edfzvmk getCollisions (Lnet/minecraft/C_98tnijqnf;Lnet/minecraft/C_68qygpazz;)Ljava/util/List;
 		ARG 1 entity
@@ -295,7 +295,7 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 1 entity
 		ARG 2 range
 	METHOD m_43wfnrnun getSeed ()J
-	METHOD m_43ycfbstb calculateAmbientDarkness ()V
+	METHOD m_43ycfbstb initAmbientDarkness ()V
 	METHOD m_44qembzha addGlobalEntity (Lnet/minecraft/C_98tnijqnf;)Z
 		ARG 1 entity
 	METHOD m_45gnavggo tickWeather ()V
@@ -360,7 +360,7 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 9 destructive
 	METHOD m_52colvovb populateCrashReport (Lnet/minecraft/C_72mprqjfu;)Lnet/minecraft/C_00tyqvsxa;
 		ARG 1 report
-	METHOD m_54fssmqhz getRainOrSnowHeight (II)I
+	METHOD m_54fssmqhz getPrecipitationHeight (II)I
 		COMMENT get the height at which rain or snow can fall
 		ARG 1 x
 		ARG 2 z
@@ -519,7 +519,7 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 7 blockPathAllowed
 		ARG 8 inWater
 		ARG 9 canSwim
-	METHOD m_77ygmmyho playAmbientSounds (IILnet/minecraft/C_29tuwvijg;)V
+	METHOD m_77ygmmyho tickAmbienceAndLight (IILnet/minecraft/C_29tuwvijg;)V
 		ARG 1 x
 		ARG 2 z
 		ARG 3 chunk
@@ -549,7 +549,7 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 2 z
 	METHOD m_81lsyawvx getSunLightLevel (F)F
 		ARG 1 time
-	METHOD m_81octbnky isFullBlock (III)Z
+	METHOD m_81octbnky isCollisionBoxFullCube (III)Z
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
@@ -604,7 +604,7 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 3 entityY
 		ARG 5 entityZ
 		ARG 7 range
-	METHOD m_89hzjlzwk (IIIZ)Z
+	METHOD m_89hzjlzwk isConductor (IIIZ)Z
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
@@ -655,7 +655,7 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 5 data
 	METHOD m_95jcwpnza getBlocksIntersectingBox (Lnet/minecraft/C_68qygpazz;)Ljava/util/List;
 		ARG 1 box
-	METHOD m_96hwgnjnl setBuildListAndCheckLight ()V
+	METHOD m_96hwgnjnl tickLight ()V
 	METHOD m_96pcflxyo willTickThisTick (IIILnet/minecraft/C_88rbsxznd;)Z
 		ARG 1 x
 		ARG 2 y

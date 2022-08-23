@@ -1,7 +1,7 @@
 CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 	FIELD f_01hsvkved thunderGradient F
 	FIELD f_03sbvwfpj storage Lnet/minecraft/C_84iwxwflg;
-	FIELD f_04ehujzor unloadedEntities Ljava/util/List;
+	FIELD f_04ehujzor entitiesToUnload Ljava/util/List;
 	FIELD f_04onykbfi calendar Ljava/util/Calendar;
 	FIELD f_07ndpykzs removedBlockEntities Ljava/util/List;
 	FIELD f_13fanncif savedDataStorage Lnet/minecraft/C_44diwpdev;
@@ -31,7 +31,7 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 	FIELD f_84qnvtvin executeTicksImmediately Z
 		COMMENT If true, scheduled ticks will happen instantly
 	FIELD f_87djvqwse allowMonsters Z
-	FIELD f_89adattao properties Lnet/minecraft/C_52ryqrhri;
+	FIELD f_89adattao data Lnet/minecraft/C_52ryqrhri;
 	FIELD f_91eaxcnsh random Ljava/util/Random;
 	FIELD f_91xrxbrgz tickingBlockEntities Ljava/util/List;
 	FIELD f_92ezcnzzt isClient Z
@@ -75,7 +75,7 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 3 seed
 	METHOD m_07hgnxusf getLightLevel (Lnet/minecraft/C_98mwkxlqj;)I
 		ARG 1 pos
-	METHOD m_07wrtlhtw m_07wrtlhtw (Lnet/minecraft/C_54nvtxdqe;Lnet/minecraft/C_68qygpazz;)F
+	METHOD m_07wrtlhtw (Lnet/minecraft/C_54nvtxdqe;Lnet/minecraft/C_68qygpazz;)F
 		ARG 1 vec
 		ARG 2 box
 	METHOD m_08hvkyxzj markDirty (Lnet/minecraft/C_98mwkxlqj;Lnet/minecraft/C_41cvuyzpf;)V
@@ -167,7 +167,7 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 1 pos
 		ARG 2 state
 		ARG 3 flags
-	METHOD m_25lvohvxp removeBlockEntity (Lnet/minecraft/C_41cvuyzpf;)V
+	METHOD m_25lvohvxp unloadBlockEntity (Lnet/minecraft/C_41cvuyzpf;)V
 		ARG 1 blockEntity
 	METHOD m_26dlzqwny isWater (Lnet/minecraft/C_98mwkxlqj;)Z
 		ARG 1 pos
@@ -267,7 +267,7 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 	METHOD m_43gjvaydz loadEntities (Ljava/util/Collection;)V
 		ARG 1 entities
 	METHOD m_43wfnrnun getSeed ()J
-	METHOD m_43ycfbstb calculateAmbientDarkness ()V
+	METHOD m_43ycfbstb initAmbientDarkness ()V
 	METHOD m_44qembzha addGlobalEntity (Lnet/minecraft/C_98tnijqnf;)Z
 		ARG 1 entity
 	METHOD m_44qmrkfld isRegionLoaded (Lnet/minecraft/C_98mwkxlqj;Lnet/minecraft/C_98mwkxlqj;)Z
@@ -281,7 +281,7 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 1 pos
 		ARG 2 block
 		ARG 3 dir
-	METHOD m_47ihsmvgi m_47ihsmvgi (Lnet/minecraft/C_98mwkxlqj;)Z
+	METHOD m_47ihsmvgi isTopOfColumnIgnoreFluids (Lnet/minecraft/C_98mwkxlqj;)Z
 		ARG 1 pos
 	METHOD m_47ucbcquw isThundering ()Z
 	METHOD m_47ufekzqb removeListener (Lnet/minecraft/C_64xnvxpfm;)V
@@ -326,7 +326,7 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 	METHOD m_52lsnmbea isRegionLoaded (Lnet/minecraft/C_56geqvdbi;Z)Z
 		ARG 1 box
 		ARG 2 allowEmpty
-	METHOD m_54fssmqhz getRainOrSnowHeight (Lnet/minecraft/C_98mwkxlqj;)Lnet/minecraft/C_98mwkxlqj;
+	METHOD m_54fssmqhz getPrecipitationHeight (Lnet/minecraft/C_98mwkxlqj;)Lnet/minecraft/C_98mwkxlqj;
 		COMMENT get the height at which rain or snow can fall
 		ARG 1 pos
 	METHOD m_54uyzbbkh removeBlock (Lnet/minecraft/C_98mwkxlqj;)Z
@@ -384,7 +384,7 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 1 box
 		ARG 2 material
 		ARG 3 entity
-	METHOD m_64ztuzqjw setDefaultSpawn (Lnet/minecraft/C_98mwkxlqj;)V
+	METHOD m_64ztuzqjw setSpawnPos (Lnet/minecraft/C_98mwkxlqj;)V
 		ARG 1 pos
 	METHOD m_65cpjfuzr addParticle (Lnet/minecraft/C_29ozecydx;ZDDDDDD[I)V
 		ARG 1 type
@@ -444,12 +444,12 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 	METHOD m_72pynfkcf onBlockChanged (Lnet/minecraft/C_98mwkxlqj;)V
 		ARG 1 pos
 	METHOD m_72wifgrtf breakBlock (Lnet/minecraft/C_98mwkxlqj;Z)Z
-		ARG 1 x
-		ARG 2 y
+		ARG 1 pos
+		ARG 2 dropItems
 	METHOD m_73zavgflu isSpawnChunk (II)Z
 		ARG 1 chunkX
 		ARG 2 chunkZ
-	METHOD m_74hnbzywe readSessionLock ()V
+	METHOD m_74hnbzywe checkSessionLock ()V
 	METHOD m_74rgvgjyf getWorldBorder ()Lnet/minecraft/C_75odwcymf;
 	METHOD m_75aqhwwcn playSound (Lnet/minecraft/C_29wvrnpbz;Ljava/lang/String;FF)V
 		ARG 1 source
@@ -473,7 +473,7 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 1 start
 		ARG 2 end
 		ARG 3 isLiving
-	METHOD m_77ygmmyho playAmbientSounds (IILnet/minecraft/C_29tuwvijg;)V
+	METHOD m_77ygmmyho tickAmbienceAndLight (IILnet/minecraft/C_29tuwvijg;)V
 		ARG 1 x
 		ARG 2 z
 		ARG 3 chunk
@@ -587,7 +587,7 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 1 box
 	METHOD m_96eiujcfk isRegionLoaded (Lnet/minecraft/C_56geqvdbi;)Z
 		ARG 1 box
-	METHOD m_96hwgnjnl setBuildListAndCheckLight ()V
+	METHOD m_96hwgnjnl tickLight ()V
 	METHOD m_96pcflxyo willTickThisTick (Lnet/minecraft/C_98mwkxlqj;Lnet/minecraft/C_88rbsxznd;)Z
 		ARG 1 pos
 		ARG 2 block

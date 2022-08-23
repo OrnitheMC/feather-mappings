@@ -1,11 +1,18 @@
 CLASS net/minecraft/C_80dcurlre net/minecraft/world/biome/BiomeSource
+	FIELD f_15nftqmfv generatorOptions Ljava/lang/String;
 	FIELD f_84pqamtym biomes Lnet/minecraft/C_18xqwbkgc;
 	FIELD f_85olaaumq biomeCache Lnet/minecraft/C_73cvnbcja;
 	FIELD f_89wljcnnk biomeCacheList Lnet/minecraft/C_18xqwbkgc;
 	FIELD f_92qoycdwy spawnableBiomes Ljava/util/List;
 		COMMENT A list of biomes in which the player can spawn
-	METHOD m_08ilwybxe getBiomeAt (Lnet/minecraft/C_98mwkxlqj;)Lnet/minecraft/C_33fapnocc;
-		ARG 1 x
+	METHOD <init> (JLnet/minecraft/C_34kpzomwa;Ljava/lang/String;)V
+		ARG 1 seed
+		ARG 3 generatorType
+		ARG 4 generatorOptions
+	METHOD <init> (Lnet/minecraft/C_72mqkrkao;)V
+		ARG 1 world
+	METHOD m_08ilwybxe getBiome (Lnet/minecraft/C_98mwkxlqj;)Lnet/minecraft/C_33fapnocc;
+		ARG 1 pos
 	METHOD m_12ckhkohi getBiomeAtPos ([Lnet/minecraft/C_33fapnocc;IIIIZ)[Lnet/minecraft/C_33fapnocc;
 		ARG 1 biomes
 		ARG 2 x
@@ -19,12 +26,11 @@ CLASS net/minecraft/C_80dcurlre net/minecraft/world/biome/BiomeSource
 		ARG 3 zChunk
 		ARG 4 biomeList
 		ARG 5 random
-	METHOD m_36fftgvej getBiomeAtOrDefault (Lnet/minecraft/C_98mwkxlqj;Lnet/minecraft/C_33fapnocc;)Lnet/minecraft/C_33fapnocc;
+	METHOD m_36fftgvej getBiomeOrDefault (Lnet/minecraft/C_98mwkxlqj;Lnet/minecraft/C_33fapnocc;)Lnet/minecraft/C_33fapnocc;
 		ARG 1 pos
-		ARG 2 defaultValue
-	METHOD m_39fpircfc getRainfallValues ([FIIII)[F
-		COMMENT Generates a list of rainfall values for a specific XZ column
-		ARG 1 listToUse
+		ARG 2 defaultBiome
+	METHOD m_39fpircfc populateDownfallTable ([FIIII)[F
+		ARG 1 downfall
 		ARG 2 x
 		ARG 3 z
 		ARG 4 width
@@ -32,7 +38,7 @@ CLASS net/minecraft/C_80dcurlre net/minecraft/world/biome/BiomeSource
 	METHOD m_43slootmu getTemperature (FI)F
 		ARG 1 temperature
 		ARG 2 rainfallHeight
-	METHOD m_54ofxcbpr getBiomes ()Ljava/util/List;
+	METHOD m_54ofxcbpr getSpawnableBiomes ()Ljava/util/List;
 	METHOD m_69weariap isBiomeValid (IIILjava/util/List;)Z
 		ARG 1 x
 		ARG 2 z
