@@ -1,41 +1,42 @@
-CLASS net/minecraft/C_15kinndyj net/minecraft/village/Village
-	FIELD f_03djfebei playersInVillage Ljava/util/TreeMap;
+CLASS net/minecraft/C_15kinndyj net/minecraft/world/village/Village
+	FIELD f_03djfebei playerReputations Ljava/util/TreeMap;
 	FIELD f_18edxdamr ticks I
 	FIELD f_38uotrpka golems I
 	FIELD f_48otrwzfv populationSize I
 	FIELD f_49wgcybqu radius I
-	FIELD f_52upsaubc villageTickLastAddedDoor I
+	FIELD f_52upsaubc ticksOfLastDoorAdded I
 	FIELD f_70kmqfkyq doors Ljava/util/List;
-	FIELD f_76vkooacp mtick I
-	FIELD f_84ijrbihf max Lnet/minecraft/C_98mwkxlqj;
-	FIELD f_85vxpqxzr livingEntities Ljava/util/List;
+	FIELD f_76vkooacp ticksOfLastMating I
+	FIELD f_84ijrbihf combinedDoorPositions Lnet/minecraft/C_98mwkxlqj;
+		COMMENT The sum of all door positions - used to calculate the village center.
+	FIELD f_85vxpqxzr attackers Ljava/util/List;
 	FIELD f_85zaewexf world Lnet/minecraft/C_72mqkrkao;
-	FIELD f_97qaefzuf min Lnet/minecraft/C_98mwkxlqj;
+	FIELD f_97qaefzuf center Lnet/minecraft/C_98mwkxlqj;
 	METHOD <init> (Lnet/minecraft/C_72mqkrkao;)V
 		ARG 1 world
-	METHOD m_04cztetny tickLivingEntities ()V
+	METHOD m_04cztetny cleanUpAttackers ()V
 	METHOD m_06duwekjz updateIronGolemCount ()V
-	METHOD m_09xdxyolc tickDoors ()V
-	METHOD m_12knmvcdf getCurrentReputation (Ljava/lang/String;)I
-		ARG 1 translationKey
-	METHOD m_14uuletzc ticksAfterLastAddedDoor ()I
+	METHOD m_09xdxyolc cleanUpDoors ()V
+	METHOD m_12knmvcdf getReputation (Ljava/lang/String;)I
+		ARG 1 playerName
+	METHOD m_14uuletzc getTimeSinceLastDoorAdded ()I
 	METHOD m_19ncpxexn getClosestPlayer (Lnet/minecraft/C_92gesnerq;)Lnet/minecraft/C_29wvrnpbz;
 		ARG 1 entity
-	METHOD m_28pfzypcq getMinPos ()Lnet/minecraft/C_98mwkxlqj;
+	METHOD m_28pfzypcq getCenter ()Lnet/minecraft/C_98mwkxlqj;
 	METHOD m_31xaicckx readNbt (Lnet/minecraft/C_85dsbsqaq;)V
 		ARG 1 nbt
 	METHOD m_32fsfmjst canIronGolemSpawn (IIIIII)Z
-		ARG 1 randomX
-		ARG 2 randomY
-		ARG 3 randomZ
-		ARG 4 width
-		ARG 5 height
-		ARG 6 depth
+		ARG 1 x
+		ARG 2 y
+		ARG 3 z
+		ARG 4 rangeX
+		ARG 5 rangeY
+		ARG 6 rangeZ
 	METHOD m_32nntqeke hasBadReputation (Ljava/lang/String;)Z
-		ARG 1 translationKey
+		ARG 1 playerName
 	METHOD m_32uzraccl getRadius ()I
-	METHOD m_39bpezuvx addLivingEntity (Lnet/minecraft/C_92gesnerq;)V
-		ARG 1 entity
+	METHOD m_39bpezuvx addOrUpdateAttacker (Lnet/minecraft/C_92gesnerq;)V
+		ARG 1 attacker
 	METHOD m_39bqdvgch setWorld (Lnet/minecraft/C_72mqkrkao;)V
 		ARG 1 world
 	METHOD m_41wnholrh isWoodenDoor (III)Z
@@ -52,29 +53,29 @@ CLASS net/minecraft/C_15kinndyj net/minecraft/village/Village
 		ARG 2 y
 		ARG 3 z
 	METHOD m_59rdkoppt hasNoDoors ()Z
-	METHOD m_61kmggvwx getIronGolemSpawnPosition (IIIIII)Lnet/minecraft/C_54nvtxdqe;
-		ARG 1 minX
-		ARG 2 minY
-		ARG 3 minZ
-		ARG 4 width
-		ARG 5 height
-		ARG 6 depth
-	METHOD m_65ttnjlqu updateRadius ()V
+	METHOD m_61kmggvwx getSpawnPosForIronGolem (IIIIII)Lnet/minecraft/C_54nvtxdqe;
+		ARG 1 centerX
+		ARG 2 centerY
+		ARG 3 centerZ
+		ARG 4 rangeX
+		ARG 5 rangeY
+		ARG 6 rangeZ
+	METHOD m_65ttnjlqu updateCenterAndRadius ()V
 	METHOD m_68slsckxp updatePopulationSize ()V
 	METHOD m_77exiaqcu stopMating ()V
-	METHOD m_80tbbeqmf getClosestLivingEntity (Lnet/minecraft/C_92gesnerq;)Lnet/minecraft/C_92gesnerq;
-		ARG 1 livingEntity
+	METHOD m_80tbbeqmf getClosestAttacker (Lnet/minecraft/C_92gesnerq;)Lnet/minecraft/C_92gesnerq;
+		ARG 1 entity
 	METHOD m_83xpvdmnx writeNbt (Lnet/minecraft/C_85dsbsqaq;)V
 		ARG 1 nbt
 	METHOD m_85alujbir getDoors ()Ljava/util/List;
-	METHOD m_87ddsttht setTicks (I)V
+	METHOD m_87ddsttht tick (I)V
 		ARG 1 ticks
-	METHOD m_87lbblsix getVillageDoor (III)Lnet/minecraft/C_17dzohjto;
+	METHOD m_87lbblsix getDoor (III)Lnet/minecraft/C_17dzohjto;
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
 	METHOD m_89bgjxjed updateReputation (Ljava/lang/String;I)I
-		ARG 1 translationKey
+		ARG 1 playerName
 		ARG 2 reputation
 	METHOD m_91dlgvpst canMate ()Z
 	METHOD m_93lywyvug getClosestDoor (III)Lnet/minecraft/C_17dzohjto;
@@ -82,14 +83,14 @@ CLASS net/minecraft/C_15kinndyj net/minecraft/village/Village
 		ARG 2 y
 		ARG 3 z
 	METHOD m_97tgxmdpk getDoorCount ()I
-	METHOD m_98antxttd inVillage (III)Z
+	METHOD m_98antxttd contains (III)Z
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
-	CLASS C_29bcswums Occupant
+	CLASS C_29bcswums Attacker
 		FIELD f_60mzykmnn ticks I
 		FIELD f_87puchknz village Lnet/minecraft/C_15kinndyj;
-		FIELD f_90kvaiwrb entity Lnet/minecraft/C_92gesnerq;
+		FIELD f_90kvaiwrb attacker Lnet/minecraft/C_92gesnerq;
 		METHOD <init> (Lnet/minecraft/C_15kinndyj;Lnet/minecraft/C_92gesnerq;I)V
 			ARG 2 entity
 			ARG 3 ticks
