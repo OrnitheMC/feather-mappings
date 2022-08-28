@@ -24,10 +24,14 @@ CLASS net/minecraft/C_68qygpazz net/minecraft/util/math/Box
 	METHOD m_19epjvdee getAverageSideLength ()D
 	METHOD m_27dlkywie set (Lnet/minecraft/C_68qygpazz;)V
 		ARG 1 box
-	METHOD m_33srmdqux stretch (DDD)Lnet/minecraft/C_68qygpazz;
-		ARG 1 x
-		ARG 3 y
-		ARG 5 z
+	METHOD m_33srmdqux grow (DDD)Lnet/minecraft/C_68qygpazz;
+		COMMENT Create a new {@code Box} that grows by the given amounts. Positive amounts lead to
+		COMMENT increases in the maximum values, while negative amounts lead to decreases in the
+		COMMENT minimum values. This ensures the new {@code Box} is always bigger (unless the amounts
+		COMMENT given are all {@code 0}).
+		ARG 1 dx
+		ARG 3 dy
+		ARG 5 dz
 	METHOD m_41bqspsqy containsXY (Lnet/minecraft/C_54nvtxdqe;)Z
 		ARG 1 pos
 	METHOD m_44qxvbayy copy ()Lnet/minecraft/C_68qygpazz;
@@ -35,10 +39,10 @@ CLASS net/minecraft/C_68qygpazz net/minecraft/util/math/Box
 		ARG 1 box
 	METHOD m_56fqexrcj contains (Lnet/minecraft/C_54nvtxdqe;)Z
 		ARG 1 vec
-	METHOD m_61qdtyloi withOffset (DDD)Lnet/minecraft/C_68qygpazz;
-		ARG 1 x
-		ARG 3 y
-		ARG 5 z
+	METHOD m_61qdtyloi move (DDD)Lnet/minecraft/C_68qygpazz;
+		ARG 1 dx
+		ARG 3 dy
+		ARG 5 dz
 	METHOD m_62nqzovby containsYZ (Lnet/minecraft/C_54nvtxdqe;)Z
 		ARG 1 pos
 	METHOD m_64aascllq containsXZ (Lnet/minecraft/C_54nvtxdqe;)Z
@@ -50,26 +54,32 @@ CLASS net/minecraft/C_68qygpazz net/minecraft/util/math/Box
 		ARG 7 maxX
 		ARG 9 maxY
 		ARG 11 maxZ
-	METHOD m_67etkiien shrink (DDD)Lnet/minecraft/C_68qygpazz;
-		ARG 1 x
-		ARG 3 y
-		ARG 5 z
-	METHOD m_68kjwulfw isColliding (Lnet/minecraft/C_54nvtxdqe;Lnet/minecraft/C_54nvtxdqe;)Lnet/minecraft/C_67isfwlvr;
+	METHOD m_67etkiien contract (DDD)Lnet/minecraft/C_68qygpazz;
+		COMMENT Create a new {@code Box} that is contracted by the given amounts. The minimum and maximum
+		COMMENT values are increased and decreased respectively by the amounts given. This means the
+		COMMENT new {@code Box} will be smaller by twice the amounts given on each axis.
+		ARG 1 dx
+		ARG 3 dy
+		ARG 5 dz
+	METHOD m_68kjwulfw clip (Lnet/minecraft/C_54nvtxdqe;Lnet/minecraft/C_54nvtxdqe;)Lnet/minecraft/C_67isfwlvr;
 		ARG 1 vec1
 		ARG 2 vec2
 	METHOD m_76pplxzwl expand (DDD)Lnet/minecraft/C_68qygpazz;
+		COMMENT Create a new {@code Box} that is expanded by the given amounts. The minimum and maximum
+		COMMENT values are decreased and increased respectively by the amounts given. This means the
+		COMMENT new {@code Box} will be bigger by twice the amounts given on each axis.
 		ARG 1 dx
 		ARG 3 dy
 		ARG 5 dz
 	METHOD m_91rjkvqij getCache ()Lnet/minecraft/C_82vlbevxv;
-	METHOD m_94okpbuxx offset (DDD)Lnet/minecraft/C_68qygpazz;
-		ARG 1 dX
-		ARG 3 dY
-		ARG 5 dZ
+	METHOD m_94okpbuxx setMoved (DDD)Lnet/minecraft/C_68qygpazz;
+		ARG 1 dx
+		ARG 3 dy
+		ARG 5 dz
 	METHOD m_95niujlfr intersectY (Lnet/minecraft/C_68qygpazz;D)D
 		ARG 1 box
 		ARG 2 limit
-	METHOD m_99ssyfmer create (DDDDDD)Lnet/minecraft/C_68qygpazz;
+	METHOD m_99ssyfmer of (DDDDDD)Lnet/minecraft/C_68qygpazz;
 		ARG 0 minX
 		ARG 2 minY
 		ARG 4 minZ
