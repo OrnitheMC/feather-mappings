@@ -2,31 +2,48 @@ CLASS net/minecraft/C_49ekvwuyg net/minecraft/world/map/SavedMapData
 	FIELD f_22ndszrnx dimension B
 	FIELD f_28rsqojqm colors [B
 	FIELD f_30abuftpc scale B
-	FIELD f_34ahoafsp icons Ljava/util/Map;
-	FIELD f_66qfcxrpv playerUpdateTrackers Ljava/util/Map;
-	FIELD f_66sohgykp xCenter I
-	FIELD f_75orqqdzm updateTrackers Ljava/util/List;
-	FIELD f_94qxrkvkw zCenter I
-	METHOD m_13sdepnli getVisibleIcons (Lnet/minecraft/C_17gpkxmuh;Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_29wvrnpbz;)Lnet/minecraft/C_53hiiajnl;
-		COMMENT Gets all the visible player icons for that stack of maps for that player
-		ARG 1 itemStack
+	FIELD f_34ahoafsp decorations Ljava/util/Map;
+	FIELD f_66qfcxrpv holdersByPlayer Ljava/util/Map;
+	FIELD f_66sohgykp centerX I
+	FIELD f_75orqqdzm holders Ljava/util/List;
+	FIELD f_94qxrkvkw centerZ I
+	METHOD m_13sdepnli createUpdatePacket (Lnet/minecraft/C_17gpkxmuh;Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_29wvrnpbz;)Lnet/minecraft/C_53hiiajnl;
+		ARG 1 stack
 		ARG 2 world
 		ARG 3 player
-	METHOD m_38ystcygm updateIcons (Lnet/minecraft/C_29wvrnpbz;Lnet/minecraft/C_17gpkxmuh;)V
+	METHOD m_38ystcygm tickHolder (Lnet/minecraft/C_29wvrnpbz;Lnet/minecraft/C_17gpkxmuh;)V
 		ARG 1 player
 		ARG 2 itemStack
-	METHOD m_61vunhitt addPlayerTracker (Lnet/minecraft/C_29wvrnpbz;)Lnet/minecraft/C_49ekvwuyg$C_34kzitvif;
+	METHOD m_43ueglnrz markDirty (II)V
+		ARG 1 x
+		ARG 2 y
+	METHOD m_58ohwrwrn updateCenter (DDI)V
+		ARG 1 x
+		ARG 3 z
+		ARG 5 scale
+	METHOD m_61vunhitt addHolder (Lnet/minecraft/C_29wvrnpbz;)Lnet/minecraft/C_49ekvwuyg$C_34kzitvif;
 		ARG 1 player
-	METHOD m_83epfwwsw updateIcon (ILnet/minecraft/C_72mqkrkao;Ljava/lang/String;DDD)V
-		ARG 1 isInItemFrame
+	METHOD m_83epfwwsw addDecoration (ILnet/minecraft/C_72mqkrkao;Ljava/lang/String;DDD)V
+		ARG 1 type
 		ARG 2 world
-		ARG 3 label
+		ARG 3 id
 		ARG 4 x
 		ARG 6 z
-	CLASS C_34kzitvif DisplayData
-		FIELD f_22kkkazvn hasIcons Z
+		ARG 8 rotation
+	CLASS C_34kzitvif Holder
+		FIELD f_08gmrnjwu dirtyMinY I
+		FIELD f_22kkkazvn dirty Z
 		FIELD f_22nebzguv player Lnet/minecraft/C_29wvrnpbz;
-		FIELD f_59nktekvr numberOfIcons I
+		FIELD f_47mcjpgem dirtyMaxY I
+		FIELD f_59nktekvr step I
+		FIELD f_94iwxjzpn dirtyMinX I
+		FIELD f_94uzjgxwu dirtyMaxX I
+		FIELD f_96vzvrnov ticks I
 		FIELD f_99iuvhgup mapData Lnet/minecraft/C_49ekvwuyg;
 		METHOD <init> (Lnet/minecraft/C_49ekvwuyg;Lnet/minecraft/C_29wvrnpbz;)V
 			ARG 2 player
+		METHOD m_59uciopfo createUpdatePacket (Lnet/minecraft/C_17gpkxmuh;)Lnet/minecraft/C_53hiiajnl;
+			ARG 1 stack
+		METHOD m_62pstztgn markDirty (II)V
+			ARG 1 x
+			ARG 2 y

@@ -2,64 +2,63 @@ CLASS net/minecraft/C_49ekvwuyg net/minecraft/world/map/SavedMapData
 	FIELD f_22ndszrnx dimension B
 	FIELD f_28rsqojqm colors [B
 	FIELD f_30abuftpc scale B
-	FIELD f_34ahoafsp icons Ljava/util/Map;
-	FIELD f_66qfcxrpv playerUpdateTrackers Ljava/util/Map;
-	FIELD f_66sohgykp xCenter I
-	FIELD f_75orqqdzm updateTrackers Ljava/util/List;
-	FIELD f_94qxrkvkw zCenter I
-	METHOD m_13sdepnli getVisibleIcons (Lnet/minecraft/C_17gpkxmuh;Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_29wvrnpbz;)[B
-		COMMENT Gets all the visible player icons for that stack of maps for that player
-		ARG 1 itemStack
+	FIELD f_34ahoafsp decorations Ljava/util/Map;
+	FIELD f_66qfcxrpv holdersByPlayers Ljava/util/Map;
+	FIELD f_66sohgykp centerX I
+	FIELD f_75orqqdzm holders Ljava/util/List;
+	FIELD f_94qxrkvkw centerZ I
+	METHOD m_13sdepnli getUpdatePacketData (Lnet/minecraft/C_17gpkxmuh;Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_29wvrnpbz;)[B
+		ARG 1 stack
 		ARG 2 world
 		ARG 3 player
-	METHOD m_23dbynjdf getDataFromOtherPlayers ([B)V
-		ARG 1 playerData
-	METHOD m_38ystcygm updateIcons (Lnet/minecraft/C_29wvrnpbz;Lnet/minecraft/C_17gpkxmuh;)V
+	METHOD m_23dbynjdf updateFromPacketData ([B)V
+		ARG 1 updatePacketData
+	METHOD m_38ystcygm tickHolder (Lnet/minecraft/C_29wvrnpbz;Lnet/minecraft/C_17gpkxmuh;)V
 		ARG 1 player
-		ARG 2 itemStack
-	METHOD m_61vunhitt addPlayerTracker (Lnet/minecraft/C_29wvrnpbz;)Lnet/minecraft/C_49ekvwuyg$C_34kzitvif;
+		ARG 2 stack
+	METHOD m_61vunhitt addHolder (Lnet/minecraft/C_29wvrnpbz;)Lnet/minecraft/C_49ekvwuyg$C_34kzitvif;
 		ARG 1 player
-	METHOD m_83epfwwsw updateIcon (ILnet/minecraft/C_72mqkrkao;Ljava/lang/String;DDD)V
-		ARG 1 isInItemFrame
+	METHOD m_83epfwwsw addDecoration (ILnet/minecraft/C_72mqkrkao;Ljava/lang/String;DDD)V
+		ARG 1 type
 		ARG 2 world
-		ARG 3 label
+		ARG 3 id
 		ARG 4 x
 		ARG 6 z
 		ARG 8 rotation
-	METHOD m_98mrhrlcy markYPixelRowDirty (III)V
-		ARG 1 x
-		ARG 2 yMin
-		ARG 3 yMax
-	CLASS C_34kzitvif DisplayData
-		FIELD f_22kkkazvn hasIcons Z
+	METHOD m_98mrhrlcy markDirty (III)V
+		ARG 1 index
+		ARG 2 minY
+		ARG 3 maxY
+	CLASS C_34kzitvif Holder
+		FIELD f_22kkkazvn syncedScale Z
 		FIELD f_22nebzguv player Lnet/minecraft/C_29wvrnpbz;
-		FIELD f_33tiwzahg zPixels [I
-		FIELD f_37denejon updateCooldown I
-			COMMENT Adds a cooldown to updating the map, or in other words, this is
-			COMMENT a timer, when it runs out the players data will be updated on the map.
-		FIELD f_46immfyxm magicNumber I
-		FIELD f_59nktekvr numberOfIcons I
-		FIELD f_63ceutlok iconLocation [B
-			COMMENT The last known location of a player on the map.
-		FIELD f_89rskbvru xPixels [I
+		FIELD f_33tiwzahg dirtyMaxY [I
+		FIELD f_37denejon cooldown I
+		FIELD f_46immfyxm nextDirtyPixel I
+			COMMENT The {@code dirtyMinY} and {@code dirtyMaxY} arrays store new mininum and maximum y
+			COMMENT values of specific points on the map. This field holds the index of the next dirty
+			COMMENT location for update packets.
+		FIELD f_59nktekvr step I
+		FIELD f_63ceutlok decorations [B
+		FIELD f_89rskbvru dirtyMinY [I
 		FIELD f_99iuvhgup mapData Lnet/minecraft/C_49ekvwuyg;
 		METHOD <init> (Lnet/minecraft/C_49ekvwuyg;Lnet/minecraft/C_29wvrnpbz;)V
 			ARG 2 player
-		METHOD m_58vrxomfj getVisibleIcons (Lnet/minecraft/C_17gpkxmuh;)[B
-			COMMENT This method tries to get all player icons that should be displayed.
-			COMMENT This means players in the correct dimension, inside the map boundaries.
-			COMMENT A map should only display icons if it is not in an item frame.
-			COMMENT A map will only update every 4 ticks and therefore has a cooldown.
-			COMMENT @return a byte array that has all player icons
-			ARG 1 itemStack
-	CLASS C_97gftfqcz MapCoordinate
+		METHOD m_58vrxomfj getUpdatePacketData (Lnet/minecraft/C_17gpkxmuh;)[B
+			COMMENT Packs data for a map update packet in a byte array. The first byte encodes the type
+			COMMENT of update:
+			COMMENT <br>0: colors
+			COMMENT <br>1: decorations
+			COMMENT <br>2: scale
+			ARG 1 stack
+	CLASS C_97gftfqcz Decoration
 		FIELD f_48lhvhlib rotation B
 		FIELD f_58eejezsh mapData Lnet/minecraft/C_49ekvwuyg;
-		FIELD f_76jqltkqp zCenter B
-		FIELD f_88ietlfdx iconSize B
-		FIELD f_96oubokps xCenter B
+		FIELD f_76jqltkqp z B
+		FIELD f_88ietlfdx type B
+		FIELD f_96oubokps x B
 		METHOD <init> (Lnet/minecraft/C_49ekvwuyg;BBBB)V
-			ARG 2 iconSize
-			ARG 3 xCenter
-			ARG 4 zCenter
+			ARG 2 type
+			ARG 3 x
+			ARG 4 z
 			ARG 5 rotation
