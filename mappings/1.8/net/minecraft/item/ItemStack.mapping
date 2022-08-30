@@ -1,28 +1,32 @@
 CLASS net/minecraft/C_17gpkxmuh net/minecraft/item/ItemStack
 	FIELD f_24yhsfpfa MODIFIER_FORMAT Ljava/text/DecimalFormat;
-	FIELD f_26hqwxbqe count I
+	FIELD f_26hqwxbqe size I
 	FIELD f_38uwtebys nbt Lnet/minecraft/C_85dsbsqaq;
+	FIELD f_41xzujosj cachedCanPlaceOnBlockResult Z
 	FIELD f_43jrvagtt metadata I
 	FIELD f_44txhcdiv item Lnet/minecraft/C_85numzecy;
+	FIELD f_52dncdggk cachedCanMineBlock Lnet/minecraft/C_88rbsxznd;
+	FIELD f_61okiarzk cachedCanMineBlockResult Z
 	FIELD f_64ozytmla itemFrame Lnet/minecraft/C_68mxokoil;
 	FIELD f_80gxbxuwj cooldown I
+	FIELD f_87gnynltm cachedCanPlaceOnBlock Lnet/minecraft/C_88rbsxznd;
 	METHOD <init> (Lnet/minecraft/C_85numzecy;)V
 		ARG 1 item
 	METHOD <init> (Lnet/minecraft/C_85numzecy;I)V
 		ARG 1 item
-		ARG 2 count
+		ARG 2 size
 	METHOD <init> (Lnet/minecraft/C_85numzecy;II)V
 		ARG 1 item
-		ARG 2 count
+		ARG 2 size
 		ARG 3 metadata
 	METHOD <init> (Lnet/minecraft/C_88rbsxznd;)V
 		ARG 1 block
 	METHOD <init> (Lnet/minecraft/C_88rbsxznd;I)V
 		ARG 1 block
-		ARG 2 count
+		ARG 2 size
 	METHOD <init> (Lnet/minecraft/C_88rbsxznd;II)V
 		ARG 1 block
-		ARG 2 count
+		ARG 2 size
 		ARG 3 metadata
 	METHOD m_00mzjutad hasCustomName ()Z
 	METHOD m_00uyfjscm isEqual (Lnet/minecraft/C_17gpkxmuh;)Z
@@ -33,6 +37,8 @@ CLASS net/minecraft/C_17gpkxmuh net/minecraft/item/ItemStack
 	METHOD m_01xezwxoq onStartUse (Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_29wvrnpbz;)Lnet/minecraft/C_17gpkxmuh;
 		ARG 1 world
 		ARG 2 player
+	METHOD m_02vnxcapa isEqualForHoldAnimation (Lnet/minecraft/C_17gpkxmuh;)Z
+		ARG 1 stack
 	METHOD m_05qhclxab addToNbt (Ljava/lang/String;Lnet/minecraft/C_50ovnvtry;)V
 		ARG 1 key
 		ARG 2 nbt
@@ -68,11 +74,11 @@ CLASS net/minecraft/C_17gpkxmuh net/minecraft/item/ItemStack
 	METHOD m_32szawadl use (Lnet/minecraft/C_29wvrnpbz;Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_98mwkxlqj;Lnet/minecraft/C_08cjfgfvj;FFF)Z
 		ARG 1 player
 		ARG 2 world
-		ARG 3 x
-		ARG 4 y
+		ARG 3 pos
+		ARG 4 face
 		ARG 5 z
-		ARG 6 dir
-		ARG 7 dx
+		ARG 6 dy
+		ARG 7 dz
 	METHOD m_33apecdry getTranslationKey ()Ljava/lang/String;
 	METHOD m_33dsuzmst getRarity ()Lnet/minecraft/C_48irtmvke;
 	METHOD m_36pxrdcsx canUse ()Z
@@ -121,15 +127,15 @@ CLASS net/minecraft/C_17gpkxmuh net/minecraft/item/ItemStack
 	METHOD m_68lvgcklm onMinedWith (Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_88rbsxznd;Lnet/minecraft/C_98mwkxlqj;Lnet/minecraft/C_29wvrnpbz;)V
 		ARG 1 world
 		ARG 2 block
-		ARG 3 x
-		ARG 4 y
+		ARG 3 pos
+		ARG 4 player
 	METHOD m_69xrbkzxg isEnchantable ()Z
 	METHOD m_70gmwziio getItemTooltip (Lnet/minecraft/C_29wvrnpbz;Z)Ljava/util/List;
 		ARG 1 player
 		ARG 2 hasId
 	METHOD m_72uozzavj readNbt (Lnet/minecraft/C_85dsbsqaq;)V
 		ARG 1 nbt
-	METHOD m_72ymlzlas onResult (Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_29wvrnpbz;I)V
+	METHOD m_72ymlzlas onCrafted (Lnet/minecraft/C_72mqkrkao;Lnet/minecraft/C_29wvrnpbz;I)V
 		ARG 1 world
 		ARG 2 player
 		ARG 3 amount
@@ -140,6 +146,9 @@ CLASS net/minecraft/C_17gpkxmuh net/minecraft/item/ItemStack
 		ARG 1 stack2
 	METHOD m_79hjrxvnb writeNbt (Lnet/minecraft/C_85dsbsqaq;)Lnet/minecraft/C_85dsbsqaq;
 		ARG 1 nbt
+	METHOD m_85qhexfdi getNbtCompound (Ljava/lang/String;Z)Lnet/minecraft/C_85dsbsqaq;
+		ARG 1 key
+		ARG 2 orCreate
 	METHOD m_88mfzyojo getMiningSpeed (Lnet/minecraft/C_88rbsxznd;)F
 		ARG 1 block
 	METHOD m_89absegwj removeCustomName ()V

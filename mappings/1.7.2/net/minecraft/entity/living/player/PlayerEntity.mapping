@@ -9,12 +9,12 @@ CLASS net/minecraft/C_29wvrnpbz net/minecraft/entity/living/player/PlayerEntity
 	FIELD f_10rqyjqkv capeY D
 	FIELD f_23fxbvkji xpCooldown I
 	FIELD f_23gbxpkyj lastCapeX D
-	FIELD f_24dqvexwz hasSpawnpointSet Z
+	FIELD f_24dqvexwz hasSpawnPoint Z
 	FIELD f_24dwwszxl playerScreenHandler Lnet/minecraft/C_77gckepdk;
-	FIELD f_25asoenqq spawnPointPosition Lnet/minecraft/C_98mwkxlqj;
+	FIELD f_25asoenqq spawnPoint Lnet/minecraft/C_98mwkxlqj;
 	FIELD f_25uyikbwh hungerManager Lnet/minecraft/C_77klylapo;
 	FIELD f_33fgurnxy strideDistance F
-	FIELD f_35uffaxzm xp F
+	FIELD f_35uffaxzm xpProgress F
 	FIELD f_37khsfojl currentScreenHandler Lnet/minecraft/C_77gckepdk;
 	FIELD f_38rbmjmft enderchest Lnet/minecraft/C_54lupxcdd;
 	FIELD f_40mxqknxb sleeping Z
@@ -31,7 +31,7 @@ CLASS net/minecraft/C_29wvrnpbz net/minecraft/entity/living/player/PlayerEntity
 	FIELD f_76twotlmr minecartTravelStartPos Lnet/minecraft/C_98mwkxlqj;
 	FIELD f_77rbpztjg lastXpSoundTime I
 	FIELD f_81wwphgnf sleepOffsetZ F
-	FIELD f_85fhdexit xpTotal I
+	FIELD f_85fhdexit xp I
 	FIELD f_85fnmtcnp sleepTimer I
 	FIELD f_88etikuss flyingSpeed F
 	FIELD f_92xebrlfe lastCapeZ D
@@ -45,7 +45,7 @@ CLASS net/minecraft/C_29wvrnpbz net/minecraft/entity/living/player/PlayerEntity
 		ARG 2 hasSpawnpointSet
 	METHOD m_01xrqtnmg closeScreenHandler ()V
 	METHOD m_02oigutdk setSpawnpoint (Lnet/minecraft/C_98mwkxlqj;Z)V
-		ARG 1 spawnpoint
+		ARG 1 pos
 		ARG 2 hasSpawnpointSet
 	METHOD m_05fspcdyi getUuid (Lcom/mojang/authlib/GameProfile;)Ljava/util/UUID;
 		ARG 0 profile
@@ -68,13 +68,13 @@ CLASS net/minecraft/C_29wvrnpbz net/minecraft/entity/living/player/PlayerEntity
 		ARG 2 amount
 	METHOD m_16fgtaqzp dropItem (Z)Lnet/minecraft/C_58mentcnj;
 		ARG 1 wholeStack
-	METHOD m_16yhdnqav attackEntity (Lnet/minecraft/C_98tnijqnf;)V
-		ARG 1 entity
+	METHOD m_16yhdnqav attack (Lnet/minecraft/C_98tnijqnf;)V
+		ARG 1 target
 	METHOD m_18iwfnikh wakeUp (ZZZ)V
 		ARG 1 resetSleepTimer
 		ARG 2 update
 		ARG 3 setSpawnPoint
-	METHOD m_19ewdttls getSpawnPointPosition ()Lnet/minecraft/C_98mwkxlqj;
+	METHOD m_19ewdttls getSpawnPoint ()Lnet/minecraft/C_98mwkxlqj;
 	METHOD m_20avamxuo stopUsingHand ()V
 	METHOD m_21mrcqcfx tryRespawn ()V
 	METHOD m_23pbkheri openEnchantingScreen (IIILjava/lang/String;)V
@@ -141,8 +141,8 @@ CLASS net/minecraft/C_29wvrnpbz net/minecraft/entity/living/player/PlayerEntity
 		ARG 1 item
 		ARG 2 velocityFromPlayerDirection
 		ARG 3 thrownByPlayer
-	METHOD m_57bbdjswj interactEntity (Lnet/minecraft/C_98tnijqnf;)Z
-		ARG 1 entity
+	METHOD m_57bbdjswj interact (Lnet/minecraft/C_98tnijqnf;)Z
+		ARG 1 target
 	METHOD m_58fygvhhv getXpAmount ()I
 	METHOD m_58lyunpov canAttack (Lnet/minecraft/C_29wvrnpbz;)Z
 		ARG 1 player
@@ -152,7 +152,7 @@ CLASS net/minecraft/C_29wvrnpbz net/minecraft/entity/living/player/PlayerEntity
 		ARG 1 x
 		ARG 3 y
 		ARG 5 z
-	METHOD m_60mynjmyp updateEntityStatus ()V
+	METHOD m_60mynjmyp finishUsingItem ()V
 	METHOD m_64qcwzvut setScore (I)V
 		ARG 1 score
 	METHOD m_65ffiqpyl getScoreboard ()Lnet/minecraft/C_02jedjmmr;
@@ -176,7 +176,7 @@ CLASS net/minecraft/C_29wvrnpbz net/minecraft/entity/living/player/PlayerEntity
 	METHOD m_81dpcnpsi getArmorEquippedRatio ()F
 		COMMENT @return the ratio of the number of the amount of armor equipped to the total armor slots
 	METHOD m_81oqxeaez syncAbilities ()V
-	METHOD m_81xrkchdd isSpawnPointSet ()Z
+	METHOD m_81xrkchdd hasSpawnPoint ()Z
 	METHOD m_82lsuskzz isValidSleepingPos ()Z
 	METHOD m_84fovyaas addEnchantedCritParticles (Lnet/minecraft/C_98tnijqnf;)V
 		ARG 1 entity

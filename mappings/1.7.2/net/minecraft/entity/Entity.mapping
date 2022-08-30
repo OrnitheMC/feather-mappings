@@ -1,6 +1,6 @@
 CLASS net/minecraft/C_98tnijqnf net/minecraft/entity/Entity
 	FIELD f_00tghulem prevY D
-	FIELD f_00wbmfbqc spawnedY I
+	FIELD f_00wbmfbqc packetY I
 	FIELD f_05laqzsbm collidingHorizontally Z
 	FIELD f_09zifoshk immovable Z
 	FIELD f_10pcqiipn prevX D
@@ -21,7 +21,7 @@ CLASS net/minecraft/C_98tnijqnf net/minecraft/entity/Entity
 	FIELD f_41eqnsnmk z D
 	FIELD f_42pyfxnap netherPortalCooldown I
 	FIELD f_43yntvbpo teleporting Z
-	FIELD f_48yilwhfw entityId I
+	FIELD f_48yilwhfw networkId I
 		COMMENT A number that uniquely identifies this entity. It is used for server-client communication.
 	FIELD f_49hgnkbjd prevYaw F
 	FIELD f_50yutksvc pushSpeedReduction F
@@ -50,14 +50,14 @@ CLASS net/minecraft/C_98tnijqnf net/minecraft/entity/Entity
 	FIELD f_74sjrgaau eyeHeight F
 	FIELD f_74xifmlgt hitbox Lnet/minecraft/C_68qygpazz;
 	FIELD f_75lzlajgs yaw F
-	FIELD f_76jgezwtb spawnedX I
+	FIELD f_76jgezwtb packetX I
 	FIELD f_77whdyekq prevZ D
 	FIELD f_77whnchbe velocityY D
 	FIELD f_79xeprhfy onFireTimer I
 		COMMENT The number of ticks left for which this entity will be on fire.
 	FIELD f_81frublwj height F
 	FIELD f_82bwhzlrk removed Z
-	FIELD f_82ugjssjz spawnedZ I
+	FIELD f_82ugjssjz packetZ I
 	FIELD f_83ekdbayp uuid Ljava/util/UUID;
 	FIELD f_83sdjvzwo width F
 	FIELD f_84unquwmp dimensionId I
@@ -96,8 +96,8 @@ CLASS net/minecraft/C_98tnijqnf net/minecraft/entity/Entity
 		ARG 1 entity
 	METHOD m_06cntkhra extinguish ()V
 	METHOD m_06wlqanws getDataTracker ()Lnet/minecraft/C_28uorqjpn;
-	METHOD m_07bcxwpuv handleStatus (B)V
-		ARG 1 status
+	METHOD m_07bcxwpuv handleEvent (B)V
+		ARG 1 event
 	METHOD m_07ivfabxs isAlive ()Z
 	METHOD m_07tkdnrcc isPushable ()Z
 	METHOD m_07zsolffq getSquaredDistanceTo (DDD)D
@@ -214,7 +214,7 @@ CLASS net/minecraft/C_98tnijqnf net/minecraft/entity/Entity
 		ARG 2 pitch
 	METHOD m_51umlmbby onPortalCollision ()V
 		COMMENT Called when this entity collides with a nether portal block.
-	METHOD m_52xohgozk getEntityId ()I
+	METHOD m_52xohgozk getNetworkId ()I
 	METHOD m_54benzeer interact (Lnet/minecraft/C_29wvrnpbz;)Z
 		ARG 1 player
 	METHOD m_54tuugbxj setPosition (DDD)V
@@ -247,7 +247,7 @@ CLASS net/minecraft/C_98tnijqnf net/minecraft/entity/Entity
 		ARG 1 entity
 	METHOD m_65vpsbbiy onPunched (Lnet/minecraft/C_98tnijqnf;)Z
 		ARG 1 attacker
-	METHOD m_66htsfwfu setEntityId (I)V
+	METHOD m_66htsfwfu setNetworkId (I)V
 		ARG 1 id
 	METHOD m_67hjrmwux hasVehicle ()Z
 	METHOD m_68atjylrv dropItem (Lnet/minecraft/C_17gpkxmuh;F)Lnet/minecraft/C_58mentcnj;
@@ -340,7 +340,7 @@ CLASS net/minecraft/C_98tnijqnf net/minecraft/entity/Entity
 		ARG 5 z
 		ARG 7 yaw
 		ARG 8 pitch
-	METHOD m_99sxviuue updatePositionAndRotation (DDDFFI)V
+	METHOD m_99sxviuue updatePositionAndAngles (DDDFFI)V
 		ARG 1 x
 		ARG 3 y
 		ARG 5 z

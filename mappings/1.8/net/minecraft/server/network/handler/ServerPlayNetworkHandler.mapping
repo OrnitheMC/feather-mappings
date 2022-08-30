@@ -2,16 +2,17 @@ CLASS net/minecraft/C_41pcvqcnr net/minecraft/server/network/handler/ServerPlayN
 	FIELD f_05euhjery LOGGER Lorg/apache/logging/log4j/Logger;
 	FIELD f_06sfwyyuk floatingTime I
 	FIELD f_26mhqgbth ticks I
-	FIELD f_39gygebkt playerMoved Z
-	FIELD f_39llfhjlz requestedTeleportPosX D
-	FIELD f_42nfbawgc isSleeping Z
+	FIELD f_39gygebkt moved Z
+	FIELD f_39llfhjlz teleportTargetX D
+	FIELD f_42nfbawgc teleported Z
 	FIELD f_42nldtiwc messageCooldown I
 	FIELD f_44ngvdhjv keepAliveTime J
-	FIELD f_45nxoriwe requestedTeleportPosY D
-	FIELD f_56xmvvbia creativeItemDropThreshold I
+	FIELD f_45nxoriwe teleportTargetY D
+	FIELD f_56xmvvbia dropItemCooldown I
+	FIELD f_58cztmalz lastTeleportTime I
 	FIELD f_58lfhbzqr savedKeepAliveTime I
 	FIELD f_59nvdjlnw transactions Lnet/minecraft/C_11mydqehb;
-	FIELD f_59xaduith requestedTeleportPosZ D
+	FIELD f_59xaduith teleportTargetZ D
 	FIELD f_61juqnxij lastKeepAliveUpdateTime J
 	FIELD f_64jftuzwz player Lnet/minecraft/C_60pqhcduh;
 	FIELD f_77ppkamtj connection Lnet/minecraft/C_17vjviahn;
@@ -20,12 +21,13 @@ CLASS net/minecraft/C_41pcvqcnr net/minecraft/server/network/handler/ServerPlayN
 		ARG 1 server
 		ARG 2 connection
 		ARG 3 player
-	METHOD m_37eatvahx requestTeleport (DDDFFLjava/util/Set;)V
+	METHOD m_37eatvahx teleport (DDDFFLjava/util/Set;)V
 		ARG 1 x
 		ARG 3 y
 		ARG 5 z
 		ARG 7 yaw
 		ARG 8 pitch
+		ARG 9 relativeArgs
 	METHOD m_46auunark disconnect (Ljava/lang/String;)V
 		ARG 1 reason
 	METHOD m_57urvzjio sendPacket (Lnet/minecraft/C_53hiiajnl;)V
@@ -34,7 +36,7 @@ CLASS net/minecraft/C_41pcvqcnr net/minecraft/server/network/handler/ServerPlayN
 	METHOD m_63nlctrhh getTimeMillis ()J
 	METHOD m_77szrzhzb executeCommand (Ljava/lang/String;)V
 		ARG 1 command
-	METHOD m_80tsxrdpf requestTeleport (DDDFF)V
+	METHOD m_80tsxrdpf teleport (DDDFF)V
 		ARG 1 x
 		ARG 3 y
 		ARG 5 z
@@ -48,5 +50,6 @@ CLASS net/minecraft/C_41pcvqcnr net/minecraft/server/network/handler/ServerPlayN
 	CLASS 3 3
 		FIELD f_25liimwgo packet Lnet/minecraft/C_53hiiajnl;
 		FIELD f_77bqtrvli networkHandler Lnet/minecraft/C_41pcvqcnr;
+		METHOD call call ()Ljava/lang/Object;
 	CLASS 4 4
 		FIELD f_69pkjdhrj ALL [I
