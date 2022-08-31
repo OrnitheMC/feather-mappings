@@ -1,11 +1,11 @@
 CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
-	FIELD f_01hsvkved thunderGradient F
+	FIELD f_01hsvkved thunder F
 	FIELD f_03sbvwfpj storage Lnet/minecraft/C_84iwxwflg;
 	FIELD f_04ehujzor entitiesToUnload Ljava/util/List;
 	FIELD f_04onykbfi calendar Ljava/util/Calendar;
 	FIELD f_07ndpykzs removedBlockEntities Ljava/util/List;
 	FIELD f_13fanncif isSearchingSpawnPoint Z
-	FIELD f_13jvszmuq thunderGradientPrev F
+	FIELD f_13jvszmuq prevThunder F
 	FIELD f_18oaanfhe savedDataStorage Lnet/minecraft/C_44diwpdev;
 	FIELD f_20lyurakl blockEntities Ljava/util/List;
 	FIELD f_25fxejsfd ambientSoundCooldown I
@@ -15,14 +15,14 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 	FIELD f_48ftxcjqv allowAnimals Z
 	FIELD f_51almlwus scheduledLightUpdates [I
 	FIELD f_51iecckrw pendingBlockEntities Ljava/util/List;
-	FIELD f_53xxvgraf rainGradient F
+	FIELD f_53xxvgraf rain F
 	FIELD f_55edtvfeg vec3dCache Lnet/minecraft/C_08gbeezmc;
 	FIELD f_58edywfdk eventListeners Ljava/util/List;
-	FIELD f_65qphudha chunkPositions Ljava/util/Set;
+	FIELD f_65qphudha tickingChunks Ljava/util/Set;
 	FIELD f_65rrmmxym randomTickLCG I
 	FIELD f_66mjgvwuv chunkSource Lnet/minecraft/C_83hkyqngm;
 	FIELD f_68jygjzow profiler Lnet/minecraft/C_10dmbgqch;
-	FIELD f_68mxvoddx ticksSinceLightning I
+	FIELD f_68mxvoddx lightningCooldown I
 	FIELD f_70syiuasi difficulty Lnet/minecraft/C_56kavdnmu;
 	FIELD f_72npgcaxn players Ljava/util/List;
 	FIELD f_75ufuzjvw isTickingBlockEntities Z
@@ -38,7 +38,7 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 	FIELD f_91eaxcnsh random Ljava/util/Random;
 	FIELD f_92ezcnzzt isClient Z
 	FIELD f_95kytnzhl dimension Lnet/minecraft/C_60nwbsxvy;
-	FIELD f_99vunzwlc rainGradientPrev F
+	FIELD f_99vunzwlc prevRain F
 	METHOD <init> (Lnet/minecraft/C_84iwxwflg;Ljava/lang/String;Lnet/minecraft/C_10yycgwfx;Lnet/minecraft/C_60nwbsxvy;Lnet/minecraft/C_10dmbgqch;)V
 		ARG 1 storage
 		ARG 2 name
@@ -51,21 +51,22 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 3 dimension
 		ARG 4 settings
 		ARG 5 profiler
-	METHOD m_00zikfgyv isVeryHumid (III)Z
+	METHOD m_00zikfgyv isHumid (III)Z
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
-	METHOD m_04aayhflh sendEntityStatus (Lnet/minecraft/C_98tnijqnf;B)V
+	METHOD m_04aayhflh doEntityEvent (Lnet/minecraft/C_98tnijqnf;B)V
 		ARG 1 entity
-		ARG 2 status
+		ARG 2 event
 	METHOD m_04gsippig rayTrace (Lnet/minecraft/C_54nvtxdqe;Lnet/minecraft/C_54nvtxdqe;ZZZ)Lnet/minecraft/C_67isfwlvr;
 		ARG 1 start
 		ARG 2 end
-		ARG 3 isLiving
+		ARG 3 allowFluids
+		ARG 4 ignoreBlocksWithoutCollision
 	METHOD m_04zikcmxx getGameRules ()Lnet/minecraft/C_74weymsvl;
 	METHOD m_05ewqclls loadEntity (Lnet/minecraft/C_98tnijqnf;)V
 		ARG 1 entity
-	METHOD m_05wpaywzp replaceBlock (Lnet/minecraft/C_88rbsxznd;IIIZILnet/minecraft/C_98tnijqnf;Lnet/minecraft/C_17gpkxmuh;)Z
+	METHOD m_05wpaywzp canReplace (Lnet/minecraft/C_88rbsxznd;IIIZILnet/minecraft/C_98tnijqnf;Lnet/minecraft/C_17gpkxmuh;)Z
 		ARG 1 block
 		ARG 2 x
 		ARG 3 y
@@ -74,7 +75,7 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 6 face
 		ARG 7 entity
 		ARG 8 stack
-	METHOD m_06gzxigyh calculateLightStrength (IIILnet/minecraft/C_90rtvsfeu;)I
+	METHOD m_06gzxigyh getRawLight (IIILnet/minecraft/C_90rtvsfeu;)I
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
@@ -87,29 +88,29 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 1 x
 		ARG 2 z
 		ARG 3 seed
-	METHOD m_07hgnxusf getLightLevel (III)I
+	METHOD m_07hgnxusf getRawLight (III)I
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
-	METHOD m_07wrtlhtw (Lnet/minecraft/C_54nvtxdqe;Lnet/minecraft/C_68qygpazz;)F
+	METHOD m_07wrtlhtw getBlockDensity (Lnet/minecraft/C_54nvtxdqe;Lnet/minecraft/C_68qygpazz;)F
 		ARG 1 vec
 		ARG 2 box
-	METHOD m_08hvkyxzj markDirty (IIILnet/minecraft/C_41cvuyzpf;)V
+	METHOD m_08hvkyxzj onBlockEntityChanged (IIILnet/minecraft/C_41cvuyzpf;)V
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
 		ARG 4 blockEntity
-	METHOD m_08qtkqdfp setRainGradient (F)V
-		ARG 1 rainGradient
+	METHOD m_08qtkqdfp setRain (F)V
+		ARG 1 rain
 	METHOD m_08wnzbben getSurfaceHeight (II)I
 		ARG 1 x
-		ARG 2 y
+		ARG 2 z
 	METHOD m_08zkqtaoy onRecordRemoved (Ljava/lang/String;III)V
 		ARG 1 name
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-	METHOD m_09aoxgind addFireworkParticle (DDDDDDLnet/minecraft/C_85dsbsqaq;)V
+	METHOD m_09aoxgind addFireworksParticle (DDDDDDLnet/minecraft/C_85dsbsqaq;)V
 		ARG 1 x
 		ARG 3 y
 		ARG 5 z
@@ -123,7 +124,7 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 	METHOD m_10jwqvpuo getEntities (Lnet/minecraft/C_98tnijqnf;Lnet/minecraft/C_68qygpazz;)Ljava/util/List;
 		ARG 1 exclude
 		ARG 2 box
-	METHOD m_12ygyuand onLightLevelChanged (III)V
+	METHOD m_12ygyuand onLightChanged (III)V
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
@@ -133,8 +134,8 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 2 sound
 		ARG 3 volume
 		ARG 4 pitch
-	METHOD m_15hvvbfxa skyCloudColor (F)Lnet/minecraft/C_54nvtxdqe;
-		ARG 1 time
+	METHOD m_15hvvbfxa getCloudColor (F)Lnet/minecraft/C_54nvtxdqe;
+		ARG 1 tickDelta
 	METHOD m_15muhymly tickEntities ()V
 	METHOD m_16ibzugfw getLocalDifficulty (III)F
 		ARG 1 x
@@ -148,12 +149,12 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 5 delay
 		ARG 6 priority
 	METHOD m_16ptrrzoh updateSleepingPlayers ()V
-	METHOD m_16uucwiqc getLightLevel (Lnet/minecraft/C_90rtvsfeu;III)I
+	METHOD m_16uucwiqc getLight (Lnet/minecraft/C_90rtvsfeu;III)I
 		ARG 1 type
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-	METHOD m_18ibiolgw getDebugLoadedEntities ()Ljava/lang/String;
+	METHOD m_18ibiolgw getEntitiesDebugInfo ()Ljava/lang/String;
 	METHOD m_19dljkujq spawnEntity (Lnet/minecraft/C_98tnijqnf;)Z
 		ARG 1 entity
 	METHOD m_19gnjznmg addListener (Lnet/minecraft/C_64xnvxpfm;)V
@@ -219,7 +220,7 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 	METHOD m_30pkzwdmd rayTrace (Lnet/minecraft/C_54nvtxdqe;Lnet/minecraft/C_54nvtxdqe;)Lnet/minecraft/C_67isfwlvr;
 		ARG 1 start
 		ARG 2 end
-	METHOD m_31afrgpck getSpawnPos ()Lnet/minecraft/C_98mwkxlqj;
+	METHOD m_31afrgpck getSpawnPoint ()Lnet/minecraft/C_98mwkxlqj;
 	METHOD m_31myqvaws getMoonPhase ()I
 	METHOD m_32aiuhcxo getClosestEntity (Ljava/lang/Class;Lnet/minecraft/C_68qygpazz;Lnet/minecraft/C_98tnijqnf;)Lnet/minecraft/C_98tnijqnf;
 		ARG 1 type
@@ -233,10 +234,9 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 8 power
 		ARG 9 createFire
 		ARG 10 destructive
-	METHOD m_32kpdqvlv getHightestY (II)I
-		COMMENT @return The highest y value that has a opaque block
+	METHOD m_32kpdqvlv getHeight (II)I
 		ARG 1 x
-		ARG 2 y
+		ARG 2 z
 	METHOD m_33jmlirzx updateComparators (IIILnet/minecraft/C_88rbsxznd;)V
 		ARG 1 x
 		ARG 2 y
@@ -248,14 +248,14 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
-	METHOD m_34sogsabu setThunderGradient (F)V
-		ARG 1 thunderGradient
-	METHOD m_34zxjrcgd allowAnimalsAndMonsters (ZZ)V
+	METHOD m_34sogsabu setThunder (F)V
+		ARG 1 thunder
+	METHOD m_34zxjrcgd setAllowedMobSpawns (ZZ)V
 		ARG 1 allowAnimals
 		ARG 2 allowMonsters
 	METHOD m_36flrzsml calculateAmbientDarkness (F)I
-		ARG 1 time
-	METHOD m_36neoxcun getMaxSpawnHeight ()I
+		ARG 1 tickDelta
+	METHOD m_36neoxcun getDimensionHeight ()I
 	METHOD m_36sbyixsx canFreezeNaturally (III)Z
 		ARG 1 x
 		ARG 2 y
@@ -275,22 +275,23 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 3 y
 		ARG 4 z
 		ARG 5 face
-	METHOD m_39uybyekc getBlockLight (IIIZ)I
+	METHOD m_39uybyekc getLight (IIIZ)I
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
-		ARG 4 allowNeighborLight
+		ARG 4 useNeighborLight
 	METHOD m_41eujqdxc checkLight (IIII)V
 		ARG 1 x
 		ARG 2 z
 		ARG 3 minY
 		ARG 4 maxY
-	METHOD m_41mklaqfw removeEntity (Lnet/minecraft/C_98tnijqnf;)V
+	METHOD m_41mklaqfw removeEntityNow (Lnet/minecraft/C_98tnijqnf;)V
 		ARG 1 entity
-	METHOD m_41vmeskky getBlockBelowFirstAirBlockAboveSealLevel (II)Lnet/minecraft/C_88rbsxznd;
+	METHOD m_41vmeskky getSurfaceBlock (II)Lnet/minecraft/C_88rbsxznd;
+		COMMENT Returns the top-most block of the ground above sea-level.
 		ARG 1 x
 		ARG 2 z
-	METHOD m_42cqwnshp getCalenderInstance ()Ljava/util/Calendar;
+	METHOD m_42cqwnshp getCalendar ()Ljava/util/Calendar;
 	METHOD m_42pgpkmqj getClosestPlayer (Lnet/minecraft/C_98tnijqnf;D)Lnet/minecraft/C_29wvrnpbz;
 		ARG 1 entity
 		ARG 2 range
@@ -350,7 +351,7 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 3 filter
 	METHOD m_51krefnyn getChunk (II)Lnet/minecraft/C_29tuwvijg;
 		ARG 1 x
-		ARG 2 y
+		ARG 2 z
 	METHOD m_51xwgsyid createExplosion (Lnet/minecraft/C_98tnijqnf;DDDFZ)Lnet/minecraft/C_25eizizno;
 		ARG 1 entity
 		ARG 2 x
@@ -368,18 +369,18 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
-	METHOD m_54xpiwvlx hasRain (III)Z
+	METHOD m_54xpiwvlx isRaining (III)Z
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
 	METHOD m_55hmvrhkn getChunkAt (II)Lnet/minecraft/C_29tuwvijg;
 		ARG 1 chunkX
 		ARG 2 chunkZ
-	METHOD m_55nhnjltg getBlockLight (III)I
+	METHOD m_55nhnjltg getLight (III)I
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
-	METHOD m_55obmsoeo containsBlockWithMaterial (Lnet/minecraft/C_68qygpazz;Lnet/minecraft/C_20jrxdumg;)Z
+	METHOD m_55obmsoeo containsMaterial (Lnet/minecraft/C_68qygpazz;Lnet/minecraft/C_20jrxdumg;)Z
 		ARG 1 box
 		ARG 2 material
 	METHOD m_55sszmyjh getClosestPlayerToAttack (Lnet/minecraft/C_98tnijqnf;D)Lnet/minecraft/C_29wvrnpbz;
@@ -390,7 +391,7 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 2 y
 		ARG 3 z
 	METHOD m_56pijldqz getChunkSource ()Lnet/minecraft/C_83hkyqngm;
-	METHOD m_57kjvzbhc setLightLevel (Lnet/minecraft/C_90rtvsfeu;IIII)V
+	METHOD m_57kjvzbhc setLight (Lnet/minecraft/C_90rtvsfeu;IIII)V
 		ARG 1 type
 		ARG 2 x
 		ARG 3 y
@@ -406,23 +407,23 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 8 velocityX
 		ARG 10 velocityY
 		ARG 12 velocityZ
-	METHOD m_58rtcbvdt containsNonAirBlock (Lnet/minecraft/C_68qygpazz;)Z
+	METHOD m_58rtcbvdt containsNonAir (Lnet/minecraft/C_68qygpazz;)Z
 		ARG 1 box
 	METHOD m_60hvzkggx updateNeighbors (IIILnet/minecraft/C_88rbsxznd;)V
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
 		ARG 4 block
-	METHOD m_61xhyntpv containsFluidBlockWithMaterial (Lnet/minecraft/C_68qygpazz;Lnet/minecraft/C_20jrxdumg;)Z
+	METHOD m_61xhyntpv containsFluid (Lnet/minecraft/C_68qygpazz;Lnet/minecraft/C_20jrxdumg;)Z
 		ARG 1 area
 		ARG 2 material
-	METHOD m_62itpurul containsFluidBlock (Lnet/minecraft/C_68qygpazz;)Z
+	METHOD m_62itpurul containsFluid (Lnet/minecraft/C_68qygpazz;)Z
 		ARG 1 box
-	METHOD m_63ppzoixw (Lnet/minecraft/C_68qygpazz;Lnet/minecraft/C_20jrxdumg;Lnet/minecraft/C_98tnijqnf;)Z
+	METHOD m_63ppzoixw addMaterialDrag (Lnet/minecraft/C_68qygpazz;Lnet/minecraft/C_20jrxdumg;Lnet/minecraft/C_98tnijqnf;)Z
 		ARG 1 box
 		ARG 2 material
 		ARG 3 entity
-	METHOD m_64ztuzqjw setSpawnPos (III)V
+	METHOD m_64ztuzqjw setSpawnPoint (III)V
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
@@ -440,8 +441,8 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 1 entities
 	METHOD m_66kcswqml setTimeOfDay (J)V
 		ARG 1 time
-	METHOD m_66pniwewv getThunderGradient (F)F
-		ARG 1 offset
+	METHOD m_66pniwewv getThunder (F)F
+		ARG 1 tickDelta
 	METHOD m_68kbtlccs playSound (DDDLjava/lang/String;FF)V
 		ARG 1 x
 		ARG 3 y
@@ -462,8 +463,8 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 2 y
 		ARG 3 z
 		ARG 4 dir
-	METHOD m_70npehsnq getSkyAngleRadians (F)F
-		ARG 1 time
+	METHOD m_70npehsnq getSunAngle (F)F
+		ARG 1 tickDelta
 	METHOD m_70zgzfefl getBrightness (III)F
 		ARG 1 x
 		ARG 2 y
@@ -493,22 +494,22 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 2 sound
 		ARG 3 volume
 		ARG 4 pitch
-	METHOD m_75flkizjt getRainGradient (F)F
-		ARG 1 offset
+	METHOD m_75flkizjt getRain (F)F
+		ARG 1 tickDelta
 	METHOD m_75nokbwnk loadSavedData (Ljava/lang/Class;Ljava/lang/String;)Lnet/minecraft/C_17kjdigjl;
 		ARG 1 type
 		ARG 2 id
-	METHOD m_76jdabotw hasEntityIn (Lnet/minecraft/C_68qygpazz;Lnet/minecraft/C_98tnijqnf;)Z
+	METHOD m_76jdabotw containsEntity (Lnet/minecraft/C_68qygpazz;Lnet/minecraft/C_98tnijqnf;)Z
 		ARG 1 box
 		ARG 2 exclude
 	METHOD m_76xgrwnvo getMoonSize ()F
 	METHOD m_77kzinnsq isSunny ()Z
-	METHOD m_77mmxgvmd removeEntityQuietly (Lnet/minecraft/C_98tnijqnf;)V
+	METHOD m_77mmxgvmd removeEntity (Lnet/minecraft/C_98tnijqnf;)V
 		ARG 1 entity
 	METHOD m_77qplddjh rayTrace (Lnet/minecraft/C_54nvtxdqe;Lnet/minecraft/C_54nvtxdqe;Z)Lnet/minecraft/C_67isfwlvr;
 		ARG 1 start
 		ARG 2 end
-		ARG 3 isLiving
+		ARG 3 allowFluids
 	METHOD m_77qyytnxi pathFindPos (Lnet/minecraft/C_98tnijqnf;IIIFZZZZ)Lnet/minecraft/C_58wymxilz;
 		ARG 1 entity
 		ARG 2 x
@@ -524,7 +525,7 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 2 z
 		ARG 3 chunk
 	METHOD m_78jlpytnb getEntities ()Ljava/util/List;
-	METHOD m_78qoxpfjm getBlockLightLevel (Lnet/minecraft/C_90rtvsfeu;III)I
+	METHOD m_78qoxpfjm getNeighborLight (Lnet/minecraft/C_90rtvsfeu;III)I
 		ARG 1 type
 		ARG 2 x
 		ARG 3 y
@@ -537,19 +538,19 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 5 maxY
 		ARG 6 maxZ
 	METHOD m_79aaljucy createChunkCache ()Lnet/minecraft/C_83hkyqngm;
-	METHOD m_79cxzonld calculateRgbFogColor (F)Lnet/minecraft/C_54nvtxdqe;
-		ARG 1 time
+	METHOD m_79cxzonld getFogColor (F)Lnet/minecraft/C_54nvtxdqe;
+		ARG 1 tickDelta
 	METHOD m_79ppozeyc checkLight (Lnet/minecraft/C_90rtvsfeu;III)Z
 		ARG 1 type
 		ARG 2 x
 		ARG 3 y
 		ARG 4 z
-	METHOD m_80buibohb getHighestOpaqueBlockY (II)I
+	METHOD m_80buibohb getLowestHeight (II)I
 		ARG 1 x
 		ARG 2 z
-	METHOD m_81lsyawvx getSunLightLevel (F)F
-		ARG 1 time
-	METHOD m_81octbnky isCollisionBoxFullCube (III)Z
+	METHOD m_81lsyawvx calculateAmbientLight (F)F
+		ARG 1 tickDelta
+	METHOD m_81octbnky isFullCube (III)Z
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
@@ -558,7 +559,7 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 2 y
 		ARG 3 z
 		ARG 4 range
-	METHOD m_82myessqx canInteract (Lnet/minecraft/C_29wvrnpbz;III)Z
+	METHOD m_82myessqx canModify (Lnet/minecraft/C_29wvrnpbz;III)Z
 		ARG 1 player
 		ARG 2 x
 		ARG 3 y
@@ -578,9 +579,9 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 6 flags
 	METHOD m_84iwviblj setTime (J)V
 		ARG 1 time
-	METHOD m_86oburlma getSpawnCap (Ljava/lang/Class;)I
+	METHOD m_86oburlma getEntityCount (Ljava/lang/Class;)I
 		ARG 1 type
-	METHOD m_86psvhscj isPosLoaded (III)Z
+	METHOD m_86psvhscj isLoaded (III)Z
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
@@ -604,7 +605,7 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 3 entityY
 		ARG 5 entityZ
 		ARG 7 range
-	METHOD m_89hzjlzwk isConductor (IIIZ)Z
+	METHOD m_89hzjlzwk isOpaqueFullCube (IIIZ)Z
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
@@ -617,14 +618,14 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 8 volume
 		ARG 9 pitch
 		ARG 10 delayed
-	METHOD m_90ibomhtp getDebugString ()Ljava/lang/String;
+	METHOD m_90ibomhtp getChunkSourceDebugInfo ()Ljava/lang/String;
 	METHOD m_90iwmdpma getClosestPlayer (DDDD)Lnet/minecraft/C_29wvrnpbz;
 		ARG 1 x
 		ARG 3 y
 		ARG 5 z
 		ARG 7 range
-	METHOD m_91brvysxs starBrightness (F)F
-		ARG 1 time
+	METHOD m_91brvysxs getStarBrightness (F)F
+		ARG 1 tickDelta
 	METHOD m_91iwakjgp isRaining ()Z
 	METHOD m_92hrixvvk isChunkLoaded (II)Z
 		ARG 1 chunkX
@@ -653,15 +654,15 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 3 y
 		ARG 4 z
 		ARG 5 data
-	METHOD m_95jcwpnza getBlocksIntersectingBox (Lnet/minecraft/C_68qygpazz;)Ljava/util/List;
+	METHOD m_95jcwpnza getCollisionBoxes (Lnet/minecraft/C_68qygpazz;)Ljava/util/List;
 		ARG 1 box
-	METHOD m_96hwgnjnl tickLight ()V
+	METHOD m_96hwgnjnl purgeTickingChunks ()V
 	METHOD m_96pcflxyo willTickThisTick (IIILnet/minecraft/C_88rbsxznd;)Z
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
 		ARG 4 block
-	METHOD m_96pchygpy initWeatherGradients ()V
+	METHOD m_96pchygpy initWeather ()V
 	METHOD m_96uotnwil init (Lnet/minecraft/C_10yycgwfx;)V
 		ARG 1 settings
 	METHOD m_97acwuirg hasSkyAccess (III)Z
@@ -672,18 +673,18 @@ CLASS net/minecraft/C_72mqkrkao net/minecraft/world/World
 		ARG 1 entities
 	METHOD m_97mdhxtck addBlockEntities (Ljava/util/Collection;)V
 		ARG 1 blockEntities
-	METHOD m_97muidifk hasEntityIn (Lnet/minecraft/C_68qygpazz;)Z
+	METHOD m_97muidifk containsEntity (Lnet/minecraft/C_68qygpazz;)Z
 		ARG 1 box
-	METHOD m_98oaooplc canHaveSnow (IIIZ)Z
+	METHOD m_98oaooplc canSnowFall (IIIZ)Z
 		ARG 1 x
 		ARG 2 y
 		ARG 3 z
 		ARG 4 checkLight
 	METHOD m_98rubbmsi getSavedDataCount (Ljava/lang/String;)I
 		ARG 1 id
-	METHOD m_99xywigax skyBoxColor (Lnet/minecraft/C_98tnijqnf;F)Lnet/minecraft/C_54nvtxdqe;
+	METHOD m_99xywigax getSkyColor (Lnet/minecraft/C_98tnijqnf;F)Lnet/minecraft/C_54nvtxdqe;
 		ARG 1 entity
-		ARG 2 time
+		ARG 2 tickDelta
 	CLASS 1 1
 		FIELD f_00dodwfij z I
 		FIELD f_18zamnmvh x I

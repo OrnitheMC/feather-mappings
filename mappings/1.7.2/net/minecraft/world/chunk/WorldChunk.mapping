@@ -4,12 +4,12 @@ CLASS net/minecraft/C_29tuwvijg net/minecraft/world/chunk/WorldChunk
 		COMMENT The number of ticks for which players have been present in this chunk - used for local difficulty.
 	FIELD f_09rifyvyr precipitationHeight [I
 		COMMENT The minimum y-coordinate at which snow or rain can fall for each column in this chunk.
-	FIELD f_17hrzfgge lightUpdateCount I
+	FIELD f_17hrzfgge queuedLightChecks I
 	FIELD f_28ugcjogj blockEntities Ljava/util/Map;
 	FIELD f_30ertgujm LOGGER Lorg/apache/logging/log4j/Logger;
 	FIELD f_32jhpnsmt biomes [B
 		COMMENT The biome id for each column in this chunk.
-	FIELD f_34pecwwwy modified Z
+	FIELD f_34pecwwwy dirty Z
 		COMMENT Used to check if this chunk has changes that need to be saved to disk.
 	FIELD f_42hxqbtlo full Z
 	FIELD f_47ihynisr needsLightUpdate [Z
@@ -18,8 +18,10 @@ CLASS net/minecraft/C_29tuwvijg net/minecraft/world/chunk/WorldChunk
 	FIELD f_50qhhjbvp sections [Lnet/minecraft/C_74gfaprel;
 	FIELD f_52adltndl chunkZ I
 	FIELD f_54arxenqc gapsPopulated Z
+		COMMENT True if this chunk has ticked at least once.
 	FIELD f_69ecbsvgw recheckGap Z
-	FIELD f_70gmnieiz highestOpaqueBlock I
+	FIELD f_70gmnieiz lowestHeight I
+		COMMENT The lowest height among all columns of this chunk.
 	FIELD f_75vqhtxnq containsEntities Z
 		COMMENT True if this chunk contains entities - used to decide how often to save this chunk to disk.
 	FIELD f_76gsriajg world Lnet/minecraft/C_72mqkrkao;
@@ -48,7 +50,7 @@ CLASS net/minecraft/C_29tuwvijg net/minecraft/world/chunk/WorldChunk
 		ARG 5 chunkZ
 	METHOD m_03pvwszun load ()V
 	METHOD m_04yafswyk recheckGaps (Z)V
-		ARG 1 checkAll
+		ARG 1 checkOne
 	METHOD m_06dnctszf unload ()V
 	METHOD m_07iaitcns checkBorderLight (I)V
 		COMMENT Check the light around the border of a chunk.
@@ -61,23 +63,23 @@ CLASS net/minecraft/C_29tuwvijg net/minecraft/world/chunk/WorldChunk
 		ARG 1 sectionX
 		ARG 2 sectionZ
 		ARG 3 source
-	METHOD m_11nyjkult setModified ()V
+	METHOD m_11nyjkult markDirty ()V
 	METHOD m_13fqfqgqw isPopulated ()Z
 	METHOD m_14kmjxnhg isAt (II)Z
 		ARG 1 chunkX
 		ARG 2 chunkZ
 	METHOD m_16ywsrykf shouldSave (Z)Z
 		ARG 1 saveEntities
-	METHOD m_17afoszlh clearLightUpdates ()V
+	METHOD m_17afoszlh clearLightChecks ()V
 	METHOD m_17istendl checkSkylight (III)V
 		ARG 1 x
 		ARG 2 z
 		ARG 3 maxY
-	METHOD m_21wjrhvgb hasSkyAccess (III)Z
+	METHOD m_21wjrhvgb hasSkyAccessAt (III)Z
 		ARG 1 sectionX
 		ARG 2 y
 		ARG 3 sectionZ
-	METHOD m_24ttdzpmy getHighestSectionYOffset ()I
+	METHOD m_24ttdzpmy getHighestSectionOffset ()I
 	METHOD m_26ugdpjbz checkSkylight (IIII)V
 		ARG 1 x
 		ARG 2 z
@@ -100,14 +102,14 @@ CLASS net/minecraft/C_29tuwvijg net/minecraft/world/chunk/WorldChunk
 	METHOD m_32ujkqovg getBiomes ()[B
 	METHOD m_34hbnmssq setSections ([Lnet/minecraft/C_74gfaprel;)V
 		ARG 1 sections
-	METHOD m_35xfpwvsb getLightLevelAt (IIII)I
+	METHOD m_35xfpwvsb getLightAt (IIII)I
 		ARG 1 sectionX
 		ARG 2 y
 		ARG 3 sectionZ
 		ARG 4 skyDarkness
 	METHOD m_36ofkafbh addBlockEntity (Lnet/minecraft/C_41cvuyzpf;)V
 		ARG 1 blockEntity
-	METHOD m_38ogmyfec getLightLevelAt (Lnet/minecraft/C_90rtvsfeu;III)I
+	METHOD m_38ogmyfec getLightAt (Lnet/minecraft/C_90rtvsfeu;III)I
 		ARG 1 type
 		ARG 2 sectionX
 		ARG 3 y
@@ -117,7 +119,7 @@ CLASS net/minecraft/C_29tuwvijg net/minecraft/world/chunk/WorldChunk
 		ARG 2 generator
 		ARG 3 chunkX
 		ARG 4 chunkZ
-	METHOD m_45tyombfk setLightLevelAt (Lnet/minecraft/C_90rtvsfeu;IIII)V
+	METHOD m_45tyombfk setLightAt (Lnet/minecraft/C_90rtvsfeu;IIII)V
 		ARG 1 type
 		ARG 2 sectionX
 		ARG 3 y
@@ -150,7 +152,7 @@ CLASS net/minecraft/C_29tuwvijg net/minecraft/world/chunk/WorldChunk
 		ARG 4 filter
 	METHOD m_55noxhmsl getPos ()Lnet/minecraft/C_77sszozrk;
 	METHOD m_56zeyarlt isEmpty ()Z
-	METHOD m_57uupipro update ([BIIZ)V
+	METHOD m_57uupipro set ([BIIZ)V
 		ARG 1 rawChunkData
 		ARG 2 sectionsWithData
 		ARG 3 sectionsWithBlockIdsUpper
@@ -158,7 +160,7 @@ CLASS net/minecraft/C_29tuwvijg net/minecraft/world/chunk/WorldChunk
 	METHOD m_59lnkqrop setBiomes ([B)V
 		ARG 1 biomes
 	METHOD m_59nzohhzl tick (Z)V
-		ARG 1 beFast
+		ARG 1 skipRecheckGaps
 	METHOD m_62fttnupe queueLightUpdateAt (II)V
 		ARG 1 sectionX
 		ARG 2 sectionZ
@@ -177,20 +179,20 @@ CLASS net/minecraft/C_29tuwvijg net/minecraft/world/chunk/WorldChunk
 	METHOD m_66zqikjlk populateSkylight ()V
 	METHOD m_66zqoeubb addEntity (Lnet/minecraft/C_98tnijqnf;)V
 		ARG 1 entity
-	METHOD m_67rkxthkc tickLight ()V
+	METHOD m_67rkxthkc checkLight ()V
 	METHOD m_74dgeiymo getRandomForSlime (J)Ljava/util/Random;
 		ARG 1 seed
 	METHOD m_75lrnasrv getPrecipitationHeightAt (II)I
 		ARG 1 sectionX
 		ARG 2 sectionZ
-	METHOD m_76mmszxpg getHighestYAt (II)I
+	METHOD m_76mmszxpg getHeightAt (II)I
 		ARG 1 sectionX
 		ARG 2 sectionZ
-	METHOD m_78bymertd removeBlockEntity (III)V
+	METHOD m_78bymertd removeBlockEntityAt (III)V
 		ARG 1 sectionX
 		ARG 2 y
 		ARG 3 sectionZ
-	METHOD m_78vpalcwg updateLightAt (II)Z
+	METHOD m_78vpalcwg checkLightAt (II)Z
 		ARG 1 sectionX
 		ARG 2 sectionZ
 	METHOD m_79ofvkezi populateHeightmap ()V
