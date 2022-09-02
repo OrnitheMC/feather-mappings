@@ -1,4 +1,4 @@
-CLASS net/minecraft/C_56nfqgsif net/minecraft/client/texture/TextureUtils
+CLASS net/minecraft/C_56nfqgsif com/mojang/blaze3d/platform/TextureUtil
 	FIELD f_15rszlvnl LOGGER Lorg/apache/logging/log4j/Logger;
 	FIELD f_27mfmnwgo MISSING_TEXTURE Lnet/minecraft/C_51ecoakpo;
 	FIELD f_29pnnjmkk BUFFER Ljava/nio/IntBuffer;
@@ -24,18 +24,26 @@ CLASS net/minecraft/C_56nfqgsif net/minecraft/client/texture/TextureUtils
 	METHOD m_11dnpcdwq uploadTexture (ILjava/awt/image/BufferedImage;ZZ)I
 		ARG 0 id
 		ARG 1 texture
+	METHOD m_24ucfvqhm writeAsPNG (Ljava/lang/String;IIII)V
+		ARG 0 file
+		ARG 1 texture
+		ARG 2 count
+		ARG 3 width
+		ARG 4 height
 	METHOD m_26nuancnl prepareImage (III)V
 		ARG 0 id
 		ARG 1 width
 		ARG 2 height
-	METHOD m_31lypxkmq upload (ILjava/awt/image/BufferedImage;)I
-		ARG 0 id
-		ARG 1 texture
-	METHOD m_31xopsasw upload (I[III)V
-		ARG 0 id
-		ARG 1 texture
-		ARG 2 frameX
-		ARG 3 frameY
+	METHOD m_31lypxkmq uploadTexture (ILjava/awt/image/BufferedImage;)I
+		ARG 0 texture
+		ARG 1 image
+	METHOD m_31xopsasw uploadTexture (I[III)V
+		ARG 0 texture
+		ARG 1 pixels
+		ARG 2 width
+		ARG 3 height
+	METHOD m_34vsnblus readImage (Ljava/io/InputStream;)Ljava/awt/image/BufferedImage;
+		ARG 0 is
 	METHOD m_38bzvpihh setTextureFilter (ZZ)V
 		ARG 0 blur
 		ARG 1 mipmap
@@ -49,14 +57,14 @@ CLASS net/minecraft/C_56nfqgsif net/minecraft/client/texture/TextureUtils
 		ARG 6 blur
 		ARG 7 clamped
 		ARG 8 mipmap
-	METHOD m_58buaxncy update3dAnaglyph ([I)[I
-		ARG 0 tecture
-	METHOD m_62nmfqqpm getBufferedImageAsRgbArray (Lnet/minecraft/C_75cicgtcu;Lnet/minecraft/C_21ejqkzye;)[I
+	METHOD m_58buaxncy getAnaglyphColors ([I)[I
+		ARG 0 colors
+	METHOD m_62nmfqqpm getPixels (Lnet/minecraft/C_75cicgtcu;Lnet/minecraft/C_21ejqkzye;)[I
 		ARG 0 resourceManager
-		ARG 1 identifier
+		ARG 1 id
 	METHOD m_66khrnldo setTextureClamp (Z)V
 		ARG 0 clamp
-	METHOD m_66szvfmgu bindTexture (I)V
+	METHOD m_66szvfmgu bind (I)V
 		ARG 0 id
 	METHOD m_67faxsonp setFilterWithBlur (Z)V
 		ARG 0 blur
@@ -71,11 +79,13 @@ CLASS net/minecraft/C_56nfqgsif net/minecraft/client/texture/TextureUtils
 		ARG 4 height
 		ARG 5 blur
 		ARG 6 clamped
-	METHOD m_71ydpguaq generateMipmapInterval (II[[I)[[I
-		ARG 0 mipmapLevels
+	METHOD m_71ydpguaq generateMipmaps (II[[I)[[I
+		ARG 0 mipmaps
 		ARG 1 width
-		ARG 2 image
-	METHOD m_76trihzar generateTexture ()I
+		ARG 2 pixels
+	METHOD m_75ctavgzt getAnaglyphColor (I)I
+		ARG 0 color
+	METHOD m_76trihzar genTextures ()I
 	METHOD m_85glcyrod blendPixels (IIIIZ)I
 		ARG 0 colorTopLeft
 		ARG 1 colorTopRight
@@ -83,7 +93,7 @@ CLASS net/minecraft/C_56nfqgsif net/minecraft/client/texture/TextureUtils
 		ARG 3 colorBottomRight
 		ARG 4 transperant
 	METHOD m_90fpveqjn deleteTexture (I)V
-		ARG 0 id
+		ARG 0 texture
 	METHOD m_90maycxth putInBufferAt ([III)V
 		ARG 0 texture
 		ARG 1 offset
