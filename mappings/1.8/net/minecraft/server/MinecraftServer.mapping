@@ -1,5 +1,6 @@
 CLASS net/minecraft/server/MinecraftServer net/minecraft/server/MinecraftServer
 	FIELD f_01mfkbqig playerManager Lnet/minecraft/C_37payaeub;
+	FIELD f_03zohmuyh pendingEvents Ljava/util/Queue;
 	FIELD f_06jqlsfhr resourcePackUrl Ljava/lang/String;
 	FIELD f_11zgeunyw commandHandler Lnet/minecraft/C_19theuvwq;
 	FIELD f_15qvwonxs onlineMode Z
@@ -25,6 +26,7 @@ CLASS net/minecraft/server/MinecraftServer net/minecraft/server/MinecraftServer
 	FIELD f_51lbozidc ticks I
 	FIELD f_51lzpjbpn forceGameMode Z
 	FIELD f_51pokpkmv worldName Ljava/lang/String;
+	FIELD f_54arldnbn nextTickTime J
 	FIELD f_54dxbqcej stopped Z
 	FIELD f_57vvrnydj profiling Z
 	FIELD f_57wqsxxht lastPlayerSampleUpdate J
@@ -97,6 +99,7 @@ CLASS net/minecraft/server/MinecraftServer net/minecraft/server/MinecraftServer
 		ARG 2 saveHandler
 	METHOD m_19eaatogr tickWorlds ()V
 	METHOD m_19juvmdjo isHardcore ()Z
+	METHOD m_19lbortoe getThread ()Ljava/lang/Thread;
 	METHOD m_22awqmbhl convertWorld (Ljava/lang/String;)V
 		ARG 1 name
 	METHOD m_22sschmzw shouldSpawnAnimals ()Z
@@ -175,6 +178,8 @@ CLASS net/minecraft/server/MinecraftServer net/minecraft/server/MinecraftServer
 	METHOD m_56czyaqlx setMotd (Ljava/lang/String;)V
 		ARG 1 motd
 	METHOD m_56rqfaloi shouldSpawnNpcs ()Z
+	METHOD m_56wcowerl submit (Ljava/util/concurrent/Callable;)Lcom/google/common/util/concurrent/ListenableFuture;
+		ARG 1 event
 	METHOD m_57pfqkwtr tick ()V
 	METHOD m_57xtwwsyi getKeyPair ()Ljava/security/KeyPair;
 	METHOD m_58agjhzso getIp ()Ljava/lang/String;
@@ -189,6 +194,7 @@ CLASS net/minecraft/server/MinecraftServer net/minecraft/server/MinecraftServer
 	METHOD m_60upwabes getMaxWorldSize ()I
 	METHOD m_61xwkvabs hasStopped ()Z
 	METHOD m_62lcgmwih getTicks ()I
+	METHOD m_62odlitnt getNextTickTime ()J
 	METHOD m_63sqjyveu start ()V
 	METHOD m_64nuthyyq isMonsterSpawningEnabled ()Z
 	METHOD m_65mlqnopf getWorldStorageSource ()Lnet/minecraft/C_60oojglfe;
