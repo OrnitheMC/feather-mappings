@@ -24,6 +24,25 @@ import net.fabricmc.tinyremapper.OutputConsumerPath
 import net.fabricmc.tinyremapper.TinyRemapper
 import net.fabricmc.tinyremapper.TinyUtils
 import net.ornithemc.nester.Nester
+import net.ornithemc.mappingutils.MappingUtils;
+import net.ornithemc.mappingutils.PropagationDirection;
+import net.ornithemc.mappingutils.io.Format;
+import net.ornithemc.mappingutils.io.Mappings;
+import net.ornithemc.mappingutils.io.Mappings.ClassMapping;
+import net.ornithemc.mappingutils.io.Mappings.FieldMapping;
+import net.ornithemc.mappingutils.io.Mappings.MethodMapping;
+import net.ornithemc.mappingutils.io.Mappings.ParameterMapping;
+import net.ornithemc.mappingutils.io.MappingTarget;
+import net.ornithemc.mappingutils.io.MappingValidator;
+import net.ornithemc.mappingutils.io.diff.DiffSide;
+import net.ornithemc.mappingutils.io.diff.MappingsDiff;
+import net.ornithemc.mappingutils.io.diff.MappingsDiff.ClassDiff;
+import net.ornithemc.mappingutils.io.diff.MappingsDiff.Diff;
+import net.ornithemc.mappingutils.io.diff.MappingsDiff.FieldDiff;
+import net.ornithemc.mappingutils.io.diff.MappingsDiff.MethodDiff;
+import net.ornithemc.mappingutils.io.diff.MappingsDiff.ParameterDiff;
+import net.ornithemc.mappingutils.io.diff.MappingsDiffValidator;
+import net.ornithemc.mappingutils.io.diff.tree.MappingsDiffTree;
 import org.apache.commons.io.FileUtils
 
 import java.nio.charset.Charset
@@ -59,6 +78,7 @@ buildscript {
 		classpath "net.ornithemc:stitch:${project.stitch_version}"
 		classpath "net.ornithemc:tiny-remapper:0.8.4"
 		classpath "net.ornithemc:nester:0.2.5"
+		classpath "net.ornithemc:mapping-utils:0.1.0"
 		classpath "commons-io:commons-io:2.8.0"
 		classpath 'de.undercouch:gradle-download-task:4.1.1'
 		classpath "net.ornithemc:name-proposal:${project.name_proposal_version}"
@@ -185,7 +205,10 @@ def setupGroup = "jar setup"
 def featherGroup = "feather"
 def buildMappingGroup = "mapping build"
 def mapJarGroup = "jar mapping"
-def mappingsDir = file("mappings/${minecraft_version}")
+def mappingsDir = file("mappings/")
+def workingDir = file("run/")
+def separatedMappings = new File(workingDir, "${minecraft_version}.tiny")
+def workingMappings = new File(workingDir, "${minecraft_version}-changed.tiny")
 def cacheFilesMinecraft = file(".gradle/minecraft")
 def tempDir = file(".gradle/temp")
 def mergedFile = file("${minecraft_version}-merged.jar")
@@ -290,13 +313,6 @@ task downloadMcJars(dependsOn: downloadWantedVersionManifest) {
 	}
 }
 
-task downloadNesterMappings(dependsOn: downloadMcJars, type: Download) {
-	group = buildMappingGroup
-	def url = "https://github.com/OrnitheMC/calamus/raw/main/nests/${minecraft_version}.nest"
-	src UrlEscapers.urlFragmentEscaper().escape(url)
-	dest new File(cacheFilesMinecraft, "${minecraft_version}.nest")
-}
-
 task downloadCalamus(dependsOn: downloadMcJars, type: Download) {
 	group = buildMappingGroup
 	def url = "https://github.com/OrnitheMC/calamus/raw/main/mappings/${minecraft_version}.tiny"
@@ -311,7 +327,9 @@ task downloadCalamusV2(dependsOn: downloadMcJars, type: Download) {
 	dest new File(cacheFilesMinecraft, "${minecraft_version}-calamus-v2.jar")
 
 	def output = new File(cacheFilesMinecraft, "${minecraft_version}-calamus-v2.tiny")
-	outputs.file output
+	def nests = new File(cacheFilesMinecraft, "${minecraft_version}.nest")
+	outputs.files(output, nests)
+
 
 	doLast {
 		copy {
@@ -322,6 +340,23 @@ task downloadCalamusV2(dependsOn: downloadMcJars, type: Download) {
 
 			into output.parentFile
 		}
+		copy {
+			from({ zipTree(downloadCalamusV2.dest) }) {
+				from 'mappings/mappings.nest'
+				rename 'mappings.nest', "../${nests.name}"
+			}
+
+			into nests.parentFile
+		}
+	}
+}
+
+task downloadNesterMappings(dependsOn: [downloadCalamusV2]) {
+	group = buildMappingGroup
+	def dest
+
+	doLast {
+		dest = downloadCalamusV2.outputs.files.files.find { it.name.endsWith(".nest") }
 	}
 }
 
@@ -493,7 +528,149 @@ task mapCalamusJar(dependsOn: [downloadMcLibs, downloadCalamus, nestJar]) {
 }
 
 
-task feather(dependsOn: mapCalamusJar) {
+task separateMappings() {
+	group = featherGroup
+	inputs.dir mappingsDir
+	outputs.files(separatedMappings, workingMappings)
+
+	//Force the task to always run
+	outputs.upToDateWhen { false }
+
+	doLast {
+		logger.lifecycle(":separating mappings for " + minecraft_version)
+
+		MappingsDiffTree tree = MappingsDiffTree.of(Format.TINY_V2, mappingsDir.toPath())
+		Mappings mappings = MappingUtils.separateMappings(tree, minecraft_version);
+
+		Format.TINY_V2.writeMappings(separatedMappings.toPath(), mappings)
+		mappings.setValidator(new MappingValidator() {
+			// remove dummy mappings
+
+			@Override
+			public boolean validate(ClassMapping c) {
+				return MappingsDiff.safeIsDiff(c.src(), c.getComplete()) || !c.getJavadoc().isEmpty() || c.hasChildren();
+			}
+
+			@Override
+			public boolean validate(FieldMapping f) {
+				return MappingsDiff.safeIsDiff(f.src(), f.get()) || !f.getJavadoc().isEmpty();
+			}
+
+			@Override
+			public boolean validate(MethodMapping m) {
+				return MappingsDiff.safeIsDiff(m.src(), m.get()) || (!m.get().startsWith("m_") && !m.get().equals("<init>") && !m.get().equals("<clinit>")) || !m.getJavadoc().isEmpty() || m.hasChildren();
+			}
+
+			@Override
+			public boolean validate(ParameterMapping p) {
+				if (p.get().startsWith("p_")) {
+					p.set(p.src());
+					return !p.getJavadoc().isEmpty();
+				}
+
+				return true;
+			}
+		})
+		Format.TINY_V2.writeMappings(workingMappings.toPath(), mappings)
+	}
+}
+
+static def insertMappings(minecraft_version, mappingsDir, separatedMappingsPath, workingMappingsPath, dir) {
+	Mappings separatedMappings = Format.TINY_V2.readMappings(separatedMappingsPath);
+	Mappings workingMappings = Format.TINY_V2.readMappings(workingMappingsPath);
+
+	MappingsDiff changes = MappingUtils.diffMappings(Format.TINY_V2, separatedMappings, workingMappings);
+	changes.setValidator(new MappingsDiffValidator() {
+		// re-insert dummy mappings
+
+		@Override
+		public boolean validate(ClassDiff c) {
+			return check(c);
+		}
+
+		@Override
+		public boolean validate(FieldDiff f) {
+			return check(f);
+		}
+
+		@Override
+		public boolean validate(MethodDiff m) {
+			return check(m);
+		}
+
+		@Override
+		public boolean validate(ParameterDiff p) {
+			return check(p);
+		}
+
+		private boolean check(Diff<?> d) {
+			if (d.isDiff()) {
+				if (d.get(DiffSide.A).isEmpty()) {
+					// new mappings should be ignored, as any un-mapped members
+					// should already be present as dummy mappings
+					System.out.println("ignoring illegal change " + d);
+					return false;
+				}
+				if (d.get(DiffSide.B).isEmpty()) {
+					// removing a mapping is changed into a dummy mapping
+					if (d.target() == MappingTarget.CLASS) {
+						d.set(DiffSide.B, ClassMapping.getSimplified(d.src()));
+					} else if (d.target() == MappingTarget.PARAMETER) {
+						d.set(DiffSide.B, "p_" + ((ParameterDiff)d).getIndex());
+					} else {
+						d.set(DiffSide.B, d.src());
+					}
+				}
+			}
+
+			return true;
+		}
+	});
+
+	MappingsDiffTree tree = MappingsDiffTree.of(Format.TINY_V2, mappingsDir);
+	MappingUtils.insertMappings(dir, tree, changes, minecraft_version);
+
+	java.nio.file.Files.delete(separatedMappingsPath)
+	java.nio.file.Files.delete(workingMappingsPath)
+}
+
+task insertMappings() {
+	group = featherGroup
+	doLast {
+		logger.lifecycle(":saving mappings for " + minecraft_version)
+
+		insertMappings(minecraft_version, mappingsDir.toPath(), separatedMappings.toPath(), workingMappings.toPath(), PropagationDirection.NONE)
+	}
+}
+
+task propagateMappingsDown() {
+	group = featherGroup
+	doLast {
+		logger.lifecycle(":saving mappings for " + minecraft_version)
+
+		insertMappings(minecraft_version, mappingsDir.toPath(), separatedMappings.toPath(), workingMappings.toPath(), PropagationDirection.DOWN)
+	}
+}
+
+task propagateMappingsUp() {
+	group = featherGroup
+	doLast {
+		logger.lifecycle(":saving mappings for " + minecraft_version)
+
+		insertMappings(minecraft_version, mappingsDir.toPath(), separatedMappings.toPath(), workingMappings.toPath(), PropagationDirection.UP)
+	}
+}
+
+task propagateMappings() {
+	group = featherGroup
+	doLast {
+		logger.lifecycle(":saving mappings for " + minecraft_version)
+
+		insertMappings(minecraft_version, mappingsDir.toPath(), separatedMappings.toPath(), workingMappings.toPath(), PropagationDirection.BOTH)
+	}
+}
+
+task feather(dependsOn: [mapCalamusJar, separateMappings]) {
 	group = featherGroup
 	doLast {
 		ant.setLifecycleLogLevel "WARN"
@@ -507,23 +684,42 @@ task feather(dependsOn: mapCalamusJar) {
 			arg(value: '-jar')
 			arg(value: calamusJar.getAbsolutePath())
 			arg(value: '-mappings')
-			arg(value: mappingsDir.getAbsolutePath())
+			arg(value: workingMappings.getAbsolutePath())
 			arg(value: '-profile')
 			arg(value: 'enigma_profile.json')
 		}
 	}
 }
 
-task checkMappings(dependsOn: mapCalamusJar) {
-	group = buildMappingGroup
+task separateMappingsForBuild(type: WithV2FileOutput) {
 	inputs.dir mappingsDir
+
+	v1Output = new File(tempDir, "separated-mappings.tiny")
+	v2Output = new File(tempDir, "separated-mappings-v2.tiny")
+
+	outputs.upToDateWhen { false }
+
+	doLast {
+		MappingUtils.separateMappings(Format.TINY_V2, mappingsDir.toPath(), v2Output.toPath(), minecraft_version)
+
+		new ConvertMappingsCommand().run(
+			"tinyv2",
+			v2Output.getAbsolutePath(),
+			"tiny:calamus:named",
+			v1Output.getAbsolutePath())
+	}
+}
+
+task checkMappings(dependsOn: [mapCalamusJar, separateMappingsForBuild]) {
+	group = buildMappingGroup
+	inputs.file separateMappingsForBuild.v2Output
 	doLast {
 		logger.lifecycle(":checking mappings")
 
 		File jarFile = nestedJar.exists() ? nestedJar : mergedFile
 		String[] args = [
 				jarFile.getAbsolutePath(),
-				mappingsDir.getAbsolutePath()
+				separateMappingsForBuild.v2Output.getAbsolutePath()
 		]
 
 		try {
@@ -534,9 +730,9 @@ task checkMappings(dependsOn: mapCalamusJar) {
 	}
 }
 
-task buildFeatherTiny(dependsOn: mapCalamusJar, type: WithV2FileOutput) {
+task buildFeatherTiny(dependsOn: [mapCalamusJar, separateMappingsForBuild], type: WithV2FileOutput) {
 	group = buildMappingGroup
-	inputs.dir mappingsDir
+	inputs.file separateMappingsForBuild.v2Output
 	if (!libs.exists()) {
 		libs.mkdirs()
 	}
@@ -552,7 +748,7 @@ task buildFeatherTiny(dependsOn: mapCalamusJar, type: WithV2FileOutput) {
 		new MapSpecializedMethodsCommand().run(
 				calamusJar.getAbsolutePath(),
 				"enigma",
-				mappingsDir.getAbsolutePath(),
+				separateMappingsForBuild.v2Output.getAbsolutePath(),
 				"tinyv2:calamus:named",
 				v2Output.getAbsolutePath()
 		)
