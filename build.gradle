@@ -351,15 +351,6 @@ task downloadCalamusV2(dependsOn: downloadMcJars, type: Download) {
 	}
 }
 
-task downloadNesterMappings(dependsOn: [downloadCalamusV2]) {
-	group = buildMappingGroup
-	def dest
-
-	doLast {
-		dest = downloadCalamusV2.outputs.files.files.find { it.name.endsWith(".nest") }
-	}
-}
-
 task mergeJars(dependsOn: downloadMcJars) {
 	group = setupGroup
 	inputs.files downloadMcJars.outputs.files.files
@@ -382,7 +373,7 @@ task mergeJars(dependsOn: downloadMcJars) {
 
 }
 
-task nestJar(dependsOn: [mergeJars, downloadNesterMappings]) {
+task nestJar(dependsOn: [mergeJars, downloadCalamusV2]) {
 	group = setupGroup
 	inputs.file mergedFile
 	outputs.file(nestedJar)
@@ -394,7 +385,7 @@ task nestJar(dependsOn: [mergeJars, downloadNesterMappings]) {
 			return
 		}
 
-		File nests = downloadNesterMappings.dest
+		File nests = downloadCalamusV2.outputs.files.files.find { it.name.endsWith(".nest") }
 
 		if (nests.exists()) {
 			Nester.fixJar(Paths.get(mergedFile.getAbsolutePath()), Paths.get(nestedJar.getAbsolutePath()), Paths.get(nests.getAbsolutePath()))
