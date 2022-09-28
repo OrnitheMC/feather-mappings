@@ -935,7 +935,8 @@ c	net/minecraft/C_21iqoazsm
 c	net/minecraft/C_23hwqxybq
 c	net/minecraft/C_23hwqxybq$C_33qmmrmvi
 	m	()Lnet/minecraft/C_93drurvvw;	m_27reaoshx		m_27reaoshx
-	m	()Z	m_12hhulxxv		m_12hhulxxv
+	m	()Z	m_12hhulxxv		isSolid
+		c		A solid block is a full cube with no transparency.
 	m	()I	m_56ddjgbbl		m_56ddjgbbl
 	m	()I	m_40lxfgxpk		m_40lxfgxpk
 	m	()Z	m_14ohtichu		m_14ohtichu
@@ -952,7 +953,8 @@ c	net/minecraft/C_23hwqxybq$C_33qmmrmvi
 		p	2			p_2
 	m	()F	m_52mewxcem		m_52mewxcem
 	m	()Z	m_33xjgfecc		m_33xjgfecc
-	m	()Z	m_66dlxwzyl		m_66dlxwzyl
+	m	()Z	m_66dlxwzyl		isConductor
+		c		Returns whether this block conducts redstone signals.
 	m	()Z	m_49ndtaaei		m_49ndtaaei
 	m	(Lnet/minecraft/C_27vpafegt;Lnet/minecraft/C_56axpdmnz;Lnet/minecraft/C_47zkzbwpw;)I	m_86azaynci		m_86azaynci
 		p	1			p_1
@@ -3046,33 +3048,35 @@ c	net/minecraft/C_71tldynod
 		c	Returns the redstone power that a comparator that is reading the contents of this block\nshould output.	
 		p	1		world	
 		p	2		pos	
-	m	(Lnet/minecraft/C_67yyfsste;)Z	m_43kgrgdjq		m_43kgrgdjq
+	m	(Lnet/minecraft/C_67yyfsste;)Z	m_43kgrgdjq		isSolid
+		c		A solid block is a full cube with no transparency.
 		p	1			p_1
-	m	(Lnet/minecraft/C_67yyfsste;)I	m_66lxdkqxv		m_66lxdkqxv
+	m	(Lnet/minecraft/C_67yyfsste;)I	m_66lxdkqxv		getOpacity
 		p	1			p_1
-	m	(Lnet/minecraft/C_67yyfsste;)Z	m_32hqyyjbg		m_32hqyyjbg
+	m	(Lnet/minecraft/C_67yyfsste;)Z	m_32hqyyjbg		isTranslucent
 		p	1			p_1
-	m	(Lnet/minecraft/C_67yyfsste;)I	m_35dueadwe		m_35dueadwe
+	m	(Lnet/minecraft/C_67yyfsste;)I	m_35dueadwe		getLightLevel
 		p	1			p_1
-	m	(Lnet/minecraft/C_67yyfsste;)Z	m_50sdyzvoq		m_50sdyzvoq
+	m	(Lnet/minecraft/C_67yyfsste;)Z	m_50sdyzvoq		usesNeighborLight
 		p	1			p_1
-	m	(Lnet/minecraft/C_67yyfsste;)Lnet/minecraft/C_93drurvvw;	m_16ztgppmz		m_16ztgppmz
+	m	(Lnet/minecraft/C_67yyfsste;)Lnet/minecraft/C_93drurvvw;	m_16ztgppmz		getMaterial
 		p	1			p_1
-	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_02mkxgffo;)Lnet/minecraft/C_67yyfsste;	m_47fcwxbuj		m_47fcwxbuj
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_63ehaunll;)Lnet/minecraft/C_67yyfsste;	m_85rbgsuqt		m_85rbgsuqt
+	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_02mkxgffo;)Lnet/minecraft/C_67yyfsste;	m_47fcwxbuj		rotate
 		p	1			p_1
 		p	2			p_2
-	m	(Lnet/minecraft/C_67yyfsste;)Z	m_05vbagwgl		m_05vbagwgl
+	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_63ehaunll;)Lnet/minecraft/C_67yyfsste;	m_85rbgsuqt		mirror
 		p	1			p_1
-	m	(Lnet/minecraft/C_67yyfsste;)Z	m_33cyinppu		m_33cyinppu
+		p	2			p_2
+	m	(Lnet/minecraft/C_67yyfsste;)Z	m_05vbagwgl		hasAmbientOcclusion
 		p	1			p_1
-	m	(Lnet/minecraft/C_67yyfsste;)Z	m_78bxggief		m_78bxggief
+	m	(Lnet/minecraft/C_67yyfsste;)Z	m_33cyinppu		isConductor
+		c		Returns whether this block conducts redstone signals.
 		p	1			p_1
-	m	(Lnet/minecraft/C_67yyfsste;)Lnet/minecraft/C_74mkzdigl;	m_56jqnbptm		m_56jqnbptm
+	m	(Lnet/minecraft/C_67yyfsste;)Z	m_78bxggief		isFullCube
 		p	1			p_1
-	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;)F	m_02jghzifl		m_02jghzifl
+	m	(Lnet/minecraft/C_67yyfsste;)Lnet/minecraft/C_74mkzdigl;	m_56jqnbptm		getType
+		p	1			p_1
+	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;)F	m_02jghzifl		getMiningSpeed
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -3080,72 +3084,80 @@ c	net/minecraft/C_71tldynod
 		p	1			p_1
 	m	(Lnet/minecraft/C_67yyfsste;)Lnet/minecraft/C_26botaqcx;	m_46cpceomg		m_46cpceomg
 		p	1			p_1
-	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_27vpafegt;Lnet/minecraft/C_56axpdmnz;)I	m_47nupsrwb		m_47nupsrwb
+	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_27vpafegt;Lnet/minecraft/C_56axpdmnz;)I	m_47nupsrwb		getLightLevel
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_27vpafegt;Lnet/minecraft/C_56axpdmnz;Lnet/minecraft/C_47zkzbwpw;)Z	m_34oozzkwj		m_34oozzkwj
+	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_27vpafegt;Lnet/minecraft/C_56axpdmnz;Lnet/minecraft/C_47zkzbwpw;)Z	m_34oozzkwj		isSideVisible
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;)Lnet/minecraft/C_26botaqcx;	m_51xrulzhy		m_51xrulzhy
+	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;)Lnet/minecraft/C_26botaqcx;	m_51xrulzhy		getSelectionBox
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;Lnet/minecraft/C_26botaqcx;Ljava/util/List;Lnet/minecraft/C_45xnjghlg;)V	m_93bshrsxw		m_93bshrsxw
+	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;Lnet/minecraft/C_26botaqcx;Ljava/util/List;Lnet/minecraft/C_45xnjghlg;)V	m_93bshrsxw		appendCollisionBoxes
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
 		p	6			p_6
-	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;)Lnet/minecraft/C_26botaqcx;	m_85oknqrbb		m_85oknqrbb
+	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;)Lnet/minecraft/C_26botaqcx;	m_85oknqrbb		getCollisionBox
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lnet/minecraft/C_67yyfsste;)Z	m_10zcbuwkt		m_10zcbuwkt
+	m	(Lnet/minecraft/C_67yyfsste;)Z	m_10zcbuwkt		hasTransparency
 		p	1			p_1
-	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;Ljava/util/Random;)V	m_93jjidqdr		m_93jjidqdr
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_40gcibmhk;Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;)F	m_37nfsxvbo		m_37nfsxvbo
+	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;Ljava/util/Random;)V	m_93jjidqdr		randomDisplayTick
+		c		Performs a random display tick. Random display ticks are mostly used to spawn particles\naround a block. The client does 1000 random display tick attempts within a radius of\n16 blocks of the player each tick.
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;Lnet/minecraft/C_08aktnefi;Lnet/minecraft/C_08aktnefi;)Lnet/minecraft/C_02lgmjtpg;	m_33enkrwob		m_33enkrwob
+	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_40gcibmhk;Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;)F	m_37nfsxvbo		getMiningSpeed
+		c		Calculates the mining speed of this block, taking into consideration the given\nplayer's status effects such as haste and mining fatigue, in progress per tick.
+		p	1			p_1
+		p	2			p_2
+		p	3			p_3
+		p	4			p_4
+	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;Lnet/minecraft/C_08aktnefi;Lnet/minecraft/C_08aktnefi;)Lnet/minecraft/C_02lgmjtpg;	m_33enkrwob		rayTrace
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	(Lnet/minecraft/C_56axpdmnz;Lnet/minecraft/C_08aktnefi;Lnet/minecraft/C_08aktnefi;Lnet/minecraft/C_26botaqcx;)Lnet/minecraft/C_02lgmjtpg;	m_59qvgsmjz		m_59qvgsmjz
+	m	(Lnet/minecraft/C_56axpdmnz;Lnet/minecraft/C_08aktnefi;Lnet/minecraft/C_08aktnefi;Lnet/minecraft/C_26botaqcx;)Lnet/minecraft/C_02lgmjtpg;	m_59qvgsmjz		rayTrace
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_27vpafegt;Lnet/minecraft/C_56axpdmnz;Lnet/minecraft/C_47zkzbwpw;)I	m_10jorbonl		m_10jorbonl
+	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_27vpafegt;Lnet/minecraft/C_56axpdmnz;Lnet/minecraft/C_47zkzbwpw;)I	m_10jorbonl		getEmittedWeakPower
+		c		Returns the weak redstone power this block is emitting in the given direction.\n\n<p>\nNOTE: directions in redstone power related methods are backwards, so blocks should\ncheck for power emitted in the direction <i>opposite</i> of the one given.
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(Lnet/minecraft/C_67yyfsste;)Z	m_71gvnikkq		m_71gvnikkq
+	m	(Lnet/minecraft/C_67yyfsste;)Z	m_71gvnikkq		isPowerSource
+		c		Returns whether this block is capable of emitting redstone power.
 		p	1			p_1
-	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_27vpafegt;Lnet/minecraft/C_56axpdmnz;Lnet/minecraft/C_47zkzbwpw;)I	m_43hxwxxgf		m_43hxwxxgf
+	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_27vpafegt;Lnet/minecraft/C_56axpdmnz;Lnet/minecraft/C_47zkzbwpw;)I	m_43hxwxxgf		getEmittedStrongPower
+		c		Returns the strong redstone power this block is emitting in the given direction.\n\n<p>\nNOTE: directions in redstone power related methods are backwards, so blocks should\ncheck for power emitted in the direction <i>opposite</i> of the one given.
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(Lnet/minecraft/C_67yyfsste;)Lnet/minecraft/C_41mosnkan;	m_84jnsdszc		m_84jnsdszc
+	m	(Lnet/minecraft/C_67yyfsste;)Lnet/minecraft/C_41mosnkan;	m_84jnsdszc		getPistonMoveBehavior
+		c		Returns how this block interacts with pistons.
 		p	1			p_1
-	m	(Lnet/minecraft/C_67yyfsste;)F	m_47zbltiee		m_47zbltiee
+	m	(Lnet/minecraft/C_67yyfsste;)F	m_47zbltiee		getAmbientOcclusionLightLevel
 		p	1			p_1
-	m	(Lnet/minecraft/C_67yyfsste;)Z	m_35zssfcxe		m_35zssfcxe
+	m	(Lnet/minecraft/C_67yyfsste;)Z	m_35zssfcxe		hasComparatorOutput
+		c		Returns whether this block has contents that can be read by a comparator.
 		p	1			p_1
-	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;)I	m_14knzcsqg		m_14knzcsqg
+	m	(Lnet/minecraft/C_67yyfsste;Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;)I	m_14knzcsqg		getComparatorOutput
+		c		Returns the redstone power that a comparator that is reading the contents of this block\nshould output.
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -3817,7 +3829,7 @@ c	net/minecraft/C_93drurvvw
 	f	I	f_62kutmdzp	pistonMoveBehavior	
 	f	Lnet/minecraft/C_41mosnkan;	f_62kutmdzp		f_62kutmdzp
 	m	()I	m_21wcubtok	getPistonMoveBehavior	
-	m	()Lnet/minecraft/C_41mosnkan;	m_21wcubtok		m_21wcubtok
+	m	()Lnet/minecraft/C_41mosnkan;	m_21wcubtok		getPistonMoveBehavior
 c	net/minecraft/C_94qrsalrp
 	m	()Z	m_10zcbuwkt	m_10zcbuwkt	
 	m	(Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;Lnet/minecraft/C_67yyfsste;)Lnet/minecraft/C_26botaqcx;	m_85oknqrbb	m_85oknqrbb	
@@ -3962,13 +3974,13 @@ c	net/minecraft/C_99rolngno
 c	net/minecraft/server/MinecraftServer
 	f	Z	f_47phfgqko	stopping	
 	m	()V	m_41vtuekcc	deleteWorldAndStop	
-c	net/minecraft/C_02mkxgffo		net/minecraft/C_02mkxgffo
-	f	Lnet/minecraft/C_02mkxgffo;	f_95kkfczei		f_95kkfczei
-	f	Lnet/minecraft/C_02mkxgffo;	f_64efkunaj		f_64efkunaj
-	f	Lnet/minecraft/C_02mkxgffo;	f_74zcfpzrz		f_74zcfpzrz
-	f	Lnet/minecraft/C_02mkxgffo;	f_34vpmjodl		f_34vpmjodl
-	f	Ljava/lang/String;	f_47lxlsfoe		f_47lxlsfoe
-	f	[Ljava/lang/String;	f_53ifuasio		f_53ifuasio
+c	net/minecraft/C_02mkxgffo		net/minecraft/util/BlockRotation
+	f	Lnet/minecraft/C_02mkxgffo;	f_95kkfczei		NONE
+	f	Lnet/minecraft/C_02mkxgffo;	f_64efkunaj		CLOCKWISE_90
+	f	Lnet/minecraft/C_02mkxgffo;	f_74zcfpzrz		CLOCKWISE_180
+	f	Lnet/minecraft/C_02mkxgffo;	f_34vpmjodl		COUNTERCLOCKWISE_90
+	f	Ljava/lang/String;	f_47lxlsfoe		id
+	f	[Ljava/lang/String;	f_53ifuasio		IDS
 	f	[Lnet/minecraft/C_02mkxgffo;	f_97kzucmxg		f_97kzucmxg
 	m	()[Lnet/minecraft/C_02mkxgffo;	values		values
 	m	(Ljava/lang/String;)Lnet/minecraft/C_02mkxgffo;	valueOf		valueOf
@@ -4056,10 +4068,10 @@ c	net/minecraft/C_31gwdswoo		net/minecraft/C_31gwdswoo
 	m	()Lnet/minecraft/C_20lkdvolc;	m_67iyliatb		m_67iyliatb
 	m	()D	m_70xvwzktx		m_70xvwzktx
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_41mosnkan		net/minecraft/C_41mosnkan
-	f	Lnet/minecraft/C_41mosnkan;	f_73qtnrtpa		f_73qtnrtpa
-	f	Lnet/minecraft/C_41mosnkan;	f_61gsfoiim		f_61gsfoiim
-	f	Lnet/minecraft/C_41mosnkan;	f_03ykrgqqd		f_03ykrgqqd
+c	net/minecraft/C_41mosnkan		net/minecraft/block/piston/PistonMoveBehavior
+	f	Lnet/minecraft/C_41mosnkan;	f_73qtnrtpa		NORMAL
+	f	Lnet/minecraft/C_41mosnkan;	f_61gsfoiim		DESTROY
+	f	Lnet/minecraft/C_41mosnkan;	f_03ykrgqqd		BLOCK
 	f	[Lnet/minecraft/C_41mosnkan;	f_55gihnffr		f_55gihnffr
 	m	()[Lnet/minecraft/C_41mosnkan;	values		values
 	m	(Ljava/lang/String;)Lnet/minecraft/C_41mosnkan;	valueOf		valueOf
@@ -4078,12 +4090,12 @@ c	net/minecraft/C_50xeotknp		net/minecraft/C_50xeotknp
 c	net/minecraft/C_59pbghsmq		net/minecraft/C_59pbghsmq
 	m	(I)V	<init>		<init>
 		p	1			p_1
-c	net/minecraft/C_63ehaunll		net/minecraft/C_63ehaunll
-	f	Lnet/minecraft/C_63ehaunll;	f_73evxmshc		f_73evxmshc
-	f	Lnet/minecraft/C_63ehaunll;	f_41vcdflxd		f_41vcdflxd
-	f	Lnet/minecraft/C_63ehaunll;	f_75oetrhgb		f_75oetrhgb
-	f	Ljava/lang/String;	f_62gsnzxin		f_62gsnzxin
-	f	[Ljava/lang/String;	f_79uhcknej		f_79uhcknej
+c	net/minecraft/C_63ehaunll		net/minecraft/util/BlockMirror
+	f	Lnet/minecraft/C_63ehaunll;	f_73evxmshc		NONE
+	f	Lnet/minecraft/C_63ehaunll;	f_41vcdflxd		LEFT_RIGHT
+	f	Lnet/minecraft/C_63ehaunll;	f_75oetrhgb		FRONT_BACK
+	f	Ljava/lang/String;	f_62gsnzxin		id
+	f	[Ljava/lang/String;	f_79uhcknej		IDS
 	f	[Lnet/minecraft/C_63ehaunll;	f_49sbonkjh		f_49sbonkjh
 	m	()[Lnet/minecraft/C_63ehaunll;	values		values
 	m	(Ljava/lang/String;)Lnet/minecraft/C_63ehaunll;	valueOf		valueOf
@@ -4116,69 +4128,69 @@ c	net/minecraft/C_74mkzdigl		net/minecraft/C_74mkzdigl
 		p	1			p_1
 		p	2			p_2
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_95nqliruw		net/minecraft/C_95nqliruw
-	m	()Lnet/minecraft/C_93drurvvw;	m_27reaoshx		m_27reaoshx
-	m	()Z	m_12hhulxxv		m_12hhulxxv
-	m	()I	m_56ddjgbbl		m_56ddjgbbl
-	m	()I	m_40lxfgxpk		m_40lxfgxpk
-	m	()Z	m_14ohtichu		m_14ohtichu
-	m	()Z	m_65hpsqqfs		m_65hpsqqfs
-	m	()Lnet/minecraft/C_30xcbmfzh;	m_60ytohngx		m_60ytohngx
-	m	(Lnet/minecraft/C_02mkxgffo;)Lnet/minecraft/C_67yyfsste;	m_11nryvshv		m_11nryvshv
+c	net/minecraft/C_95nqliruw		net/minecraft/block/state/IBlockState
+	m	()Lnet/minecraft/C_93drurvvw;	m_27reaoshx		getMaterial
+	m	()Z	m_12hhulxxv		isSolid
+	m	()I	m_56ddjgbbl		getOpacity
+	m	()I	m_40lxfgxpk		getLightLevel
+	m	()Z	m_14ohtichu		isTranslucent
+	m	()Z	m_65hpsqqfs		usesNeighborLight
+	m	()Lnet/minecraft/C_30xcbmfzh;	m_60ytohngx		getMaterialColor
+	m	(Lnet/minecraft/C_02mkxgffo;)Lnet/minecraft/C_67yyfsste;	m_11nryvshv		rotate
 		p	1			p_1
-	m	(Lnet/minecraft/C_63ehaunll;)Lnet/minecraft/C_67yyfsste;	m_49tlransr		m_49tlransr
+	m	(Lnet/minecraft/C_63ehaunll;)Lnet/minecraft/C_67yyfsste;	m_49tlransr		mirror
 		p	1			p_1
-	m	()Z	m_25yjenzau		m_25yjenzau
-	m	()Lnet/minecraft/C_74mkzdigl;	m_80iepmeil		m_80iepmeil
-	m	(Lnet/minecraft/C_27vpafegt;Lnet/minecraft/C_56axpdmnz;)I	m_27pstamay		m_27pstamay
-		p	1			p_1
-		p	2			p_2
-	m	()F	m_52mewxcem		m_52mewxcem
-	m	()Z	m_33xjgfecc		m_33xjgfecc
-	m	()Z	m_66dlxwzyl		m_66dlxwzyl
-	m	()Z	m_49ndtaaei		m_49ndtaaei
-	m	(Lnet/minecraft/C_27vpafegt;Lnet/minecraft/C_56axpdmnz;Lnet/minecraft/C_47zkzbwpw;)I	m_86azaynci		m_86azaynci
+	m	()Z	m_25yjenzau		isFullCube
+	m	()Lnet/minecraft/C_74mkzdigl;	m_80iepmeil		getType
+	m	(Lnet/minecraft/C_27vpafegt;Lnet/minecraft/C_56axpdmnz;)I	m_27pstamay		getLightLevel
 		p	1			p_1
 		p	2			p_2
-		p	3			p_3
-	m	()Z	m_67hvntjhn		m_67hvntjhn
-	m	(Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;)I	m_27iqusune		m_27iqusune
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;)F	m_44fgultee		m_44fgultee
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/C_40gcibmhk;Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;)F	m_38vnnnpuy		m_38vnnnpuy
+	m	()F	m_52mewxcem		getAmbientOcclusionLightLevel
+	m	()Z	m_33xjgfecc		hasAmbientOcclusion
+	m	()Z	m_66dlxwzyl		isConductor
+	m	()Z	m_49ndtaaei		isPowerSource
+	m	(Lnet/minecraft/C_27vpafegt;Lnet/minecraft/C_56axpdmnz;Lnet/minecraft/C_47zkzbwpw;)I	m_86azaynci		getEmittedWeakPower
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lnet/minecraft/C_27vpafegt;Lnet/minecraft/C_56axpdmnz;Lnet/minecraft/C_47zkzbwpw;)I	m_26itzzuce		m_26itzzuce
+	m	()Z	m_67hvntjhn		hasComparatorOutput
+	m	(Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;)I	m_27iqusune		getComparatorOutput
+		p	1			p_1
+		p	2			p_2
+	m	(Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;)F	m_44fgultee		getMiningSpeed
+		p	1			p_1
+		p	2			p_2
+	m	(Lnet/minecraft/C_40gcibmhk;Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;)F	m_38vnnnpuy		getMiningSpeed
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	()Lnet/minecraft/C_41mosnkan;	m_44agbfacf		m_44agbfacf
-	m	(Lnet/minecraft/C_27vpafegt;Lnet/minecraft/C_56axpdmnz;)Lnet/minecraft/C_67yyfsste;	m_13kghmfak		m_13kghmfak
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;)Lnet/minecraft/C_26botaqcx;	m_82njmkmzn		m_82njmkmzn
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/C_27vpafegt;Lnet/minecraft/C_56axpdmnz;Lnet/minecraft/C_47zkzbwpw;)Z	m_08ihjexox		m_08ihjexox
+	m	(Lnet/minecraft/C_27vpafegt;Lnet/minecraft/C_56axpdmnz;Lnet/minecraft/C_47zkzbwpw;)I	m_26itzzuce		getEmittedStrongPower
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	()Z	m_13wleqvad		m_13wleqvad
-	m	(Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;)Lnet/minecraft/C_26botaqcx;	m_78sqgyura		m_78sqgyura
+	m	()Lnet/minecraft/C_41mosnkan;	m_44agbfacf		getPistonMoveBehavior
+	m	(Lnet/minecraft/C_27vpafegt;Lnet/minecraft/C_56axpdmnz;)Lnet/minecraft/C_67yyfsste;	m_13kghmfak		updateShape
 		p	1			p_1
 		p	2			p_2
-	m	(Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;Lnet/minecraft/C_26botaqcx;Ljava/util/List;Lnet/minecraft/C_45xnjghlg;)V	m_63adkzgqj		m_63adkzgqj
+	m	(Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;)Lnet/minecraft/C_26botaqcx;	m_82njmkmzn		getSelectionBox
+		p	1			p_1
+		p	2			p_2
+	m	(Lnet/minecraft/C_27vpafegt;Lnet/minecraft/C_56axpdmnz;Lnet/minecraft/C_47zkzbwpw;)Z	m_08ihjexox		isSideVisible
+		p	1			p_1
+		p	2			p_2
+		p	3			p_3
+	m	()Z	m_13wleqvad		hasTransparency
+	m	(Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;)Lnet/minecraft/C_26botaqcx;	m_78sqgyura		getCollisionBox
+		p	1			p_1
+		p	2			p_2
+	m	(Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;Lnet/minecraft/C_26botaqcx;Ljava/util/List;Lnet/minecraft/C_45xnjghlg;)V	m_63adkzgqj		appendCollisionBoxes
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
 	m	()Lnet/minecraft/C_26botaqcx;	m_23fdbtanx		m_23fdbtanx
-	m	(Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;Lnet/minecraft/C_08aktnefi;Lnet/minecraft/C_08aktnefi;)Lnet/minecraft/C_02lgmjtpg;	m_52rgvoxfr		m_52rgvoxfr
+	m	(Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_56axpdmnz;Lnet/minecraft/C_08aktnefi;Lnet/minecraft/C_08aktnefi;)Lnet/minecraft/C_02lgmjtpg;	m_52rgvoxfr		rayTrace
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
