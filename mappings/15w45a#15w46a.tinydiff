@@ -3,8 +3,8 @@ c	net/minecraft/C_00qbounbs
 	m	(Lnet/minecraft/C_98mwkxlqj;)Z	m_30skjucao		m_30skjucao
 		p	1			p_1
 c	net/minecraft/C_04dfzncuu
-	m	(Lnet/minecraft/C_58fsfxdjw;)V	m_78zilmxfw	m_78zilmxfw	
-		p	1		p_1	
+	m	(Lnet/minecraft/C_58fsfxdjw;)V	m_78zilmxfw	onCompressionThreshold	
+		p	1		packet	
 c	net/minecraft/C_16drrxxsd
 	f	Lnet/minecraft/C_68qygpazz;	f_95uaujxff	f_95uaujxff	
 	f	[Lnet/minecraft/C_68qygpazz;	f_95uaujxff		f_95uaujxff
@@ -19,7 +19,7 @@ c	net/minecraft/C_27bagnuxl
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_33fapnocc
-	m	()I	m_85bcmjdtl	m_85bcmjdtl	
+	m	()I	m_85bcmjdtl	getScaledDownfall	
 c	net/minecraft/C_38lnusdph
 	m	(Lnet/minecraft/C_88cypnfji;)V	m_00mlbcxtx		m_00mlbcxtx
 		p	1			p_1
@@ -54,25 +54,26 @@ c	net/minecraft/C_54cemzqbj$C_46vuokzfd		C_46vuokzfd
 	m	(Lnet/minecraft/C_54cemzqbj;)V	<init>		<init>
 		p	1			p_1
 	m	()Z	m_21whmanow		m_21whmanow
-c	net/minecraft/C_58fsfxdjw	net/minecraft/C_58fsfxdjw	
-	f	I	f_80dhhscwm	f_80dhhscwm	
+c	net/minecraft/C_58fsfxdjw	net/minecraft/network/packet/s2c/play/CompressionThresholdS2CPacket	
+	f	I	f_80dhhscwm	compressionThreshold	
 	m	()V	<init>	<init>	
 	m	(Lnet/minecraft/C_49etbdgxo;)V	m_33xxjblew	m_33xxjblew	
 		p	1		p_1	
 	m	(Lnet/minecraft/C_49etbdgxo;)V	m_86szxdfjb	m_86szxdfjb	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_04dfzncuu;)V	m_72hwglmbs	m_72hwglmbs	
+	m	(Lnet/minecraft/C_04dfzncuu;)V	m_72hwglmbs	apply	
 		p	1		p_1	
-	m	()I	m_05dtatilx	m_05dtatilx	
+	m	()I	m_05dtatilx	getCompressionThreshold	
 	m	(Lnet/minecraft/C_94vigqard;)V	m_21smzvmna	m_21smzvmna	
 		p	1		p_1	
 c	net/minecraft/C_64bpmbyku
 	f	Ljava/util/List;	f_01fgjvnbj		f_01fgjvnbj
 c	net/minecraft/C_68qygpazz
-	m	(DDD)Lnet/minecraft/C_68qygpazz;	m_64lkvbndd	m_64lkvbndd	
-		p	1		p_1	
-		p	3		p_3	
-		p	5		p_5	
+	m	(DDD)Lnet/minecraft/C_68qygpazz;	m_64lkvbndd	contract	
+		c	Create a new {@code Box} that is contracted by the given amounts. The minimum and maximum\nvalues are increased and decreased respectively by the amounts given. This means the\nnew {@code Box} will be smaller by twice the amounts given on each axis.	
+		p	1		dx	
+		p	3		dy	
+		p	5		dz	
 	m	(D)Lnet/minecraft/C_68qygpazz;	m_59lotjykt		m_59lotjykt
 		p	1			p_1
 	m	(D)Lnet/minecraft/C_68qygpazz;	m_64lkvbndd		m_64lkvbndd
@@ -82,7 +83,7 @@ c	net/minecraft/C_72njhldau
 		p	1			p_1
 c	net/minecraft/C_73cvnbcja
 c	net/minecraft/C_73cvnbcja$C_55vkdylyj
-	f	[F	f_66spisnfq	f_66spisnfq	
+	f	[F	f_66spisnfq	downfall	
 c	net/minecraft/C_75bukzfes
 	m	(Lnet/minecraft/C_95jkivfww;Lnet/minecraft/C_85kncnihp;Lnet/minecraft/C_98mwkxlqj;Lnet/minecraft/C_08cjfgfvj;)I	m_92iajlarp		m_92iajlarp
 		p	1			p_1
@@ -112,12 +113,12 @@ c	net/minecraft/C_78foddfva
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/C_80dcurlre
-	m	([FIIII)[F	m_39fpircfc	m_39fpircfc	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
+	m	([FIIII)[F	m_39fpircfc	getDownfall	
+		p	1		downfall	
+		p	2		x	
+		p	3		z	
+		p	4		width	
+		p	5		length	
 c	net/minecraft/C_82qwxcawv
 	f	[Lnet/minecraft/C_82qwxcawv$C_21kbrpqkp;	f_29jrdmbwq		f_29jrdmbwq
 	f	Lnet/minecraft/C_82qwxcawv$C_21kbrpqkp;	f_64nxvgrub		f_64nxvgrub
@@ -249,8 +250,8 @@ c	net/minecraft/C_89aygywxq
 	m	(Lnet/minecraft/C_95jkivfww;)Z	m_16xofugem		m_16xofugem
 		p	0			p_0
 c	net/minecraft/C_92gesnerq
-	m	(Z)V	m_67ukfgscd	m_67ukfgscd	
-		p	1		p_1	
+	m	(Z)V	m_67ukfgscd	setJumping	
+		p	1		jumping	
 	m	(Z)V	m_47lrepzbn		m_47lrepzbn
 		p	1			p_1
 c	net/minecraft/C_95jkivfww
