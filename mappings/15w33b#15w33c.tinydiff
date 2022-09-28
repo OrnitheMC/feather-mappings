@@ -7,16 +7,16 @@ c	net/minecraft/C_01giluqxt
 c	net/minecraft/C_03nzdgfov
 	m	()Lnet/minecraft/C_73ocgrvrr;	m_00jnoqnak		m_00jnoqnak
 c	net/minecraft/C_04rgacqgp
-	m	(Lnet/minecraft/C_32kijbyyv;)I	m_99pripdfd	m_99pripdfd	
-		p	1		p_1	
-	m	(Lnet/minecraft/C_32kijbyyv;I)I	m_50woqyqib	m_50woqyqib	
-		p	1		p_1	
-		p	2		p_2	
-	m	(Lnet/minecraft/C_32kijbyyv;IZZ)V	m_15aufcysp	m_15aufcysp	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
+	m	(Lnet/minecraft/C_32kijbyyv;)I	m_99pripdfd	indexOfItem	
+		p	1		item	
+	m	(Lnet/minecraft/C_32kijbyyv;I)I	m_50woqyqib	indexOfItemWithMetaData	
+		p	1		item	
+		p	2		metaData	
+	m	(Lnet/minecraft/C_32kijbyyv;IZZ)V	m_15aufcysp	pickItem	
+		p	1		item	
+		p	2		metadata	
+		p	3		isDamageable	
+		p	4		creativeMode	
 	m	(Lnet/minecraft/C_28zsxyyrk;Lnet/minecraft/C_28zsxyyrk;)Z	m_89itaugvy		m_89itaugvy
 		p	1			p_1
 		p	2			p_2
@@ -43,9 +43,9 @@ c	net/minecraft/C_06stqxsqm
 	f	Ljava/util/Map;	f_83czkfgsa	f_83czkfgsa	
 	m	(Ljava/lang/Class;)I	m_51fmpohbs	m_51fmpohbs	
 		p	0		p_0	
-	m	(ILjava/lang/Object;)V	m_86ecwbncd	m_86ecwbncd	
-		p	1		p_1	
-		p	2		p_2	
+	m	(ILjava/lang/Object;)V	m_86ecwbncd	put	
+		p	1		id	
+		p	2		value	
 	m	(II)V	m_78huucnjx	m_78huucnjx	
 		p	1		p_1	
 		p	2		p_2	
@@ -53,29 +53,29 @@ c	net/minecraft/C_06stqxsqm
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(I)B	m_24ckqbcug	m_24ckqbcug	
-		p	1		p_1	
-	m	(I)S	m_72kpxbone	m_72kpxbone	
-		p	1		p_1	
-	m	(I)I	m_81pmijgpo	m_81pmijgpo	
-		p	1		p_1	
-	m	(I)F	m_82kcufynv	m_82kcufynv	
-		p	1		p_1	
-	m	(I)Ljava/lang/String;	m_10kxbojkk	m_10kxbojkk	
-		p	1		p_1	
-	m	(I)Lnet/minecraft/C_28zsxyyrk;	m_12rgvtqzb	m_12rgvtqzb	
-		p	1		p_1	
-	m	(I)Lnet/minecraft/C_06stqxsqm$C_69nqjyhxa;	m_81eczrlwo	m_81eczrlwo	
-		p	1		p_1	
+	m	(I)B	m_24ckqbcug	getByte	
+		p	1		id	
+	m	(I)S	m_72kpxbone	getShort	
+		p	1		id	
+	m	(I)I	m_81pmijgpo	getInt	
+		p	1		id	
+	m	(I)F	m_82kcufynv	getFloat	
+		p	1		id	
+	m	(I)Ljava/lang/String;	m_10kxbojkk	getString	
+		p	1		id	
+	m	(I)Lnet/minecraft/C_28zsxyyrk;	m_12rgvtqzb	getStack	
+		p	1		id	
+	m	(I)Lnet/minecraft/C_06stqxsqm$C_69nqjyhxa;	m_81eczrlwo	get	
+		p	1		id	
 	m	(I)Lnet/minecraft/C_56axpdmnz;	m_20feaagli	m_20feaagli	
 		p	1		p_1	
 	m	(I)Lnet/minecraft/C_66ojovnpv;	m_41ovxlhao	m_41ovxlhao	
 		p	1		p_1	
-	m	(ILjava/lang/Object;)V	m_20khrfqau	m_20khrfqau	
-		p	1		p_1	
-		p	2		p_2	
-	m	(I)V	m_88yfbturs	m_88yfbturs	
-		p	1		p_1	
+	m	(ILjava/lang/Object;)V	m_20khrfqau	update	
+		p	1		id	
+		p	2		value	
+	m	(I)V	m_88yfbturs	markDirty	
+		p	1		id	
 	m	(Ljava/lang/Class;Lnet/minecraft/C_09njgsmmm;)Lnet/minecraft/C_56bwttqna;	m_51fmpohbs		m_51fmpohbs
 		p	0			p_0
 		p	1			p_1
@@ -95,15 +95,17 @@ c	net/minecraft/C_06stqxsqm
 	m	(Lnet/minecraft/C_56bwttqna;)V	m_88yfbturs		m_88yfbturs
 		p	1			p_1
 c	net/minecraft/C_06stqxsqm$C_69nqjyhxa
-	f	I	f_72cfjpvlu	f_72cfjpvlu	
-	f	I	f_57nyonyiw	f_57nyonyiw	
+	f	I	f_72cfjpvlu	type	
+		c	A number that encodes the type of data stored in this entry.	
+	f	I	f_57nyonyiw	id	
+		c	A number that encodes what the data in this entry represents.	
 	f	Lnet/minecraft/C_56bwttqna;	f_57nyonyiw		f_57nyonyiw
 	m	(IILjava/lang/Object;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-	m	()I	m_39jdkeowk	m_39jdkeowk	
-	m	()I	m_25tbkvdxj	m_25tbkvdxj	
+		p	1		type	
+		p	2		id	
+		p	3		value	
+	m	()I	m_39jdkeowk	getId	
+	m	()I	m_25tbkvdxj	getType	
 	m	(Lnet/minecraft/C_56bwttqna;Ljava/lang/Object;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -155,8 +157,8 @@ c	net/minecraft/C_10ekdbvdx
 	f	Lnet/minecraft/C_56bwttqna;	f_34jtatipf		f_34jtatipf
 	f	Lnet/minecraft/C_56bwttqna;	f_93gjdrdve		f_93gjdrdve
 	m	()Ljava/lang/String;	m_91xqvmrhh	m_91xqvmrhh	
-	m	(Ljava/lang/String;)V	m_50iqismno	m_50iqismno	
-		p	1		p_1	
+	m	(Ljava/lang/String;)V	m_50iqismno	setOwner	
+		p	1		owner	
 	m	()Ljava/util/UUID;	m_91xqvmrhh		m_91xqvmrhh
 	m	(Ljava/util/UUID;)V	m_50iqismno		m_50iqismno
 		p	1			p_1
@@ -319,7 +321,7 @@ c	net/minecraft/C_29nkoayrg
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/C_31afoaxfy
-	f	I	f_48wjicjdg	f_48wjicjdg	
+	f	I	f_48wjicjdg	fuseTimer	
 	f	S	f_14vhxeqgo	f_14vhxeqgo	
 	f	Lnet/minecraft/C_56bwttqna;	f_48wjicjdg		f_48wjicjdg
 	f	I	f_14vhxeqgo		f_14vhxeqgo
@@ -511,8 +513,8 @@ c	net/minecraft/C_45xnjghlg
 	f	Lnet/minecraft/C_56bwttqna;	f_58uuudgsx		f_58uuudgsx
 	f	Lnet/minecraft/C_56bwttqna;	f_56zqjjfhu		f_56zqjjfhu
 	f	Z	f_39moadaqo		f_39moadaqo
-	m	(I)V	m_92bydfody	m_92bydfody	
-		p	1		p_1	
+	m	(I)V	m_92bydfody	onDataValueChanged	
+		p	1		id	
 	m	(Lnet/minecraft/C_56bwttqna;)V	m_92bydfody		m_92bydfody
 		p	1			p_1
 	m	()Z	m_18dagfkmk		m_18dagfkmk
@@ -541,9 +543,9 @@ c	net/minecraft/C_50dxufzqm
 	f	Lnet/minecraft/C_56bwttqna;	f_46atymthv		f_46atymthv
 	f	Lnet/minecraft/C_56bwttqna;	f_60cieznim		f_60cieznim
 	f	Lnet/minecraft/C_56bwttqna;	f_75scdaxkq		f_75scdaxkq
-	m	()Ljava/lang/String;	m_03psyckxf	m_03psyckxf	
-	m	(Ljava/lang/String;)V	m_07vmspnwk	m_07vmspnwk	
-		p	1		p_1	
+	m	()Ljava/lang/String;	m_03psyckxf	getOwnerUuid	
+	m	(Ljava/lang/String;)V	m_07vmspnwk	setOwnerName	
+		p	1		name	
 	m	()Ljava/util/UUID;	m_03psyckxf		m_03psyckxf
 	m	(Ljava/util/UUID;)V	m_07vmspnwk		m_07vmspnwk
 		p	1			p_1
@@ -652,7 +654,7 @@ c	net/minecraft/C_60yuudzng
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/C_61jvuylyq
-	m	()Ljava/lang/String;	m_91xqvmrhh	m_91xqvmrhh	
+	m	()Ljava/lang/String;	m_91xqvmrhh	getOwnerName	
 	m	()Ljava/util/UUID;	m_91xqvmrhh		m_91xqvmrhh
 c	net/minecraft/C_62kpsaikt
 	f	I	f_58jjbybil	f_58jjbybil	

@@ -12,23 +12,23 @@ c	net/minecraft/C_03dclokag
 	m	(Lnet/minecraft/C_58ajathvc;)V	<init>		<init>
 		p	1			p_1
 c	net/minecraft/C_04kwcasqb
-	f	Z	f_66unpedcv	f_66unpedcv	
+	f	Z	f_66unpedcv	awaitingServerResourcePack	
 	f	Ljava/util/concurrent/locks/ReentrantLock;	f_68eruxfiw		f_68eruxfiw
 	f	Lcom/google/common/util/concurrent/ListenableFuture;	f_91nzafasg		f_91nzafasg
-	m	(Ljava/lang/String;)V	m_56rxbqhxb	m_56rxbqhxb	
-		p	1		p_1	
-	m	(Ljava/lang/String;Ljava/io/File;)V	m_95ytjnfuk	m_95ytjnfuk	
-		p	1		p_1	
-		p	2		p_2	
+	m	(Ljava/lang/String;)V	m_56rxbqhxb	downloadServerResourcePack	
+		p	1		url	
+	m	(Ljava/lang/String;Ljava/io/File;)V	m_95ytjnfuk	downloadServerResourcePack	
+		p	1		url	
+		p	2		dst	
 	m	(Ljava/io/File;Z)V	m_01bgsqtol	m_01bgsqtol	
 		p	1		p_1	
 		p	2		p_2	
-	m	()V	m_09clunlvx	m_09clunlvx	
-	m	(Lnet/minecraft/C_04kwcasqb;)Z	m_13acmledy	m_13acmledy	
-		p	0		p_0	
-	m	(Lnet/minecraft/C_04kwcasqb;Z)Z	m_80cffrpio	m_80cffrpio	
-		p	0		p_0	
-		p	1		p_1	
+	m	()V	m_09clunlvx	removeServerResourcePack	
+	m	(Lnet/minecraft/C_04kwcasqb;)Z	m_13acmledy	isSet	
+		p	0		resourcePackLoader	
+	m	(Lnet/minecraft/C_04kwcasqb;Z)Z	m_80cffrpio	setIsSet	
+		p	0		resourcePackLoader	
+		p	1		isSet	
 	m	(Ljava/lang/String;Ljava/lang/String;)Lcom/google/common/util/concurrent/ListenableFuture;	m_06zbagquh		m_06zbagquh
 		p	1			p_1
 		p	2			p_2
@@ -36,7 +36,7 @@ c	net/minecraft/C_04kwcasqb
 		p	1			p_1
 	m	()V	m_43hjaprul		m_43hjaprul
 c	net/minecraft/C_04kwcasqb$2
-	f	Lnet/minecraft/C_04kwcasqb;	f_48lwfxdgn	f_48lwfxdgn	
+	f	Lnet/minecraft/C_04kwcasqb;	f_48lwfxdgn	loader	
 	f	Lnet/minecraft/C_33jfbhyhh;	f_05qzaxjqq		f_05qzaxjqq
 	f	Lnet/minecraft/C_81wtzudcq;	f_74sgkbvvo		f_74sgkbvvo
 	f	Lnet/minecraft/C_04kwcasqb;	f_60odexqzy		f_60odexqzy
@@ -79,12 +79,12 @@ c	net/minecraft/C_12cmncnej
 	m	(Lnet/minecraft/C_35vtajgwv;)V	m_28qkkgfte		m_28qkkgfte
 		p	1			p_1
 c	net/minecraft/C_12gcprgzw
-	f	[B	f_89rywwitw	f_89rywwitw	
+	f	[B	f_89rywwitw	data	
 	f	Lnet/minecraft/C_28hbdhyyx;	f_49priajdg		f_49priajdg
 	m	(Ljava/lang/String;[B)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-	m	()[B	m_42gcguzmq	m_42gcguzmq	
+		p	1		channel	
+		p	2		data	
+	m	()[B	m_42gcguzmq	getData	
 	m	()Lnet/minecraft/C_28hbdhyyx;	m_42gcguzmq		m_42gcguzmq
 c	net/minecraft/C_13rsgktde
 	m	(DDI)V	m_29iyzzmie		m_29iyzzmie
@@ -95,14 +95,14 @@ c	net/minecraft/C_23owbidlp
 	f	Lnet/minecraft/C_32nmzayao;	f_83xueolqr		f_83xueolqr
 c	net/minecraft/C_25yelsayc
 	f	Lcom/google/common/util/concurrent/ListeningExecutorService;	f_07iukofxn		f_07iukofxn
-	m	(Ljava/io/File;Ljava/lang/String;Lnet/minecraft/C_73kgmdkfn;Ljava/util/Map;ILnet/minecraft/C_70mrojwwv;Ljava/net/Proxy;)V	m_54qmwacog	m_54qmwacog	
-		p	0		p_0	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
+	m	(Ljava/io/File;Ljava/lang/String;Lnet/minecraft/C_73kgmdkfn;Ljava/util/Map;ILnet/minecraft/C_70mrojwwv;Ljava/net/Proxy;)V	m_54qmwacog	downloadServerPack	
+		p	0		file	
+		p	1		url	
+		p	2		resourcePack	
+		p	3		hashMap	
+		p	4		maxFileSize	
+		p	5		progressListener	
+		p	6		proxy	
 	m	(Ljava/io/File;Ljava/lang/String;Ljava/util/Map;ILnet/minecraft/C_70mrojwwv;Ljava/net/Proxy;)Lcom/google/common/util/concurrent/ListenableFuture;	m_54qmwacog		m_54qmwacog
 		p	0			p_0
 		p	1			p_1
@@ -111,7 +111,7 @@ c	net/minecraft/C_25yelsayc
 		p	4			p_4
 		p	5			p_5
 c	net/minecraft/C_25yelsayc$1
-	f	Lnet/minecraft/C_73kgmdkfn;	f_55feybvup	f_55feybvup	
+	f	Lnet/minecraft/C_73kgmdkfn;	f_55feybvup	resourcePack	
 	m	(Lnet/minecraft/C_70mrojwwv;Ljava/lang/String;Ljava/net/Proxy;Ljava/util/Map;Ljava/io/File;Lnet/minecraft/C_73kgmdkfn;I)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -140,11 +140,11 @@ c	net/minecraft/C_27tgnrrjm$1
 		p	4			p_4
 		p	6			p_6
 c	net/minecraft/C_28erpbwyk
-	m	()J	m_00ethsxda	m_00ethsxda	
+	m	()J	m_00ethsxda	getTime	
 c	net/minecraft/C_28hbdhyyx
 	m	()[B	m_64rytbcmi	m_64rytbcmi	
-	m	(Ljava/lang/String;)V	m_21errmkql	m_21errmkql	
-		p	1		p_1	
+	m	(Ljava/lang/String;)V	m_21errmkql	writeString	
+		p	1		string	
 	m	()J	m_13ybdoyzi		m_13ybdoyzi
 	m	(J)V	m_02fxjuwze		m_02fxjuwze
 		p	1			p_1
@@ -157,9 +157,9 @@ c	net/minecraft/C_28ybopdsp
 	m	(Ljava/lang/String;)Z	m_20wpyhpzg		m_20wpyhpzg
 		p	0			p_0
 c	net/minecraft/C_31jmygkfc
-	m	(Ljava/lang/String;Ljava/lang/String;)V	m_62smnphdg	m_62smnphdg	
-		p	1		p_1	
-		p	2		p_2	
+	m	(Ljava/lang/String;Ljava/lang/String;)V	m_62smnphdg	add	
+		p	1		name	
+		p	2		defaultValue	
 	m	(Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/C_31jmygkfc$C_51hwkcnvw;)V	m_62smnphdg		m_62smnphdg
 		p	1			p_1
 		p	2			p_2
@@ -170,7 +170,7 @@ c	net/minecraft/C_31jmygkfc
 c	net/minecraft/C_31jmygkfc$C_34mrhjgil
 	f	Lnet/minecraft/C_31jmygkfc$C_51hwkcnvw;	f_20gdgwiec		f_20gdgwiec
 	m	(Ljava/lang/String;)V	<init>	<init>	
-		p	1		p_1	
+		p	1		value	
 	m	(Ljava/lang/String;Lnet/minecraft/C_31jmygkfc$C_51hwkcnvw;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -209,8 +209,8 @@ c	net/minecraft/C_32nmzayao
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/C_33jfbhyhh
-	f	Z	f_71bbzyncf	f_71bbzyncf	
-	m	()V	m_38ebitwhd	m_38ebitwhd	
+	f	Z	f_71bbzyncf	hasServerResourcePack	
+	m	()V	m_38ebitwhd	onApplyServerResourcePack	
 	m	()Lcom/google/common/util/concurrent/ListenableFuture;	m_61pakpafy		m_61pakpafy
 	m	()Ljava/util/Map;	m_31uokkgzg		m_31uokkgzg
 c	net/minecraft/C_33jfbhyhh$10
@@ -287,9 +287,9 @@ c	net/minecraft/C_33jfbhyhh$17		17
 	m	()Ljava/lang/String;	m_57bjondvi		m_57bjondvi
 	m	()Ljava/lang/Object;	call		call
 c	net/minecraft/C_33kwnhrpl
-	m	([Ljava/lang/String;Ljava/lang/Iterable;)Ljava/util/List;	m_27xsxaabg	m_27xsxaabg	
-		p	0		p_0	
-		p	1		p_1	
+	m	([Ljava/lang/String;Ljava/lang/Iterable;)Ljava/util/List;	m_27xsxaabg	suggestMatching	
+		p	0		args	
+		p	1		suggestions	
 	m	(Ljava/lang/String;)J	m_55qtiagtn		m_55qtiagtn
 		p	0			p_0
 	m	(Ljava/lang/String;JJ)J	m_49grcpdhb		m_49grcpdhb
@@ -325,12 +325,12 @@ c	net/minecraft/C_37irlkjbv
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/C_38ejktfpk
-	f	[B	f_44htaqibj	f_44htaqibj	
+	f	[B	f_44htaqibj	data	
 	f	Lnet/minecraft/C_28hbdhyyx;	f_51krkcooa		f_51krkcooa
 	m	(Ljava/lang/String;[B)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-	m	()[B	m_74pstuije	m_74pstuije	
+		p	1		channel	
+		p	2		data	
+	m	()[B	m_74pstuije	getData	
 	m	()Lnet/minecraft/C_28hbdhyyx;	m_74pstuije		m_74pstuije
 c	net/minecraft/C_40gcibmhk
 	m	()V	m_26zodpjgn		m_26zodpjgn
@@ -375,12 +375,13 @@ c	net/minecraft/C_52fbxdqah
 		p	4			p_4
 		p	6			p_6
 c	net/minecraft/C_55tdjbiuc
-	m	(Lnet/minecraft/C_99krnodnj;Lnet/minecraft/C_99krnodnj;)F	m_91owifsfa	m_91owifsfa	
-		p	0		p_0	
-		p	1		p_1	
-	m	(Lnet/minecraft/C_99krnodnj;Lnet/minecraft/C_99krnodnj;)I	m_54mgokwor	m_54mgokwor	
-		p	0		p_0	
-		p	1		p_1	
+	m	(Lnet/minecraft/C_99krnodnj;Lnet/minecraft/C_99krnodnj;)F	m_91owifsfa	modifyDamage	
+		c	Returns the increase in damage to the target due to the attacker's enchantments.	
+		p	0		attacker	
+		p	1		target	
+	m	(Lnet/minecraft/C_99krnodnj;Lnet/minecraft/C_99krnodnj;)I	m_54mgokwor	getKnockbackLevel	
+		p	0		attacker	
+		p	1		target	
 	m	(Lnet/minecraft/C_99krnodnj;)I	m_54mgokwor		m_54mgokwor
 		p	0			p_0
 c	net/minecraft/C_58ajathvc
@@ -403,8 +404,8 @@ c	net/minecraft/C_61mgczogw$1
 		p	4			p_4
 		p	6			p_6
 c	net/minecraft/C_64bdsfyyk
-	m	(Ljava/lang/String;)V	m_19xdrgpri	m_19xdrgpri	
-		p	1		p_1	
+	m	(Ljava/lang/String;)V	m_19xdrgpri	sendResourcePack	
+		p	1		url	
 	m	(Ljava/lang/String;Ljava/lang/String;)V	m_89uvmeecu		m_89uvmeecu
 		p	1			p_1
 		p	2			p_2
@@ -414,8 +415,8 @@ c	net/minecraft/C_68pitlqdw
 	m	(Lnet/minecraft/C_68pitlqdw;)Lnet/minecraft/C_67srpuqzs;	m_49fdzeuka		m_49fdzeuka
 		p	0			p_0
 c	net/minecraft/C_68pitlqdw$1
-	f	Ljava/lang/String;	f_16jacvaoh	f_16jacvaoh	
-	f	Lnet/minecraft/C_68pitlqdw;	f_56czjwtfg	f_56czjwtfg	
+	f	Ljava/lang/String;	f_16jacvaoh	name	
+	f	Lnet/minecraft/C_68pitlqdw;	f_56czjwtfg	networkHandler	
 	f	Ljava/lang/String;	f_24gjbsgkb		f_24gjbsgkb
 	f	Lnet/minecraft/C_68pitlqdw;	f_38upnkfre		f_38upnkfre
 	m	(ZI)V	m_96yvzksow	m_96yvzksow	
@@ -481,11 +482,11 @@ c	net/minecraft/C_70uunbknj
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_72lmksxlm
-	f	Ljava/util/List;	f_41cbuusgd	f_41cbuusgd	
+	f	Ljava/util/List;	f_41cbuusgd	LISTS	
 	m	()V	<clinit>	<clinit>	
-c	net/minecraft/C_73kgmdkfn	net/minecraft/C_73kgmdkfn	
-	m	(Ljava/io/File;)V	m_36pfsaoqj	m_36pfsaoqj	
-		p	1		p_1	
+c	net/minecraft/C_73kgmdkfn	net/minecraft/client/resource/pack/ServerResourcePack	
+	m	(Ljava/io/File;)V	m_36pfsaoqj	apply	
+		p	1		file	
 c	net/minecraft/C_76frhnfoz
 	m	(Lnet/minecraft/C_90heegthq;Lnet/minecraft/C_33mvdbiez$C_79lvxxvpk;Lnet/minecraft/C_56axpdmnz;)Z	m_85yuefmoz		m_85yuefmoz
 		p	1			p_1
@@ -523,8 +524,8 @@ c	net/minecraft/C_88mgmdxwj
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_88mhwqlfd
-	f	I	f_83vdhjbdw	f_83vdhjbdw	
-	f	Ljava/util/Set;	f_85gvrgxzf	f_85gvrgxzf	
+	f	I	f_83vdhjbdw	modCount	
+	f	Ljava/util/Set;	f_85gvrgxzf	ids	
 c	net/minecraft/C_89hmcekbk
 	f	Lnet/minecraft/C_40ywyqept;	f_16jwrmbss	f_16jwrmbss	
 	f	Lnet/minecraft/C_03mgtjlfl;	f_81ulhsaiu		f_81ulhsaiu
@@ -568,14 +569,14 @@ c	net/minecraft/C_97avsuoqc$2		2
 	m	(Ljava/lang/Object;)V	onSuccess		onSuccess
 		p	1			p_1
 c	net/minecraft/C_99krnodnj
-	m	(DDD)V	m_28etxvouy	m_28etxvouy	
-		p	1		p_1	
-		p	3		p_3	
-		p	5		p_5	
+	m	(DDD)V	m_28etxvouy	refreshPosition	
+		p	1		x	
+		p	3		y	
+		p	5		z	
 c	net/minecraft/server/MinecraftServer
 	f	Ljava/lang/String;	f_57pkrfxov		f_57pkrfxov
-	m	(Ljava/lang/String;)V	m_74ulvqqla	m_74ulvqqla	
-		p	1		p_1	
+	m	(Ljava/lang/String;)V	m_74ulvqqla	setResourcePack	
+		p	1		url	
 	m	()Ljava/lang/String;	m_57ilnvnof		m_57ilnvnof
 	m	(Ljava/lang/String;Ljava/lang/String;)V	m_74ulvqqla		m_74ulvqqla
 		p	1			p_1

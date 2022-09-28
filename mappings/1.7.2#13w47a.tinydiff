@@ -1,6 +1,6 @@
 tiny	2	0
 c	net/minecraft/C_00ejxwixt
-	f	Ljava/util/concurrent/atomic/AtomicInteger;	f_23javpoxu	f_23javpoxu	
+	f	Ljava/util/concurrent/atomic/AtomicInteger;	f_23javpoxu	idCounter	
 	m	(Lnet/minecraft/C_00ejxwixt;)Lnet/minecraft/C_33jfbhyhh;	m_58svisibv		m_58svisibv
 		p	0			p_0
 c	net/minecraft/C_00ejxwixt$1
@@ -15,9 +15,9 @@ c	net/minecraft/C_04simxeay
 c	net/minecraft/C_06zbckyvc
 	f	Ljava/lang/String;	f_19xxbajys		f_19xxbajys
 	m	(ILjava/lang/String;I)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+		p	1		responseCode	
+		p	2		error	
+		p	3		errorCode	
 	m	(ILjava/lang/String;ILjava/lang/String;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -66,7 +66,7 @@ c	net/minecraft/C_15hnkakxk
 c	net/minecraft/C_15hnkakxk$C_50vhlcgld
 	f	Lnet/minecraft/C_15hnkakxk$C_50vhlcgld;	f_41zhhpduv		f_41zhhpduv
 c	net/minecraft/C_18pkftaht
-	f	Ljava/util/concurrent/atomic/AtomicInteger;	f_32rhttjal	f_32rhttjal	
+	f	Ljava/util/concurrent/atomic/AtomicInteger;	f_32rhttjal	numberOfInvites	
 c	net/minecraft/C_18pkftaht$1
 	m	(Lnet/minecraft/C_18pkftaht;Ljava/lang/String;)V	<init>	<init>	
 		p	1		p_1	
@@ -91,12 +91,12 @@ c	net/minecraft/C_20vlsfszg
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_23nvtlfpi
-	f	Lnet/minecraft/C_23nvtlfpi$C_21iozuojj;	f_43lgbftkf	f_43lgbftkf	
-	f	Ljava/util/Timer;	f_01rhbpptt	f_01rhbpptt	
-	f	I	f_02ftmvyvx	f_02ftmvyvx	
-	f	Z	f_15vqzieoz	f_15vqzieoz	
-	f	Lnet/minecraft/C_77lrbvjmr;	f_26apwmebi	f_26apwmebi	
-	f	I	f_07tnptkbw	f_07tnptkbw	
+	f	Lnet/minecraft/C_23nvtlfpi$C_21iozuojj;	f_43lgbftkf	timerTask	
+	f	Ljava/util/Timer;	f_01rhbpptt	timer	
+	f	I	f_02ftmvyvx	clickable	
+	f	Z	f_15vqzieoz	set	
+	f	Lnet/minecraft/C_77lrbvjmr;	f_26apwmebi	session	
+	f	I	f_07tnptkbw	subscriptionStatus	
 	f	Ljava/util/concurrent/ScheduledExecutorService;	f_45obbncrx		f_45obbncrx
 	f	Lnet/minecraft/C_23nvtlfpi$C_21iozuojj;	f_20jwegwvh		f_20jwegwvh
 	f	Lnet/minecraft/C_23nvtlfpi$C_81oyxkdog;	f_03axhfqjc		f_03axhfqjc
@@ -107,19 +107,19 @@ c	net/minecraft/C_23nvtlfpi
 	f	Ljava/util/concurrent/ScheduledFuture;	f_24oorfwid		f_24oorfwid
 	f	Ljava/util/concurrent/ScheduledFuture;	f_85plmfjam		f_85plmfjam
 	f	Ljava/util/Map;	f_74iwfmvsy		f_74iwfmvsy
-	m	(Lnet/minecraft/C_77lrbvjmr;)V	m_70wpsboep	m_70wpsboep	
-		p	1		p_1	
-	m	()Z	m_68gbgexix	m_68gbgexix	
-	m	()V	m_83hgmzyde	m_83hgmzyde	
-	m	(I)V	m_71nwvkdlp	m_71nwvkdlp	
-		p	1		p_1	
-	m	(Lnet/minecraft/C_23nvtlfpi;)Z	m_24hnqldog	m_24hnqldog	
-		p	0		p_0	
-	m	(Lnet/minecraft/C_23nvtlfpi;)Lnet/minecraft/C_77lrbvjmr;	m_40xwmugad	m_40xwmugad	
-		p	0		p_0	
-	m	(Lnet/minecraft/C_23nvtlfpi;I)V	m_93wghscab	m_93wghscab	
-		p	0		p_0	
-		p	1		p_1	
+	m	(Lnet/minecraft/C_77lrbvjmr;)V	m_70wpsboep	init	
+		p	1		session	
+	m	()Z	m_68gbgexix	isSet	
+	m	()V	m_83hgmzyde	cancelTimer	
+	m	(I)V	m_71nwvkdlp	setClickable	
+		p	1		clickable	
+	m	(Lnet/minecraft/C_23nvtlfpi;)Z	m_24hnqldog	needsNewTimer	
+		p	0		serverList	
+	m	(Lnet/minecraft/C_23nvtlfpi;)Lnet/minecraft/C_77lrbvjmr;	m_40xwmugad	getSession	
+		p	0		serverList	
+	m	(Lnet/minecraft/C_23nvtlfpi;I)V	m_93wghscab	setClickable	
+		p	0		server	
+		p	1		clickable	
 	m	()V	m_70wpsboep		m_70wpsboep
 	m	(Lnet/minecraft/C_22gpoxrdq;)Z	m_24hheiofv		m_24hheiofv
 		p	1			p_1
@@ -140,11 +140,11 @@ c	net/minecraft/C_23nvtlfpi
 		p	0			p_0
 		p	1			p_1
 c	net/minecraft/C_23nvtlfpi$C_21iozuojj
-	f	Lnet/minecraft/C_36wnmyggk;	f_10htlulxt	f_10htlulxt	
-	m	()V	m_08xqhioid	m_08xqhioid	
-	m	()V	m_60mhwsfid	m_60mhwsfid	
-	m	(Ljava/util/List;)V	m_33gmrifrk	m_33gmrifrk	
-		p	1		p_1	
+	f	Lnet/minecraft/C_36wnmyggk;	f_10htlulxt	client	
+	m	()V	m_08xqhioid	setServerList	
+	m	()V	m_60mhwsfid	setSubscriptionStatus	
+	m	(Ljava/util/List;)V	m_33gmrifrk	sortServerList	
+		p	1		serverList	
 c	net/minecraft/C_23nvtlfpi$C_60dvpqmvi
 	f	Lnet/minecraft/C_23nvtlfpi$C_21iozuojj;	f_89jmhhenv	f_89jmhhenv	
 	f	Lnet/minecraft/C_23nvtlfpi;	f_89jmhhenv		f_89jmhhenv
@@ -181,7 +181,8 @@ c	net/minecraft/C_23nvtlfpi$C_81oyxkdog		C_81oyxkdog
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_23owbidlp
-	f	Lnet/minecraft/C_71tldynod;	f_25ftlhnwv	f_25ftlhnwv	
+	c	This class holds references to all Vanilla blocks.	
+	f	Lnet/minecraft/C_71tldynod;	f_25ftlhnwv	SAND	
 	f	Lnet/minecraft/C_99nbiuvgu;	f_25ftlhnwv		f_25ftlhnwv
 c	net/minecraft/C_25yelsayc
 	m	(Ljava/net/URL;)Ljava/lang/String;	m_69tqvbybh		m_69tqvbybh
@@ -189,16 +190,16 @@ c	net/minecraft/C_25yelsayc
 c	net/minecraft/C_33jfbhyhh
 	f	Lnet/minecraft/C_48kamxasz;	f_20dpuxgaa		f_20dpuxgaa
 	m	(Lnet/minecraft/C_77lrbvjmr;IIZZLjava/io/File;Ljava/io/File;Ljava/io/File;Ljava/net/Proxy;Ljava/lang/String;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
-		p	7		p_7	
-		p	8		p_8	
-		p	9		p_9	
-		p	10		p_10	
+		p	1		session	
+		p	2		width	
+		p	3		height	
+		p	4		fullscreen	
+		p	5		demo	
+		p	6		runDir	
+		p	7		assetsDir	
+		p	8		resourcePacksDir	
+		p	9		proxy	
+		p	10		gameVersion	
 	m	(Lnet/minecraft/C_77lrbvjmr;IIZZLjava/io/File;Ljava/io/File;Ljava/io/File;Ljava/net/Proxy;Ljava/lang/String;Lcom/google/common/collect/Multimap;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -214,8 +215,8 @@ c	net/minecraft/C_33jfbhyhh
 	m	()Lnet/minecraft/C_48kamxasz;	m_46vuvxkrb		m_46vuvxkrb
 	m	()V	m_24krascro		m_24krascro
 c	net/minecraft/C_33jgupvqm
-	f	Ljava/util/concurrent/atomic/AtomicInteger;	f_98zzmigly	f_98zzmigly	
-	f	Lnet/minecraft/C_53frmdhtb;	f_42iasrzmc	f_42iasrzmc	
+	f	Ljava/util/concurrent/atomic/AtomicInteger;	f_98zzmigly	configureRequesterId	
+	f	Lnet/minecraft/C_53frmdhtb;	f_42iasrzmc	moreInfoButton	
 	f	Lnet/minecraft/C_82uoptpps;	f_42iasrzmc		f_42iasrzmc
 	f	I	f_92nilahto		f_92nilahto
 	f	Z	f_40pjiscjp		f_40pjiscjp
@@ -236,17 +237,17 @@ c	net/minecraft/C_33jgupvqm$1
 	m	(Lnet/minecraft/C_33jgupvqm;)V	<init>		<init>
 		p	1			p_1
 c	net/minecraft/C_33jgupvqm$C_21zqziuwc
-	m	(IIIILnet/minecraft/C_74npglenx;)V	m_53uulqiao	m_53uulqiao	
+	m	(IIIILnet/minecraft/C_74npglenx;)V	m_53uulqiao	m_22egwcqcx	
+		p	1		index	
+		p	2		x	
+		p	3		y	
+		p	4		p_4	
+		p	5		bufferBuilder	
+	m	(IIILnet/minecraft/C_75gqbtwno;)V	m_10qfbsnju	m_35gulhaip	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-	m	(IIILnet/minecraft/C_75gqbtwno;)V	m_10qfbsnju	m_10qfbsnju	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
+		p	4		server	
 	m	(III)V	m_53uulqiao		m_53uulqiao
 		p	1			p_1
 		p	2			p_2
@@ -260,7 +261,7 @@ c	net/minecraft/C_33jgupvqm$C_21zqziuwc
 c	net/minecraft/C_35swlqzbq
 	m	()Ljava/lang/String;	m_62eivspkz		m_62eivspkz
 c	net/minecraft/C_36wnmyggk
-	m	()Ljava/lang/String;	m_43ftkcozo	m_43ftkcozo	
+	m	()Ljava/lang/String;	m_43ftkcozo	executeMcoStat	
 	m	()Lnet/minecraft/C_33qnwnjqf;	m_43ftkcozo		m_43ftkcozo
 c	net/minecraft/C_37vtrkrst
 	m	(Lnet/minecraft/C_70uunbknj;IIIIFI)V	m_43afwmahn	m_43afwmahn	
@@ -272,11 +273,11 @@ c	net/minecraft/C_37vtrkrst
 		p	6		p_6	
 		p	7		p_7	
 c	net/minecraft/C_48griddld
-	f	I	f_68schjwsz	f_68schjwsz	
+	f	I	f_68schjwsz	cancelButtonId	
 	f	Z	f_58vmzqvow		f_58vmzqvow
 	m	()Ljava/lang/String;	m_83cbnqgjw		m_83cbnqgjw
-c	net/minecraft/C_53frmdhtb	net/minecraft/C_53frmdhtb	
-	f	Lorg/apache/logging/log4j/Logger;	f_40uczqhfo	f_40uczqhfo	
+c	net/minecraft/C_53frmdhtb	net/minecraft/client/realms/gui/MoreInfoButtonWidget	
+	f	Lorg/apache/logging/log4j/Logger;	f_40uczqhfo	LOGGER	
 	m	(IIIIILjava/lang/String;)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -284,8 +285,8 @@ c	net/minecraft/C_53frmdhtb	net/minecraft/C_53frmdhtb
 		p	4		p_4	
 		p	5		p_5	
 		p	6		p_6	
-	m	(Ljava/lang/String;)V	m_81hinqelr	m_81hinqelr	
-		p	1		p_1	
+	m	(Ljava/lang/String;)V	m_81hinqelr	openLink	
+		p	1		url	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/C_54wxcnzuh
 	m	(IIFFIIIIFF)V	m_46ofwkcdp		m_46ofwkcdp
@@ -301,13 +302,13 @@ c	net/minecraft/C_54wxcnzuh
 		p	9			p_9
 c	net/minecraft/C_62zbrgmeb
 	m	(Lnet/minecraft/C_86bjwfwfy;Lnet/minecraft/C_30kwpsaes;Lnet/minecraft/C_73ocgrvrr;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-	m	(Lnet/minecraft/C_73ocgrvrr;)V	m_08acoanzl	m_08acoanzl	
-		p	1		p_1	
-	m	(Lcom/google/gson/JsonElement;)V	m_54bbdvvec	m_54bbdvvec	
-		p	1		p_1	
+		p	1		resourceManager	
+		p	2		screenTarget	
+		p	3		id	
+	m	(Lnet/minecraft/C_73ocgrvrr;)V	m_08acoanzl	load	
+		p	1		id	
+	m	(Lcom/google/gson/JsonElement;)V	m_54bbdvvec	parsePassNode	
+		p	1		json	
 	m	(Lnet/minecraft/C_92pcocbdx;Lnet/minecraft/C_86bjwfwfy;Lnet/minecraft/C_30kwpsaes;Lnet/minecraft/C_73ocgrvrr;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -323,10 +324,10 @@ c	net/minecraft/C_63alzccby
 	m	(F)V	m_13rmbjrcd		m_13rmbjrcd
 		p	1			p_1
 c	net/minecraft/C_63sqjlwyt
-	f	Ljava/lang/String;	f_95kdvgteb	f_95kdvgteb	
+	f	Ljava/lang/String;	f_95kdvgteb	title	
 c	net/minecraft/C_63ywqcxjy
-	f	Ljava/util/concurrent/atomic/AtomicInteger;	f_55bjcnvwr	f_55bjcnvwr	
-	f	Ljava/lang/Thread;	f_79izbwykp	f_79izbwykp	
+	f	Ljava/util/concurrent/atomic/AtomicInteger;	f_55bjcnvwr	idCounter	
+	f	Ljava/lang/Thread;	f_79izbwykp	taskThread	
 	f	Lnet/minecraft/C_81mztrkyo;	f_60uomyioc		f_60uomyioc
 c	net/minecraft/C_66txtzkrv
 	f	Z	f_78skghfqe		f_78skghfqe
@@ -343,7 +344,7 @@ c	net/minecraft/C_78fwqxmjc
 		p	0			p_0
 		p	1			p_1
 c	net/minecraft/C_83fnrgadf
-	f	Ljava/util/concurrent/atomic/AtomicInteger;	f_35qxuxcrc	f_35qxuxcrc	
+	f	Ljava/util/concurrent/atomic/AtomicInteger;	f_35qxuxcrc	connections	
 c	net/minecraft/C_83fnrgadf$1
 	m	(Lnet/minecraft/C_83fnrgadf;Ljava/lang/String;Ljava/lang/String;I)V	<init>	<init>	
 		p	1		p_1	
@@ -355,24 +356,24 @@ c	net/minecraft/C_83fnrgadf$1
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/C_86zjkxpey
-	f	Ljava/lang/String;	f_17khhcvwi	f_17khhcvwi	
+	f	Ljava/lang/String;	f_17khhcvwi	split	
 	f	Lnet/minecraft/C_33qnwnjqf;	f_98euqyyut		f_98euqyyut
 	f	Z	f_33oyrzlke		f_33oyrzlke
-	m	(Lnet/minecraft/C_86zjkxpey;Ljava/lang/String;)Ljava/lang/String;	m_06gtndypa	m_06gtndypa	
-		p	0		p_0	
-		p	1		p_1	
+	m	(Lnet/minecraft/C_86zjkxpey;Ljava/lang/String;)Ljava/lang/String;	m_06gtndypa	setSplit	
+		p	0		buyRealmsScreen	
+		p	1		split	
 	m	(Ljava/lang/String;)V	m_87xzdfvnd		m_87xzdfvnd
 		p	1			p_1
 	m	(Lnet/minecraft/C_86zjkxpey;Lnet/minecraft/C_33qnwnjqf;)Lnet/minecraft/C_33qnwnjqf;	m_06gtndypa		m_06gtndypa
 		p	0			p_0
 		p	1			p_1
 c	net/minecraft/C_92kcjslxf
-	f	Ljava/lang/String;	f_03dkebspn	f_03dkebspn	
+	f	Ljava/lang/String;	f_03dkebspn	description	
 	f	Lnet/minecraft/C_63wkrecwi;	f_56dbshscg		f_56dbshscg
 	m	(Ljava/lang/String;I)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-	m	()Ljava/lang/String;	m_92jluchad	m_92jluchad	
+		p	1		description	
+		p	2		format	
+	m	()Ljava/lang/String;	m_92jluchad	getDescription	
 	m	(Lnet/minecraft/C_63wkrecwi;I)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
