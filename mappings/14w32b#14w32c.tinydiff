@@ -1,6 +1,6 @@
 tiny	2	0
 c	net/minecraft/C_03nkgzlfi
-	m	()Z	m_51bymiihv		m_51bymiihv
+	m	()Z	m_51bymiihv		canTransferNextTick
 c	net/minecraft/C_04qwxjami
 	m	()Lnet/minecraft/C_71tldynod;	m_59aingxhh	m_59aingxhh	
 	m	()I	m_77qqnydau	m_77qqnydau	
@@ -29,19 +29,19 @@ c	net/minecraft/C_20fkgpafa
 	m	()Lnet/minecraft/C_71tldynod;	m_59aingxhh	m_59aingxhh	
 	m	()Lnet/minecraft/C_67yyfsste;	m_12npkwojv		m_12npkwojv
 c	net/minecraft/C_20lkdvolc
-	f	Ljava/util/concurrent/ConcurrentLinkedQueue;	f_84jvudizi		f_84jvudizi
+	f	Ljava/util/concurrent/ConcurrentLinkedQueue;	f_84jvudizi		blockEntityCreationQueue
 	m	(Lnet/minecraft/C_56axpdmnz;Z)Lnet/minecraft/C_87keltfgr;	m_07smcdahg	m_07smcdahg	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/C_56axpdmnz;)Lnet/minecraft/C_87keltfgr;	m_87kcxaguj		m_87kcxaguj
-		p	1			p_1
-	m	(Lnet/minecraft/C_56axpdmnz;Lnet/minecraft/C_20lkdvolc$C_44nfadgaz;)Lnet/minecraft/C_87keltfgr;	m_07smcdahg		m_07smcdahg
-		p	1			p_1
-		p	2			p_2
-c	net/minecraft/C_20lkdvolc$C_44nfadgaz		C_44nfadgaz
-	f	Lnet/minecraft/C_20lkdvolc$C_44nfadgaz;	f_06qtoosoa		f_06qtoosoa
-	f	Lnet/minecraft/C_20lkdvolc$C_44nfadgaz;	f_56uvebwzq		f_56uvebwzq
-	f	Lnet/minecraft/C_20lkdvolc$C_44nfadgaz;	f_64fcmxlta		f_64fcmxlta
+	m	(Lnet/minecraft/C_56axpdmnz;)Lnet/minecraft/C_87keltfgr;	m_87kcxaguj		createBlockEntity
+		p	1			pos
+	m	(Lnet/minecraft/C_56axpdmnz;Lnet/minecraft/C_20lkdvolc$C_44nfadgaz;)Lnet/minecraft/C_87keltfgr;	m_07smcdahg		getBlockEntity
+		p	1			pos
+		p	2			creationType
+c	net/minecraft/C_20lkdvolc$C_44nfadgaz		BlockEntityCreationType
+	f	Lnet/minecraft/C_20lkdvolc$C_44nfadgaz;	f_06qtoosoa		IMMEDIATE
+	f	Lnet/minecraft/C_20lkdvolc$C_44nfadgaz;	f_56uvebwzq		QUEUED
+	f	Lnet/minecraft/C_20lkdvolc$C_44nfadgaz;	f_64fcmxlta		CHECK
 	f	[Lnet/minecraft/C_20lkdvolc$C_44nfadgaz;	f_13voaezqc		f_13voaezqc
 	m	()[Lnet/minecraft/C_20lkdvolc$C_44nfadgaz;	values		values
 	m	(Ljava/lang/String;)Lnet/minecraft/C_20lkdvolc$C_44nfadgaz;	valueOf		valueOf
@@ -58,10 +58,10 @@ c	net/minecraft/C_28cppuyil
 c	net/minecraft/C_29npkkzgz
 	f	Lnet/minecraft/C_71tldynod;	f_22zpwmwwk	block	
 	f	I	f_68ylyyonv	metadata	
-	f	Lnet/minecraft/C_67yyfsste;	f_69overohg		f_69overohg
+	f	Lnet/minecraft/C_67yyfsste;	f_69overohg		state
 	m	()Lnet/minecraft/C_71tldynod;	m_06iuypgyn	getBlock	
-	m	()Lnet/minecraft/C_67yyfsste;	m_06iuypgyn		m_06iuypgyn
-	m	()Lnet/minecraft/C_71tldynod;	m_90rbkunyg		m_90rbkunyg
+	m	()Lnet/minecraft/C_67yyfsste;	m_06iuypgyn		getBlockState
+	m	()Lnet/minecraft/C_71tldynod;	m_90rbkunyg		getBlock
 c	net/minecraft/C_32fadxkqb
 	m	(Lnet/minecraft/C_43bwwkbqb;FLnet/minecraft/C_71tldynod;I)V	m_07xdzmrwq	renderSpawnerMinecart	
 		p	1		p_1	
@@ -73,7 +73,7 @@ c	net/minecraft/C_32fadxkqb
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
-	m	(Lnet/minecraft/C_43bwwkbqb;FLnet/minecraft/C_67yyfsste;)V	m_07xdzmrwq		m_07xdzmrwq
+	m	(Lnet/minecraft/C_43bwwkbqb;FLnet/minecraft/C_67yyfsste;)V	m_07xdzmrwq		renderSpawnerMinecart
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -104,7 +104,7 @@ c	net/minecraft/C_38juvqwqz
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
-	m	(Lnet/minecraft/C_20fkgpafa;FLnet/minecraft/C_67yyfsste;)V	m_04evnbpfa		m_04evnbpfa
+	m	(Lnet/minecraft/C_20fkgpafa;FLnet/minecraft/C_67yyfsste;)V	m_04evnbpfa		renderSpawnerMinecart
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -193,25 +193,25 @@ c	net/minecraft/C_53oyjqbjr
 	m	()Lnet/minecraft/C_67yyfsste;	m_12npkwojv		m_12npkwojv
 c	net/minecraft/C_57vvyxxjr
 	f	[B	f_15xnvsauy	clayLayers	
-	f	[Lnet/minecraft/C_67yyfsste;	f_38uddslku		f_38uddslku
+	f	[Lnet/minecraft/C_67yyfsste;	f_38uddslku		clayLayers
 	m	(III)B	m_83igvvvia	getClayLayer	
 		p	1		x	
 		p	2		y	
 		p	3		z	
-	m	(III)Lnet/minecraft/C_67yyfsste;	m_83igvvvia		m_83igvvvia
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(III)Lnet/minecraft/C_67yyfsste;	m_83igvvvia		getClayLayer
+		p	1			x
+		p	2			y
+		p	3			z
 c	net/minecraft/C_71tldynod
-	f	Lnet/minecraft/C_71tldynod$C_76kunyilc;	f_59hdhitvu		f_59hdhitvu
+	f	Lnet/minecraft/C_71tldynod$C_76kunyilc;	f_59hdhitvu		SLIME
 	m	(I)I	m_83twxnrfa	getColor	
 		p	1		metadata	
 	m	(I)I	m_25vfomogb	m_25vfomogb	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_67yyfsste;)I	m_74cktzwwx		m_74cktzwwx
-		p	1			p_1
-	m	(Lnet/minecraft/C_67yyfsste;)Lnet/minecraft/C_67yyfsste;	m_52dfgnrss		m_52dfgnrss
-		p	1			p_1
+	m	(Lnet/minecraft/C_67yyfsste;)I	m_74cktzwwx		getColor
+		p	1			state
+	m	(Lnet/minecraft/C_67yyfsste;)Lnet/minecraft/C_67yyfsste;	m_52dfgnrss		getStateForRendering
+		p	1			state
 c	net/minecraft/C_71tldynod$4		4
 	m	(Ljava/lang/String;FF)V	<init>		<init>
 		p	1			p_1
@@ -226,10 +226,10 @@ c	net/minecraft/C_76bcebgmm
 		p	2		tickDelta	
 		p	3		block	
 		p	4		metadata	
-	m	(Lnet/minecraft/C_39hqklhhf;FLnet/minecraft/C_67yyfsste;)V	m_38tmsfkzn		m_38tmsfkzn
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(Lnet/minecraft/C_39hqklhhf;FLnet/minecraft/C_67yyfsste;)V	m_38tmsfkzn		renderSpawnerMinecart
+		p	1			spawnerMinecartEntity
+		p	2			tickDelta
+		p	3			block
 c	net/minecraft/C_88fqpvmrl
 	m	(I)I	m_83twxnrfa	m_83twxnrfa	
 		p	1		p_1	

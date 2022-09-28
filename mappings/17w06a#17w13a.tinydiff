@@ -48,7 +48,7 @@ c	net/minecraft/C_01zioqcwk	net/minecraft/stat/achievement/AchievementStat
 	f	I	f_57wbdrpew	row	
 	f	Lnet/minecraft/C_01zioqcwk;	f_31xeoqgrj	parent	
 	f	Ljava/lang/String;	f_77grhnlhx	translationKey	
-	f	Lnet/minecraft/C_58yszjbrx;	f_74xzhreni	formatter	
+	f	Lnet/minecraft/C_58yszjbrx;	f_74xzhreni	statFormatter	
 	f	Lnet/minecraft/C_28zsxyyrk;	f_15cwydura	icon	
 	f	Z	f_70kabwufg	challenge	
 	m	(Ljava/lang/String;Ljava/lang/String;IILnet/minecraft/C_32kijbyyv;Lnet/minecraft/C_01zioqcwk;)V	<init>	<init>	
@@ -56,7 +56,7 @@ c	net/minecraft/C_01zioqcwk	net/minecraft/stat/achievement/AchievementStat
 		p	2		achievementName	
 		p	3		column	
 		p	4		row	
-		p	5		item	
+		p	5		logo	
 		p	6		parent	
 	m	(Ljava/lang/String;Ljava/lang/String;IILnet/minecraft/C_71tldynod;Lnet/minecraft/C_01zioqcwk;)V	<init>	<init>	
 		p	1		statName	
@@ -70,7 +70,7 @@ c	net/minecraft/C_01zioqcwk	net/minecraft/stat/achievement/AchievementStat
 		p	2		achievementName	
 		p	3		column	
 		p	4		row	
-		p	5		logo	
+		p	5		item	
 		p	6		parent	
 	m	()Lnet/minecraft/C_01zioqcwk;	m_67sytapgr	setLocalOnly	
 	m	()Lnet/minecraft/C_01zioqcwk;	m_80mgbtxwk	setAsChallenge	
@@ -98,19 +98,19 @@ c	net/minecraft/C_03zhcekke
 	m	()Ljava/util/List;	m_75fwneexu		m_75fwneexu
 	m	()Z	m_86nmwekin		m_86nmwekin
 c	net/minecraft/C_04mnmracr
-	m	(Z)V	m_02ggxdeft	setRenderSelectionHighlight	
-		p	1		renderSelectionHighlight	
+	m	(Z)V	m_02ggxdeft	setRenderSelection	
+		p	1		renderSelection	
 	m	(III)V	m_99wepyvte	m_99wepyvte	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(IIIIII)V	m_37kpxwhsu	m_37kpxwhsu	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
+	m	(IIIIII)V	m_37kpxwhsu	renderEntry	
+		p	1		index	
+		p	2		x	
+		p	3		y	
+		p	4		rowHeight	
+		p	5		bufferBuilder	
+		p	6		mouseX	
 	m	(IIII)V	m_75xwwiwuy	renderList	
 		p	1		x	
 		p	2		y	
@@ -193,18 +193,19 @@ c	net/minecraft/C_05ropxfff$C_84kokfzxb
 c	net/minecraft/C_05tryysqm
 	f	Lnet/minecraft/C_32kijbyyv;	f_58qwiprxa		f_58qwiprxa
 c	net/minecraft/C_07kerlazx
-	f	B	f_98qafqttb	f_98qafqttb	
+	f	B	f_98qafqttb	type	
+		c	The type of message. The possible values are:\n<br>0: chat\n<br>1: system\n<br>2: info	
 	f	Lnet/minecraft/C_86likytdy;	f_98qafqttb		f_98qafqttb
 	m	(Lnet/minecraft/C_63wkrecwi;B)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-	m	()B	m_01eacrxef	m_01eacrxef	
+		p	1		message	
+		p	2		type	
+	m	()B	m_01eacrxef	getType	
 	m	(Lnet/minecraft/C_63wkrecwi;Lnet/minecraft/C_86likytdy;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
 	m	()Lnet/minecraft/C_86likytdy;	m_01eacrxef		m_01eacrxef
 c	net/minecraft/C_08dcrrlvx
-	m	(Lnet/minecraft/C_83rwnqwbh;DDDFI)V	m_94wwkjmqu	m_94wwkjmqu	
+	m	(Lnet/minecraft/C_83rwnqwbh;DDDFI)V	m_94wwkjmqu	render	
 		p	1		p_1	
 		p	2		p_2	
 		p	4		p_4	
@@ -219,7 +220,7 @@ c	net/minecraft/C_08dcrrlvx
 		p	8		p_8	
 		p	9		p_9	
 c	net/minecraft/C_09epvdnmv
-	m	(Lnet/minecraft/C_79kxlfxay;DDDFI)V	m_28qybeiul	m_28qybeiul	
+	m	(Lnet/minecraft/C_79kxlfxay;DDDFI)V	m_28qybeiul	render	
 		p	1		p_1	
 		p	2		p_2	
 		p	4		p_4	
@@ -339,13 +340,13 @@ c	net/minecraft/C_12gdmswcy$C_76vnxkzei
 	m	()Ljava/util/List;	m_75fwneexu		m_75fwneexu
 	m	()Z	m_86nmwekin		m_86nmwekin
 c	net/minecraft/C_13totjbbk
-	m	(Lnet/minecraft/C_87keltfgr;DDDFI)V	m_76qehkdqe	m_76qehkdqe	
-		p	1		p_1	
-		p	2		p_2	
-		p	4		p_4	
-		p	6		p_6	
-		p	8		p_8	
-		p	9		p_9	
+	m	(Lnet/minecraft/C_87keltfgr;DDDFI)V	m_76qehkdqe	render	
+		p	1		blockEntity	
+		p	2		x	
+		p	4		y	
+		p	6		z	
+		p	8		tickDelta	
+		p	9		blockMiningProgress	
 	m	(Lnet/minecraft/C_87keltfgr;DDDFIF)V	m_76qehkdqe		m_76qehkdqe
 		p	1			p_1
 		p	2			p_2
@@ -361,7 +362,7 @@ c	net/minecraft/C_14ygowpwm
 	m	(F)V	m_97nlsudsz		m_97nlsudsz
 		p	1			p_1
 c	net/minecraft/C_15hbhxwgb
-	m	(Lnet/minecraft/C_09fbsxbvs;DDDFI)V	m_54byhuglc	m_54byhuglc	
+	m	(Lnet/minecraft/C_09fbsxbvs;DDDFI)V	m_54byhuglc	render	
 		p	1		p_1	
 		p	2		p_2	
 		p	4		p_4	
@@ -418,8 +419,8 @@ c	net/minecraft/C_20vlsfszg
 c	net/minecraft/C_21iqoazsm
 	m	()Lnet/minecraft/C_32kijbyyv$C_89koibefo;	m_00jvlqahu	getMaterial	
 c	net/minecraft/C_22wnfpodv
-	m	(Lnet/minecraft/C_22wnfpodv$C_97ooytvbz;)V	m_92phnderv	m_92phnderv	
-		p	0		p_0	
+	m	(Lnet/minecraft/C_22wnfpodv$C_97ooytvbz;)V	m_92phnderv	enableTexGen	
+		p	0		texGen	
 c	net/minecraft/C_23cmhonhk
 	m	(Lnet/minecraft/C_50gzrxupk;DDDFI)V	m_93dzrkjxs	m_93dzrkjxs	
 		p	1		p_1	
@@ -448,7 +449,7 @@ c	net/minecraft/C_23sdnywnc
 		p	3			p_3
 c	net/minecraft/C_24kfuoqbo
 	m	()V	m_72njoygig	m_72njoygig	
-	m	()V	m_41nmghfsm	addButtons	
+	m	()V	m_41nmghfsm	createButtons	
 	m	()V	m_91grxjxqi	m_91grxjxqi	
 	m	(Lnet/minecraft/C_24kfuoqbo;)Lnet/minecraft/C_02frfelgi;	m_94ifewehp	getTextRenderer12	
 		p	0		statsScreen	
@@ -535,8 +536,8 @@ c	net/minecraft/C_24kfuoqbo$C_80uwzdwew$1	1
 		p	1		p_1	
 		p	2		p_2	
 	m	(Ljava/lang/Object;Ljava/lang/Object;)I	compare	compare	
-		p	1		stat1	
-		p	2		stat2	
+		p	1		p_1	
+		p	2		p_2	
 c	net/minecraft/C_24kfuoqbo$C_89lyrtpzo
 	m	(Lnet/minecraft/C_24kfuoqbo;Lnet/minecraft/C_33jfbhyhh;)V	<init>	<init>	
 		p	1		p_1	
@@ -632,7 +633,7 @@ c	net/minecraft/C_32whjmosp
 		p	9			p_9
 		p	10			p_10
 c	net/minecraft/C_33jfbhyhh
-	f	Lnet/minecraft/C_71cmgaqyk;	f_26rihbdjc	toasts	
+	f	Lnet/minecraft/C_71cmgaqyk;	f_26rihbdjc	notification	
 c	net/minecraft/C_33jfbhyhh$1
 	f	Lnet/minecraft/C_33jfbhyhh;	f_95cyvmmzl	f_95cyvmmzl	
 	f	Lnet/minecraft/C_33jfbhyhh;	f_81dkbibid		f_81dkbibid
@@ -851,10 +852,10 @@ c	net/minecraft/C_37pdrclwz
 c	net/minecraft/C_38yljafhz
 	f	Lnet/minecraft/C_62hmsmpnp;	f_44kruiaur		f_44kruiaur
 	m	(Lnet/minecraft/C_33jfbhyhh;Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_68pitlqdw;Lnet/minecraft/C_79xruvsul;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
+		p	1		client	
+		p	2		world	
+		p	3		session	
+		p	4		networkHandler	
 	m	(Lnet/minecraft/C_33jfbhyhh;Lnet/minecraft/C_70uunbknj;Lnet/minecraft/C_68pitlqdw;Lnet/minecraft/C_79xruvsul;Lnet/minecraft/C_62hmsmpnp;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -1196,7 +1197,7 @@ c	net/minecraft/C_57gvspgcv$1	1
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(Lnet/minecraft/C_01zioqcwk;)Z	m_13nzscecq	m_13nzscecq	
+	m	(Lnet/minecraft/C_01zioqcwk;)Z	m_13nzscecq	apply	
 		p	1		p_1	
 	m	(Ljava/lang/Object;)Z	apply	apply	
 		p	1		p_1	
@@ -1208,7 +1209,7 @@ c	net/minecraft/C_59xbojwfx	net/minecraft/crafting/FoodRecipes
 	m	(Lnet/minecraft/C_72fjrfenf;)V	m_22rfrakyj	register	
 		p	1		manager	
 c	net/minecraft/C_59xnscmbc
-	m	(Lnet/minecraft/C_80xfnbdtb;DDDFI)V	m_63dsddqhk	m_63dsddqhk	
+	m	(Lnet/minecraft/C_80xfnbdtb;DDDFI)V	m_63dsddqhk	render	
 		p	1		p_1	
 		p	2		p_2	
 		p	4		p_4	
@@ -1402,8 +1403,8 @@ c	net/minecraft/C_66bifbhnb	net/minecraft/client/gui/screen/menu/AchievementsScr
 		p	3		p_3	
 	m	()V	m_91grxjxqi	m_91grxjxqi	
 	m	()V	m_43ntykefc	m_43ntykefc	
-	m	()V	m_40wfwgvht	renderTitle	
-	m	(IIF)V	m_10xjnlovu	renderAchievements	
+	m	()V	m_40wfwgvht	setTitle	
+	m	(IIF)V	m_10xjnlovu	renderIcons	
 		p	1		mouseX	
 		p	2		mouseY	
 		p	3		tickdelta	
@@ -1418,7 +1419,7 @@ c	net/minecraft/C_66gurbwvf
 	m	()Lnet/minecraft/C_64bdsfyyk;	m_69csfioqa		m_69csfioqa
 c	net/minecraft/C_67ntzfweo	net/minecraft/crafting/ArmorRecipes	
 	f	[[Ljava/lang/String;	f_15vgcmehb	patterns	
-	f	[[Lnet/minecraft/C_32kijbyyv;	f_72ceauoat	f_72ceauoat	
+	f	[[Lnet/minecraft/C_32kijbyyv;	f_72ceauoat	recipes	
 	m	()V	<init>	<init>	
 	m	(Lnet/minecraft/C_72fjrfenf;)V	m_61oqpqtrv	register	
 		p	1		manager	
@@ -1483,15 +1484,15 @@ c	net/minecraft/C_68otlnllf$C_21wcfbnaa
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(IIIIIIIZ)V	m_28crgwaze	m_28crgwaze	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
-		p	7		p_7	
-		p	8		p_8	
+	m	(IIIIIIIZ)V	m_28crgwaze	render	
+		p	1		id	
+		p	2		x	
+		p	3		y	
+		p	4		width	
+		p	5		height	
+		p	6		bufferBuilder	
+		p	7		mouseX	
+		p	8		mouseY	
 	m	(IIIF)V	m_94eejibdd		m_94eejibdd
 		p	1			p_1
 		p	2			p_2
@@ -1520,13 +1521,13 @@ c	net/minecraft/C_68urhmrdp
 c	net/minecraft/C_68xekzvnu
 	f	J	f_53qvsezce	lastBeamRenderTime	
 	f	F	f_78onstrrt	beamAngle	
-	m	()Ljava/util/List;	m_60xtdyryz	m_60xtdyryz	
+	m	()Ljava/util/List;	m_60xtdyryz	getBeamSections	
 	m	()F	m_80tokhath	getBeamAngle	
 	m	()I	m_07unjlhia		m_07unjlhia
 c	net/minecraft/C_68xekzvnu$C_91zrpbzaf
-	m	()I	m_16gxtcmfa	m_16gxtcmfa	
+	m	()I	m_16gxtcmfa	getHeight	
 c	net/minecraft/C_70sbjwoqh
-	m	(Lnet/minecraft/C_23jxpuxtu;DDDFI)V	m_24wjcjgpq	m_24wjcjgpq	
+	m	(Lnet/minecraft/C_23jxpuxtu;DDDFI)V	m_24wjcjgpq	render	
 		p	1		p_1	
 		p	2		p_2	
 		p	4		p_4	
@@ -1566,9 +1567,9 @@ c	net/minecraft/C_71cmgaqyk	net/minecraft/client/gui/ToastGui
 	m	(Lnet/minecraft/C_33jfbhyhh;)V	<init>	<init>	
 		p	1		client	
 	m	(Lnet/minecraft/C_01zioqcwk;)V	m_48koerctd	set	
-		p	1		achievement	
+		p	1		achieved	
 	m	(Lnet/minecraft/C_01zioqcwk;)V	m_25cycubww	setTutorial	
-		p	1		achievement	
+		p	1		achieved	
 	m	()V	m_06dqpkang	render	
 	m	()V	m_25wjxntxo	tick	
 	m	()V	m_16jxcnzvd	clear	
@@ -1606,6 +1607,7 @@ c	net/minecraft/C_72fjrfenf
 		p	0			p_0
 		p	1			p_1
 c	net/minecraft/C_73ocgrvrr
+	c	Identifiers are used to point to resources of the game, like sounds, textures, models, etc.\nAn Identifier consists of two parts: a namespace and a path. Its string representation is\nits namespace and path, separated by a colon (':'): "<namespace>:<path>".\n\n<p>The namespace is the domain in which the resource is located. The default namespace is "minecraft",\nwhich is where all the Vanilla resources are located. Any resources provided by a resource pack, data\npack, mod, etc. should be put in their own namespace to keep them distinct. For mods it is custom to\nuse their mod id as the namespace for their resources.\n\n<p>The path is the location of the resource within the namespace.\n\n<p> Namespaces may only contain lowercase letters ([a-z]), digits ([0-9]), and the characters '_', '.', and '-'.\nPaths may also contain the standard path separator '/'.	
 	m	(Lnet/minecraft/C_73ocgrvrr;)I	m_03zmhvqlt		m_03zmhvqlt
 		p	1			p_1
 	m	(Ljava/lang/Object;)I	compareTo		compareTo
@@ -1695,7 +1697,7 @@ c	net/minecraft/C_76beglxyo$C_23alkfjam
 c	net/minecraft/C_76frhnfoz
 	m	()Lnet/minecraft/C_31vzpvtoh;	m_87rovtrkn		m_87rovtrkn
 c	net/minecraft/C_76nbciyba
-	m	(Lnet/minecraft/C_51ncspfnf;DDDFI)V	m_79kdtsqtf	m_79kdtsqtf	
+	m	(Lnet/minecraft/C_51ncspfnf;DDDFI)V	m_79kdtsqtf	render	
 		p	1		p_1	
 		p	2		p_2	
 		p	4		p_4	
@@ -1726,7 +1728,7 @@ c	net/minecraft/C_76nbciyba
 		p	9			p_9
 		p	10			p_10
 c	net/minecraft/C_78uqazpcn
-	m	(Lnet/minecraft/C_80manzdpj;DDDFI)V	m_76wigwwcb	m_76wigwwcb	
+	m	(Lnet/minecraft/C_80manzdpj;DDDFI)V	m_76wigwwcb	render	
 		p	1		p_1	
 		p	2		p_2	
 		p	4		p_4	
@@ -1847,7 +1849,8 @@ c	net/minecraft/C_80oxeyipy	net/minecraft/stat/achievement/Achievements
 		c	Achieved when a 9x9 beacon is created	
 	f	Lnet/minecraft/C_01zioqcwk;	f_62tgirfjd	EXPORE_ALL_BIOMES	
 		c	Achieved when all biomes have been explored	
-	f	Lnet/minecraft/C_01zioqcwk;	f_07rbohowo	f_07rbohowo	
+	f	Lnet/minecraft/C_01zioqcwk;	f_07rbohowo	OVERPOWERED	
+		c	Achieved when eating an enchanted golden apple.	
 	m	()V	m_05pvxmaji	load	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/C_81pjkslaa
@@ -1906,9 +1909,9 @@ c	net/minecraft/C_86zpovruo
 		p	8		p_8	
 		p	9		p_9	
 c	net/minecraft/C_87rhepaey
-	m	(II)V	m_35wudmwqs	m_35wudmwqs	
-		p	1		p_1	
-		p	2		p_2	
+	m	(II)V	m_35wudmwqs	setColor	
+		p	1		rgb	
+		p	2		index	
 	m	(IIF)V	m_35wudmwqs		m_35wudmwqs
 		p	1			p_1
 		p	2			p_2
@@ -2032,7 +2035,7 @@ c	net/minecraft/C_88cnrsicf$14		14
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_88kpgfqjl
-	m	(Lnet/minecraft/C_29shbhgbm;DDDFI)V	m_68ejxnseo	m_68ejxnseo	
+	m	(Lnet/minecraft/C_29shbhgbm;DDDFI)V	m_68ejxnseo	render	
 		p	1		p_1	
 		p	2		p_2	
 		p	4		p_4	
@@ -2097,19 +2100,19 @@ c	net/minecraft/C_91ifnvuub
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/C_91mdyfvzw
-	m	(Lnet/minecraft/C_87keltfgr;DDDF)V	m_41sboqfmj	m_41sboqfmj	
-		p	1		p_1	
-		p	2		p_2	
-		p	4		p_4	
-		p	6		p_6	
-		p	8		p_8	
-	m	(Lnet/minecraft/C_87keltfgr;DDDFI)V	m_50keskmcy	m_50keskmcy	
-		p	1		p_1	
-		p	2		p_2	
-		p	4		p_4	
-		p	6		p_6	
-		p	8		p_8	
-		p	9		p_9	
+	m	(Lnet/minecraft/C_87keltfgr;DDDF)V	m_41sboqfmj	render	
+		p	1		blockEntity	
+		p	2		x	
+		p	4		y	
+		p	6		z	
+		p	8		tickDelta	
+	m	(Lnet/minecraft/C_87keltfgr;DDDFI)V	m_50keskmcy	render	
+		p	1		entity	
+		p	2		x	
+		p	4		y	
+		p	6		z	
+		p	8		tickDelta	
+		p	9		blockMiningProgress	
 	m	(Lnet/minecraft/C_87keltfgr;DDDF)V	m_47kazafou		m_47kazafou
 		p	1			p_1
 		p	2			p_2
@@ -2132,7 +2135,7 @@ c	net/minecraft/C_91mdyfvzw
 		p	9			p_9
 		p	10			p_10
 c	net/minecraft/C_91nvdwmaw
-	m	(Lnet/minecraft/C_68xekzvnu;DDDFI)V	m_45yrcuqhj	m_45yrcuqhj	
+	m	(Lnet/minecraft/C_68xekzvnu;DDDFI)V	m_45yrcuqhj	render	
 		p	1		p_1	
 		p	2		p_2	
 		p	4		p_4	
