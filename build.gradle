@@ -221,6 +221,79 @@ def serverJar = new File(cacheFilesMinecraft, "${minecraft_version}-server.jar")
 def libraries = new File(cacheFilesMinecraft, "libraries")
 def libs = new File("build/libs/")
 
+def REMOVE_DUMMY = new MappingValidator() {
+
+	@Override
+	public boolean validate(ClassMapping c) {
+		return MappingsDiff.safeIsDiff(c.src(), c.getComplete()) || !c.getJavadoc().isEmpty() || c.hasChildren();
+	}
+
+	@Override
+	public boolean validate(FieldMapping f) {
+		return MappingsDiff.safeIsDiff(f.src(), f.get()) || !f.getJavadoc().isEmpty();
+	}
+
+	@Override
+	public boolean validate(MethodMapping m) {
+		return MappingsDiff.safeIsDiff(m.src(), m.get()) || (!m.get().startsWith("m_") && !m.get().equals("<init>") && !m.get().equals("<clinit>")) || !m.getJavadoc().isEmpty() || m.hasChildren();
+	}
+
+	@Override
+	public boolean validate(ParameterMapping p) {
+		if (p.get().startsWith("p_")) {
+			p.set(p.src());
+			return !p.getJavadoc().isEmpty();
+		}
+
+		return true;
+	}
+};
+def INSERT_DUMMY = new MappingsDiffValidator() {
+
+	@Override
+	public boolean validate(ClassDiff c) {
+		return check(c);
+	}
+
+	@Override
+	public boolean validate(FieldDiff f) {
+		return check(f);
+	}
+
+	@Override
+	public boolean validate(MethodDiff m) {
+		return check(m);
+	}
+
+	@Override
+	public boolean validate(ParameterDiff p) {
+		return check(p);
+	}
+
+	private boolean check(Diff<?> d) {
+		if (d.isDiff()) {
+			if (d.get(DiffSide.A).isEmpty()) {
+				// new mappings should be ignored, as any un-mapped members
+				// should already be present as dummy mappings
+				System.out.println("ignoring illegal change " + d);
+				return false;
+			}
+			if (d.get(DiffSide.B).isEmpty()) {
+				// removing a mapping is changed into a dummy mapping
+				if (d.target() == MappingTarget.CLASS) {
+					d.set(DiffSide.B, ClassMapping.getSimplified(d.src()));
+				} else if (d.target() == MappingTarget.PARAMETER) {
+					d.set(DiffSide.B, "p_" + ((ParameterDiff)d).getIndex());
+				} else {
+					d.set(DiffSide.B, d.src());
+				}
+			}
+		}
+
+		return true;
+	}
+};
+
 static boolean validateChecksum(File file, String checksum) {
 	if (file != null) {
 		//noinspection GrDeprecatedAPIUsage
@@ -534,89 +607,17 @@ task separateMappings() {
 		Mappings mappings = MappingUtils.separateMappings(tree, minecraft_version);
 
 		Format.TINY_V2.writeMappings(separatedMappings.toPath(), mappings)
-		mappings.setValidator(new MappingValidator() {
-			// remove dummy mappings
-
-			@Override
-			public boolean validate(ClassMapping c) {
-				return MappingsDiff.safeIsDiff(c.src(), c.getComplete()) || !c.getJavadoc().isEmpty() || c.hasChildren();
-			}
-
-			@Override
-			public boolean validate(FieldMapping f) {
-				return MappingsDiff.safeIsDiff(f.src(), f.get()) || !f.getJavadoc().isEmpty();
-			}
-
-			@Override
-			public boolean validate(MethodMapping m) {
-				return MappingsDiff.safeIsDiff(m.src(), m.get()) || (!m.get().startsWith("m_") && !m.get().equals("<init>") && !m.get().equals("<clinit>")) || !m.getJavadoc().isEmpty() || m.hasChildren();
-			}
-
-			@Override
-			public boolean validate(ParameterMapping p) {
-				if (p.get().startsWith("p_")) {
-					p.set(p.src());
-					return !p.getJavadoc().isEmpty();
-				}
-
-				return true;
-			}
-		})
+		mappings.setValidator(REMOVE_DUMMY)
 		Format.TINY_V2.writeMappings(workingMappings.toPath(), mappings)
 	}
 }
 
-static def insertMappings(minecraft_version, mappingsDir, separatedMappingsPath, workingMappingsPath, dir) {
+static def insertMappings(minecraft_version, mappingsDir, separatedMappingsPath, workingMappingsPath, dir, validator) {
 	Mappings separatedMappings = Format.TINY_V2.readMappings(separatedMappingsPath);
 	Mappings workingMappings = Format.TINY_V2.readMappings(workingMappingsPath);
 
 	MappingsDiff changes = MappingUtils.diffMappings(Format.TINY_V2, separatedMappings, workingMappings);
-	changes.setValidator(new MappingsDiffValidator() {
-		// re-insert dummy mappings
-
-		@Override
-		public boolean validate(ClassDiff c) {
-			return check(c);
-		}
-
-		@Override
-		public boolean validate(FieldDiff f) {
-			return check(f);
-		}
-
-		@Override
-		public boolean validate(MethodDiff m) {
-			return check(m);
-		}
-
-		@Override
-		public boolean validate(ParameterDiff p) {
-			return check(p);
-		}
-
-		private boolean check(Diff<?> d) {
-			if (d.isDiff()) {
-				if (d.get(DiffSide.A).isEmpty()) {
-					// new mappings should be ignored, as any un-mapped members
-					// should already be present as dummy mappings
-					System.out.println("ignoring illegal change " + d);
-					return false;
-				}
-				if (d.get(DiffSide.B).isEmpty()) {
-					// removing a mapping is changed into a dummy mapping
-					if (d.target() == MappingTarget.CLASS) {
-						d.set(DiffSide.B, ClassMapping.getSimplified(d.src()));
-					} else if (d.target() == MappingTarget.PARAMETER) {
-						d.set(DiffSide.B, "p_" + ((ParameterDiff)d).getIndex());
-					} else {
-						d.set(DiffSide.B, d.src());
-					}
-				}
-			}
-
-			return true;
-		}
-	});
+	changes.setValidator(validator);
 
 	MappingsDiffTree tree = MappingsDiffTree.of(Format.TINY_V2, mappingsDir);
 	MappingUtils.insertMappings(dir, tree, changes, minecraft_version);
@@ -630,7 +631,7 @@ task insertMappings() {
 	doLast {
 		logger.lifecycle(":saving mappings for " + minecraft_version)
 
-		insertMappings(minecraft_version, mappingsDir.toPath(), separatedMappings.toPath(), workingMappings.toPath(), PropagationDirection.NONE)
+		insertMappings(minecraft_version, mappingsDir.toPath(), separatedMappings.toPath(), workingMappings.toPath(), PropagationDirection.NONE, INSERT_DUMMY)
 	}
 }
 
@@ -639,7 +640,7 @@ task propagateMappingsDown() {
 	doLast {
 		logger.lifecycle(":saving mappings for " + minecraft_version)
 
-		insertMappings(minecraft_version, mappingsDir.toPath(), separatedMappings.toPath(), workingMappings.toPath(), PropagationDirection.DOWN)
+		insertMappings(minecraft_version, mappingsDir.toPath(), separatedMappings.toPath(), workingMappings.toPath(), PropagationDirection.DOWN, INSERT_DUMMY)
 	}
 }
 
@@ -648,7 +649,7 @@ task propagateMappingsUp() {
 	doLast {
 		logger.lifecycle(":saving mappings for " + minecraft_version)
 
-		insertMappings(minecraft_version, mappingsDir.toPath(), separatedMappings.toPath(), workingMappings.toPath(), PropagationDirection.UP)
+		insertMappings(minecraft_version, mappingsDir.toPath(), separatedMappings.toPath(), workingMappings.toPath(), PropagationDirection.UP, INSERT_DUMMY)
 	}
 }
 
@@ -657,7 +658,7 @@ task propagateMappings() {
 	doLast {
 		logger.lifecycle(":saving mappings for " + minecraft_version)
 
-		insertMappings(minecraft_version, mappingsDir.toPath(), separatedMappings.toPath(), workingMappings.toPath(), PropagationDirection.BOTH)
+		insertMappings(minecraft_version, mappingsDir.toPath(), separatedMappings.toPath(), workingMappings.toPath(), PropagationDirection.BOTH, INSERT_DUMMY)
 	}
 }
 
@@ -691,7 +692,11 @@ task separateMappingsForBuild(type: WithV2FileOutput) {
 	outputs.upToDateWhen { false }
 
 	doLast {
-		MappingUtils.separateMappings(Format.TINY_V2, mappingsDir.toPath(), v2Output.toPath(), minecraft_version)
+		MappingsDiffTree tree = MappingsDiffTree.of(Format.TINY_V2, mappingsDir.toPath())
+		Mappings mappings = MappingUtils.separateMappings(tree, minecraft_version);
+
+		mappings.setValidator(REMOVE_DUMMY)
+		Format.TINY_V2.writeMappings(v2Output.toPath(), mappings)
 
 		new ConvertMappingsCommand().run(
 			"tinyv2",
