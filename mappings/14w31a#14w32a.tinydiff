@@ -1,7 +1,7 @@
 tiny	2	0
 c	net/minecraft/C_02twdgcot
-	f	I	f_81mreuexg		f_81mreuexg
-	f	J	f_54donlhci		f_54donlhci
+	f	I	f_81mreuexg		displayHealth
+	f	J	f_54donlhci		lastHealthTime
 c	net/minecraft/C_04kroweqx
 	m	()Z	m_00plcnlaq		m_00plcnlaq
 	m	(Z)V	m_33tynoydf		m_33tynoydf
@@ -10,7 +10,7 @@ c	net/minecraft/C_04kroweqx
 c	net/minecraft/C_05bfzhcea
 	f	I	f_83twfwkoq		f_83twfwkoq
 c	net/minecraft/C_06rtknweq
-	m	()V	m_11kadeqme		m_11kadeqme
+	m	()V	m_11kadeqme		exit
 c	net/minecraft/C_06rtknweq$1		1
 	f	Lnet/minecraft/C_06rtknweq;	f_38uliflsp		f_38uliflsp
 	m	(Lnet/minecraft/C_06rtknweq;)V	<init>		<init>
@@ -23,10 +23,10 @@ c	net/minecraft/C_09bxmuibs
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/C_12vmmnflv
-	m	(Lnet/minecraft/C_77kzrkefm;Lnet/minecraft/C_63rjkkbvm;Lnet/minecraft/C_07ixygwvr;)Z	m_37jtfynze		m_37jtfynze
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(Lnet/minecraft/C_77kzrkefm;Lnet/minecraft/C_63rjkkbvm;Lnet/minecraft/C_07ixygwvr;)Z	m_37jtfynze		interactEntityAt
+		p	1			player
+		p	2			target
+		p	3			result
 c	net/minecraft/C_13yofkfik
 c	net/minecraft/C_13yofkfik$7
 	f	[I	f_28utlrvke	f_28utlrvke	
@@ -40,10 +40,10 @@ c	net/minecraft/C_13yofkfik$8		8
 	f	[I	f_28utlrvke		f_28utlrvke
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/C_14xdxaaoy
-	f	Lnet/minecraft/C_59dzjlfjt;	f_25omqeweo		f_25omqeweo
-	f	Lnet/minecraft/C_59dzjlfjt;	f_29osjdbat		f_29osjdbat
-	f	Lnet/minecraft/C_89bgsyagf;	f_14gtatxtt		f_14gtatxtt
-	f	Lnet/minecraft/C_89bgsyagf;	f_76zagedmf		f_76zagedmf
+	f	Lnet/minecraft/C_59dzjlfjt;	f_25omqeweo		RED_SANDSTONE
+	f	Lnet/minecraft/C_59dzjlfjt;	f_29osjdbat		RED_SANDSTONE_STAIRS
+	f	Lnet/minecraft/C_89bgsyagf;	f_14gtatxtt		DOUBLE_RED_SANDSTONE_SLAB
+	f	Lnet/minecraft/C_89bgsyagf;	f_76zagedmf		RED_SANDSTONE_SLAB
 c	net/minecraft/C_27pabwvvt
 	m	(Lnet/minecraft/C_45fbfrwcr;)V	m_56morowod		m_56morowod
 		p	1			p_1
@@ -51,23 +51,23 @@ c	net/minecraft/C_35tpsxcjx
 	m	(Lnet/minecraft/C_45fbfrwcr;)V	m_56morowod		m_56morowod
 		p	1			p_1
 c	net/minecraft/C_40xmruldo
-	f	Lnet/minecraft/C_03ycckswl;	f_57uongfkj		f_57uongfkj
+	f	Lnet/minecraft/C_03ycckswl;	f_57uongfkj		targetPos
 	m	(Lnet/minecraft/C_63rjkkbvm;Lnet/minecraft/C_03ycckswl;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-	m	()Lnet/minecraft/C_03ycckswl;	m_55mtyakkg		m_55mtyakkg
+		p	1			target
+		p	2			targetPos
+	m	()Lnet/minecraft/C_03ycckswl;	m_55mtyakkg		getTargetPos
 c	net/minecraft/C_40xmruldo$C_93uewmife
-	f	Lnet/minecraft/C_40xmruldo$C_93uewmife;	f_25kucfsfz		f_25kucfsfz
+	f	Lnet/minecraft/C_40xmruldo$C_93uewmife;	f_25kucfsfz		INTERACT_AT
 c	net/minecraft/C_44ugezvnl
-	f	Lnet/minecraft/C_85axycjkm;	f_79bwrtbwm		f_79bwrtbwm
+	f	Lnet/minecraft/C_85axycjkm;	f_79bwrtbwm		ARMOR_STAND
 c	net/minecraft/C_59dzjlfjt
 	m	(Lnet/minecraft/C_60xlezclu;Lnet/minecraft/C_78uvaikic;Lnet/minecraft/C_70boeylyv;)V	m_36qpqujry
 		p	3		p_3	
-		p	0			p_0
+		p	0			world
 c	net/minecraft/C_60dzqkphg
 	f	Lcom/google/common/util/concurrent/ListeningExecutorService;	f_61fshtwkc	f_61fshtwkc	
 	f	Lcom/google/common/util/concurrent/ListenableFuture;	f_25ujdwjwz	f_25ujdwjwz	
-	f	Lnet/minecraft/C_72uhprvpf;	f_97mpiieqs		f_97mpiieqs
+	f	Lnet/minecraft/C_72uhprvpf;	f_97mpiieqs		pathHelper
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/C_60dzqkphg$1	1	
 	f	Lnet/minecraft/C_63rjkkbvm;	f_79zswpifw	f_79zswpifw	
@@ -93,53 +93,53 @@ c	net/minecraft/C_63rjkkbvm
 	m	()Lnet/minecraft/C_73yvmijgm;	m_23lmtmyso		m_23lmtmyso
 	m	(Lnet/minecraft/C_73yvmijgm;)V	m_23ohyozrv		m_23ohyozrv
 		p	1			p_1
-	m	(Lnet/minecraft/C_77kzrkefm;Lnet/minecraft/C_03ycckswl;)Z	m_99iscnxpg		m_99iscnxpg
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/C_77kzrkefm;Lnet/minecraft/C_03ycckswl;)Z	m_99iscnxpg		interactAt
+		p	1			player
+		p	2			pos
 c	net/minecraft/C_67pvowwpz
 c	net/minecraft/C_67pvowwpz$10
 	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_44qhtdczc	m_44qhtdczc	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_38dvspswo		m_38dvspswo
+	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_38dvspswo		apply
 		p	1			p_1
 c	net/minecraft/C_67pvowwpz$11
 	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_38vnoldgw	m_38vnoldgw	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_44qhtdczc		m_44qhtdczc
+	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_44qhtdczc		apply
 		p	1			p_1
 c	net/minecraft/C_67pvowwpz$12
 	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_36wadebeb	m_36wadebeb	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_38vnoldgw		m_38vnoldgw
+	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_38vnoldgw		apply
 		p	1			p_1
 c	net/minecraft/C_67pvowwpz$13
 	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_60jifojqb	m_60jifojqb	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_36wadebeb		m_36wadebeb
+	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_36wadebeb		apply
 		p	1			p_1
 c	net/minecraft/C_67pvowwpz$14
 	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_09ehgvrkh	m_09ehgvrkh	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_60jifojqb		m_60jifojqb
+	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_60jifojqb		apply
 		p	1			p_1
 c	net/minecraft/C_67pvowwpz$15
 	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_58nhbeuna	m_58nhbeuna	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_09ehgvrkh		m_09ehgvrkh
+	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_09ehgvrkh		apply
 		p	1			p_1
 c	net/minecraft/C_67pvowwpz$16
 	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_89fijvgxq	m_89fijvgxq	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_58nhbeuna		m_58nhbeuna
+	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_58nhbeuna		apply
 		p	1			p_1
 c	net/minecraft/C_67pvowwpz$9
 	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_38dvspswo	m_38dvspswo	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_18xlnntsm		m_18xlnntsm
+	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_18xlnntsm		apply
 		p	1			p_1
 c	net/minecraft/C_67pvowwpz$17		17
 	m	()V	<init>		<init>
-	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_89fijvgxq		m_89fijvgxq
+	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_89fijvgxq		apply
 		p	1			p_1
 	m	(Ljava/lang/Object;)Ljava/lang/Object;	apply		apply
 		p	1			p_1
@@ -148,17 +148,17 @@ c	net/minecraft/C_71lthymyi
 c	net/minecraft/C_79dvqhjfw
 	m	()V	m_41egdrrik		m_41egdrrik
 c	net/minecraft/C_83hiuaqty
-	f	Ljava/util/List;	f_80rqzkwby		f_80rqzkwby
-	m	()V	m_45qecnxvw		m_45qecnxvw
-	m	()Ljava/util/List;	m_09jamllep		m_09jamllep
-c	net/minecraft/C_83hiuaqty$C_69igtbqxe		C_69igtbqxe
-	f	[F	f_46kxelnpk		f_46kxelnpk
-	f	I	f_03vdudubz		f_03vdudubz
+	f	Ljava/util/List;	f_80rqzkwby		beamSections
+	m	()V	m_45qecnxvw		update
+	m	()Ljava/util/List;	m_09jamllep		getBeamSections
+c	net/minecraft/C_83hiuaqty$C_69igtbqxe		BeamSection
+	f	[F	f_46kxelnpk		color
+	f	I	f_03vdudubz		height
 	m	([F)V	<init>		<init>
-		p	1			p_1
-	m	()V	m_67qabslhn		m_67qabslhn
-	m	()[F	m_02nkhyemw		m_02nkhyemw
-	m	()I	m_40mpokprj		m_40mpokprj
+		p	1			color
+	m	()V	m_67qabslhn		incrementHeight
+	m	()[F	m_02nkhyemw		getColor
+	m	()I	m_40mpokprj		getHeight
 c	net/minecraft/C_86vgsfbzn
 	f	Lnet/minecraft/C_86vgsfbzn;	f_79odfvxnb		f_79odfvxnb
 c	net/minecraft/C_96biotigl
@@ -171,14 +171,14 @@ c	net/minecraft/C_96biotigl
 c	net/minecraft/C_96biotigl$1		1
 	f	[I	f_50zqareib		f_50zqareib
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_22kndojby		net/minecraft/C_22kndojby
+c	net/minecraft/C_22kndojby		net/minecraft/C_13ptfdojl
 	f	Lnet/minecraft/C_77bitvoax;	f_95nvarmwe		f_95nvarmwe
 	m	(Lnet/minecraft/C_04boujhua;)V	<init>		<init>
 		p	1			p_1
-	m	(Lnet/minecraft/C_31pyodqot;)Lnet/minecraft/C_77bitvoax;	m_83nkdmxcv		m_83nkdmxcv
+	m	(Lnet/minecraft/C_31pyodqot;)Lnet/minecraft/C_77bitvoax;	m_83nkdmxcv		getTexture
 		p	1			p_1
 	m	()Lnet/minecraft/C_84jpckvlc;	m_58bzutjim		m_58bzutjim
-	m	(Lnet/minecraft/C_31pyodqot;FFF)V	m_97hvtwhpn		m_97hvtwhpn
+	m	(Lnet/minecraft/C_31pyodqot;FFF)V	m_97hvtwhpn		applyRotation
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -204,10 +204,10 @@ c	net/minecraft/C_22kndojby$1		1
 		p	1			p_1
 		p	2			p_2
 	m	()V	m_46wgqdfis		m_46wgqdfis
-c	net/minecraft/C_24zembjkk		net/minecraft/C_24zembjkk
+c	net/minecraft/C_24zembjkk		net/minecraft/block/DoubleRedSandstoneSlabBlock
 	m	()V	<init>		<init>
 	m	()Z	m_60qenzahy		m_60qenzahy
-c	net/minecraft/C_31pyodqot		net/minecraft/C_31pyodqot
+c	net/minecraft/C_31pyodqot		net/minecraft/entity/living/ArmorStandEntity
 	f	Lnet/minecraft/C_87hkcoxcm;	f_68qlqmegl		f_68qlqmegl
 	f	Lnet/minecraft/C_87hkcoxcm;	f_44ggpeqru		f_44ggpeqru
 	f	Lnet/minecraft/C_87hkcoxcm;	f_66ewocpta		f_66ewocpta
@@ -302,7 +302,7 @@ c	net/minecraft/C_31pyodqot		net/minecraft/C_31pyodqot
 	m	()Lnet/minecraft/C_87hkcoxcm;	m_42pxwhhqq		m_42pxwhhqq
 	m	()Lnet/minecraft/C_87hkcoxcm;	m_59bucrcvu		m_59bucrcvu
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_45fbfrwcr		net/minecraft/C_45fbfrwcr
+c	net/minecraft/C_45fbfrwcr		net/minecraft/C_85xwxzjeg
 	f	I	f_07wqurybr		f_07wqurybr
 	f	Lnet/minecraft/C_73yvmijgm;	f_54luxptrf		f_54luxptrf
 	m	()V	<init>		<init>
@@ -313,14 +313,14 @@ c	net/minecraft/C_45fbfrwcr		net/minecraft/C_45fbfrwcr
 		p	1			p_1
 	m	(Lnet/minecraft/C_95lhppoap;)V	m_73nymvfwu		m_73nymvfwu
 		p	1			p_1
-	m	(Lnet/minecraft/C_35tpsxcjx;)V	m_65pekpxvq		m_65pekpxvq
+	m	(Lnet/minecraft/C_35tpsxcjx;)V	m_65pekpxvq		apply
 		p	1			p_1
 	m	()Lnet/minecraft/C_73yvmijgm;	m_64assnwnh		m_64assnwnh
 	m	(Lnet/minecraft/C_60xlezclu;)Lnet/minecraft/C_63rjkkbvm;	m_22elvgqlw		m_22elvgqlw
 		p	1			p_1
 	m	(Lnet/minecraft/C_69xiycoqt;)V	m_56jvqdjns		m_56jvqdjns
 		p	1			p_1
-c	net/minecraft/C_50lghpeyh		net/minecraft/C_50lghpeyh
+c	net/minecraft/C_50lghpeyh		net/minecraft/block/SingleRedSandstoneSlabBlock
 	m	()V	<init>		<init>
 	m	()Z	m_60qenzahy		m_60qenzahy
 c	net/minecraft/C_66bpqeckk		net/minecraft/C_66bpqeckk
@@ -365,7 +365,7 @@ c	net/minecraft/C_84jpckvlc		net/minecraft/C_84jpckvlc
 		p	7			p_7
 	m	(F)V	m_36uauvuem		m_36uauvuem
 		p	1			p_1
-c	net/minecraft/C_85axycjkm		net/minecraft/C_85axycjkm
+c	net/minecraft/C_85axycjkm		net/minecraft/item/ArmorStandItem
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/C_70boeylyv;Lnet/minecraft/C_77kzrkefm;Lnet/minecraft/C_60xlezclu;Lnet/minecraft/C_78uvaikic;Lnet/minecraft/C_47lpbmigy;FFF)Z	m_97uyiftke		m_97uyiftke
 		p	1			p_1
@@ -377,9 +377,9 @@ c	net/minecraft/C_85axycjkm		net/minecraft/C_85axycjkm
 		p	7			p_7
 		p	8			p_8
 	m	(Lnet/minecraft/C_31pyodqot;Ljava/util/Random;)V	m_10zjihhca		m_10zjihhca
-		p	1			p_1
-		p	2			p_2
-c	net/minecraft/C_87hkcoxcm		net/minecraft/C_87hkcoxcm
+		p	1			armorStand
+		p	2			random
+c	net/minecraft/C_87hkcoxcm		net/minecraft/C_66ojovnpv
 	f	F	f_32qetbeew		f_32qetbeew
 	f	F	f_80hykusyi		f_80hykusyi
 	f	F	f_77hdeodbv		f_77hdeodbv
@@ -395,8 +395,8 @@ c	net/minecraft/C_87hkcoxcm		net/minecraft/C_87hkcoxcm
 	m	()F	m_90rsreaum		m_90rsreaum
 	m	()F	m_22zekhjqz		m_22zekhjqz
 	m	()F	m_91ihsrqmb		m_91ihsrqmb
-c	net/minecraft/C_93iamlvrp		net/minecraft/C_93iamlvrp
-	f	Lnet/minecraft/C_29vjhhhkv;	f_29fvzofgz		f_29fvzofgz
+c	net/minecraft/C_93iamlvrp		net/minecraft/block/RedSandstoneBlock
+	f	Lnet/minecraft/C_29vjhhhkv;	f_29fvzofgz		TYPE
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/C_05lecifbj;)I	m_67jmcmzzb		m_67jmcmzzb
 		p	1			p_1
@@ -410,14 +410,14 @@ c	net/minecraft/C_93iamlvrp		net/minecraft/C_93iamlvrp
 		p	1			p_1
 	m	()Lnet/minecraft/C_95beknjgp;	m_72eguuymr		m_72eguuymr
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_93iamlvrp$C_04emvsolu		C_04emvsolu
-	f	Lnet/minecraft/C_93iamlvrp$C_04emvsolu;	f_89ebiqgfq		f_89ebiqgfq
-	f	Lnet/minecraft/C_93iamlvrp$C_04emvsolu;	f_83jhdmqma		f_83jhdmqma
-	f	Lnet/minecraft/C_93iamlvrp$C_04emvsolu;	f_75nrkikkk		f_75nrkikkk
-	f	[Lnet/minecraft/C_93iamlvrp$C_04emvsolu;	f_61tqlcwrk		f_61tqlcwrk
-	f	I	f_07kzyxqlq		f_07kzyxqlq
-	f	Ljava/lang/String;	f_50hjmsjan		f_50hjmsjan
-	f	Ljava/lang/String;	f_40pjihwpi		f_40pjihwpi
+c	net/minecraft/C_93iamlvrp$C_04emvsolu		Type
+	f	Lnet/minecraft/C_93iamlvrp$C_04emvsolu;	f_89ebiqgfq		DEFAULT
+	f	Lnet/minecraft/C_93iamlvrp$C_04emvsolu;	f_83jhdmqma		CHISELED
+	f	Lnet/minecraft/C_93iamlvrp$C_04emvsolu;	f_75nrkikkk		SMOOTH
+	f	[Lnet/minecraft/C_93iamlvrp$C_04emvsolu;	f_61tqlcwrk		ALL
+	f	I	f_07kzyxqlq		index
+	f	Ljava/lang/String;	f_50hjmsjan		id
+	f	Ljava/lang/String;	f_40pjihwpi		name
 	f	[Lnet/minecraft/C_93iamlvrp$C_04emvsolu;	f_41dkqkgil		f_41dkqkgil
 	m	()[Lnet/minecraft/C_93iamlvrp$C_04emvsolu;	values		values
 	m	(Ljava/lang/String;)Lnet/minecraft/C_93iamlvrp$C_04emvsolu;	valueOf		valueOf
@@ -425,19 +425,19 @@ c	net/minecraft/C_93iamlvrp$C_04emvsolu		C_04emvsolu
 	m	(Ljava/lang/String;IILjava/lang/String;Ljava/lang/String;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	()I	m_91gmfbjxz		m_91gmfbjxz
+		p	3			index
+		p	4			id
+		p	5			name
+	m	()I	m_91gmfbjxz		getIndex
 	m	()Ljava/lang/String;	toString		toString
-	m	(I)Lnet/minecraft/C_93iamlvrp$C_04emvsolu;	m_89yqtacee		m_89yqtacee
-		p	0			p_0
+	m	(I)Lnet/minecraft/C_93iamlvrp$C_04emvsolu;	m_89yqtacee		byIndex
+		p	0			index
 	m	()Ljava/lang/String;	m_59knpmpuh		m_59knpmpuh
-	m	()Ljava/lang/String;	m_86xpcylat		m_86xpcylat
+	m	()Ljava/lang/String;	m_86xpcylat		getName
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_98bzmqkaz		net/minecraft/C_98bzmqkaz
-	f	Lnet/minecraft/C_55mltqobz;	f_37fzgfngp		f_37fzgfngp
-	f	Lnet/minecraft/C_29vjhhhkv;	f_57botblbv		f_57botblbv
+c	net/minecraft/C_98bzmqkaz		net/minecraft/block/RedSandstoneSlab
+	f	Lnet/minecraft/C_55mltqobz;	f_37fzgfngp		SEAMLESS
+	f	Lnet/minecraft/C_29vjhhhkv;	f_57botblbv		VARIANT
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/C_05lecifbj;Ljava/util/Random;I)Lnet/minecraft/C_67pvowwpz;	m_71kjpptou		m_71kjpptou
 		p	1			p_1
@@ -462,11 +462,11 @@ c	net/minecraft/C_98bzmqkaz		net/minecraft/C_98bzmqkaz
 	m	(Lnet/minecraft/C_05lecifbj;)I	m_67jmcmzzb		m_67jmcmzzb
 		p	1			p_1
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_98bzmqkaz$C_92znzawfm		C_92znzawfm
-	f	Lnet/minecraft/C_98bzmqkaz$C_92znzawfm;	f_47ziowlim		f_47ziowlim
-	f	[Lnet/minecraft/C_98bzmqkaz$C_92znzawfm;	f_33zkqkfma		f_33zkqkfma
-	f	I	f_59neickev		f_59neickev
-	f	Ljava/lang/String;	f_69dxovjjp		f_69dxovjjp
+c	net/minecraft/C_98bzmqkaz$C_92znzawfm		Variant
+	f	Lnet/minecraft/C_98bzmqkaz$C_92znzawfm;	f_47ziowlim		RED_SANDSTONE
+	f	[Lnet/minecraft/C_98bzmqkaz$C_92znzawfm;	f_33zkqkfma		ALL
+	f	I	f_59neickev		index
+	f	Ljava/lang/String;	f_69dxovjjp		id
 	f	Ljava/lang/String;	f_42pccwvxo		f_42pccwvxo
 	f	[Lnet/minecraft/C_98bzmqkaz$C_92znzawfm;	f_87pujwpcx		f_87pujwpcx
 	m	()[Lnet/minecraft/C_98bzmqkaz$C_92znzawfm;	values		values
@@ -475,18 +475,18 @@ c	net/minecraft/C_98bzmqkaz$C_92znzawfm		C_92znzawfm
 	m	(Ljava/lang/String;IILjava/lang/String;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	3			index
+		p	4			id
 	m	(Ljava/lang/String;IILjava/lang/String;Ljava/lang/String;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	()I	m_51xbeduny		m_51xbeduny
+	m	()I	m_51xbeduny		getIndex
 	m	()Ljava/lang/String;	toString		toString
-	m	(I)Lnet/minecraft/C_98bzmqkaz$C_92znzawfm;	m_32ybeomna		m_32ybeomna
-		p	0			p_0
+	m	(I)Lnet/minecraft/C_98bzmqkaz$C_92znzawfm;	m_32ybeomna		byIndex
+		p	0			index
 	m	()Ljava/lang/String;	m_59knpmpuh		m_59knpmpuh
-	m	()Ljava/lang/String;	m_06ufpltmw		m_06ufpltmw
+	m	()Ljava/lang/String;	m_06ufpltmw		getId
 	m	()V	<clinit>		<clinit>

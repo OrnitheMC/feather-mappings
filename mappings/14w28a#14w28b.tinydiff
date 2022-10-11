@@ -9,7 +9,7 @@ c	net/minecraft/C_01awqxvuk	net/minecraft/client/realms/dto/RealmsServerList
 		p	0		stringToParse	
 c	net/minecraft/C_01onspqpt
 c	net/minecraft/C_01onspqpt$C_11rkqinvo
-	f	Lnet/minecraft/C_01onspqpt$C_89efyerbu;	f_64jxqhhcc		f_64jxqhhcc
+	f	Lnet/minecraft/C_01onspqpt$C_89efyerbu;	f_64jxqhhcc		line
 c	net/minecraft/C_01wwplvnt
 	m	([BLnet/minecraft/C_90vyeyknf;)Lnet/minecraft/C_73yvmijgm;	m_43lsdqzyj	m_43lsdqzyj	
 		p	0		p_0	
@@ -17,7 +17,7 @@ c	net/minecraft/C_01wwplvnt
 	m	(Lnet/minecraft/C_73yvmijgm;)[B	m_38zqblllh	write	
 		p	0		nbt	
 c	net/minecraft/C_02twdgcot
-	m	()Lnet/minecraft/C_67ybodhkf;	m_78jeunggb		m_78jeunggb
+	m	()Lnet/minecraft/C_67ybodhkf;	m_78jeunggb		getPlayerTabOverlay
 c	net/minecraft/C_03gljklff	net/minecraft/client/realms/request/PutRequest	
 	f	[B	f_98zosjiat	data	
 	m	(Ljava/lang/String;[BII)V	<init>	<init>	
@@ -28,23 +28,23 @@ c	net/minecraft/C_03gljklff	net/minecraft/client/realms/request/PutRequest
 	m	()Lnet/minecraft/C_03gljklff;	m_87bysmsbb	init	
 	m	()Lnet/minecraft/C_11elowcbs;	m_24khhfllp	m_24khhfllp	
 c	net/minecraft/C_05zzzvxgg
-	f	Lcom/google/common/base/Joiner;	f_03otmtlhz		f_03otmtlhz
-	f	Lcom/google/common/base/Function;	f_49mefpkbg		f_49mefpkbg
+	f	Lcom/google/common/base/Joiner;	f_03otmtlhz		ENTRY_JOINER
+	f	Lcom/google/common/base/Function;	f_49mefpkbg		ENTRY_TO_STRING
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/C_05zzzvxgg$1		1
 	m	()V	<init>		<init>
-	m	(Ljava/util/Map$Entry;)Ljava/lang/String;	m_70ntbqgbe		m_70ntbqgbe
+	m	(Ljava/util/Map$Entry;)Ljava/lang/String;	m_70ntbqgbe		apply
 		p	1			p_1
 	m	(Ljava/lang/Object;)Ljava/lang/Object;	apply		apply
-		p	1			p_1
+		p	1			entry
 c	net/minecraft/C_09pzbtcry
 	m	(Lnet/minecraft/C_60xlezclu;Lnet/minecraft/C_78uvaikic;)F	m_44zmirhgj	m_44zmirhgj	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/C_59dzjlfjt;Lnet/minecraft/C_60xlezclu;Lnet/minecraft/C_78uvaikic;)F	m_44zmirhgj		m_44zmirhgj
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/C_59dzjlfjt;Lnet/minecraft/C_60xlezclu;Lnet/minecraft/C_78uvaikic;)F	m_44zmirhgj		getMoisture
+		p	0			block
+		p	1			world
+		p	2			pos
 c	net/minecraft/C_10brbfnwc	net/minecraft/client/realms/RealmsClient	
 	f	Ljava/lang/String;	f_12qvrmqzp	sessionId	
 	f	Ljava/lang/String;	f_10rwlrine	username	
@@ -189,10 +189,10 @@ c	net/minecraft/C_12ibomjih	net/minecraft/client/realms/gui/screen/EditWorldScre
 		p	1		screen	
 		p	2		textRenderer	
 c	net/minecraft/C_12kzpjcct
-	m	(BBB)V	m_48ktitxod		m_48ktitxod
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(BBB)V	m_48ktitxod		color
+		p	1			r
+		p	2			g
+		p	3			b
 c	net/minecraft/C_15ynyyqhq	net/minecraft/client/realms/request/GetRequest	
 	m	(Ljava/lang/String;II)V	<init>	<init>	
 		p	1		p_1	
@@ -509,11 +509,11 @@ c	net/minecraft/C_27pabwvvt
 	m	(Lnet/minecraft/C_70khnraml;)V	m_99husaxgl		m_99husaxgl
 		p	1			p_1
 c	net/minecraft/C_27pxnsssu
-	m	()Ljava/lang/String;	m_43jgabpzx		m_43jgabpzx
-	m	(Ljava/lang/String;)Z	m_82yekaxwr		m_82yekaxwr
-		p	1			p_1
-	m	(Ljava/lang/String;)Z	m_42kxrfnvd		m_42kxrfnvd
-		p	1			p_1
+	m	()Ljava/lang/String;	m_43jgabpzx		getName
+	m	(Ljava/lang/String;)Z	m_82yekaxwr		canCreate
+		p	1			worldName
+	m	(Ljava/lang/String;)Z	m_42kxrfnvd		isConvertible
+		p	1			worldName
 c	net/minecraft/C_27wbqduqu	net/minecraft/client/realms/gui/screen/BuyRealmsScreen	
 	f	Lorg/apache/logging/log4j/Logger;	f_46assxiwa	LOGGER	
 	f	Lnet/minecraft/C_42hzijzdb;	f_78pbgqxac	parent	
@@ -630,7 +630,7 @@ c	net/minecraft/C_30ieelrfr$1	1
 		p	2		p_2	
 	m	()V	run	run	
 c	net/minecraft/C_30tkhdruc
-	m	()Ljava/util/List;	m_13psqqlxy		m_13psqqlxy
+	m	()Ljava/util/List;	m_13psqqlxy		getObjectives
 c	net/minecraft/C_30vvxyayt
 	m	(I)V	m_80sbzugwr	updateBoundingBox	
 		p	1		metadata	
@@ -793,8 +793,8 @@ c	net/minecraft/C_33wxqolrw	net/minecraft/client/realms/gui/screen/RealmsListWid
 		p	3		topAlpha	
 		p	4		bottomAlpha	
 c	net/minecraft/C_35tpsxcjx
-	m	(Lnet/minecraft/C_70khnraml;)V	m_99husaxgl		m_99husaxgl
-		p	1			p_1
+	m	(Lnet/minecraft/C_70khnraml;)V	m_99husaxgl		onTabList
+		p	1			packet
 c	net/minecraft/C_36opmwcdr	net/minecraft/C_36opmwcdr	
 	f	Ljava/util/concurrent/ExecutorService;	f_44lychjeu	f_44lychjeu	
 	m	()V	<clinit>	<clinit>	
@@ -841,9 +841,9 @@ c	net/minecraft/C_42acdxckk
 		p	3		doubleSlab	
 		p	4		isDouble	
 	m	(Lnet/minecraft/C_59dzjlfjt;Lnet/minecraft/C_89bgsyagf;Lnet/minecraft/C_89bgsyagf;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			block
+		p	2			singleSlab
+		p	3			doubleSlab
 c	net/minecraft/C_42jpsrcqw
 c	net/minecraft/C_42jpsrcqw$C_45mkyadrg
 	m	()Ljava/lang/String;	m_53adzzspf	m_53adzzspf	
@@ -953,9 +953,9 @@ c	net/minecraft/C_47cytkamp$C_84wabgdvo	ServerComparator
 		p	3		p_3	
 c	net/minecraft/C_47etntltp
 c	net/minecraft/C_47etntltp$C_23njjpxvr
-	f	Lnet/minecraft/C_47etntltp$C_23njjpxvr;	f_07oxmtsne		f_07oxmtsne
+	f	Lnet/minecraft/C_47etntltp$C_23njjpxvr;	f_07oxmtsne		UPDATE_DISPLAY_NAME
 c	net/minecraft/C_47etntltp$C_70nqkisdr
-	f	Lnet/minecraft/C_66djdeecc;	f_98xpbsuqi		f_98xpbsuqi
+	f	Lnet/minecraft/C_66djdeecc;	f_98xpbsuqi		displayName
 	m	(Lnet/minecraft/C_47etntltp;Lcom/mojang/authlib/GameProfile;ILnet/minecraft/C_74gtedwpe$C_64rrliocl;)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -963,11 +963,11 @@ c	net/minecraft/C_47etntltp$C_70nqkisdr
 		p	4		p_4	
 	m	(Lnet/minecraft/C_47etntltp;Lcom/mojang/authlib/GameProfile;ILnet/minecraft/C_74gtedwpe$C_64rrliocl;Lnet/minecraft/C_66djdeecc;)V	<init>		<init>
 		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	()Lnet/minecraft/C_66djdeecc;	m_19txhiwyc		m_19txhiwyc
+		p	2			profile
+		p	3			ping
+		p	4			gameMode
+		p	5			displayName
+	m	()Lnet/minecraft/C_66djdeecc;	m_19txhiwyc		getDisplayName
 c	net/minecraft/C_49mxjxgun
 	m	()V	m_10xvrbaoc	m_10xvrbaoc	
 	m	()V	m_54itdbsla		m_54itdbsla
@@ -1166,11 +1166,11 @@ c	net/minecraft/C_55kdmxjem	net/minecraft/client/realms/gui/screen/ScreenWithSer
 		p	1		serverInfo	
 	m	()V	m_15bkvuyce	m_15bkvuyce	
 c	net/minecraft/C_56trbjqbw
-	m	(D)I	m_91ekomdzf		m_91ekomdzf
-		p	0			p_0
+	m	(D)I	m_91ekomdzf		abs
+		p	0			x
 c	net/minecraft/C_57dvdsngm
-	f	Z	f_20ofozyiu		f_20ofozyiu
-	m	()Z	m_59gwrgofq		m_59gwrgofq
+	f	Z	f_20ofozyiu		encrypted
+	m	()Z	m_59gwrgofq		isEncrypted
 c	net/minecraft/C_60vliozeg	net/minecraft/client/realms/request/DeleteRequest	
 	m	(Ljava/lang/String;II)V	<init>	<init>	
 		p	1		p_1	
@@ -1179,7 +1179,7 @@ c	net/minecraft/C_60vliozeg	net/minecraft/client/realms/request/DeleteRequest
 	m	()Lnet/minecraft/C_60vliozeg;	m_61twfaucf	init	
 	m	()Lnet/minecraft/C_11elowcbs;	m_24khhfllp	m_24khhfllp	
 c	net/minecraft/C_60xlezclu
-	f	Ljava/util/List;	f_81igyfwex		f_81igyfwex
+	f	Ljava/util/List;	f_81igyfwex		tickingBlockEntities
 c	net/minecraft/C_61poisnpm
 	m	()V	m_10xvrbaoc	m_10xvrbaoc	
 	m	()V	m_54itdbsla		m_54itdbsla
@@ -1189,7 +1189,7 @@ c	net/minecraft/C_61vszjdog	net/minecraft/client/realms/dto/ServerAdressValueObj
 	m	(Ljava/lang/String;)Lnet/minecraft/C_61vszjdog;	m_70uzmvchd	getServerAdress	
 		p	0		id	
 c	net/minecraft/C_62tqehryk
-	f	Lnet/minecraft/C_15uwwgrlu;	f_19uvdmmyt		f_19uvdmmyt
+	f	Lnet/minecraft/C_15uwwgrlu;	f_19uvdmmyt		eula
 	m	(Lnet/minecraft/C_74gtedwpe$C_64rrliocl;)V	m_63xqzgikd		m_63xqzgikd
 		p	1			p_1
 c	net/minecraft/C_64cydrmbd
@@ -1198,14 +1198,14 @@ c	net/minecraft/C_65byvxgoz
 	m	()V	m_10xvrbaoc	m_10xvrbaoc	
 	m	()V	m_54itdbsla		m_54itdbsla
 c	net/minecraft/C_67ybodhkf
-	f	Lnet/minecraft/C_66djdeecc;	f_86wolbhzw		f_86wolbhzw
-	f	Lnet/minecraft/C_66djdeecc;	f_29gpaurfa		f_29gpaurfa
-	m	(Lnet/minecraft/C_99pzxxpay;)Ljava/lang/String;	m_81tdkwozn		m_81tdkwozn
-		p	1			p_1
-	m	(Lnet/minecraft/C_66djdeecc;)V	m_93wtvocca		m_93wtvocca
-		p	1			p_1
-	m	(Lnet/minecraft/C_66djdeecc;)V	m_03zzzdakn		m_03zzzdakn
-		p	1			p_1
+	f	Lnet/minecraft/C_66djdeecc;	f_86wolbhzw		header
+	f	Lnet/minecraft/C_66djdeecc;	f_29gpaurfa		footer
+	m	(Lnet/minecraft/C_99pzxxpay;)Ljava/lang/String;	m_81tdkwozn		getDisplayName
+		p	1			player
+	m	(Lnet/minecraft/C_66djdeecc;)V	m_93wtvocca		setHeader
+		p	1			header
+	m	(Lnet/minecraft/C_66djdeecc;)V	m_03zzzdakn		setFooter
+		p	1			footer
 c	net/minecraft/C_69uqlskci
 	m	()V	m_10xvrbaoc	m_10xvrbaoc	
 	m	()V	m_54itdbsla		m_54itdbsla
@@ -1224,7 +1224,7 @@ c	net/minecraft/C_70qowuaot	net/minecraft/client/realms/dto/RealmsServerState
 c	net/minecraft/C_72bbzhtzo
 	m	(Lnet/minecraft/C_70boeylyv;)Z	m_19ekifiwp
 		p	1		p_1	
-		p	0			p_0
+		p	0			stack
 c	net/minecraft/C_72setcqdp
 	m	()Ljava/lang/String;	m_43jgabpzx		m_43jgabpzx
 	m	(Ljava/lang/String;)Z	m_42kxrfnvd		m_42kxrfnvd
@@ -1270,11 +1270,11 @@ c	net/minecraft/C_73srwmjpi
 		p	0		chunk	
 		p	1		full	
 		p	2		dirtySections	
-	m	(Lnet/minecraft/C_11tlqqqfs;ZZI)Lnet/minecraft/C_73srwmjpi$C_79xyayrtf;	m_68icixxnz		m_68icixxnz
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(Lnet/minecraft/C_11tlqqqfs;ZZI)Lnet/minecraft/C_73srwmjpi$C_79xyayrtf;	m_68icixxnz		packChunkData
+		p	0			chunk
+		p	1			full
+		p	2			doubleHeight
+		p	3			dirtySections
 c	net/minecraft/C_73zihifiq	net/minecraft/client/realms/gui/screen/ConfirmationScreen	
 	f	Lnet/minecraft/C_84zqfctkh;	f_63mtedeth	type	
 	f	Ljava/lang/String;	f_35fqodqhl	title	
@@ -1312,7 +1312,7 @@ c	net/minecraft/C_77mvmjbpd	net/minecraft/client/realms/RealmsException
 		p	4		p_4	
 	m	()Ljava/lang/String;	toString	toString	
 c	net/minecraft/C_77peaityi
-	m	()J	m_55sqbwulq		m_55sqbwulq
+	m	()J	m_55sqbwulq		getSize
 c	net/minecraft/C_79xesmarp	net/minecraft/client/realms/gui/screen/AbstractRealmsWorldScreen	
 	f	Lnet/minecraft/C_13vzsuknp;	f_91kvintnl	client	
 	f	I	f_01uvfjbwz	width	
@@ -1357,13 +1357,13 @@ c	net/minecraft/C_79xesmarp	net/minecraft/client/realms/gui/screen/AbstractRealm
 	m	()I	m_97gkfwkic	m_97gkfwkic	
 c	net/minecraft/C_80iurzjoc
 c	net/minecraft/C_80iurzjoc$C_98ycoliht
-	f	Ljava/lang/String;	f_73zhsnqvr		f_73zhsnqvr
+	f	Ljava/lang/String;	f_73zhsnqvr		name
 	m	(Ljava/lang/String;IILjava/lang/String;Ljava/lang/String;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	3			index
+		p	4			id
+		p	5			name
 c	net/minecraft/C_80wyeewlw	net/minecraft/client/realms/gui/screen/RealmsMainScreen	
 	f	Lorg/apache/logging/log4j/Logger;	f_22pefwalz	LOGGER	
 	f	Lnet/minecraft/C_77bitvoax;	f_06xpwjmtt	WIDGETS	
@@ -1833,8 +1833,8 @@ c	net/minecraft/C_93urdlyfx	net/minecraft/client/realms/task/RealmsTask
 		p	1		button	
 	m	()V	m_48zoskpxw	init	
 c	net/minecraft/C_95beknjgp
-	f	Lcom/google/common/base/Joiner;	f_72mlxdruc		f_72mlxdruc
-	f	Lcom/google/common/base/Function;	f_17tqfjyta		f_17tqfjyta
+	f	Lcom/google/common/base/Joiner;	f_72mlxdruc		PROPERTY_JOINER
+	f	Lcom/google/common/base/Function;	f_17tqfjyta		PROPERTY_TO_STRING
 	m	()Ljava/lang/String;	toString		toString
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/C_95beknjgp$1
@@ -1848,20 +1848,20 @@ c	net/minecraft/C_95beknjgp$1
 		p	1		p_1	
 		p	2		p_2	
 	m	()V	<init>		<init>
-	m	(Lnet/minecraft/C_01khbiewk;)Ljava/lang/String;	m_76cegpawz		m_76cegpawz
+	m	(Lnet/minecraft/C_01khbiewk;)Ljava/lang/String;	m_76cegpawz		apply
 		p	1			p_1
 	m	(Ljava/lang/Object;)Ljava/lang/Object;	apply		apply
-		p	1			p_1
+		p	1			property
 c	net/minecraft/C_95beknjgp$2		2
 	f	Lnet/minecraft/C_95beknjgp;	f_20nuponvc		f_20nuponvc
 	m	(Lnet/minecraft/C_95beknjgp;)V	<init>		<init>
 		p	1			p_1
-	m	(Lnet/minecraft/C_01khbiewk;Lnet/minecraft/C_01khbiewk;)I	m_87fdzajrg		m_87fdzajrg
+	m	(Lnet/minecraft/C_01khbiewk;Lnet/minecraft/C_01khbiewk;)I	m_87fdzajrg		compare
 		p	1			p_1
 		p	2			p_2
 	m	(Ljava/lang/Object;Ljava/lang/Object;)I	compare		compare
-		p	1			p_1
-		p	2			p_2
+		p	1			property1
+		p	2			property2
 c	net/minecraft/C_96vweslqa	net/minecraft/client/realms/RealmsClientProxyHandler	
 	f	Ljava/net/Proxy;	f_23yugqzkg	proxy	
 	m	()Ljava/net/Proxy;	m_39faajmqc	getProxy	
@@ -1887,20 +1887,20 @@ c	net/minecraft/C_98uqackrf	net/minecraft/client/gui/screen/menu/ServerDisconnec
 		p	2		p_2	
 		p	3		p_3	
 c	net/minecraft/C_99pzxxpay
-	f	Lnet/minecraft/C_66djdeecc;	f_71hwiypxs		f_71hwiypxs
-	m	(Lnet/minecraft/C_66djdeecc;)V	m_44cqcvenj		m_44cqcvenj
-		p	1			p_1
-	m	()Lnet/minecraft/C_66djdeecc;	m_14pkprznv		m_14pkprznv
-c	net/minecraft/C_15uwwgrlu		net/minecraft/C_15uwwgrlu
-	f	Lorg/apache/logging/log4j/Logger;	f_03phsclwe		f_03phsclwe
-	f	Ljava/io/File;	f_47qrjmqna		f_47qrjmqna
-	f	Z	f_17bmtarjn		f_17bmtarjn
+	f	Lnet/minecraft/C_66djdeecc;	f_71hwiypxs		displayName
+	m	(Lnet/minecraft/C_66djdeecc;)V	m_44cqcvenj		setDisplayName
+		p	1			displayName
+	m	()Lnet/minecraft/C_66djdeecc;	m_14pkprznv		getDisplayName
+c	net/minecraft/C_15uwwgrlu		net/minecraft/server/Eula
+	f	Lorg/apache/logging/log4j/Logger;	f_03phsclwe		LOGGER
+	f	Ljava/io/File;	f_47qrjmqna		file
+	f	Z	f_17bmtarjn		accepted
 	m	(Ljava/io/File;)V	<init>		<init>
-		p	1			p_1
-	m	(Ljava/io/File;)Z	m_89stykecn		m_89stykecn
-		p	1			p_1
-	m	()Z	m_79jatuyyc		m_79jatuyyc
-	m	()V	m_69yjlqkcb		m_69yjlqkcb
+		p	1			file
+	m	(Ljava/io/File;)Z	m_89stykecn		load
+		p	1			file
+	m	()Z	m_79jatuyyc		isAccepted
+	m	()V	m_69yjlqkcb		write
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/C_44gkgqjab		net/minecraft/C_44gkgqjab
 	f	Lnet/minecraft/realms/RealmsScrolledSelectionList;	f_16tgxdfhx		f_16tgxdfhx
@@ -1973,20 +1973,20 @@ c	net/minecraft/C_47oocghts		net/minecraft/C_47oocghts
 	m	(Z)I	m_35zcgqqzx		m_35zcgqqzx
 		p	1			p_1
 	m	()I	m_32mzfzspa		m_32mzfzspa
-c	net/minecraft/C_70khnraml		net/minecraft/C_70khnraml
-	f	Lnet/minecraft/C_66djdeecc;	f_59gppztbi		f_59gppztbi
-	f	Lnet/minecraft/C_66djdeecc;	f_23zfuttdn		f_23zfuttdn
+c	net/minecraft/C_70khnraml		net/minecraft/network/packet/s2c/play/TabListS2CPacket
+	f	Lnet/minecraft/C_66djdeecc;	f_59gppztbi		header
+	f	Lnet/minecraft/C_66djdeecc;	f_23zfuttdn		footer
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/C_66djdeecc;)V	<init>		<init>
-		p	1			p_1
+		p	1			header
 	m	(Lnet/minecraft/C_95lhppoap;)V	m_22zxocirk		m_22zxocirk
 		p	1			p_1
 	m	(Lnet/minecraft/C_95lhppoap;)V	m_73nymvfwu		m_73nymvfwu
 		p	1			p_1
-	m	(Lnet/minecraft/C_35tpsxcjx;)V	m_02nrwrjzs		m_02nrwrjzs
+	m	(Lnet/minecraft/C_35tpsxcjx;)V	m_02nrwrjzs		apply
 		p	1			p_1
-	m	()Lnet/minecraft/C_66djdeecc;	m_01hmrewuq		m_01hmrewuq
-	m	()Lnet/minecraft/C_66djdeecc;	m_73jzzmvma		m_73jzzmvma
+	m	()Lnet/minecraft/C_66djdeecc;	m_01hmrewuq		getHeader
+	m	()Lnet/minecraft/C_66djdeecc;	m_73jzzmvma		getFooter
 	m	(Lnet/minecraft/C_69xiycoqt;)V	m_56jvqdjns		m_56jvqdjns
 		p	1			p_1
 c	net/minecraft/C_86gavuiac		net/minecraft/C_86gavuiac

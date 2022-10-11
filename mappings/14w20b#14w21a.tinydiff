@@ -23,11 +23,11 @@ c	net/minecraft/C_04csnbibn
 	m	(Lnet/minecraft/C_24ahulphb;)V	m_12xyqdqky	sendToListenersAndTrackedEntityIfPlayer	
 		p	1		packet	
 	m	()Lnet/minecraft/C_24ahulphb;	m_99erhmjuq	createEntitySpawnPacket	
-	m	(Lnet/minecraft/C_02axnjskx;)V	m_89hkuwqvr		m_89hkuwqvr
-		p	1			p_1
-	m	(Lnet/minecraft/C_02axnjskx;)V	m_12xyqdqky		m_12xyqdqky
-		p	1			p_1
-	m	()Lnet/minecraft/C_02axnjskx;	m_99erhmjuq		m_99erhmjuq
+	m	(Lnet/minecraft/C_02axnjskx;)V	m_89hkuwqvr		sendToListeners
+		p	1			packet
+	m	(Lnet/minecraft/C_02axnjskx;)V	m_12xyqdqky		sendToListenersAndTrackedEntityIfPlayer
+		p	1			packet
+	m	()Lnet/minecraft/C_02axnjskx;	m_99erhmjuq		createEntitySpawnPacket
 c	net/minecraft/C_04kroweqx
 	m	()Ljava/lang/String;	m_73vwtffjq	m_73vwtffjq	
 	m	(Ljava/lang/String;)V	m_58ztvjoxq	setCustomName	
@@ -48,17 +48,17 @@ c	net/minecraft/C_05xxppoat
 c	net/minecraft/C_09pbvuikg
 	f	I	f_32gtqsqyw	action	
 		c	The type of score update.\n<br>0: set score\n<br>1: remove score	
-	f	Lnet/minecraft/C_09pbvuikg$C_99uecwitg;	f_53rpmkelg		f_53rpmkelg
+	f	Lnet/minecraft/C_09pbvuikg$C_99uecwitg;	f_53rpmkelg		action
 	m	(Lnet/minecraft/C_49fnarvrm;I)V	<init>	<init>	
 		p	1		score	
 		p	2		action	
 	m	()I	m_08pltgkui	getAction	
 	m	(Lnet/minecraft/C_49fnarvrm;)V	<init>		<init>
-		p	1			p_1
-	m	()Lnet/minecraft/C_09pbvuikg$C_99uecwitg;	m_14ihbgbdw		m_14ihbgbdw
-c	net/minecraft/C_09pbvuikg$C_99uecwitg		C_99uecwitg
-	f	Lnet/minecraft/C_09pbvuikg$C_99uecwitg;	f_62hldpvum		f_62hldpvum
-	f	Lnet/minecraft/C_09pbvuikg$C_99uecwitg;	f_56toslurk		f_56toslurk
+		p	1			score
+	m	()Lnet/minecraft/C_09pbvuikg$C_99uecwitg;	m_14ihbgbdw		getAction
+c	net/minecraft/C_09pbvuikg$C_99uecwitg		Action
+	f	Lnet/minecraft/C_09pbvuikg$C_99uecwitg;	f_62hldpvum		CHANGE
+	f	Lnet/minecraft/C_09pbvuikg$C_99uecwitg;	f_56toslurk		REMOVE
 	f	[Lnet/minecraft/C_09pbvuikg$C_99uecwitg;	f_94wotkzcv		f_94wotkzcv
 	m	()[Lnet/minecraft/C_09pbvuikg$C_99uecwitg;	values		values
 	m	(Ljava/lang/String;)Lnet/minecraft/C_09pbvuikg$C_99uecwitg;	valueOf		valueOf
@@ -110,35 +110,35 @@ c	net/minecraft/C_19zzcarfo
 		p	8		maxDistance	
 		p	10		dimensionId	
 		p	11		packet	
-	m	(Lnet/minecraft/C_02axnjskx;)V	m_08mmjodem		m_08mmjodem
-		p	1			p_1
-	m	(Lnet/minecraft/C_02axnjskx;I)V	m_65prbabxr		m_65prbabxr
-		p	1			p_1
-		p	2			p_2
-	m	(DDDDILnet/minecraft/C_02axnjskx;)V	m_82eicawzq		m_82eicawzq
-		p	1			p_1
-		p	3			p_3
-		p	5			p_5
-		p	7			p_7
-		p	9			p_9
-		p	10			p_10
-	m	(Lnet/minecraft/C_77kzrkefm;DDDDILnet/minecraft/C_02axnjskx;)V	m_33pazquzi		m_33pazquzi
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
-		p	6			p_6
-		p	8			p_8
-		p	10			p_10
-		p	11			p_11
+	m	(Lnet/minecraft/C_02axnjskx;)V	m_08mmjodem		sendToAll
+		p	1			packet
+	m	(Lnet/minecraft/C_02axnjskx;I)V	m_65prbabxr		sendToDimension
+		p	1			packet
+		p	2			dimensionId
+	m	(DDDDILnet/minecraft/C_02axnjskx;)V	m_82eicawzq		sendToAround
+		p	1			x
+		p	3			y
+		p	5			z
+		p	7			range
+		p	9			dimensionId
+		p	10			packet
+	m	(Lnet/minecraft/C_77kzrkefm;DDDDILnet/minecraft/C_02axnjskx;)V	m_33pazquzi		sendToAround
+		p	1			source
+		p	2			x
+		p	4			y
+		p	6			z
+		p	8			range
+		p	10			dimensionId
+		p	11			packet
 c	net/minecraft/C_21ybmgzki
 	m	(Lnet/minecraft/C_70boeylyv;Lnet/minecraft/C_60xlezclu;Lnet/minecraft/C_77kzrkefm;)Lnet/minecraft/C_24ahulphb;	m_60chgjwet	getUpdatePacket	
 		p	1		stack	
 		p	2		world	
 		p	3		player	
-	m	(Lnet/minecraft/C_70boeylyv;Lnet/minecraft/C_60xlezclu;Lnet/minecraft/C_77kzrkefm;)Lnet/minecraft/C_02axnjskx;	m_60chgjwet		m_60chgjwet
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(Lnet/minecraft/C_70boeylyv;Lnet/minecraft/C_60xlezclu;Lnet/minecraft/C_77kzrkefm;)Lnet/minecraft/C_02axnjskx;	m_60chgjwet		getUpdatePacket
+		p	1			stack
+		p	2			world
+		p	3			player
 c	net/minecraft/C_22bpklana
 	m	()Z	m_30wphccgz	m_30wphccgz	
 c	net/minecraft/C_23tjaaond
@@ -185,8 +185,8 @@ c	net/minecraft/C_27pabwvvt
 	m	(Lnet/minecraft/C_56lryronk;Lnet/minecraft/C_56lryronk;)V	m_21qkgpiwg	m_21qkgpiwg	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/C_02axnjskx;)V	m_02aryedfg		m_02aryedfg
-		p	1			p_1
+	m	(Lnet/minecraft/C_02axnjskx;)V	m_02aryedfg		sendPacket
+		p	1			packet
 c	net/minecraft/C_30pmthxfc
 	m	()V	m_76kbqgclc	m_76kbqgclc	
 	m	(Lnet/minecraft/C_56lryronk;Lnet/minecraft/C_56lryronk;)V	m_21qkgpiwg	m_21qkgpiwg	
@@ -202,11 +202,11 @@ c	net/minecraft/C_32ersosra
 	m	()Lnet/minecraft/C_24ahulphb;	m_56zvgzinc	m_56zvgzinc	
 	m	()Lnet/minecraft/C_02axnjskx;	m_56zvgzinc		m_56zvgzinc
 c	net/minecraft/C_32igtaucr
-	m	(Lnet/minecraft/C_42fgqhfer;[Ljava/lang/String;Lnet/minecraft/C_81kjyzdux;Ljava/lang/String;)Z	m_99lqgusgh		m_99lqgusgh
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(Lnet/minecraft/C_42fgqhfer;[Ljava/lang/String;Lnet/minecraft/C_81kjyzdux;Ljava/lang/String;)Z	m_99lqgusgh		execute
+		p	1			source
+		p	2			args
+		p	3			command
+		p	4			rawCommand
 c	net/minecraft/C_33vnmobsa
 	m	()Ljava/lang/String;	m_90czeovfb	m_90czeovfb	
 c	net/minecraft/C_34cxuwqmd
@@ -228,8 +228,8 @@ c	net/minecraft/C_39obmsqqt
 		p	1		p_1	
 		p	2		p_2	
 	m	()V	m_54itdbsla		m_54itdbsla
-	m	(Lnet/minecraft/C_02axnjskx;)V	m_57jykrivu		m_57jykrivu
-		p	1			p_1
+	m	(Lnet/minecraft/C_02axnjskx;)V	m_57jykrivu		sendPacket
+		p	1			packet
 c	net/minecraft/C_39obmsqqt$2
 	f	Lnet/minecraft/C_24ahulphb;	f_03nrzixsp	packet	
 	f	Lnet/minecraft/C_02axnjskx;	f_03nrzixsp		f_03nrzixsp
@@ -278,8 +278,8 @@ c	net/minecraft/C_44lqfxgqm
 		p	3			p_3
 c	net/minecraft/C_47etntltp
 	m	(Lnet/minecraft/C_47etntltp$C_23njjpxvr;Ljava/lang/Iterable;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			action
+		p	2			players
 c	net/minecraft/C_47etntltp$C_23njjpxvr
 	f	[Lnet/minecraft/C_47etntltp$C_23njjpxvr;	f_03ksttdoi	f_03ksttdoi	
 	f	I	f_01rogvokg	f_01rogvokg	
@@ -296,7 +296,7 @@ c	net/minecraft/C_47etntltp$C_23njjpxvr
 c	net/minecraft/C_47etntltp$C_70nqkisdr
 	f	Ljava/util/UUID;	f_10gbixvgn	f_10gbixvgn	
 	f	Ljava/lang/String;	f_62tzykgmq	f_62tzykgmq	
-	f	Lcom/mojang/authlib/GameProfile;	f_26bygtvrw		f_26bygtvrw
+	f	Lcom/mojang/authlib/GameProfile;	f_26bygtvrw		profile
 	m	(Lnet/minecraft/C_47etntltp;Ljava/util/UUID;Ljava/lang/String;ILnet/minecraft/C_74gtedwpe$C_64rrliocl;)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -310,7 +310,7 @@ c	net/minecraft/C_47etntltp$C_70nqkisdr
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	()Lcom/mojang/authlib/GameProfile;	m_43uxspgex		m_43uxspgex
+	m	()Lcom/mojang/authlib/GameProfile;	m_43uxspgex		getProfile
 c	net/minecraft/C_47zimudvl
 	m	()Ljava/lang/String;	m_90czeovfb	m_90czeovfb	
 c	net/minecraft/C_48mrlbmpu
@@ -321,8 +321,8 @@ c	net/minecraft/C_52mvipkst
 		p	1		channel	
 		p	2		data	
 	m	(Ljava/lang/String;Lnet/minecraft/C_95lhppoap;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			channel
+		p	2			data
 c	net/minecraft/C_54iogeise
 c	net/minecraft/C_54iogeise$C_20wrsoxra
 	f	Lnet/minecraft/C_48tublxxd;	f_16zjdvtze	f_16zjdvtze	
@@ -343,8 +343,8 @@ c	net/minecraft/C_55fgzyrew
 c	net/minecraft/C_56lryronk
 	m	(Lnet/minecraft/C_24ahulphb;)Lnet/minecraft/C_56lryronk;	m_67olwmlvz	byPacket	
 		p	0		packet	
-	m	(Lnet/minecraft/C_02axnjskx;)Lnet/minecraft/C_56lryronk;	m_67olwmlvz		m_67olwmlvz
-		p	0			p_0
+	m	(Lnet/minecraft/C_02axnjskx;)Lnet/minecraft/C_56lryronk;	m_67olwmlvz		byPacket
+		p	0			packet
 c	net/minecraft/C_57dvdsngm
 	f	Ljava/util/Queue;	f_04zbftmyd	readQueue	
 	f	Lnet/minecraft/C_56lryronk;	f_83myqrnpa	state	
@@ -357,18 +357,18 @@ c	net/minecraft/C_57dvdsngm
 	m	(Lnet/minecraft/C_24ahulphb;[Lio/netty/util/concurrent/GenericFutureListener;)V	m_65dubgzxd	sendPacket	
 		p	1		packet	
 		p	2		listeners	
-	m	(Lio/netty/channel/ChannelHandlerContext;Lnet/minecraft/C_02axnjskx;)V	m_26gezairv		m_26gezairv
+	m	(Lio/netty/channel/ChannelHandlerContext;Lnet/minecraft/C_02axnjskx;)V	m_26gezairv		channelRead0
 		p	1			p_1
 		p	2			p_2
-	m	(Lnet/minecraft/C_02axnjskx;)V	m_77zaihuvz		m_77zaihuvz
-		p	1			p_1
-	m	(Lnet/minecraft/C_02axnjskx;Lio/netty/util/concurrent/GenericFutureListener;[Lio/netty/util/concurrent/GenericFutureListener;)V	m_46ilhjjjk		m_46ilhjjjk
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lnet/minecraft/C_02axnjskx;[Lio/netty/util/concurrent/GenericFutureListener;)V	m_65dubgzxd		m_65dubgzxd
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/C_02axnjskx;)V	m_77zaihuvz		send
+		p	1			packet
+	m	(Lnet/minecraft/C_02axnjskx;Lio/netty/util/concurrent/GenericFutureListener;[Lio/netty/util/concurrent/GenericFutureListener;)V	m_46ilhjjjk		send
+		p	1			packet
+		p	2			listener
+		p	3			listeners
+	m	(Lnet/minecraft/C_02axnjskx;[Lio/netty/util/concurrent/GenericFutureListener;)V	m_65dubgzxd		sendPacket
+		p	1			packet
+		p	2			listeners
 c	net/minecraft/C_57dvdsngm$1
 	f	Lnet/minecraft/C_24ahulphb;	f_88yvthdmw	packet	
 	f	Lnet/minecraft/C_02axnjskx;	f_88yvthdmw		f_88yvthdmw
@@ -386,17 +386,17 @@ c	net/minecraft/C_57dvdsngm$1
 		p	5			p_5
 c	net/minecraft/C_57dvdsngm$C_52spqjrpt
 	f	Lnet/minecraft/C_24ahulphb;	f_13psclumu	packet	
-	f	Lnet/minecraft/C_02axnjskx;	f_13psclumu		f_13psclumu
+	f	Lnet/minecraft/C_02axnjskx;	f_13psclumu		packet
 	m	(Lnet/minecraft/C_24ahulphb;[Lio/netty/util/concurrent/GenericFutureListener;)V	<init>	<init>	
 		p	1		packet	
 		p	2		listeners	
 	m	(Lnet/minecraft/C_57dvdsngm$C_52spqjrpt;)Lnet/minecraft/C_24ahulphb;	m_54fqqpgqz	getPacket	
 		p	0		packetWrapper	
 	m	(Lnet/minecraft/C_02axnjskx;[Lio/netty/util/concurrent/GenericFutureListener;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/C_57dvdsngm$C_52spqjrpt;)Lnet/minecraft/C_02axnjskx;	m_54fqqpgqz		m_54fqqpgqz
-		p	0			p_0
+		p	1			packet
+		p	2			listeners
+	m	(Lnet/minecraft/C_57dvdsngm$C_52spqjrpt;)Lnet/minecraft/C_02axnjskx;	m_54fqqpgqz		getPacket
+		p	0			packetWrapper
 c	net/minecraft/C_57hslofqj
 	m	(Lnet/minecraft/C_71lthymyi;DDDLjava/lang/String;FD)V	m_88qffyaag	m_88qffyaag	
 		p	1		p_1	
@@ -449,10 +449,10 @@ c	net/minecraft/C_58xslyxec
 	m	()Ljava/lang/String;	m_90czeovfb	m_90czeovfb	
 c	net/minecraft/C_59paxlyhp
 	f	Lcom/mojang/authlib/GameProfile;	f_96wyhaktz	profile	
-	f	Ljava/util/UUID;	f_11cvgtdtq		f_11cvgtdtq
+	f	Ljava/util/UUID;	f_11cvgtdtq		uuid
 	m	()Ljava/lang/String;	m_90czeovfb	m_90czeovfb	
 	m	()Lcom/mojang/authlib/GameProfile;	m_54cbdhapl	getProfile	
-	m	()Ljava/util/UUID;	m_54cbdhapl		m_54cbdhapl
+	m	()Ljava/util/UUID;	m_54cbdhapl		getUuid
 c	net/minecraft/C_59xbtnuuo
 	m	()Ljava/lang/String;	m_90czeovfb	m_90czeovfb	
 c	net/minecraft/C_60btwyvxf
@@ -460,16 +460,16 @@ c	net/minecraft/C_60btwyvxf
 c	net/minecraft/C_62flsfgfr
 	m	()Ljava/lang/String;	m_90czeovfb	m_90czeovfb	
 c	net/minecraft/C_62ygksvhz
-	f	Ljava/util/UUID;	f_91chwkxfh		f_91chwkxfh
+	f	Ljava/util/UUID;	f_91chwkxfh		attackerUuid
 	m	(Lnet/minecraft/C_71lthymyi;)V	m_16dvjksjr		m_16dvjksjr
 		p	1			p_1
 c	net/minecraft/C_63hmvbeag
 	m	()Ljava/lang/String;	m_90czeovfb	m_90czeovfb	
 c	net/minecraft/C_63rjkkbvm
-	m	(Ljava/lang/String;)V	m_16frmjexq		m_16frmjexq
-		p	1			p_1
-	m	()Ljava/lang/String;	m_03cyoxmvr		m_03cyoxmvr
-	m	()Z	m_88kzwpxrs		m_88kzwpxrs
+	m	(Ljava/lang/String;)V	m_16frmjexq		setCustomName
+		p	1			name
+	m	()Ljava/lang/String;	m_03cyoxmvr		getCustomName
+	m	()Z	m_88kzwpxrs		hasCustomName
 	m	(Z)V	m_07qnyxukh		m_07qnyxukh
 		p	1			p_1
 	m	()Z	m_97gzipolg		m_97gzipolg
@@ -479,8 +479,8 @@ c	net/minecraft/C_64tbjogjq
 		p	1		channel	
 		p	2		data	
 	m	(Ljava/lang/String;Lnet/minecraft/C_95lhppoap;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			channel
+		p	2			data
 c	net/minecraft/C_68vegtwyg
 	m	(Lnet/minecraft/C_63rjkkbvm;DDD)V	m_70zkycgqi		m_70zkycgqi
 		p	1			p_1
@@ -595,7 +595,7 @@ c	net/minecraft/C_86kifjyha
 	m	()F	m_41zznomrg	getWalkSpeed	
 c	net/minecraft/C_86ktcgars
 	m	()Lnet/minecraft/C_24ahulphb;	m_56zvgzinc	toUpdatePacket	
-	m	()Lnet/minecraft/C_02axnjskx;	m_56zvgzinc		m_56zvgzinc
+	m	()Lnet/minecraft/C_02axnjskx;	m_56zvgzinc		toUpdatePacket
 c	net/minecraft/C_88dzxgqhq
 	m	()Z	m_30wphccgz	m_30wphccgz	
 c	net/minecraft/C_88ggihwcz
@@ -606,8 +606,8 @@ c	net/minecraft/C_91oauolpd
 c	net/minecraft/C_91oauolpd$C_27eliihcp
 	m	(Lnet/minecraft/C_24ahulphb;)V	m_61dszzvyd	sendPacket	
 		p	1		packet	
-	m	(Lnet/minecraft/C_02axnjskx;)V	m_61dszzvyd		m_61dszzvyd
-		p	1			p_1
+	m	(Lnet/minecraft/C_02axnjskx;)V	m_61dszzvyd		sendPacket
+		p	1			packet
 c	net/minecraft/C_91ukhtvyg
 c	net/minecraft/C_91ukhtvyg$1
 	m	(Lnet/minecraft/C_56lryronk;Lnet/minecraft/C_56lryronk;)V	m_21qkgpiwg	m_21qkgpiwg	
@@ -633,14 +633,14 @@ c	net/minecraft/C_94vuqjfhi$C_32itzvfra
 c	net/minecraft/C_95iylolph
 	m	()Ljava/lang/String;	m_90czeovfb	m_90czeovfb	
 c	net/minecraft/C_95lhppoap
-	m	([B)V	m_21zpjslkm		m_21zpjslkm
-		p	1			p_1
-	m	()[B	m_68wwqglwv		m_68wwqglwv
+	m	([B)V	m_21zpjslkm		writeByteArray
+		p	1			bytes
+	m	()[B	m_68wwqglwv		readByteArray
 	m	()[B	m_81qqanlcl		m_81qqanlcl
-	m	(Ljava/lang/Class;)Ljava/lang/Enum;	m_78orywlqy		m_78orywlqy
-		p	1			p_1
-	m	(Ljava/lang/Enum;)V	m_52jbctpvb		m_52jbctpvb
-		p	1			p_1
+	m	(Ljava/lang/Class;)Ljava/lang/Enum;	m_78orywlqy		readEnum
+		p	1			type
+	m	(Ljava/lang/Enum;)V	m_52jbctpvb		writeEnum
+		p	1			value
 c	net/minecraft/C_95wtxdjpa
 	m	(Lnet/minecraft/C_63rjkkbvm;Lnet/minecraft/C_24ahulphb;)V	m_77ujetsop	sendToListeners	
 		p	1		entity	
@@ -648,12 +648,12 @@ c	net/minecraft/C_95wtxdjpa
 	m	(Lnet/minecraft/C_63rjkkbvm;Lnet/minecraft/C_24ahulphb;)V	m_42nksilxa	sendToListenersAndTrackedEntityIfPlayer	
 		p	1		entity	
 		p	2		packet	
-	m	(Lnet/minecraft/C_63rjkkbvm;Lnet/minecraft/C_02axnjskx;)V	m_77ujetsop		m_77ujetsop
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/C_63rjkkbvm;Lnet/minecraft/C_02axnjskx;)V	m_42nksilxa		m_42nksilxa
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/C_63rjkkbvm;Lnet/minecraft/C_02axnjskx;)V	m_77ujetsop		sendToListeners
+		p	1			entity
+		p	2			packet
+	m	(Lnet/minecraft/C_63rjkkbvm;Lnet/minecraft/C_02axnjskx;)V	m_42nksilxa		sendToListenersAndTrackedEntityIfPlayer
+		p	1			entity
+		p	2			packet
 c	net/minecraft/C_97awsovea
 	m	()Ljava/lang/String;	m_90czeovfb	m_90czeovfb	
 c	net/minecraft/C_98bckadxp
@@ -661,64 +661,64 @@ c	net/minecraft/C_98bckadxp
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(Lio/netty/channel/ChannelHandlerContext;Lnet/minecraft/C_02axnjskx;Lio/netty/buffer/ByteBuf;)V	m_05nfpibsy		m_05nfpibsy
+	m	(Lio/netty/channel/ChannelHandlerContext;Lnet/minecraft/C_02axnjskx;Lio/netty/buffer/ByteBuf;)V	m_05nfpibsy		encode
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/C_99pzxxpay
 	m	(Lnet/minecraft/C_47etntltp$C_70nqkisdr;)V	<init>		<init>
-		p	1			p_1
+		p	1			entry
 c	net/minecraft/server/MinecraftServer
-	f	Ljava/util/Queue;	f_63gjrsozf		f_63gjrsozf
-	f	Ljava/lang/Thread;	f_45oiebjnv		f_45oiebjnv
-	m	(Ljava/util/concurrent/Callable;)Lcom/google/common/util/concurrent/ListenableFuture;	m_91citxjzz		m_91citxjzz
-		p	1			p_1
+	f	Ljava/util/Queue;	f_63gjrsozf		pendingEvents
+	f	Ljava/lang/Thread;	f_45oiebjnv		thread
+	m	(Ljava/util/concurrent/Callable;)Lcom/google/common/util/concurrent/ListenableFuture;	m_91citxjzz		submit
+		p	1			event
 	m	(Ljava/lang/Runnable;)Lcom/google/common/util/concurrent/ListenableFuture;	m_64booazne		m_64booazne
 		p	1			p_1
 	m	()Z	m_88hdwcosq		m_88hdwcosq
 c	net/minecraft/server/MinecraftServer$3
 	f	Lnet/minecraft/server/MinecraftServer;	f_73ydenczo	server	
-	f	Lnet/minecraft/server/MinecraftServer;	f_02kpzuird		f_02kpzuird
+	f	Lnet/minecraft/server/MinecraftServer;	f_02kpzuird		server
 	m	(Lnet/minecraft/server/MinecraftServer;Ljava/lang/String;)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
 	m	()V	run	run	
 	m	(Lnet/minecraft/server/MinecraftServer;)V	<init>		<init>
 		p	1			p_1
-	m	()Ljava/lang/String;	m_59jbbxsep		m_59jbbxsep
+	m	()Ljava/lang/String;	m_59jbbxsep		call
 	m	()Ljava/lang/Object;	call		call
 c	net/minecraft/server/MinecraftServer$4
 	f	Lnet/minecraft/server/MinecraftServer;	f_02kpzuird	server	
-	f	Lnet/minecraft/server/MinecraftServer;	f_86uerhwil		f_86uerhwil
+	f	Lnet/minecraft/server/MinecraftServer;	f_86uerhwil		server
 	m	()Ljava/lang/String;	m_59jbbxsep	call	
-	m	()Ljava/lang/String;	m_22jeitosl		m_22jeitosl
+	m	()Ljava/lang/String;	m_22jeitosl		call
 c	net/minecraft/server/MinecraftServer$5	5	
 	f	Lnet/minecraft/server/MinecraftServer;	f_86uerhwil	f_86uerhwil	
 	m	(Lnet/minecraft/server/MinecraftServer;)V	<init>	<init>	
 		p	1		p_1	
 	m	()Ljava/lang/String;	m_22jeitosl	m_22jeitosl	
 	m	()Ljava/lang/Object;	call	call	
-c	net/minecraft/C_00cneuwbv		net/minecraft/C_00cneuwbv
-	m	(Ljava/lang/Runnable;)Lcom/google/common/util/concurrent/ListenableFuture;	m_64booazne		m_64booazne
-		p	1			p_1
-	m	()Z	m_88hdwcosq		m_88hdwcosq
-c	net/minecraft/C_02axnjskx		net/minecraft/C_02axnjskx
-	m	(Lnet/minecraft/C_95lhppoap;)V	m_22zxocirk		m_22zxocirk
-		p	1			p_1
-	m	(Lnet/minecraft/C_95lhppoap;)V	m_73nymvfwu		m_73nymvfwu
-		p	1			p_1
-	m	(Lnet/minecraft/C_69xiycoqt;)V	m_56jvqdjns		m_56jvqdjns
-		p	1			p_1
-c	net/minecraft/C_27wjgcsbm		net/minecraft/C_27wjgcsbm
-	f	Lnet/minecraft/C_27wjgcsbm;	f_04jgagmeh		f_04jgagmeh
+c	net/minecraft/C_00cneuwbv		net/minecraft/util/BlockableEventLoop
+	m	(Ljava/lang/Runnable;)Lcom/google/common/util/concurrent/ListenableFuture;	m_64booazne		submit
+		p	1			event
+	m	()Z	m_88hdwcosq		isOnSameThread
+c	net/minecraft/C_02axnjskx		net/minecraft/network/Packet
+	m	(Lnet/minecraft/C_95lhppoap;)V	m_22zxocirk		write
+		p	1			buffer
+	m	(Lnet/minecraft/C_95lhppoap;)V	m_73nymvfwu		read
+		p	1			buffer
+	m	(Lnet/minecraft/C_69xiycoqt;)V	m_56jvqdjns		apply
+		p	1			listener
+c	net/minecraft/C_27wjgcsbm		net/minecraft/network/DifferentThreadException
+	f	Lnet/minecraft/C_27wjgcsbm;	f_04jgagmeh		INSTANCE
 	m	()V	<init>		<init>
 	m	()Ljava/lang/Throwable;	fillInStackTrace		fillInStackTrace
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_73ulsexmb		net/minecraft/C_73ulsexmb
-	m	(Lnet/minecraft/C_02axnjskx;Lnet/minecraft/C_69xiycoqt;Lnet/minecraft/C_00cneuwbv;)V	m_18kjhnyws		m_18kjhnyws
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
+c	net/minecraft/C_73ulsexmb		net/minecraft/network/PacketUtils
+	m	(Lnet/minecraft/C_02axnjskx;Lnet/minecraft/C_69xiycoqt;Lnet/minecraft/C_00cneuwbv;)V	m_18kjhnyws		ensureOnSameThread
+		p	0			packet
+		p	1			listener
+		p	2			eventLoop
 c	net/minecraft/C_73ulsexmb$1		1
 	f	Lnet/minecraft/C_02axnjskx;	f_46kfuwcdo		f_46kfuwcdo
 	f	Lnet/minecraft/C_69xiycoqt;	f_53nkzusot		f_53nkzusot
