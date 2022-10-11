@@ -1,6 +1,6 @@
 tiny	2	0
 c	net/minecraft/C_00pktlljv
-	f	Lnet/minecraft/C_73yvmijgm;	f_42schtlvs		f_42schtlvs
+	f	Lnet/minecraft/C_73yvmijgm;	f_42schtlvs		nbt
 c	net/minecraft/C_02ikeagrp
 	f	Lnet/minecraft/C_93urvdpuw;	f_99vcrcrtr		f_99vcrcrtr
 	m	(I)Lnet/minecraft/C_02ikeagrp;	m_14bsdhkjo	m_14bsdhkjo	
@@ -18,7 +18,7 @@ c	net/minecraft/C_02ikeagrp
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/C_05bfzhcea
-	f	Lnet/minecraft/C_42hzijzdb;	f_31kxdtrlc		f_31kxdtrlc
+	f	Lnet/minecraft/C_42hzijzdb;	f_31kxdtrlc		parent
 	m	(Ljava/lang/String;Ljava/lang/String;[Ljava/lang/Object;)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -31,11 +31,11 @@ c	net/minecraft/C_05bfzhcea
 c	net/minecraft/C_10brbfnwc
 	f	Lnet/minecraft/C_57mbhljol;	f_22xpevhyi		f_22xpevhyi
 	m	()Ljava/util/List;	m_58plhcqnf	m_58plhcqnf	
-	m	()Lnet/minecraft/C_01awqxvuk;	m_58plhcqnf		m_58plhcqnf
-	m	(J)Lnet/minecraft/C_87rppojev;	m_76lmorhro		m_76lmorhro
-		p	1			p_1
-	m	(J)Lnet/minecraft/C_31vwaoygm;	m_57gbukien		m_57gbukien
-		p	1			p_1
+	m	()Lnet/minecraft/C_01awqxvuk;	m_58plhcqnf		listWorlds
+	m	(J)Lnet/minecraft/C_87rppojev;	m_76lmorhro		createServer
+		p	1			worldId
+	m	(J)Lnet/minecraft/C_31vwaoygm;	m_57gbukien		executeSubscriptions
+		p	1			worldId
 c	net/minecraft/C_10brbfnwc$1	1	
 	f	Lnet/minecraft/C_10brbfnwc;	f_68mamfwrg	f_68mamfwrg	
 	m	(Lnet/minecraft/C_10brbfnwc;)V	<init>	<init>	
@@ -44,15 +44,15 @@ c	net/minecraft/C_11elowcbs
 	m	()Ljava/lang/String;	m_72nranuvq	m_72nranuvq	
 	m	()Lnet/minecraft/C_57mbhljol;	m_93udwxbsy		m_93udwxbsy
 c	net/minecraft/C_17mblaojz
-	f	J	f_62uiottpc		f_62uiottpc
+	f	J	f_62uiottpc		snooperInitTime
 c	net/minecraft/C_19atnyxhk
-	f	Lnet/minecraft/C_99fhvuqfc;	f_96zpagfps		f_96zpagfps
-	f	Lnet/minecraft/C_99fhvuqfc;	f_24rqfhirg		f_24rqfhirg
-	f	Lnet/minecraft/C_99fhvuqfc;	f_32sddwjpz		f_32sddwjpz
+	f	Lnet/minecraft/C_99fhvuqfc;	f_96zpagfps		inviteButton
+	f	Lnet/minecraft/C_99fhvuqfc;	f_24rqfhirg		uninviteButton
+	f	Lnet/minecraft/C_99fhvuqfc;	f_32sddwjpz		subscriptionButton
 c	net/minecraft/C_19zzcarfo
 	f	Ljava/util/logging/Logger;	f_63lqdsytb	f_63lqdsytb	
 c	net/minecraft/C_21xyjcoyi
-	f	Ljava/lang/String;	f_79qhlatdo		f_79qhlatdo
+	f	Ljava/lang/String;	f_79qhlatdo		name
 	f	Ljava/lang/String;	f_12jhwwsvn		f_12jhwwsvn
 	m	(Lnet/minecraft/C_21xyjcoyi;)Lnet/minecraft/client/Minecraft;	m_31kmiiyjk		m_31kmiiyjk
 		p	0			p_0
@@ -104,8 +104,8 @@ c	net/minecraft/C_30ieelrfr
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Z)Z	m_24zojjxlv		m_24zojjxlv
-		p	0			p_0
+	m	(Z)Z	m_24zojjxlv		setMcoEnabled
+		p	0			mcoEnabled
 c	net/minecraft/C_30ieelrfr$1		1
 	f	Lnet/minecraft/C_08uodfbyd;	f_88tszcibe		f_88tszcibe
 	f	I	f_63eiweoou		f_63eiweoou
@@ -166,8 +166,8 @@ c	net/minecraft/C_45ypjifuc
 	f	Ljava/util/logging/Logger;	f_65vbqyexf	f_65vbqyexf	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/C_51ijhrnpn
-	m	(Lnet/minecraft/C_51ijhrnpn;)Lnet/minecraft/C_42hzijzdb;	m_33episyup		m_33episyup
-		p	0			p_0
+	m	(Lnet/minecraft/C_51ijhrnpn;)Lnet/minecraft/C_42hzijzdb;	m_33episyup		getScreen
+		p	0			realmsServerLoginTask
 c	net/minecraft/C_51ildmdzd
 	m	(CI)V	m_57jozdyag		m_57jozdyag
 		p	1			p_1
@@ -252,15 +252,15 @@ c	net/minecraft/C_67vgpnzme
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_73lwjhcys
-	f	Ljava/lang/Thread;	f_24xawlowk		f_24xawlowk
+	f	Ljava/lang/Thread;	f_24xawlowk		taskThread
 	m	(Lnet/minecraft/C_93urdlyfx;)V	m_74lkudoko	m_74lkudoko	
 		p	1		p_1	
-	m	()V	m_74lkudoko		m_74lkudoko
+	m	()V	m_74lkudoko		start
 c	net/minecraft/C_74mxhtwsp
 	f	I	f_20nzljkrv	f_20nzljkrv	
 	f	I	delaySeconds		delaySeconds
 c	net/minecraft/C_75lunudpb
-	f	Lnet/minecraft/C_42hzijzdb;	f_69rutpdmm		f_69rutpdmm
+	f	Lnet/minecraft/C_42hzijzdb;	f_69rutpdmm		parent
 	m	(Lnet/minecraft/client/Minecraft;Lnet/minecraft/C_26xftpljz;)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -285,8 +285,8 @@ c	net/minecraft/C_77mvmjbpd
 	f	I	httpResultCode		httpResultCode
 	f	Ljava/lang/String;	httpResponseContent		httpResponseContent
 c	net/minecraft/C_80wyeewlw
-	m	(J)Lnet/minecraft/C_87rppojev;	m_97twqhiar		m_97twqhiar
-		p	1			p_1
+	m	(J)Lnet/minecraft/C_87rppojev;	m_97twqhiar		getOwnWorld
+		p	1			worldId
 	m	(II)V	m_33yedfjxw		m_33yedfjxw
 		p	1			p_1
 		p	2			p_2
@@ -300,7 +300,7 @@ c	net/minecraft/C_80wyeewlw
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_80wyeewlw$1		1
-	f	Lnet/minecraft/C_80wyeewlw;	f_30spajnfw		f_30spajnfw
+	f	Lnet/minecraft/C_80wyeewlw;	f_30spajnfw		mainScreen
 	m	(Lnet/minecraft/C_80wyeewlw;)V	<init>		<init>
 		p	1			p_1
 	m	()V	run		run
@@ -432,7 +432,7 @@ c	net/minecraft/client/Minecraft
 c	net/minecraft/server/MinecraftServer
 	f	Ljava/util/logging/Logger;	f_05axaqfmv	f_05axaqfmv	
 	m	()Lnet/minecraft/C_93urvdpuw;	m_06ssvorgn		m_06ssvorgn
-c	net/minecraft/C_01awqxvuk		net/minecraft/C_01awqxvuk
+c	net/minecraft/C_01awqxvuk		net/minecraft/client/realms/dto/RealmsServerList
 	f	Ljava/util/List;	servers		servers
 	m	()V	<init>		<init>
 c	net/minecraft/C_14bgqgmms		net/minecraft/C_14bgqgmms
@@ -443,22 +443,22 @@ c	net/minecraft/C_14bgqgmms		net/minecraft/C_14bgqgmms
 c	net/minecraft/C_16qitbovt		net/minecraft/C_16qitbovt
 	m	()V	<init>		<init>
 	m	()Ljava/lang/Object;	m_88fyjdjrx		m_88fyjdjrx
-c	net/minecraft/C_28jqfynkb		net/minecraft/C_28jqfynkb
-	f	Lnet/minecraft/C_42hzijzdb;	f_99eunevjk		f_99eunevjk
-	f	Lnet/minecraft/C_87rppojev;	f_39sgdcikc		f_39sgdcikc
-	f	I	f_38oseekmx		f_38oseekmx
-	f	I	f_97ptdalsy		f_97ptdalsy
-	f	I	f_72qcixlql		f_72qcixlql
-	f	Ljava/lang/String;	f_30wpzgorr		f_30wpzgorr
+c	net/minecraft/C_28jqfynkb		net/minecraft/client/realms/gui/screen/RealmsSubscriptionScreen
+	f	Lnet/minecraft/C_42hzijzdb;	f_99eunevjk		parent
+	f	Lnet/minecraft/C_87rppojev;	f_39sgdcikc		server
+	f	I	f_38oseekmx		extendSubscriptionButtonId
+	f	I	f_97ptdalsy		cancelButtonId
+	f	I	f_72qcixlql		daysLeft
+	f	Ljava/lang/String;	f_30wpzgorr		startDate
 	m	(Lnet/minecraft/C_42hzijzdb;Lnet/minecraft/C_87rppojev;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			parent
+		p	2			server
 	m	()V	m_44tiaqzto		m_44tiaqzto
 	m	()V	m_11vecxuja		m_11vecxuja
-	m	(J)V	m_29qnycxwb		m_29qnycxwb
-		p	1			p_1
-	m	(J)Ljava/lang/String;	m_08bfdamtr		m_08bfdamtr
-		p	1			p_1
+	m	(J)V	m_29qnycxwb		init
+		p	1			realmsServerId
+	m	(J)Ljava/lang/String;	m_08bfdamtr		getDateAsString
+		p	1			date
 	m	()V	m_86cqatnjv		m_86cqatnjv
 	m	(Lnet/minecraft/C_99fhvuqfc;)V	m_09zuzmlby		m_09zuzmlby
 		p	1			p_1
@@ -473,7 +473,7 @@ c	net/minecraft/C_28jqfynkb		net/minecraft/C_28jqfynkb
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/C_31vwaoygm		net/minecraft/C_31vwaoygm
+c	net/minecraft/C_31vwaoygm		net/minecraft/client/realms/dto/RealmsSubscriptionValueObject
 	f	J	startDate		startDate
 	f	I	daysLeft		daysLeft
 	m	()V	<init>		<init>

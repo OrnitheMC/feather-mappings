@@ -6,18 +6,18 @@ c	net/minecraft/C_00zybwwgr
 		p	2			p_2
 c	net/minecraft/C_03ycckswl
 	f	Ljava/lang/ThreadLocal;	f_69fmwrmcq	f_69fmwrmcq	
-	f	Lnet/minecraft/C_65vmdispe;	f_06vukmsyo		f_06vukmsyo
-	f	Lnet/minecraft/C_65vmdispe;	f_67smntgur		f_67smntgur
+	f	Lnet/minecraft/C_65vmdispe;	f_06vukmsyo		CACHE
+	f	Lnet/minecraft/C_65vmdispe;	f_67smntgur		pool
 	m	()Lnet/minecraft/C_65vmdispe;	m_37ozqnqig	m_37ozqnqig	
 	m	(DDD)V	<init>	<init>	
 		p	1		p_1	
 		p	3		p_3	
 		p	5		p_5	
 	m	(Lnet/minecraft/C_65vmdispe;DDD)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
-		p	6			p_6
+		p	1			pool
+		p	2			x
+		p	4			y
+		p	6			z
 c	net/minecraft/C_03ycckswl$1	1	
 	m	()V	<init>	<init>	
 	m	()Lnet/minecraft/C_65vmdispe;	m_79rjwmqff	m_79rjwmqff	
@@ -27,17 +27,17 @@ c	net/minecraft/C_04pzexdgz
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_04xdtsnnj
-	f	[I	f_54hitduti		f_54hitduti
+	f	[I	f_54hitduti		chargedSkullCooldowns
 	m	(ILnet/minecraft/C_71lthymyi;)V	m_85fmoldmj	m_85fmoldmj	
 		p	1		p_1	
 		p	2		p_2	
-	m	(ILnet/minecraft/C_71lthymyi;)V	m_86piaxdzp		m_86piaxdzp
-		p	1			p_1
-		p	2			p_2
-	m	(IDDDZ)V	m_85fmoldmj		m_85fmoldmj
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
+	m	(ILnet/minecraft/C_71lthymyi;)V	m_86piaxdzp		shootSkullAt
+		p	1			headIndex
+		p	2			target
+	m	(IDDDZ)V	m_85fmoldmj		shootSkullAt
+		p	1			headIndex
+		p	2			targetX
+		p	4			targetY
 		p	6			p_6
 		p	8			p_8
 c	net/minecraft/C_06jqxzmay
@@ -67,8 +67,8 @@ c	net/minecraft/C_12hsdbglc
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/C_15lgassdj
-	f	Lnet/minecraft/C_62vqbrytq;	f_94fwzwytu		f_94fwzwytu
-	m	()Lnet/minecraft/C_62vqbrytq;	m_16xuwiupf		m_16xuwiupf
+	f	Lnet/minecraft/C_62vqbrytq;	f_94fwzwytu		playerControlGoal
+	m	()Lnet/minecraft/C_62vqbrytq;	m_16xuwiupf		getPlayerControlGoal
 c	net/minecraft/C_17avaraix
 	m	(Ljava/lang/String;)Z	m_66cbdlpch		m_66cbdlpch
 		p	1			p_1
@@ -80,21 +80,21 @@ c	net/minecraft/C_22uydpevl
 		p	4		p_4	
 		p	5		p_5	
 		p	6		p_6	
-	m	(FFFIFILjava/lang/String;)V	m_12ruefapi		m_12ruefapi
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
+	m	(FFFIFILjava/lang/String;)V	m_12ruefapi		render
+		p	1			x
+		p	2			y
+		p	3			z
+		p	4			metadata
+		p	5			rotation
+		p	6			skullType
+		p	7			name
 c	net/minecraft/C_22yzzwxfl
 	m	()Lnet/minecraft/C_65vmdispe;	m_59korzatp		m_59korzatp
 c	net/minecraft/C_27pxnsssu
 	m	(Ljava/lang/String;)V	m_38jsetyjz	m_38jsetyjz	
 		p	1		p_1	
-	m	(Ljava/lang/String;)Z	m_38jsetyjz		m_38jsetyjz
-		p	1			p_1
+	m	(Ljava/lang/String;)Z	m_38jsetyjz		delete
+		p	1			worldName
 c	net/minecraft/C_29dohblku
 	m	()I	m_73bcdolot		m_73bcdolot
 	m	(F)V	m_06fvvaxfk		m_06fvvaxfk
@@ -104,14 +104,15 @@ c	net/minecraft/C_31avslvtk
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_31txbgmyw
-	m	()F	m_88lorgbhc		m_88lorgbhc
+	m	()F	m_88lorgbhc		getDrag
 c	net/minecraft/C_37jluzdjr
 	m	(Lnet/minecraft/C_86uwjwipz;Lnet/minecraft/C_86vgsfbzn;)I	m_96cohvcyv	m_96cohvcyv	
 		p	0		p_0	
 		p	1		p_1	
-	m	([Lnet/minecraft/C_70boeylyv;Lnet/minecraft/C_86vgsfbzn;)I	m_96cohvcyv		m_96cohvcyv
-		p	0			p_0
-		p	1			p_1
+	m	([Lnet/minecraft/C_70boeylyv;Lnet/minecraft/C_86vgsfbzn;)I	m_96cohvcyv		modifyProtection
+		c		Returns the increase in protection from the damage source due to the armor stacks' enchantments.
+		p	0			armor
+		p	1			source
 c	net/minecraft/C_40phkmcuu
 	m	(Lnet/minecraft/C_70boeylyv;Lnet/minecraft/C_60xlezclu;Lnet/minecraft/C_77kzrkefm;)Lnet/minecraft/C_70boeylyv;	m_68nbceomw		m_68nbceomw
 		p	1			p_1
@@ -128,47 +129,47 @@ c	net/minecraft/C_44afiveiz
 		p	0		p_0	
 	m	(Ljava/lang/String;)Z	m_38jsetyjz		m_38jsetyjz
 		p	1			p_1
-	m	([Ljava/io/File;)Z	m_07byecdnt		m_07byecdnt
-		p	0			p_0
+	m	([Ljava/io/File;)Z	m_07byecdnt		deleteFilesAndDirs
+		p	0			files
 c	net/minecraft/C_45adecpsr
 	m	(Ljava/lang/String;Ljava/lang/String;)V	m_68qukkjos		m_68qukkjos
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_48mrlbmpu
-	f	Ljava/lang/String;	f_81cfhoknp		f_81cfhoknp
+	f	Ljava/lang/String;	f_81cfhoknp		extraType
 	m	(I)V	m_72ocimljb	m_72ocimljb	
 		p	1		p_1	
-	m	(ILjava/lang/String;)V	m_72ocimljb		m_72ocimljb
-		p	1			p_1
-		p	2			p_2
-	m	()Ljava/lang/String;	m_20lgbgxlc		m_20lgbgxlc
+	m	(ILjava/lang/String;)V	m_72ocimljb		setSkullType
+		p	1			type
+		p	2			extraType
+	m	()Ljava/lang/String;	m_20lgbgxlc		getExtraType
 c	net/minecraft/C_54jxatjie
-	f	I	f_75huhjegw		f_75huhjegw
-	m	()I	m_08ncpirix		m_08ncpirix
+	f	I	f_75huhjegw		index
+	m	()I	m_08ncpirix		getIndex
 c	net/minecraft/C_56trbjqbw
-	m	(Ljava/util/Random;DD)D	m_59rqwozez		m_59rqwozez
-		p	0			p_0
-		p	1			p_1
-		p	3			p_3
-	m	(Ljava/lang/String;I)I	m_45fdlwzvj		m_45fdlwzvj
-		p	0			p_0
-		p	1			p_1
+	m	(Ljava/util/Random;DD)D	m_59rqwozez		nextDouble
+		p	0			random
+		p	1			min
+		p	3			max
+	m	(Ljava/lang/String;I)I	m_45fdlwzvj		parseInt
+		p	0			s
+		p	1			defaultValue
 c	net/minecraft/C_58qbxlcoz
-	m	(Lnet/minecraft/C_71lthymyi;IF)V	m_25hitrkre		m_25hitrkre
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(Lnet/minecraft/C_71lthymyi;IF)V	m_25hitrkre		renderArmorPiece
+		p	1			entity
+		p	2			piece
+		p	3			f
 c	net/minecraft/C_60xlezclu
-	f	Lnet/minecraft/C_65vmdispe;	f_81evqpawh		f_81evqpawh
+	f	Lnet/minecraft/C_65vmdispe;	f_81evqpawh		vec3dCache
 	m	()Lnet/minecraft/C_65vmdispe;	m_59korzatp		m_59korzatp
 c	net/minecraft/C_62vqbrytq
-	f	Z	f_30yeqaccg		f_30yeqaccg
-	f	I	f_24awtvlpv		f_24awtvlpv
-	f	I	f_21ckkoigb		f_21ckkoigb
+	f	Z	f_30yeqaccg		moving
+	f	I	f_24awtvlpv		movingTicks
+	f	I	f_21ckkoigb		maxMovingTicks
 	m	()V	m_94ctoaxco		m_94ctoaxco
-	m	()Z	m_65ymhcqlu		m_65ymhcqlu
-	m	()V	m_36iwnljil		m_36iwnljil
-	m	()Z	m_68yjzyofn		m_68yjzyofn
+	m	()Z	m_65ymhcqlu		isMoving
+	m	()V	m_36iwnljil		startMoving
+	m	()Z	m_68yjzyofn		canStartMoving
 c	net/minecraft/C_63rjkkbvm
 	m	(Lnet/minecraft/C_12hzmgwnb;Lnet/minecraft/C_59dzjlfjt;III)F	m_37qhihxvt		m_37qhihxvt
 		p	1			p_1
@@ -176,19 +177,19 @@ c	net/minecraft/C_63rjkkbvm
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	()I	m_73bcdolot		m_73bcdolot
+	m	()I	m_73bcdolot		getSafeFallDistance
 c	net/minecraft/C_65qbekrcf
 	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_91nmgocfw		m_91nmgocfw
 		p	1			p_1
 c	net/minecraft/C_65vmdispe
-	m	()Z	m_44sjghntb		m_44sjghntb
+	m	()Z	m_44sjghntb		shouldSkipTrimming
 c	net/minecraft/C_66ptvxgxc
-	f	Lnet/minecraft/C_03ycckswl;	f_14gtrhlvn		f_14gtrhlvn
-	f	Lnet/minecraft/C_03ycckswl;	f_70nouliaj		f_70nouliaj
+	f	Lnet/minecraft/C_03ycckswl;	f_14gtrhlvn		LIGHT_0
+	f	Lnet/minecraft/C_03ycckswl;	f_70nouliaj		LIGHT_1
 c	net/minecraft/C_67pvowwpz
 	f	Lnet/minecraft/C_67pvowwpz;	f_80gcgkjlx		f_80gcgkjlx
 c	net/minecraft/C_69etuumgd
-	m	()Lnet/minecraft/C_65vmdispe;	m_59korzatp		m_59korzatp
+	m	()Lnet/minecraft/C_65vmdispe;	m_59korzatp		getVec3dCache
 c	net/minecraft/C_70rbreonm
 	m	(Lnet/minecraft/C_77kzrkefm;IF)V	m_72kddsysc		m_72kddsysc
 		p	1			p_1
@@ -201,61 +202,62 @@ c	net/minecraft/C_70rbreonm
 c	net/minecraft/C_71lthymyi
 	m	()I	m_73bcdolot		m_73bcdolot
 c	net/minecraft/C_72uhprvpf
-	m	(Lnet/minecraft/C_63rjkkbvm;IIILnet/minecraft/C_55brtjlsb;ZZZ)I	m_72dvdjuuq		m_72dvdjuuq
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
+	m	(Lnet/minecraft/C_63rjkkbvm;IIILnet/minecraft/C_55brtjlsb;ZZZ)I	m_72dvdjuuq		getVerticalOffsetInPathHelper
+		c		@return max vertical offset in path at x, y, z
+		p	0			entity
+		p	1			x
+		p	2			y
+		p	3			z
+		p	4			increasedEntityHitBox
+		p	5			canSwim
+		p	6			blockPathAllowed
+		p	7			willOpenWoodenDoor
 c	net/minecraft/C_74gtedwpe
-	f	Ljava/lang/String;	f_22mgtiqcv		f_22mgtiqcv
-	m	(Ljava/lang/String;)Lnet/minecraft/C_74gtedwpe;	m_05rdronic		m_05rdronic
-		p	1			p_1
-	m	()Ljava/lang/String;	m_89rkvphnm		m_89rkvphnm
+	f	Ljava/lang/String;	f_22mgtiqcv		generatorOptions
+	m	(Ljava/lang/String;)Lnet/minecraft/C_74gtedwpe;	m_05rdronic		setGeneratorOptions
+		p	1			generatorOptions
+	m	()Ljava/lang/String;	m_89rkvphnm		getGeneratorOptions
 c	net/minecraft/C_74sxjhicm
-	f	Lnet/minecraft/C_99fhvuqfc;	f_13axgsdvx		f_13axgsdvx
-	m	(Lnet/minecraft/C_74sxjhicm;)Lnet/minecraft/C_99fhvuqfc;	m_06ctpthgl		m_06ctpthgl
-		p	0			p_0
+	f	Lnet/minecraft/C_99fhvuqfc;	f_13axgsdvx		recreateWorldButton
+	m	(Lnet/minecraft/C_74sxjhicm;)Lnet/minecraft/C_99fhvuqfc;	m_06ctpthgl		getRecreateWorldButton
+		p	0			selectWorldScreen
 c	net/minecraft/C_74wdnirru
-	f	Lnet/minecraft/C_99fhvuqfc;	f_24vnpqrzw		f_24vnpqrzw
-	f	Ljava/lang/String;	f_86pwxoegd		f_86pwxoegd
-	m	()V	m_79kazrwdb		m_79kazrwdb
-	m	(Z)V	m_15pufgdsv		m_15pufgdsv
-		p	1			p_1
-	m	(Lnet/minecraft/C_17jkyytyj;)V	m_28ttcfpsl		m_28ttcfpsl
-		p	1			p_1
+	f	Lnet/minecraft/C_99fhvuqfc;	f_24vnpqrzw		customizeButton
+	f	Ljava/lang/String;	f_86pwxoegd		generatorOptions
+	m	()V	m_79kazrwdb		toggleMoreOptions
+	m	(Z)V	m_15pufgdsv		setScreen
+		p	1			moreOptionsOPen
+	m	(Lnet/minecraft/C_17jkyytyj;)V	m_28ttcfpsl		copyWorld
+		p	1			properties
 c	net/minecraft/C_75lgmrtov
 	f	[B	f_36pxqoidk	f_36pxqoidk	
 	f	[B	f_54dxbgkxl		f_54dxbgkxl
-	f	[B	f_28nwuxtxk		f_28nwuxtxk
-	f	Lnet/minecraft/C_54kpuflto;	f_18pxocrgx		f_18pxocrgx
+	f	[B	f_28nwuxtxk		blockMetadata
+	f	Lnet/minecraft/C_54kpuflto;	f_18pxocrgx		generator
 	m	([B)V	m_24kegykju	m_24kegykju	
 		p	1		p_1	
 	m	(II)V	m_12lcdasaj		m_12lcdasaj
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_77kzrkefm
-	f	Z	f_89jsxurdt		f_89jsxurdt
+	f	Z	f_89jsxurdt		respawnForced
 	m	(Lnet/minecraft/C_60xlezclu;Lnet/minecraft/C_78uvaikic;)Lnet/minecraft/C_78uvaikic;	m_76iflfggn	m_76iflfggn	
 		p	0		p_0	
 		p	1		p_1	
 	m	(Lnet/minecraft/C_78uvaikic;)V	m_93obiqkwu	m_93obiqkwu	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_60xlezclu;Lnet/minecraft/C_78uvaikic;Z)Lnet/minecraft/C_78uvaikic;	m_76iflfggn		m_76iflfggn
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-	m	()Z	m_06ogxafzp		m_06ogxafzp
-	m	(Lnet/minecraft/C_78uvaikic;Z)V	m_93obiqkwu		m_93obiqkwu
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/C_60xlezclu;Lnet/minecraft/C_78uvaikic;Z)Lnet/minecraft/C_78uvaikic;	m_76iflfggn		getUpdatedSpawnpoint
+		p	0			world
+		p	1			oldSpawnpoint
+		p	2			hasSpawnpointSet
+	m	()Z	m_06ogxafzp		isRespawnForced
+	m	(Lnet/minecraft/C_78uvaikic;Z)V	m_93obiqkwu		setSpawnpoint
+		p	1			spawnPoint
+		p	2			respawnForced
 c	net/minecraft/C_86nqeljfj
-	m	(II)V	m_12lcdasaj		m_12lcdasaj
-		p	1			p_1
-		p	2			p_2
+	m	(II)V	m_12lcdasaj		placeStructures
+		p	1			chunkX
+		p	2			chunkZ
 c	net/minecraft/C_86uwjwipz
 	m	()I	m_23dgrcvaz		m_23dgrcvaz
 c	net/minecraft/C_88kamaffs
@@ -271,21 +273,21 @@ c	net/minecraft/C_88kamaffs
 		p	4			p_4
 		p	5			p_5
 	m	()V	m_52ahzblce		m_52ahzblce
-	m	()Z	m_57hmyqcjs		m_57hmyqcjs
-	m	(Z)V	m_19sxqcrrq		m_19sxqcrrq
-		p	1			p_1
-c	net/minecraft/C_05zorxlpy		net/minecraft/C_05zorxlpy
-	f	Lnet/minecraft/C_45atcbwes;	f_43inzodic		f_43inzodic
-	f	Ljava/util/List;	f_70hvwdkoa		f_70hvwdkoa
-	f	Lnet/minecraft/C_51ztsvcla;	f_06qmnhywc		f_06qmnhywc
-	f	Ljava/lang/String;	f_58phkeedf		f_58phkeedf
-	f	Ljava/lang/String;	f_56vhozmux		f_56vhozmux
-	f	Ljava/lang/String;	f_91rplpiha		f_91rplpiha
-	f	Lnet/minecraft/C_05zorxlpy$C_85amgwluh;	f_55gacefrg		f_55gacefrg
-	f	Lnet/minecraft/C_99fhvuqfc;	f_73mmdcywg		f_73mmdcywg
-	f	Lnet/minecraft/C_06loqtdhw;	f_71zjmleqh		f_71zjmleqh
+	m	()Z	m_57hmyqcjs		isCharged
+	m	(Z)V	m_19sxqcrrq		setCharged
+		p	1			charged
+c	net/minecraft/C_05zorxlpy		net/minecraft/client/gui/screen/PresetsScreen
+	f	Lnet/minecraft/C_45atcbwes;	f_43inzodic		presetItemRenderer
+	f	Ljava/util/List;	f_70hvwdkoa		PRESETS
+	f	Lnet/minecraft/C_51ztsvcla;	f_06qmnhywc		parent
+	f	Ljava/lang/String;	f_58phkeedf		titleText
+	f	Ljava/lang/String;	f_56vhozmux		shareText
+	f	Ljava/lang/String;	f_91rplpiha		listText
+	f	Lnet/minecraft/C_05zorxlpy$C_85amgwluh;	f_55gacefrg		listWidget
+	f	Lnet/minecraft/C_99fhvuqfc;	f_73mmdcywg		selectButton
+	f	Lnet/minecraft/C_06loqtdhw;	f_71zjmleqh		customPresetField
 	m	(Lnet/minecraft/C_51ztsvcla;)V	<init>		<init>
-		p	1			p_1
+		p	1			parent
 	m	()V	m_11vecxuja		m_11vecxuja
 	m	(III)V	m_99orfbgta		m_99orfbgta
 		p	1			p_1
@@ -301,45 +303,46 @@ c	net/minecraft/C_05zorxlpy		net/minecraft/C_05zorxlpy
 		p	2			p_2
 		p	3			p_3
 	m	()V	m_44tiaqzto		m_44tiaqzto
-	m	()V	m_90pltbksz		m_90pltbksz
-	m	()Z	m_99osujbbv		m_99osujbbv
+	m	()V	m_90pltbksz		activateSelectButtonIfPresetSelected
+	m	()Z	m_99osujbbv		isPresetSelected
+		c		Returns true if any preset is selected
 	m	(Ljava/lang/String;ILnet/minecraft/C_57afkpmdd;[Lnet/minecraft/C_76ajrrmys;)V	m_69aekwbjg		m_69aekwbjg
 		p	0			p_0
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	()Lnet/minecraft/C_45atcbwes;	m_29zmvrjsb		m_29zmvrjsb
-	m	()Ljava/util/List;	m_13sjytsau		m_13sjytsau
-	m	(Lnet/minecraft/C_05zorxlpy;)Lnet/minecraft/C_05zorxlpy$C_85amgwluh;	m_26tbuqqaw		m_26tbuqqaw
-		p	0			p_0
-	m	(Lnet/minecraft/C_05zorxlpy;)Lnet/minecraft/C_06loqtdhw;	m_10papkgjk		m_10papkgjk
-		p	0			p_0
+	m	()Lnet/minecraft/C_45atcbwes;	m_29zmvrjsb		getPresetsItemRenderer
+	m	()Ljava/util/List;	m_13sjytsau		getPresetsList
+	m	(Lnet/minecraft/C_05zorxlpy;)Lnet/minecraft/C_05zorxlpy$C_85amgwluh;	m_26tbuqqaw		getListWidget
+		p	0			presetScreen
+	m	(Lnet/minecraft/C_05zorxlpy;)Lnet/minecraft/C_06loqtdhw;	m_10papkgjk		getField
+		p	0			presetScreen
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_05zorxlpy$C_51yzpkcma		C_51yzpkcma
+c	net/minecraft/C_05zorxlpy$C_51yzpkcma		FlatWorldPreset
 	f	I	f_77mvwnrrr		f_77mvwnrrr
-	f	Ljava/lang/String;	f_29efetygo		f_29efetygo
-	f	Ljava/lang/String;	f_68akskbpz		f_68akskbpz
+	f	Ljava/lang/String;	f_29efetygo		presetName
+	f	Ljava/lang/String;	f_68akskbpz		presetLayers
 	m	(ILjava/lang/String;Ljava/lang/String;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/C_05zorxlpy$C_85amgwluh		C_85amgwluh
-	f	I	f_79acooawo		f_79acooawo
-	f	Lnet/minecraft/C_05zorxlpy;	f_18thhemri		f_18thhemri
+c	net/minecraft/C_05zorxlpy$C_85amgwluh		PresetsListWidget
+	f	I	f_79acooawo		selectedEntryIndex
+	f	Lnet/minecraft/C_05zorxlpy;	f_18thhemri		screen
 	m	(Lnet/minecraft/C_05zorxlpy;)V	<init>		<init>
 		p	1			p_1
 	m	(III)V	m_95umwjori		m_95umwjori
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(II)V	m_68jcqqves		m_68jcqqves
-		p	1			p_1
-		p	2			p_2
-	m	(IIII)V	m_37jvlnbhk		m_37jvlnbhk
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(II)V	m_68jcqqves		render
+		p	1			x
+		p	2			y
+	m	(IIII)V	m_37jvlnbhk		render
+		p	1			x
+		p	2			y
+		p	3			u
+		p	4			v
 	m	()I	m_31cwrxtdr		m_31cwrxtdr
 	m	(IZ)V	m_83swtxkvu		m_83swtxkvu
 		p	1			p_1
@@ -353,7 +356,7 @@ c	net/minecraft/C_05zorxlpy$C_85amgwluh		C_85amgwluh
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-c	net/minecraft/C_23kwyjotv		net/minecraft/C_23kwyjotv
+c	net/minecraft/C_23kwyjotv		net/minecraft/server/command/ClearCommand
 	m	()V	<init>		<init>
 	m	()Ljava/lang/String;	m_22zykhapn		m_22zykhapn
 	m	(Lnet/minecraft/C_42fgqhfer;)Ljava/lang/String;	m_66glvngxl		m_66glvngxl
@@ -365,42 +368,42 @@ c	net/minecraft/C_23kwyjotv		net/minecraft/C_23kwyjotv
 	m	(Lnet/minecraft/C_42fgqhfer;[Ljava/lang/String;)Ljava/util/List;	m_06sqjnqhx		m_06sqjnqhx
 		p	1			p_1
 		p	2			p_2
-	m	()[Ljava/lang/String;	m_53islxldv		m_53islxldv
+	m	()[Ljava/lang/String;	m_53islxldv		getPlayerNames
 	m	(I)Z	m_43yiywyvk		m_43yiywyvk
 		p	1			p_1
-c	net/minecraft/C_51ztsvcla		net/minecraft/C_51ztsvcla
-	f	Lnet/minecraft/C_45atcbwes;	f_22mdqanwg		f_22mdqanwg
-	f	Lnet/minecraft/C_74wdnirru;	f_47nmvsliw		f_47nmvsliw
-	f	Lnet/minecraft/C_54kpuflto;	f_08hyvbvnc		f_08hyvbvnc
-	f	Ljava/lang/String;	f_87bwpwrvz		f_87bwpwrvz
-	f	Ljava/lang/String;	f_03wpozyee		f_03wpozyee
-	f	Ljava/lang/String;	f_04lfsjcwv		f_04lfsjcwv
-	f	Lnet/minecraft/C_51ztsvcla$C_86qbqqzga;	f_58fetqagp		f_58fetqagp
-	f	Lnet/minecraft/C_99fhvuqfc;	f_47tqbkbki		f_47tqbkbki
-	f	Lnet/minecraft/C_99fhvuqfc;	f_28xmjjyxp		f_28xmjjyxp
-	f	Lnet/minecraft/C_99fhvuqfc;	f_82yenjuwa		f_82yenjuwa
+c	net/minecraft/C_51ztsvcla		net/minecraft/client/gui/screen/CustomizeFlatLevelScreen
+	f	Lnet/minecraft/C_45atcbwes;	f_22mdqanwg		itemRenderer
+	f	Lnet/minecraft/C_74wdnirru;	f_47nmvsliw		parent
+	f	Lnet/minecraft/C_54kpuflto;	f_08hyvbvnc		helper
+	f	Ljava/lang/String;	f_87bwpwrvz		title
+	f	Ljava/lang/String;	f_03wpozyee		tileText
+	f	Ljava/lang/String;	f_04lfsjcwv		heightText
+	f	Lnet/minecraft/C_51ztsvcla$C_86qbqqzga;	f_58fetqagp		customizeFlatLevelListWidget
+	f	Lnet/minecraft/C_99fhvuqfc;	f_47tqbkbki		addLayer
+	f	Lnet/minecraft/C_99fhvuqfc;	f_28xmjjyxp		editLayer
+	f	Lnet/minecraft/C_99fhvuqfc;	f_82yenjuwa		removeLayer
 	m	(Lnet/minecraft/C_74wdnirru;Ljava/lang/String;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-	m	()Ljava/lang/String;	m_95qpafvzp		m_95qpafvzp
-	m	(Ljava/lang/String;)V	m_08rxasyag		m_08rxasyag
-		p	1			p_1
+		p	1			parent
+		p	2			config
+	m	()Ljava/lang/String;	m_95qpafvzp		getConfigString
+	m	(Ljava/lang/String;)V	m_08rxasyag		setConfigString
+		p	1			config
 	m	()V	m_11vecxuja		m_11vecxuja
 	m	(Lnet/minecraft/C_99fhvuqfc;)V	m_09zuzmlby		m_09zuzmlby
 		p	1			p_1
-	m	()V	m_95bumhydc		m_95bumhydc
-	m	()Z	m_73lslydvb		m_73lslydvb
+	m	()V	m_95bumhydc		setActive
+	m	()Z	m_73lslydvb		isActive
 	m	(IIF)V	m_76lcimlax		m_76lcimlax
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	()Lnet/minecraft/C_45atcbwes;	m_49flxvgdu		m_49flxvgdu
-	m	(Lnet/minecraft/C_51ztsvcla;)Lnet/minecraft/C_54kpuflto;	m_87kblpswc		m_87kblpswc
-		p	0			p_0
+	m	()Lnet/minecraft/C_45atcbwes;	m_49flxvgdu		getItemRenderer
+	m	(Lnet/minecraft/C_51ztsvcla;)Lnet/minecraft/C_54kpuflto;	m_87kblpswc		getHelper
+		p	0			customizeFlatLevelScreen
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_51ztsvcla$C_86qbqqzga		C_86qbqqzga
-	f	I	f_53qqusoyk		f_53qqusoyk
-	f	Lnet/minecraft/C_51ztsvcla;	f_16girwcsc		f_16girwcsc
+c	net/minecraft/C_51ztsvcla$C_86qbqqzga		CustomizeFlatLevelListWidget
+	f	I	f_53qqusoyk		focusedEntry
+	f	Lnet/minecraft/C_51ztsvcla;	f_16girwcsc		parent
 	m	(Lnet/minecraft/C_51ztsvcla;)V	<init>		<init>
 		p	1			p_1
 	m	(IILnet/minecraft/C_70boeylyv;)V	m_40lnikwyz		m_40lnikwyz
@@ -429,29 +432,29 @@ c	net/minecraft/C_51ztsvcla$C_86qbqqzga		C_86qbqqzga
 		p	4			p_4
 		p	5			p_5
 	m	()I	m_60cuciian		m_60cuciian
-c	net/minecraft/C_54kpuflto		net/minecraft/C_54kpuflto
-	f	Ljava/util/List;	f_48qxxdhqg		f_48qxxdhqg
-	f	I	f_77htyxwbj		f_77htyxwbj
+c	net/minecraft/C_54kpuflto		net/minecraft/world/gen/FlatWorldGenerator
+	f	Ljava/util/List;	f_48qxxdhqg		layers
+	f	I	f_77htyxwbj		biomeId
 	m	()V	<init>		<init>
-	m	()I	m_94ewlwrcb		m_94ewlwrcb
-	m	(I)V	m_10asmutqd		m_10asmutqd
-		p	1			p_1
-	m	()Ljava/util/List;	m_13pkpmbxr		m_13pkpmbxr
-	m	()V	m_52sajyyaj		m_52sajyyaj
+	m	()I	m_94ewlwrcb		getBiomeId
+	m	(I)V	m_10asmutqd		setBiomeId
+		p	1			biomeId
+	m	()Ljava/util/List;	m_13pkpmbxr		getLayers
+	m	()V	m_52sajyyaj		processLayers
 	m	()Ljava/lang/String;	toString		toString
-	m	(Ljava/lang/String;I)Lnet/minecraft/C_76ajrrmys;	m_75nktlrjn		m_75nktlrjn
-		p	0			p_0
-		p	1			p_1
-	m	(Ljava/lang/String;)Ljava/util/List;	m_51aexbhit		m_51aexbhit
-		p	0			p_0
-	m	(Ljava/lang/String;)Lnet/minecraft/C_54kpuflto;	m_41myvrjcc		m_41myvrjcc
-		p	0			p_0
-	m	()Lnet/minecraft/C_54kpuflto;	m_48tzfpbrw		m_48tzfpbrw
-c	net/minecraft/C_76ajrrmys		net/minecraft/C_76ajrrmys
-	f	I	f_23bnedgaa		f_23bnedgaa
+	m	(Ljava/lang/String;I)Lnet/minecraft/C_76ajrrmys;	m_75nktlrjn		parseLayer
+		p	0			preset
+		p	1			y
+	m	(Ljava/lang/String;)Ljava/util/List;	m_51aexbhit		getLayers
+		p	0			preset
+	m	(Ljava/lang/String;)Lnet/minecraft/C_54kpuflto;	m_41myvrjcc		of
+		p	0			preset
+	m	()Lnet/minecraft/C_54kpuflto;	m_48tzfpbrw		ofDefault
+c	net/minecraft/C_76ajrrmys		net/minecraft/world/gen/FlatWorldLayer
+	f	I	f_23bnedgaa		size
 	f	I	f_03sokthie		f_03sokthie
-	f	I	f_31xzjazoo		f_31xzjazoo
-	f	I	f_54pnqvdzr		f_54pnqvdzr
+	f	I	f_31xzjazoo		metadata
+	f	I	f_54pnqvdzr		y
 	m	(II)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -459,10 +462,10 @@ c	net/minecraft/C_76ajrrmys		net/minecraft/C_76ajrrmys
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	()I	m_82jgerumc		m_82jgerumc
+	m	()I	m_82jgerumc		getSize
 	m	()I	m_42xxaybtv		m_42xxaybtv
-	m	()I	m_25hxfasbl		m_25hxfasbl
-	m	()I	m_18htgkadq		m_18htgkadq
-	m	(I)V	m_14aozkvlk		m_14aozkvlk
-		p	1			p_1
+	m	()I	m_25hxfasbl		getBlockMetadata
+	m	()I	m_18htgkadq		getY
+	m	(I)V	m_14aozkvlk		setY
+		p	1			y
 	m	()Ljava/lang/String;	toString		toString

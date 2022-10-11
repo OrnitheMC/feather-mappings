@@ -1,6 +1,6 @@
 tiny	2	0
 c	net/minecraft/C_12joypzyl
-	f	Z	f_08qzivszi		f_08qzivszi
+	f	Z	f_08qzivszi		doAmbientOcclusionOverOne
 c	net/minecraft/C_21clrvzpb
 	m	(Lnet/minecraft/C_60xlezclu;III)Lnet/minecraft/C_14obvrpul;	m_16zfpzvdh	m_16zfpzvdh	
 		p	1		p_1	
@@ -21,11 +21,11 @@ c	net/minecraft/C_37pvwquup
 		p	4		p_4	
 		p	6		p_6	
 		p	8		p_8	
-		p	0			p_0
-		p	3			p_3
-		p	5			p_5
-		p	7			p_7
-	m	(Lnet/minecraft/C_32ersosra;DDDF)V	m_33ypsbaiz		m_33ypsbaiz
+		p	0			mobSpawner
+		p	3			y
+		p	5			z
+		p	7			tickDelta
+	m	(Lnet/minecraft/C_32ersosra;DDDF)V	m_33ypsbaiz		render
 		p	1			p_1
 		p	2			p_2
 		p	4			p_4
@@ -33,7 +33,7 @@ c	net/minecraft/C_37pvwquup
 		p	8			p_8
 c	net/minecraft/C_41egseoxr
 	f	I	f_44xmisztk	f_44xmisztk	
-	f	I	f_74tihitoh		f_74tihitoh
+	f	I	f_74tihitoh		delay
 	m	()V	m_10xvrbaoc	m_10xvrbaoc	
 	m	(Lnet/minecraft/C_73yvmijgm;)V	m_35grvowwf	m_35grvowwf	
 		p	1		p_1	
@@ -43,22 +43,22 @@ c	net/minecraft/C_41egseoxr
 	m	(II)V	m_30jpojdbm	m_30jpojdbm	
 		p	1		p_1	
 		p	2		p_2	
-	m	()V	m_87skqllha		m_87skqllha
-	m	(Lnet/minecraft/C_73yvmijgm;)V	m_75gxwhonu		m_75gxwhonu
-		p	1			p_1
-	m	(Lnet/minecraft/C_73yvmijgm;)V	m_23qhteokj		m_23qhteokj
-		p	1			p_1
-	m	(I)Z	m_40ginyxlu		m_40ginyxlu
-		p	1			p_1
-	m	()Lnet/minecraft/C_41egseoxr$C_27iorgjzt;	m_53jywmhgy		m_53jywmhgy
-	m	(Lnet/minecraft/C_41egseoxr$C_27iorgjzt;)V	m_30blfrzzt		m_30blfrzzt
-		p	1			p_1
-	m	(I)V	m_14ziipfcc		m_14ziipfcc
-		p	1			p_1
-	m	()Lnet/minecraft/C_60xlezclu;	m_36ukbssbf		m_36ukbssbf
-	m	()I	m_87lrfgplc		m_87lrfgplc
-	m	()I	m_09oiyqzrj		m_09oiyqzrj
-	m	()I	m_12vsytqab		m_12vsytqab
+	m	()V	m_87skqllha		tick
+	m	(Lnet/minecraft/C_73yvmijgm;)V	m_75gxwhonu		readNbt
+		p	1			nbt
+	m	(Lnet/minecraft/C_73yvmijgm;)V	m_23qhteokj		writeNbt
+		p	1			nbt
+	m	(I)Z	m_40ginyxlu		handleStatus
+		p	1			status
+	m	()Lnet/minecraft/C_41egseoxr$C_27iorgjzt;	m_53jywmhgy		getSpawnData
+	m	(Lnet/minecraft/C_41egseoxr$C_27iorgjzt;)V	m_30blfrzzt		setSpawnData
+		p	1			spawnEntry
+	m	(I)V	m_14ziipfcc		updateStatus
+		p	1			status
+	m	()Lnet/minecraft/C_60xlezclu;	m_36ukbssbf		getWorld
+	m	()I	m_87lrfgplc		getX
+	m	()I	m_09oiyqzrj		getY
+	m	()I	m_12vsytqab		getZ
 c	net/minecraft/C_42mwxblda
 	m	(II)V	m_30jpojdbm	m_30jpojdbm	
 		p	1		p_1	
@@ -119,13 +119,14 @@ c	net/minecraft/C_59dzjlfjt
 		p	4		p_4	
 		p	5		p_5	
 		p	6		p_6	
-	m	(Lnet/minecraft/C_60xlezclu;IIIII)Z	m_60ktmjxvj		m_60ktmjxvj
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
+	m	(Lnet/minecraft/C_60xlezclu;IIIII)Z	m_60ktmjxvj		doBlockEvent
+		c		Performs a block event. Block events are queued on the server, and executed once per\ntick. Successful block events are synced with clients that are within range. Block events\nare most notably used by pistons to handle extension and retraction, but note blocks\nalso use them to play sounds.\n\n@return whether the block event was successful.
+		p	1			world
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			type
+		p	6			data
 c	net/minecraft/C_60xlezclu
 	m	(III)I	m_48zmddawo	m_48zmddawo	
 		p	1		p_1	
@@ -145,11 +146,11 @@ c	net/minecraft/C_60xlezclu
 		p	4		p_4	
 		p	5		p_5	
 		p	6		p_6	
-	m	(IIILnet/minecraft/C_52ynghuan;)I	m_58mbhikqo		m_58mbhikqo
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(IIILnet/minecraft/C_52ynghuan;)I	m_58mbhikqo		getRawLight
+		p	1			x
+		p	2			y
+		p	3			z
+		p	4			type
 c	net/minecraft/C_62vqbrytq
 	m	(I)Z	m_54tyoyeyp		m_54tyoyeyp
 		p	1			p_1
@@ -169,37 +170,37 @@ c	net/minecraft/C_62zlauxfl
 		p	5			p_5
 		p	6			p_6
 c	net/minecraft/C_64cydrmbd
-	f	F	f_43grmjdeq		f_43grmjdeq
-	f	F	f_24xbxotxt		f_24xbxotxt
-	m	(Z)V	m_59dplrrfy		m_59dplrrfy
-		p	1			p_1
+	f	F	f_43grmjdeq		ageWidth
+	f	F	f_24xbxotxt		ageHeight
+	m	(Z)V	m_59dplrrfy		setAgeSize
+		p	1			isBaby
 	m	(FF)V	m_28osfozrc		m_28osfozrc
 		p	1			p_1
 		p	2			p_2
-	m	(F)V	m_14fekquus		m_14fekquus
-		p	1			p_1
+	m	(F)V	m_14fekquus		resizeBounds
+		p	1			size
 c	net/minecraft/C_86ktcgars
 	m	(II)V	m_30jpojdbm	m_30jpojdbm	
 		p	1		p_1	
 		p	2		p_2	
-	m	(II)Z	m_30jpojdbm		m_30jpojdbm
-		p	1			p_1
-		p	2			p_2
+	m	(II)Z	m_30jpojdbm		doBlockEvent
+		p	1			type
+		p	2			data
 c	net/minecraft/C_88qgzcabj
 	f	Ljava/util/List;	f_87sbphqgr	f_87sbphqgr	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/C_93scxpami
 	f	I	f_22xbxnbto	f_22xbxnbto	
-	f	I	f_29dagkimt		f_29dagkimt
+	f	I	f_29dagkimt		chestType
 	m	(II)V	m_30jpojdbm	m_30jpojdbm	
 		p	1		p_1	
 		p	2		p_2	
 	m	(II)Z	m_30jpojdbm		m_30jpojdbm
 		p	1			p_1
 		p	2			p_2
-	m	()I	m_98jznamos		m_98jznamos
-c	net/minecraft/C_32ersosra		net/minecraft/C_32ersosra
-	f	Lnet/minecraft/C_41egseoxr;	f_53ubmoflc		f_53ubmoflc
+	m	()I	m_98jznamos		getChestType
+c	net/minecraft/C_32ersosra		net/minecraft/block/entity/MobSpawnerBlockEntity
+	f	Lnet/minecraft/C_41egseoxr;	f_53ubmoflc		spawner
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/C_73yvmijgm;)V	m_35grvowwf		m_35grvowwf
 		p	1			p_1
@@ -210,9 +211,9 @@ c	net/minecraft/C_32ersosra		net/minecraft/C_32ersosra
 	m	(II)Z	m_30jpojdbm		m_30jpojdbm
 		p	1			p_1
 		p	2			p_2
-	m	()Lnet/minecraft/C_41egseoxr;	m_99owktifj		m_99owktifj
+	m	()Lnet/minecraft/C_41egseoxr;	m_99owktifj		getSpawner
 c	net/minecraft/C_32ersosra$1		1
-	f	Lnet/minecraft/C_32ersosra;	f_39cicnipy		f_39cicnipy
+	f	Lnet/minecraft/C_32ersosra;	f_39cicnipy		anonMobSpawner
 	m	(Lnet/minecraft/C_32ersosra;)V	<init>		<init>
 		p	1			p_1
 	m	(I)V	m_14ziipfcc		m_14ziipfcc
@@ -223,9 +224,9 @@ c	net/minecraft/C_32ersosra$1		1
 	m	()I	m_12vsytqab		m_12vsytqab
 	m	(Lnet/minecraft/C_41egseoxr$C_27iorgjzt;)V	m_30blfrzzt		m_30blfrzzt
 		p	1			p_1
-c	net/minecraft/C_61csstiud		net/minecraft/C_61csstiud
+c	net/minecraft/C_61csstiud		net/minecraft/client/render/entity/SpawnerMinecartEntityRenderer
 	m	()V	<init>		<init>
-	m	(Lnet/minecraft/C_95wkihdhj;FLnet/minecraft/C_59dzjlfjt;I)V	m_52yvijore		m_52yvijore
+	m	(Lnet/minecraft/C_95wkihdhj;FLnet/minecraft/C_59dzjlfjt;I)V	m_52yvijore		renderSpawnerMinecart
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -235,8 +236,8 @@ c	net/minecraft/C_61csstiud		net/minecraft/C_61csstiud
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-c	net/minecraft/C_95wkihdhj		net/minecraft/C_95wkihdhj
-	f	Lnet/minecraft/C_41egseoxr;	f_71vvmsdgo		f_71vvmsdgo
+c	net/minecraft/C_95wkihdhj		net/minecraft/entity/vehicle/SpawnerMinecartEntity
+	f	Lnet/minecraft/C_41egseoxr;	f_71vvmsdgo		spawner
 	m	(Lnet/minecraft/C_60xlezclu;)V	<init>		<init>
 		p	1			p_1
 	m	(Lnet/minecraft/C_60xlezclu;DDD)V	<init>		<init>
@@ -253,9 +254,9 @@ c	net/minecraft/C_95wkihdhj		net/minecraft/C_95wkihdhj
 	m	(B)V	m_84lsfzukd		m_84lsfzukd
 		p	1			p_1
 	m	()V	m_41egdrrik		m_41egdrrik
-	m	()Lnet/minecraft/C_41egseoxr;	m_50jdbqmqx		m_50jdbqmqx
+	m	()Lnet/minecraft/C_41egseoxr;	m_50jdbqmqx		getSpawnerBehavior
 c	net/minecraft/C_95wkihdhj$1		1
-	f	Lnet/minecraft/C_95wkihdhj;	f_86vzbkzgl		f_86vzbkzgl
+	f	Lnet/minecraft/C_95wkihdhj;	f_86vzbkzgl		anonSpawnerCart
 	m	(Lnet/minecraft/C_95wkihdhj;)V	<init>		<init>
 		p	1			p_1
 	m	(I)V	m_14ziipfcc		m_14ziipfcc

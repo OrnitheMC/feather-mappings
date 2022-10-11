@@ -3,17 +3,17 @@ c	net/minecraft/C_27pabwvvt
 	m	(Lnet/minecraft/C_58rjztron;)V	m_99kwyiqdo		m_99kwyiqdo
 		p	1			p_1
 c	net/minecraft/C_35tpsxcjx
-	m	(Lnet/minecraft/C_58rjztron;)V	m_99kwyiqdo		m_99kwyiqdo
-		p	1			p_1
+	m	(Lnet/minecraft/C_58rjztron;)V	m_99kwyiqdo		onParticle
+		p	1			packet
 c	net/minecraft/C_38msujegw
-	f	I	f_14jlzuvmi		f_14jlzuvmi
+	f	I	f_14jlzuvmi		transferCooldown
 	m	(Lnet/minecraft/C_73yvmijgm;)V	m_01pqhgeaj		m_01pqhgeaj
 		p	1			p_1
 	m	(Lnet/minecraft/C_73yvmijgm;)V	m_10qdpwnei		m_10qdpwnei
 		p	1			p_1
-	m	(I)V	m_29fanevai		m_29fanevai
-		p	1			p_1
-	m	()Z	m_61pbsnpme		m_61pbsnpme
+	m	(I)V	m_29fanevai		setTransferCooldown
+		p	1			transferCooldown
+	m	()Z	m_61pbsnpme		hasTransferCooldown
 c	net/minecraft/C_39obmsqqt
 c	net/minecraft/C_39obmsqqt$1		1
 	f	Lnet/minecraft/C_02ikeagrp;	f_64btpvbtq		f_64btpvbtq
@@ -33,10 +33,10 @@ c	net/minecraft/C_39obmsqqt$2		2
 	m	()Ljava/lang/Object;	call		call
 c	net/minecraft/C_49mxjxgun
 	m	()V	m_69sjqwobk		m_69sjqwobk
-	m	()Z	m_33mzdtkgi		m_33mzdtkgi
-	m	(I)V	m_50txbwzty		m_50txbwzty
-		p	1			p_1
-	m	()Z	m_84twhvyld		m_84twhvyld
+	m	()Z	m_33mzdtkgi		transferItems
+	m	(I)V	m_50txbwzty		setCooldown
+		p	1			cooldown
+	m	()Z	m_84twhvyld		isOnCooldown
 c	net/minecraft/C_60xlezclu
 	m	(IIIII)V	m_00jlvtcmz	m_00jlvtcmz	
 		p	1		p_1	
@@ -80,11 +80,11 @@ c	net/minecraft/C_92zquxprp
 		p	3		p_3	
 		p	4		p_4	
 		p	5		p_5	
-	m	(Lnet/minecraft/C_69etuumgd;III)Lnet/minecraft/C_49mxjxgun;	m_55jcmaado		m_55jcmaado
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(Lnet/minecraft/C_69etuumgd;III)Lnet/minecraft/C_49mxjxgun;	m_55jcmaado		getHopperBlockEntity
+		p	0			world
+		p	1			x
+		p	2			y
+		p	3			z
 c	net/minecraft/C_96mpdidco
 	m	(II[BDDD)V	m_36xyfsklm	m_36xyfsklm	
 		p	1		p_1	
@@ -128,30 +128,30 @@ c	net/minecraft/C_96mpdidco
 		p	15			p_15
 		p	16			p_16
 		p	17			p_17
-c	net/minecraft/C_58rjztron		net/minecraft/C_58rjztron
-	f	Ljava/lang/String;	f_84unnrihd		f_84unnrihd
-	f	F	f_35fhwcfuj		f_35fhwcfuj
-	f	F	f_38aopsvso		f_38aopsvso
-	f	F	f_51deyjnxe		f_51deyjnxe
-	f	F	f_80axiregh		f_80axiregh
-	f	F	f_86ibtmnpd		f_86ibtmnpd
-	f	F	f_19ddyaxuz		f_19ddyaxuz
-	f	F	f_20oeyfwuy		f_20oeyfwuy
-	f	I	f_85psdtlva		f_85psdtlva
+c	net/minecraft/C_58rjztron		net/minecraft/network/packet/s2c/play/ParticleS2CPacket
+	f	Ljava/lang/String;	f_84unnrihd		type
+	f	F	f_35fhwcfuj		x
+	f	F	f_38aopsvso		y
+	f	F	f_51deyjnxe		z
+	f	F	f_80axiregh		velocityX
+	f	F	f_86ibtmnpd		velocityY
+	f	F	f_19ddyaxuz		velocityZ
+	f	F	f_20oeyfwuy		velocityScale
+	f	I	f_85psdtlva		count
 	m	()V	<init>		<init>
 	m	(Ljava/io/DataInputStream;)V	m_22zxocirk		m_22zxocirk
 		p	1			p_1
 	m	(Ljava/io/DataOutputStream;)V	m_73nymvfwu		m_73nymvfwu
 		p	1			p_1
-	m	()Ljava/lang/String;	m_84secxqsx		m_84secxqsx
-	m	()D	m_34instqxd		m_34instqxd
-	m	()D	m_77gvedywq		m_77gvedywq
-	m	()D	m_17aykzxrq		m_17aykzxrq
-	m	()F	m_12nwmkfpu		m_12nwmkfpu
-	m	()F	m_18rtpgwou		m_18rtpgwou
-	m	()F	m_52jcypdcn		m_52jcypdcn
-	m	()F	m_85giblgyw		m_85giblgyw
-	m	()I	m_68ilfwuau		m_68ilfwuau
+	m	()Ljava/lang/String;	m_84secxqsx		getType
+	m	()D	m_34instqxd		getX
+	m	()D	m_77gvedywq		getY
+	m	()D	m_17aykzxrq		getZ
+	m	()F	m_12nwmkfpu		getVelocityX
+	m	()F	m_18rtpgwou		getVelocityY
+	m	()F	m_52jcypdcn		getVelocityZ
+	m	()F	m_85giblgyw		getVelocityScale
+	m	()I	m_68ilfwuau		getCount
 	m	(Lnet/minecraft/C_35tpsxcjx;)V	m_87kwcfeot		m_87kwcfeot
 		p	1			p_1
 	m	()I	m_09osvagel		m_09osvagel

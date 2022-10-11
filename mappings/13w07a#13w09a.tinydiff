@@ -1,9 +1,9 @@
 tiny	2	0
 c	net/minecraft/C_01awqxvuk
 	f	Ljava/util/List;	servers	servers	
-	f	Ljava/util/List;	f_36qeplths		f_36qeplths
-	m	(Ljava/lang/String;)Lnet/minecraft/C_01awqxvuk;	m_51bnhtmeq		m_51bnhtmeq
-		p	0			p_0
+	f	Ljava/util/List;	f_36qeplths		servers
+	m	(Ljava/lang/String;)Lnet/minecraft/C_01awqxvuk;	m_51bnhtmeq		parse
+		p	0			stringToParse
 c	net/minecraft/C_06pmwhfrp
 	m	()Lnet/minecraft/C_75eoizevo;	m_26zvxbxur		m_26zvxbxur
 c	net/minecraft/C_10brbfnwc
@@ -30,11 +30,11 @@ c	net/minecraft/C_17avaraix
 	m	([I)[I	m_33cjbcxzw		m_33cjbcxzw
 		p	1			p_1
 c	net/minecraft/C_18eokyraj
-	f	Lnet/minecraft/C_68javbdih;	f_89fjpyrfb		f_89fjpyrfb
-	m	(Lnet/minecraft/C_18eokyraj;)Lnet/minecraft/C_30iaoczdn;	m_20xzsodkv		m_20xzsodkv
-		p	0			p_0
+	f	Lnet/minecraft/C_68javbdih;	f_89fjpyrfb		entityFilter
+	m	(Lnet/minecraft/C_18eokyraj;)Lnet/minecraft/C_30iaoczdn;	m_20xzsodkv		getMob
+		p	0			fleeEntityGoal
 c	net/minecraft/C_18eokyraj$1		1
-	f	Lnet/minecraft/C_18eokyraj;	f_68olcyntc		f_68olcyntc
+	f	Lnet/minecraft/C_18eokyraj;	f_68olcyntc		fleeGoal
 	m	(Lnet/minecraft/C_18eokyraj;)V	<init>		<init>
 		p	1			p_1
 	m	(Lnet/minecraft/C_63rjkkbvm;)Z	m_47hpeofqg		m_47hpeofqg
@@ -58,11 +58,11 @@ c	net/minecraft/C_19jynkimh
 c	net/minecraft/C_19zzcarfo
 	m	(Lnet/minecraft/C_87rnospqh;)V	m_69zlaxkcw	m_69zlaxkcw	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_87rnospqh;)Lnet/minecraft/C_73yvmijgm;	m_69zlaxkcw		m_69zlaxkcw
-		p	1			p_1
+	m	(Lnet/minecraft/C_87rnospqh;)Lnet/minecraft/C_73yvmijgm;	m_69zlaxkcw		loadSinglePlayerData
+		p	1			player
 c	net/minecraft/C_21dpwdmta
 	f	Z	f_36imtkzmq	f_36imtkzmq	
-	f	I	f_36uawxjci		f_36uawxjci
+	f	I	f_36uawxjci		flags
 c	net/minecraft/C_24tnwrjlm
 	f	Ljava/lang/String;	f_13lytnyfj	f_13lytnyfj	
 	f	Lnet/minecraft/C_57cqagbkx;	f_64vqqyjvi		f_64vqqyjvi
@@ -77,8 +77,8 @@ c	net/minecraft/C_24tnwrjlm
 c	net/minecraft/C_27mcoqfbc
 	m	(Ljava/lang/reflect/Field;)Z	isStatic	isStatic	
 		p	0		p_0	
-	m	(Ljava/lang/reflect/Field;)Z	m_70kgigoum		m_70kgigoum
-		p	0			p_0
+	m	(Ljava/lang/reflect/Field;)Z	m_70kgigoum		isStatic
+		p	0			field
 c	net/minecraft/C_27pznqmmv
 	m	(Ljava/nio/IntBuffer;)V	m_67jdxmsgb	m_67jdxmsgb	
 		p	0		p_0	
@@ -87,10 +87,10 @@ c	net/minecraft/C_27pznqmmv
 c	net/minecraft/C_31vwaoygm
 	f	J	startDate	startDate	
 	f	I	daysLeft	daysLeft	
-	f	J	f_57rvbzbxk		f_57rvbzbxk
-	f	I	f_37xheectu		f_37xheectu
-	m	(Ljava/lang/String;)Lnet/minecraft/C_31vwaoygm;	m_16uruwqje		m_16uruwqje
-		p	0			p_0
+	f	J	f_57rvbzbxk		startDate
+	f	I	f_37xheectu		daysLeft
+	m	(Ljava/lang/String;)Lnet/minecraft/C_31vwaoygm;	m_16uruwqje		getSubscriptionTime
+		p	0			id
 c	net/minecraft/C_37qysamgg
 	f	I	f_59jaztuli	f_59jaztuli	
 	f	[I	f_28xjxrrco	f_28xjxrrco	
@@ -115,8 +115,8 @@ c	net/minecraft/C_39wtuyksr
 c	net/minecraft/C_39wtuyksr$C_57vaxldfx	C_57vaxldfx	
 c	net/minecraft/C_43xyxycjg
 	f	Z	f_93xcyoial	f_93xcyoial	
-	f	[Ljava/lang/String;	f_89hrugqip		f_89hrugqip
-	f	I	f_51mrfmxql		f_51mrfmxql
+	f	[Ljava/lang/String;	f_89hrugqip		AO_SETTINGS
+	f	I	f_51mrfmxql		ambientOcclusion
 c	net/minecraft/C_57cqagbkx
 	m	(IIIIIIILjava/awt/image/BufferedImage;)V	<init>	<init>	
 		p	1		p_1	
@@ -184,15 +184,15 @@ c	net/minecraft/C_58qbxlcoz
 		p	1			p_1
 c	net/minecraft/C_61vszjdog
 	f	Ljava/lang/String;	address	address	
-	f	Ljava/lang/String;	f_19djjeadp		f_19djjeadp
-	m	(Ljava/lang/String;)Lnet/minecraft/C_61vszjdog;	m_70uzmvchd		m_70uzmvchd
-		p	0			p_0
+	f	Ljava/lang/String;	f_19djjeadp		serverAdress
+	m	(Ljava/lang/String;)Lnet/minecraft/C_61vszjdog;	m_70uzmvchd		getServerAdress
+		p	0			id
 c	net/minecraft/C_63rjkkbvm
-	f	Z	f_36rgksxyf		f_36rgksxyf
-	m	(Lnet/minecraft/C_73yvmijgm;)Z	m_63tkdkzxo		m_63tkdkzxo
-		p	1			p_1
-	m	(Lnet/minecraft/C_77kzrkefm;)Z	m_96sanydna		m_96sanydna
-		p	1			p_1
+	f	Z	f_36rgksxyf		teleporting
+	m	(Lnet/minecraft/C_73yvmijgm;)Z	m_63tkdkzxo		writeNbt
+		p	1			nbt
+	m	(Lnet/minecraft/C_77kzrkefm;)Z	m_96sanydna		isInvisibleTo
+		p	1			player
 c	net/minecraft/C_64mklgutb
 	m	(IIII)Lnet/minecraft/C_57cqagbkx;	m_14pvgcxmy	m_14pvgcxmy	
 		p	1		p_1	
@@ -268,8 +268,8 @@ c	net/minecraft/C_67lfrhoiv
 c	net/minecraft/C_68rkmhvik
 	m	(Lnet/minecraft/C_77kzrkefm;)V	m_70dkcwmom	m_70dkcwmom	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_77kzrkefm;)Lnet/minecraft/C_73yvmijgm;	m_70dkcwmom		m_70dkcwmom
-		p	1			p_1
+	m	(Lnet/minecraft/C_77kzrkefm;)Lnet/minecraft/C_73yvmijgm;	m_70dkcwmom		loadPlayerData
+		p	1			player
 c	net/minecraft/C_70rbreonm
 	m	(Lnet/minecraft/C_77kzrkefm;)V	m_21tflzlxf		m_21tflzlxf
 		p	1			p_1
@@ -281,11 +281,11 @@ c	net/minecraft/C_70xwomnns$C_38kzyaxbn$1	1
 	f	[I	f_40jjgkbgq	f_40jjgkbgq	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/C_70xwomnns$3		3
-	f	[I	f_40jjgkbgq		f_40jjgkbgq
+	f	[I	f_40jjgkbgq		entrancePieceTypes
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/C_74mxhtwsp
 	f	I	delaySeconds	delaySeconds	
-	f	I	f_60pwitpfe		f_60pwitpfe
+	f	I	f_60pwitpfe		retryAfterAmountInSeconds
 c	net/minecraft/C_75eoizevo
 	m	(Ljava/lang/String;Z)Ljava/io/InputStream;	m_30daiaunb		m_30daiaunb
 		p	1			p_1
@@ -302,8 +302,8 @@ c	net/minecraft/C_77kzrkefm
 c	net/minecraft/C_77mvmjbpd
 	f	I	httpResultCode	httpResultCode	
 	f	Ljava/lang/String;	httpResponseContent	httpResponseContent	
-	f	I	f_03mnftqoo		f_03mnftqoo
-	f	Ljava/lang/String;	f_73garavke		f_73garavke
+	f	I	f_03mnftqoo		responseCode
+	f	Ljava/lang/String;	f_73garavke		error
 c	net/minecraft/C_77rfvpxtq
 	m	([Ljava/lang/Object;)Lnet/minecraft/C_04ssjdhqi;	m_92wouojsg		m_92wouojsg
 		p	0			p_0
@@ -343,13 +343,13 @@ c	net/minecraft/C_77rfvpxtq$7		7
 	m	(Ljava/lang/Object;)Z	m_70kiufyzt		m_70kiufyzt
 		p	1			p_1
 c	net/minecraft/C_79vwhsqzl
-	f	Z	f_99ucmnhkz		f_99ucmnhkz
+	f	Z	f_99ucmnhkz		showFriendlyInvisibles
 	m	()Z	m_70vnwynzv		m_70vnwynzv
-	m	(Z)V	m_38vpewqwo		m_38vpewqwo
-		p	1			p_1
-	m	()I	m_60iwroaxf		m_60iwroaxf
-	m	(I)V	m_27llovwqg		m_27llovwqg
-		p	1			p_1
+	m	(Z)V	m_38vpewqwo		setShowFriendlyInvisibles
+		p	1			showFriendlyInvisibles
+	m	()I	m_60iwroaxf		packFriendlyFlags
+	m	(I)V	m_27llovwqg		unpackFriendlyFlags
+		p	1			flags
 c	net/minecraft/C_80wyeewlw
 	m	(Lnet/minecraft/C_80wyeewlw;)Lnet/minecraft/client/Minecraft;	m_80upqcztr	m_80upqcztr	
 		p	0		p_0	
@@ -394,16 +394,16 @@ c	net/minecraft/C_87rppojev
 	f	J	ping	ping	
 	f	Ljava/lang/String;	decodedMotd	decodedMotd	
 	f	Ljava/lang/String;	decodedName	decodedName	
-	f	Ljava/lang/String;	f_46hvtemcc		f_46hvtemcc
-	f	Ljava/lang/String;	f_20klzjcpc		f_20klzjcpc
-	f	Ljava/lang/String;	f_99jshfurf		f_99jshfurf
-	f	Ljava/util/List;	f_52gjdnuhc		f_52gjdnuhc
-	f	Ljava/lang/String;	f_07wuipmrz		f_07wuipmrz
-	f	Z	f_48xeddetb		f_48xeddetb
-	f	I	f_97juhndin		f_97juhndin
+	f	Ljava/lang/String;	f_46hvtemcc		motd
+	f	Ljava/lang/String;	f_20klzjcpc		state
+	f	Ljava/lang/String;	f_99jshfurf		owner
+	f	Ljava/util/List;	f_52gjdnuhc		invitesList
+	f	Ljava/lang/String;	f_07wuipmrz		ip
+	f	Z	f_48xeddetb		isExpired
+	f	I	f_97juhndin		serverId
 	f	I	f_26xdvgcfm		f_26xdvgcfm
 	f	Ljava/lang/String;	f_48tdcinrl		f_48tdcinrl
-	f	Ljava/lang/String;	f_05ngzmlrr		f_05ngzmlrr
+	f	Ljava/lang/String;	f_05ngzmlrr		serverName
 	f	Z	f_03ejufhyp		f_03ejufhyp
 	f	J	f_14nnliexj		f_14nnliexj
 	f	Ljava/lang/String;	f_84rzshosm		f_84rzshosm
@@ -418,18 +418,18 @@ c	net/minecraft/C_87rppojev
 		p	1		p_1	
 	m	()Ljava/lang/String;	m_41zchxnqr		m_41zchxnqr
 	m	()Ljava/lang/String;	m_66npjtmcq		m_66npjtmcq
-	m	(Ljava/lang/String;)V	m_60ryzosjs		m_60ryzosjs
-		p	1			p_1
-	m	(Ljava/lang/String;)V	m_01raurlpw		m_01raurlpw
-		p	1			p_1
-	m	(Lnet/minecraft/C_87rppojev;)V	m_83gbxycgd		m_83gbxycgd
-		p	1			p_1
+	m	(Ljava/lang/String;)V	m_60ryzosjs		setName
+		p	1			name
+	m	(Ljava/lang/String;)V	m_01raurlpw		setMotd
+		p	1			motd
+	m	(Lnet/minecraft/C_87rppojev;)V	m_83gbxycgd		copyFromServer
+		p	1			realmsServer
 	m	(Lnet/minecraft/C_97ubukaaz;)Lnet/minecraft/C_87rppojev;	m_12regkuqd		m_12regkuqd
 		p	0			p_0
 	m	(Ljava/util/List;)Ljava/util/List;	m_95yznwhcn		m_95yznwhcn
 		p	0			p_0
-	m	(Ljava/lang/String;)Lnet/minecraft/C_87rppojev;	m_78njbzlbg		m_78njbzlbg
-		p	0			p_0
+	m	(Ljava/lang/String;)Lnet/minecraft/C_87rppojev;	m_78njbzlbg		createServer
+		p	0			name
 c	net/minecraft/C_91ipfyjnm
 	f	I	f_28dmnzvrt	f_28dmnzvrt	
 	f	I	f_80vcdcesb	f_80vcdcesb	
@@ -438,7 +438,7 @@ c	net/minecraft/C_91ipfyjnm
 	m	()Lnet/minecraft/C_57cqagbkx;	m_47endbhju	m_47endbhju	
 	m	()I	m_25ukimzbr	m_25ukimzbr	
 	m	()Lnet/minecraft/C_57cqagbkx;	m_24qvpbikx		m_24qvpbikx
-	m	()V	m_11oqcuinh		m_11oqcuinh
+	m	()V	m_11oqcuinh		createTextureAtlas
 c	net/minecraft/C_91ypdxwsa
 	f	Ljava/util/List;	locations	locations	
 	f	Lnet/minecraft/C_39qosnqas;	suggestion	suggestion	
@@ -503,7 +503,7 @@ c	net/minecraft/C_11qluwuwa		net/minecraft/C_11qluwuwa
 c	net/minecraft/C_81udpeudm		net/minecraft/C_81udpeudm
 	m	()V	<init>		<init>
 	m	()V	run		run
-c	net/minecraft/C_99fzkxlhe		net/minecraft/C_99fzkxlhe
+c	net/minecraft/C_99fzkxlhe		net/minecraft/client/render/TextureStitchException
 	f	Lnet/minecraft/C_24tnwrjlm;	f_33rzwcgsh		f_33rzwcgsh
 	m	(Lnet/minecraft/C_24tnwrjlm;)V	<init>		<init>
 		p	1			p_1
