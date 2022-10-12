@@ -53,8 +53,8 @@ c	net/minecraft/C_00zybwwgr$C_71jjnljxo
 	m	(Lnet/minecraft/C_03ucymzav;)I	m_78sdfkvji		m_78sdfkvji
 		p	1			p_1
 c	net/minecraft/C_01khbiewk
-	m	(Ljava/lang/String;)Lcom/google/common/base/Optional;	m_53nkjnfji		m_53nkjnfji
-		p	1			p_1
+	m	(Ljava/lang/String;)Lcom/google/common/base/Optional;	m_53nkjnfji		getValue
+		p	1			name
 c	net/minecraft/C_01onspqpt
 	f	Ljava/nio/FloatBuffer;	f_57gajpwtr		f_57gajpwtr
 	m	(Lorg/lwjgl/util/vector/Quaternion;)V	m_73khrqqxh		m_73khrqqxh
@@ -4187,24 +4187,25 @@ c	net/minecraft/C_59dzjlfjt
 	m	(Lnet/minecraft/C_05lecifbj;Lnet/minecraft/C_59dzjlfjt$C_63ehaunll;)Lnet/minecraft/C_05lecifbj;	m_85rbgsuqt		m_85rbgsuqt
 		p	1			p_1
 		p	2			p_2
-	m	(Lnet/minecraft/C_60xlezclu;Lnet/minecraft/C_78uvaikic;Lnet/minecraft/C_05lecifbj;Lnet/minecraft/C_77kzrkefm;Lnet/minecraft/C_22dgxftqp;Lnet/minecraft/C_70boeylyv;Lnet/minecraft/C_20gcjygaw;FFF)Z	m_78xjdyttv		m_78xjdyttv
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
-		p	9			p_9
-		p	10			p_10
-	m	(Lnet/minecraft/C_60xlezclu;Lnet/minecraft/C_77kzrkefm;Lnet/minecraft/C_78uvaikic;Lnet/minecraft/C_05lecifbj;Lnet/minecraft/C_86ktcgars;Lnet/minecraft/C_70boeylyv;)V	m_88rqhszph		m_88rqhszph
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
+	m	(Lnet/minecraft/C_60xlezclu;Lnet/minecraft/C_78uvaikic;Lnet/minecraft/C_05lecifbj;Lnet/minecraft/C_77kzrkefm;Lnet/minecraft/C_22dgxftqp;Lnet/minecraft/C_70boeylyv;Lnet/minecraft/C_20gcjygaw;FFF)Z	m_78xjdyttv		onUse
+		c		Handles a player interacting with this block, i.e. a player holding the <i>use</i> key\nwhile looking at this block.\n\n@return whether the interaction was consumed,\ni.e. whether further processing of the use action should be blocked.
+		p	1			world
+		p	2			pos
+		p	3			state
+		p	4			player
+		p	5			hand
+		p	6			stack
+		p	7			dir
+		p	8			dx
+		p	9			dy
+		p	10			dz
+	m	(Lnet/minecraft/C_60xlezclu;Lnet/minecraft/C_77kzrkefm;Lnet/minecraft/C_78uvaikic;Lnet/minecraft/C_05lecifbj;Lnet/minecraft/C_86ktcgars;Lnet/minecraft/C_70boeylyv;)V	m_88rqhszph		afterMinedByPlayer
+		p	1			world
+		p	2			player
+		p	3			pos
+		p	4			state
+		p	5			blockEntity
+		p	6			stack
 c	net/minecraft/C_59dzjlfjt$5		5
 	f	[I	f_34gtnnzfu		f_34gtnnzfu
 	f	[I	f_79zwxmggn		f_79zwxmggn
@@ -6223,14 +6224,14 @@ c	net/minecraft/C_88kamaffs
 c	net/minecraft/C_88qgzcabj
 	m	()Lnet/minecraft/C_88qgzcabj$C_29ujxdumw;	m_78rgsojpo	m_78rgsojpo	
 c	net/minecraft/C_88tpwoyak
-	m	(Ljava/util/UUID;)Lnet/minecraft/C_73yvmijgm;	m_05pjavfeq		m_05pjavfeq
-		p	0			p_0
-	m	(Lnet/minecraft/C_73yvmijgm;)Ljava/util/UUID;	m_04mnrxflk		m_04mnrxflk
-		p	0			p_0
-	m	(Lnet/minecraft/C_73yvmijgm;)Lnet/minecraft/C_78uvaikic;	m_58tvscerf		m_58tvscerf
-		p	0			p_0
-	m	(Lnet/minecraft/C_78uvaikic;)Lnet/minecraft/C_73yvmijgm;	m_36elovumj		m_36elovumj
-		p	0			p_0
+	m	(Ljava/util/UUID;)Lnet/minecraft/C_73yvmijgm;	m_05pjavfeq		writeUuid
+		p	0			uuid
+	m	(Lnet/minecraft/C_73yvmijgm;)Ljava/util/UUID;	m_04mnrxflk		readUuid
+		p	0			nbt
+	m	(Lnet/minecraft/C_73yvmijgm;)Lnet/minecraft/C_78uvaikic;	m_58tvscerf		readBlockPos
+		p	0			nbt
+	m	(Lnet/minecraft/C_78uvaikic;)Lnet/minecraft/C_73yvmijgm;	m_36elovumj		writeBlockPos
+		p	0			pos
 c	net/minecraft/C_88xepnstl
 	m	(Lnet/minecraft/C_70boeylyv;Lnet/minecraft/C_77kzrkefm;Lnet/minecraft/C_60xlezclu;Lnet/minecraft/C_78uvaikic;Lnet/minecraft/C_20gcjygaw;FFF)Z	m_97uyiftke	m_97uyiftke	
 		p	1		p_1	
@@ -6416,13 +6417,13 @@ c	net/minecraft/C_94zgalzio
 c	net/minecraft/C_95beknjgp
 	f	Lcom/google/common/base/Joiner;	f_72mlxdruc	PROPERTY_JOINER	
 	f	Lcom/google/common/collect/ImmutableList;	f_84wrnnovx	properties	
-	f	Ljava/util/regex/Pattern;	f_36qygimaf		f_36qygimaf
-	f	Lcom/google/common/collect/ImmutableSortedMap;	f_84wrnnovx		f_84wrnnovx
-	m	(Lnet/minecraft/C_59dzjlfjt;Lnet/minecraft/C_01khbiewk;)Ljava/lang/String;	m_46ndqpipz		m_46ndqpipz
-		p	0			p_0
-		p	1			p_1
-	m	(Ljava/lang/String;)Lnet/minecraft/C_01khbiewk;	m_75fiuuazg		m_75fiuuazg
-		p	1			p_1
+	f	Ljava/util/regex/Pattern;	f_36qygimaf		NAME_PATTERN
+	f	Lcom/google/common/collect/ImmutableSortedMap;	f_84wrnnovx		properties
+	m	(Lnet/minecraft/C_59dzjlfjt;Lnet/minecraft/C_01khbiewk;)Ljava/lang/String;	m_46ndqpipz		validateProperty
+		p	0			block
+		p	1			property
+	m	(Ljava/lang/String;)Lnet/minecraft/C_01khbiewk;	m_75fiuuazg		getProperty
+		p	1			name
 c	net/minecraft/C_95beknjgp$2	2	
 	f	Lnet/minecraft/C_95beknjgp;	f_20nuponvc	f_20nuponvc	
 	m	(Lnet/minecraft/C_95beknjgp;)V	<init>	<init>	
@@ -7015,7 +7016,7 @@ c	net/minecraft/C_09bgvqdpj		net/minecraft/C_09bgvqdpj
 c	net/minecraft/C_09bgvqdpj$1		1
 	f	[I	f_74btqaujx		f_74btqaujx
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_09bmtkxst		net/minecraft/C_09bmtkxst
+c	net/minecraft/C_09bmtkxst		net/minecraft/C_89runhgas
 	f	Lnet/minecraft/C_51votbqag;	f_27igftvea		f_27igftvea
 	f	Lnet/minecraft/C_23kawjnel;	f_52tciyqwm		f_52tciyqwm
 	f	Z	f_16jbdhsqa		f_16jbdhsqa
@@ -7705,7 +7706,7 @@ c	net/minecraft/C_37lsojzxt		net/minecraft/C_37lsojzxt
 		p	3			p_3
 	m	(Lnet/minecraft/C_70boeylyv;)Ljava/lang/String;	m_91nmgocfw		m_91nmgocfw
 		p	1			p_1
-c	net/minecraft/C_37uictyci		net/minecraft/C_37uictyci
+c	net/minecraft/C_37uictyci		net/minecraft/C_23xgamhif
 	f	Ljava/util/List;	f_04zhdzvcf		f_04zhdzvcf
 	m	(Ljava/util/List;)V	<init>		<init>
 		p	1			p_1
