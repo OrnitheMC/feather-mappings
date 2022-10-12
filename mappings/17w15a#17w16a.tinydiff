@@ -103,8 +103,8 @@ c	net/minecraft/C_17kgavlit
 	m	(Lnet/minecraft/C_86vgsfbzn;)Lnet/minecraft/C_80hehezhf;	m_62avvolnb		m_62avvolnb
 		p	1			p_1
 c	net/minecraft/C_18qszwmaq
-	m	(Lnet/minecraft/C_78uvaikic;)Z	m_05maexsuj	m_05maexsuj	
-		p	1		p_1	
+	m	(Lnet/minecraft/C_78uvaikic;)Z	m_05maexsuj	addColumn	
+		p	1		pos	
 	m	(Lnet/minecraft/C_78uvaikic;Lnet/minecraft/C_20gcjygaw;)Z	m_05maexsuj		m_05maexsuj
 		p	1			p_1
 		p	2			p_2
@@ -266,20 +266,20 @@ c	net/minecraft/C_48fvsojgg
 	f	I	f_98ovkvwha		f_98ovkvwha
 	m	(Ljava/lang/String;)I	m_19mgwfexb	getTopElementCount	
 		p	0		rawNbt	
-	m	([Ljava/lang/String;)Lnet/minecraft/C_48fvsojgg$C_68bacdmct;	m_70xxzrjce	m_70xxzrjce	
-		p	0		p_0	
+	m	([Ljava/lang/String;)Lnet/minecraft/C_48fvsojgg$C_68bacdmct;	m_70xxzrjce	parseNbtEntry	
+		p	0		rawEntry	
 	m	(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/C_48fvsojgg$C_68bacdmct;	m_80xtqdjiu	parseNbtEntry	
 		p	0		key	
 		p	1		rawElement	
-	m	(Ljava/lang/String;Z)Lnet/minecraft/C_48fvsojgg$C_68bacdmct;	m_45movzrms	m_45movzrms	
-		p	0		p_0	
-		p	1		p_1	
+	m	(Ljava/lang/String;Z)Lnet/minecraft/C_48fvsojgg$C_68bacdmct;	m_45movzrms	parseNbtEntry	
+		p	0		rawEntry	
+		p	1		allowNoSeparator	
 	m	(Ljava/lang/String;Z)Ljava/lang/String;	m_94pelcwiz	getNextEntry	
 		p	0		rawNbt	
 		p	1		expectSeparator	
-	m	(Ljava/lang/String;I)Ljava/lang/String;	m_28ffnaldi	m_28ffnaldi	
-		p	0		p_0	
-		p	1		p_1	
+	m	(Ljava/lang/String;I)Ljava/lang/String;	m_28ffnaldi	getNextEntry	
+		p	0		rawNbt	
+		p	1		separatorIndex	
 	m	(Ljava/lang/String;Z)Ljava/lang/String;	m_07bdjjmpg	getKey	
 		p	0		rawEntry	
 		p	1		allowNoSeparator	
@@ -290,9 +290,9 @@ c	net/minecraft/C_48fvsojgg
 		c	Find a character that separates nbt elements. This is either the character that\nseparates key/value pairs or the character that separates elements in a list.\n\n@return the index of the character	
 		p	0		rawNbt	
 		p	1		chr	
-	m	(Ljava/lang/String;I)Z	m_65vehpauz	m_65vehpauz	
-		p	0		p_0	
-		p	1		p_1	
+	m	(Ljava/lang/String;I)Z	m_65vehpauz	isEscaped	
+		p	0		rawNbt	
+		p	1		index	
 	m	()Lnet/minecraft/C_73yvmijgm;	m_56tccvyzx		m_56tccvyzx
 	m	(Ljava/lang/String;)V	<init>		<init>
 		p	1			p_1
@@ -326,14 +326,14 @@ c	net/minecraft/C_48fvsojgg
 	m	()C	m_09tvsphdy		m_09tvsphdy
 	m	()C	m_10sayjwrv		m_10sayjwrv
 c	net/minecraft/C_48fvsojgg$C_11beonyrh	PrimitiveEntry	
-	f	Ljava/util/regex/Pattern;	f_05ofixhge	f_05ofixhge	
-	f	Ljava/util/regex/Pattern;	f_17tgeztou	f_17tgeztou	
-	f	Ljava/util/regex/Pattern;	f_70vtxpcpj	f_70vtxpcpj	
-	f	Ljava/util/regex/Pattern;	f_05fmksxks	f_05fmksxks	
-	f	Ljava/util/regex/Pattern;	f_91ttyrvei	f_91ttyrvei	
-	f	Ljava/util/regex/Pattern;	f_49efobegp	f_49efobegp	
-	f	Ljava/util/regex/Pattern;	f_38qatihzm	f_38qatihzm	
-	f	Lcom/google/common/base/Splitter;	f_99hvsbbcf	f_99hvsbbcf	
+	f	Ljava/util/regex/Pattern;	f_05ofixhge	DOUBLE_WITH_SUFFIX_PATTERN	
+	f	Ljava/util/regex/Pattern;	f_17tgeztou	FLOAT_PATTERN	
+	f	Ljava/util/regex/Pattern;	f_70vtxpcpj	BYTE_PATTERN	
+	f	Ljava/util/regex/Pattern;	f_05fmksxks	LONG_PATTERN	
+	f	Ljava/util/regex/Pattern;	f_91ttyrvei	SHORT_PATTERN	
+	f	Ljava/util/regex/Pattern;	f_49efobegp	INT_PATTERN	
+	f	Ljava/util/regex/Pattern;	f_38qatihzm	DOUBLE_PATTERN	
+	f	Lcom/google/common/base/Splitter;	f_99hvsbbcf	LIST_ELEMENT_SPLITTER	
 	f	Ljava/lang/String;	f_20ygaaorm	rawValue	
 	m	(Ljava/lang/String;Ljava/lang/String;)V	<init>	<init>	
 		p	1		key	
@@ -341,7 +341,7 @@ c	net/minecraft/C_48fvsojgg$C_11beonyrh	PrimitiveEntry
 	m	()Lnet/minecraft/C_53tbgzvpp;	m_71qpqnovv	m_71qpqnovv	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/C_48fvsojgg$C_67iftsvgt	ListEntry	
-	f	Ljava/util/List;	f_18ramnxer	f_18ramnxer	
+	f	Ljava/util/List;	f_18ramnxer	entries	
 	m	(Ljava/lang/String;)V	<init>	<init>	
 		p	1		key	
 	m	()Lnet/minecraft/C_53tbgzvpp;	m_71qpqnovv	m_71qpqnovv	
@@ -350,7 +350,7 @@ c	net/minecraft/C_48fvsojgg$C_68bacdmct	Entry
 	m	()V	<init>	<init>	
 	m	()Lnet/minecraft/C_53tbgzvpp;	m_71qpqnovv	getValue	
 c	net/minecraft/C_48fvsojgg$C_96kowfmuq	CompoundEntry	
-	f	Ljava/util/List;	f_43swelhpq	f_43swelhpq	
+	f	Ljava/util/List;	f_43swelhpq	entries	
 	m	(Ljava/lang/String;)V	<init>	<init>	
 		p	1		key	
 	m	()Lnet/minecraft/C_53tbgzvpp;	m_71qpqnovv	m_71qpqnovv	
