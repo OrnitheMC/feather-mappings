@@ -9,7 +9,7 @@ c	net/minecraft/C_15aegzsod
 		p	0			p_0
 		p	1			p_1
 c	net/minecraft/C_19zrlhmve
-	f	Lorg/apache/logging/log4j/Logger;	f_69uxxnjyk	f_69uxxnjyk	
+	f	Lorg/apache/logging/log4j/Logger;	f_69uxxnjyk	LOGGER	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/C_21dzymxqi
 	m	()Z	m_47ernpdob		m_47ernpdob
@@ -48,8 +48,8 @@ c	net/minecraft/C_35goshnqp
 	f	Lnet/minecraft/C_35goshnqp;	f_55mhzbfpo		f_55mhzbfpo
 	f	Lnet/minecraft/C_35goshnqp;	f_45ppaavqc		f_45ppaavqc
 	f	Lnet/minecraft/C_35goshnqp;	f_40zkybzen		f_40zkybzen
-	m	(Ljava/util/List;)I	m_59wniulsw	m_59wniulsw	
-		p	1		p_1	
+	m	(Ljava/util/List;)I	m_59wniulsw	countScore	
+		p	1		owners	
 c	net/minecraft/C_38nhthubo
 	f	Lnet/minecraft/C_71lxnrbkl;	f_91lgvwrmq		f_91lgvwrmq
 	m	()Lnet/minecraft/C_71lxnrbkl;	m_40allmjrv		m_40allmjrv
@@ -74,8 +74,8 @@ c	net/minecraft/C_56iqyqxmi
 	m	(Z)V	m_47fpiaglj		m_47fpiaglj
 		p	1			p_1
 c	net/minecraft/C_56osoqdtm
-	m	(Ljava/util/List;)V	m_90lufvyzx	m_90lufvyzx	
-		p	1		p_1	
+	m	(Ljava/util/List;)V	m_90lufvyzx	setToTotalOf	
+		p	1		owners	
 c	net/minecraft/C_57hcjgevl
 	m	()Lnet/minecraft/C_71lxnrbkl;	m_40allmjrv		m_40allmjrv
 c	net/minecraft/C_59dzjlfjt
@@ -105,8 +105,8 @@ c	net/minecraft/C_62mkpozog
 		p	0			p_0
 c	net/minecraft/C_63rjkkbvm
 	f	Ljava/util/Set;	f_12coyhcdv		f_12coyhcdv
-	m	(Lnet/minecraft/C_73yvmijgm;)Z	m_26aalukgv	m_26aalukgv	
-		p	1		p_1	
+	m	(Lnet/minecraft/C_73yvmijgm;)Z	m_26aalukgv	writeNbtNoRider	
+		p	1		nbt	
 	m	()Ljava/util/Set;	m_05kulxgnl		m_05kulxgnl
 	m	(Lnet/minecraft/C_73yvmijgm;Z)Z	m_26aalukgv		m_26aalukgv
 		p	1			p_1
@@ -148,26 +148,29 @@ c	net/minecraft/C_71lxnrbkl
 	m	(Ljava/lang/String;)V	<init>		<init>
 		p	1			p_1
 c	net/minecraft/C_74sxjhicm
-	f	Ljava/text/DateFormat;	f_73pdttisb	f_73pdttisb	
-	f	Z	f_22zarfekc	f_22zarfekc	
-	f	I	f_69usmbrxh	f_69usmbrxh	
-	f	Ljava/util/List;	f_52izjzhyg	f_52izjzhyg	
-	f	Lnet/minecraft/C_74sxjhicm$C_79mppdbdz;	f_74zlazlqv	f_74zlazlqv	
-	f	Ljava/lang/String;	f_09kaxapar	f_09kaxapar	
-	f	Ljava/lang/String;	f_10jpnykpg	f_10jpnykpg	
-	f	[Ljava/lang/String;	f_94snwavmp	f_94snwavmp	
+	f	Ljava/text/DateFormat;	f_73pdttisb	dateFormat	
+	f	Z	f_22zarfekc	worldLoaded	
+	f	I	f_69usmbrxh	selectedWorldId	
+	f	Ljava/util/List;	f_52izjzhyg	saves	
+	f	Lnet/minecraft/C_74sxjhicm$C_79mppdbdz;	f_74zlazlqv	worldList	
+	f	Ljava/lang/String;	f_09kaxapar	worldText	
+	f	Ljava/lang/String;	f_10jpnykpg	conversionText	
+		c	The text to display when a world needs to be converted (e.g. when it needs to be converted from a lower version)	
+	f	[Ljava/lang/String;	f_94snwavmp	gameModeTexts	
 	f	Z	f_15ggkaqwr	f_15ggkaqwr	
-	f	Z	f_63zvhdxds	f_63zvhdxds	
+	f	Z	f_63zvhdxds	isInChildScreen	
+		c	Is true if the player is in a child screen (e.g. a confirmation screen).\nIs set to false again when the selectWorldScreen gets displayed again.	
 	f	Lnet/minecraft/C_42dlvyhjt;	f_74zlazlqv		f_74zlazlqv
-	m	()V	m_50sjnipcj	m_50sjnipcj	
-	m	(I)Ljava/lang/String;	m_95gisqcal	m_95gisqcal	
-		p	1		p_1	
-	m	(I)Ljava/lang/String;	m_36bstiqcj	m_36bstiqcj	
-		p	1		p_1	
+	m	()V	m_50sjnipcj	getSaves	
+	m	(I)Ljava/lang/String;	m_95gisqcal	getSaveFileName	
+		c	The world save name is the name of the save folder. When a world is created this\nis always equal to the world name, but can be different if the folder is either manually\neditted or if you create multiple worlds with the same name.	
+		p	1		index	
+	m	(I)Ljava/lang/String;	m_36bstiqcj	getWorldName	
+		p	1		index	
 	m	(I)V	m_04ehtvbiv	m_04ehtvbiv	
 		p	1		p_1	
-	m	(I)V	m_48izphwyl	m_48izphwyl	
-		p	1		p_1	
+	m	(I)V	m_48izphwyl	loadWorld	
+		p	1		id	
 	m	(ZI)V	m_97klivfxf	m_97klivfxf	
 		p	1		p_1	
 		p	2		p_2	
@@ -179,32 +182,32 @@ c	net/minecraft/C_74sxjhicm
 		p	0		p_0	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/C_74sxjhicm;)Ljava/util/List;	m_41joftnnq	m_41joftnnq	
-		p	0		p_0	
-	m	(Lnet/minecraft/C_74sxjhicm;I)I	m_75kornqxl	m_75kornqxl	
-		p	0		p_0	
-		p	1		p_1	
-	m	(Lnet/minecraft/C_74sxjhicm;)I	m_85mpqceja	m_85mpqceja	
-		p	0		p_0	
-	m	(Lnet/minecraft/C_74sxjhicm;)Lnet/minecraft/C_99fhvuqfc;	m_07elsmuug	m_07elsmuug	
-		p	0		p_0	
-	m	(Lnet/minecraft/C_74sxjhicm;)Lnet/minecraft/C_99fhvuqfc;	m_54kduzzvx	m_54kduzzvx	
-		p	0		p_0	
-	m	(Lnet/minecraft/C_74sxjhicm;)Lnet/minecraft/C_99fhvuqfc;	m_85iijuoos	m_85iijuoos	
-		p	0		p_0	
-	m	(Lnet/minecraft/C_74sxjhicm;)Lnet/minecraft/C_99fhvuqfc;	m_06ctpthgl	m_06ctpthgl	
-		p	0		p_0	
+	m	(Lnet/minecraft/C_74sxjhicm;)Ljava/util/List;	m_41joftnnq	getSaves	
+		p	0		selectWorldScreen	
+	m	(Lnet/minecraft/C_74sxjhicm;I)I	m_75kornqxl	setSelectedWorldId	
+		p	0		selectWorldScreen	
+		p	1		id	
+	m	(Lnet/minecraft/C_74sxjhicm;)I	m_85mpqceja	getSelectedWorldId	
+		p	0		selectWorldScreen	
+	m	(Lnet/minecraft/C_74sxjhicm;)Lnet/minecraft/C_99fhvuqfc;	m_07elsmuug	getPlaySelectedWorldButton	
+		p	0		selectWorldScreen	
+	m	(Lnet/minecraft/C_74sxjhicm;)Lnet/minecraft/C_99fhvuqfc;	m_54kduzzvx	getDeleteWorldButton	
+		p	0		selectWorldScreen	
+	m	(Lnet/minecraft/C_74sxjhicm;)Lnet/minecraft/C_99fhvuqfc;	m_85iijuoos	getRenameWorldButton	
+		p	0		selectWorldScreen	
+	m	(Lnet/minecraft/C_74sxjhicm;)Lnet/minecraft/C_99fhvuqfc;	m_06ctpthgl	getRecreateWorldButton	
+		p	0		selectWorldScreen	
 	m	(Lnet/minecraft/C_74sxjhicm;I)V	m_68kmgepkp	m_68kmgepkp	
 		p	0		p_0	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_74sxjhicm;)Ljava/lang/String;	m_89zpfojpv	m_89zpfojpv	
-		p	0		p_0	
-	m	(Lnet/minecraft/C_74sxjhicm;)Ljava/text/DateFormat;	m_85cxclohe	m_85cxclohe	
-		p	0		p_0	
-	m	(Lnet/minecraft/C_74sxjhicm;)Ljava/lang/String;	m_12gykbzls	m_12gykbzls	
-		p	0		p_0	
-	m	(Lnet/minecraft/C_74sxjhicm;)[Ljava/lang/String;	m_67gzksymd	m_67gzksymd	
-		p	0		p_0	
+	m	(Lnet/minecraft/C_74sxjhicm;)Ljava/lang/String;	m_89zpfojpv	getWorldText	
+		p	0		selectWorldScreen	
+	m	(Lnet/minecraft/C_74sxjhicm;)Ljava/text/DateFormat;	m_85cxclohe	getDateFormat	
+		p	0		selectWorldScreen	
+	m	(Lnet/minecraft/C_74sxjhicm;)Ljava/lang/String;	m_12gykbzls	getConversionText	
+		p	0		selectWorldScreen	
+	m	(Lnet/minecraft/C_74sxjhicm;)[Ljava/lang/String;	m_67gzksymd	getGameModeTexts	
+		p	0		selectWorldScreen	
 	m	(III)V	m_99orfbgta		m_99orfbgta
 		p	1			p_1
 		p	2			p_2
@@ -215,8 +218,8 @@ c	net/minecraft/C_74sxjhicm
 		p	3			p_3
 	m	(Lnet/minecraft/C_67wzskgeh;)V	m_91gkeeypq		m_91gkeeypq
 		p	1			p_1
-c	net/minecraft/C_74sxjhicm$C_79mppdbdz	C_79mppdbdz	
-	f	Lnet/minecraft/C_74sxjhicm;	f_46atvshbe	f_46atvshbe	
+c	net/minecraft/C_74sxjhicm$C_79mppdbdz	WorldListWidget	
+	f	Lnet/minecraft/C_74sxjhicm;	f_46atvshbe	parent	
 	m	(Lnet/minecraft/C_74sxjhicm;Lnet/minecraft/C_98zxcuwnb;)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	

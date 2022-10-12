@@ -1,9 +1,9 @@
 tiny	2	0
 c	net/minecraft/C_00qwrjsrf
-	f	Ljava/util/List;	f_88vwwgpcs	f_88vwwgpcs	
-	m	(FF)V	m_69lyjshiu	m_69lyjshiu	
-		p	1		p_1	
-		p	2		p_2	
+	f	Ljava/util/List;	f_88vwwgpcs	movedEntities	
+	m	(FF)V	m_69lyjshiu	moveEntities	
+		p	1		progress	
+		p	2		amount	
 	m	(F)F	m_45pghhfwi		m_45pghhfwi
 		p	1			p_1
 	m	(Lnet/minecraft/C_60xlezclu;Lnet/minecraft/C_78uvaikic;)Lnet/minecraft/C_14obvrpul;	m_33feiyour		m_33feiyour
@@ -84,8 +84,8 @@ c	net/minecraft/C_03tturuwc
 	m	(Lnet/minecraft/C_69etuumgd;Lnet/minecraft/C_78uvaikic;)V	m_11plmscav	m_11plmscav	
 		p	1		p_1	
 		p	2		p_2	
-	m	(I)V	m_53bupqdwe	m_53bupqdwe	
-		p	1		p_1	
+	m	(I)V	m_53bupqdwe	updateBoundingBox	
+		p	1		metadata	
 	m	(I)Z	m_87aklbfqx	m_87aklbfqx	
 		p	0		p_0	
 	m	(Lnet/minecraft/C_05lecifbj;Lnet/minecraft/C_69etuumgd;Lnet/minecraft/C_78uvaikic;)Lnet/minecraft/C_14obvrpul;	m_11plmscav		m_11plmscav
@@ -127,9 +127,9 @@ c	net/minecraft/C_05ektqssu
 c	net/minecraft/C_05eusvpxg
 	f	Z	f_02gqeqvln		f_02gqeqvln
 	m	(Lnet/minecraft/C_60xlezclu;DDD)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	4		p_4	
+		p	1		world	
+		p	2		x	
+		p	4		y	
 		p	6		p_6	
 	m	(Lnet/minecraft/C_60xlezclu;DDDZ)V	<init>		<init>
 		p	1			p_1
@@ -219,9 +219,9 @@ c	net/minecraft/C_15aegzsod
 	m	(F)V	m_79zouhcup		m_79zouhcup
 		p	1			p_1
 c	net/minecraft/C_15svsowqt
-	f	[[I	f_03mbxlsxs	f_03mbxlsxs	
-	f	Z	f_74gyevuyc	f_74gyevuyc	
-	f	I	f_18lojctro	f_18lojctro	
+	f	[[I	f_03mbxlsxs	ROTATIONS	
+	f	Z	f_74gyevuyc	isCorner	
+	f	I	f_18lojctro	stairType	
 	f	Lnet/minecraft/C_14obvrpul;	f_17rlmnajx		f_17rlmnajx
 	f	Lnet/minecraft/C_14obvrpul;	f_68xqolsiq		f_68xqolsiq
 	f	Lnet/minecraft/C_14obvrpul;	f_96ijsvciv		f_96ijsvciv
@@ -246,8 +246,8 @@ c	net/minecraft/C_15svsowqt
 	m	(Lnet/minecraft/C_69etuumgd;Lnet/minecraft/C_78uvaikic;)V	m_70cuhqvzq	m_70cuhqvzq	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/C_59dzjlfjt;)Z	m_54jbunxrp	m_54jbunxrp	
-		p	0		p_0	
+	m	(Lnet/minecraft/C_59dzjlfjt;)Z	m_54jbunxrp	isStair	
+		p	0		block	
 	m	(Lnet/minecraft/C_69etuumgd;Lnet/minecraft/C_78uvaikic;Lnet/minecraft/C_05lecifbj;)Z	m_10izebpdf	m_10izebpdf	
 		p	0		p_0	
 		p	1		p_1	
@@ -401,7 +401,7 @@ c	net/minecraft/C_25qvkumud
 	m	(Lnet/minecraft/C_69etuumgd;Lnet/minecraft/C_78uvaikic;)V	m_11plmscav	m_11plmscav	
 		p	1		p_1	
 		p	2		p_2	
-	m	()V	m_63jpijuxi	m_63jpijuxi	
+	m	()V	m_63jpijuxi	setBoundingBox	
 	m	(Lnet/minecraft/C_05lecifbj;Lnet/minecraft/C_69etuumgd;Lnet/minecraft/C_78uvaikic;)Lnet/minecraft/C_14obvrpul;	m_11plmscav		m_11plmscav
 		p	1			p_1
 		p	2			p_2
@@ -455,8 +455,8 @@ c	net/minecraft/C_31ttfjshg
 	m	(Lnet/minecraft/C_69etuumgd;Lnet/minecraft/C_78uvaikic;)V	m_11plmscav	m_11plmscav	
 		p	1		p_1	
 		p	2		p_2	
-	m	(I)V	m_03myxfjad	m_03myxfjad	
-		p	1		p_1	
+	m	(I)V	m_03myxfjad	setLayers	
+		p	1		layer	
 	m	(Lnet/minecraft/C_05lecifbj;Lnet/minecraft/C_69etuumgd;Lnet/minecraft/C_78uvaikic;)Lnet/minecraft/C_14obvrpul;	m_11plmscav		m_11plmscav
 		p	1			p_1
 		p	2			p_2
@@ -604,23 +604,24 @@ c	net/minecraft/C_56evkuvca
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/C_56ixxfgcy
-	f	[Ljava/lang/String;	f_71jdpbfts	f_71jdpbfts	
-	f	[Ljava/lang/String;	f_47dgkzovw	f_47dgkzovw	
-	f	[I	f_56xbvgeel	f_56xbvgeel	
+	f	[Ljava/lang/String;	f_71jdpbfts	HORSE_ARMOR_TEXTURES	
+	f	[Ljava/lang/String;	f_47dgkzovw	HORSE_ARMOR_LABELS	
+	f	[I	f_56xbvgeel	HORSE_ARMOR_VALUES	
 	f	Lnet/minecraft/C_96rudekav;	f_13fjstkpn		f_13fjstkpn
 	f	Z	f_87pbihrou		f_87pbihrou
 	f	I	f_52uikdnzy		f_52uikdnzy
-	m	(I)V	m_90plseput	m_90plseput	
-		p	1		p_1	
-	m	()I	m_06zpndtjg	m_06zpndtjg	
-	m	()I	m_65kgthmgl	m_65kgthmgl	
-	m	(Lnet/minecraft/C_70boeylyv;)I	m_61ishdmpq	m_61ishdmpq	
-		p	1		p_1	
-	m	()Z	m_97ulityvb	m_97ulityvb	
-	m	()Z	m_84voxzfnx	m_84voxzfnx	
-	m	()Z	m_39ngqrtpz	m_39ngqrtpz	
-	m	(Lnet/minecraft/C_67pvowwpz;)Z	m_13rwsogkj	m_13rwsogkj	
-		p	0		p_0	
+	m	(I)V	m_90plseput	setType	
+		p	1		type	
+	m	()I	m_06zpndtjg	getType	
+	m	()I	m_65kgthmgl	getArmor	
+	m	(Lnet/minecraft/C_70boeylyv;)I	m_61ishdmpq	getArmorIndex	
+		c	ironIndex = 0, goldIndex = 1, diamondIndex = 2	
+		p	1		item	
+	m	()Z	m_97ulityvb	isNotAngry	
+	m	()Z	m_84voxzfnx	isAngryHorse	
+	m	()Z	m_39ngqrtpz	noLove	
+	m	(Lnet/minecraft/C_67pvowwpz;)Z	m_13rwsogkj	isHorseArmor	
+		p	0		item	
 	m	(Lnet/minecraft/C_61qcbghsa;)V	m_90plseput		m_90plseput
 		p	1			p_1
 	m	()Lnet/minecraft/C_61qcbghsa;	m_06zpndtjg		m_06zpndtjg
@@ -629,11 +630,11 @@ c	net/minecraft/C_56ixxfgcy
 	m	(Z)V	m_97ulityvb		m_97ulityvb
 		p	1			p_1
 c	net/minecraft/C_56ixxfgcy$C_44lpvkhwt
-	f	I	f_28figueio	f_28figueio	
+	f	I	f_28figueio	type	
 	f	Lnet/minecraft/C_61qcbghsa;	f_28figueio		f_28figueio
 	m	(II)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		type	
+		p	2		variant	
 	m	(Lnet/minecraft/C_61qcbghsa;I)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -663,7 +664,8 @@ c	net/minecraft/C_59dzjlfjt
 	m	(Lnet/minecraft/C_69etuumgd;Lnet/minecraft/C_78uvaikic;)V	m_11plmscav	m_11plmscav	
 		p	1		p_1	
 		p	2		p_2	
-	m	()V	m_22ccokzaa	m_22ccokzaa	
+	m	()V	m_22ccokzaa	setBlockItemBounds	
+		c	Sets the bounds for the BlockItem	
 	m	(Lnet/minecraft/C_05lecifbj;Lnet/minecraft/C_69etuumgd;Lnet/minecraft/C_78uvaikic;)Lnet/minecraft/C_14obvrpul;	m_11plmscav		m_11plmscav
 		p	1			p_1
 		p	2			p_2
@@ -793,8 +795,8 @@ c	net/minecraft/C_74tdvjegc
 	m	(Lnet/minecraft/C_69etuumgd;Lnet/minecraft/C_78uvaikic;)V	m_11plmscav	m_11plmscav	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/C_59dzjlfjt;)Z	m_33pnmrcyk	m_33pnmrcyk	
-		p	1		p_1	
+	m	(Lnet/minecraft/C_59dzjlfjt;)Z	m_33pnmrcyk	canGrowOn	
+		p	1		block	
 	m	(Lnet/minecraft/C_05lecifbj;Lnet/minecraft/C_69etuumgd;Lnet/minecraft/C_78uvaikic;)Lnet/minecraft/C_14obvrpul;	m_11plmscav		m_11plmscav
 		p	1			p_1
 		p	2			p_2
@@ -907,7 +909,7 @@ c	net/minecraft/C_92rnxmzdn
 		p	3			p_3
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/C_93ktchsym
-	f	Z	f_22jmktghp	f_22jmktghp	
+	f	Z	f_22jmktghp	updated	
 	f	F	f_40hfnqviy		f_40hfnqviy
 	f	F	f_62zvtqekn		f_62zvtqekn
 	f	Lnet/minecraft/C_93ktchsym$C_85eybbsgf;	f_22jmktghp		f_22jmktghp
@@ -929,11 +931,11 @@ c	net/minecraft/C_93ktchsym$C_85eybbsgf		C_85eybbsgf
 		p	2			p_2
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/C_94wmoelpw
-	f	Lnet/minecraft/C_51votbqag;	f_90gcyhcup	f_90gcyhcup	
-	f	Lnet/minecraft/C_51votbqag;	f_72cepgkoy	f_72cepgkoy	
-	f	Lnet/minecraft/C_51votbqag;	f_71qvlqvmd	f_71qvlqvmd	
-	f	Lnet/minecraft/C_51votbqag;	f_18uiftnux	f_18uiftnux	
-	f	Lnet/minecraft/C_51votbqag;	f_11kadfnll	f_11kadfnll	
+	f	Lnet/minecraft/C_51votbqag;	f_90gcyhcup	WHITE_TEXTURE	
+	f	Lnet/minecraft/C_51votbqag;	f_72cepgkoy	MULE_TEXTURE	
+	f	Lnet/minecraft/C_51votbqag;	f_71qvlqvmd	DONKEY_TEXTURE	
+	f	Lnet/minecraft/C_51votbqag;	f_18uiftnux	ZOMBIE_TEXTURE	
+	f	Lnet/minecraft/C_51votbqag;	f_11kadfnll	SKELETON_TEXTURE	
 c	net/minecraft/C_95beknjgp
 c	net/minecraft/C_95beknjgp$C_96mijcesd
 	m	()Lnet/minecraft/C_14obvrpul;	m_23fdbtanx	m_23fdbtanx	
