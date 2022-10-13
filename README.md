@@ -7,13 +7,11 @@
 Feather is a set of open, unencumbered Minecraft mappings, free for everyone to use under the Creative Commons Zero license. The intention is to let 
 everyone mod Minecraft freely and openly, while also being able to innovate and process the mappings as they see fit.
 
-To see the current version being targeted, check the branch name!
-
 ## Usage
-To use feather-deobfuscated Minecraft for Minecraft modding or as a dependency in a Java project, you can use [loom](https://github.com/fabricmc/fabric-loom) Gradle plugin. See [fabric wiki tutorial](https://fabricmc.net/wiki/tutorial:setup) for more information.
+To use feather-deobfuscated Minecraft for Minecraft modding or as a dependency in a Java project, you can use [loom](https://github.com/OrnitheMC/ornithe-loom) Gradle plugin. See [fabric wiki tutorial](https://fabricmc.net/wiki/tutorial:setup) for more information.
 
-To obtain a deobfuscated Minecraft jar, [`./gradlew mapNamedJar`](#mapNamedJar) will generate a jar named like `<minecraft version>-named.jar`, which can be sent to a decompiler for deobfuscated code.
-You can also directly generate a mapped jar and decompile the code using one of the following commands (no need to run `./gradlew mapNamedJar` first):
+To obtain a deobfuscated Minecraft jar, [`py feather.py mapNamedJar <minecraft version>`](#mapNamedJar) will generate a jar named like `<minecraft version>-named.jar`, which can be sent to a decompiler for deobfuscated code.
+You can also directly generate a mapped jar and decompile the code using one of the following commands (no need to run the `mapNamedJar` task first):
 - CFR: `./gradlew decompileCFR`
 - Quiltflower: `./gradlew decompileQuiltflower`
 - Procyon: `./gradlew decompileProcyon`
@@ -29,9 +27,14 @@ Please have a look at the [naming conventions](/CONVENTIONS.md) before submittin
 ### Getting Started
 
 1. Fork and clone the repo
-2. Run `./gradlew feather` (Linux, macOS) or `gradlew feather` (Windows) to open [Enigma](https://github.com/FabricMC/Enigma), a user interface to easily edit the mappings
-3. Commit and push your work to your fork
-4. Open a pull request with your changes
+2. Run `py feather.py feather <minecraft version>` (Windows) to open [Enigma](https://github.com/FabricMC/Enigma), a user interface to easily edit the mappings
+3. Save your changes by running one of the following tasks (`py feather.py <task> <minecraft version>`):
+   - `propagateMappings`: propagate your changes up and down the version tree and save them to every applicable Minecraft version (this is most likely the task you want to use)
+   - `insertMappings`: save your changes only to the specified Minecraft version
+   - `propagateMappingsDown`: propagate your changes down the version tree (to versions further away from the root) and save them to every applicable Minecraft version
+   - `propagateMappingsUp`: propagate your changes up the version tree (to versions closer to the root) and save them to every applicable Minecraft version
+4. Commit and push your work to your fork
+5. Open a pull request with your changes
 
 ## Gradle
 Feather uses Gradle to provide a number of utility tasks for working with the mappings.
