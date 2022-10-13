@@ -12,9 +12,9 @@ To use feather-deobfuscated Minecraft for Minecraft modding or as a dependency i
 
 To obtain a deobfuscated Minecraft jar, [`py feather.py mapNamedJar <minecraft version>`](#mapNamedJar) will generate a jar named like `<minecraft version>-named.jar`, which can be sent to a decompiler for deobfuscated code.
 You can also directly generate a mapped jar and decompile the code using one of the following commands (no need to run the `mapNamedJar` task first):
-- CFR: `./gradlew decompileCFR`
-- Quiltflower: `./gradlew decompileQuiltflower`
-- Procyon: `./gradlew decompileProcyon`
+- CFR: `py feather.py decompileCFR <minecraft version>`
+- Quiltflower: `py feather.py decompileQuiltflower <minecraft version>`
+- Procyon: `py feather.py decompileProcyon <minecraft version>`
 
 ## Contributing
 
