@@ -27,7 +27,7 @@ Please have a look at the [naming conventions](/CONVENTIONS.md) before submittin
 ### Getting Started
 
 1. Fork and clone the repo
-2. Run `py feather.py feather <minecraft version>` (Windows) to open [Enigma](https://github.com/FabricMC/Enigma), a user interface to easily edit the mappings
+2. Run `py feather.py feather <minecraft version>` to open [Enigma](https://github.com/FabricMC/Enigma), a user interface to easily edit the mappings
 3. Save your changes by running one of the following tasks (`py feather.py <task> <minecraft version>`):
    - `propagateMappings`: propagate your changes up and down the version tree and save them to every applicable Minecraft version (this is most likely the task you want to use)
    - `insertMappings`: save your changes only to the specified Minecraft version
