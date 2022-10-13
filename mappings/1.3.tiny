@@ -1568,7 +1568,7 @@ c	net/minecraft/C_05ektqssu	net/minecraft/block/EndPortalBlock
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/C_05eusvpxg	net/minecraft/entity/weather/LightningBoltEntity
 	f	I	f_87qxonsux	stage
-		c	Determines what actions this lightning bolt performs each tick.\n<br>- 2: play sounds.\n<br>- 1/0: damage entities.\n<br>- < 0: attempt to summon fire\n<br>\nOnce the lightning bolt has worked through all its attempts it is removed.
+		c	Determines what actions this lightning bolt performs each tick.\n<br>- 2: play sounds.\n<br>- 1/0: damage entities.\n<br>- &lt; 0: attempt to summon fire\n<br>\nOnce the lightning bolt has worked through all its attempts it is removed.
 	f	J	f_96ecdqftk	seed
 	f	I	f_02fhfolqt	fireAttempts
 		c	The number of attempts this lightning bolt will do to summon fire.
@@ -1576,7 +1576,7 @@ c	net/minecraft/C_05eusvpxg	net/minecraft/entity/weather/LightningBoltEntity
 		p	1		world
 		p	2		x
 		p	4		y
-		p	6		p_6
+		p	6		z
 	m	()V	m_41egdrrik	m_41egdrrik
 	m	()V	m_52ahzblce	m_52ahzblce
 	m	(Lnet/minecraft/C_73yvmijgm;)V	m_10qdpwnei	m_10qdpwnei
@@ -4851,7 +4851,7 @@ c	net/minecraft/C_14kkxopnq	net/minecraft/entity/vehicle/BoatEntity
 	m	()I	m_33rxuhvsf	getBreakingWindow
 		c	When a boat is hit it starts wiggling. You need to consequitively hit it in that window to be able to do\nenough damage until the boat breaks. This method gets that value in the datatracker.\nThe value is initially set to 10 when hit and decreases by one each tick when the boat is not hit.
 	m	(I)V	m_91oiahiie	setAnitmationSide
-		c	This value determines on which side the wiggle animation starts. See {@link net.minecraft.client.render.entity.BoatEntityRender#render}}\n    -1:     start to the right\n     1:     start to the left\nDefault: 1
+		c	This value determines on which side the wiggle animation starts.\nSee {@link net.minecraft.client.render.entity.BoatEntityRenderer#render}}\n    -1:     start to the right\n     1:     start to the left\nDefault: 1
 		p	1		value
 	m	()I	m_03xzqdxeg	getAnimationSide
 	m	()Z	m_93engqdmt	m_93engqdmt
@@ -10330,7 +10330,6 @@ c	net/minecraft/C_30iaoczdn	net/minecraft/entity/living/mob/PathAwareEntity
 	f	Lnet/minecraft/C_63rjkkbvm;	f_62euzcqxz	target
 	f	Z	f_19lkcdrvr	wasAttacking
 	f	I	f_70mgfaein	fastMovementCooldown
-		c	When the mob is attacked it will have a 60 tick window of sped up movement.\nSee {@link #FLEEING_SPEED_BONUS} and {@link #FLEEING_SPEED_BONUS_UUID}
 	m	(Lnet/minecraft/C_60xlezclu;)V	<init>	<init>
 		p	1		p_1
 	m	()Z	m_96zfstvrb	wasAttacking
@@ -12413,13 +12412,9 @@ c	net/minecraft/C_37qysamgg	net/minecraft/client/render/TextRenderer
 	f	Z	f_86bemzegb	unicode
 	f	Z	f_89czbqgfc	rightToLeft
 	f	F	f_91yjhqktp	r
-		c	The amount of red in the texts (r, g, b, a) color.
 	f	F	f_56qwepvbm	g
-		c	The amount of blue in the texts (r, g, b, a) color.
 	f	F	f_45hhetzuc	b
-		c	The amount of green in the texts (r, g, b, a) color.
 	f	F	f_50slezlcg	a
-		c	The amount of alpha in the texts (r, g, b, a) color.
 	f	I	f_10lewpknw	color
 	f	Z	f_23vfgztsp	obfuscated
 	f	Z	f_17lydawsp	bold
@@ -12428,10 +12423,10 @@ c	net/minecraft/C_37qysamgg	net/minecraft/client/render/TextRenderer
 	f	Z	f_19rkdvlwh	strikethrough
 	m	()V	<init>	<init>
 	m	(Lnet/minecraft/C_43xyxycjg;Ljava/lang/String;Lnet/minecraft/C_17avaraix;Z)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
+		p	1		options
+		p	2		font
 		p	3		p_3
-		p	4		p_4
+		p	4		unicode
 	m	(ICZ)F	m_27lkyomfw	renderText
 		p	1		formattingChar
 		p	2		unicodeChar
@@ -12464,7 +12459,6 @@ c	net/minecraft/C_37qysamgg	net/minecraft/client/render/TextRenderer
 		p	1		text
 	m	()V	m_28etqkpym	reset
 	m	(Ljava/lang/String;Z)V	m_68wkljstz	drawLine
-		c	0 1 2 3 4 5 6 7 8 9 a  b  c  d  e  f  k  l  m  n  o  r\n0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21
 		p	1		text
 		p	2		hasShadow
 	m	(Ljava/lang/String;IIIIZ)I	m_92fzazwcc	drawLayer
@@ -12537,13 +12531,13 @@ c	net/minecraft/C_37qysamgg	net/minecraft/client/render/TextRenderer
 		p	1		text
 		p	2		offset
 	m	(C)Z	m_61izczspt	isColorCharacter
-		c	Checks if a certain formatting character is a color. The different colors are:\n<ul>\n<li><b>0:</b> <span style="color:#000000";>black</span></li>\n<li><b>1:</b> <span style="color:#0000AA";>dark blue</span></li>\n<li><b>2:</b> <span style="color:#00AA00";>dark green</span></li>\n<li><b>3:</b> <span style="color:#00AAAA";>dark aqua</span></li>\n<li><b>4:</b> <span style="color:#AA0000";>dark red</span></li>\n<li><b>5:</b> <span style="color:#AA00AA";>dark purple</span></li>\n<li><b>6:</b> <span style="color:#FFAA00";>gold</span></li>\n<li><b>7:</b> <span style="color:#AAAAAA";>gray</span></li>\n<li><b>8:</b> <span style="color:#555555";>dark gray</span></li>\n<li><b>9:</b> <span style="color:#5555FF";>blue</span></li>\n<li><b>a/A:</b> <span style="color:#55FF55";>green</span></li>\n<li><b>b/B:</b> <span style="color:#55FFFF";>aqua</span></li>\n<li><b>c/C:</b> <span style="color:#FF5555";>red</span></li>\n<li><b>d/D:</b> <span style="color:#FF55FF";>light_purple</span></li>\n<li><b>e/E:</b> <span style="color:#FFFF55";>yellow</span></li>\n<li><b>f/F:</b> <span style="color:#FFFFFF";>white</span></li>\n<li><b>g/G:</b> <span style="color:#DDD605";>minecoin gold</span></li>\n</ul>
-		p	0		formatChar
-	m	(C)Z	m_79tmsdpyc	isFormattinCharacter
-		c	Checks the type of formatting character.\n<ul>\n<li><b>k:</b> <span style="color:#000000";>obfuscated</span></li>\n<li><b>l:</b> <span style="color:#000000";><b>bold</b></span></li>\n<li><b>m:</b> <span style="color:#000000";><strike>strikethrough</strike></span></li>\n<li><b>n:</b> <span style="color:#000000";><u>underline</u></span></li>\n<li><b>o:</b> <span style="color:#000000";><i>italic</i></span></li>\n<li><b>r:</b> <span style="color:#000000";>reset</span></li>\n</ul>
-		p	0		formatChar
-	m	(Ljava/lang/String;)Ljava/lang/String;	m_76kgxfpzn	getAllFormatCharacters
-		c	Strips all non formatting characters from a string and returns an string containing only chained formatting characters.
+		c	Checks if a certain formatting character is a color. The different colors are:\n<ul>\n<li><b>0:</b> <span style="color:#000000">black</span></li>\n<li><b>1:</b> <span style="color:#0000AA">dark blue</span></li>\n<li><b>2:</b> <span style="color:#00AA00">dark green</span></li>\n<li><b>3:</b> <span style="color:#00AAAA">dark aqua</span></li>\n<li><b>4:</b> <span style="color:#AA0000">dark red</span></li>\n<li><b>5:</b> <span style="color:#AA00AA">dark purple</span></li>\n<li><b>6:</b> <span style="color:#FFAA00">gold</span></li>\n<li><b>7:</b> <span style="color:#AAAAAA">gray</span></li>\n<li><b>8:</b> <span style="color:#555555">dark gray</span></li>\n<li><b>9:</b> <span style="color:#5555FF">blue</span></li>\n<li><b>a/A:</b> <span style="color:#55FF55">green</span></li>\n<li><b>b/B:</b> <span style="color:#55FFFF">aqua</span></li>\n<li><b>c/C:</b> <span style="color:#FF5555">red</span></li>\n<li><b>d/D:</b> <span style="color:#FF55FF">light_purple</span></li>\n<li><b>e/E:</b> <span style="color:#FFFF55">yellow</span></li>\n<li><b>f/F:</b> <span style="color:#FFFFFF">white</span></li>\n<li><b>g/G:</b> <span style="color:#DDD605">minecoin gold</span></li>\n</ul>
+		p	0		chr
+	m	(C)Z	m_79tmsdpyc	isFormattingCharacter
+		c	Checks the type of formatting character.\n<ul>\n<li><b>k:</b> <span style="color:#000000">obfuscated</span></li>\n<li><b>l:</b> <span style="color:#000000"><b>bold</b></span></li>\n<li><b>m:</b> <span style="color:#000000"><s>strikethrough</s></span></li>\n<li><b>n:</b> <span style="color:#000000"><u>underline</u></span></li>\n<li><b>o:</b> <span style="color:#000000"><i>italic</i></span></li>\n<li><b>r:</b> <span style="color:#000000">reset</span></li>\n</ul>
+		p	0		chr
+	m	(Ljava/lang/String;)Ljava/lang/String;	m_76kgxfpzn	isolateFormatting
+		c	Strips all non formatting characters from the string.
 		p	0		text
 	m	()Z	m_42rudpyvq	isRightToLeft
 c	net/minecraft/C_37thswfld	net/minecraft/network/packet/s2c/play/ChatMessageS2CPacket
@@ -23989,7 +23983,7 @@ c	net/minecraft/C_71lthymyi	net/minecraft/entity/living/LivingEntity
 	m	()V	m_22rfxncyx	m_22rfxncyx
 	m	()V	m_06uqfxbam	m_06uqfxbam
 	m	()V	m_12zheytug	tickPostDeath
-		c	This method is called 20 times from {@link net.minecraft.entity.LivingEntity.baseTick()v} after the entity has died(when Health is 0), as the death animation lasts for 20ticks.\nIn the 20th tick/call it marks the entity as removed
+		c	This method is called 20 times from {@link net.minecraft.entity.living.LivingEntity#baseTick baseTick}\nafter the entity has died (when health is 0), as the death animation lasts for 20 ticks.\nIn the 20th tick/call it marks the entity as removed.
 	m	(I)I	m_33rdbssxi	removeBreathUnderWater
 		p	1		breath
 	m	(Lnet/minecraft/C_77kzrkefm;)I	m_08zusdrux	getXpDrop
@@ -24068,7 +24062,6 @@ c	net/minecraft/C_71lthymyi	net/minecraft/entity/living/LivingEntity
 	m	()Z	m_00plcnlaq	isServer
 	m	()Z	m_55mvekwcf	isDead
 	m	()Z	m_70zzjeftf	isCustomNameVisible
-		c	This method is only called on the client, and it returns customNameVisibility from {@link getCustomNameVisibility()}
 	m	()V	m_65mdqosyd	jump
 	m	()Z	m_14ngfcfuf	m_14ngfcfuf
 	m	()V	m_64tasgdpk	m_64tasgdpk
@@ -31161,9 +31154,9 @@ c	net/minecraft/C_91yuldizk	net/minecraft/world/chunk/storage/AnvilChunkStorage
 	f	Ljava/util/List;	f_39gtjscpo	chunkSaveQueue
 	f	Ljava/util/Set;	f_87bzljrma	queuedChunks
 	f	Ljava/lang/Object;	f_20kawpunb	lock
-	f	Ljava/io/File;	f_67zpkvwro	file
+	f	Ljava/io/File;	f_67zpkvwro	dir
 	m	(Ljava/io/File;)V	<init>	<init>
-		p	1		file
+		p	1		dir
 	m	(Lnet/minecraft/C_60xlezclu;II)Lnet/minecraft/C_11tlqqqfs;	m_56kynkkej	m_56kynkkej
 		p	1		p_1
 		p	2		p_2
