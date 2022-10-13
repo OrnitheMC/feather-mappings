@@ -3,10 +3,11 @@ import sys
 import subprocess
 
 MAPPINGS_DIR = 'mappings'
-GRADLE_TASKS = ['feather', 'build', 'javadoc', 'javadocJar', 'checkMappings', 'mapNamedJar', 'publish']
+GRADLE_TASKS = ['clean', 'feather', 'build', 'javadoc', 'javadocJar', 'checkMappings', 'mapCalamusJar', 'mapNamedJar', 'publish', 'separateMappings', 'insertMappings', 'propagateMappingsDown', 'propagateMappingsUp', 'propagateMappings']
 GRADLEW = 'gradlew' if os.name == 'nt' else './gradlew'
 
 def main():
+    possible_versions = find_minecraft_versions()
     versions = []
     tasks = []
     
@@ -15,7 +16,7 @@ def main():
     for i in range(1, len(args)):
         arg = args[i]
         
-        if is_minecraft_version(arg):
+        if arg in possible_versions:
             versions.append(arg)
         elif arg in GRADLE_TASKS:
             tasks.append(arg)
@@ -31,7 +32,7 @@ def main():
             else:
                 raise Exception('no minecraft version given!')
         else:
-            find_minecraft_versions(versions)
+            versions = possible_versions
     if len(tasks) == 0:
         raise Exception('no gradle tasks given!')
     
@@ -43,16 +44,22 @@ def main():
         os.environ['MC_VERSION'] = version
         subprocess.run(" ".join(command), shell = True, check = True)
 
-def is_minecraft_version(string):
-    path = os.path.join(MAPPINGS_DIR, string)
-    return os.path.isdir(path)
-
-def find_minecraft_versions(versions):
-    for version in os.listdir(MAPPINGS_DIR):
-        path = os.path.join(MAPPINGS_DIR, version)
+def find_minecraft_versions():
+    versions = []
+    
+    for filename in os.listdir(MAPPINGS_DIR):
+        path = os.path.join(MAPPINGS_DIR, filename)
         
-        if os.path.isdir(path):
-            versions.append(version)
+        if filename.endswith('.tiny'):
+            versions.append(filename[0:len(filename) - len('.tiny')])
+        elif filename.endswith('.tinydiff'):
+            raw_pair = filename[0:len(filename) - len('.tinydiff')]
+            pair = raw_pair.split('#')
+            
+            if len(pair) == 2:
+                versions.append(pair[-1])
+    
+    return versions
 
 if __name__ == '__main__':
     main()
