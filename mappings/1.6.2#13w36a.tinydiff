@@ -1076,17 +1076,17 @@ c	net/minecraft/C_11tlqqqfs
 	f	Z	f_88mxkvbra		lightPopulated
 	f	Z	f_49xobaxti		hasTicked
 		c		True if this chunk has ticked at least once.
-	m	()V	m_16xcbaptu	m_16xcbaptu	
-	m	(III)I	m_16oyieogr	m_16oyieogr	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-	m	(IIIII)Z	m_62gmhmrcx	m_62gmhmrcx	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
+	m	()V	m_16xcbaptu	recheckGaps	
+	m	(III)I	m_16oyieogr	getBlockAt	
+		p	1		sectionX	
+		p	2		y	
+		p	3		sectionZ	
+	m	(IIIII)Z	m_62gmhmrcx	setBlockWithMetadataAt	
+		p	1		sectionX	
+		p	2		y	
+		p	3		sectionZ	
+		p	4		blockId	
+		p	5		metadata	
 	m	()V	m_61fnhautn	m_61fnhautn	
 	m	(Lnet/minecraft/C_60xlezclu;[B[BII)V	<init>		<init>
 		p	1			p_1
@@ -2980,13 +2980,13 @@ c	net/minecraft/C_43gbvhloa
 		p	3		p_3	
 		p	4		p_4	
 		p	5		p_5	
-	m	(ILnet/minecraft/C_60xlezclu;IIIZ)Z	m_60phwqggv	m_60phwqggv	
-		p	0		p_0	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
+	m	(ILnet/minecraft/C_60xlezclu;IIIZ)Z	m_60phwqggv	canMoveBlock	
+		p	0		blockId	
+		p	1		world	
+		p	2		x	
+		p	3		y	
+		p	4		z	
+		p	5		allowBreaking	
 	m	(Z)V	<init>		<init>
 		p	1			sticky
 	m	(Lnet/minecraft/C_60xlezclu;IIILnet/minecraft/C_59dzjlfjt;)V	m_28ymtqqcg		m_28ymtqqcg
@@ -3198,15 +3198,15 @@ c	net/minecraft/C_48mnuikhd
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/C_48prrerbj
-	m	(III)I	m_20nxsxowx	m_20nxsxowx	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-	m	(IIII)V	m_44qmpifsa	m_44qmpifsa	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
+	m	(III)I	m_20nxsxowx	getBlock	
+		p	1		x	
+		p	2		y	
+		p	3		z	
+	m	(IIII)V	m_44qmpifsa	setBlock	
+		p	1		x	
+		p	2		y	
+		p	3		z	
+		p	4		blockId	
 	m	(III)Lnet/minecraft/C_59dzjlfjt;	m_20nxsxowx		getBlock
 		p	1			x
 		p	2			y
@@ -3217,13 +3217,13 @@ c	net/minecraft/C_48prrerbj
 		p	3			z
 		p	4			block
 c	net/minecraft/C_49dqgxhwu
-	f	I	f_34rvrfooa	f_34rvrfooa	
+	f	I	f_34rvrfooa	blockId	
 	f	Lnet/minecraft/C_59dzjlfjt;	f_34rvrfooa		block
 	m	(IIII)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
+		p	1		x	
+		p	2		y	
+		p	3		z	
+		p	4		blockId	
 	m	(IIILnet/minecraft/C_59dzjlfjt;)V	<init>		<init>
 		p	1			x
 		p	2			y
@@ -4417,19 +4417,19 @@ c	net/minecraft/C_59dzjlfjt
 	m	()V	m_31srhybim	m_31srhybim	
 	m	(I)Z	m_26wkvjkpg	m_26wkvjkpg	
 		p	0		id	
-	m	(Lnet/minecraft/C_60xlezclu;IIII)V	m_28ymtqqcg	m_28ymtqqcg	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-	m	(Lnet/minecraft/C_60xlezclu;IIIII)V	m_40lcjbarr	m_40lcjbarr	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
+	m	(Lnet/minecraft/C_60xlezclu;IIII)V	m_28ymtqqcg	update	
+		p	1		world	
+		p	2		x	
+		p	3		y	
+		p	4		z	
+		p	5		blockId	
+	m	(Lnet/minecraft/C_60xlezclu;IIIII)V	m_40lcjbarr	onRemoved	
+		p	1		world	
+		p	2		x	
+		p	3		y	
+		p	4		z	
+		p	5		blockId	
+		p	6		metadata	
 	m	(ILjava/util/Random;I)I	m_71kjpptou	m_71kjpptou	
 		p	1		p_1	
 		p	2		p_2	
@@ -4569,9 +4569,9 @@ c	net/minecraft/C_60qnqvbpv
 	m	(I)Z	m_98thvzhbc		isDesert
 		p	1			id
 c	net/minecraft/C_60xlezclu
-	m	(II)I	m_24eeefhag	m_24eeefhag	
-		p	1		p_1	
-		p	2		p_2	
+	m	(II)I	m_24eeefhag	getSurfaceBlock	
+		p	1		x	
+		p	2		z	
 	m	(III)I	m_99pqvwaia	m_99pqvwaia	
 		p	1		p_1	
 		p	2		p_2	
@@ -4588,27 +4588,27 @@ c	net/minecraft/C_60xlezclu
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
-	m	(IIII)V	m_80dtlmjyf	m_80dtlmjyf	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-	m	(IIII)V	m_56vvukbbd	m_56vvukbbd	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
+	m	(IIII)V	m_80dtlmjyf	onBlockChanged	
+		p	1		x	
+		p	2		y	
+		p	3		z	
+		p	4		blockId	
+	m	(IIII)V	m_56vvukbbd	updateNeighbors	
+		p	1		x	
+		p	2		y	
+		p	3		z	
+		p	4		blockId	
 	m	(IIIII)V	m_68rrzlgxg	m_68rrzlgxg	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
 		p	5		p_5	
-	m	(IIII)V	m_17gaundeb	m_17gaundeb	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
+	m	(IIII)V	m_17gaundeb	updateNeighbor	
+		p	1		x	
+		p	2		y	
+		p	3		z	
+		p	4		blockId	
 	m	(IIII)Z	m_13fzxflzx	m_13fzxflzx	
 		p	1		p_1	
 		p	2		p_2	
@@ -4629,19 +4629,19 @@ c	net/minecraft/C_60xlezclu
 		p	8		p_8	
 		p	9		p_9	
 		p	10		p_10	
-	m	(IIIII)V	m_95xtykbjj	m_95xtykbjj	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-	m	(IIIIII)V	m_33yhiwsbn	m_33yhiwsbn	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
+	m	(IIIII)V	m_95xtykbjj	scheduleTick	
+		p	1		x	
+		p	2		y	
+		p	3		z	
+		p	4		blockId	
+		p	5		delay	
+	m	(IIIIII)V	m_33yhiwsbn	scheduleTick	
+		p	1		x	
+		p	2		y	
+		p	3		z	
+		p	4		blockId	
+		p	5		delay	
+		p	6		priority	
 	m	(IIIIII)V	m_00jlvtcmz	m_00jlvtcmz	
 		p	1		p_1	
 		p	2		p_2	
@@ -4649,11 +4649,11 @@ c	net/minecraft/C_60xlezclu
 		p	4		p_4	
 		p	5		p_5	
 		p	6		p_6	
-	m	(III)V	m_70ffegypv	m_70ffegypv	
+	m	(III)V	m_70ffegypv	checkLight	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(Lnet/minecraft/C_52ynghuan;III)V	m_20ojthjzh	m_20ojthjzh	
+	m	(Lnet/minecraft/C_52ynghuan;III)V	m_20ojthjzh	checkLight	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
@@ -4667,13 +4667,13 @@ c	net/minecraft/C_60xlezclu
 		p	6		p_6	
 		p	7		p_7	
 		p	8		p_8	
-	m	(IIIIII)V	m_00tdxoitl	m_00tdxoitl	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
+	m	(IIIIII)V	m_00tdxoitl	doBlockEvent	
+		p	1		x	
+		p	2		y	
+		p	3		z	
+		p	4		blockId	
+		p	5		type	
+		p	6		data	
 	m	(IIII)V	m_83psiljyx	m_83psiljyx	
 		p	1		p_1	
 		p	2		p_2	
@@ -5522,10 +5522,10 @@ c	net/minecraft/C_69bvlfpel
 	f	Lnet/minecraft/C_23guwnlpt;	f_74zxpxfuk		frameBuffer
 	m	()V	m_36kvfkyjc		m_36kvfkyjc
 c	net/minecraft/C_69etuumgd
-	m	(III)I	m_99pqvwaia	m_99pqvwaia	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+	m	(III)I	m_99pqvwaia	getBlock	
+		p	1		x	
+		p	2		y	
+		p	3		z	
 	m	(III)Lnet/minecraft/C_59dzjlfjt;	m_99pqvwaia		getBlock
 		p	1			x
 		p	2			y
