@@ -3702,7 +3702,7 @@ c	net/minecraft/C_11tlqqqfs	net/minecraft/world/chunk/WorldChunk
 		p	1		sectionX
 		p	2		y
 		p	3		sectionZ
-		p	4		skyDarkness
+		p	4		ambientDarkness
 	m	(Lnet/minecraft/C_63rjkkbvm;)V	m_32ihqytlo	addEntity
 		p	1		entity
 	m	(Lnet/minecraft/C_63rjkkbvm;)V	m_20dhctdnh	removeEntity
@@ -18504,12 +18504,13 @@ c	net/minecraft/C_59dzjlfjt	net/minecraft/block/Block
 		p	2		x
 		p	3		y
 		p	4		z
-	m	()I	m_92lxdsttp	getType
-	m	(F)Lnet/minecraft/C_59dzjlfjt;	m_94wvdziks	setMiningSpeed
+	m	()I	m_92lxdsttp	getRenderType
+		c	Returns this block's render type. The possible values are as follows:\n<br>-1: none\n<br>1: invisible\n<br>2: animated block entity\n<br>3: block model
+	m	(F)Lnet/minecraft/C_59dzjlfjt;	m_94wvdziks	setStrength
 		c	Sets this block's mining speed and updates its resistance if needed.\nA block's resistance cannot be less than 5 times its mining speed.\n\n<p>\nNOTE: this method should only be used during the block's creation before it is registered.
-		p	1		miningSpeed
+		p	1		strength
 	m	()Lnet/minecraft/C_59dzjlfjt;	m_34ebkhhcb	setUnbreakable
-		c	Sets this block as unbreakable by setting its mining speed to -1.\nUsed by barriers and command blocks.\n\n<p>\nNOTE: this method should only be used during the block's creation before it is registered.
+		c	Sets this block as unbreakable by setting its strength to -1. Note that this changes both\nthe block's mining speed and its blast resistance.\n\n<p>\nNOTE: this method should only be used during the block's creation before it is registered.
 	m	(Lnet/minecraft/C_60xlezclu;III)F	m_55tltbvnw	getMiningSpeed
 		p	1		world
 		p	2		x
@@ -18534,7 +18535,7 @@ c	net/minecraft/C_59dzjlfjt	net/minecraft/block/Block
 		p	2		p_2
 		p	3		p_3
 		p	4		p_4
-	m	(Lnet/minecraft/C_69etuumgd;III)I	m_30ypbpajs	getLightLevel
+	m	(Lnet/minecraft/C_69etuumgd;III)I	m_30ypbpajs	getLightColor
 		p	1		world
 		p	2		x
 		p	3		y
@@ -18545,13 +18546,13 @@ c	net/minecraft/C_59dzjlfjt	net/minecraft/block/Block
 		p	2		p_2
 		p	3		p_3
 		p	4		p_4
-	m	(Lnet/minecraft/C_69etuumgd;IIII)Z	m_47kivzlnk	isSideVisible
+	m	(Lnet/minecraft/C_69etuumgd;IIII)Z	m_47kivzlnk	shouldRenderFace
 		p	1		world
 		p	2		x
 		p	3		y
 		p	4		z
 		p	5		face
-	m	(Lnet/minecraft/C_69etuumgd;IIII)Z	m_68bfciwky	hasCollision
+	m	(Lnet/minecraft/C_69etuumgd;IIII)Z	m_68bfciwky	isFaceSolid
 		p	1		world
 		p	2		x
 		p	3		y
@@ -18573,23 +18574,23 @@ c	net/minecraft/C_59dzjlfjt	net/minecraft/block/Block
 		p	2		x
 		p	3		y
 		p	4		z
-	m	(Lnet/minecraft/C_60xlezclu;IIILnet/minecraft/C_14obvrpul;Ljava/util/List;Lnet/minecraft/C_63rjkkbvm;)V	m_35debovxp	appendCollisionBoxes
+	m	(Lnet/minecraft/C_60xlezclu;IIILnet/minecraft/C_14obvrpul;Ljava/util/List;Lnet/minecraft/C_63rjkkbvm;)V	m_35debovxp	addCollisionBox
 		p	1		world
 		p	2		x
 		p	3		y
 		p	4		z
-		p	5		box
-		p	6		list
+		p	5		entityBox
+		p	6		boxes
 		p	7		entity
 	m	(Lnet/minecraft/C_60xlezclu;III)Lnet/minecraft/C_14obvrpul;	m_16zfpzvdh	getCollisionBox
 		p	1		world
 		p	2		x
 		p	3		y
 		p	4		z
-	m	()Z	m_77domkauv	hasTransparency
-	m	(IZ)Z	m_72oayclud	canCollide
+	m	()Z	m_77domkauv	isOpaqueCube
+	m	(IZ)Z	m_72oayclud	hasCollision
 		p	1		metadata
-		p	2		isLiving
+		p	2		allowFluids
 	m	()Z	m_80evdcnhp	hasCollision
 	m	(Lnet/minecraft/C_60xlezclu;IIILjava/util/Random;)V	m_20pwfxgry	tick
 		c	Performs a scheduled tick. Blocks that want to perform some action after a delay can\ntell the world to schedule the update, which is then executed by calling this method.
@@ -18686,8 +18687,8 @@ c	net/minecraft/C_59dzjlfjt	net/minecraft/block/Block
 		p	2		x
 		p	3		y
 		p	4		z
-		p	5		vec1
-		p	6		vec2
+		p	5		start
+		p	6		end
 	m	(Lnet/minecraft/C_03ycckswl;)Z	m_84bjqqdat	isWithinPlaneYZ
 		p	1		vec
 	m	(Lnet/minecraft/C_03ycckswl;)Z	m_18imqkmsj	isWithinPlaneXZ
@@ -18699,7 +18700,8 @@ c	net/minecraft/C_59dzjlfjt	net/minecraft/block/Block
 		p	2		p_2
 		p	3		p_3
 		p	4		p_4
-	m	()I	m_64naveoni	setAlpha
+	m	()I	m_64naveoni	getRenderLayer
+		c	Returns this block's render layer. The possible values are as follows:\n<br>0: solid\n<br>1: mipped cutout\n<br>2: cutout\n<br>3: translucent
 	m	(Lnet/minecraft/C_60xlezclu;IIII)Z	m_16gkoisje	canPlace
 		p	1		world
 		p	2		x
@@ -18755,14 +18757,14 @@ c	net/minecraft/C_59dzjlfjt	net/minecraft/block/Block
 		p	4		z
 		p	5		entity
 		p	6		flow
-	m	(Lnet/minecraft/C_69etuumgd;III)V	m_11plmscav	updateBoundingBox
+	m	(Lnet/minecraft/C_69etuumgd;III)V	m_11plmscav	updateSelectionBox
 		p	1		world
 		p	2		x
 		p	3		y
 		p	4		z
 	m	()I	m_71mcbiijn	getColor
 	m	(I)I	m_75tsxfvlk	getColor
-		p	1		metadata
+		p	1		tint
 	m	(Lnet/minecraft/C_69etuumgd;III)I	m_50zummwzv	getColor
 		p	1		world
 		p	2		x
@@ -18820,9 +18822,9 @@ c	net/minecraft/C_59dzjlfjt	net/minecraft/block/Block
 		p	3		p_3
 		p	4		p_4
 		p	5		p_5
-	m	(Ljava/lang/String;)Lnet/minecraft/C_59dzjlfjt;	m_95wvmyqpj	setTranslationKey
-		c	Sets this block's translation key.\n\n<p>\nNOTE: this method should only be used during the block's creation before it is registered.
-		p	1		key
+	m	(Ljava/lang/String;)Lnet/minecraft/C_59dzjlfjt;	m_95wvmyqpj	setName
+		c	Sets this block's name.\n\n<p>\nNOTE: this method should only be used during the block's creation before it is registered.
+		p	1		name
 	m	()Ljava/lang/String;	m_10wccendm	getDisplayName
 		c	Returns the translation of this block's translation key.
 	m	()Ljava/lang/String;	m_34dwkvqdi	m_34dwkvqdi
@@ -18882,7 +18884,7 @@ c	net/minecraft/C_59dzjlfjt	net/minecraft/block/Block
 		p	3		y
 		p	4		z
 		p	5		metadata
-	m	(Lnet/minecraft/C_60xlezclu;III)V	m_51lcakifu	precipitationTick
+	m	(Lnet/minecraft/C_60xlezclu;III)V	m_51lcakifu	randomPrecipitationTick
 		p	1		world
 		p	2		x
 		p	3		y
@@ -19560,7 +19562,7 @@ c	net/minecraft/C_60xlezclu	net/minecraft/world/World
 		p	1		x
 		p	2		y
 		p	3		z
-	m	(III)I	m_65weziugn	getRawLight
+	m	(III)I	m_65weziugn	getLight
 		p	1		x
 		p	2		y
 		p	3		z
@@ -19735,11 +19737,11 @@ c	net/minecraft/C_60xlezclu	net/minecraft/world/World
 	m	(Lnet/minecraft/C_63rjkkbvm;Z)V	m_28oopncot	tickEntity
 		p	1		entity
 		p	2		requireLoaded
-	m	(Lnet/minecraft/C_14obvrpul;)Z	m_94eplxppy	containsEntity
+	m	(Lnet/minecraft/C_14obvrpul;)Z	m_94eplxppy	canBuildIn
 		p	1		box
-	m	(Lnet/minecraft/C_14obvrpul;Lnet/minecraft/C_63rjkkbvm;)Z	m_33dazfgwe	containsEntity
+	m	(Lnet/minecraft/C_14obvrpul;Lnet/minecraft/C_63rjkkbvm;)Z	m_33dazfgwe	canBuildIn
 		p	1		box
-		p	2		exclude
+		p	2		ignore
 	m	(Lnet/minecraft/C_14obvrpul;)Z	m_89jpqfliq	containsNonAir
 		p	1		box
 	m	(Lnet/minecraft/C_14obvrpul;)Z	m_63dwbmzuo	containsFluid
@@ -20996,7 +20998,7 @@ c	net/minecraft/C_63rjkkbvm	net/minecraft/entity/Entity
 	f	I	f_98xwvviun	networkId
 		c	A number that uniquely identifies this entity. It is used for server-client communication.
 	f	D	f_87enhvjym	viewDistanceScaling
-	f	Z	f_92udoirpy	inanimate
+	f	Z	f_92udoirpy	blocksBuilding
 	f	Lnet/minecraft/C_63rjkkbvm;	f_03dkqpkdz	rider
 	f	Lnet/minecraft/C_63rjkkbvm;	f_75gxijbgy	vehicle
 	f	Lnet/minecraft/C_60xlezclu;	f_57eewankx	world
@@ -21139,7 +21141,7 @@ c	net/minecraft/C_63rjkkbvm	net/minecraft/entity/Entity
 		p	3		factor
 	m	(F)I	m_14sbgmutf	getLightLevel
 		p	1		tickDelta
-	m	(F)F	m_72avfbzld	getBrightnessAtEyes
+	m	(F)F	m_72avfbzld	getBrightness
 		p	1		tickDelta
 	m	(Lnet/minecraft/C_60xlezclu;)V	m_31crojdir	setWorld
 		p	1		world
@@ -21228,7 +21230,7 @@ c	net/minecraft/C_63rjkkbvm	net/minecraft/entity/Entity
 		p	1		stack
 		p	2		yOffset
 	m	()Z	m_35debvtww	isAlive
-	m	()Z	m_72ngbclul	isSuffocating
+	m	()Z	m_72ngbclul	isInWall
 	m	(Lnet/minecraft/C_77kzrkefm;)Z	m_72kzuuspk	interact
 		p	1		player
 	m	(Lnet/minecraft/C_63rjkkbvm;)Lnet/minecraft/C_14obvrpul;	m_07aslzlfn	getHardCollisionBox
@@ -22634,11 +22636,11 @@ c	net/minecraft/C_69etuumgd	net/minecraft/world/IWorld
 		p	1		x
 		p	2		y
 		p	3		z
-	m	(IIII)I	m_89aqyehbg	packLightLevels
+	m	(IIII)I	m_89aqyehbg	getLightColor
 		p	1		x
 		p	2		y
 		p	3		z
-		p	4		minBlockLight
+		p	4		blockLight
 	m	(IIII)F	m_71ocjiolq	m_71ocjiolq
 		p	1		p_1
 		p	2		p_2
@@ -26341,11 +26343,11 @@ c	net/minecraft/C_77kzrkefm	net/minecraft/entity/living/player/PlayerEntity
 	m	(DDD)V	m_79njlejsz	tickNonRidingMovmentRelatedStats
 		p	1		x
 		p	3		y
-		p	5		p_5
+		p	5		z
 	m	(DDD)V	m_81mcazmec	tickRidingRelatedStats
 		p	1		x
 		p	3		y
-		p	5		p_5
+		p	5		z
 	m	(F)V	m_06fvvaxfk	m_06fvvaxfk
 		p	1		p_1
 	m	(Lnet/minecraft/C_71lthymyi;)V	m_55stvuvea	m_55stvuvea

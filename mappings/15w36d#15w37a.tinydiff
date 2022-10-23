@@ -2234,8 +2234,8 @@ c	net/minecraft/C_59dzjlfjt
 	f	D	f_78ualovmd	maxY	
 	f	D	f_05yjufevc	maxZ	
 	f	Lnet/minecraft/C_14obvrpul;	f_52uuiwiwy		f_52uuiwiwy
-	m	()Z	m_84zbljeei	isSolid	
-		c	A solid block is a full cube with no transparency.	
+	m	()Z	m_84zbljeei	isOpaque	
+		c	An opaque block is a full cube with no transparency.	
 	m	()I	m_17xloeurd	getOpacity	
 	m	()Z	m_65cqgfybv	isTranslucent	
 	m	()I	m_67ucuoexq	getLightLevel	
@@ -2247,11 +2247,12 @@ c	net/minecraft/C_59dzjlfjt
 	m	(Lnet/minecraft/C_05lecifbj;Lnet/minecraft/C_59dzjlfjt$C_63ehaunll;)Lnet/minecraft/C_05lecifbj;	m_85rbgsuqt	m_85rbgsuqt	
 		p	1		p_1	
 		p	2		p_2	
-	m	()Z	m_26klcgayb	hasAmbientOcclusion	
+	m	()Z	m_26klcgayb	blocksAmbientLight	
 	m	()Z	m_83tjjujpy	isConductor	
 		c	Returns whether this block conducts redstone signals.	
 	m	()Z	m_59aycysra	isFullCube	
-	m	()I	m_92lxdsttp	getType	
+	m	()I	m_92lxdsttp	getRenderType	
+		c	Returns this block's render type. The possible values are as follows:\n<br>-1: none\n<br>1: invisible\n<br>2: animated block entity\n<br>3: block model	
 	m	(Lnet/minecraft/C_60xlezclu;Lnet/minecraft/C_78uvaikic;)F	m_55tltbvnw	getMiningSpeed	
 		p	1		world	
 		p	2		pos	
@@ -2262,28 +2263,28 @@ c	net/minecraft/C_59dzjlfjt
 		p	4		maxX	
 		p	5		maxY	
 		p	6		maxZ	
-	m	(Lnet/minecraft/C_69etuumgd;Lnet/minecraft/C_78uvaikic;)I	m_30ypbpajs	getLightLevel	
+	m	(Lnet/minecraft/C_69etuumgd;Lnet/minecraft/C_78uvaikic;)I	m_30ypbpajs	getLightColor	
 		p	1		world	
 		p	2		pos	
-	m	(Lnet/minecraft/C_69etuumgd;Lnet/minecraft/C_78uvaikic;Lnet/minecraft/C_20gcjygaw;)Z	m_47kivzlnk	isSideVisible	
+	m	(Lnet/minecraft/C_69etuumgd;Lnet/minecraft/C_78uvaikic;Lnet/minecraft/C_20gcjygaw;)Z	m_47kivzlnk	shouldRenderFace	
 		p	1		world	
 		p	2		pos	
 		p	3		face	
 	m	(Lnet/minecraft/C_60xlezclu;Lnet/minecraft/C_78uvaikic;)Lnet/minecraft/C_14obvrpul;	m_93bvujwpd	getSelectionBox	
 		p	1		world	
 		p	2		pos	
-	m	(Lnet/minecraft/C_60xlezclu;Lnet/minecraft/C_78uvaikic;Lnet/minecraft/C_05lecifbj;Lnet/minecraft/C_14obvrpul;Ljava/util/List;Lnet/minecraft/C_63rjkkbvm;)V	m_35debovxp	appendCollisionBoxes	
+	m	(Lnet/minecraft/C_60xlezclu;Lnet/minecraft/C_78uvaikic;Lnet/minecraft/C_05lecifbj;Lnet/minecraft/C_14obvrpul;Ljava/util/List;Lnet/minecraft/C_63rjkkbvm;)V	m_35debovxp	addCollisionBox	
 		p	1		world	
 		p	2		pos	
 		p	3		state	
-		p	4		box	
-		p	5		list	
+		p	4		entityBox	
+		p	5		boxes	
 		p	6		entity	
 	m	(Lnet/minecraft/C_60xlezclu;Lnet/minecraft/C_78uvaikic;Lnet/minecraft/C_05lecifbj;)Lnet/minecraft/C_14obvrpul;	m_16zfpzvdh	getCollisionBox	
 		p	1		world	
 		p	2		pos	
 		p	3		state	
-	m	()Z	m_77domkauv	hasTransparency	
+	m	()Z	m_77domkauv	isOpaqueCube	
 	m	(Lnet/minecraft/C_60xlezclu;Lnet/minecraft/C_78uvaikic;Lnet/minecraft/C_05lecifbj;Ljava/util/Random;)V	m_67ijcpeni	randomDisplayTick	
 		c	Performs a random display tick. Random display ticks are mostly used to spawn particles\naround a block. The client does 1000 random display tick attempts within a radius of\n16 blocks of the player each tick.	
 		p	1		world	
@@ -2298,8 +2299,8 @@ c	net/minecraft/C_59dzjlfjt
 	m	(Lnet/minecraft/C_60xlezclu;Lnet/minecraft/C_78uvaikic;Lnet/minecraft/C_03ycckswl;Lnet/minecraft/C_03ycckswl;)Lnet/minecraft/C_07ixygwvr;	m_96zmtaseb	rayTrace	
 		p	1		world	
 		p	2		pos	
-		p	3		vec1	
-		p	4		vec2	
+		p	3		start	
+		p	4		end	
 	m	(Lnet/minecraft/C_03ycckswl;)Z	m_84bjqqdat	isWithinPlaneYZ	
 		p	1		vec	
 	m	(Lnet/minecraft/C_03ycckswl;)Z	m_18imqkmsj	isWithinPlaneXZ	
@@ -2328,10 +2329,10 @@ c	net/minecraft/C_59dzjlfjt
 		p	4		dir	
 	m	()I	m_06dhujvly	getPistonMoveBehavior	
 		c	Returns how this block interacts with pistons. The following values are accepted:\n<br>- 0: this block can be pushed and pulled by pistons.\n<br>- 1: this block is broken when pushed.\n<br>- 2: this block cannot be pushed or pulled by pistons.	
-	m	()F	m_47sjuuwli	getAmbientOcclusionLightLevel	
-	m	()Z	m_50dxpggwm	hasComparatorOutput	
+	m	()F	m_47sjuuwli	getAmbientOcclusionLight	
+	m	()Z	m_50dxpggwm	hasAnalogOutput	
 		c	Returns whether this block has contents that can be read by a comparator.	
-	m	(Lnet/minecraft/C_60xlezclu;Lnet/minecraft/C_78uvaikic;)I	m_16pyfmewq	getComparatorOutput	
+	m	(Lnet/minecraft/C_60xlezclu;Lnet/minecraft/C_78uvaikic;)I	m_16pyfmewq	getAnalogOutput	
 		c	Returns the redstone power that a comparator that is reading the contents of this block\nshould output.	
 		p	1		world	
 		p	2		pos	
