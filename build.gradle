@@ -489,6 +489,10 @@ task downloadMcLibs(dependsOn: downloadWantedVersionManifest) {
 		}
 
 		version.libraries.each {
+			if (it.downloads == null) {
+				return;
+			}
+
 			def artifact = it.downloads.artifact
 			if (artifact == null) return
 			def downloadUrl = artifact.url
