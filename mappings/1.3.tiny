@@ -1019,10 +1019,10 @@ c	net/minecraft/C_05ktcjdzx	net/minecraft/world/IWorld
 		p	4		p_4
 	m	()I	m_70uyjewoi	getHeight
 	m	()Z	m_90novtcki	isSaved
-	m	(III)Z	m_19gifuain	m_19gifuain
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
+	m	(III)Z	m_19gifuain	hasSolidTop
+		p	1		x
+		p	2		y
+		p	3		z
 c	net/minecraft/C_05lmvdfsp	net/minecraft/C_05lmvdfsp
 	m	(Lnet/minecraft/C_54ruxjwzt;)V	<init>	<init>
 		p	1		p_1
@@ -1836,19 +1836,19 @@ c	net/minecraft/C_08ffcvoqp	net/minecraft/world/gen/Generator
 	f	Ljava/util/Random;	f_64qymsiym	random
 	f	Lnet/minecraft/C_54ruxjwzt;	f_59suhjzws	world
 	m	()V	<init>	<init>
-	m	(Lnet/minecraft/C_36ghrohdl;Lnet/minecraft/C_54ruxjwzt;II[B)V	m_58oqjvewa	m_58oqjvewa
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-		p	5		p_5
-	m	(Lnet/minecraft/C_54ruxjwzt;IIII[B)V	m_64gvoyluv	m_64gvoyluv
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-		p	5		p_5
-		p	6		p_6
+	m	(Lnet/minecraft/C_36ghrohdl;Lnet/minecraft/C_54ruxjwzt;II[B)V	m_58oqjvewa	place
+		p	1		source
+		p	2		world
+		p	3		chunkX
+		p	4		chunkZ
+		p	5		blockIds
+	m	(Lnet/minecraft/C_54ruxjwzt;IIII[B)V	m_64gvoyluv	place
+		p	1		world
+		p	2		chunkX
+		p	3		chunkZ
+		p	4		centerChunkX
+		p	5		centerChunkZ
+		p	6		blockIds
 c	net/minecraft/C_08fnwcokh	net/minecraft/crafting/FoodRecipes
 	m	()V	<init>	<init>
 	m	(Lnet/minecraft/C_27xiwqwcl;)V	m_08vsyofxr	register
@@ -3700,7 +3700,7 @@ c	net/minecraft/C_15gsnebpe	net/minecraft/world/biome/BiomeDecorator
 	f	Ljava/util/Random;	f_31piqikfv	random
 	f	I	f_33lfooqza	x
 	f	I	f_60rkyojgn	z
-	f	Lnet/minecraft/C_72robrvqq;	f_32fmwksuw	f_32fmwksuw
+	f	Lnet/minecraft/C_72robrvqq;	f_32fmwksuw	biome
 	f	Lnet/minecraft/C_95jgarkyq;	f_21zpwauxn	clayPatch
 	f	Lnet/minecraft/C_95jgarkyq;	f_38qzddynq	sandPatch
 	f	Lnet/minecraft/C_95jgarkyq;	f_97fozfuce	gravelPatch
@@ -3712,8 +3712,8 @@ c	net/minecraft/C_15gsnebpe	net/minecraft/world/biome/BiomeDecorator
 	f	Lnet/minecraft/C_95jgarkyq;	f_69uhukafu	redstoneOreVein
 	f	Lnet/minecraft/C_95jgarkyq;	f_16zpwnery	diomandOreVein
 	f	Lnet/minecraft/C_95jgarkyq;	f_08rrqtmil	lapisOreVein
-	f	Lnet/minecraft/C_95jgarkyq;	f_41puufknr	f_41puufknr
-	f	Lnet/minecraft/C_95jgarkyq;	f_42axeskxl	f_42axeskxl
+	f	Lnet/minecraft/C_95jgarkyq;	f_41puufknr	yellowFlower
+	f	Lnet/minecraft/C_95jgarkyq;	f_42axeskxl	redFlower
 	f	Lnet/minecraft/C_95jgarkyq;	f_46gjbvmsq	brownMushroom
 	f	Lnet/minecraft/C_95jgarkyq;	f_40aebkkgo	redMushroom
 	f	Lnet/minecraft/C_95jgarkyq;	f_00vylqtic	hugeMushroom
@@ -3734,13 +3734,13 @@ c	net/minecraft/C_15gsnebpe	net/minecraft/world/biome/BiomeDecorator
 	f	I	f_29mogrloj	hugeMushroomAttempts
 	f	Z	f_15vnccgkw	placeLakes
 	m	(Lnet/minecraft/C_72robrvqq;)V	<init>	<init>
-		p	1		p_1
-	m	(Lnet/minecraft/C_54ruxjwzt;Ljava/util/Random;II)V	m_30pyqeyna	m_30pyqeyna
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-	m	()V	m_15trmekpi	m_15trmekpi
+		p	1		biome
+	m	(Lnet/minecraft/C_54ruxjwzt;Ljava/util/Random;II)V	m_30pyqeyna	decorate
+		p	1		world
+		p	2		random
+		p	3		x
+		p	4		z
+	m	()V	m_15trmekpi	decorate
 	m	(ILnet/minecraft/C_95jgarkyq;)V	m_11zoffsmb	m_11zoffsmb
 		p	1		p_1
 		p	2		p_2
@@ -4125,7 +4125,7 @@ c	net/minecraft/C_16jvgqdli	net/minecraft/server/command/handler/CommandHandler
 	m	(Lnet/minecraft/C_06gpuubcg;)Ljava/util/List;	m_41wryafcr	getAvailableCommands
 		p	1		source
 	m	()Ljava/util/Map;	m_32zqpeozx	getCommands
-c	net/minecraft/C_16kurilpb	net/minecraft/C_16kurilpb
+c	net/minecraft/C_16kurilpb	net/minecraft/world/biome/TaigaBiome
 	m	(I)V	<init>	<init>
 		p	1		p_1
 	m	(Ljava/util/Random;)Lnet/minecraft/C_95jgarkyq;	m_42zsyinxq	m_42zsyinxq
@@ -5832,7 +5832,7 @@ c	net/minecraft/C_20lppiyht	net/minecraft/C_20lppiyht
 		p	3		p_3
 		p	4		p_4
 		p	5		p_5
-c	net/minecraft/C_20nizbrvj	net/minecraft/C_20nizbrvj
+c	net/minecraft/C_20nizbrvj	net/minecraft/world/biome/IceBiome
 	m	(I)V	<init>	<init>
 		p	1		p_1
 c	net/minecraft/C_20swdavms	net/minecraft/server/dedicated/PendingCommand
@@ -11300,7 +11300,7 @@ c	net/minecraft/C_36bjrnzgu	net/minecraft/item/ShearsItem
 		p	1		p_1
 		p	2		p_2
 c	net/minecraft/C_36bxmjvmi	net/minecraft/stat/Stat
-	f	I	f_03srsqjpf	f_03srsqjpf
+	f	I	f_03srsqjpf	id
 	f	Ljava/lang/String;	f_08ctqphfy	name
 	f	Z	f_20mweepmt	localOnly
 	f	Ljava/lang/String;	f_47znaszvq	f_47znaszvq
@@ -11311,12 +11311,12 @@ c	net/minecraft/C_36bxmjvmi	net/minecraft/stat/Stat
 	f	Lnet/minecraft/C_59bznbmob;	f_24rijxkfj	timeProvider
 	f	Lnet/minecraft/C_59bznbmob;	f_64dfbzyrk	distanceProvider
 	m	(ILjava/lang/String;Lnet/minecraft/C_59bznbmob;)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
+		p	1		id
+		p	2		name
+		p	3		statTypeProvider
 	m	(ILjava/lang/String;)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
+		p	1		id
+		p	2		name
 	m	()Lnet/minecraft/C_36bxmjvmi;	m_36cqnovgo	setLocalOnly
 	m	()Lnet/minecraft/C_36bxmjvmi;	m_31brmvymy	addStat
 	m	()Z	m_09lseodud	isAchievement
@@ -13279,7 +13279,7 @@ c	net/minecraft/C_41yxvtewz	net/minecraft/client/network/handler/ClientPlayNetwo
 		p	2		p_2
 	m	(Lnet/minecraft/C_19sjytfcv;)V	m_19yunkjcc	m_19yunkjcc
 		p	1		p_1
-	m	(Lnet/minecraft/C_19sjytfcv;)V	m_35ablvdsd	m_35ablvdsd
+	m	(Lnet/minecraft/C_19sjytfcv;)V	m_35ablvdsd	sendPacket
 		p	1		p_1
 	m	(Lnet/minecraft/C_43hztdzsj;)V	m_58nptqvqk	m_58nptqvqk
 		p	1		p_1
@@ -13546,12 +13546,12 @@ c	net/minecraft/C_42sowfbht	net/minecraft/world/storage/SavedDataStorage
 	m	()V	m_62foixpfk	loadIdCounts
 	m	(Ljava/lang/String;)I	m_19czixkyt	getNextCount
 		p	1		id
-c	net/minecraft/C_42uoqcgog	net/minecraft/C_42uoqcgog
-	f	I	f_42jbijnbt	f_42jbijnbt
-	f	I	f_95cxnmrof	f_95cxnmrof
-	f	I	f_19cpmznfx	f_19cpmznfx
-	f	S	f_31mxpmfff	f_31mxpmfff
-	f	Lnet/minecraft/C_72owraavl;	f_47mrjbjgm	f_47mrjbjgm
+c	net/minecraft/C_42uoqcgog	net/minecraft/network/packet/c2s/play/MenuClickSlotC2SPacket
+	f	I	f_42jbijnbt	menuId
+	f	I	f_95cxnmrof	slotId
+	f	I	f_19cpmznfx	clickData
+	f	S	f_31mxpmfff	actionId
+	f	Lnet/minecraft/C_72owraavl;	f_47mrjbjgm	stack
 	f	Z	f_68ekjhdqh	f_68ekjhdqh
 	m	()V	<init>	<init>
 	m	(IIIZLnet/minecraft/C_72owraavl;S)V	<init>	<init>
@@ -16272,7 +16272,7 @@ c	net/minecraft/C_50tqogcbw	net/minecraft/client/render/entity/EnderCrystalEntit
 		p	6		p_6
 		p	8		p_8
 		p	9		p_9
-c	net/minecraft/C_50vlbaywa	net/minecraft/C_50vlbaywa
+c	net/minecraft/C_50vlbaywa	net/minecraft/world/biome/ForestBiome
 	m	(I)V	<init>	<init>
 		p	1		p_1
 	m	(Ljava/util/Random;)Lnet/minecraft/C_95jgarkyq;	m_42zsyinxq	m_42zsyinxq
@@ -16416,15 +16416,16 @@ c	net/minecraft/C_51ouvctku	net/minecraft/block/LadderBlock
 		p	5		p_5
 	m	(Ljava/util/Random;)I	m_65hnunesa	m_65hnunesa
 		p	1		p_1
-c	net/minecraft/C_51qbgqjmo	net/minecraft/C_51qbgqjmo
-	f	I	f_57vlkonbo	f_57vlkonbo
-	f	I	f_44hwjlmfm	f_44hwjlmfm
-	f	I	f_08mlpsoef	f_08mlpsoef
+c	net/minecraft/C_51qbgqjmo	net/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket
+	f	I	f_57vlkonbo	playerId
+	f	I	f_44hwjlmfm	targetId
+	f	I	f_08mlpsoef	action
+		c	The type of action. The possible values are as follows:\n<br>0: interact\n<br>1: attack
 	m	()V	<init>	<init>
 	m	(III)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
+		p	1		playerId
+		p	2		targetId
+		p	3		action
 	m	(Ljava/io/DataInputStream;)V	m_00ycwkymm	m_00ycwkymm
 		p	1		p_1
 	m	(Ljava/io/DataOutputStream;)V	m_73uomkfhh	m_73uomkfhh
@@ -17462,7 +17463,7 @@ c	net/minecraft/C_54jdujmos	net/minecraft/nbt/NbtCompound
 		p	1		p_1
 	m	(Ljava/io/DataInput;)V	m_38zwfkwow	m_38zwfkwow
 		p	1		p_1
-	m	()Ljava/util/Collection;	m_40cluqeui	m_40cluqeui
+	m	()Ljava/util/Collection;	m_40cluqeui	getValues
 	m	()B	m_62rureybh	m_62rureybh
 	m	(Ljava/lang/String;Lnet/minecraft/C_95hosembz;)V	m_53awzlqhh	put
 		p	1		key
@@ -17494,9 +17495,9 @@ c	net/minecraft/C_54jdujmos	net/minecraft/nbt/NbtCompound
 	m	(Ljava/lang/String;[I)V	m_83khwxitr	putIntArray
 		p	1		key
 		p	2		value
-	m	(Ljava/lang/String;Lnet/minecraft/C_54jdujmos;)V	m_84zoxblcc	m_84zoxblcc
-		p	1		p_1
-		p	2		p_2
+	m	(Ljava/lang/String;Lnet/minecraft/C_54jdujmos;)V	m_84zoxblcc	putCompound
+		p	1		key
+		p	2		nbt
 	m	(Ljava/lang/String;Z)V	m_15yoefzft	putBoolean
 		p	1		key
 		p	2		value
@@ -17524,8 +17525,8 @@ c	net/minecraft/C_54jdujmos	net/minecraft/nbt/NbtCompound
 		p	1		key
 	m	(Ljava/lang/String;)Lnet/minecraft/C_54jdujmos;	m_87edsypaz	getCompound
 		p	1		key
-	m	(Ljava/lang/String;)Lnet/minecraft/C_91glxqzmz;	m_07wkindog	m_07wkindog
-		p	1		p_1
+	m	(Ljava/lang/String;)Lnet/minecraft/C_91glxqzmz;	m_07wkindog	getList
+		p	1		key
 	m	(Ljava/lang/String;)Z	m_89brpagja	getBoolean
 		p	1		key
 	m	()Ljava/lang/String;	toString	toString
@@ -17583,7 +17584,8 @@ c	net/minecraft/C_54ruxjwzt	net/minecraft/world/World
 	f	I	f_90ihwmuni	f_90ihwmuni
 	f	I	f_31sxdlpml	lightningCooldown
 	f	Z	f_01hjjegyo	suppressBlockUpdates
-	f	I	f_15lmxkcmu	f_15lmxkcmu
+	f	I	f_15lmxkcmu	difficulty
+		c	This world's difficulty setting. The possible values are as follows:\n<br>0: peaceful\n<br>1: easy\n<br>2: normal\n<br>3: hard
 	f	Ljava/util/Random;	f_90hcxhabf	random
 	f	Lnet/minecraft/C_40jxxxsaj;	f_16svtseni	dimension
 	f	Ljava/util/List;	f_58menwdrp	eventListeners
@@ -17848,7 +17850,7 @@ c	net/minecraft/C_54ruxjwzt	net/minecraft/world/World
 		p	2		sound
 		p	3		volume
 		p	4		pitch
-	m	(DDDLjava/lang/String;FF)V	m_04erosyed	m_04erosyed
+	m	(DDDLjava/lang/String;FF)V	m_04erosyed	playSound
 		p	1		p_1
 		p	3		p_3
 		p	5		p_5
@@ -23551,7 +23553,7 @@ c	net/minecraft/C_68ydbefqv	net/minecraft/client/network/listener/ClientPlayPack
 		p	1		packet
 	m	(Lnet/minecraft/C_31elsaqlo;)V	m_15dbtghmu	onEntityAttach
 		p	1		packet
-	m	(Lnet/minecraft/C_51qbgqjmo;)V	m_07mdovanp	m_07mdovanp
+	m	(Lnet/minecraft/C_51qbgqjmo;)V	m_07mdovanp	onInteractEntity
 		p	1		p_1
 	m	(Lnet/minecraft/C_05mlkomxt;)V	m_04ywlnhnq	onEntityEvent
 		p	1		packet
@@ -23565,7 +23567,7 @@ c	net/minecraft/C_68ydbefqv	net/minecraft/client/network/listener/ClientPlayPack
 		p	1		packet
 	m	(Lnet/minecraft/C_70znyxrop;)V	m_67owghugh	onCloseMenu
 		p	1		packet
-	m	(Lnet/minecraft/C_42uoqcgog;)V	m_50nrreubp	m_50nrreubp
+	m	(Lnet/minecraft/C_42uoqcgog;)V	m_50nrreubp	onMenuClickSlot
 		p	1		p_1
 	m	(Lnet/minecraft/C_37akbwgsn;)V	m_26nzqvgvq	onMenuSlotUpdate
 		p	1		packet
@@ -23831,7 +23833,8 @@ c	net/minecraft/C_68zcrzyxg	net/minecraft/block/Block
 	m	(F)Lnet/minecraft/C_68zcrzyxg;	m_31izeieql	setResistance
 		c	Sets this block's resistance.\n\n<p>\nNOTE: this method should only be used during the block's creation before it is registered.
 		p	1		resistance
-	m	(I)Z	m_60khzzoue	m_60khzzoue
+	m	(I)Z	m_60khzzoue	isConductor
+		c	Returns whether the block with the given id conducts redstone signals.
 		p	0		id
 	m	()Z	m_79llpympa	isFullCube
 	m	(Lnet/minecraft/C_05ktcjdzx;III)Z	m_68aofxyme	canWalkThrough
@@ -23953,7 +23956,7 @@ c	net/minecraft/C_68zcrzyxg	net/minecraft/block/Block
 		p	2		x
 		p	3		y
 		p	4		z
-		p	5		blockId
+		p	5		neighborBlockId
 	m	(Lnet/minecraft/C_54ruxjwzt;III)V	m_51ntuwbrl	m_51ntuwbrl
 		p	1		p_1
 		p	2		p_2
@@ -25790,8 +25793,8 @@ c	net/minecraft/C_72robrvqq	net/minecraft/world/biome/Biome
 	f	Lnet/minecraft/C_72robrvqq;	f_70bxdmjnm	JUNGLE_HILLS
 	f	Ljava/lang/String;	f_63mtjwqsk	name
 	f	I	f_08pwztfms	baseColor
-	f	B	f_78hwmblft	f_78hwmblft
-	f	B	f_61pbbmarg	f_61pbbmarg
+	f	B	f_78hwmblft	surfaceBlockId
+	f	B	f_61pbbmarg	subsurfaceBlockId
 	f	I	f_63nlqkjaq	mutatedColor
 	f	F	f_30wdtzeml	baseHeight
 	f	F	f_72jwwnlwz	heightVariation
@@ -25807,7 +25810,7 @@ c	net/minecraft/C_72robrvqq	net/minecraft/world/biome/Biome
 	f	I	f_66wvbdjyu	id
 	f	Lnet/minecraft/C_32jwjedoy;	f_83exfedrt	tree
 	f	Lnet/minecraft/C_58mypyvam;	f_35hhaetzh	largeTree
-	f	Lnet/minecraft/C_96quxkvkm;	f_47kljpzxq	f_47kljpzxq
+	f	Lnet/minecraft/C_96quxkvkm;	f_47kljpzxq	spruceTree
 	f	Lnet/minecraft/C_75ykarwfb;	f_66ybmhqkm	swampTree
 	m	(I)V	<init>	<init>
 		p	1		id
@@ -25815,12 +25818,12 @@ c	net/minecraft/C_72robrvqq	net/minecraft/world/biome/Biome
 	m	(FF)Lnet/minecraft/C_72robrvqq;	m_19spawtep	setTemperatureAndDownfall
 		p	1		temperature
 		p	2		downfall
-	m	(FF)Lnet/minecraft/C_72robrvqq;	m_00oulccgh	m_00oulccgh
-		p	1		p_1
-		p	2		p_2
+	m	(FF)Lnet/minecraft/C_72robrvqq;	m_00oulccgh	setHeight
+		p	1		baseHeight
+		p	2		heightVariation
 	m	()Lnet/minecraft/C_72robrvqq;	m_76hsdtqju	disableRain
-	m	(Ljava/util/Random;)Lnet/minecraft/C_95jgarkyq;	m_42zsyinxq	m_42zsyinxq
-		p	1		p_1
+	m	(Ljava/util/Random;)Lnet/minecraft/C_95jgarkyq;	m_42zsyinxq	getRandomTree
+		p	1		random
 	m	(Ljava/util/Random;)Lnet/minecraft/C_95jgarkyq;	m_39nrivyna	getRandomGrass
 		p	1		random
 	m	()Lnet/minecraft/C_72robrvqq;	m_18edozqhi	setSnowy
@@ -25839,16 +25842,16 @@ c	net/minecraft/C_72robrvqq	net/minecraft/world/biome/Biome
 	m	()Z	m_31vpdmhdt	isHumid
 	m	()F	m_27fnaulcc	getSpawnChance
 	m	()I	m_69bzcahjh	getScaledDownfall
-	m	()I	m_17swyzmcj	m_17swyzmcj
+	m	()I	m_17swyzmcj	getScaledTemperature
 	m	()F	m_68urjycux	getDownfall
-	m	()F	m_19nnunfqk	m_19nnunfqk
+	m	()F	m_19nnunfqk	getTemperature
 	m	(Lnet/minecraft/C_54ruxjwzt;Ljava/util/Random;II)V	m_86nbksbcq	decorate
 		p	1		world
 		p	2		random
 		p	3		x
 		p	4		z
-	m	()I	m_93echowvf	m_93echowvf
-	m	()I	m_22keffeqc	m_22keffeqc
+	m	()I	m_93echowvf	getGrassColor
+	m	()I	m_22keffeqc	getFoliageColor
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/C_72robrvqq$C_01dzwypla	net/minecraft/world/biome/Biome$SpawnEntry
 	f	Ljava/lang/Class;	f_91uqmxjrj	type
@@ -30219,8 +30222,8 @@ c	net/minecraft/C_90mzqjlui	net/minecraft/client/ClientPlayerInteractionManager
 		p	1		player
 		p	2		world
 		p	3		stack
-	m	(Lnet/minecraft/C_54ruxjwzt;)Lnet/minecraft/C_19ljvnexp;	m_05wcxtoif	m_05wcxtoif
-		p	1		p_1
+	m	(Lnet/minecraft/C_54ruxjwzt;)Lnet/minecraft/C_19ljvnexp;	m_05wcxtoif	createPlayerEntity
+		p	1		world
 	m	(Lnet/minecraft/C_84dqcqlog;Lnet/minecraft/C_47ldwddrb;)V	m_18qjmewrs	attackEntity
 		p	1		player
 		p	2		target
@@ -30597,12 +30600,12 @@ c	net/minecraft/C_91glxqzmz	net/minecraft/nbt/NbtList
 	m	(Ljava/lang/String;Ljava/io/PrintStream;)V	m_86ydfmolq	m_86ydfmolq
 		p	1		p_1
 		p	2		p_2
-	m	(Lnet/minecraft/C_95hosembz;)V	m_07dubcypq	m_07dubcypq
-		p	1		p_1
+	m	(Lnet/minecraft/C_95hosembz;)V	m_07dubcypq	add
+		p	1		element
 	m	(I)Lnet/minecraft/C_95hosembz;	m_29oimtwjh	remove
 		p	1		index
-	m	(I)Lnet/minecraft/C_95hosembz;	m_60jrkhswx	m_60jrkhswx
-		p	1		p_1
+	m	(I)Lnet/minecraft/C_95hosembz;	m_60jrkhswx	get
+		p	1		index
 	m	()I	m_10jkaibvy	size
 	m	()Lnet/minecraft/C_95hosembz;	m_26pntizfl	m_26pntizfl
 	m	(Ljava/lang/Object;)Z	equals	equals
@@ -31478,7 +31481,7 @@ c	net/minecraft/C_95evsppdm	net/minecraft/client/render/entity/CatEntityRenderer
 		p	8		p_8
 		p	9		p_9
 c	net/minecraft/C_95hosembz	net/minecraft/nbt/NbtElement
-	f	Ljava/lang/String;	f_26chtbilb	f_26chtbilb
+	f	Ljava/lang/String;	f_26chtbilb	name
 	m	(Ljava/io/DataOutput;)V	m_56pzcyhvr	write
 		p	1		output
 	m	(Ljava/io/DataInput;)V	m_38zwfkwow	m_38zwfkwow
@@ -31486,25 +31489,25 @@ c	net/minecraft/C_95hosembz	net/minecraft/nbt/NbtElement
 	m	()Ljava/lang/String;	toString	toString
 	m	()B	m_62rureybh	getType
 	m	(Ljava/lang/String;)V	<init>	<init>
-		p	1		p_1
+		p	1		name
 	m	(Ljava/io/PrintStream;)V	m_78odciwnv	m_78odciwnv
 		p	1		p_1
 	m	(Ljava/lang/String;Ljava/io/PrintStream;)V	m_86ydfmolq	m_86ydfmolq
 		p	1		p_1
 		p	2		p_2
-	m	(Ljava/lang/String;)Lnet/minecraft/C_95hosembz;	m_54zdvtrxg	m_54zdvtrxg
-		p	1		p_1
-	m	()Ljava/lang/String;	m_83rfluzal	m_83rfluzal
+	m	(Ljava/lang/String;)Lnet/minecraft/C_95hosembz;	m_54zdvtrxg	setName
+		p	1		name
+	m	()Ljava/lang/String;	m_83rfluzal	getName
 	m	(Ljava/io/DataInput;)Lnet/minecraft/C_95hosembz;	m_23lssrxdb	m_23lssrxdb
 		p	0		p_0
-	m	(Lnet/minecraft/C_95hosembz;Ljava/io/DataOutput;)V	m_17cllotxe	m_17cllotxe
-		p	0		p_0
-		p	1		p_1
-	m	(BLjava/lang/String;)Lnet/minecraft/C_95hosembz;	m_69rgoelot	m_69rgoelot
-		p	0		p_0
-		p	1		p_1
-	m	(B)Ljava/lang/String;	m_34txahnyc	m_34txahnyc
-		p	0		p_0
+	m	(Lnet/minecraft/C_95hosembz;Ljava/io/DataOutput;)V	m_17cllotxe	serialize
+		p	0		nbt
+		p	1		output
+	m	(BLjava/lang/String;)Lnet/minecraft/C_95hosembz;	m_69rgoelot	create
+		p	0		type
+		p	1		name
+	m	(B)Ljava/lang/String;	m_34txahnyc	getName
+		p	0		type
 	m	()Lnet/minecraft/C_95hosembz;	m_26pntizfl	copy
 	m	(Ljava/lang/Object;)Z	equals	equals
 		p	1		obj

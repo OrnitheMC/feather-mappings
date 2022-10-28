@@ -612,9 +612,9 @@ c	net/minecraft/C_19sjytfcv	net/minecraft/network/packet/Packet
 		p	1		p_1	
 	m	()Z	m_65pgxembj	m_65pgxembj	
 	m	()Ljava/lang/String;	toString	toString	
-	m	(Ljava/io/DataInput;)Lnet/minecraft/C_72owraavl;	m_92osooizq	m_92osooizq	
+	m	(Ljava/io/DataInput;)Lnet/minecraft/C_72owraavl;	m_92osooizq	readItemStack	
 		p	0		p_0	
-	m	(Lnet/minecraft/C_72owraavl;Ljava/io/DataOutput;)V	m_86hncqjht	m_86hncqjht	
+	m	(Lnet/minecraft/C_72owraavl;Ljava/io/DataOutput;)V	m_86hncqjht	writeItemStack	
 		p	0		p_0	
 		p	1		p_1	
 	m	(Ljava/io/DataInput;)Lnet/minecraft/C_54jdujmos;	m_08cmfrqnv	m_08cmfrqnv	
@@ -1115,7 +1115,7 @@ c	net/minecraft/C_33huxzuac
 		p	1		p_1	
 	m	(Lio/netty/buffer/ByteBuf;)V	m_50tdvmnyq		writeEntityId
 		p	1			byteBuf
-c	net/minecraft/C_33lkbnhyb	net/minecraft/C_33lkbnhyb	
+c	net/minecraft/C_33lkbnhyb	net/minecraft/block/AprilFoolsLockedChestBlock	
 	m	()V	<init>	<init>	
 	m	(Lnet/minecraft/C_54ruxjwzt;III)Z	m_29afphugb	m_29afphugb	
 		p	1		p_1	
@@ -1375,7 +1375,7 @@ c	net/minecraft/C_41yxvtewz
 		p	2		p_2	
 	m	(Lnet/minecraft/C_19sjytfcv;)V	m_19yunkjcc	m_19yunkjcc	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_19sjytfcv;)V	m_35ablvdsd	m_35ablvdsd	
+	m	(Lnet/minecraft/C_19sjytfcv;)V	m_35ablvdsd	sendPacket	
 		p	1		p_1	
 	m	(Ljava/lang/String;)Lnet/minecraft/C_21uoltggz;	m_72jccssku	m_72jccssku	
 		p	1		p_1	
@@ -1407,21 +1407,21 @@ c	net/minecraft/C_41yxvtewz
 	m	(Lnet/minecraft/C_95faooggc;)V	m_19wzksfeu		m_19wzksfeu
 		p	1			p_1
 	m	()Lnet/minecraft/C_51akkmkss;	m_87frkpvjb		m_87frkpvjb
-c	net/minecraft/C_42uoqcgog	net/minecraft/C_42uoqcgog	
-	f	I	f_42jbijnbt	f_42jbijnbt	
-	f	I	f_95cxnmrof	f_95cxnmrof	
-	f	I	f_19cpmznfx	f_19cpmznfx	
-	f	S	f_31mxpmfff	f_31mxpmfff	
-	f	Lnet/minecraft/C_72owraavl;	f_47mrjbjgm	f_47mrjbjgm	
-	f	I	f_00ojgmuja	f_00ojgmuja	
+c	net/minecraft/C_42uoqcgog	net/minecraft/network/packet/c2s/play/MenuClickSlotC2SPacket	
+	f	I	f_42jbijnbt	menuId	
+	f	I	f_95cxnmrof	slotId	
+	f	I	f_19cpmznfx	clickData	
+	f	S	f_31mxpmfff	actionId	
+	f	Lnet/minecraft/C_72owraavl;	f_47mrjbjgm	stack	
+	f	I	f_00ojgmuja	action	
 	m	()V	<init>	<init>	
 	m	(IIIILnet/minecraft/C_72owraavl;S)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
+		p	1		menuId	
+		p	2		slotId	
+		p	3		clickData	
+		p	4		action	
+		p	5		stack	
+		p	6		actionId	
 	m	(Lnet/minecraft/C_68ydbefqv;)V	m_68vcjopzq	m_68vcjopzq	
 		p	1		p_1	
 	m	(Ljava/io/DataInput;)V	m_00ycwkymm	m_00ycwkymm	
@@ -1805,15 +1805,16 @@ c	net/minecraft/C_51klafwme
 		p	1			p_1
 	m	(Lnet/minecraft/C_80inurxlz;)V	m_46qwjrofo		m_46qwjrofo
 		p	1			p_1
-c	net/minecraft/C_51qbgqjmo	net/minecraft/C_51qbgqjmo	
-	f	I	f_57vlkonbo	f_57vlkonbo	
-	f	I	f_44hwjlmfm	f_44hwjlmfm	
-	f	I	f_08mlpsoef	f_08mlpsoef	
+c	net/minecraft/C_51qbgqjmo	net/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket	
+	f	I	f_57vlkonbo	playerId	
+	f	I	f_44hwjlmfm	targetId	
+	f	I	f_08mlpsoef	action	
+		c	The type of action. The possible values are as follows:\n<br>0: interact\n<br>1: attack	
 	m	()V	<init>	<init>	
 	m	(III)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+		p	1		playerId	
+		p	2		targetId	
+		p	3		action	
 	m	(Ljava/io/DataInput;)V	m_00ycwkymm	m_00ycwkymm	
 		p	1		p_1	
 	m	(Ljava/io/DataOutput;)V	m_73uomkfhh	m_73uomkfhh	
@@ -1981,7 +1982,8 @@ c	net/minecraft/C_53rvieenf
 	m	()Lnet/minecraft/C_19sjytfcv;	m_73cxtiwtd	m_73cxtiwtd	
 	m	()Lnet/minecraft/C_97ogqzfxl;	m_73cxtiwtd		m_73cxtiwtd
 c	net/minecraft/C_54ruxjwzt
-	f	I	f_15lmxkcmu	f_15lmxkcmu	
+	f	I	f_15lmxkcmu	difficulty	
+		c	This world's difficulty setting. The possible values are as follows:\n<br>0: peaceful\n<br>1: easy\n<br>2: normal\n<br>3: hard	
 	f	Lnet/minecraft/C_57rxazdrb;	f_15lmxkcmu		difficulty
 	m	(Lnet/minecraft/C_60pmlswez;Lnet/minecraft/C_60pmlswez;ZZ)Lnet/minecraft/C_87xskakms;	m_78aztiuqm	m_78aztiuqm	
 		p	1		p_1	
@@ -2255,9 +2257,9 @@ c	net/minecraft/C_68ydbefqv
 		p	1		p_1	
 	m	(Lnet/minecraft/C_91qpcboru;)V	m_48xflstiy	m_48xflstiy	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_51qbgqjmo;)V	m_07mdovanp	m_07mdovanp	
+	m	(Lnet/minecraft/C_51qbgqjmo;)V	m_07mdovanp	onInteractEntity	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_42uoqcgog;)V	m_50nrreubp	m_50nrreubp	
+	m	(Lnet/minecraft/C_42uoqcgog;)V	m_50nrreubp	onMenuClickSlot	
 		p	1		p_1	
 	m	(Lnet/minecraft/C_32slulely;)V	m_28rsvudpk	m_28rsvudpk	
 		p	1		p_1	

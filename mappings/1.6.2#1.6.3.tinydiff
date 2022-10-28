@@ -42,26 +42,26 @@ c	net/minecraft/C_53mtutqhz
 	f	J	f_85elmhjxp		f_85elmhjxp
 	m	()V	m_01wpgfayc		m_01wpgfayc
 c	net/minecraft/C_55uohgkix
-	f	Lnet/minecraft/C_12fkfhtqt;	f_97mwdnucg		f_97mwdnucg
+	f	Lnet/minecraft/C_12fkfhtqt;	f_97mwdnucg		savedData
 	m	(III)Z	m_18fbxwqfp	m_18fbxwqfp	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	()Ljava/lang/String;	m_30npjxvwu		m_30npjxvwu
-	m	(III)Z	m_09srqyucx		m_09srqyucx
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(III)Lnet/minecraft/C_98ftfvxbc;	m_18fbxwqfp		m_18fbxwqfp
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lnet/minecraft/C_54ruxjwzt;)V	m_76xnacqdr		m_76xnacqdr
-		p	1			p_1
-	m	(IILnet/minecraft/C_98ftfvxbc;)V	m_84izjamgg		m_84izjamgg
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	()Ljava/lang/String;	m_30npjxvwu		getName
+	m	(III)Z	m_09srqyucx		isInsideStructure
+		p	1			x
+		p	2			y
+		p	3			z
+	m	(III)Lnet/minecraft/C_98ftfvxbc;	m_18fbxwqfp		getStructure
+		p	1			x
+		p	2			y
+		p	3			z
+	m	(Lnet/minecraft/C_54ruxjwzt;)V	m_76xnacqdr		loadSavedData
+		p	1			world
+	m	(IILnet/minecraft/C_98ftfvxbc;)V	m_84izjamgg		save
+		p	1			chunkX
+		p	2			chunkZ
+		p	3			start
 c	net/minecraft/C_58zszktdc
 	m	()Ljava/lang/String;	m_30npjxvwu		m_30npjxvwu
 c	net/minecraft/C_59opvrrnm
@@ -169,9 +169,9 @@ c	net/minecraft/C_64klykcln$C_82rbiwhdt
 	m	()V	<init>		<init>
 c	net/minecraft/C_70gletrex
 	m	([I)V	<init>		<init>
-		p	1			p_1
-	m	(Ljava/lang/String;)Lnet/minecraft/C_17ezmmlvc;	m_36ohdudhi		m_36ohdudhi
-		p	1			p_1
+		p	1			coords
+	m	(Ljava/lang/String;)Lnet/minecraft/C_17ezmmlvc;	m_36ohdudhi		toNbt
+		p	1			name
 c	net/minecraft/C_71hguqpgk
 	m	()V	m_97brergwm		register
 c	net/minecraft/C_71hguqpgk$C_02sauojvo
@@ -274,23 +274,23 @@ c	net/minecraft/C_81dytjcnl
 c	net/minecraft/C_81dytjcnl$C_91udoejoj
 	m	()V	<init>		<init>
 c	net/minecraft/C_98ftfvxbc
-	f	I	f_97kgntwhj		f_97kgntwhj
-	f	I	f_92nvuvdbw		f_92nvuvdbw
+	f	I	f_97kgntwhj		chunkX
+	f	I	f_92nvuvdbw		chunkZ
 	m	(II)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-	m	(II)Lnet/minecraft/C_54jdujmos;	m_04hrioijd		m_04hrioijd
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/C_54jdujmos;)V	m_68avqwzzw		m_68avqwzzw
-		p	1			p_1
-	m	(Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_54jdujmos;)V	m_39thzrrje		m_39thzrrje
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/C_54jdujmos;)V	m_49mcvudek		m_49mcvudek
-		p	1			p_1
-	m	()I	m_27ajlvwhr		m_27ajlvwhr
-	m	()I	m_24vnllnja		m_24vnllnja
+		p	1			chunkX
+		p	2			chunkZ
+	m	(II)Lnet/minecraft/C_54jdujmos;	m_04hrioijd		toNbt
+		p	1			chunkX
+		p	2			chunkZ
+	m	(Lnet/minecraft/C_54jdujmos;)V	m_68avqwzzw		readValidityNbt
+		p	1			nbt
+	m	(Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_54jdujmos;)V	m_39thzrrje		readNbt
+		p	1			world
+		p	2			nbt
+	m	(Lnet/minecraft/C_54jdujmos;)V	m_49mcvudek		writeValidityNbt
+		p	1			nbt
+	m	()I	m_27ajlvwhr		getChunkX
+	m	()I	m_24vnllnja		getChunkZ
 c	net/minecraft/C_98jlqnywr
 	m	()V	<init>		<init>
 c	net/minecraft/C_99oopkucy
@@ -354,25 +354,25 @@ c	net/minecraft/C_99oopkucy$C_90cppwbjn
 c	net/minecraft/server/MinecraftServer
 	f	I	f_70wbqckxl		f_70wbqckxl
 	m	()I	m_43eozzzig		m_43eozzzig
-	m	(I)V	m_66ijknpew		m_66ijknpew
+	m	(I)V	m_66ijknpew		setIdleTimeout
 		p	1			p_1
-c	net/minecraft/C_12fkfhtqt		net/minecraft/C_12fkfhtqt
-	f	Lnet/minecraft/C_54jdujmos;	f_51zjxzkqf		f_51zjxzkqf
+c	net/minecraft/C_12fkfhtqt		net/minecraft/world/gen/feature/SavedFeatureData
+	f	Lnet/minecraft/C_54jdujmos;	f_51zjxzkqf		features
 	m	(Ljava/lang/String;)V	<init>		<init>
 		p	1			p_1
 	m	(Lnet/minecraft/C_54jdujmos;)V	m_72pkcbjyn		m_72pkcbjyn
 		p	1			p_1
 	m	(Lnet/minecraft/C_54jdujmos;)V	m_62sctpoir		m_62sctpoir
 		p	1			p_1
-	m	(Lnet/minecraft/C_54jdujmos;II)V	m_35gpjfdvq		m_35gpjfdvq
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(II)Ljava/lang/String;	m_83aubschz		m_83aubschz
-		p	1			p_1
-		p	2			p_2
-	m	()Lnet/minecraft/C_54jdujmos;	m_64ponlqnf		m_64ponlqnf
-c	net/minecraft/C_43fibxdqa		net/minecraft/C_43fibxdqa
+	m	(Lnet/minecraft/C_54jdujmos;II)V	m_35gpjfdvq		put
+		p	1			nbt
+		p	2			chunkX
+		p	3			chunkZ
+	m	(II)Ljava/lang/String;	m_83aubschz		toKey
+		p	1			chunkX
+		p	2			chunkZ
+	m	()Lnet/minecraft/C_54jdujmos;	m_64ponlqnf		getFeatures
+c	net/minecraft/C_43fibxdqa		net/minecraft/server/command/SetIdleTimeoutComand
 	m	()V	<init>		<init>
 	m	()Ljava/lang/String;	m_78rblvqki		m_78rblvqki
 	m	()I	m_28lluscsi		m_28lluscsi
