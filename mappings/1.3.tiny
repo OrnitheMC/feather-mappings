@@ -1,13 +1,13 @@
 tiny	2	0	calamus	named
-c	net/minecraft/C_00dzpffnu	net/minecraft/network/packet/s2c/play/CompressionThresholdS2CPacket
-	f	S	f_65zqwwfdc	f_65zqwwfdc
-	f	S	f_71ycejcps	f_71ycejcps
+c	net/minecraft/C_00dzpffnu	net/minecraft/network/packet/MapDataPacket
+	f	S	f_65zqwwfdc	id
+	f	S	f_71ycejcps	metadata
 	f	[B	f_36vbhwpvu	data
 	m	()V	<init>	<init>
 	m	(SS[B)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
+		p	1		id
+		p	2		metadata
+		p	3		data
 	m	(Ljava/io/DataInputStream;)V	m_00ycwkymm	m_00ycwkymm
 		p	1		p_1
 	m	(Ljava/io/DataOutputStream;)V	m_73uomkfhh	m_73uomkfhh
@@ -78,35 +78,40 @@ c	net/minecraft/C_00vpjcpqr	net/minecraft/client/entity/particle/FlameParticle
 	m	(F)F	m_04lbxddoy	m_04lbxddoy
 		p	1		p_1
 	m	()V	m_28zixkoqt	m_28zixkoqt
-c	net/minecraft/C_00zgnzavq	net/minecraft/C_34frsvtvj
-	f	Ljava/util/concurrent/atomic/AtomicInteger;	f_89huzhrki	f_89huzhrki
-	f	Ljava/util/concurrent/atomic/AtomicInteger;	f_06mnbxadh	f_06mnbxadh
-	f	Ljava/lang/Object;	f_89tjqwwbk	f_89tjqwwbk
-	f	Ljava/net/Socket;	f_46hbthwhy	f_46hbthwhy
-	f	Ljava/net/SocketAddress;	f_08wkrqngj	f_08wkrqngj
-	f	Ljava/io/DataInputStream;	f_03lxetrsz	f_03lxetrsz
-	f	Ljava/io/DataOutputStream;	f_43suhidbh	f_43suhidbh
-	f	Z	f_80zgmpuse	f_80zgmpuse
-	f	Z	f_05pacpomn	f_05pacpomn
+c	net/minecraft/C_00zgnzavq	net/minecraft/network/Connection
+	f	Ljava/util/concurrent/atomic/AtomicInteger;	f_89huzhrki	READ_THREAD_COUNTER
+	f	Ljava/util/concurrent/atomic/AtomicInteger;	f_06mnbxadh	WRITE_THREAD_COUNTER
+	f	Ljava/lang/Object;	f_89tjqwwbk	lock
+	f	Ljava/net/Socket;	f_46hbthwhy	socket
+	f	Ljava/net/SocketAddress;	f_08wkrqngj	address
+	f	Ljava/io/DataInputStream;	f_03lxetrsz	input
+	f	Ljava/io/DataOutputStream;	f_43suhidbh	output
+	f	Z	f_80zgmpuse	open
+	f	Z	f_05pacpomn	disconnected
 	f	Ljava/util/List;	f_25fprproj	f_25fprproj
-	f	Ljava/util/List;	f_02qqdpjwk	f_02qqdpjwk
-	f	Ljava/util/List;	f_17qcvqumk	f_17qcvqumk
-	f	Lnet/minecraft/C_68ydbefqv;	f_90mumymqe	f_90mumymqe
-	f	Z	f_37gbvoxru	f_37gbvoxru
-	f	Ljava/lang/Thread;	f_84qaexesi	f_84qaexesi
-	f	Ljava/lang/Thread;	f_82hzfkwdq	f_82hzfkwdq
-	f	Ljava/lang/String;	f_94fxnaucg	f_94fxnaucg
-	f	[Ljava/lang/Object;	f_29ypdtspp	f_29ypdtspp
-	f	I	f_03foejikh	f_03foejikh
-	f	I	f_73fyqunxb	f_73fyqunxb
-	f	[I	f_95jcbfvsl	f_95jcbfvsl
-	f	[I	f_71gymqxvt	f_71gymqxvt
-	f	I	f_51znzgusf	f_51znzgusf
-	f	Z	f_29dgviajp	f_29dgviajp
-	f	Z	f_94erktezu	f_94erktezu
-	f	Ljavax/crypto/SecretKey;	f_89rijaaut	f_89rijaaut
-	f	Ljava/security/PrivateKey;	f_65gonwchn	f_65gonwchn
-	f	I	f_42pkzdozi	f_42pkzdozi
+	f	Ljava/util/List;	f_02qqdpjwk	sendQueue
+	f	Ljava/util/List;	f_17qcvqumk	blockDataSendQueue
+		c	The send queue for packets containing block (entity) data.\n<br>\nNote: this queue is unused since 1.4.3.
+	f	Lnet/minecraft/C_68ydbefqv;	f_90mumymqe	listener
+	f	Z	f_37gbvoxru	closed
+	f	Ljava/lang/Thread;	f_84qaexesi	writer
+	f	Ljava/lang/Thread;	f_82hzfkwdq	reader
+	f	Ljava/lang/String;	f_94fxnaucg	disconnectReason
+	f	[Ljava/lang/Object;	f_29ypdtspp	disconnectReasonArgs
+	f	I	f_03foejikh	timeoutTimer
+	f	I	f_73fyqunxb	sendQueueSize
+	f	[I	f_95jcbfvsl	TOTAL_READ_SIZE
+		c	The total size of all received packets, by packet id.
+	f	[I	f_71gymqxvt	TOTAL_SEND_SIZE
+		c	The total size of all sent packets, by packet id.
+	f	I	f_51znzgusf	packetDelay
+		c	Delay in milliseconds before a packet can be sent.
+	f	Z	f_29dgviajp	inputDecrypted
+	f	Z	f_94erktezu	outputEncrypted
+	f	Ljavax/crypto/SecretKey;	f_89rijaaut	secretKey
+	f	Ljava/security/PrivateKey;	f_65gonwchn	privateKey
+	f	I	f_42pkzdozi	blockDataDelay
+		c	Delay before this connection can send block data packets.
 	m	(Ljava/net/Socket;Ljava/lang/String;Lnet/minecraft/C_68ydbefqv;)V	<init>	<init>
 		p	1		p_1
 		p	2		p_2
@@ -121,26 +126,26 @@ c	net/minecraft/C_00zgnzavq	net/minecraft/C_34frsvtvj
 		p	1		p_1
 	m	(Lnet/minecraft/C_19sjytfcv;)V	m_61ppgrkac	m_61ppgrkac
 		p	1		p_1
-	m	()Z	m_38vnefozb	m_38vnefozb
-	m	(Z)Lnet/minecraft/C_19sjytfcv;	m_23kkmqebf	m_23kkmqebf
-		p	1		p_1
-	m	(Lnet/minecraft/C_19sjytfcv;Z)Z	m_06dqyzsxn	m_06dqyzsxn
-		p	1		p_1
-		p	2		p_2
+	m	()Z	m_38vnefozb	write
+	m	(Z)Lnet/minecraft/C_19sjytfcv;	m_23kkmqebf	pollSendQueue
+		p	1		blockData
+	m	(Lnet/minecraft/C_19sjytfcv;Z)Z	m_06dqyzsxn	shouldDiscard
+		p	1		packet
+		p	2		blockData
 	m	()V	m_91ogblfvk	m_91ogblfvk
-	m	()Z	m_74lvaohxu	m_74lvaohxu
-	m	(Ljava/lang/Exception;)V	m_04hrichdl	m_04hrichdl
-		p	1		p_1
+	m	()Z	m_74lvaohxu	read
+	m	(Ljava/lang/Exception;)V	m_04hrichdl	onConnectionCrashed
+		p	1		exception
 	m	(Ljava/lang/String;[Ljava/lang/Object;)V	m_83ctkdnlz	m_83ctkdnlz
 		p	1		p_1
 		p	2		p_2
 	m	()V	m_13qztercw	m_13qztercw
 	m	()Ljava/net/SocketAddress;	m_99fihzbnc	m_99fihzbnc
 	m	()V	m_51apdxvvr	m_51apdxvvr
-	m	()V	m_65rtzbvpr	m_65rtzbvpr
-	m	()V	m_32nleolcw	m_32nleolcw
+	m	()V	m_65rtzbvpr	decryptInput
+	m	()V	m_32nleolcw	encryptOutput
 	m	()I	m_49sonkska	m_49sonkska
-	m	()Ljava/net/Socket;	m_09lcsdqdu	m_09lcsdqdu
+	m	()Ljava/net/Socket;	m_09lcsdqdu	getSocket
 	m	(Lnet/minecraft/C_00zgnzavq;)Z	m_71uhbjltg	m_71uhbjltg
 		p	0		p_0
 	m	(Lnet/minecraft/C_00zgnzavq;)Z	m_04myzkzft	m_04myzkzft
@@ -161,24 +166,24 @@ c	net/minecraft/C_00zgnzavq	net/minecraft/C_34frsvtvj
 	m	(Lnet/minecraft/C_00zgnzavq;)Ljava/lang/Thread;	m_26crllahf	m_26crllahf
 		p	0		p_0
 	m	()V	<clinit>	<clinit>
-c	net/minecraft/C_00zgnzavq$1	net/minecraft/C_34frsvtvj$1
+c	net/minecraft/C_00zgnzavq$1	net/minecraft/network/Connection$1
 	f	Lnet/minecraft/C_00zgnzavq;	f_21iqukfon	f_21iqukfon
 	m	(Lnet/minecraft/C_00zgnzavq;Ljava/lang/String;)V	<init>	<init>
 		p	1		p_1
 		p	2		p_2
 	m	()V	run	run
-c	net/minecraft/C_00zgnzavq$2	net/minecraft/C_34frsvtvj$2
+c	net/minecraft/C_00zgnzavq$2	net/minecraft/network/Connection$2
 	f	Lnet/minecraft/C_00zgnzavq;	f_26huwhfle	f_26huwhfle
 	m	(Lnet/minecraft/C_00zgnzavq;Ljava/lang/String;)V	<init>	<init>
 		p	1		p_1
 		p	2		p_2
 	m	()V	run	run
-c	net/minecraft/C_00zgnzavq$3	net/minecraft/C_34frsvtvj$3
+c	net/minecraft/C_00zgnzavq$3	net/minecraft/network/Connection$3
 	f	Lnet/minecraft/C_00zgnzavq;	f_93ebrsokw	f_93ebrsokw
 	m	(Lnet/minecraft/C_00zgnzavq;)V	<init>	<init>
 		p	1		p_1
 	m	()V	run	run
-c	net/minecraft/C_00zgnzavq$4	net/minecraft/C_34frsvtvj$4
+c	net/minecraft/C_00zgnzavq$4	net/minecraft/network/Connection$4
 	f	Lnet/minecraft/C_00zgnzavq;	f_75clvcshj	f_75clvcshj
 	m	(Lnet/minecraft/C_00zgnzavq;)V	<init>	<init>
 		p	1		p_1
@@ -406,7 +411,7 @@ c	net/minecraft/C_02wyraymr	net/minecraft/server/integrated/LanServerPinger
 	m	(Ljava/lang/String;)Ljava/lang/String;	m_80hxqauox	parsePort
 		p	0		metadata
 	m	()V	<clinit>	<clinit>
-c	net/minecraft/C_02zysewcw	net/minecraft/network/packet/s2c/play/SignBlockEntityUpdateS2CPacket
+c	net/minecraft/C_02zysewcw	net/minecraft/network/packet/SignBlockEntityUpdatePacket
 	f	I	f_91inpbrzt	x
 	f	I	f_44bkapuoo	y
 	f	I	f_50nrsmquu	z
@@ -453,7 +458,7 @@ c	net/minecraft/C_03dnpvbml	net/minecraft/client/gui/screen/ingame/FurnaceScreen
 		p	1		p_1
 		p	2		p_2
 		p	3		p_3
-c	net/minecraft/C_03eqaqriz	net/minecraft/network/packet/s2c/play/WorldChunkS2CPacket
+c	net/minecraft/C_03eqaqriz	net/minecraft/network/packet/WorldChunkPacket
 	f	I	f_96rgujsha	chunkX
 	f	I	f_88wjgqaun	chunkZ
 	f	I	f_46appkfov	sectionsWithData
@@ -482,7 +487,7 @@ c	net/minecraft/C_03eqaqriz	net/minecraft/network/packet/s2c/play/WorldChunkS2CP
 		p	1		full
 		p	2		dirtySections
 	m	()V	<clinit>	<clinit>
-c	net/minecraft/C_03eqaqriz$C_51grmgwqx	net/minecraft/network/packet/s2c/play/WorldChunkS2CPacket$ChunkData
+c	net/minecraft/C_03eqaqriz$C_51grmgwqx	net/minecraft/network/packet/WorldChunkPacket$ChunkData
 	f	[B	f_51hxstora	rawChunkData
 	f	I	f_98jbqridi	sectionsWithData
 	f	I	f_25fktzmdd	sectionsWithBlockIdsUpper
@@ -623,7 +628,7 @@ c	net/minecraft/C_03umgrygj	net/minecraft/client/entity/particle/LiquidDripParti
 	m	(F)F	m_04lbxddoy	m_04lbxddoy
 		p	1		p_1
 	m	()V	m_28zixkoqt	m_28zixkoqt
-c	net/minecraft/C_04dfuymlf	net/minecraft/network/packet/s2c/play/XpOrbSpawnS2CPacket
+c	net/minecraft/C_04dfuymlf	net/minecraft/network/packet/XpOrbSpawnPacket
 	f	I	f_93swjfucw	id
 	f	I	f_47nnnipqg	x
 	f	I	f_06icjqohb	y
@@ -1031,13 +1036,13 @@ c	net/minecraft/C_05lmvdfsp	net/minecraft/C_05lmvdfsp
 		p	1		p_1
 	m	(Lnet/minecraft/C_54jdujmos;)V	m_02rnyxkdz	m_02rnyxkdz
 		p	1		p_1
-c	net/minecraft/C_05mlkomxt	net/minecraft/network/packet/s2c/play/EntityEventS2CPacket
+c	net/minecraft/C_05mlkomxt	net/minecraft/network/packet/EntityEventPacket
 	f	I	f_50nvyubyl	id
 	f	B	f_87javorfi	event
 	m	()V	<init>	<init>
 	m	(IB)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
+		p	1		id
+		p	2		event
 	m	(Ljava/io/DataInputStream;)V	m_00ycwkymm	m_00ycwkymm
 		p	1		p_1
 	m	(Ljava/io/DataOutputStream;)V	m_73uomkfhh	m_73uomkfhh
@@ -1190,7 +1195,7 @@ c	net/minecraft/C_06fzwmncu	net/minecraft/block/BedBlock
 		p	3		p_3
 		p	4		p_4
 	m	()V	<clinit>	<clinit>
-c	net/minecraft/C_06gcpfnta	net/minecraft/network/packet/s2c/play/StatisticsS2CPacket
+c	net/minecraft/C_06gcpfnta	net/minecraft/network/packet/StatisticsPacket
 	f	I	f_39typbtqq	f_39typbtqq
 	f	I	f_37bfgwlce	f_37bfgwlce
 	m	()V	<init>	<init>
@@ -1345,7 +1350,7 @@ c	net/minecraft/C_07dltaqdj	net/minecraft/C_07dltaqdj
 	f	I	f_82afcshjv	f_82afcshjv
 	m	()V	<init>	<init>
 	m	()V	m_04yxgvvha	m_04yxgvvha
-c	net/minecraft/C_07gnyvbmi	net/minecraft/network/packet/s2c/play/BlockEntityUpdateS2CPacket
+c	net/minecraft/C_07gnyvbmi	net/minecraft/network/packet/BlockEntityUpdatePacket
 	f	I	f_86auznvxr	x
 	f	I	f_85xdcbbjl	y
 	f	I	f_02vypewfd	z
@@ -1953,13 +1958,13 @@ c	net/minecraft/C_08itqzfks	net/minecraft/block/TripwireHookBlock
 		p	4		p_4
 		p	5		p_5
 	m	()Z	m_11ivkkwns	m_11ivkkwns
-c	net/minecraft/C_08jqhccnz	net/minecraft/network/packet/c2s/play/SelectSlotC2SPacket
-	f	I	f_49eqfheeo	slot
-	f	I	f_67xhguqol	f_67xhguqol
+c	net/minecraft/C_08jqhccnz	net/minecraft/network/packet/MenuClickButtonPacket
+	f	I	f_49eqfheeo	menuId
+	f	I	f_67xhguqol	buttonId
 	m	()V	<init>	<init>
 	m	(II)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
+		p	1		menuId
+		p	2		buttonId
 	m	(Lnet/minecraft/C_68ydbefqv;)V	m_68vcjopzq	m_68vcjopzq
 		p	1		p_1
 	m	(Ljava/io/DataInputStream;)V	m_00ycwkymm	m_00ycwkymm
@@ -2255,7 +2260,7 @@ c	net/minecraft/C_08urjzlbg$1	net/minecraft/C_08urjzlbg$1
 		p	4		p_4
 		p	5		p_5
 	m	()Lnet/minecraft/C_36ghrohdl;	m_45cgbmfjq	m_45cgbmfjq
-c	net/minecraft/C_09axhtvhz	net/minecraft/network/packet/s2c/play/ExplosionS2CPacket
+c	net/minecraft/C_09axhtvhz	net/minecraft/network/packet/ExplosionPacket
 	f	D	f_35appkyyz	x
 	f	D	f_29nrcdtgu	y
 	f	D	f_48qzykadg	z
@@ -3774,7 +3779,7 @@ c	net/minecraft/C_15hvadmjn	net/minecraft/client/render/entity/FallingBlockEntit
 		p	6		p_6
 		p	8		p_8
 		p	9		p_9
-c	net/minecraft/C_15mndhsiw	net/minecraft/network/packet/s2c/play/EntityMoveS2CPacket
+c	net/minecraft/C_15mndhsiw	net/minecraft/network/packet/EntityMovePacket
 	f	I	f_07mpzrtct	id
 	f	B	f_52uoeynyc	dx
 	f	B	f_07neakccb	dy
@@ -3797,7 +3802,7 @@ c	net/minecraft/C_15mndhsiw	net/minecraft/network/packet/s2c/play/EntityMoveS2CP
 	m	()Z	m_26rdyetjl	m_26rdyetjl
 	m	(Lnet/minecraft/C_19sjytfcv;)Z	m_44fhokvca	m_44fhokvca
 		p	1		p_1
-c	net/minecraft/C_15mndhsiw$C_08bidcucj	net/minecraft/network/packet/s2c/play/EntityMoveS2CPacket$Position
+c	net/minecraft/C_15mndhsiw$C_08bidcucj	net/minecraft/network/packet/EntityMovePacket$Position
 	m	()V	<init>	<init>
 	m	(IBBB)V	<init>	<init>
 		p	1		id
@@ -3810,7 +3815,7 @@ c	net/minecraft/C_15mndhsiw$C_08bidcucj	net/minecraft/network/packet/s2c/play/En
 		p	1		p_1
 	m	()I	m_85rpsnrmq	m_85rpsnrmq
 	m	()Ljava/lang/String;	m_12qudywtm	m_12qudywtm
-c	net/minecraft/C_15mndhsiw$C_14npcqayp	net/minecraft/network/packet/s2c/play/EntityMoveS2CPacket$Angles
+c	net/minecraft/C_15mndhsiw$C_14npcqayp	net/minecraft/network/packet/EntityMovePacket$Angles
 	m	()V	<init>	<init>
 	m	(IBB)V	<init>	<init>
 		p	1		id
@@ -3822,7 +3827,7 @@ c	net/minecraft/C_15mndhsiw$C_14npcqayp	net/minecraft/network/packet/s2c/play/En
 		p	1		p_1
 	m	()I	m_85rpsnrmq	m_85rpsnrmq
 	m	()Ljava/lang/String;	m_12qudywtm	m_12qudywtm
-c	net/minecraft/C_15mndhsiw$C_95gpbmgzf	net/minecraft/network/packet/s2c/play/EntityMoveS2CPacket$PositionAndAngles
+c	net/minecraft/C_15mndhsiw$C_95gpbmgzf	net/minecraft/network/packet/EntityMovePacket$PositionAndAngles
 	m	()V	<init>	<init>
 	m	(IBBBBB)V	<init>	<init>
 		p	1		id
@@ -4242,7 +4247,7 @@ c	net/minecraft/C_17ezmmlvc	net/minecraft/nbt/NbtIntArray
 	m	(Ljava/lang/Object;)Z	equals	equals
 		p	1		p_1
 	m	()I	hashCode	hashCode
-c	net/minecraft/C_17frhrrth	net/minecraft/network/packet/c2s/play/ClientSettingsC2SPacket
+c	net/minecraft/C_17frhrrth	net/minecraft/network/packet/ClientSettingsPacket
 	f	Ljava/lang/String;	f_48nervwfd	language
 	f	I	f_72nolcaih	viewDistance
 	f	I	f_05wxtlvmm	chatVisibility
@@ -4293,7 +4298,7 @@ c	net/minecraft/C_17jjnrjcz	net/minecraft/entity/ai/goal/GoToEntityGoal
 		p	2		p_2
 		p	3		p_3
 		p	4		p_4
-c	net/minecraft/C_17mokcrmm	net/minecraft/network/packet/s2c/play/MobSpawnS2CPacket
+c	net/minecraft/C_17mokcrmm	net/minecraft/network/packet/MobSpawnPacket
 	f	I	f_48elxhqku	id
 	f	I	f_60ueaatyk	type
 	f	I	f_47cyooiop	x
@@ -4428,7 +4433,7 @@ c	net/minecraft/C_17zcocacm	net/minecraft/C_17zcocacm
 	m	()V	<init>	<init>
 	m	(Lnet/minecraft/C_77tckqxkb;)V	m_49zhlctlq	m_49zhlctlq
 		p	1		p_1
-c	net/minecraft/C_17znkflpu	net/minecraft/network/packet/s2c/play/PaintingSpawnS2CPacket
+c	net/minecraft/C_17znkflpu	net/minecraft/network/packet/PaintingSpawnPacket
 	f	I	f_72gatzayr	id
 	f	I	f_71qbeguas	x
 	f	I	f_66spxyqbk	y
@@ -4815,7 +4820,7 @@ c	net/minecraft/C_18mhtxumt$3	net/minecraft/C_96wupaazp$3
 		p	5		p_5
 		p	6		p_6
 	m	()Lnet/minecraft/C_36ghrohdl;	m_45cgbmfjq	m_45cgbmfjq
-c	net/minecraft/C_18obqhocx	net/minecraft/network/packet/s2c/play/EntityStatusEffectS2CPacket
+c	net/minecraft/C_18obqhocx	net/minecraft/network/packet/EntityStatusEffectPacket
 	f	I	f_15quygqqz	id
 	f	B	f_21eldcedm	effect
 	f	B	f_43qdqhrtq	amplifier
@@ -5206,21 +5211,22 @@ c	net/minecraft/C_19qwwlphc	net/minecraft/nbt/NbtByte
 		p	1		p_1
 	m	()I	hashCode	hashCode
 c	net/minecraft/C_19sjytfcv	net/minecraft/network/packet/Packet
-	f	Lnet/minecraft/C_17nozgejl;	f_43cofzjqs	typesById
-	f	Ljava/util/Map;	f_19kgueqgf	idsByType
-	f	Ljava/util/Set;	f_36ymslbks	f_36ymslbks
-	f	Ljava/util/Set;	f_22iddqzxc	f_22iddqzxc
-	f	J	f_51izsalgm	f_51izsalgm
-	f	J	f_82nzsufvs	f_82nzsufvs
+	f	Lnet/minecraft/C_17nozgejl;	f_43cofzjqs	ID_TO_TYPE
+	f	Ljava/util/Map;	f_19kgueqgf	TYPE_TO_ID
+	f	Ljava/util/Set;	f_36ymslbks	S2C
+	f	Ljava/util/Set;	f_22iddqzxc	C2S
+	f	J	f_51izsalgm	creationTime
+	f	J	f_82nzsufvs	deserialized
 	f	J	f_31fetbcji	f_31fetbcji
-	f	J	f_69dsxnnni	f_69dsxnnni
+	f	J	f_69dsxnnni	serialized
 	f	J	f_28giwqggx	f_28giwqggx
-	f	Z	f_94rwrieql	f_94rwrieql
+	f	Z	f_94rwrieql	hasBlockData
+		c	True if this packet contains block (entity) data.\n<br>\nNote: this field is unused since 1.4.3.
 	m	()V	<init>	<init>
 	m	(IZZLjava/lang/Class;)V	m_75pufvogg	register
 		p	0		id
-		p	1		p_1
-		p	2		p_2
+		p	1		s2c
+		p	2		c2s
 		p	3		type
 	m	(I)Lnet/minecraft/C_19sjytfcv;	m_64wfmvfwi	m_64wfmvfwi
 		p	0		p_0
@@ -5229,7 +5235,7 @@ c	net/minecraft/C_19sjytfcv	net/minecraft/network/packet/Packet
 		p	1		p_1
 	m	(Ljava/io/DataInputStream;)[B	m_02xlqjrlc	m_02xlqjrlc
 		p	0		p_0
-	m	()I	m_06lgffzih	m_06lgffzih
+	m	()I	m_06lgffzih	getId
 	m	(Ljava/io/DataInputStream;Z)Lnet/minecraft/C_19sjytfcv;	m_76hdvrtww	m_76hdvrtww
 		p	0		p_0
 		p	1		p_1
@@ -5248,11 +5254,13 @@ c	net/minecraft/C_19sjytfcv	net/minecraft/network/packet/Packet
 		p	1		p_1
 	m	(Lnet/minecraft/C_68ydbefqv;)V	m_68vcjopzq	apply
 		p	1		listener
-	m	()I	m_85rpsnrmq	m_85rpsnrmq
-	m	()Z	m_26rdyetjl	m_26rdyetjl
-	m	(Lnet/minecraft/C_19sjytfcv;)Z	m_44fhokvca	m_44fhokvca
-		p	1		p_1
-	m	()Z	m_65pgxembj	m_65pgxembj
+	m	()I	m_85rpsnrmq	getSize
+	m	()Z	m_26rdyetjl	checkForDuplicates
+		c	Returns whether connections should check for duplicates before sending this packet.
+	m	(Lnet/minecraft/C_19sjytfcv;)Z	m_44fhokvca	is
+		p	1		packet
+	m	()Z	m_65pgxembj	canHandleOnCurrentThread
+		c	Returns whether this packet can be handled on  the current thread or if it should\nbe queued to be handled on the main thread.
 	m	()Ljava/lang/String;	toString	toString
 	m	()Ljava/lang/String;	m_12qudywtm	m_12qudywtm
 	m	(Ljava/io/DataInputStream;)Lnet/minecraft/C_72owraavl;	m_92osooizq	m_92osooizq
@@ -5963,7 +5971,7 @@ c	net/minecraft/C_20ysellnk	net/minecraft/block/SnowBlock
 		p	5		p_5
 c	net/minecraft/C_21csofyoj	net/minecraft/C_21csofyoj
 	m	()V	<init>	<init>
-c	net/minecraft/C_21cyyvviz	net/minecraft/network/packet/c2s/play/PlayerAbilitiesC2SPacket
+c	net/minecraft/C_21cyyvviz	net/minecraft/network/packet/PlayerAbilitiesPacket
 	f	Z	f_46tyvwthp	invulnerable
 	f	Z	f_01wvepiae	flying
 	f	Z	f_81bnqwzdy	allowFlying
@@ -6545,7 +6553,7 @@ c	net/minecraft/C_22qvmutfp	net/minecraft/C_07tdwkcfc
 		p	2		p_2
 		p	3		p_3
 	m	()V	m_54jjboaob	m_54jjboaob
-c	net/minecraft/C_22rpvsruc	net/minecraft/network/packet/s2c/play/BlockUpdateS2CPacket
+c	net/minecraft/C_22rpvsruc	net/minecraft/network/packet/BlockUpdatePacket
 	f	I	f_44mbqoyha	x
 	f	I	f_34egvoqox	y
 	f	I	f_28pmjtpyl	z
@@ -6619,11 +6627,11 @@ c	net/minecraft/C_22rysxuhq	net/minecraft/block/EndPortalBlock
 		p	3		p_3
 		p	4		p_4
 	m	()V	<clinit>	<clinit>
-c	net/minecraft/C_22wrjgbko	net/minecraft/network/packet/s2c/play/DisconnectS2CPacket
-	f	Ljava/lang/String;	f_40wcewvgf	f_40wcewvgf
+c	net/minecraft/C_22wrjgbko	net/minecraft/network/packet/DisconnectPacket
+	f	Ljava/lang/String;	f_40wcewvgf	reason
 	m	()V	<init>	<init>
 	m	(Ljava/lang/String;)V	<init>	<init>
-		p	1		p_1
+		p	1		reason
 	m	(Ljava/io/DataInputStream;)V	m_00ycwkymm	m_00ycwkymm
 		p	1		p_1
 	m	(Ljava/io/DataOutputStream;)V	m_73uomkfhh	m_73uomkfhh
@@ -7894,8 +7902,8 @@ c	net/minecraft/C_27uqpifyq	net/minecraft/server/network/handler/ServerLoginNetw
 	f	[B	f_42kwkiuun	nonce
 	f	Ljava/util/logging/Logger;	f_92jzytqxe	f_92jzytqxe
 	f	Ljava/util/Random;	f_57cmxqvrj	RANDOM
-	f	Lnet/minecraft/C_00zgnzavq;	f_47twriyww	f_47twriyww
-	f	Z	f_04kegftao	f_04kegftao
+	f	Lnet/minecraft/C_00zgnzavq;	f_47twriyww	connection
+	f	Z	f_04kegftao	disconnected
 	f	Lnet/minecraft/server/MinecraftServer;	f_27lzbzybd	server
 	f	I	f_38suugaea	ticks
 	f	Ljava/lang/String;	f_88fjiquuv	serverId
@@ -7906,7 +7914,7 @@ c	net/minecraft/C_27uqpifyq	net/minecraft/server/network/handler/ServerLoginNetw
 		p	1		p_1
 		p	2		p_2
 		p	3		p_3
-	m	()V	m_09nqdgity	m_09nqdgity
+	m	()V	m_09nqdgity	tick
 	m	(Ljava/lang/String;)V	m_92yxdlzzh	disconnect
 		p	1		reason
 	m	(Lnet/minecraft/C_86yjpmalw;)V	m_43tozbfsi	m_43tozbfsi
@@ -8029,7 +8037,7 @@ c	net/minecraft/C_28ayxatmp	net/minecraft/client/gui/screen/SleepingChatScreen
 	m	(Lnet/minecraft/C_62wzojhks;)V	m_33wnscxyw	m_33wnscxyw
 		p	1		p_1
 	m	()V	m_54wruukwr	stopSleeping
-c	net/minecraft/C_28bsbywwb	net/minecraft/network/packet/c2s/play/CreativeMenuSlotC2SPacket
+c	net/minecraft/C_28bsbywwb	net/minecraft/network/packet/CreativeMenuSlotPacket
 	f	I	f_44bmcjlgk	slotId
 	f	Lnet/minecraft/C_72owraavl;	f_87jsughsk	stack
 	m	()V	<init>	<init>
@@ -8948,7 +8956,7 @@ c	net/minecraft/C_30ejlxsnj	net/minecraft/item/StickyPistonBlockItem
 		p	1		p_1
 	m	(I)I	m_14ezeujvg	m_14ezeujvg
 		p	1		p_1
-c	net/minecraft/C_30fftgagq	net/minecraft/network/packet/s2c/play/EntitySpawnS2CPacket
+c	net/minecraft/C_30fftgagq	net/minecraft/network/packet/EntitySpawnPacket
 	f	I	f_22uortmfx	id
 	f	I	f_70gknmycc	x
 	f	I	f_02hmhhciu	y
@@ -9483,7 +9491,7 @@ c	net/minecraft/C_30rsigerv	net/minecraft/entity/ai/goal/Goal
 	m	(I)V	m_92xnnhgem	setControls
 		p	1		controls
 	m	()I	m_99cioqcsk	getControls
-c	net/minecraft/C_30slusdig	net/minecraft/network/packet/s2c/play/RemoveEntitiesS2CPacket
+c	net/minecraft/C_30slusdig	net/minecraft/network/packet/RemoveEntitiesPacket
 	f	[I	f_82hfbwbty	ids
 	m	()V	<init>	<init>
 	m	([I)V	<init>	<init>
@@ -9832,7 +9840,7 @@ c	net/minecraft/C_30vndvelc$C_96axytpop	net/minecraft/item/Item$ToolMaterial
 	m	()I	m_93oqztbdr	getStrength
 	m	()I	m_18abjcmxg	getEnchantability
 	m	()V	<clinit>	<clinit>
-c	net/minecraft/C_30yxslnws	net/minecraft/network/packet/s2c/play/BlockEventS2CPacket
+c	net/minecraft/C_30yxslnws	net/minecraft/network/packet/BlockEventPacket
 	f	I	f_92gdxbkht	x
 	f	I	f_72emhjuka	y
 	f	I	f_40ayxbwwk	z
@@ -10024,7 +10032,7 @@ c	net/minecraft/C_31csqqsan	net/minecraft/block/PistonHeadBlock
 		p	2		p_2
 		p	3		p_3
 		p	4		p_4
-c	net/minecraft/C_31elsaqlo	net/minecraft/network/packet/s2c/play/EntityAttachS2CPacket
+c	net/minecraft/C_31elsaqlo	net/minecraft/network/packet/EntityAttachPacket
 	f	I	f_77njvudxu	id
 	f	I	f_82bhlprwa	holderId
 	m	()V	<init>	<init>
@@ -10236,7 +10244,7 @@ c	net/minecraft/C_31pujbufv	net/minecraft/block/PistonExtensionBlock
 		p	2		p_2
 		p	3		p_3
 		p	4		p_4
-c	net/minecraft/C_31radntjg	net/minecraft/network/packet/s2c/play/WorldEventS2CPacket
+c	net/minecraft/C_31radntjg	net/minecraft/network/packet/WorldEventPacket
 	f	I	f_94daamrqm	event
 	f	I	f_74ktqlmpr	data
 	f	I	f_83zjjyjid	x
@@ -10313,7 +10321,7 @@ c	net/minecraft/C_31rdgoemj	net/minecraft/client/gui/screen/Screen
 	m	()Z	m_71yziiczt	m_71yziiczt
 c	net/minecraft/C_31rmwrrdw	net/minecraft/C_31rmwrrdw
 	m	()V	<init>	<init>
-c	net/minecraft/C_31uyahcrd	net/minecraft/network/packet/s2c/play/InventoryMenuS2CPacket
+c	net/minecraft/C_31uyahcrd	net/minecraft/network/packet/InventoryMenuPacket
 	f	I	f_99bahlzcf	menuId
 	f	[Lnet/minecraft/C_72owraavl;	f_51fsvcxya	stacks
 	m	()V	<init>	<init>
@@ -10335,7 +10343,7 @@ c	net/minecraft/C_31vtmtomj	net/minecraft/text/StringUtils
 	m	(Ljava/lang/String;)Ljava/lang/String;	m_02fncmmma	stripFormatting
 		p	0		text
 	m	()V	<clinit>	<clinit>
-c	net/minecraft/C_32fhnfguc	net/minecraft/network/packet/s2c/play/KeepAliveS2CPacket
+c	net/minecraft/C_32fhnfguc	net/minecraft/network/packet/KeepAlivePacket
 	f	I	f_42pzxodib	timeMillis
 	m	()V	<init>	<init>
 	m	(I)V	<init>	<init>
@@ -10431,7 +10439,7 @@ c	net/minecraft/C_32nbsplgc	net/minecraft/client/util/SmoothUtil
 	m	(FF)F	m_68mcscnug	smooth
 		p	1		original
 		p	2		smoother
-c	net/minecraft/C_32slulely	net/minecraft/network/packet/c2s/play/ConfirmMenuActionC2SPacket
+c	net/minecraft/C_32slulely	net/minecraft/network/packet/ConfirmMenuActionPacket
 	f	I	f_70qghtyvx	menuId
 	f	S	f_38ptwwdrl	actionId
 	f	Z	f_17hejwfla	accepted
@@ -10820,9 +10828,9 @@ c	net/minecraft/C_33xiimebb	net/minecraft/item/DyeItem
 		p	2		p_2
 		p	3		p_3
 	m	()V	<clinit>	<clinit>
-c	net/minecraft/C_34dwbvqbs	net/minecraft/network/packet/s2c/play/EntityRemoveStatusEffectS2CPacket
+c	net/minecraft/C_34dwbvqbs	net/minecraft/network/packet/EntityRemoveStatusEffectPacket
 	f	I	f_44uivgbhi	id
-	f	B	f_50htuimjx	f_50htuimjx
+	f	B	f_50htuimjx	effect
 	m	()V	<init>	<init>
 	m	(ILnet/minecraft/C_03ojyhopc;)V	<init>	<init>
 		p	1		entityId
@@ -11122,11 +11130,11 @@ c	net/minecraft/C_35fagcrzn	net/minecraft/block/PlantBlock
 	m	()Z	m_17xctrmxv	m_17xctrmxv
 	m	()Z	m_79llpympa	m_79llpympa
 	m	()I	m_36tsytztv	m_36tsytztv
-c	net/minecraft/C_35hkdriob	net/minecraft/network/packet/s2c/play/CommandSuggestionsS2CPacket
-	f	Ljava/lang/String;	f_97jjulgch	f_97jjulgch
+c	net/minecraft/C_35hkdriob	net/minecraft/network/packet/CommandSuggestionsPacket
+	f	Ljava/lang/String;	f_97jjulgch	command
 	m	()V	<init>	<init>
 	m	(Ljava/lang/String;)V	<init>	<init>
-		p	1		p_1
+		p	1		command
 	m	(Ljava/io/DataInputStream;)V	m_00ycwkymm	m_00ycwkymm
 		p	1		p_1
 	m	(Ljava/io/DataOutputStream;)V	m_73uomkfhh	m_73uomkfhh
@@ -11134,7 +11142,7 @@ c	net/minecraft/C_35hkdriob	net/minecraft/network/packet/s2c/play/CommandSuggest
 	m	(Lnet/minecraft/C_68ydbefqv;)V	m_68vcjopzq	m_68vcjopzq
 		p	1		p_1
 	m	()I	m_85rpsnrmq	m_85rpsnrmq
-	m	()Ljava/lang/String;	m_15tqflnjf	m_15tqflnjf
+	m	()Ljava/lang/String;	m_15tqflnjf	getCommand
 	m	()Ljava/lang/String;	m_12qudywtm	m_12qudywtm
 	m	()Z	m_26rdyetjl	m_26rdyetjl
 	m	(Lnet/minecraft/C_19sjytfcv;)Z	m_44fhokvca	m_44fhokvca
@@ -11213,20 +11221,20 @@ c	net/minecraft/C_35netyfsz$C_83eofrezm	net/minecraft/C_25vbkvdlj$C_83eofrezm
 	m	(Ljava/lang/String;)V	<init>	<init>
 		p	1		p_1
 	m	()Ljava/lang/String;	toString	toString
-c	net/minecraft/C_36abrcmve	net/minecraft/C_36abrcmve
-	m	(Lnet/minecraft/C_68ydbefqv;)V	m_16mrzjfuf	m_16mrzjfuf
-		p	1		p_1
-	m	(Lnet/minecraft/C_19sjytfcv;)V	m_61ppgrkac	m_61ppgrkac
-		p	1		p_1
-	m	()V	m_91ogblfvk	m_91ogblfvk
-	m	()V	m_13qztercw	m_13qztercw
-	m	()Ljava/net/SocketAddress;	m_99fihzbnc	m_99fihzbnc
-	m	()V	m_51apdxvvr	m_51apdxvvr
-	m	()I	m_49sonkska	m_49sonkska
-	m	(Ljava/lang/String;[Ljava/lang/Object;)V	m_83ctkdnlz	m_83ctkdnlz
-		p	1		p_1
-		p	2		p_2
-	m	()V	m_44bcrhhtk	m_44bcrhhtk
+c	net/minecraft/C_36abrcmve	net/minecraft/network/IConnection
+	m	(Lnet/minecraft/C_68ydbefqv;)V	m_16mrzjfuf	setListener
+		p	1		listener
+	m	(Lnet/minecraft/C_19sjytfcv;)V	m_61ppgrkac	send
+		p	1		packet
+	m	()V	m_91ogblfvk	interrupt
+	m	()V	m_13qztercw	tick
+	m	()Ljava/net/SocketAddress;	m_99fihzbnc	getAddress
+	m	()V	m_51apdxvvr	close
+	m	()I	m_49sonkska	getBlockDataSendQueueSize
+	m	(Ljava/lang/String;[Ljava/lang/Object;)V	m_83ctkdnlz	disconnect
+		p	1		reason
+		p	2		args
+	m	()V	m_44bcrhhtk	stop
 c	net/minecraft/C_36agmpvyu	net/minecraft/entity/living/mob/hostile/boss/EnderDragonEntity
 	f	D	f_91twllrlw	targetX
 	f	D	f_81zxwtdtn	targetY
@@ -11616,7 +11624,7 @@ c	net/minecraft/C_36ywfeeve	net/minecraft/entity/living/mob/water/SquidEntity
 		p	2		p_2
 	m	()V	m_80hevoldz	m_80hevoldz
 	m	()Z	m_02vbhpwmn	m_02vbhpwmn
-c	net/minecraft/C_37akbwgsn	net/minecraft/network/packet/s2c/play/MenuSlotUpdateS2CPacket
+c	net/minecraft/C_37akbwgsn	net/minecraft/network/packet/MenuSlotUpdatePacket
 	f	I	f_96yhwzfqo	menuId
 	f	I	f_94pwvexdt	slotId
 	f	Lnet/minecraft/C_72owraavl;	f_25auxpjsx	stack
@@ -11675,12 +11683,12 @@ c	net/minecraft/C_37hlwxory	net/minecraft/network/encryption/EncryptionUtils
 	m	(ZLjava/security/Key;)Lnet/minecraft/C_29dbksaxy;	m_09xifzuzz	m_09xifzuzz
 		p	0		p_0
 		p	1		p_1
-	m	(Ljavax/crypto/SecretKey;Ljava/io/OutputStream;)Ljava/io/OutputStream;	m_45msyvaha	m_45msyvaha
-		p	0		p_0
-		p	1		p_1
-	m	(Ljavax/crypto/SecretKey;Ljava/io/InputStream;)Ljava/io/InputStream;	m_84nmolvpc	m_84nmolvpc
-		p	0		p_0
-		p	1		p_1
+	m	(Ljavax/crypto/SecretKey;Ljava/io/OutputStream;)Ljava/io/OutputStream;	m_45msyvaha	encrypt
+		p	0		secretKey
+		p	1		output
+	m	(Ljavax/crypto/SecretKey;Ljava/io/InputStream;)Ljava/io/InputStream;	m_84nmolvpc	decrypt
+		p	0		secretKey
+		p	1		input
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/C_37hskkbmk	net/minecraft/client/gui/screen/ingame/CreativeInventoryScreen
 	f	Lnet/minecraft/C_25xbwoyzs;	f_95lnzgfhb	inventory
@@ -11784,7 +11792,7 @@ c	net/minecraft/C_37hskkbmk$C_19qcagdhy	net/minecraft/client/gui/screen/ingame/C
 		p	2		p_2
 	m	(Lnet/minecraft/C_37hskkbmk$C_19qcagdhy;)Lnet/minecraft/C_45vtulehf;	m_37rboqvzc	m_37rboqvzc
 		p	0		p_0
-c	net/minecraft/C_37jqedtgc	net/minecraft/network/packet/s2c/play/PlayerSpawnPointS2CPacket
+c	net/minecraft/C_37jqedtgc	net/minecraft/network/packet/PlayerSpawnPointPacket
 	f	I	f_61klsvvla	spawnX
 	f	I	f_67ekjknbp	spawnY
 	f	I	f_33uciivqm	spawnZ
@@ -12486,7 +12494,7 @@ c	net/minecraft/C_38vawxpad	net/minecraft/client/network/PlayerInfo
 		p	1		name
 	m	(Ljava/lang/String;)Z	m_32bzbhnwd	m_32bzbhnwd
 		p	1		p_1
-c	net/minecraft/C_39jsiqnla	net/minecraft/network/packet/s2c/play/PlayerHealthS2CPacket
+c	net/minecraft/C_39jsiqnla	net/minecraft/network/packet/PlayerHealthPacket
 	f	I	f_49hdvrghf	f_49hdvrghf
 	f	I	f_69wjtsfnd	hunger
 	f	F	f_97nyemazr	saturation
@@ -13300,8 +13308,8 @@ c	net/minecraft/C_41yxvtewz	net/minecraft/client/network/handler/ClientPlayNetwo
 		p	1		p_1
 	m	(Lnet/minecraft/C_05mlkomxt;)V	m_04ywlnhnq	m_04ywlnhnq
 		p	1		p_1
-	m	(I)Lnet/minecraft/C_47ldwddrb;	m_53tllpute	m_53tllpute
-		p	1		p_1
+	m	(I)Lnet/minecraft/C_47ldwddrb;	m_53tllpute	getEntity
+		p	1		networkId
 	m	(Lnet/minecraft/C_39jsiqnla;)V	m_32hjvhvbk	m_32hjvhvbk
 		p	1		p_1
 	m	(Lnet/minecraft/C_80oshoggh;)V	m_85kylnpyv	m_85kylnpyv
@@ -13546,7 +13554,7 @@ c	net/minecraft/C_42sowfbht	net/minecraft/world/storage/SavedDataStorage
 	m	()V	m_62foixpfk	loadIdCounts
 	m	(Ljava/lang/String;)I	m_19czixkyt	getNextCount
 		p	1		id
-c	net/minecraft/C_42uoqcgog	net/minecraft/network/packet/c2s/play/MenuClickSlotC2SPacket
+c	net/minecraft/C_42uoqcgog	net/minecraft/network/packet/c2s/play/MenuClickSlotPacket
 	f	I	f_42jbijnbt	menuId
 	f	I	f_95cxnmrof	slotId
 	f	I	f_19cpmznfx	clickData
@@ -13667,7 +13675,7 @@ c	net/minecraft/C_43aozbdma	net/minecraft/client/entity/particle/EnchantingParti
 	m	(F)F	m_04lbxddoy	m_04lbxddoy
 		p	1		p_1
 	m	()V	m_28zixkoqt	m_28zixkoqt
-c	net/minecraft/C_43hztdzsj	net/minecraft/network/packet/s2c/play/EntityPickupS2CPacket
+c	net/minecraft/C_43hztdzsj	net/minecraft/network/packet/EntityPickupPacket
 	f	I	f_07bulthvz	id
 	f	I	f_05ctjjrzp	collectorId
 	m	()V	<init>	<init>
@@ -13774,7 +13782,7 @@ c	net/minecraft/C_43kwhwbrq	net/minecraft/client/entity/particle/DummyCriticalHi
 	m	()I	m_41vbqvyjb	m_41vbqvyjb
 c	net/minecraft/C_43mnimvqq	net/minecraft/server/network/handler/ServerPlayNetworkHandler
 	f	Ljava/util/logging/Logger;	f_33xmiezwi	f_33xmiezwi
-	f	Lnet/minecraft/C_36abrcmve;	f_04qapbfan	f_04qapbfan
+	f	Lnet/minecraft/C_36abrcmve;	f_04qapbfan	connection
 	f	Z	f_30vayjgrs	f_30vayjgrs
 	f	Lnet/minecraft/server/MinecraftServer;	f_52rxkghfr	server
 	f	Lnet/minecraft/C_53mtutqhz;	f_69qzkfajq	player
@@ -13969,7 +13977,7 @@ c	net/minecraft/C_43xhlpcus	net/minecraft/entity/thrown/PotionEntity
 		p	1		p_1
 	m	(Lnet/minecraft/C_54jdujmos;)V	m_02rnyxkdz	m_02rnyxkdz
 		p	1		p_1
-c	net/minecraft/C_44ceqljes	net/minecraft/network/packet/s2c/play/MenuDataS2CPacket
+c	net/minecraft/C_44ceqljes	net/minecraft/network/packet/MenuDataPacket
 	f	I	f_17lgonklo	menuId
 	f	I	f_02zfzdccb	dataId
 	f	I	f_40hqhymmo	value
@@ -14010,7 +14018,7 @@ c	net/minecraft/C_44dxeosss	net/minecraft/client/render/model/TexturedBakedQuad
 		p	1		builder
 		p	2		scale
 	m	()Lnet/minecraft/C_44dxeosss;	m_17bndfuzf	m_17bndfuzf
-c	net/minecraft/C_44ehmgtkt	net/minecraft/network/packet/c2s/play/PlayerMoveC2SPacket
+c	net/minecraft/C_44ehmgtkt	net/minecraft/network/packet/PlayerMovePacket
 	f	D	f_02ksnaukn	x
 	f	D	f_19atxyado	minY
 	f	D	f_73nnivyio	z
@@ -14033,7 +14041,7 @@ c	net/minecraft/C_44ehmgtkt	net/minecraft/network/packet/c2s/play/PlayerMoveC2SP
 	m	()Z	m_26rdyetjl	m_26rdyetjl
 	m	(Lnet/minecraft/C_19sjytfcv;)Z	m_44fhokvca	m_44fhokvca
 		p	1		p_1
-c	net/minecraft/C_44ehmgtkt$C_38acrvpkh	net/minecraft/network/packet/c2s/play/PlayerMoveC2SPacket$Angles
+c	net/minecraft/C_44ehmgtkt$C_38acrvpkh	net/minecraft/network/packet/PlayerMovePacket$Angles
 	m	()V	<init>	<init>
 	m	(FFZ)V	<init>	<init>
 		p	1		yaw
@@ -14044,7 +14052,7 @@ c	net/minecraft/C_44ehmgtkt$C_38acrvpkh	net/minecraft/network/packet/c2s/play/Pl
 	m	(Ljava/io/DataOutputStream;)V	m_73uomkfhh	m_73uomkfhh
 		p	1		p_1
 	m	()I	m_85rpsnrmq	m_85rpsnrmq
-c	net/minecraft/C_44ehmgtkt$C_46uhixriu	net/minecraft/network/packet/c2s/play/PlayerMoveC2SPacket$Position
+c	net/minecraft/C_44ehmgtkt$C_46uhixriu	net/minecraft/network/packet/PlayerMovePacket$Position
 	m	()V	<init>	<init>
 	m	(DDDDZ)V	<init>	<init>
 		p	1		x
@@ -14057,7 +14065,7 @@ c	net/minecraft/C_44ehmgtkt$C_46uhixriu	net/minecraft/network/packet/c2s/play/Pl
 	m	(Ljava/io/DataOutputStream;)V	m_73uomkfhh	m_73uomkfhh
 		p	1		p_1
 	m	()I	m_85rpsnrmq	m_85rpsnrmq
-c	net/minecraft/C_44ehmgtkt$C_74lpuwbkj	net/minecraft/network/packet/c2s/play/PlayerMoveC2SPacket$PositionAndAngles
+c	net/minecraft/C_44ehmgtkt$C_74lpuwbkj	net/minecraft/network/packet/PlayerMovePacket$PositionAndAngles
 	m	()V	<init>	<init>
 	m	(DDDDFFZ)V	<init>	<init>
 		p	1		x
@@ -14486,7 +14494,7 @@ c	net/minecraft/C_45sfcejtp	net/minecraft/enchantment/FlameEnchantment
 	m	(I)I	m_39kjqddsr	m_39kjqddsr
 		p	1		p_1
 	m	()I	m_45utxkoig	m_45utxkoig
-c	net/minecraft/C_45ttrqhfw	net/minecraft/network/packet/s2c/play/DifficultyS2CPacket
+c	net/minecraft/C_45ttrqhfw	net/minecraft/network/packet/OpenMenuPacket
 	f	I	f_80kzxakpb	menuId
 	f	I	f_68fmftplu	menuType
 		c	The type of inventory menu. The possible values are:\n<br>0: container (e.g. chest)\n<br>1: crafting table\n<br>2: furnace\n<br>3: dispenser\n<br>4: enchanting table\n<br>5: brewing stand\n<br>6: trader (i.e. villager)\n<br>7: beacon\n<br>8: anvil\n<br>9: hopper\n<br>10: dropper\n<br>11: horse with chest
@@ -14680,7 +14688,7 @@ c	net/minecraft/C_46nyuprdc	net/minecraft/block/entity/BrewingStandBlockEntity
 	m	(I)V	m_61kgsaloi	setTimer
 		p	1		timer
 	m	()I	m_61drvrqog	findFilledInputs
-c	net/minecraft/C_46oohluqr	net/minecraft/network/packet/c2s/play/PlayerUseItemC2SPacket
+c	net/minecraft/C_46oohluqr	net/minecraft/network/packet/PlayerUseItemPacket
 	f	I	f_67fshijns	x
 	f	I	f_85kievccx	y
 	f	I	f_64kibpteq	z
@@ -14748,7 +14756,7 @@ c	net/minecraft/C_46rstthee	net/minecraft/inventory/menu/DispenserMenu
 		p	1		p_1
 	m	(I)Lnet/minecraft/C_72owraavl;	m_44rmytnem	m_44rmytnem
 		p	1		p_1
-c	net/minecraft/C_46vjssuff	net/minecraft/network/packet/s2c/play/EntityAnimationS2CPacket
+c	net/minecraft/C_46vjssuff	net/minecraft/network/packet/EntityAnimationPacket
 	f	I	f_69gfrfpul	id
 	f	I	f_56pvksuxl	action
 	m	()V	<init>	<init>
@@ -14772,19 +14780,19 @@ c	net/minecraft/C_46wdcwinl	net/minecraft/C_46wdcwinl
 		p	3		p_3
 		p	4		p_4
 		p	5		p_5
-c	net/minecraft/C_46xtorrrs	net/minecraft/network/packet/s2c/play/BlocksUpdateS2CPacket
-	f	I	f_07voorupc	f_07voorupc
-	f	I	f_17gkxfiyk	f_17gkxfiyk
+c	net/minecraft/C_46xtorrrs	net/minecraft/network/packet/BlocksUpdatePacket
+	f	I	f_07voorupc	chunkX
+	f	I	f_17gkxfiyk	chunkZ
 	f	[B	f_79hxidftt	updates
-	f	I	f_75qxnatar	f_75qxnatar
-	f	[B	f_85pdgliyf	f_85pdgliyf
+	f	I	f_75qxnatar	blockChangeCount
+	f	[B	f_85pdgliyf	buffer
 	m	()V	<init>	<init>
 	m	(II[SILnet/minecraft/C_54ruxjwzt;)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-		p	5		p_5
+		p	1		chunkX
+		p	2		chunkZ
+		p	3		positions
+		p	4		blockChangeCount
+		p	5		world
 	m	(Ljava/io/DataInputStream;)V	m_00ycwkymm	m_00ycwkymm
 		p	1		p_1
 	m	(Ljava/io/DataOutputStream;)V	m_73uomkfhh	m_73uomkfhh
@@ -16192,7 +16200,7 @@ c	net/minecraft/C_50qwckuhb	net/minecraft/entity/ai/goal/FleeEntityGoal
 	m	()V	m_12snmulzq	m_12snmulzq
 	m	()V	m_44eboxwev	m_44eboxwev
 	m	()V	m_89nkhezid	m_89nkhezid
-c	net/minecraft/C_50stqtmin	net/minecraft/network/packet/s2c/play/EntityVelocityS2CPacket
+c	net/minecraft/C_50stqtmin	net/minecraft/network/packet/EntityVelocityPacket
 	f	I	f_15jieqzcz	id
 	f	I	f_98cjpnvzv	velocityX
 	f	I	f_79zxofiru	velocityY
@@ -16344,19 +16352,19 @@ c	net/minecraft/C_50yiiyywv	net/minecraft/world/chunk/storage/AlphaChunkDataArra
 	m	(I)V	m_57ywqxdsw	m_57ywqxdsw
 		p	1		p_1
 c	net/minecraft/C_51cglrkva	net/minecraft/entity/living/mob/passive/Tradable
-c	net/minecraft/C_51klafwme	net/minecraft/network/packet/s2c/play/PlayerSleepS2CPacket
+c	net/minecraft/C_51klafwme	net/minecraft/network/packet/PlayerSleepPacket
 	f	I	f_67cjwdypy	id
 	f	I	f_93busrclx	x
 	f	I	f_37jynfutc	y
 	f	I	f_51dojnrys	z
-	f	I	f_70ikiuqei	f_70ikiuqei
+	f	I	f_70ikiuqei	action
 	m	()V	<init>	<init>
 	m	(Lnet/minecraft/C_47ldwddrb;IIII)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-		p	5		p_5
+		p	1		player
+		p	2		action
+		p	3		x
+		p	4		y
+		p	5		z
 	m	(Ljava/io/DataInputStream;)V	m_00ycwkymm	m_00ycwkymm
 		p	1		p_1
 	m	(Ljava/io/DataOutputStream;)V	m_73uomkfhh	m_73uomkfhh
@@ -16416,7 +16424,7 @@ c	net/minecraft/C_51ouvctku	net/minecraft/block/LadderBlock
 		p	5		p_5
 	m	(Ljava/util/Random;)I	m_65hnunesa	m_65hnunesa
 		p	1		p_1
-c	net/minecraft/C_51qbgqjmo	net/minecraft/network/packet/c2s/play/PlayerInteractEntityC2SPacket
+c	net/minecraft/C_51qbgqjmo	net/minecraft/network/packet/PlayerInteractEntityPacket
 	f	I	f_57vlkonbo	playerId
 	f	I	f_44hwjlmfm	targetId
 	f	I	f_08mlpsoef	action
@@ -16639,25 +16647,25 @@ c	net/minecraft/C_51zyvrgpa	net/minecraft/C_51zyvrgpa
 	m	(Ljava/lang/String;)Ljava/io/File;	m_32bojpbhn	m_32bojpbhn
 		p	1		p_1
 	m	()Ljava/lang/String;	m_42desqjzo	m_42desqjzo
-c	net/minecraft/C_52amhfimv	net/minecraft/network/packet/s2c/play/LoginS2CPacket
-	f	I	f_31lrhkcwc	entityId
-	f	Lnet/minecraft/C_88awvyqha;	f_30vrogypp	f_30vrogypp
+c	net/minecraft/C_52amhfimv	net/minecraft/network/packet/LoginPacket
+	f	I	f_31lrhkcwc	id
+	f	Lnet/minecraft/C_88awvyqha;	f_30vrogypp	generatorType
 	f	Z	f_23txabkja	hardcore
 	f	Lnet/minecraft/C_92rrzzavg$C_65phlzcds;	f_92vcwxasu	gameMode
 	f	I	f_25cmbcezt	dimensionId
-	f	B	f_69llpreet	f_69llpreet
-	f	B	f_89wwgamod	f_89wwgamod
-	f	B	f_24nzzysrs	f_24nzzysrs
+	f	B	f_69llpreet	difficulty
+	f	B	f_89wwgamod	worldHeight
+	f	B	f_24nzzysrs	maxPlayerCount
 	m	()V	<init>	<init>
 	m	(ILnet/minecraft/C_88awvyqha;Lnet/minecraft/C_92rrzzavg$C_65phlzcds;ZIIII)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-		p	5		p_5
-		p	6		p_6
-		p	7		p_7
-		p	8		p_8
+		p	1		id
+		p	2		generatorType
+		p	3		gameMode
+		p	4		hardcore
+		p	5		dimensionId
+		p	6		difficulty
+		p	7		worldHeight
+		p	8		maxPlayerCount
 	m	(Ljava/io/DataInputStream;)V	m_00ycwkymm	m_00ycwkymm
 		p	1		p_1
 	m	(Ljava/io/DataOutputStream;)V	m_73uomkfhh	m_73uomkfhh
@@ -19137,7 +19145,7 @@ c	net/minecraft/C_57xbrvulv	net/minecraft/client/render/entity/model/WolfEntityM
 		p	4		p_4
 		p	5		p_5
 		p	6		p_6
-c	net/minecraft/C_57xrqgtta	net/minecraft/network/packet/s2c/play/BlockBreakingProgressS2CPacket
+c	net/minecraft/C_57xrqgtta	net/minecraft/network/packet/BlockMiningProgressPacket
 	f	I	f_66xgoqpqa	id
 	f	I	f_79gegxirf	x
 	f	I	f_04ugmzeoz	y
@@ -19605,11 +19613,11 @@ c	net/minecraft/C_58vpvenzh	net/minecraft/nbt/NbtString
 	m	(Ljava/lang/Object;)Z	equals	equals
 		p	1		p_1
 	m	()I	hashCode	hashCode
-c	net/minecraft/C_58wdmxzvg	net/minecraft/network/packet/c2s/play/ClientStatusC2SPacket
-	f	I	f_90yerwbds	f_90yerwbds
+c	net/minecraft/C_58wdmxzvg	net/minecraft/network/packet/ClientStatusPacket
+	f	I	f_90yerwbds	status
 	m	()V	<init>	<init>
 	m	(I)V	<init>	<init>
-		p	1		p_1
+		p	1		status
 	m	(Ljava/io/DataInputStream;)V	m_00ycwkymm	m_00ycwkymm
 		p	1		p_1
 	m	(Ljava/io/DataOutputStream;)V	m_73uomkfhh	m_73uomkfhh
@@ -20114,7 +20122,7 @@ c	net/minecraft/C_60jdtafba	net/minecraft/item/PickaxeItem
 		p	1		p_1
 		p	2		p_2
 	m	()V	<clinit>	<clinit>
-c	net/minecraft/C_60jqgzqrq	net/minecraft/network/packet/s2c/play/GlobalEntitySpawnS2CPacket
+c	net/minecraft/C_60jqgzqrq	net/minecraft/network/packet/GlobalEntitySpawnPacket
 	f	I	f_27qbydffq	id
 	f	I	f_76khunifm	x
 	f	I	f_05ubycnuq	y
@@ -21240,7 +21248,7 @@ c	net/minecraft/C_63ujlquhf	net/minecraft/client/render/entity/LivingEntityRende
 c	net/minecraft/C_63vfbtuam	net/minecraft/world/biome/RiverBiome
 	m	(I)V	<init>	<init>
 		p	1		p_1
-c	net/minecraft/C_63xkjavbt	net/minecraft/network/packet/s2c/play/PlayerSpawnS2CPacket
+c	net/minecraft/C_63xkjavbt	net/minecraft/network/packet/PlayerSpawnPacket
 	f	I	f_74zuuxoav	id
 	f	Ljava/lang/String;	f_90ikhtfvh	f_90ikhtfvh
 	f	I	f_41hzjxnmk	x
@@ -21977,16 +21985,16 @@ c	net/minecraft/C_64ugnezcd	net/minecraft/client/gui/widget/ListWidget
 		p	2		bottom
 		p	3		topAlpha
 		p	4		bottomAlpha
-c	net/minecraft/C_64uwgcqzu	net/minecraft/network/packet/s2c/play/ChatMessageS2CPacket
+c	net/minecraft/C_64uwgcqzu	net/minecraft/network/packet/ChatMessagePacket
 	f	I	f_17agwokvi	f_17agwokvi
-	f	Ljava/lang/String;	f_24clvvcry	f_24clvvcry
+	f	Ljava/lang/String;	f_24clvvcry	message
 	f	Z	f_42xmezghq	system
 	m	()V	<init>	<init>
 	m	(Ljava/lang/String;)V	<init>	<init>
-		p	1		p_1
+		p	1		message
 	m	(Ljava/lang/String;Z)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
+		p	1		message
+		p	2		system
 	m	(Ljava/io/DataInputStream;)V	m_00ycwkymm	m_00ycwkymm
 		p	1		p_1
 	m	(Ljava/io/DataOutputStream;)V	m_73uomkfhh	m_73uomkfhh
@@ -23298,7 +23306,7 @@ c	net/minecraft/C_68bxhbsdb	net/minecraft/world/biome/layer/ShoreLayer
 		p	2		p_2
 		p	3		p_3
 		p	4		p_4
-c	net/minecraft/C_68cralyxh	net/minecraft/network/packet/s2c/play/EntityDataS2CPacket
+c	net/minecraft/C_68cralyxh	net/minecraft/network/packet/EntityDataPacket
 	f	I	f_62cciqlxu	id
 	f	Ljava/util/List;	f_52anrkdwt	dataEntries
 	m	()V	<init>	<init>
@@ -23489,26 +23497,26 @@ c	net/minecraft/C_68rumsjio	net/minecraft/C_68rumsjio
 	m	()V	m_99cxvylfu	m_99cxvylfu
 	m	()V	m_17rqhqvct	m_17rqhqvct
 	m	()V	m_00urghxie	m_00urghxie
-c	net/minecraft/C_68ydbefqv	net/minecraft/client/network/listener/ClientPlayPacketListener
+c	net/minecraft/C_68ydbefqv	net/minecraft/network/listener/PacketListener
 	m	()V	<init>	<init>
-	m	()Z	m_14lqttvsj	m_14lqttvsj
+	m	()Z	m_14lqttvsj	isServer
 	m	(Lnet/minecraft/C_03eqaqriz;)V	m_00igmvmme	onWorldChunk
 		p	1		packet
-	m	(Lnet/minecraft/C_19sjytfcv;)V	m_97plruhiz	m_97plruhiz
-		p	1		p_1
-	m	(Ljava/lang/String;[Ljava/lang/Object;)V	m_49lsowicz	m_49lsowicz
-		p	1		p_1
-		p	2		p_2
+	m	(Lnet/minecraft/C_19sjytfcv;)V	m_97plruhiz	onUnknownPacket
+		p	1		packet
+	m	(Ljava/lang/String;[Ljava/lang/Object;)V	m_49lsowicz	onDisconnect
+		p	1		reason
+		p	2		args
 	m	(Lnet/minecraft/C_22wrjgbko;)V	m_10njnrvvj	onDisconnect
 		p	1		packet
 	m	(Lnet/minecraft/C_52amhfimv;)V	m_13ygmbtbu	onLogin
 		p	1		packet
-	m	(Lnet/minecraft/C_44ehmgtkt;)V	m_90oqkelpe	m_90oqkelpe
-		p	1		p_1
+	m	(Lnet/minecraft/C_44ehmgtkt;)V	m_90oqkelpe	onPlayerMove
+		p	1		packet
 	m	(Lnet/minecraft/C_46xtorrrs;)V	m_08unbaoec	onBlocksUpdate
 		p	1		packet
-	m	(Lnet/minecraft/C_76kwkklrm;)V	m_15hhvspvu	m_15hhvspvu
-		p	1		p_1
+	m	(Lnet/minecraft/C_76kwkklrm;)V	m_15hhvspvu	onPlayerAction
+		p	1		packet
 	m	(Lnet/minecraft/C_22rpvsruc;)V	m_28oziwdus	onBlockUpdate
 		p	1		packet
 	m	(Lnet/minecraft/C_63xkjavbt;)V	m_61ulbwkck	onPlayerSpawn
@@ -23517,8 +23525,8 @@ c	net/minecraft/C_68ydbefqv	net/minecraft/client/network/listener/ClientPlayPack
 		p	1		packet
 	m	(Lnet/minecraft/C_86sivffwo;)V	m_62nxxsoor	onEntityTeleport
 		p	1		packet
-	m	(Lnet/minecraft/C_46oohluqr;)V	m_18vbvpyld	m_18vbvpyld
-		p	1		p_1
+	m	(Lnet/minecraft/C_46oohluqr;)V	m_18vbvpyld	onPlayerUseItem
+		p	1		packet
 	m	(Lnet/minecraft/C_97orfpebp;)V	m_51ijyvczu	onSelectSlot
 		p	1		packet
 	m	(Lnet/minecraft/C_30slusdig;)V	m_46otncgwd	onRemoveEntities
@@ -23533,14 +23541,14 @@ c	net/minecraft/C_68ydbefqv	net/minecraft/client/network/listener/ClientPlayPack
 		p	1		packet
 	m	(Lnet/minecraft/C_46vjssuff;)V	m_50hqcabhc	onEntityAnimation
 		p	1		packet
-	m	(Lnet/minecraft/C_90jpywgsy;)V	m_05uctwsft	m_05uctwsft
-		p	1		p_1
-	m	(Lnet/minecraft/C_86yjpmalw;)V	m_43tozbfsi	m_43tozbfsi
-		p	1		p_1
-	m	(Lnet/minecraft/C_82dbhilpa;)V	m_85ciiozpv	m_85ciiozpv
-		p	1		p_1
-	m	(Lnet/minecraft/C_91qpcboru;)V	m_48xflstiy	m_48xflstiy
-		p	1		p_1
+	m	(Lnet/minecraft/C_90jpywgsy;)V	m_05uctwsft	onPlayerCommand
+		p	1		packet
+	m	(Lnet/minecraft/C_86yjpmalw;)V	m_43tozbfsi	onHandshake
+		p	1		packet
+	m	(Lnet/minecraft/C_82dbhilpa;)V	m_85ciiozpv	onHello
+		p	1		packet
+	m	(Lnet/minecraft/C_91qpcboru;)V	m_48xflstiy	onKey
+		p	1		packet
 	m	(Lnet/minecraft/C_17mokcrmm;)V	m_47opxxdvd	onMobSpawn
 		p	1		packet
 	m	(Lnet/minecraft/C_85uudzdfb;)V	m_38fwsgjay	onWorldTime
@@ -23554,7 +23562,7 @@ c	net/minecraft/C_68ydbefqv	net/minecraft/client/network/listener/ClientPlayPack
 	m	(Lnet/minecraft/C_31elsaqlo;)V	m_15dbtghmu	onEntityAttach
 		p	1		packet
 	m	(Lnet/minecraft/C_51qbgqjmo;)V	m_07mdovanp	onInteractEntity
-		p	1		p_1
+		p	1		packet
 	m	(Lnet/minecraft/C_05mlkomxt;)V	m_04ywlnhnq	onEntityEvent
 		p	1		packet
 	m	(Lnet/minecraft/C_39jsiqnla;)V	m_32hjvhvbk	onPlayerHealth
@@ -23563,12 +23571,12 @@ c	net/minecraft/C_68ydbefqv	net/minecraft/client/network/listener/ClientPlayPack
 		p	1		packet
 	m	(Lnet/minecraft/C_09axhtvhz;)V	m_75bpzghvp	onExplosion
 		p	1		packet
-	m	(Lnet/minecraft/C_45ttrqhfw;)V	m_61xlbvoqw	onDifficulty
+	m	(Lnet/minecraft/C_45ttrqhfw;)V	m_61xlbvoqw	onOpenMenu
 		p	1		packet
 	m	(Lnet/minecraft/C_70znyxrop;)V	m_67owghugh	onCloseMenu
 		p	1		packet
 	m	(Lnet/minecraft/C_42uoqcgog;)V	m_50nrreubp	onMenuClickSlot
-		p	1		p_1
+		p	1		packet
 	m	(Lnet/minecraft/C_37akbwgsn;)V	m_26nzqvgvq	onMenuSlotUpdate
 		p	1		packet
 	m	(Lnet/minecraft/C_31uyahcrd;)V	m_57rjcoisd	onInventoryMenu
@@ -23579,8 +23587,8 @@ c	net/minecraft/C_68ydbefqv	net/minecraft/client/network/listener/ClientPlayPack
 		p	1		packet
 	m	(Lnet/minecraft/C_95wukzoyl;)V	m_91hioyrru	onEntityEquipment
 		p	1		packet
-	m	(Lnet/minecraft/C_32slulely;)V	m_28rsvudpk	m_28rsvudpk
-		p	1		p_1
+	m	(Lnet/minecraft/C_32slulely;)V	m_28rsvudpk	onConfirmMenuAction
+		p	1		packet
 	m	(Lnet/minecraft/C_17znkflpu;)V	m_17bdlltto	onPaintingSpawn
 		p	1		packet
 	m	(Lnet/minecraft/C_30yxslnws;)V	m_19bhcitwn	onBlockEvent
@@ -23611,11 +23619,11 @@ c	net/minecraft/C_68ydbefqv	net/minecraft/client/network/listener/ClientPlayPack
 		p	1		packet
 	m	(Lnet/minecraft/C_80oshoggh;)V	m_85kylnpyv	onPlayerXp
 		p	1		packet
-	m	(Lnet/minecraft/C_28bsbywwb;)V	m_91udjorly	m_91udjorly
+	m	(Lnet/minecraft/C_28bsbywwb;)V	m_91udjorly	onCreativeMenuSlot
 		p	1		p_1
 	m	(Lnet/minecraft/C_04dfuymlf;)V	m_65yxvdbhm	onXpOrbSpawn
 		p	1		packet
-	m	(Lnet/minecraft/C_08jqhccnz;)V	m_32latbciv	m_32latbciv
+	m	(Lnet/minecraft/C_08jqhccnz;)V	m_32latbciv	onMenuClickButton
 		p	1		p_1
 	m	(Lnet/minecraft/C_92cwiwkmg;)V	m_17tczodue	onCustomPayload
 		p	1		packet
@@ -23627,17 +23635,18 @@ c	net/minecraft/C_68ydbefqv	net/minecraft/client/network/listener/ClientPlayPack
 		p	1		p_1
 	m	(Lnet/minecraft/C_35hkdriob;)V	m_67ezreyvy	onCommandSuggestions
 		p	1		packet
-	m	(Lnet/minecraft/C_17frhrrth;)V	m_44dmokbjl	m_44dmokbjl
+	m	(Lnet/minecraft/C_17frhrrth;)V	m_44dmokbjl	onClientSettings
 		p	1		p_1
 	m	(Lnet/minecraft/C_88ddlbbbh;)V	m_19ebofjoj	onSoundEvent
 		p	1		packet
 	m	(Lnet/minecraft/C_57xrqgtta;)V	m_09kfmfavj	onBlockMiningProgress
 		p	1		packet
-	m	(Lnet/minecraft/C_58wdmxzvg;)V	m_59pmxsufu	m_59pmxsufu
+	m	(Lnet/minecraft/C_58wdmxzvg;)V	m_59pmxsufu	onClientStatus
 		p	1		p_1
 	m	(Lnet/minecraft/C_96zvjfuar;)V	m_79yctctoc	onWorldChunks
 		p	1		packet
-	m	()Z	m_32wnqiiyn	m_32wnqiiyn
+	m	()Z	m_32wnqiiyn	canHandleOnCurrentThread
+		c	Returns whether this packet handler can handle packets on the current thread or if\npackets should be queued to be handled on the main thread.
 c	net/minecraft/C_68zcrzyxg	net/minecraft/block/Block
 	f	Lnet/minecraft/C_70okwidnp;	f_26ltcffdk	itemGroup
 	f	Lnet/minecraft/C_68zcrzyxg$C_17cfzskly;	f_61soneabm	ORE_SOUND
@@ -24759,7 +24768,7 @@ c	net/minecraft/C_70upxzmqr	net/minecraft/C_70upxzmqr
 	f	[F	f_45pmikhzf	f_45pmikhzf
 	m	()V	<init>	<init>
 	m	()V	m_04yxgvvha	m_04yxgvvha
-c	net/minecraft/C_70znyxrop	net/minecraft/network/packet/s2c/play/CloseMenuS2CPacket
+c	net/minecraft/C_70znyxrop	net/minecraft/network/packet/CloseMenuPacket
 	f	I	f_13zqauqze	id
 	m	()V	<init>	<init>
 	m	(I)V	<init>	<init>
@@ -26820,7 +26829,7 @@ c	net/minecraft/C_76itfndic	net/minecraft/block/FlowingLiquidBlock
 		p	2		p_2
 		p	3		p_3
 		p	4		p_4
-c	net/minecraft/C_76kwkklrm	net/minecraft/network/packet/c2s/play/PlayerActionC2SPacket
+c	net/minecraft/C_76kwkklrm	net/minecraft/network/packet/PlayerActionPacket
 	f	I	f_84xlkfeyt	x
 	f	I	f_20lguebll	y
 	f	I	f_80qfspxcw	z
@@ -27487,13 +27496,13 @@ c	net/minecraft/C_79swpzvtc	net/minecraft/client/gui/screen/OutOfMemoryScreen
 		p	1		p_1
 		p	2		p_2
 		p	3		p_3
-c	net/minecraft/C_79yqaxgmd	net/minecraft/network/packet/s2c/play/EntityHeadAnglesS2CPacket
+c	net/minecraft/C_79yqaxgmd	net/minecraft/network/packet/EntityHeadAnglesPacket
 	f	I	f_28uqlibew	id
 	f	B	f_54qzhrvra	headYaw
 	m	()V	<init>	<init>
 	m	(IB)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
+		p	1		id
+		p	2		headYaw
 	m	(Ljava/io/DataInputStream;)V	m_00ycwkymm	m_00ycwkymm
 		p	1		p_1
 	m	(Ljava/io/DataOutputStream;)V	m_73uomkfhh	m_73uomkfhh
@@ -27577,7 +27586,7 @@ c	net/minecraft/C_80lvtbnza	net/minecraft/world/storage/RegionWorldStorage
 		p	1		p_1
 	m	()Ljava/lang/String;	m_42desqjzo	m_42desqjzo
 	m	()V	<clinit>	<clinit>
-c	net/minecraft/C_80oshoggh	net/minecraft/network/packet/s2c/play/PlayerXpS2CPacket
+c	net/minecraft/C_80oshoggh	net/minecraft/network/packet/PlayerXpPacket
 	f	F	f_88qjucpwa	levelProgress
 	f	I	f_49vwhjtwq	xp
 	f	I	f_51htbinet	level
@@ -27692,19 +27701,19 @@ c	net/minecraft/C_81judpclv	net/minecraft/C_81judpclv
 		p	1		p_1
 	m	()Ljava/lang/String;	m_42desqjzo	m_42desqjzo
 	m	()[Ljava/lang/String;	m_53mafvveo	m_53mafvveo
-c	net/minecraft/C_81kamwyqa	net/minecraft/network/packet/s2c/play/PlayerRespawnS2CPacket
-	f	I	f_62lnfxxyw	f_62lnfxxyw
-	f	I	f_41mlxukri	f_41mlxukri
-	f	I	f_14uzjcfip	dimensionId
+c	net/minecraft/C_81kamwyqa	net/minecraft/network/packet/PlayerRespawnPacket
+	f	I	f_62lnfxxyw	dimensionId
+	f	I	f_41mlxukri	difficulty
+	f	I	f_14uzjcfip	worldHeight
 	f	Lnet/minecraft/C_92rrzzavg$C_65phlzcds;	f_44osmcssf	gameMode
-	f	Lnet/minecraft/C_88awvyqha;	f_40fuxjrue	f_40fuxjrue
+	f	Lnet/minecraft/C_88awvyqha;	f_40fuxjrue	generatorType
 	m	()V	<init>	<init>
 	m	(IBLnet/minecraft/C_88awvyqha;ILnet/minecraft/C_92rrzzavg$C_65phlzcds;)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-		p	5		p_5
+		p	1		dimensionId
+		p	2		difficulty
+		p	3		generatorType
+		p	4		worldHeight
+		p	5		gameMode
 	m	(Lnet/minecraft/C_68ydbefqv;)V	m_68vcjopzq	m_68vcjopzq
 		p	1		p_1
 	m	(Ljava/io/DataInputStream;)V	m_00ycwkymm	m_00ycwkymm
@@ -27886,7 +27895,7 @@ c	net/minecraft/C_81zpklrtm	net/minecraft/block/FireBlock
 		p	3		p_3
 		p	4		p_4
 		p	5		p_5
-c	net/minecraft/C_82dbhilpa	net/minecraft/network/packet/s2c/login/HelloS2CPacket
+c	net/minecraft/C_82dbhilpa	net/minecraft/network/packet/HelloPacket
 	f	Ljava/lang/String;	f_99yavezhz	serverId
 	f	Ljava/security/PublicKey;	f_51uxzypug	publicKey
 	f	[B	f_98vbodurp	nonce
@@ -28710,28 +28719,28 @@ c	net/minecraft/C_85bwkvsib	net/minecraft/entity/living/mob/hostile/SkeletonEnti
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/C_85dcnxfay	net/minecraft/server/network/ServerNetworkIo
 	f	Ljava/util/logging/Logger;	f_49ejlohoe	f_49ejlohoe
-	f	Ljava/util/List;	f_82njniwyd	channels
+	f	Ljava/util/List;	f_82njniwyd	connections
 	f	Ljava/util/HashMap;	f_76kohttac	f_76kohttac
-	f	I	f_27uluurcw	f_27uluurcw
-	f	Ljava/net/ServerSocket;	f_44khdeerv	f_44khdeerv
+	f	I	f_27uluurcw	connectionCounter
+	f	Ljava/net/ServerSocket;	f_44khdeerv	socket
 	f	Lnet/minecraft/C_59mqpusow;	f_49maljocz	f_49maljocz
-	f	Ljava/net/InetAddress;	f_90tlhcmro	f_90tlhcmro
-	f	I	f_03susakoc	f_03susakoc
+	f	Ljava/net/InetAddress;	f_90tlhcmro	address
+	f	I	f_03susakoc	port
 	m	(Lnet/minecraft/C_59mqpusow;Ljava/net/InetAddress;I)V	<init>	<init>
 		p	1		p_1
 		p	2		p_2
 		p	3		p_3
 	m	()V	m_37msmjdwb	tick
 	m	()V	run	run
-	m	(Lnet/minecraft/C_27uqpifyq;)V	m_85vtlymui	m_85vtlymui
-		p	1		p_1
+	m	(Lnet/minecraft/C_27uqpifyq;)V	m_85vtlymui	addConnection
+		p	1		connection
 	m	(Ljava/net/InetAddress;)Z	m_99hgwwfuo	m_99hgwwfuo
 		p	0		p_0
-	m	(Ljava/net/InetAddress;)V	m_21hglizju	m_21hglizju
-		p	1		p_1
-	m	()V	m_24dodgjka	m_24dodgjka
+	m	(Ljava/net/InetAddress;)V	m_21hglizju	close
+		p	1		address
+	m	()V	m_24dodgjka	close
 	m	()Ljava/net/InetAddress;	m_22yqymmhg	m_22yqymmhg
-	m	()I	m_92fkatwvt	m_92fkatwvt
+	m	()I	m_92fkatwvt	getPort
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/C_85dnxtfbh	net/minecraft/block/TripwireBlock
 	m	(I)V	<init>	<init>
@@ -28921,7 +28930,7 @@ c	net/minecraft/C_85uenplbc	net/minecraft/entity/thrown/SnowballEntity
 		p	6		p_6
 	m	(Lnet/minecraft/C_87xskakms;)V	m_43itxnwlq	m_43itxnwlq
 		p	1		p_1
-c	net/minecraft/C_85uudzdfb	net/minecraft/network/packet/s2c/play/WorldTimeS2CPacket
+c	net/minecraft/C_85uudzdfb	net/minecraft/network/packet/WorldTimePacket
 	f	J	f_56hyzlrkw	time
 	m	()V	<init>	<init>
 	m	(J)V	<init>	<init>
@@ -29027,7 +29036,7 @@ c	net/minecraft/C_86jbsexkg	net/minecraft/item/SpawnEggItem
 		p	1		p_1
 		p	2		p_2
 		p	3		p_3
-c	net/minecraft/C_86sivffwo	net/minecraft/network/packet/s2c/play/EntityTeleportS2CPacket
+c	net/minecraft/C_86sivffwo	net/minecraft/network/packet/EntityTeleportPacket
 	f	I	f_61xdpwgze	id
 	f	I	f_76qsquxxy	x
 	f	I	f_52yngxszh	y
@@ -29128,17 +29137,17 @@ c	net/minecraft/C_86yiwwvox	net/minecraft/client/gui/screen/ingame/menu/Inventor
 	m	()Z	m_77zbbemvw	m_77zbbemvw
 	m	()V	m_50qzyawdj	m_50qzyawdj
 	m	()V	<clinit>	<clinit>
-c	net/minecraft/C_86yjpmalw	net/minecraft/network/packet/c2s/handshake/HandshakeC2SPacket
+c	net/minecraft/C_86yjpmalw	net/minecraft/network/packet/HandshakePacket
 	f	I	f_02vxtbisq	version
-	f	Ljava/lang/String;	f_57lkpfjzb	f_57lkpfjzb
+	f	Ljava/lang/String;	f_57lkpfjzb	protocol
 	f	Ljava/lang/String;	f_96euhhiww	address
 	f	I	f_22ljafksa	port
 	m	()V	<init>	<init>
 	m	(ILjava/lang/String;Ljava/lang/String;I)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
+		p	1		version
+		p	2		protocol
+		p	3		address
+		p	4		port
 	m	(Ljava/io/DataInputStream;)V	m_00ycwkymm	m_00ycwkymm
 		p	1		p_1
 	m	(Ljava/io/DataOutputStream;)V	m_73uomkfhh	m_73uomkfhh
@@ -29147,7 +29156,7 @@ c	net/minecraft/C_86yjpmalw	net/minecraft/network/packet/c2s/handshake/Handshake
 		p	1		p_1
 	m	()I	m_85rpsnrmq	m_85rpsnrmq
 	m	()I	m_11ujgkctc	getVersion
-	m	()Ljava/lang/String;	m_61olkvxem	m_61olkvxem
+	m	()Ljava/lang/String;	m_61olkvxem	getProtocol
 	m	()Ljava/lang/String;	m_28xpvbjxu	m_28xpvbjxu
 	m	()I	m_07xmellws	m_07xmellws
 	m	()Ljava/lang/String;	m_12qudywtm	m_12qudywtm
@@ -29419,7 +29428,7 @@ c	net/minecraft/C_88awvyqha	net/minecraft/world/gen/WorldGeneratorType
 	m	(Ljava/lang/String;)Lnet/minecraft/C_88awvyqha;	m_22rtpooks	byId
 		p	0		id
 	m	()V	<clinit>	<clinit>
-c	net/minecraft/C_88ddlbbbh	net/minecraft/network/packet/s2c/play/SoundEventS2CPacket
+c	net/minecraft/C_88ddlbbbh	net/minecraft/network/packet/SoundEventPacket
 	f	Ljava/lang/String;	f_77omttawm	name
 	f	I	f_21nldvzqu	x
 	f	I	f_76qtpqxdh	y
@@ -30145,7 +30154,7 @@ c	net/minecraft/C_90hhamlow	net/minecraft/C_90hhamlow
 		p	1		p_1
 	m	(S)V	m_55lrxtjnm	m_55lrxtjnm
 		p	1		p_1
-c	net/minecraft/C_90jpywgsy	net/minecraft/network/packet/c2s/play/PlayerCommandC2SPacket
+c	net/minecraft/C_90jpywgsy	net/minecraft/network/packet/PlayerCommandPacket
 	f	I	f_73tyoumtx	entityId
 	f	I	f_14saawjmf	command
 	m	()V	<init>	<init>
@@ -30644,10 +30653,10 @@ c	net/minecraft/C_91ouwajhg	net/minecraft/util/math/Directions
 	f	[I	f_38ltmbpyi	Z_OFFSET
 	m	()V	<init>	<init>
 	m	()V	<clinit>	<clinit>
-c	net/minecraft/C_91qpcboru	net/minecraft/network/packet/c2s/login/KeyC2SPacket
+c	net/minecraft/C_91qpcboru	net/minecraft/network/packet/KeyPacket
 	f	[B	f_60vbvlmcw	keyBytes
 	f	[B	f_73pecuprb	nonceBytes
-	f	Ljavax/crypto/SecretKey;	f_24kzsdsjx	f_24kzsdsjx
+	f	Ljavax/crypto/SecretKey;	f_24kzsdsjx	key
 	m	()V	<init>	<init>
 	m	(Ljavax/crypto/SecretKey;Ljava/security/PublicKey;[B)V	<init>	<init>
 		p	1		secretKey
@@ -30662,7 +30671,7 @@ c	net/minecraft/C_91qpcboru	net/minecraft/network/packet/c2s/login/KeyC2SPacket
 	m	()I	m_85rpsnrmq	m_85rpsnrmq
 	m	(Ljava/security/PrivateKey;)Ljavax/crypto/SecretKey;	m_18zxmlwzn	getSecretKey
 		p	1		privateKey
-	m	()Ljavax/crypto/SecretKey;	m_15zlrrehu	m_15zlrrehu
+	m	()Ljavax/crypto/SecretKey;	m_15zlrrehu	getSecretKey
 	m	(Ljava/security/PrivateKey;)[B	m_68amyabjj	getNonce
 		p	1		privateKey
 c	net/minecraft/C_91wrhnwqa	net/minecraft/world/gen/chunk/NetherChunkGenerator
@@ -30736,9 +30745,9 @@ c	net/minecraft/C_91wrhnwqa	net/minecraft/world/gen/chunk/NetherChunkGenerator
 		p	4		p_4
 		p	5		p_5
 	m	()I	m_46uhgqnto	m_46uhgqnto
-c	net/minecraft/C_92cwiwkmg	net/minecraft/network/packet/s2c/play/CustomPayloadS2CPacket
+c	net/minecraft/C_92cwiwkmg	net/minecraft/network/packet/CustomPayloadPacket
 	f	Ljava/lang/String;	f_28huaabbg	channel
-	f	I	f_53horrrkp	f_53horrrkp
+	f	I	f_53horrrkp	size
 	f	[B	f_48wjpuqso	data
 	m	()V	<init>	<init>
 	m	(Ljava/lang/String;[B)V	<init>	<init>
@@ -31007,7 +31016,7 @@ c	net/minecraft/C_93sxivfat	net/minecraft/client/entity/particle/PortalParticle
 	m	(F)F	m_04lbxddoy	m_04lbxddoy
 		p	1		p_1
 	m	()V	m_28zixkoqt	m_28zixkoqt
-c	net/minecraft/C_93txwepbr	net/minecraft/network/packet/s2c/play/PlayerInfoS2CPacket
+c	net/minecraft/C_93txwepbr	net/minecraft/network/packet/PlayerInfoPacket
 	f	Ljava/lang/String;	f_23rimxgyk	playerName
 	f	Z	f_48eacizoi	online
 	f	I	f_68isvspwu	ping
@@ -31701,7 +31710,7 @@ c	net/minecraft/C_95uzvmqyi	net/minecraft/client/render/entity/model/ChickenEnti
 		p	4		p_4
 		p	5		p_5
 		p	6		p_6
-c	net/minecraft/C_95wukzoyl	net/minecraft/network/packet/s2c/play/EntityEquipmentS2CPacket
+c	net/minecraft/C_95wukzoyl	net/minecraft/network/packet/EntityEquipmentPacket
 	f	I	f_66lthcmmn	id
 	f	I	f_05vvxizaw	equipmentSlot
 	f	Lnet/minecraft/C_72owraavl;	f_27dmijyth	stack
@@ -31971,7 +31980,7 @@ c	net/minecraft/C_96xxupkuf	net/minecraft/C_96xxupkuf
 	m	(Ljava/lang/Object;)Ljava/lang/Object;	m_96gnwnehr	m_96gnwnehr
 		p	1		p_1
 	m	()Ljava/lang/String;	m_77qmyhnqj	m_77qmyhnqj
-c	net/minecraft/C_96zvjfuar	net/minecraft/network/packet/s2c/play/WorldChunksS2CPacket
+c	net/minecraft/C_96zvjfuar	net/minecraft/network/packet/WorldChunksPacket
 	f	[I	f_38bsrmbdl	chunkX
 	f	[I	f_09ywawtep	chunkZ
 	f	[I	f_82slwacxp	sectionsWithData
@@ -32311,7 +32320,7 @@ c	net/minecraft/C_97oneowwj	net/minecraft/block/FarmlandBlock
 		p	2		p_2
 		p	3		p_3
 		p	4		p_4
-c	net/minecraft/C_97orfpebp	net/minecraft/network/packet/s2c/play/SelectSlotS2CPacket
+c	net/minecraft/C_97orfpebp	net/minecraft/network/packet/SelectSlotPacket
 	f	I	f_25paswwqc	slot
 	m	()V	<init>	<init>
 	m	(I)V	<init>	<init>
@@ -32641,7 +32650,7 @@ c	net/minecraft/C_97zulxhng	net/minecraft/entity/living/LivingEntity
 	m	(Lnet/minecraft/C_72owraavl;)V	m_08ascjnai	renderBrokenItem
 		p	1		itemStack
 	m	()Z	m_96dlqiezu	m_96dlqiezu
-c	net/minecraft/C_98abnoiwb	net/minecraft/network/packet/s2c/play/GameEventS2CPacket
+c	net/minecraft/C_98abnoiwb	net/minecraft/network/packet/GameEventPacket
 	f	[Ljava/lang/String;	f_26hkmbeyi	EVENT_MESSAGES
 	f	I	f_22vyzamaj	event
 	f	I	f_27awnhvjt	f_27awnhvjt
