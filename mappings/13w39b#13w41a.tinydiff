@@ -575,9 +575,9 @@ c	net/minecraft/C_19sjytfcv	net/minecraft/network/packet/Packet
 	f	Ljava/util/Set;	f_22iddqzxc	C2S	
 	f	J	f_51izsalgm	creationTime	
 	f	J	f_82nzsufvs	deserialized	
-	f	J	f_31fetbcji	f_31fetbcji	
+	f	J	f_31fetbcji	deserializedSize	
 	f	J	f_69dsxnnni	serialized	
-	f	J	f_28giwqggx	f_28giwqggx	
+	f	J	f_28giwqggx	serializedSize	
 	f	Z	f_94rwrieql	hasBlockData	
 		c	True if this packet contains block (entity) data.\n<br>\nNote: this field is unused since 1.4.3.	
 	m	()V	<init>	<init>	
@@ -1460,14 +1460,14 @@ c	net/minecraft/C_43hztdzsj	net/minecraft/network/packet/EntityPickupPacket	net/
 		p	1			p_1
 c	net/minecraft/C_43mnimvqq
 	f	Lnet/minecraft/C_36abrcmve;	f_04qapbfan	connection	
-	f	Z	f_30vayjgrs	f_30vayjgrs	
+	f	Z	f_30vayjgrs	disconnected	
 	f	Lnet/minecraft/C_51akkmkss;	f_04qapbfan		f_04qapbfan
 	m	(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/C_36abrcmve;Lnet/minecraft/C_53mtutqhz;)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 	m	()V	m_66hozvkqv	m_66hozvkqv	
-	m	(Ljava/lang/String;)V	m_02eglyfcn	m_02eglyfcn	
+	m	(Ljava/lang/String;)V	m_02eglyfcn	disconnect	
 		p	1		p_1	
 	m	(Lnet/minecraft/C_44ehmgtkt;)V	m_90oqkelpe	m_90oqkelpe	
 		p	1		p_1	
@@ -2111,8 +2111,8 @@ c	net/minecraft/C_59mqpusow	net/minecraft/C_59mqpusow
 		p	1		p_1	
 	m	(Lnet/minecraft/C_43mnimvqq;)V	m_69zikucut	m_69zikucut	
 		p	1		p_1	
-	m	()V	m_00hwgungw	m_00hwgungw	
-	m	()V	m_56vuzarrw	m_56vuzarrw	
+	m	()V	m_00hwgungw	close	
+	m	()V	m_56vuzarrw	tick	
 	m	()Lnet/minecraft/server/MinecraftServer;	m_29mtbhzwv	m_29mtbhzwv	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/C_59mqpusow$1	1	
@@ -2756,29 +2756,29 @@ c	net/minecraft/C_90jpywgsy	net/minecraft/network/packet/PlayerCommandPacket	net
 	m	(Lnet/minecraft/C_80inurxlz;)V	m_46qwjrofo		m_46qwjrofo
 		p	1			p_1
 c	net/minecraft/C_91cpqtfmr
-	m	(Lnet/minecraft/C_36abrcmve;Lnet/minecraft/C_53mtutqhz;)V	m_91iratbhc	m_91iratbhc	
-		p	1		p_1	
-		p	2		p_2	
-	m	(Lnet/minecraft/C_19sjytfcv;)V	m_30axhxcgz	m_30axhxcgz	
-		p	1		p_1	
-	m	(Lnet/minecraft/C_19sjytfcv;I)V	m_91mjaamqs	m_91mjaamqs	
-		p	1		p_1	
-		p	2		p_2	
-	m	(DDDDILnet/minecraft/C_19sjytfcv;)V	m_84vrjlmff	m_84vrjlmff	
-		p	1		p_1	
-		p	3		p_3	
-		p	5		p_5	
-		p	7		p_7	
-		p	9		p_9	
-		p	10		p_10	
-	m	(Lnet/minecraft/C_84dqcqlog;DDDDILnet/minecraft/C_19sjytfcv;)V	m_35hoxlslq	m_35hoxlslq	
-		p	1		p_1	
-		p	2		p_2	
-		p	4		p_4	
-		p	6		p_6	
-		p	8		p_8	
-		p	10		p_10	
-		p	11		p_11	
+	m	(Lnet/minecraft/C_36abrcmve;Lnet/minecraft/C_53mtutqhz;)V	m_91iratbhc	onLogin	
+		p	1		connection	
+		p	2		player	
+	m	(Lnet/minecraft/C_19sjytfcv;)V	m_30axhxcgz	sendToAll	
+		p	1		packet	
+	m	(Lnet/minecraft/C_19sjytfcv;I)V	m_91mjaamqs	sendToDimension	
+		p	1		packet	
+		p	2		dimensionId	
+	m	(DDDDILnet/minecraft/C_19sjytfcv;)V	m_84vrjlmff	sendToAround	
+		p	1		x	
+		p	3		y	
+		p	5		z	
+		p	7		maxDistance	
+		p	9		dimensionId	
+		p	10		packet	
+	m	(Lnet/minecraft/C_84dqcqlog;DDDDILnet/minecraft/C_19sjytfcv;)V	m_35hoxlslq	sendToAround	
+		p	1		source	
+		p	2		x	
+		p	4		y	
+		p	6		z	
+		p	8		maxDistance	
+		p	10		dimensionId	
+		p	11		packet	
 	m	(Lnet/minecraft/C_51akkmkss;Lnet/minecraft/C_53mtutqhz;)V	m_91iratbhc		m_91iratbhc
 		p	1			p_1
 		p	2			p_2
@@ -2976,25 +2976,25 @@ c	net/minecraft/C_99sowdzft
 	f	Lnet/minecraft/C_84dqcqlog$C_15ytfvxmv;	f_17vtdqgsy		chatVisibility
 	f	Lnet/minecraft/C_57rxazdrb;	f_21lhpdjir		difficulty
 c	net/minecraft/server/MinecraftServer
-	f	J	f_19cbvdnhv	f_19cbvdnhv	
-	f	J	f_75minzakp	f_75minzakp	
-	f	J	f_48fbnrncw	f_48fbnrncw	
-	f	J	f_62yblpdzi	f_62yblpdzi	
-	f	[J	f_45utieyaw	f_45utieyaw	
-	f	[J	f_46wqyhkuw	f_46wqyhkuw	
-	f	[J	f_27pvceong	f_27pvceong	
-	f	[J	f_16yoyusyq	f_16yoyusyq	
+	f	J	f_19cbvdnhv	lastSentPacketCount	
+	f	J	f_75minzakp	lastSentPacketSize	
+	f	J	f_48fbnrncw	lastReceivedPacketCount	
+	f	J	f_62yblpdzi	lastReceivedPacketSize	
+	f	[J	f_45utieyaw	averageSentPacketSize	
+	f	[J	f_46wqyhkuw	averageReceivedPacketCount	
+	f	[J	f_27pvceong	averageReceivedPacketSize	
+	f	[J	f_16yoyusyq	averageTickTime	
 	f	Lnet/minecraft/C_85dcnxfay;	f_09yedvoya		networkIo
 	f	Lnet/minecraft/C_89nlsgadq;	f_08backcfx		status
 	f	Ljava/util/Random;	f_68ivxcvsv		random
 	f	J	f_48nvhrobi		lastPlayerSampleUpdate
-	m	()I	m_09rqyflxk	m_09rqyflxk	
+	m	()I	m_09rqyflxk	getDefaultDifficulty	
 	m	(ZZ)V	m_00rouqqrg	m_00rouqqrg	
 		p	1		p_1	
 		p	2		p_2	
-	m	(I)V	m_95pmlfrrs	m_95pmlfrrs	
-		p	1		p_1	
-	m	()Lnet/minecraft/C_59mqpusow;	m_52mwuxmaf	m_52mwuxmaf	
+	m	(I)V	m_95pmlfrrs	setDifficulty	
+		p	1		difficulty	
+	m	()Lnet/minecraft/C_59mqpusow;	m_52mwuxmaf	getNetworkIo	
 	m	()Lnet/minecraft/C_57rxazdrb;	m_09rqyflxk		getDefaultDifficulty
 	m	(Z)V	m_00rouqqrg		saveWorlds
 		p	1			silent
