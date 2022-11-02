@@ -16,7 +16,7 @@ c	net/minecraft/C_00dzpffnu	net/minecraft/network/packet/MapDataPacket	net/minec
 	m	()Ljava/lang/String;	m_41vkeclbr		m_41vkeclbr
 	m	(Lnet/minecraft/C_80inurxlz;)V	m_46qwjrofo		m_46qwjrofo
 		p	1			p_1
-c	net/minecraft/C_00zgnzavq	net/minecraft/network/Connection	
+c	net/minecraft/C_00zgnzavq	net/minecraft/network/RemoteConnection	
 	f	Ljava/util/concurrent/atomic/AtomicInteger;	f_01qcovhdl	DISCONNECT_THREAD_COUNTER	
 	f	Lorg/apache/logging/log4j/Logger;	f_01macigzp	LOGGER	
 	f	Ljava/util/concurrent/atomic/AtomicInteger;	f_89huzhrki	READ_THREAD_COUNTER	
@@ -699,7 +699,7 @@ c	net/minecraft/C_21cyyvviz	net/minecraft/network/packet/PlayerAbilitiesPacket	n
 	m	(Lnet/minecraft/C_80inurxlz;)V	m_46qwjrofo		m_46qwjrofo
 		p	1			p_1
 c	net/minecraft/C_21jveielc
-	f	Lnet/minecraft/C_41yxvtewz;	f_98fagnsrt	f_98fagnsrt	
+	f	Lnet/minecraft/C_41yxvtewz;	f_98fagnsrt	networkHandler	
 	f	Lnet/minecraft/C_65ttkuuty;	f_98fagnsrt		connection
 	m	(Lnet/minecraft/C_21jveielc;Lnet/minecraft/C_41yxvtewz;)Lnet/minecraft/C_41yxvtewz;	m_08hbtwcld	m_08hbtwcld	
 		p	0		p_0	
@@ -871,15 +871,16 @@ c	net/minecraft/C_27idnebby
 c	net/minecraft/C_27uqpifyq
 	f	Lnet/minecraft/C_00zgnzavq;	f_47twriyww	connection	
 	f	Z	f_04kegftao	disconnected	
-	f	Z	f_49etzabfe	f_49etzabfe	
-	f	Ljava/lang/String;	f_89xplbvhz	f_89xplbvhz	
-	f	Z	f_14fszsloc	f_14fszsloc	
+	f	Z	f_49etzabfe	accepted	
+	f	Ljava/lang/String;	f_89xplbvhz	serverId	
+	f	Z	f_14fszsloc	authenticating	
 	f	Lnet/minecraft/C_51akkmkss;	f_85lzktykh		f_85lzktykh
 	f	Lnet/minecraft/C_27uqpifyq$C_41ptshvlf;	f_46ddfdmwm		stage
+	f	Ljava/lang/String;	f_88fjiquuv	playerName	serverId
 	m	(Lnet/minecraft/server/MinecraftServer;Ljava/net/Socket;Ljava/lang/String;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+		p	1		server	
+		p	2		socket	
+		p	3		address	
 	m	()V	m_09nqdgity	tick	
 	m	(Lnet/minecraft/C_86yjpmalw;)V	m_43tozbfsi	m_43tozbfsi	
 		p	1		p_1	
@@ -1140,13 +1141,13 @@ c	net/minecraft/C_33lkbnhyb	net/minecraft/block/AprilFoolsLockedChestBlock
 	m	(Lnet/minecraft/C_34zfpnxrc;)V	m_04jdtabus	m_04jdtabus	
 		p	1		p_1	
 c	net/minecraft/C_33rxbrxcu
-	f	Ljava/lang/String;	f_33qlivtyl	f_33qlivtyl	
+	f	Ljava/lang/String;	f_33qlivtyl	id	
 	m	(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
-	m	()Ljava/lang/String;	m_25jmhsovx	m_25jmhsovx	
+	m	()Ljava/lang/String;	m_25jmhsovx	getId	
 	m	(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V	<init>		<init>
 		p	1			username
 		p	2			uuid
@@ -1208,7 +1209,7 @@ c	net/minecraft/C_35snmhjpa	net/minecraft/network/packet/ScoreboardObjectivePack
 		p	1			p_1
 	m	(Lnet/minecraft/C_80inurxlz;)V	m_46qwjrofo		m_46qwjrofo
 		p	1			p_1
-c	net/minecraft/C_36abrcmve	net/minecraft/network/IConnection	
+c	net/minecraft/C_36abrcmve	net/minecraft/network/Connection	
 	m	(Lnet/minecraft/C_68ydbefqv;)V	m_16mrzjfuf	setListener	
 		p	1		listener	
 	m	(Lnet/minecraft/C_19sjytfcv;)V	m_61ppgrkac	send	
@@ -1358,7 +1359,7 @@ c	net/minecraft/C_41xahvqjh
 		p	3			reason
 c	net/minecraft/C_41yxvtewz
 	f	Lcom/google/gson/Gson;	f_90uouzkqw	f_90uouzkqw	
-	f	Z	f_18wvvnydt	f_18wvvnydt	
+	f	Z	f_18wvvnydt	disconnected	
 	f	Lcom/mojang/authlib/minecraft/MinecraftSessionService;	f_31fcmrjxb	sessionService	
 	f	Lnet/minecraft/C_36abrcmve;	f_65fjdxsgn	connection	
 	f	Ljava/lang/String;	f_38tyxrtdu	f_38tyxrtdu	
@@ -1375,8 +1376,8 @@ c	net/minecraft/C_41yxvtewz
 	m	(Lnet/minecraft/C_13piauvdk;Lnet/minecraft/C_96dvkujix;)V	<init>	<init>	
 		p	1		client	
 		p	2		server	
-	m	()V	m_60sgyquil	m_60sgyquil	
-	m	()V	m_05aecaveu	m_05aecaveu	
+	m	()V	m_60sgyquil	cleanUp	
+	m	()V	m_05aecaveu	tick	
 	m	(Lnet/minecraft/C_82dbhilpa;)V	m_85ciiozpv	m_85ciiozpv	
 		p	1		p_1	
 	m	(Lnet/minecraft/C_91qpcboru;)V	m_48xflstiy	m_48xflstiy	
@@ -1386,13 +1387,13 @@ c	net/minecraft/C_41yxvtewz
 	m	(Ljava/lang/String;[Ljava/lang/Object;)V	m_49lsowicz	m_49lsowicz	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/C_19sjytfcv;)V	m_19yunkjcc	m_19yunkjcc	
-		p	1		p_1	
+	m	(Lnet/minecraft/C_19sjytfcv;)V	m_19yunkjcc	sendPacketAndDisconnect	
+		p	1		packet	
 	m	(Lnet/minecraft/C_19sjytfcv;)V	m_35ablvdsd	sendPacket	
-		p	1		p_1	
+		p	1		packet	
 	m	(Ljava/lang/String;)Lnet/minecraft/C_21uoltggz;	m_72jccssku	m_72jccssku	
 		p	1		p_1	
-	m	()V	m_35gzivnnn	m_35gzivnnn	
+	m	()V	m_35gzivnnn	disconnect	
 	m	(Lnet/minecraft/C_32slulely;)V	m_28rsvudpk	m_28rsvudpk	
 		p	1		p_1	
 	m	()Z	m_32wnqiiyn	m_32wnqiiyn	
@@ -1463,12 +1464,12 @@ c	net/minecraft/C_43mnimvqq
 	f	Z	f_30vayjgrs	disconnected	
 	f	Lnet/minecraft/C_51akkmkss;	f_04qapbfan		f_04qapbfan
 	m	(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/C_36abrcmve;Lnet/minecraft/C_53mtutqhz;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-	m	()V	m_66hozvkqv	m_66hozvkqv	
+		p	1		server	
+		p	2		connection	
+		p	3		player	
+	m	()V	m_66hozvkqv	tick	
 	m	(Ljava/lang/String;)V	m_02eglyfcn	disconnect	
-		p	1		p_1	
+		p	1		reason	
 	m	(Lnet/minecraft/C_44ehmgtkt;)V	m_90oqkelpe	m_90oqkelpe	
 		p	1		p_1	
 	m	(Ljava/lang/String;[Ljava/lang/Object;)V	m_49lsowicz	m_49lsowicz	
@@ -1486,7 +1487,7 @@ c	net/minecraft/C_43mnimvqq
 		p	1		p_1	
 	m	(Lnet/minecraft/C_22wrjgbko;)V	m_10njnrvvj	m_10njnrvvj	
 		p	1		p_1	
-	m	()I	m_75aiqpbcv	m_75aiqpbcv	
+	m	()I	m_75aiqpbcv	getBlockDataSendQueueSize	
 	m	(Lnet/minecraft/C_51qbgqjmo;)V	m_07mdovanp	m_07mdovanp	
 		p	1		p_1	
 	m	(Lnet/minecraft/C_58wdmxzvg;)V	m_59pmxsufu	m_59pmxsufu	
@@ -2279,17 +2280,17 @@ c	net/minecraft/C_68ydbefqv	net/minecraft/network/listener/PacketListener	net/mi
 	m	(Lnet/minecraft/C_86sqsbjfz;)V	m_63rbpfaga	onPlayerInput	
 		p	1		packet	
 	m	(Lnet/minecraft/C_13wqujhrj;)V	m_12zctzior	onPingHost	
-		p	1		p_1	
+		p	1		packet	
 	m	(Lnet/minecraft/C_28bsbywwb;)V	m_91udjorly	onCreativeMenuSlot	
-		p	1		p_1	
+		p	1		packet	
 	m	(Lnet/minecraft/C_08jqhccnz;)V	m_32latbciv	onMenuClickButton	
-		p	1		p_1	
-	m	(Lnet/minecraft/C_21cyyvviz;)V	m_19wzksfeu	m_19wzksfeu	
-		p	1		p_1	
+		p	1		packet	
+	m	(Lnet/minecraft/C_21cyyvviz;)V	m_19wzksfeu	onPlayerAbilities	
+		p	1		packet	
 	m	(Lnet/minecraft/C_17frhrrth;)V	m_44dmokbjl	onClientSettings	
-		p	1		p_1	
+		p	1		packet	
 	m	(Lnet/minecraft/C_58wdmxzvg;)V	m_59pmxsufu	onClientStatus	
-		p	1		p_1	
+		p	1		packet	
 	m	()Z	m_32wnqiiyn	canHandleOnCurrentThread	
 		c	Returns whether this packet handler can handle packets on the current thread or if\npackets should be queued to be handled on the main thread.	
 	m	()Z	m_08laelphz	isDisconnected	
@@ -2376,16 +2377,16 @@ c	net/minecraft/C_72zkbgjms
 		p	2			clamp
 		p	3			mipmaps
 	m	()Ljava/util/List;	m_54edhjssq		getMipmaps
-c	net/minecraft/C_75huluzub	net/minecraft/C_75huluzub	
+c	net/minecraft/C_75huluzub	net/minecraft/network/LocalConnection	
 	f	Lorg/apache/logging/log4j/Logger;	f_93sgtoplc	f_93sgtoplc	
-	f	Ljava/net/SocketAddress;	f_86yoylsit	f_86yoylsit	
-	f	Ljava/util/List;	f_40gifrsdq	f_40gifrsdq	
-	f	Lnet/minecraft/C_75huluzub;	f_98qctxims	f_98qctxims	
-	f	Lnet/minecraft/C_68ydbefqv;	f_96kucqqso	f_96kucqqso	
-	f	Z	f_40ndsyuwu	f_40ndsyuwu	
-	f	Ljava/lang/String;	f_27wtxicct	f_27wtxicct	
-	f	[Ljava/lang/Object;	f_66wcebgtp	f_66wcebgtp	
-	f	Z	f_24lzqagsj	f_24lzqagsj	
+	f	Ljava/net/SocketAddress;	f_86yoylsit	LOCAL_ADDRESS	
+	f	Ljava/util/List;	f_40gifrsdq	readQueue	
+	f	Lnet/minecraft/C_75huluzub;	f_98qctxims	boundConnection	
+	f	Lnet/minecraft/C_68ydbefqv;	f_96kucqqso	listener	
+	f	Z	f_40ndsyuwu	closed	
+	f	Ljava/lang/String;	f_27wtxicct	disconnectReason	
+	f	[Ljava/lang/Object;	f_66wcebgtp	disconnectReasonArgs	
+	f	Z	f_24lzqagsj	paused	
 	m	(Lnet/minecraft/C_68ydbefqv;)V	<init>	<init>	
 		p	1		p_1	
 	m	(Lnet/minecraft/C_68ydbefqv;)V	m_16mrzjfuf	m_16mrzjfuf	
@@ -2393,7 +2394,7 @@ c	net/minecraft/C_75huluzub	net/minecraft/C_75huluzub
 	m	(Lnet/minecraft/C_19sjytfcv;)V	m_61ppgrkac	m_61ppgrkac	
 		p	1		p_1	
 	m	()V	m_44bcrhhtk	m_44bcrhhtk	
-	m	()Z	m_93xbujzcf	m_93xbujzcf	
+	m	()Z	m_93xbujzcf	isOpen	
 	m	()V	m_91ogblfvk	m_91ogblfvk	
 	m	()V	m_13qztercw	m_13qztercw	
 	m	()Ljava/net/SocketAddress;	m_99fihzbnc	m_99fihzbnc	
@@ -2402,14 +2403,14 @@ c	net/minecraft/C_75huluzub	net/minecraft/C_75huluzub
 		p	1		p_1	
 		p	2		p_2	
 	m	()I	m_49sonkska	m_49sonkska	
-	m	(Lnet/minecraft/C_75huluzub;)V	m_01narvakl	m_01narvakl	
-		p	1		p_1	
-	m	()Z	m_76gvldwdp	m_76gvldwdp	
-	m	(Z)V	m_32csyinmx	m_32csyinmx	
-		p	1		p_1	
-	m	()Lnet/minecraft/C_75huluzub;	m_18rtdybnz	m_18rtdybnz	
-	m	(Lnet/minecraft/C_19sjytfcv;)V	m_85zqfrhtc	m_85zqfrhtc	
-		p	1		p_1	
+	m	(Lnet/minecraft/C_75huluzub;)V	m_01narvakl	bind	
+		p	1		connection	
+	m	()Z	m_76gvldwdp	isPaused	
+	m	(Z)V	m_32csyinmx	setPaused	
+		p	1		paused	
+	m	()Lnet/minecraft/C_75huluzub;	m_18rtdybnz	getBoundConnection	
+	m	(Lnet/minecraft/C_19sjytfcv;)V	m_85zqfrhtc	accept	
+		p	1		packet	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/C_76kwkklrm	net/minecraft/network/packet/PlayerActionPacket	net/minecraft/network/packet/c2s/play/PlayerActionC2SPacket
 	m	(Ljava/io/DataInput;)V	m_00ycwkymm	m_00ycwkymm	
