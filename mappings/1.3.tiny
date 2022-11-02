@@ -6850,7 +6850,7 @@ c	net/minecraft/C_24bdjjrxm	net/minecraft/server/dedicated/DedicatedServer
 	f	Lnet/minecraft/C_87kikyosy;	f_71xojjmza	properties
 	f	Z	f_62aoasrnu	shouldGenerateStructures
 	f	Lnet/minecraft/C_92rrzzavg$C_65phlzcds;	f_47knplcqv	defaultGameMode
-	f	Lnet/minecraft/C_59mqpusow;	f_63gnhtvty	f_63gnhtvty
+	f	Lnet/minecraft/C_59mqpusow;	f_63gnhtvty	networkIo
 	f	Z	f_20snhgcmu	hasGui
 	m	(Ljava/io/File;)V	<init>	<init>
 		p	1		gameDir
@@ -13142,22 +13142,22 @@ c	net/minecraft/C_41nbqqylf	net/minecraft/block/PumpkinBlock
 		p	3		p_3
 		p	4		p_4
 		p	5		p_5
-c	net/minecraft/C_41nrvkepa	net/minecraft/C_41nrvkepa
-	f	Lnet/minecraft/C_75huluzub;	f_76cuiepnv	f_76cuiepnv
-	f	Lnet/minecraft/C_75huluzub;	f_03fodzlpz	f_03fodzlpz
-	f	Ljava/lang/String;	f_31llmvqfl	f_31llmvqfl
-	f	Z	f_93crofsls	f_93crofsls
-	f	Lnet/minecraft/C_85dcnxfay;	f_23scheznw	f_23scheznw
+c	net/minecraft/C_41nrvkepa	net/minecraft/server/integrated/IntegratedServerNetworkIo
+	f	Lnet/minecraft/C_75huluzub;	f_76cuiepnv	connection
+	f	Lnet/minecraft/C_75huluzub;	f_03fodzlpz	playerConnection
+	f	Ljava/lang/String;	f_31llmvqfl	playerName
+	f	Z	f_93crofsls	hasPlayerConnection
+	f	Lnet/minecraft/C_85dcnxfay;	f_23scheznw	listenThread
 	m	(Lnet/minecraft/C_96dvkujix;)V	<init>	<init>
-		p	1		p_1
-	m	(Lnet/minecraft/C_75huluzub;Ljava/lang/String;)V	m_15buojcfb	m_15buojcfb
-		p	1		p_1
-		p	2		p_2
-	m	()Ljava/lang/String;	m_35mvwyrqm	m_35mvwyrqm
+		p	1		server
+	m	(Lnet/minecraft/C_75huluzub;Ljava/lang/String;)V	m_15buojcfb	setPlayerConnection
+		p	1		connection
+		p	2		playerName
+	m	()Ljava/lang/String;	m_35mvwyrqm	getPort
 	m	()V	m_00hwgungw	m_00hwgungw
 	m	()V	m_56vuzarrw	m_56vuzarrw
 	m	()Lnet/minecraft/C_96dvkujix;	m_67zjshktd	m_67zjshktd
-	m	()Z	m_16ciixcdc	m_16ciixcdc
+	m	()Z	m_16ciixcdc	isPaused
 	m	()Lnet/minecraft/server/MinecraftServer;	m_29mtbhzwv	m_29mtbhzwv
 c	net/minecraft/C_41plbebcc	net/minecraft/nbt/NbtShort
 	f	S	f_86uggxnzr	value
@@ -19854,18 +19854,18 @@ c	net/minecraft/C_59mecpana	net/minecraft/entity/living/mob/passive/animal/tamab
 		p	1		owner
 	m	()Lnet/minecraft/C_97zulxhng;	m_43wywjskk	getOwner
 	m	()Lnet/minecraft/C_00qxdwkrs;	m_45ldihmxv	getSitGoal
-c	net/minecraft/C_59mqpusow	net/minecraft/C_59mqpusow
+c	net/minecraft/C_59mqpusow	net/minecraft/server/network/ServerNetworkIo
 	f	Ljava/util/logging/Logger;	f_79bawcjwl	f_79bawcjwl
-	f	Lnet/minecraft/server/MinecraftServer;	f_03kjrbodc	f_03kjrbodc
-	f	Ljava/util/List;	f_49pixahtf	f_49pixahtf
-	f	Z	f_35xakpeef	f_35xakpeef
+	f	Lnet/minecraft/server/MinecraftServer;	f_03kjrbodc	server
+	f	Ljava/util/List;	f_49pixahtf	connections
+	f	Z	f_35xakpeef	open
 	m	(Lnet/minecraft/server/MinecraftServer;)V	<init>	<init>
-		p	1		p_1
-	m	(Lnet/minecraft/C_43mnimvqq;)V	m_69zikucut	m_69zikucut
-		p	1		p_1
+		p	1		server
+	m	(Lnet/minecraft/C_43mnimvqq;)V	m_69zikucut	addConnection
+		p	1		connection
 	m	()V	m_00hwgungw	close
 	m	()V	m_56vuzarrw	tick
-	m	()Lnet/minecraft/server/MinecraftServer;	m_29mtbhzwv	m_29mtbhzwv
+	m	()Lnet/minecraft/server/MinecraftServer;	m_29mtbhzwv	getServer
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/C_59obkmnph	net/minecraft/enchantment/PowerEnchantment
 	m	(II)V	<init>	<init>
@@ -21346,17 +21346,17 @@ c	net/minecraft/C_64fowapfs	net/minecraft/entity/ai/TargetFinder
 		p	2		verticalRange
 		p	3		distanceFromStart
 	m	()V	<clinit>	<clinit>
-c	net/minecraft/C_64itdgemu	net/minecraft/C_64itdgemu
-	f	Lnet/minecraft/C_85dcnxfay;	f_48qrnuuaj	f_48qrnuuaj
+c	net/minecraft/C_64itdgemu	net/minecraft/server/dedicated/DedicatedServerNetworkIo
+	f	Lnet/minecraft/C_85dcnxfay;	f_48qrnuuaj	listenThread
 	m	(Lnet/minecraft/server/MinecraftServer;Ljava/net/InetAddress;I)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
+		p	1		server
+		p	2		address
+		p	3		port
 	m	()V	m_00hwgungw	m_00hwgungw
 	m	()V	m_56vuzarrw	m_56vuzarrw
 	m	()Lnet/minecraft/C_24bdjjrxm;	m_56vdzbqyp	m_56vdzbqyp
-	m	(Ljava/net/InetAddress;)V	m_98aokzudp	m_98aokzudp
-		p	1		p_1
+	m	(Ljava/net/InetAddress;)V	m_98aokzudp	close
+		p	1		address
 	m	()Lnet/minecraft/server/MinecraftServer;	m_29mtbhzwv	m_29mtbhzwv
 c	net/minecraft/C_64jjptvey	net/minecraft/world/biome/DesertBiome
 	m	(I)V	<init>	<init>
@@ -28717,19 +28717,19 @@ c	net/minecraft/C_85bwkvsib	net/minecraft/entity/living/mob/hostile/SkeletonEnti
 	m	(I)V	m_79owxjjks	m_79owxjjks
 		p	1		p_1
 	m	()V	<clinit>	<clinit>
-c	net/minecraft/C_85dcnxfay	net/minecraft/server/network/ServerNetworkIo
+c	net/minecraft/C_85dcnxfay	net/minecraft/server/network/ListenThread
 	f	Ljava/util/logging/Logger;	f_49ejlohoe	f_49ejlohoe
 	f	Ljava/util/List;	f_82njniwyd	connections
-	f	Ljava/util/HashMap;	f_76kohttac	f_76kohttac
+	f	Ljava/util/HashMap;	f_76kohttac	addresses
 	f	I	f_27uluurcw	connectionCounter
 	f	Ljava/net/ServerSocket;	f_44khdeerv	socket
-	f	Lnet/minecraft/C_59mqpusow;	f_49maljocz	f_49maljocz
+	f	Lnet/minecraft/C_59mqpusow;	f_49maljocz	networkIo
 	f	Ljava/net/InetAddress;	f_90tlhcmro	address
 	f	I	f_03susakoc	port
 	m	(Lnet/minecraft/C_59mqpusow;Ljava/net/InetAddress;I)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
+		p	1		networkIo
+		p	2		address
+		p	3		port
 	m	()V	m_37msmjdwb	tick
 	m	()V	run	run
 	m	(Lnet/minecraft/C_27uqpifyq;)V	m_85vtlymui	addConnection
@@ -31862,7 +31862,7 @@ c	net/minecraft/C_96djhisig$1	net/minecraft/server/dedicated/gui/PlayerStatsGui$
 c	net/minecraft/C_96dvkujix	net/minecraft/server/integrated/IntegratedServer
 	f	Lnet/minecraft/client/Minecraft;	f_45bhykmkf	f_45bhykmkf
 	f	Lnet/minecraft/C_92rrzzavg;	f_00lnbcbil	info
-	f	Lnet/minecraft/C_41nrvkepa;	f_18otjnyaq	f_18otjnyaq
+	f	Lnet/minecraft/C_41nrvkepa;	f_18otjnyaq	networkIo
 	f	Z	f_57bnvtygr	paused
 	f	Z	f_71kzrtsdj	published
 	f	Lnet/minecraft/C_02wyraymr;	f_10kngtbqi	pinger
@@ -33595,7 +33595,7 @@ c	net/minecraft/C_99sowdzft	net/minecraft/client/options/GameOptions
 	f	[Lnet/minecraft/C_59aqzdfif;	f_63opuovok	ingameKeys
 	f	Lnet/minecraft/client/Minecraft;	f_06nnwicom	f_06nnwicom
 	f	Ljava/io/File;	f_18wtoyvqm	file
-	f	I	f_21lhpdjir	f_21lhpdjir
+	f	I	f_21lhpdjir	defaultDifficulty
 	f	Z	f_25xgowpzi	hudEnabled
 	f	I	f_70odmamkn	perspective
 		c	Camera perspective (0 = first person, 1 = second person, 2 = third person)

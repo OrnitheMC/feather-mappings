@@ -795,7 +795,7 @@ c	net/minecraft/C_23redzvjz
 	m	()Lnet/minecraft/C_19sjytfcv;	m_73cxtiwtd	m_73cxtiwtd	
 	m	()Lnet/minecraft/C_97ogqzfxl;	m_73cxtiwtd		m_73cxtiwtd
 c	net/minecraft/C_24bdjjrxm
-	f	Lnet/minecraft/C_59mqpusow;	f_63gnhtvty	f_63gnhtvty	
+	f	Lnet/minecraft/C_59mqpusow;	f_63gnhtvty	networkIo	
 	m	()I	m_09rqyflxk	m_09rqyflxk	
 	m	()Lnet/minecraft/C_59mqpusow;	m_52mwuxmaf	m_52mwuxmaf	
 	m	()Lnet/minecraft/C_57rxazdrb;	m_09rqyflxk		m_09rqyflxk
@@ -1325,23 +1325,23 @@ c	net/minecraft/C_40ykiujez
 		p	1			stack
 		p	2			world
 		p	3			player
-c	net/minecraft/C_41nrvkepa	net/minecraft/C_41nrvkepa	
+c	net/minecraft/C_41nrvkepa	net/minecraft/server/integrated/IntegratedServerNetworkIo	
 	f	Lorg/apache/logging/log4j/Logger;	f_20dnufxct	f_20dnufxct	
-	f	Lnet/minecraft/C_75huluzub;	f_76cuiepnv	f_76cuiepnv	
-	f	Lnet/minecraft/C_75huluzub;	f_03fodzlpz	f_03fodzlpz	
+	f	Lnet/minecraft/C_75huluzub;	f_76cuiepnv	connection	
+	f	Lnet/minecraft/C_75huluzub;	f_03fodzlpz	playerConnection	
 	f	Lcom/mojang/authlib/GameProfile;	f_31llmvqfl	f_31llmvqfl	
-	f	Z	f_93crofsls	f_93crofsls	
-	f	Lnet/minecraft/C_85dcnxfay;	f_23scheznw	f_23scheznw	
+	f	Z	f_93crofsls	hasPlayerConnection	
+	f	Lnet/minecraft/C_85dcnxfay;	f_23scheznw	listenThread	
 	m	(Lnet/minecraft/C_96dvkujix;)V	<init>	<init>	
-		p	1		p_1	
+		p	1		server	
 	m	(Lnet/minecraft/C_75huluzub;Lcom/mojang/authlib/GameProfile;)V	m_15buojcfb	m_15buojcfb	
 		p	1		p_1	
 		p	2		p_2	
-	m	()Ljava/lang/String;	m_35mvwyrqm	m_35mvwyrqm	
+	m	()Ljava/lang/String;	m_35mvwyrqm	getPort	
 	m	()V	m_00hwgungw	m_00hwgungw	
 	m	()V	m_56vuzarrw	m_56vuzarrw	
 	m	()Lnet/minecraft/C_96dvkujix;	m_67zjshktd	m_67zjshktd	
-	m	()Z	m_16ciixcdc	m_16ciixcdc	
+	m	()Z	m_16ciixcdc	isPaused	
 	m	()Lnet/minecraft/server/MinecraftServer;	m_29mtbhzwv	m_29mtbhzwv	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/C_41xahvqjh
@@ -2103,18 +2103,18 @@ c	net/minecraft/C_58wdmxzvg$C_67pbdeimp		Status
 	m	(Lnet/minecraft/C_58wdmxzvg$C_67pbdeimp;)I	m_17ivlxzzl		m_17ivlxzzl
 		p	0			p_0
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_59mqpusow	net/minecraft/C_59mqpusow	
+c	net/minecraft/C_59mqpusow	net/minecraft/server/network/ServerNetworkIo	
 	f	Lorg/apache/logging/log4j/Logger;	f_09cpgaseq	f_09cpgaseq	
-	f	Lnet/minecraft/server/MinecraftServer;	f_03kjrbodc	f_03kjrbodc	
-	f	Ljava/util/List;	f_49pixahtf	f_49pixahtf	
-	f	Z	f_35xakpeef	f_35xakpeef	
+	f	Lnet/minecraft/server/MinecraftServer;	f_03kjrbodc	server	
+	f	Ljava/util/List;	f_49pixahtf	connections	
+	f	Z	f_35xakpeef	open	
 	m	(Lnet/minecraft/server/MinecraftServer;)V	<init>	<init>	
-		p	1		p_1	
-	m	(Lnet/minecraft/C_43mnimvqq;)V	m_69zikucut	m_69zikucut	
-		p	1		p_1	
+		p	1		server	
+	m	(Lnet/minecraft/C_43mnimvqq;)V	m_69zikucut	addConnection	
+		p	1		connection	
 	m	()V	m_00hwgungw	close	
 	m	()V	m_56vuzarrw	tick	
-	m	()Lnet/minecraft/server/MinecraftServer;	m_29mtbhzwv	m_29mtbhzwv	
+	m	()Lnet/minecraft/server/MinecraftServer;	m_29mtbhzwv	getServer	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/C_59mqpusow$1	1	
 	f	Lnet/minecraft/C_43mnimvqq;	f_79msodkud	f_79msodkud	
@@ -2177,17 +2177,17 @@ c	net/minecraft/C_63xkjavbt	net/minecraft/network/packet/PlayerSpawnPacket	net/m
 	m	()Ljava/lang/String;	m_41vkeclbr		m_41vkeclbr
 	m	(Lnet/minecraft/C_80inurxlz;)V	m_46qwjrofo		m_46qwjrofo
 		p	1			p_1
-c	net/minecraft/C_64itdgemu	net/minecraft/C_64itdgemu	
-	f	Lnet/minecraft/C_85dcnxfay;	f_48qrnuuaj	f_48qrnuuaj	
+c	net/minecraft/C_64itdgemu	net/minecraft/server/dedicated/DedicatedServerNetworkIo	
+	f	Lnet/minecraft/C_85dcnxfay;	f_48qrnuuaj	listenThread	
 	m	(Lnet/minecraft/server/MinecraftServer;Ljava/net/InetAddress;I)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+		p	1		server	
+		p	2		address	
+		p	3		port	
 	m	()V	m_00hwgungw	m_00hwgungw	
 	m	()V	m_56vuzarrw	m_56vuzarrw	
 	m	()Lnet/minecraft/C_24bdjjrxm;	m_56vdzbqyp	m_56vdzbqyp	
-	m	(Ljava/net/InetAddress;)V	m_98aokzudp	m_98aokzudp	
-		p	1		p_1	
+	m	(Ljava/net/InetAddress;)V	m_98aokzudp	close	
+		p	1		address	
 	m	()Lnet/minecraft/server/MinecraftServer;	m_29mtbhzwv	m_29mtbhzwv	
 c	net/minecraft/C_64ugnezcd
 	m	(I)V	m_96sjqbbsp	m_96sjqbbsp	
@@ -2554,15 +2554,15 @@ c	net/minecraft/C_84dqcqlog$C_15ytfvxmv		ChatVisibility
 		p	0			index
 	m	()Ljava/lang/String;	m_45knmunbz		getId
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_85dcnxfay
+c	net/minecraft/C_85dcnxfay	net/minecraft/server/network/ListenThread	net/minecraft/server/network/ServerNetworkIo
 	f	I	f_27uluurcw	connectionCounter	
 	f	Ljava/net/ServerSocket;	f_44khdeerv	socket	
-	f	Lnet/minecraft/C_59mqpusow;	f_49maljocz	f_49maljocz	
+	f	Lnet/minecraft/C_59mqpusow;	f_49maljocz	networkIo	
 	f	Ljava/net/InetAddress;	f_90tlhcmro	address	
 	f	I	f_03susakoc	port	
 	f	Z	f_34owzbwcs		isOpen
 	f	Ljava/util/List;	f_77bqvjjzv		connections
-	f	Lio/netty/channel/nio/NioEventLoopGroup;	f_58bpworph		NETWORK_GROUP
+	f	Lio/netty/channel/nio/NioEventLoopGroup;	f_58bpworph		networkGroup
 	f	Ljava/util/List;	f_82njniwyd	connections	channels
 	m	(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/C_59mqpusow;Ljava/net/InetAddress;I)V	<init>	<init>	
 		p	1		server	
@@ -2910,7 +2910,7 @@ c	net/minecraft/C_95wukzoyl	net/minecraft/network/packet/EntityEquipmentPacket	n
 	m	(Lnet/minecraft/C_80inurxlz;)V	m_46qwjrofo		m_46qwjrofo
 		p	1			p_1
 c	net/minecraft/C_96dvkujix
-	f	Lnet/minecraft/C_41nrvkepa;	f_18otjnyaq	f_18otjnyaq	
+	f	Lnet/minecraft/C_41nrvkepa;	f_18otjnyaq	networkIo	
 	m	()I	m_09rqyflxk	m_09rqyflxk	
 	m	()Lnet/minecraft/C_41nrvkepa;	m_13neoukei	m_13neoukei	
 	m	()Lnet/minecraft/C_59mqpusow;	m_52mwuxmaf	m_52mwuxmaf	
@@ -2973,7 +2973,7 @@ c	net/minecraft/C_99sowdzft
 	f	[Ljava/lang/String;	f_67ckzdeds	f_67ckzdeds	
 	f	[Ljava/lang/String;	f_19fdcjyet	f_19fdcjyet	
 	f	I	f_22tibyxtk	f_22tibyxtk	
-	f	I	f_21lhpdjir	f_21lhpdjir	
+	f	I	f_21lhpdjir	defaultDifficulty	
 	f	Lnet/minecraft/C_84dqcqlog$C_15ytfvxmv;	f_17vtdqgsy		chatVisibility
 	f	Lnet/minecraft/C_57rxazdrb;	f_21lhpdjir		difficulty
 c	net/minecraft/server/MinecraftServer
