@@ -179,7 +179,7 @@ c	net/minecraft/C_19srclipf
 c	net/minecraft/C_19weklhwh
 	f	Lnet/minecraft/C_80efdvoox;	f_74emydzzn	f_74emydzzn	
 	f	Lorg/apache/logging/log4j/Logger;	f_87rwcpgjk		LOGGER
-c	net/minecraft/C_21iyumcfu	net/minecraft/C_42psdoooq	
+c	net/minecraft/C_21iyumcfu	net/minecraft/server/dedicated/gui/LogHandler	
 	f	[I	f_11mxotwej	f_11mxotwej	
 	f	I	f_07mmksoch	f_07mmksoch	
 	f	Ljava/util/logging/Formatter;	f_58thewxra	f_58thewxra	
@@ -302,16 +302,16 @@ c	net/minecraft/C_29sdxritb
 c	net/minecraft/C_29tnmefjj
 	f	Lorg/apache/logging/log4j/Logger;	f_45pfwfbpr		LOGGER
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_29yptfdij	net/minecraft/C_29yptfdij	
-	f	Ljava/lang/String;	f_80lfzyswc	f_80lfzyswc	
-	f	Ljava/lang/String;	f_52syknyoy	f_52syknyoy	
-	f	J	f_64kgbfuhq	f_64kgbfuhq	
+c	net/minecraft/C_29yptfdij	net/minecraft/client/LanServer	
+	f	Ljava/lang/String;	f_80lfzyswc	motd	
+	f	Ljava/lang/String;	f_52syknyoy	port	
+	f	J	f_64kgbfuhq	lastPingTime	
 	m	(Ljava/lang/String;Ljava/lang/String;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-	m	()Ljava/lang/String;	m_49dwzbjvr	m_49dwzbjvr	
-	m	()Ljava/lang/String;	m_03tpkzcqf	m_03tpkzcqf	
-	m	()V	m_95wsbyikr	m_95wsbyikr	
+		p	1		motd	
+		p	2		port	
+	m	()Ljava/lang/String;	m_49dwzbjvr	getMotd	
+	m	()Ljava/lang/String;	m_03tpkzcqf	getPort	
+	m	()V	m_95wsbyikr	ping	
 c	net/minecraft/C_31gqtnbjd
 	f	Lorg/apache/logging/log4j/Logger;	f_21xneiqpd		LOGGER
 	m	(Lnet/minecraft/C_31gqtnbjd;)Lnet/minecraft/C_13piauvdk;	m_78veoduwi	m_78veoduwi	
@@ -350,12 +350,12 @@ c	net/minecraft/C_33rxbrxcu
 c	net/minecraft/C_34fajqsek
 	f	Lorg/apache/logging/log4j/Logger;	f_23jiqkmuu		LOGGER
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_34qvjspfx	net/minecraft/C_35ftczemp	
-	f	Lnet/minecraft/C_89xtqbnte;	f_99oblkefn	f_99oblkefn	
-	f	Ljava/net/InetAddress;	f_56etwqdpr	f_56etwqdpr	
-	f	Ljava/net/MulticastSocket;	f_51stdatqb	f_51stdatqb	
+c	net/minecraft/C_34qvjspfx	net/minecraft/client/LanServerDetector	
+	f	Lnet/minecraft/C_89xtqbnte;	f_99oblkefn	serverList	
+	f	Ljava/net/InetAddress;	f_56etwqdpr	address	
+	f	Ljava/net/MulticastSocket;	f_51stdatqb	socket	
 	m	(Lnet/minecraft/C_89xtqbnte;)V	<init>	<init>	
-		p	1		p_1	
+		p	1		serverList	
 	m	()V	run	run	
 c	net/minecraft/C_35cxspgmp
 	f	Lorg/apache/logging/log4j/Logger;	f_99ettxzvw		LOGGER
@@ -804,16 +804,16 @@ c	net/minecraft/C_87kikyosy
 	m	(Ljava/io/File;)V	<init>		<init>
 		p	1			file
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_89xtqbnte	net/minecraft/C_89xtqbnte	
-	f	Ljava/util/ArrayList;	f_00bofyedr	f_00bofyedr	
-	f	Z	f_01vugnvww	f_01vugnvww	
+c	net/minecraft/C_89xtqbnte	net/minecraft/client/LanServerList	
+	f	Ljava/util/ArrayList;	f_00bofyedr	servers	
+	f	Z	f_01vugnvww	hasNewServers	
 	m	()V	<init>	<init>	
-	m	()Z	m_46tvdxdpb	m_46tvdxdpb	
-	m	()V	m_19jtwhjou	m_19jtwhjou	
-	m	()Ljava/util/List;	m_76umbjcue	m_76umbjcue	
-	m	(Ljava/lang/String;Ljava/net/InetAddress;)V	m_97cavnmxn	m_97cavnmxn	
-		p	1		p_1	
-		p	2		p_2	
+	m	()Z	m_46tvdxdpb	hasNewServers	
+	m	()V	m_19jtwhjou	refresh	
+	m	()Ljava/util/List;	m_76umbjcue	getServers	
+	m	(Ljava/lang/String;Ljava/net/InetAddress;)V	m_97cavnmxn	add	
+		p	1		metadata	
+		p	2		address	
 c	net/minecraft/C_91cpqtfmr
 	f	Lorg/apache/logging/log4j/Logger;	f_18vnpbndu		LOGGER
 	m	(Ljava/net/SocketAddress;Ljava/lang/String;)Ljava/lang/String;	m_26frtyquv	canLogin	

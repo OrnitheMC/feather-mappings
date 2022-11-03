@@ -6021,7 +6021,7 @@ c	net/minecraft/C_21dupobdf	net/minecraft/server/dedicated/command/DeOpCommand
 	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;)Ljava/util/List;	m_28cwyzvmv	m_28cwyzvmv
 		p	1		p_1
 		p	2		p_2
-c	net/minecraft/C_21iyumcfu	net/minecraft/C_42psdoooq
+c	net/minecraft/C_21iyumcfu	net/minecraft/server/dedicated/gui/LogHandler
 	f	[I	f_11mxotwej	f_11mxotwej
 	f	I	f_07mmksoch	f_07mmksoch
 	f	Ljava/util/logging/Formatter;	f_58thewxra	f_58thewxra
@@ -6032,7 +6032,7 @@ c	net/minecraft/C_21iyumcfu	net/minecraft/C_42psdoooq
 	m	()V	flush	flush
 	m	(Ljava/util/logging/LogRecord;)V	publish	publish
 		p	1		p_1
-c	net/minecraft/C_21iyumcfu$1	net/minecraft/C_42psdoooq$1
+c	net/minecraft/C_21iyumcfu$1	net/minecraft/server/dedicated/gui/LogHandler$1
 	f	Lnet/minecraft/C_21iyumcfu;	f_27uiecxbg	f_27uiecxbg
 	m	(Lnet/minecraft/C_21iyumcfu;)V	<init>	<init>
 		p	1		p_1
@@ -8906,16 +8906,16 @@ c	net/minecraft/C_29wvfrhiu	net/minecraft/inventory/slot/FurnaceResultSlot
 		p	2		p_2
 	m	(Lnet/minecraft/C_72owraavl;)V	m_39tevilft	m_39tevilft
 		p	1		p_1
-c	net/minecraft/C_29yptfdij	net/minecraft/C_29yptfdij
-	f	Ljava/lang/String;	f_80lfzyswc	f_80lfzyswc
-	f	Ljava/lang/String;	f_52syknyoy	f_52syknyoy
-	f	J	f_64kgbfuhq	f_64kgbfuhq
+c	net/minecraft/C_29yptfdij	net/minecraft/client/LanServer
+	f	Ljava/lang/String;	f_80lfzyswc	motd
+	f	Ljava/lang/String;	f_52syknyoy	port
+	f	J	f_64kgbfuhq	lastPingTime
 	m	(Ljava/lang/String;Ljava/lang/String;)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-	m	()Ljava/lang/String;	m_49dwzbjvr	m_49dwzbjvr
-	m	()Ljava/lang/String;	m_03tpkzcqf	m_03tpkzcqf
-	m	()V	m_95wsbyikr	m_95wsbyikr
+		p	1		motd
+		p	2		port
+	m	()Ljava/lang/String;	m_49dwzbjvr	getMotd
+	m	()Ljava/lang/String;	m_03tpkzcqf	getPort
+	m	()V	m_95wsbyikr	ping
 	m	()Z	m_50xxiunmb	m_50xxiunmb
 c	net/minecraft/C_30bdziopk	net/minecraft/client/render/entity/PigEntityRenderer
 	m	(Lnet/minecraft/C_56prnndub;Lnet/minecraft/C_56prnndub;F)V	<init>	<init>
@@ -10994,12 +10994,12 @@ c	net/minecraft/C_34nuouuhd	net/minecraft/client/gui/screen/ingame/EnchantingTab
 		p	3		p_3
 	m	()V	m_62izzaail	tickEnchantingScreen
 	m	()V	<clinit>	<clinit>
-c	net/minecraft/C_34qvjspfx	net/minecraft/C_35ftczemp
-	f	Lnet/minecraft/C_89xtqbnte;	f_99oblkefn	f_99oblkefn
-	f	Ljava/net/InetAddress;	f_56etwqdpr	f_56etwqdpr
-	f	Ljava/net/MulticastSocket;	f_51stdatqb	f_51stdatqb
+c	net/minecraft/C_34qvjspfx	net/minecraft/client/LanServerDetector
+	f	Lnet/minecraft/C_89xtqbnte;	f_99oblkefn	serverList
+	f	Ljava/net/InetAddress;	f_56etwqdpr	address
+	f	Ljava/net/MulticastSocket;	f_51stdatqb	socket
 	m	(Lnet/minecraft/C_89xtqbnte;)V	<init>	<init>
-		p	1		p_1
+		p	1		serverList
 	m	()V	run	run
 c	net/minecraft/C_34tlzoepi	net/minecraft/C_34tlzoepi
 	f	Lnet/minecraft/C_55qxvbpna;	f_74ykfbobc	f_74ykfbobc
@@ -14288,12 +14288,12 @@ c	net/minecraft/C_44jqidryt	net/minecraft/client/entity/particle/NoteParticle
 		p	6		p_6
 		p	7		p_7
 	m	()V	m_28zixkoqt	m_28zixkoqt
-c	net/minecraft/C_44najakvl	net/minecraft/C_44najakvl
-	f	Ljava/lang/String;	f_36zwtclme	f_36zwtclme
-	f	Ljava/net/URL;	f_08uypcqpf	f_08uypcqpf
+c	net/minecraft/C_44najakvl	net/minecraft/client/sound/system/SoundFile
+	f	Ljava/lang/String;	f_36zwtclme	path
+	f	Ljava/net/URL;	f_08uypcqpf	url
 	m	(Ljava/lang/String;Ljava/net/URL;)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
+		p	1		path
+		p	2		url
 c	net/minecraft/C_44rrgimbs	net/minecraft/C_93crishxj
 	m	()V	<init>	<init>
 	m	()I	hashCode	hashCode
@@ -15877,27 +15877,27 @@ c	net/minecraft/C_49kxcvtgp	net/minecraft/block/RepeaterBlock
 		p	3		p_3
 		p	4		p_4
 	m	()V	<clinit>	<clinit>
-c	net/minecraft/C_49llpmzmi	net/minecraft/C_49llpmzmi
-	f	Ljava/util/regex/Pattern;	f_13teunfcx	f_13teunfcx
-	f	Lnet/minecraft/C_30krpvtyk;	f_39mhinuqh	f_39mhinuqh
-	f	Lnet/minecraft/C_54unynzpr;	f_33xzpyydr	f_33xzpyydr
-	f	I	f_04gmmyjsc	f_04gmmyjsc
-	f	I	f_93jbbncxv	f_93jbbncxv
-	f	Ljava/lang/String;	f_94lgfpsfs	f_94lgfpsfs
-	f	Ljava/lang/String;	f_88tjorxah	f_88tjorxah
+c	net/minecraft/C_49llpmzmi	net/minecraft/client/gui/ChatMessageUri
+	f	Ljava/util/regex/Pattern;	f_13teunfcx	URI_PATTERN
+	f	Lnet/minecraft/C_30krpvtyk;	f_39mhinuqh	textRenderer
+	f	Lnet/minecraft/C_54unynzpr;	f_33xzpyydr	message
+	f	I	f_04gmmyjsc	width
+	f	I	f_93jbbncxv	height
+	f	Ljava/lang/String;	f_94lgfpsfs	trimmedMessage
+	f	Ljava/lang/String;	f_88tjorxah	rawUri
 	m	(Lnet/minecraft/C_30krpvtyk;Lnet/minecraft/C_54unynzpr;II)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
+		p	1		textRenderer
+		p	2		message
+		p	3		width
+		p	4		height
 	m	()Lnet/minecraft/C_30krpvtyk;	m_72oarcngg	m_72oarcngg
 	m	()Ljava/lang/String;	m_40gqjhqry	m_40gqjhqry
 	m	()Lnet/minecraft/C_54unynzpr;	m_91bgbzfys	m_91bgbzfys
 	m	()I	m_12pmmvhbe	m_12pmmvhbe
 	m	()I	m_39qldxfen	m_39qldxfen
-	m	()Ljava/lang/String;	m_09niazahh	m_09niazahh
-	m	()Ljava/net/URI;	m_19oyedzhi	m_19oyedzhi
-	m	()Ljava/lang/String;	m_71ntjdsyl	m_71ntjdsyl
+	m	()Ljava/lang/String;	m_09niazahh	getRawUri
+	m	()Ljava/net/URI;	m_19oyedzhi	getUri
+	m	()Ljava/lang/String;	m_71ntjdsyl	findUri
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/C_49lmdkqfq	net/minecraft/world/storage/AnvilWorldStorageSource
 	m	(Ljava/io/File;)V	<init>	<init>
@@ -17287,7 +17287,7 @@ c	net/minecraft/C_53qpytbmm	net/minecraft/client/gui/screen/multiplayer/Multipla
 		p	0		p_0
 		p	1		p_1
 	m	()V	<clinit>	<clinit>
-c	net/minecraft/C_53qpytbmm$C_79nzxtyid	net/minecraft/client/gui/screen/multiplayer/MultiplayerScreen$C_79nzxtyid
+c	net/minecraft/C_53qpytbmm$C_79nzxtyid	net/minecraft/client/gui/screen/multiplayer/MultiplayerScreen$ServerListWidget
 	f	Lnet/minecraft/C_53qpytbmm;	f_00sxgnddo	f_00sxgnddo
 	m	(Lnet/minecraft/C_53qpytbmm;)V	<init>	<init>
 		p	1		p_1
@@ -17323,7 +17323,7 @@ c	net/minecraft/C_53qpytbmm$C_79nzxtyid	net/minecraft/client/gui/screen/multipla
 		p	3		p_3
 		p	4		p_4
 		p	5		p_5
-c	net/minecraft/C_53qpytbmm$C_79nzxtyid$1	net/minecraft/client/gui/screen/multiplayer/MultiplayerScreen$C_79nzxtyid$1
+c	net/minecraft/C_53qpytbmm$C_79nzxtyid$1	net/minecraft/client/gui/screen/multiplayer/MultiplayerScreen$ServerListWidget$1
 	f	Lnet/minecraft/C_09gevinph;	f_93igkieib	f_93igkieib
 	f	Lnet/minecraft/C_53qpytbmm$C_79nzxtyid;	f_91llhazok	f_91llhazok
 	m	(Lnet/minecraft/C_53qpytbmm$C_79nzxtyid;Lnet/minecraft/C_09gevinph;)V	<init>	<init>
@@ -18309,13 +18309,13 @@ c	net/minecraft/C_54ruxjwzt$C_58ujogrlm	net/minecraft/world/World$C_58ujogrlm
 	m	()V	m_12xrvilft	m_12xrvilft
 c	net/minecraft/C_54unynzpr	net/minecraft/client/gui/ChatMessage
 	f	I	f_26dlhgrse	timeOfCreation
-	f	Ljava/lang/String;	f_60zoawxlu	f_60zoawxlu
+	f	Ljava/lang/String;	f_60zoawxlu	text
 	f	I	f_36wymmnqi	id
 	m	(ILjava/lang/String;I)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-	m	()Ljava/lang/String;	m_32zoymyra	m_32zoymyra
+		p	1		timeOfCreation
+		p	2		text
+		p	3		id
+	m	()Ljava/lang/String;	m_32zoymyra	getText
 	m	()I	m_13zgyeuma	getTimeOfCreation
 	m	()I	m_97rlrywqn	getId
 c	net/minecraft/C_54vxqjjba	net/minecraft/C_66npjechf
@@ -24429,9 +24429,9 @@ c	net/minecraft/C_69rhmjfst	net/minecraft/client/gui/ChatGui
 	m	()V	m_67ucbzegy	resetScroll
 	m	(I)V	m_12pcpysur	scroll
 		p	1		lines
-	m	(II)Lnet/minecraft/C_49llpmzmi;	m_30rlllale	m_30rlllale
-		p	1		p_1
-		p	2		p_2
+	m	(II)Lnet/minecraft/C_49llpmzmi;	m_30rlllale	getUriAt
+		p	1		x
+		p	2		y
 	m	(Ljava/lang/String;[Ljava/lang/Object;)V	m_50efnupud	m_50efnupud
 		p	1		p_1
 		p	2		p_2
@@ -25971,10 +25971,10 @@ c	net/minecraft/C_73fvniztt	net/minecraft/C_73fvniztt
 		p	0		p_0
 		p	2		p_2
 		p	3		p_3
-c	net/minecraft/C_73iuypdfk	net/minecraft/C_73iuypdfk
-	f	[I	f_32tobfrwm	f_32tobfrwm
+c	net/minecraft/C_73iuypdfk	net/minecraft/client/render/MapRenderer
+	f	[I	f_32tobfrwm	colors
 	f	I	f_27ihhdkue	f_27ihhdkue
-	f	Lnet/minecraft/C_99sowdzft;	f_50aepcozc	f_50aepcozc
+	f	Lnet/minecraft/C_99sowdzft;	f_50aepcozc	options
 	f	Lnet/minecraft/C_30krpvtyk;	f_05odeatcn	f_05odeatcn
 	m	(Lnet/minecraft/C_30krpvtyk;Lnet/minecraft/C_99sowdzft;Lnet/minecraft/C_11tdsrkps;)V	<init>	<init>
 		p	1		p_1
@@ -26115,19 +26115,19 @@ c	net/minecraft/C_74ebmntga$1	net/minecraft/util/NetworkUtils$1
 	m	()V	run	run
 c	net/minecraft/C_74ehhhztq	net/minecraft/client/sound/system/SoundSystem
 	f	Lpaulscode/sound/SoundSystem;	f_89yqvxzat	f_89yqvxzat
-	f	Lnet/minecraft/C_86bhlylqz;	f_65yfezdpj	f_65yfezdpj
-	f	Lnet/minecraft/C_86bhlylqz;	f_53pjwkicd	f_53pjwkicd
-	f	Lnet/minecraft/C_86bhlylqz;	f_68lxnkzmz	f_68lxnkzmz
-	f	I	f_69smbtnro	f_69smbtnro
+	f	Lnet/minecraft/C_86bhlylqz;	f_65yfezdpj	sounds
+	f	Lnet/minecraft/C_86bhlylqz;	f_53pjwkicd	records
+	f	Lnet/minecraft/C_86bhlylqz;	f_68lxnkzmz	music
+	f	I	f_69smbtnro	nextSoundEventIndex
 	f	Lnet/minecraft/C_99sowdzft;	f_27viacsga	options
 	f	Z	f_66pfqxtvw	f_66pfqxtvw
-	f	Ljava/util/Random;	f_38icjeapm	f_38icjeapm
-	f	I	f_49kqvxbwb	f_49kqvxbwb
+	f	Ljava/util/Random;	f_38icjeapm	random
+	f	I	f_49kqvxbwb	musicCooldown
 	m	()V	<init>	<init>
 	m	(Lnet/minecraft/C_99sowdzft;)V	m_95ldpjuwa	m_95ldpjuwa
 		p	1		p_1
 	m	()V	m_89bedfovn	start
-	m	()V	m_80nzuvcis	m_80nzuvcis
+	m	()V	m_80nzuvcis	volumeChanged
 	m	()V	m_71pidekze	close
 	m	(Ljava/lang/String;Ljava/io/File;)V	m_10fjgvein	m_10fjgvein
 		p	1		p_1
@@ -26138,10 +26138,10 @@ c	net/minecraft/C_74ehhhztq	net/minecraft/client/sound/system/SoundSystem
 	m	(Ljava/lang/String;Ljava/io/File;)V	m_51pkaxjan	m_51pkaxjan
 		p	1		p_1
 		p	2		p_2
-	m	()V	m_64dgwiprx	m_64dgwiprx
-	m	(Lnet/minecraft/C_97zulxhng;F)V	m_54pmsnxap	m_54pmsnxap
-		p	1		p_1
-		p	2		p_2
+	m	()V	m_64dgwiprx	tickMusic
+	m	(Lnet/minecraft/C_97zulxhng;F)V	m_54pmsnxap	tickListener
+		p	1		listener
+		p	2		tickDelta
 	m	(Ljava/lang/String;FFFFF)V	m_18jdckrxo	m_18jdckrxo
 		p	1		p_1
 		p	2		p_2
@@ -26149,17 +26149,17 @@ c	net/minecraft/C_74ehhhztq	net/minecraft/client/sound/system/SoundSystem
 		p	4		p_4
 		p	5		p_5
 		p	6		p_6
-	m	(Ljava/lang/String;FFFFF)V	m_23hnpdley	m_23hnpdley
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-		p	5		p_5
-		p	6		p_6
-	m	(Ljava/lang/String;FF)V	m_92rzyzgwz	m_92rzyzgwz
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
+	m	(Ljava/lang/String;FFFFF)V	m_23hnpdley	play
+		p	1		id
+		p	2		x
+		p	3		y
+		p	4		z
+		p	5		volume
+		p	6		pitch
+	m	(Ljava/lang/String;FF)V	m_92rzyzgwz	play
+		p	1		id
+		p	2		volume
+		p	3		pitch
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/C_74ggijjoc	net/minecraft/block/TntBlock
 	m	(II)V	<init>	<init>
@@ -28957,9 +28957,9 @@ c	net/minecraft/C_86bhlylqz	net/minecraft/C_86bhlylqz
 	m	(Ljava/lang/String;Ljava/io/File;)Lnet/minecraft/C_44najakvl;	m_76zcusohh	m_76zcusohh
 		p	1		p_1
 		p	2		p_2
-	m	(Ljava/lang/String;)Lnet/minecraft/C_44najakvl;	m_97cyrpdug	m_97cyrpdug
-		p	1		p_1
-	m	()Lnet/minecraft/C_44najakvl;	m_23mhrhcvj	m_23mhrhcvj
+	m	(Ljava/lang/String;)Lnet/minecraft/C_44najakvl;	m_97cyrpdug	getRandom
+		p	1		path
+	m	()Lnet/minecraft/C_44najakvl;	m_23mhrhcvj	getRandom
 c	net/minecraft/C_86cdyjurw	net/minecraft/entity/ai/goal/AnimalBreedGoal
 	f	Lnet/minecraft/C_12yafsnvf;	f_88ambrasx	animal
 	f	Lnet/minecraft/C_54ruxjwzt;	f_97bnhivrm	world
@@ -29675,16 +29675,16 @@ c	net/minecraft/C_88smcjwdf	net/minecraft/server/dedicated/command/OpCommand
 	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;)Ljava/util/List;	m_28cwyzvmv	m_28cwyzvmv
 		p	1		p_1
 		p	2		p_2
-c	net/minecraft/C_88ugpaphc	net/minecraft/C_88ugpaphc
-	f	Z	f_99uwtidqp	f_99uwtidqp
-	f	Ljava/util/Map;	f_49drbtrgq	f_49drbtrgq
-	f	Ljava/util/Map;	f_39tkwofjg	f_39tkwofjg
-	f	Ljava/lang/Object;	f_48vyliqyv	f_48vyliqyv
+c	net/minecraft/C_88ugpaphc	net/minecraft/network/packet/DeserializedPacketCounter
+	f	Z	f_99uwtidqp	dewit
+	f	Ljava/util/Map;	f_49drbtrgq	AMOUNT
+	f	Ljava/util/Map;	f_39tkwofjg	SIZE
+	f	Ljava/lang/Object;	f_48vyliqyv	LOCK
 	m	()V	<init>	<init>
 	m	()V	m_09noysmpc	m_09noysmpc
-	m	(IJ)V	m_55izoaiop	m_55izoaiop
-		p	0		p_0
-		p	1		p_1
+	m	(IJ)V	m_55izoaiop	update
+		p	0		id
+		p	1		size
 	m	(Ljava/lang/String;Ljava/util/Map;)Ljava/util/List;	m_49fdytfzo	m_49fdytfzo
 		p	0		p_0
 		p	1		p_1
@@ -29934,16 +29934,16 @@ c	net/minecraft/C_89xcpsluv	net/minecraft/util/math/Facings
 	f	[[I	f_66mykablj	BED_FACINGS
 	m	()V	<init>	<init>
 	m	()V	<clinit>	<clinit>
-c	net/minecraft/C_89xtqbnte	net/minecraft/C_89xtqbnte
-	f	Ljava/util/ArrayList;	f_00bofyedr	f_00bofyedr
-	f	Z	f_01vugnvww	f_01vugnvww
+c	net/minecraft/C_89xtqbnte	net/minecraft/client/LanServerList
+	f	Ljava/util/ArrayList;	f_00bofyedr	servers
+	f	Z	f_01vugnvww	hasNewServers
 	m	()V	<init>	<init>
-	m	()Z	m_46tvdxdpb	m_46tvdxdpb
-	m	()V	m_19jtwhjou	m_19jtwhjou
-	m	()Ljava/util/List;	m_76umbjcue	m_76umbjcue
-	m	(Ljava/lang/String;Ljava/net/InetAddress;)V	m_97cavnmxn	m_97cavnmxn
-		p	1		p_1
-		p	2		p_2
+	m	()Z	m_46tvdxdpb	hasNewServers
+	m	()V	m_19jtwhjou	refresh
+	m	()Ljava/util/List;	m_76umbjcue	getServers
+	m	(Ljava/lang/String;Ljava/net/InetAddress;)V	m_97cavnmxn	add
+		p	1		metadata
+		p	2		address
 c	net/minecraft/C_89ycymwid	net/minecraft/block/CocoaBlock
 	m	(I)V	<init>	<init>
 		p	1		id
@@ -33556,8 +33556,8 @@ c	net/minecraft/C_99sowdzft	net/minecraft/client/options/GameOptions
 	f	[Ljava/lang/String;	f_19fdcjyet	f_19fdcjyet
 	f	[Ljava/lang/String;	f_67zpzirvr	PARTICLE_SETTINGS
 	f	[Ljava/lang/String;	f_59siqmsku	f_59siqmsku
-	f	F	f_16hazigqx	f_16hazigqx
-	f	F	f_41olaypzs	f_41olaypzs
+	f	F	f_16hazigqx	musicVolume
+	f	F	f_41olaypzs	soundVolume
 	f	F	f_13lmwqmhl	mouseSensitivity
 	f	Z	f_88jwkgdhf	invertMouseY
 	f	I	f_04paoxtmc	viewDistance
@@ -33650,8 +33650,8 @@ c	net/minecraft/C_99sowdzft$1	net/minecraft/client/options/GameOptions$1
 	f	[I	f_87nwepdvu	f_87nwepdvu
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/C_99sowdzft$C_12taoyedq	net/minecraft/client/options/GameOptions$Option
-	f	Lnet/minecraft/C_99sowdzft$C_12taoyedq;	f_83kmikmws	f_83kmikmws
-	f	Lnet/minecraft/C_99sowdzft$C_12taoyedq;	f_67pcfcqar	f_67pcfcqar
+	f	Lnet/minecraft/C_99sowdzft$C_12taoyedq;	f_83kmikmws	MUSIC
+	f	Lnet/minecraft/C_99sowdzft$C_12taoyedq;	f_67pcfcqar	SOUND
 	f	Lnet/minecraft/C_99sowdzft$C_12taoyedq;	f_19umsntbi	INVERT_MOUSE
 	f	Lnet/minecraft/C_99sowdzft$C_12taoyedq;	f_48pwvfivj	SENSITIVITY
 	f	Lnet/minecraft/C_99sowdzft$C_12taoyedq;	f_55xbxpimu	FOV

@@ -13,10 +13,10 @@ c	net/minecraft/C_12xxtvzpn
 		p	2			p_2
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/C_54ruxjwzt
-	m	(Lnet/minecraft/C_04pegpidi;)Lnet/minecraft/C_29fsmzkxh;	m_49yjpbkge		m_49yjpbkge
-		p	1			p_1
+	m	(Lnet/minecraft/C_04pegpidi;)Lnet/minecraft/C_29fsmzkxh;	m_49yjpbkge		createSoundInstance
+		p	1			minecart
 c	net/minecraft/C_74ehhhztq
-	f	Ljava/util/Set;	f_97gpqihvf		f_97gpqihvf
+	f	Ljava/util/Set;	f_97gpqihvf		movingEvents
 	m	(Ljava/lang/String;FFFFF)V	m_18jdckrxo	m_18jdckrxo	
 		p	1		p_1	
 		p	2		p_2	
@@ -24,49 +24,49 @@ c	net/minecraft/C_74ehhhztq
 		p	4		p_4	
 		p	5		p_5	
 		p	6		p_6	
-	m	()V	m_94ibwibsn		m_94ibwibsn
-	m	(Ljava/lang/String;FFF)V	m_18jdckrxo		m_18jdckrxo
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/C_47ldwddrb;)V	m_42ykohjjh		m_42ykohjjh
-		p	1			p_1
-	m	(Lnet/minecraft/C_47ldwddrb;Lnet/minecraft/C_47ldwddrb;)V	m_14envsqjn		m_14envsqjn
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/C_47ldwddrb;)Z	m_58evgxphz		m_58evgxphz
-		p	1			p_1
-	m	(Lnet/minecraft/C_47ldwddrb;)V	m_40eieophs		m_40eieophs
-		p	1			p_1
-	m	(Lnet/minecraft/C_47ldwddrb;F)V	m_32bnxgykf		m_32bnxgykf
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/C_47ldwddrb;F)V	m_42pwqpmri		m_42pwqpmri
-		p	1			p_1
-		p	2			p_2
-	m	(Ljava/lang/String;Lnet/minecraft/C_47ldwddrb;FFZ)V	m_07dqjotwj		m_07dqjotwj
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+	m	()V	m_94ibwibsn		stop
+	m	(Ljava/lang/String;FFF)V	m_18jdckrxo		playRecord
+		p	1			id
+		p	2			x
+		p	3			y
+		p	4			z
+	m	(Lnet/minecraft/C_47ldwddrb;)V	m_42ykohjjh		updatePositionAndVelocity
+		p	1			source
+	m	(Lnet/minecraft/C_47ldwddrb;Lnet/minecraft/C_47ldwddrb;)V	m_14envsqjn		updatePositionAndVelocity
+		p	1			listener
+		p	2			source
+	m	(Lnet/minecraft/C_47ldwddrb;)Z	m_58evgxphz		isPlaying
+		p	1			source
+	m	(Lnet/minecraft/C_47ldwddrb;)V	m_40eieophs		stop
+		p	1			source
+	m	(Lnet/minecraft/C_47ldwddrb;F)V	m_32bnxgykf		setVolume
+		p	1			source
+		p	2			volume
+	m	(Lnet/minecraft/C_47ldwddrb;F)V	m_42pwqpmri		setPitch
+		p	1			source
+		p	2			pitch
+	m	(Ljava/lang/String;Lnet/minecraft/C_47ldwddrb;FFZ)V	m_07dqjotwj		play
+		p	1			id
+		p	2			source
+		p	3			volume
+		p	4			pitch
+		p	5			priority
 	m	()V	m_05sciszhn		pause
 	m	()V	m_19njiqsft		resume
-c	net/minecraft/C_16ejflhcc		net/minecraft/C_16ejflhcc
-	f	Lnet/minecraft/C_74ehhhztq;	f_40urcjdno		f_40urcjdno
-	f	Lnet/minecraft/C_04pegpidi;	f_45yqzxvtp		f_45yqzxvtp
-	f	Lnet/minecraft/C_08urhdhqb;	f_39pifjeis		f_39pifjeis
-	f	Z	f_61ervvhtp		f_61ervvhtp
-	f	Z	f_24uyfesyy		f_24uyfesyy
-	f	Z	f_65wbirbhk		f_65wbirbhk
-	f	Z	f_92mryflcd		f_92mryflcd
-	f	F	f_52anxlpby		f_52anxlpby
-	f	F	f_57xiuapyo		f_57xiuapyo
-	f	F	f_43faivaqa		f_43faivaqa
-	f	D	f_94fkrpwco		f_94fkrpwco
+c	net/minecraft/C_16ejflhcc		net/minecraft/client/sound/MinecartSoundInstance
+	f	Lnet/minecraft/C_74ehhhztq;	f_40urcjdno		soundSystem
+	f	Lnet/minecraft/C_04pegpidi;	f_45yqzxvtp		minecart
+	f	Lnet/minecraft/C_08urhdhqb;	f_39pifjeis		player
+	f	Z	f_61ervvhtp		playerIsRidingMinecart
+	f	Z	f_24uyfesyy		minecartIsRemoved
+	f	Z	f_65wbirbhk		minecartIsMoving
+	f	Z	f_92mryflcd		stopped
+	f	F	f_52anxlpby		pitch
+	f	F	f_57xiuapyo		volumeOutside
+	f	F	f_43faivaqa		volumeInside
+	f	D	f_94fkrpwco		minecartVelocity
 	m	(Lnet/minecraft/C_74ehhhztq;Lnet/minecraft/C_04pegpidi;Lnet/minecraft/C_08urhdhqb;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			soundSystem
+		p	2			minecart
+		p	3			player
 	m	()V	m_32tydutfh		m_32tydutfh
