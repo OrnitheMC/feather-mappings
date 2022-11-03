@@ -1375,18 +1375,18 @@ c	net/minecraft/C_08hsewdvi		net/minecraft/client/resource/pack/ResourcePackLoad
 	f	Ljava/util/List;	f_79pkpciqg		availableResourcePacks
 	f	Ljava/util/List;	f_36durepvg		appliedResourcePacks
 	m	(Ljava/io/File;Lnet/minecraft/C_73hqnrdhw;Lnet/minecraft/C_10ocaybgp;Lnet/minecraft/C_99sowdzft;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	1			dir
+		p	2			defaultResourcePack
+		p	3			metadataSerializerRegistry
+		p	4			options
 	m	()V	m_23wzvucag		initDirectory
 	m	()Ljava/util/List;	m_72xrrzwbe		getResourcePackFiles
 	m	()V	m_97tzmfmmq		loadResourcePacks
 	m	()Ljava/util/List;	m_78gtztlbo		getAvailableResourcePacks
 	m	()Ljava/util/List;	m_77gynamwu		getAppliedResourcePacks
-	m	()Ljava/lang/String;	m_55elcachz		m_55elcachz
-	m	([Lnet/minecraft/C_08hsewdvi$C_79zjflkht;)V	m_27wyppdgq		m_27wyppdgq
-		p	1			p_1
+	m	()Ljava/lang/String;	m_55elcachz		getTopAppliedResourcePackName
+	m	([Lnet/minecraft/C_08hsewdvi$C_79zjflkht;)V	m_27wyppdgq		setAppliedResourcePacks
+		p	1			entries
 	m	()Ljava/io/File;	m_51xgtkbob		getDirectory
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/C_08hsewdvi$1		1
@@ -1489,7 +1489,7 @@ c	net/minecraft/C_13ypbbpwh		net/minecraft/client/resource/metadata/serializer/T
 		p	2			type
 		p	3			jsonDeserializationContext
 c	net/minecraft/C_19weklhwh		net/minecraft/client/resource/pack/ResourcePack
-	f	Lnet/minecraft/C_80efdvoox;	f_74emydzzn		f_74emydzzn
+	f	Lnet/minecraft/C_80efdvoox;	f_74emydzzn		LOGGER
 	f	Ljava/io/File;	f_62zroqwfp		file
 	m	(Ljava/io/File;)V	<init>		<init>
 		p	1			file
@@ -1588,34 +1588,34 @@ c	net/minecraft/C_72zkbgjms		net/minecraft/client/resource/metadata/TextureResou
 	f	Z	f_00luababm		blur
 	f	Z	f_23ctxfsin		clamp
 	m	(ZZ)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			blur
+		p	2			clamp
 	m	()Z	m_87zrlgyat		hasBlur
 	m	()Z	m_60nydhwcn		isClamped
 c	net/minecraft/C_74iohdame		net/minecraft/client/resource/metadata/serializer/ResourceMetadataSerializer
 	m	()V	<init>		<init>
-	m	(Lcom/google/gson/JsonElement;Ljava/lang/String;Ljava/lang/Float;FF)F	m_04sqdiryj		m_04sqdiryj
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	(Lcom/google/gson/JsonElement;Ljava/lang/String;Ljava/lang/Integer;II)I	m_72stheswu		m_72stheswu
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	(Lcom/google/gson/JsonElement;Ljava/lang/String;Ljava/lang/String;II)Ljava/lang/String;	m_23ntqzyjm		m_23ntqzyjm
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	(Lcom/google/gson/JsonElement;Ljava/lang/String;Ljava/lang/Boolean;)Z	m_42ztbfqii		m_42ztbfqii
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(Lcom/google/gson/JsonElement;Ljava/lang/String;Ljava/lang/Float;FF)F	m_04sqdiryj		getFloatOrDefault
+		p	1			json
+		p	2			key
+		p	3			defaultValue
+		p	4			min
+		p	5			max
+	m	(Lcom/google/gson/JsonElement;Ljava/lang/String;Ljava/lang/Integer;II)I	m_72stheswu		getIntOrDefault
+		p	1			json
+		p	2			key
+		p	3			defaultValue
+		p	4			min
+		p	5			max
+	m	(Lcom/google/gson/JsonElement;Ljava/lang/String;Ljava/lang/String;II)Ljava/lang/String;	m_23ntqzyjm		getStringOrDefault
+		p	1			json
+		p	2			key
+		p	3			defaultValue
+		p	4			minLength
+		p	5			maxLength
+	m	(Lcom/google/gson/JsonElement;Ljava/lang/String;Ljava/lang/Boolean;)Z	m_42ztbfqii		getBooleanOrDefault
+		p	1			json
+		p	2			key
+		p	3			defaultValue
 c	net/minecraft/C_84fpkufwj		net/minecraft/client/resource/metadata/AnimationFrame
 	f	I	f_75jvwbbnt		index
 	f	I	f_86sqtdobd		time
