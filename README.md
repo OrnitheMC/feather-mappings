@@ -27,14 +27,22 @@ Please have a look at the [naming conventions](/CONVENTIONS.md) before submittin
 ### Getting Started
 
 1. Fork and clone the repo
-2. Run `py feather.py feather <minecraft version>` to open [Enigma](https://github.com/FabricMC/Enigma), a user interface to easily edit the mappings
-3. Save your changes by running one of the following tasks (`py feather.py <task> <minecraft version>`):
+2. Run `py feather.py feather <minecraft version>` to open [Enigma](https://github.com/OrnitheMC/Enigma), a user interface to easily edit the mappings
+3. Save your changes by running one of the following save tasks (`py feather.py <task> <minecraft version>`):
    - `propagateMappings`: propagate your changes up and down the version tree and save them to every applicable Minecraft version (this is most likely the task you want to use)
    - `insertMappings`: save your changes only to the specified Minecraft version
    - `propagateMappingsDown`: propagate your changes down the version tree (to versions further away from the root) and save them to every applicable Minecraft version
    - `propagateMappingsUp`: propagate your changes up the version tree (to versions closer to the root) and save them to every applicable Minecraft version
 4. Commit and push your work to your fork
 5. Open a pull request with your changes
+
+#### NOTE
+
+The `feather` task separates the mappings for the specified version out into temporary files in the `/run/` folder. Enigma will read and write to these files, and the save tasks will use these files to save the mappings back into the mappings tree.
+
+- DO NOT MANUALLY EDIT THESE FILES! You may corrupt the mappings!
+- Running the `feather` task **will** overwrite these files. If you have unsaved changes, make sure to run one of the save tasks **before** running the `feather` task to open Enigma again!
+- You can safely open multiple Enigma instances for *different* Minecraft versions. You **cannot** safely open multiple Enigma instances for *one* Minecraft version.
 
 ## Gradle
 Feather uses Gradle to provide a number of utility tasks for working with the mappings.
