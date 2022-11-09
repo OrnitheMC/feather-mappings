@@ -40,7 +40,7 @@ c	net/minecraft/C_08urhdhqb
 	m	(Lnet/minecraft/C_37ezdibax;)V	m_34vdxqizl		m_34vdxqizl
 		p	1			p_1
 c	net/minecraft/C_16awhtorx
-	f	Ljava/util/ArrayList;	f_92ikwirhr		f_92ikwirhr
+	f	Ljava/util/ArrayList;	f_92ikwirhr		currentScheduledTicks
 	m	(IIII)Z	m_31zqeqopk		m_31zqeqopk
 		p	1			p_1
 		p	2			p_2
@@ -50,10 +50,10 @@ c	net/minecraft/C_30vndvelc
 	f	Lnet/minecraft/C_30vndvelc;	f_13jwzbfrg		COMPARATOR
 	f	Lnet/minecraft/C_30vndvelc;	f_42pkrqefd		NETHERBRICK
 	f	Lnet/minecraft/C_30vndvelc;	f_16bfuzhgg		QUARTZ
-c	net/minecraft/C_36kuauqbj	net/minecraft/C_61cknocai	
-	f	Lnet/minecraft/C_36kuauqbj;	f_24ekksckh	f_24ekksckh	
-	f	Lnet/minecraft/C_36kuauqbj;	f_19zojyhov	f_19zojyhov	
-	f	Lnet/minecraft/C_36kuauqbj;	f_17xfdaxnx	f_17xfdaxnx	
+c	net/minecraft/C_36kuauqbj	net/minecraft/block/ActivationRule	
+	f	Lnet/minecraft/C_36kuauqbj;	f_24ekksckh	EVERYTHING	
+	f	Lnet/minecraft/C_36kuauqbj;	f_19zojyhov	MOBS	
+	f	Lnet/minecraft/C_36kuauqbj;	f_17xfdaxnx	PLAYERS	
 	f	[Lnet/minecraft/C_36kuauqbj;	f_27dcqclzy	f_27dcqclzy	
 	m	()[Lnet/minecraft/C_36kuauqbj;	values	values	
 	m	(Ljava/lang/String;)Lnet/minecraft/C_36kuauqbj;	valueOf	valueOf	
@@ -191,18 +191,18 @@ c	net/minecraft/C_44flbonzz
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-c	net/minecraft/C_49fshupnn
-	f	Lnet/minecraft/C_36kuauqbj;	f_84bztihsx	f_84bztihsx	
+c	net/minecraft/C_49fshupnn	net/minecraft/block/PressurePlateBlock	net/minecraft/block/AbstractPressurePlateBlock
+	f	Lnet/minecraft/C_36kuauqbj;	f_84bztihsx	rule	
 	m	(IILnet/minecraft/C_36kuauqbj;Lnet/minecraft/C_57ywipuwq;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-	m	(Lnet/minecraft/C_54ruxjwzt;III)V	m_69nduppuy	m_69nduppuy	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
+		p	1		id	
+		p	2		sprite	
+		p	3		rule	
+		p	4		material	
+	m	(Lnet/minecraft/C_54ruxjwzt;III)V	m_69nduppuy	updatePowerLevel	
+		p	1		world	
+		p	2		x	
+		p	3		y	
+		p	4		z	
 	m	(Lnet/minecraft/C_05ktcjdzx;IIII)Z	m_80duxffjn	m_80duxffjn	
 		p	1		p_1	
 		p	2		p_2	
@@ -258,7 +258,7 @@ c	net/minecraft/C_49fshupnn
 	m	(I)I	m_95gpmohiv		setPowerLevel
 		p	1			power
 c	net/minecraft/C_49kxcvtgp
-	f	Z	f_18nlnfvnm	f_18nlnfvnm	
+	f	Z	f_18nlnfvnm	powered	
 	m	()Z	m_79llpympa	m_79llpympa	
 	m	(Lnet/minecraft/C_54ruxjwzt;III)Z	m_29afphugb	m_29afphugb	
 		p	1		p_1	
@@ -305,18 +305,18 @@ c	net/minecraft/C_49kxcvtgp
 		p	3		p_3	
 		p	4		p_4	
 		p	5		p_5	
-	m	(Lnet/minecraft/C_54ruxjwzt;IIII)Z	m_54ktpwsqj	m_54ktpwsqj	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-	m	(Lnet/minecraft/C_05ktcjdzx;IIII)Z	m_13ddtxdho	m_13ddtxdho	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
+	m	(Lnet/minecraft/C_54ruxjwzt;IIII)Z	m_54ktpwsqj	shouldBePowered	
+		p	1		world	
+		p	2		x	
+		p	3		y	
+		p	4		z	
+		p	5		metadata	
+	m	(Lnet/minecraft/C_05ktcjdzx;IIII)Z	m_13ddtxdho	isLocked	
+		p	1		world	
+		p	2		x	
+		p	3		y	
+		p	4		z	
+		p	5		metadata	
 	m	()Z	m_11ivkkwns	m_11ivkkwns	
 	m	(Lnet/minecraft/C_54ruxjwzt;IIILnet/minecraft/C_97zulxhng;)V	m_01uswxoka	m_01uswxoka	
 		p	1		p_1	
@@ -336,14 +336,14 @@ c	net/minecraft/C_49kxcvtgp
 		p	4		p_4	
 		p	5		p_5	
 	m	()Z	m_17xctrmxv	m_17xctrmxv	
-	m	(I)Z	m_44mbmnrsd	m_44mbmnrsd	
-		p	0		p_0	
-	m	(Lnet/minecraft/C_54ruxjwzt;IIII)Z	m_57lqgrcoz	m_57lqgrcoz	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
+	m	(I)Z	m_44mbmnrsd	isRedstoneDiode	
+		p	0		blockId	
+	m	(Lnet/minecraft/C_54ruxjwzt;IIII)Z	m_57lqgrcoz	isFacingOtherDiode	
+		p	1		world	
+		p	2		x	
+		p	3		y	
+		p	4		z	
+		p	5		metadata	
 	m	(I)I	m_23axyulzs		m_23axyulzs
 		p	1			p_1
 	m	()Lnet/minecraft/C_39twncnab;	m_59ifwvnzc		m_59ifwvnzc
@@ -404,9 +404,9 @@ c	net/minecraft/C_54ruxjwzt
 		p	1		x	
 		p	2		y	
 		p	3		z	
-	m	(Lnet/minecraft/C_47ldwddrb;Lnet/minecraft/C_19wdelfat;)Ljava/util/List;	m_55dgtkhmc	m_55dgtkhmc	
-		p	1		p_1	
-		p	2		p_2	
+	m	(Lnet/minecraft/C_47ldwddrb;Lnet/minecraft/C_19wdelfat;)Ljava/util/List;	m_55dgtkhmc	getEntities	
+		p	1		exclude	
+		p	2		box	
 	m	(IIII)Z	m_99ducoqwg	m_99ducoqwg	
 		p	1		p_1	
 		p	2		p_2	
@@ -612,9 +612,9 @@ c	net/minecraft/C_66hkjzvwp
 	m	(I)Z	m_52wumabvq		m_52wumabvq
 		p	1			p_1
 c	net/minecraft/C_68zcrzyxg
-	f	[Z	f_67szmncba	f_67szmncba	
-	f	Lnet/minecraft/C_68zcrzyxg;	f_33jlcqixc	f_33jlcqixc	
-	f	Lnet/minecraft/C_68zcrzyxg;	f_75vipxcwt	f_75vipxcwt	
+	f	[Z	f_67szmncba	UPDATE_CLIENTS	
+	f	Lnet/minecraft/C_68zcrzyxg;	f_33jlcqixc	REPEATER	
+	f	Lnet/minecraft/C_68zcrzyxg;	f_75vipxcwt	POWERED_REPEATER	
 	f	Lnet/minecraft/C_49kxcvtgp;	f_33jlcqixc		REPEATER
 	f	Lnet/minecraft/C_49kxcvtgp;	f_75vipxcwt		POWERED_REPEATER
 	f	Lnet/minecraft/C_68zcrzyxg;	f_98wrmmqgz		TRAPPED_CHEST
@@ -626,7 +626,7 @@ c	net/minecraft/C_68zcrzyxg
 	f	Lnet/minecraft/C_68zcrzyxg;	f_76mkzpykw		REDSTONE_BLOCK
 	f	Lnet/minecraft/C_68zcrzyxg;	f_34ceqsext		QUARTZ_ORE
 	f	Lnet/minecraft/C_68zcrzyxg;	f_92hhprgiz		f_92hhprgiz
-	m	()Lnet/minecraft/C_68zcrzyxg;	m_71attwaeh	m_71attwaeh	
+	m	()Lnet/minecraft/C_68zcrzyxg;	m_71attwaeh	updateClients	
 	m	(Lnet/minecraft/C_05ktcjdzx;IIII)Z	m_80duxffjn	isEmittingWeakPower	
 		c	Returns whether weak redstone power is emitted by this block in the given direction.\n\n<p>\nNOTE: directions in redstone power related methods are backwards, so blocks should\ncheck for power emitted in the direction <i>opposite</i> of the one given.	
 		p	1		world	
@@ -725,7 +725,7 @@ c	net/minecraft/C_90mzqjlui
 c	net/minecraft/C_94ohblecv
 	f	I	f_06ygxwlfj		type
 	m	(I)V	<init>	<init>	
-		p	1		p_1	
+		p	1		id	
 	m	(II)V	<init>		<init>
 		p	1			id
 		p	2			type
@@ -744,10 +744,10 @@ c	net/minecraft/C_98ulvanlt
 		p	2		y	
 		p	3		sectionZ	
 		p	4		blockId	
-	m	(Lnet/minecraft/C_47ldwddrb;Lnet/minecraft/C_19wdelfat;Ljava/util/List;)V	m_41ffuwcng	m_41ffuwcng	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+	m	(Lnet/minecraft/C_47ldwddrb;Lnet/minecraft/C_19wdelfat;Ljava/util/List;)V	m_41ffuwcng	getEntities	
+		p	1		exclude	
+		p	2		box	
+		p	3		entities	
 	m	(Lnet/minecraft/C_47ldwddrb;Lnet/minecraft/C_19wdelfat;Ljava/util/List;Lnet/minecraft/C_52ygecrnn;)V	m_41ffuwcng		getEntities
 		p	1			exclude
 		p	2			box
@@ -1190,3 +1190,4 @@ c	net/minecraft/C_99gjvzsdw		net/minecraft/block/HopperBlock
 		p	2			p_2
 	m	(I)I	m_67vobkdtx		getFacing
 		p	0			metadata
+c	net/minecraft/C_18axwjkwf	net/minecraft/block/RailBlock	net/minecraft/block/AbstractRailBlock
