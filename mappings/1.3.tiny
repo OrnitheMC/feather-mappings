@@ -628,7 +628,7 @@ c	net/minecraft/C_03umgrygj	net/minecraft/client/entity/particle/LiquidDripParti
 	m	(F)F	m_04lbxddoy	m_04lbxddoy
 		p	1		p_1
 	m	()V	m_28zixkoqt	m_28zixkoqt
-c	net/minecraft/C_04dfuymlf	net/minecraft/network/packet/XpOrbSpawnPacket
+c	net/minecraft/C_04dfuymlf	net/minecraft/network/packet/AddXpOrbPacket
 	f	I	f_93swjfucw	id
 	f	I	f_47nnnipqg	x
 	f	I	f_06icjqohb	y
@@ -762,14 +762,14 @@ c	net/minecraft/C_04sxridaf	net/minecraft/client/world/ClientWorld
 	f	Lnet/minecraft/C_17nozgejl;	f_39ntoates	entitiesByNetworkId
 	f	Ljava/util/Set;	f_91tzifaqn	entitySet
 	f	Ljava/util/Set;	f_74vfjybca	entitiesToSpawn
-	f	Lnet/minecraft/client/Minecraft;	f_98twcohra	f_98twcohra
+	f	Lnet/minecraft/client/Minecraft;	f_98twcohra	client
 	f	Ljava/util/Set;	f_91ldunypx	removedChunks
 	m	(Lnet/minecraft/C_41yxvtewz;Lnet/minecraft/C_92rrzzavg;IILnet/minecraft/C_35cxspgmp;)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-		p	5		p_5
+		p	1		networkHandler
+		p	2		settings
+		p	3		dimensionId
+		p	4		difficulty
+		p	5		profiler
 	m	()V	m_13jgakjyi	m_13jgakjyi
 	m	(IIIIII)V	m_59fxnehey	regionChanged
 		p	1		minX
@@ -792,7 +792,7 @@ c	net/minecraft/C_04sxridaf	net/minecraft/client/world/ClientWorld
 		p	1		p_1
 	m	(Lnet/minecraft/C_47ldwddrb;)V	m_72abjhhly	m_72abjhhly
 		p	1		p_1
-	m	(ILnet/minecraft/C_47ldwddrb;)V	m_03xrgyjtf	spawnEntity
+	m	(ILnet/minecraft/C_47ldwddrb;)V	m_03xrgyjtf	addEntity
 		p	1		id
 		p	2		entity
 	m	(I)Lnet/minecraft/C_47ldwddrb;	m_35nwxpend	m_35nwxpend
@@ -4298,7 +4298,7 @@ c	net/minecraft/C_17jjnrjcz	net/minecraft/entity/ai/goal/GoToEntityGoal
 		p	2		p_2
 		p	3		p_3
 		p	4		p_4
-c	net/minecraft/C_17mokcrmm	net/minecraft/network/packet/MobSpawnPacket
+c	net/minecraft/C_17mokcrmm	net/minecraft/network/packet/AddMobPacket
 	f	I	f_48elxhqku	id
 	f	I	f_60ueaatyk	type
 	f	I	f_47cyooiop	x
@@ -4433,7 +4433,7 @@ c	net/minecraft/C_17zcocacm	org/bouncycastle/jcajce/provider/util/AlgorithmProvi
 	m	()V	<init>	<init>
 	m	(Lnet/minecraft/C_77tckqxkb;)V	m_49zhlctlq	configure
 		p	1		p_1
-c	net/minecraft/C_17znkflpu	net/minecraft/network/packet/PaintingSpawnPacket
+c	net/minecraft/C_17znkflpu	net/minecraft/network/packet/AddPaintingPacket
 	f	I	f_72gatzayr	id
 	f	I	f_71qbeguas	x
 	f	I	f_66spxyqbk	y
@@ -5590,18 +5590,18 @@ c	net/minecraft/C_20bjtobsl	net/minecraft/entity/DataTracker
 	m	(I)V	m_15hbiihxx	m_15hbiihxx
 		p	1		p_1
 	m	()Z	m_15lxvkyyr	isDirty
-	m	(Ljava/util/List;Ljava/io/DataOutputStream;)V	m_42nkmmilz	m_42nkmmilz
-		p	0		p_0
-		p	1		p_1
+	m	(Ljava/util/List;Ljava/io/DataOutputStream;)V	m_42nkmmilz	writeEntries
+		p	0		entries
+		p	1		output
 	m	()Ljava/util/List;	m_66uvbqycw	collectModifiedEntries
-	m	(Ljava/io/DataOutputStream;)V	m_01ptnzfjd	m_01ptnzfjd
-		p	1		p_1
+	m	(Ljava/io/DataOutputStream;)V	m_01ptnzfjd	serialize
+		p	1		output
 	m	()Ljava/util/List;	m_67tkwgpuj	collectEntries
-	m	(Ljava/io/DataOutputStream;Lnet/minecraft/C_20bjtobsl$C_51pjsvurp;)V	m_87wbqcaoq	m_87wbqcaoq
-		p	0		p_0
-		p	1		p_1
-	m	(Ljava/io/DataInputStream;)Ljava/util/List;	m_92otribzz	m_92otribzz
-		p	0		p_0
+	m	(Ljava/io/DataOutputStream;Lnet/minecraft/C_20bjtobsl$C_51pjsvurp;)V	m_87wbqcaoq	writeEntry
+		p	0		output
+		p	1		entry
+	m	(Ljava/io/DataInputStream;)Ljava/util/List;	m_92otribzz	readEntries
+		p	0		input
 	m	(Ljava/util/List;)V	m_55duhyohw	update
 		p	1		entries
 	m	()V	<clinit>	<clinit>
@@ -8275,7 +8275,7 @@ c	net/minecraft/C_28llkqyfj	net/minecraft/server/entity/EntityTrackerEntry
 		p	1		player
 	m	(Ljava/util/List;)V	m_48ehrnsdq	updateListeners
 		p	1		players
-	m	()Lnet/minecraft/C_19sjytfcv;	m_43varypik	createEntitySpawnPacket
+	m	()Lnet/minecraft/C_19sjytfcv;	m_43varypik	createAddEntityPacket
 	m	(Lnet/minecraft/C_53mtutqhz;)V	m_00hfjyddi	removeListener
 		p	1		player
 c	net/minecraft/C_28nkdveyn	net/minecraft/client/gui/screen/menu/AddServerScreen
@@ -8956,7 +8956,7 @@ c	net/minecraft/C_30ejlxsnj	net/minecraft/item/StickyPistonBlockItem
 		p	1		p_1
 	m	(I)I	m_14ezeujvg	m_14ezeujvg
 		p	1		p_1
-c	net/minecraft/C_30fftgagq	net/minecraft/network/packet/EntitySpawnPacket
+c	net/minecraft/C_30fftgagq	net/minecraft/network/packet/AddEntityPacket
 	f	I	f_22uortmfx	id
 	f	I	f_70gknmycc	x
 	f	I	f_02hmhhciu	y
@@ -13219,7 +13219,7 @@ c	net/minecraft/C_41yxvtewz	net/minecraft/client/network/handler/ClientNetworkHa
 	f	Z	f_18wvvnydt	disconnected
 	f	Lnet/minecraft/C_36abrcmve;	f_65fjdxsgn	connection
 	f	Ljava/lang/String;	f_38tyxrtdu	f_38tyxrtdu
-	f	Lnet/minecraft/client/Minecraft;	f_03dflhwad	f_03dflhwad
+	f	Lnet/minecraft/client/Minecraft;	f_03dflhwad	client
 	f	Lnet/minecraft/C_04sxridaf;	f_38mfsykpo	world
 	f	Z	f_28shodpor	started
 	f	Lnet/minecraft/C_42sowfbht;	f_34wgxglun	savedDataStorage
@@ -13228,12 +13228,12 @@ c	net/minecraft/C_41yxvtewz	net/minecraft/client/network/handler/ClientNetworkHa
 	f	I	f_20drydqxn	maxPlayerCount
 	f	Ljava/util/Random;	f_47ofjojhh	random
 	m	(Lnet/minecraft/client/Minecraft;Ljava/lang/String;I)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
+		p	1		client
+		p	2		address
+		p	3		port
 	m	(Lnet/minecraft/client/Minecraft;Lnet/minecraft/C_96dvkujix;)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
+		p	1		client
+		p	2		server
 	m	()V	m_60sgyquil	cleanUp
 	m	()V	m_05aecaveu	tick
 	m	(Lnet/minecraft/C_82dbhilpa;)V	m_85ciiozpv	m_85ciiozpv
@@ -17642,7 +17642,7 @@ c	net/minecraft/C_54ruxjwzt	net/minecraft/world/World
 	m	()Lnet/minecraft/C_36ghrohdl;	m_45cgbmfjq	createChunkCache
 	m	(Lnet/minecraft/C_92rrzzavg;)V	m_08shdzpdr	init
 		p	1		settings
-	m	()V	m_50pcqfcry	setDefaultSpawnClient
+	m	()V	m_50pcqfcry	resetSpawnPoint
 	m	(II)I	m_72yipderb	getSurfaceBlock
 		p	1		x
 		p	2		z
@@ -17887,9 +17887,9 @@ c	net/minecraft/C_54ruxjwzt	net/minecraft/world/World
 		p	12		velocityZ
 	m	(Lnet/minecraft/C_47ldwddrb;)Z	m_01lvmcwzi	addGlobalEntity
 		p	1		entity
-	m	(Lnet/minecraft/C_47ldwddrb;)Z	m_46ojpgcdq	spawnEntity
+	m	(Lnet/minecraft/C_47ldwddrb;)Z	m_46ojpgcdq	addEntity
 		p	1		entity
-	m	(Lnet/minecraft/C_47ldwddrb;)V	m_90bbcpgda	onEntitySpawned
+	m	(Lnet/minecraft/C_47ldwddrb;)V	m_90bbcpgda	onEntityAdded
 		p	1		entity
 	m	(Lnet/minecraft/C_47ldwddrb;)V	m_72abjhhly	onEntityRemoved
 		p	1		entity
@@ -17897,9 +17897,9 @@ c	net/minecraft/C_54ruxjwzt	net/minecraft/world/World
 		p	1		entity
 	m	(Lnet/minecraft/C_47ldwddrb;)V	m_41msjbmfv	removeEntityNow
 		p	1		entity
-	m	(Lnet/minecraft/C_99fdelfkn;)V	m_43udibrzx	addListener
+	m	(Lnet/minecraft/C_99fdelfkn;)V	m_43udibrzx	addEventListener
 		p	1		listener
-	m	(Lnet/minecraft/C_99fdelfkn;)V	m_51llitver	removeListener
+	m	(Lnet/minecraft/C_99fdelfkn;)V	m_51llitver	removeEventListener
 		p	1		listener
 	m	(Lnet/minecraft/C_47ldwddrb;Lnet/minecraft/C_19wdelfat;)Ljava/util/List;	m_28fjqijdf	getCollisions
 		p	1		entity
@@ -20122,7 +20122,7 @@ c	net/minecraft/C_60jdtafba	net/minecraft/item/PickaxeItem
 		p	1		p_1
 		p	2		p_2
 	m	()V	<clinit>	<clinit>
-c	net/minecraft/C_60jqgzqrq	net/minecraft/network/packet/GlobalEntitySpawnPacket
+c	net/minecraft/C_60jqgzqrq	net/minecraft/network/packet/AddGlobalEntityPacket
 	f	I	f_27qbydffq	id
 	f	I	f_76khunifm	x
 	f	I	f_05ubycnuq	y
@@ -21248,9 +21248,9 @@ c	net/minecraft/C_63ujlquhf	net/minecraft/client/render/entity/LivingEntityRende
 c	net/minecraft/C_63vfbtuam	net/minecraft/world/biome/RiverBiome
 	m	(I)V	<init>	<init>
 		p	1		p_1
-c	net/minecraft/C_63xkjavbt	net/minecraft/network/packet/PlayerSpawnPacket
+c	net/minecraft/C_63xkjavbt	net/minecraft/network/packet/AddPlayerPacket
 	f	I	f_74zuuxoav	id
-	f	Ljava/lang/String;	f_90ikhtfvh	f_90ikhtfvh
+	f	Ljava/lang/String;	f_90ikhtfvh	name
 	f	I	f_41hzjxnmk	x
 	f	I	f_73drvlhyp	y
 	f	I	f_37fhuamoh	z
@@ -23519,7 +23519,7 @@ c	net/minecraft/C_68ydbefqv	net/minecraft/network/listener/PacketListener
 		p	1		packet
 	m	(Lnet/minecraft/C_22rpvsruc;)V	m_28oziwdus	onBlockUpdate
 		p	1		packet
-	m	(Lnet/minecraft/C_63xkjavbt;)V	m_61ulbwkck	onPlayerSpawn
+	m	(Lnet/minecraft/C_63xkjavbt;)V	m_61ulbwkck	onAddPlayer
 		p	1		packet
 	m	(Lnet/minecraft/C_15mndhsiw;)V	m_96xbrvvva	onEntityMove
 		p	1		packet
@@ -23537,7 +23537,7 @@ c	net/minecraft/C_68ydbefqv	net/minecraft/network/listener/PacketListener
 		p	1		packet
 	m	(Lnet/minecraft/C_64uwgcqzu;)V	m_48wyoaerv	onChatMessage
 		p	1		packet
-	m	(Lnet/minecraft/C_30fftgagq;)V	m_19zejvchf	onEntitySpawn
+	m	(Lnet/minecraft/C_30fftgagq;)V	m_19zejvchf	onAddEntity
 		p	1		packet
 	m	(Lnet/minecraft/C_46vjssuff;)V	m_50hqcabhc	onEntityAnimation
 		p	1		packet
@@ -23549,7 +23549,7 @@ c	net/minecraft/C_68ydbefqv	net/minecraft/network/listener/PacketListener
 		p	1		packet
 	m	(Lnet/minecraft/C_91qpcboru;)V	m_48xflstiy	onKey
 		p	1		packet
-	m	(Lnet/minecraft/C_17mokcrmm;)V	m_47opxxdvd	onMobSpawn
+	m	(Lnet/minecraft/C_17mokcrmm;)V	m_47opxxdvd	onAddMob
 		p	1		packet
 	m	(Lnet/minecraft/C_85uudzdfb;)V	m_38fwsgjay	onWorldTime
 		p	1		packet
@@ -23589,7 +23589,7 @@ c	net/minecraft/C_68ydbefqv	net/minecraft/network/listener/PacketListener
 		p	1		packet
 	m	(Lnet/minecraft/C_32slulely;)V	m_28rsvudpk	onConfirmMenuAction
 		p	1		packet
-	m	(Lnet/minecraft/C_17znkflpu;)V	m_17bdlltto	onPaintingSpawn
+	m	(Lnet/minecraft/C_17znkflpu;)V	m_17bdlltto	onAddPainting
 		p	1		packet
 	m	(Lnet/minecraft/C_30yxslnws;)V	m_19bhcitwn	onBlockEvent
 		p	1		packet
@@ -23601,14 +23601,14 @@ c	net/minecraft/C_68ydbefqv	net/minecraft/network/listener/PacketListener
 		p	1		p_1
 	m	(Lnet/minecraft/C_98abnoiwb;)V	m_70lblfxhb	onGameEvent
 		p	1		packet
-	m	(Lnet/minecraft/C_60jqgzqrq;)V	m_35ofwgaev	onGlobalEntitySpawn
+	m	(Lnet/minecraft/C_60jqgzqrq;)V	m_35ofwgaev	onAddGlobalEntity
 		p	1		packet
 	m	(Lnet/minecraft/C_00dzpffnu;)V	m_27slcitln	onMapData
 		p	1		packet
 	m	(Lnet/minecraft/C_31radntjg;)V	m_33zyaimnc	onWorldEvent
 		p	1		packet
-	m	(Lnet/minecraft/C_47eovxhcx;)V	m_12zctzior	m_12zctzior
-		p	1		p_1
+	m	(Lnet/minecraft/C_47eovxhcx;)V	m_12zctzior	onPingHost
+		p	1		packet
 	m	(Lnet/minecraft/C_18obqhocx;)V	m_68jrqsvqu	onEntityStatusEffect
 		p	1		packet
 	m	(Lnet/minecraft/C_34dwbvqbs;)V	m_05vbrdrcp	onEntityRemoveStatusEffect
@@ -23621,7 +23621,7 @@ c	net/minecraft/C_68ydbefqv	net/minecraft/network/listener/PacketListener
 		p	1		packet
 	m	(Lnet/minecraft/C_28bsbywwb;)V	m_91udjorly	onCreativeMenuSlot
 		p	1		packet
-	m	(Lnet/minecraft/C_04dfuymlf;)V	m_65yxvdbhm	onXpOrbSpawn
+	m	(Lnet/minecraft/C_04dfuymlf;)V	m_65yxvdbhm	onAddXpOrb
 		p	1		packet
 	m	(Lnet/minecraft/C_08jqhccnz;)V	m_32latbciv	onMenuClickButton
 		p	1		packet
@@ -30955,7 +30955,7 @@ c	net/minecraft/C_93lpjhybe	net/minecraft/server/entity/EntityTracker
 	f	I	f_11jegmauv	viewDistance
 	m	(Lnet/minecraft/C_16awhtorx;)V	<init>	<init>
 		p	1		world
-	m	(Lnet/minecraft/C_47ldwddrb;)V	m_31lwznupx	startTracking
+	m	(Lnet/minecraft/C_47ldwddrb;)V	m_31lwznupx	onEntityAdded
 		p	1		entity
 	m	(Lnet/minecraft/C_47ldwddrb;II)V	m_28bxfmqdc	startTracking
 		p	1		entity
@@ -33037,7 +33037,7 @@ c	net/minecraft/C_99fdelfkn	net/minecraft/world/WorldEventListener
 		p	8		velocityX
 		p	10		velocityY
 		p	12		velocityZ
-	m	(Lnet/minecraft/C_47ldwddrb;)V	m_08zoiuunh	onEntitySpawned
+	m	(Lnet/minecraft/C_47ldwddrb;)V	m_08zoiuunh	onEntityAdded
 		p	1		entity
 	m	(Lnet/minecraft/C_47ldwddrb;)V	m_00pnuaylg	onEntityRemoved
 		p	1		entity
