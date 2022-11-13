@@ -15208,7 +15208,7 @@ c	net/minecraft/C_47ldwddrb	net/minecraft/entity/Entity
 		p	1		velocityX
 		p	3		velocityY
 		p	5		velocityZ
-	m	(B)V	m_82ocwszzd	handleEvent
+	m	(B)V	m_82ocwszzd	doEvent
 		p	1		event
 	m	()V	m_42ovybgzd	animateDamage
 	m	()V	m_40cyuwslg	m_40cyuwslg
@@ -17577,7 +17577,7 @@ c	net/minecraft/C_54ruxjwzt	net/minecraft/world/World
 	f	Z	f_16xxyddbz	doTicksImmediately
 		c	If true, block ticks will be executed immediately instead of being scheduled.
 	f	Ljava/util/List;	f_06npsczit	entities
-	f	Ljava/util/List;	f_41aakvmmy	entitiesToUnload
+	f	Ljava/util/List;	f_41aakvmmy	entitiesToRemove
 	f	Ljava/util/List;	f_29icuoyfl	blockEntities
 	f	Ljava/util/List;	f_20aabjirb	pendingBlockEntities
 	f	Ljava/util/List;	f_64fczkuwe	removedBlockEntities
@@ -17773,11 +17773,11 @@ c	net/minecraft/C_54ruxjwzt	net/minecraft/world/World
 		p	2		y
 		p	3		z
 		p	4		blockId
-	m	(IIII)V	m_90nnphkya	updateNeighbor
+	m	(IIII)V	m_90nnphkya	updateBlock
 		p	1		x
 		p	2		y
 		p	3		z
-		p	4		blockId
+		p	4		neighborBlockId
 	m	(III)Z	m_63icdqgcp	hasSkyAccess
 		p	1		x
 		p	2		y
@@ -18111,9 +18111,9 @@ c	net/minecraft/C_54ruxjwzt	net/minecraft/world/World
 		p	4		blockEntity
 	m	(Ljava/lang/Class;)I	m_27szppqsr	getEntityCount
 		p	1		type
-	m	(Ljava/util/List;)V	m_21xlkavic	loadEntities
+	m	(Ljava/util/List;)V	m_21xlkavic	addEntities
 		p	1		entities
-	m	(Ljava/util/List;)V	m_27cggejof	unloadEntities
+	m	(Ljava/util/List;)V	m_27cggejof	removeEntities
 		p	1		entities
 	m	(IIIIZILnet/minecraft/C_47ldwddrb;)Z	m_54oaznget	canReplace
 		p	1		blockId
@@ -18198,7 +18198,7 @@ c	net/minecraft/C_54ruxjwzt	net/minecraft/world/World
 		p	3		z
 	m	(Lnet/minecraft/C_76varpwca;)V	m_76jkoxkfu	m_76jkoxkfu
 		p	1		p_1
-	m	(Lnet/minecraft/C_47ldwddrb;)V	m_02sbhyjvo	loadEntity
+	m	(Lnet/minecraft/C_47ldwddrb;)V	m_02sbhyjvo	addEntityAlways
 		p	1		entity
 	m	(Lnet/minecraft/C_84dqcqlog;III)Z	m_27kkgyltw	canModify
 		p	1		player
@@ -18243,13 +18243,13 @@ c	net/minecraft/C_54ruxjwzt	net/minecraft/world/World
 		p	2		id
 	m	(Ljava/lang/String;)I	m_20vpxjvah	getSavedDataCount
 		p	1		id
-	m	(IIIII)V	m_60mfuthaz	doWorldEvent
+	m	(IIIII)V	m_60mfuthaz	doEvent
 		p	1		type
 		p	2		x
 		p	3		y
 		p	4		z
 		p	5		data
-	m	(Lnet/minecraft/C_84dqcqlog;IIIII)V	m_54imnkhfn	doWorldEvent
+	m	(Lnet/minecraft/C_84dqcqlog;IIIII)V	m_54imnkhfn	doEvent
 		p	1		source
 		p	2		type
 		p	3		x
@@ -24178,7 +24178,7 @@ c	net/minecraft/C_68zcrzyxg	net/minecraft/block/Block
 	m	()Ljava/lang/String;	m_82udcdowi	getDisplayName
 		c	Returns the translation of this block's translation key.
 	m	()Ljava/lang/String;	m_98omhdkpo	m_98omhdkpo
-	m	(Lnet/minecraft/C_54ruxjwzt;IIIII)V	m_74xuvhzuv	doBlockEvent
+	m	(Lnet/minecraft/C_54ruxjwzt;IIIII)V	m_74xuvhzuv	doEvent
 		c	Performs a block event. Block events are queued on the server, and executed once per\ntick. Successful block events are synced with clients that are within range. Block events\nare most notably used by pistons to handle extension and retraction, but note blocks\nalso use them to play sounds.
 		p	1		world
 		p	2		x
@@ -29215,7 +29215,7 @@ c	net/minecraft/C_87eagbyjs	net/minecraft/block/entity/BlockEntity
 	m	()Z	m_42xowwoln	isRemoved
 	m	()V	m_81pwhzffw	markRemoved
 	m	()V	m_74elgefoi	cancelRemoval
-	m	(II)V	m_54dbtidmn	doBlockEvent
+	m	(II)V	m_54dbtidmn	doEvent
 		p	1		type
 		p	2		data
 	m	()V	m_59spbxumk	clearBlockCache
@@ -30849,8 +30849,8 @@ c	net/minecraft/C_92rrzzavg$C_65phlzcds	net/minecraft/world/WorldSettings$GameMo
 	f	Lnet/minecraft/C_92rrzzavg$C_65phlzcds;	f_70xdhoats	SURVIVAL
 	f	Lnet/minecraft/C_92rrzzavg$C_65phlzcds;	f_83eeijebn	CREATIVE
 	f	Lnet/minecraft/C_92rrzzavg$C_65phlzcds;	f_81ydsskru	ADVENTURE
-	f	I	f_12axkaryr	id
-	f	Ljava/lang/String;	f_46uxjxqwd	name
+	f	I	f_12axkaryr	index
+	f	Ljava/lang/String;	f_46uxjxqwd	id
 	f	[Lnet/minecraft/C_92rrzzavg$C_65phlzcds;	f_42lwohtwn	f_42lwohtwn
 	m	()[Lnet/minecraft/C_92rrzzavg$C_65phlzcds;	values	values
 	m	(Ljava/lang/String;)Lnet/minecraft/C_92rrzzavg$C_65phlzcds;	valueOf	valueOf
@@ -30858,19 +30858,19 @@ c	net/minecraft/C_92rrzzavg$C_65phlzcds	net/minecraft/world/WorldSettings$GameMo
 	m	(Ljava/lang/String;IILjava/lang/String;)V	<init>	<init>
 		p	1		p_1
 		p	2		p_2
-		p	3		id
-		p	4		name
-	m	()I	m_77lkipffn	getId
-	m	()Ljava/lang/String;	m_32tanxcbz	getName
-	m	(Lnet/minecraft/C_08djwndbe;)V	m_73oqtnrhd	updateAbilities
+		p	3		index
+		p	4		id
+	m	()I	m_77lkipffn	getIndex
+	m	()Ljava/lang/String;	m_32tanxcbz	getId
+	m	(Lnet/minecraft/C_08djwndbe;)V	m_73oqtnrhd	apply
 		p	1		abilities
-	m	()Z	m_81kgbjbbw	isAdventure
+	m	()Z	m_81kgbjbbw	restrictsWorldModification
 	m	()Z	m_97uebgakz	isCreative
 	m	()Z	m_83rcoijpf	isSurvival
-	m	(I)Lnet/minecraft/C_92rrzzavg$C_65phlzcds;	m_66htfdfxg	byId
+	m	(I)Lnet/minecraft/C_92rrzzavg$C_65phlzcds;	m_66htfdfxg	byIndex
+		p	0		index
+	m	(Ljava/lang/String;)Lnet/minecraft/C_92rrzzavg$C_65phlzcds;	m_98twcyztc	byId
 		p	0		id
-	m	(Ljava/lang/String;)Lnet/minecraft/C_92rrzzavg$C_65phlzcds;	m_98twcyztc	byName
-		p	0		name
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/C_92yskxvlt	net/minecraft/item/BedItem
 	m	(I)V	<init>	<init>
@@ -33049,7 +33049,7 @@ c	net/minecraft/C_99fdelfkn	net/minecraft/world/WorldEventListener
 		p	2		x
 		p	3		y
 		p	4		z
-	m	(Lnet/minecraft/C_84dqcqlog;IIIII)V	m_82zxznzzj	doWorldEvent
+	m	(Lnet/minecraft/C_84dqcqlog;IIIII)V	m_82zxznzzj	doEvent
 		p	1		source
 		p	2		type
 		p	3		x
@@ -33057,7 +33057,7 @@ c	net/minecraft/C_99fdelfkn	net/minecraft/world/WorldEventListener
 		p	5		z
 		p	6		data
 	m	(IIIII)V	m_06ssrztvy	updateBlockMiningProgress
-		p	1		playerId
+		p	1		id
 		p	2		x
 		p	3		y
 		p	4		z

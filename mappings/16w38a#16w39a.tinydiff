@@ -55,8 +55,8 @@ c	net/minecraft/C_04pegpidi
 c	net/minecraft/C_04ttiudtv
 	m	()I	m_60xlazxax	m_60xlazxax	
 c	net/minecraft/C_05ijunaom
-	f	Lnet/minecraft/C_68zcrzyxg;	f_01rwfdpxq		f_01rwfdpxq
-	f	Lnet/minecraft/C_68zcrzyxg;	f_52wkwtndl		f_52wkwtndl
+	f	Lnet/minecraft/C_68zcrzyxg;	f_01rwfdpxq		OBSERVER
+	f	Lnet/minecraft/C_68zcrzyxg;	f_52wkwtndl		WHITE_SHULKER_BOX
 c	net/minecraft/C_06fzwmncu
 	m	(Lnet/minecraft/C_17agfiprw;Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_68zcrzyxg;)V	m_67pgyitxj	m_67pgyitxj	
 		p	1		p_1	
@@ -1073,16 +1073,16 @@ c	net/minecraft/C_53xdwsfwb
 	m	(Lnet/minecraft/C_28wsgstbh;)V	<init>		<init>
 		p	1			p_1
 c	net/minecraft/C_54ruxjwzt
-	m	(Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_68zcrzyxg;)V	m_90nnphkya	updateNeighbor	
+	m	(Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_68zcrzyxg;)V	m_90nnphkya	updateBlock	
 		p	1		pos	
-		p	2		block	
+		p	2		neighborBlock	
 	m	(II)Z	m_27bssplpe		m_27bssplpe
 		p	1			p_1
 		p	2			p_2
-	m	(Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_68zcrzyxg;Lnet/minecraft/C_76varpwca;)V	m_90nnphkya		m_90nnphkya
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_68zcrzyxg;Lnet/minecraft/C_76varpwca;)V	m_90nnphkya		updateBlock
+		p	1			pos
+		p	2			neighborBlock
+		p	3			neighborPos
 	m	(Ljava/lang/String;Lnet/minecraft/C_76varpwca;Z)Lnet/minecraft/C_76varpwca;	m_86ehutlfv		m_86ehutlfv
 		p	1			p_1
 		p	2			p_2
@@ -1198,15 +1198,15 @@ c	net/minecraft/C_59opvrrnm$C_94opdxhjo
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_60ejbbznl
-	m	(Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_68zcrzyxg;)V	m_21csomlye	m_21csomlye	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-	m	(Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_68zcrzyxg;Lnet/minecraft/C_76varpwca;)V	m_21csomlye		m_21csomlye
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_68zcrzyxg;)V	m_21csomlye	update	
+		p	1		world	
+		p	2		pos	
+		p	3		neighborBlock	
+	m	(Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_68zcrzyxg;Lnet/minecraft/C_76varpwca;)V	m_21csomlye		update
+		p	1			world
+		p	2			pos
+		p	3			neighborBlock
+		p	4			neighborPos
 c	net/minecraft/C_60guwxsid
 	f	Lnet/minecraft/C_30rsigerv;	f_79dtxrakq	goToWalkTargetGoal	
 	f	Z	f_92univvel	leechedNavigation	
@@ -1553,14 +1553,14 @@ c	net/minecraft/C_68zcrzyxg
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
-	m	(Lnet/minecraft/C_17agfiprw;)Z	m_43pmnutmj		m_43pmnutmj
-		p	1			p_1
-	m	(Lnet/minecraft/C_17agfiprw;Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_68zcrzyxg;Lnet/minecraft/C_76varpwca;)V	m_67pgyitxj		m_67pgyitxj
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+	m	(Lnet/minecraft/C_17agfiprw;)Z	m_43pmnutmj		hasCustomMiningProgress
+		p	1			state
+	m	(Lnet/minecraft/C_17agfiprw;Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_68zcrzyxg;Lnet/minecraft/C_76varpwca;)V	m_67pgyitxj		update
+		p	1			state
+		p	2			world
+		p	3			pos
+		p	4			neighborBlock
+		p	5			neighborPos
 	m	(Lnet/minecraft/C_72owraavl;Lnet/minecraft/C_84dqcqlog;Ljava/util/List;Z)V	m_32qxadhuu		m_32qxadhuu
 		p	1			p_1
 		p	2			p_2
@@ -1803,8 +1803,8 @@ c	net/minecraft/C_75vvaxahj
 		p	4			p_4
 		p	5			p_5
 c	net/minecraft/C_76varpwca
-	m	(Lnet/minecraft/C_02mkxgffo;)Lnet/minecraft/C_76varpwca;	m_58jidjbnw		m_58jidjbnw
-		p	1			p_1
+	m	(Lnet/minecraft/C_02mkxgffo;)Lnet/minecraft/C_76varpwca;	m_58jidjbnw		rotate
+		p	1			rotation
 c	net/minecraft/C_76varpwca$3		3
 	f	[I	f_26xxvupia		f_26xxvupia
 	m	()V	<clinit>		<clinit>
@@ -2081,7 +2081,7 @@ c	net/minecraft/C_95evsppdm
 	m	(Lnet/minecraft/C_28wsgstbh;)V	<init>		<init>
 		p	1			p_1
 c	net/minecraft/C_95nqliruw
-	m	()Z	m_23wfbmqjs		m_23wfbmqjs
+	m	()Z	m_23wfbmqjs		hasCustomMiningProgress
 c	net/minecraft/C_97oneowwj
 	m	(Lnet/minecraft/C_17agfiprw;Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_68zcrzyxg;)V	m_67pgyitxj	m_67pgyitxj	
 		p	1		p_1	
@@ -2347,8 +2347,8 @@ c	net/minecraft/C_12gdmswcy$C_76vnxkzei		C_76vnxkzei
 		p	1			p_1
 	m	(Lnet/minecraft/C_12gdmswcy$1;)V	<init>		<init>
 		p	1			p_1
-c	net/minecraft/C_12zuptexw		net/minecraft/C_12zuptexw
-	f	Lnet/minecraft/C_13busqwet;	f_13tfqlgfe		f_13tfqlgfe
+c	net/minecraft/C_12zuptexw		net/minecraft/block/ObserverBlock
+	f	Lnet/minecraft/C_13busqwet;	f_13tfqlgfe		POWERED
 	m	()V	<init>		<init>
 	m	()Lnet/minecraft/C_58fhurugd;	m_87mkfttjy		m_87mkfttjy
 	m	(Lnet/minecraft/C_17agfiprw;Lnet/minecraft/C_02mkxgffo;)Lnet/minecraft/C_17agfiprw;	m_47fcwxbuj		m_47fcwxbuj
@@ -2374,14 +2374,14 @@ c	net/minecraft/C_12zuptexw		net/minecraft/C_12zuptexw
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	(Lnet/minecraft/C_17agfiprw;Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_76varpwca;)V	m_13dmeijxl		m_13dmeijxl
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_17agfiprw;)V	m_36fnrupiz		m_36fnrupiz
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(Lnet/minecraft/C_17agfiprw;Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_76varpwca;)V	m_13dmeijxl		update
+		p	1			state
+		p	2			world
+		p	3			pos
+	m	(Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_17agfiprw;)V	m_36fnrupiz		updateNeighbors
+		p	1			world
+		p	2			pos
+		p	3			state
 	m	(Lnet/minecraft/C_17agfiprw;)Z	m_11ivkkwns		m_11ivkkwns
 		p	1			p_1
 	m	(Lnet/minecraft/C_17agfiprw;Lnet/minecraft/C_05ktcjdzx;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_69garkogr;)I	m_13zgwwhrw		m_13zgwwhrw
@@ -2536,7 +2536,7 @@ c	net/minecraft/C_26zmwchtf		net/minecraft/C_26zmwchtf
 		p	8			p_8
 		p	9			p_9
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_28dhcdwdp		net/minecraft/C_28dhcdwdp
+c	net/minecraft/C_28dhcdwdp		net/minecraft/block/ShulkerBoxBlock
 	f	Lnet/minecraft/C_29nyjdsja;	f_37kegtuhu		f_37kegtuhu
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/C_30vndvelc;Lnet/minecraft/C_70okwidnp;Lnet/minecraft/C_52uoasxmn;)V	m_83xgrahpd		m_83xgrahpd
