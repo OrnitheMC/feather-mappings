@@ -21,11 +21,11 @@ c	net/minecraft/C_02pknbcgq
 		p	1		source	
 		p	2		type	
 		p	3		result	
-	m	(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/C_06gpuubcg;Lnet/minecraft/C_02pknbcgq$C_31altbjak;I)V	m_04rqbqdib		m_04rqbqdib
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/C_06gpuubcg;Lnet/minecraft/C_02pknbcgq$C_31altbjak;I)V	m_04rqbqdib		add
+		p	1			server
+		p	2			source
+		p	3			type
+		p	4			result
 c	net/minecraft/C_05gpxwito
 	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;)V	m_61jphdbvr	run	
 		p	1		source	
@@ -89,12 +89,12 @@ c	net/minecraft/C_09rjgxfuc
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(Lnet/minecraft/server/MinecraftServer;I)V	m_08srgiqwx		m_08srgiqwx
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/server/MinecraftServer;I)V	m_23ewqmhxe		m_23ewqmhxe
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/server/MinecraftServer;I)V	m_08srgiqwx		setTimeOfDay
+		p	1			server
+		p	2			time
+	m	(Lnet/minecraft/server/MinecraftServer;I)V	m_23ewqmhxe		addToTimeOfDay
+		p	1			server
+		p	2			time
 c	net/minecraft/C_09vvvmhrc
 	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;)V	m_61jphdbvr	m_61jphdbvr	
 		p	1		p_1	
@@ -235,8 +235,8 @@ c	net/minecraft/C_15cpzxqsw
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lnet/minecraft/server/MinecraftServer;)V	m_90diuvnlf		m_90diuvnlf
-		p	1			p_1
+	m	(Lnet/minecraft/server/MinecraftServer;)V	m_90diuvnlf		toggleDownfall
+		p	1			server
 c	net/minecraft/C_16uvoachh
 	m	(Lnet/minecraft/C_06gpuubcg;)Z	m_60klhikrc	m_60klhikrc	
 		p	1		p_1	
@@ -334,8 +334,8 @@ c	net/minecraft/C_18rplnsaq
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lnet/minecraft/server/MinecraftServer;)Lnet/minecraft/C_06ryzvjmf;	m_68asujguo		m_68asujguo
-		p	1			p_1
+	m	(Lnet/minecraft/server/MinecraftServer;)Lnet/minecraft/C_06ryzvjmf;	m_68asujguo		getWorldBorder
+		p	1			server
 	m	(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;Lnet/minecraft/C_76varpwca;)Ljava/util/List;	m_28cwyzvmv		m_28cwyzvmv
 		p	1			p_1
 		p	2			p_2
@@ -428,19 +428,19 @@ c	net/minecraft/C_24wrxrjjo
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(JILnet/minecraft/server/MinecraftServer;)V	m_13azpvolr		m_13azpvolr
-		p	1			p_1
-		p	3			p_3
-		p	4			p_4
-	m	(JILnet/minecraft/server/MinecraftServer;)Ljava/lang/String;	m_68krmyonh		m_68krmyonh
-		p	1			p_1
-		p	3			p_3
-		p	4			p_4
-	m	(ILjava/lang/String;Ljava/lang/StringBuilder;Lnet/minecraft/server/MinecraftServer;)V	m_83blhgduv		m_83blhgduv
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(JILnet/minecraft/server/MinecraftServer;)V	m_13azpvolr		saveReport
+		p	1			durationMillis
+		p	3			durationTicks
+		p	4			server
+	m	(JILnet/minecraft/server/MinecraftServer;)Ljava/lang/String;	m_68krmyonh		buildReport
+		p	1			durationMillis
+		p	3			durationTicks
+		p	4			server
+	m	(ILjava/lang/String;Ljava/lang/StringBuilder;Lnet/minecraft/server/MinecraftServer;)V	m_83blhgduv		addResults
+		p	1			spacing
+		p	2			location
+		p	3			report
+		p	4			server
 	m	(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;Lnet/minecraft/C_76varpwca;)Ljava/util/List;	m_28cwyzvmv		m_28cwyzvmv
 		p	1			p_1
 		p	2			p_2
@@ -488,8 +488,8 @@ c	net/minecraft/C_27idnebby
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/C_29mggsfyj
-	f	Z	f_80tnofryu		f_80tnofryu
-	m	()Z	m_28tibrawo		m_28tibrawo
+	f	Z	f_80tnofryu		conditionMet
+	m	()Z	m_28tibrawo		wasConditionMet
 	m	(Z)V	m_04fglkdum		m_04fglkdum
 		p	1			p_1
 c	net/minecraft/C_31szylpws
@@ -736,8 +736,8 @@ c	net/minecraft/C_55xzlgsxc
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(Lnet/minecraft/server/MinecraftServer;)Ljava/util/List;	m_43qliusja		m_43qliusja
-		p	1			p_1
+	m	(Lnet/minecraft/server/MinecraftServer;)Ljava/util/List;	m_43qliusja		getObjectives
+		p	1			server
 c	net/minecraft/C_57ecsxfyj
 	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;)V	m_61jphdbvr	m_61jphdbvr	
 		p	1		p_1	
@@ -825,17 +825,17 @@ c	net/minecraft/C_61pewjwbs
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lnet/minecraft/C_88ywnrgwu;Ljava/lang/String;Lnet/minecraft/server/MinecraftServer;)V	m_41nbnkdcr		m_41nbnkdcr
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/C_88ywnrgwu;Ljava/lang/String;Lnet/minecraft/server/MinecraftServer;)V	m_41nbnkdcr		dispatchEntityEvent
+		p	0			gameRules
+		p	1			ruleName
+		p	2			server
 	m	(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;Lnet/minecraft/C_76varpwca;)Ljava/util/List;	m_28cwyzvmv		m_28cwyzvmv
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(Lnet/minecraft/server/MinecraftServer;)Lnet/minecraft/C_88ywnrgwu;	m_68goagvha		m_68goagvha
-		p	1			p_1
+	m	(Lnet/minecraft/server/MinecraftServer;)Lnet/minecraft/C_88ywnrgwu;	m_68goagvha		getGameRules
+		p	1			server
 c	net/minecraft/C_62yieolrd
 	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;)V	m_61jphdbvr	m_61jphdbvr	
 		p	1		p_1	
@@ -1109,7 +1109,7 @@ c	net/minecraft/C_86swunqdk
 	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;)V	m_61jphdbvr	m_61jphdbvr	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;)Z	m_72sdwdkkn	executeWildcard	
+	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;)Z	m_72sdwdkkn	runWildcard	
 		p	1		source	
 		p	2		args	
 	m	()Lnet/minecraft/C_59qbhmfto;	m_19awdtcil	getScoreboard	
@@ -1198,116 +1198,116 @@ c	net/minecraft/C_86swunqdk
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;)Z	m_72sdwdkkn		m_72sdwdkkn
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lnet/minecraft/server/MinecraftServer;)Lnet/minecraft/C_59qbhmfto;	m_19awdtcil		m_19awdtcil
-		p	1			p_1
-	m	(Ljava/lang/String;ZLnet/minecraft/server/MinecraftServer;)Lnet/minecraft/C_64nyqfgnj;	m_37hbibpvz		m_37hbibpvz
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Ljava/lang/String;Lnet/minecraft/server/MinecraftServer;)Lnet/minecraft/C_39xxckyth;	m_47ttyktyu		m_47ttyktyu
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_75eqxaoih		m_75eqxaoih
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_34ldybdxk		m_34ldybdxk
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_56jgpfarx		m_56jgpfarx
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_91lcpejli		m_91lcpejli
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_35oroueba		m_35oroueba
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_77qwgqvgb		m_77qwgqvgb
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_55qckiiny		m_55qckiiny
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_78hsdxjqi		m_78hsdxjqi
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/C_06gpuubcg;Ljava/lang/String;Lnet/minecraft/server/MinecraftServer;)V	m_63vvgxhvi		m_63vvgxhvi
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lnet/minecraft/C_06gpuubcg;Lnet/minecraft/server/MinecraftServer;)V	m_62ukiitbq		m_62ukiitbq
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_41dawbupj		m_41dawbupj
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_35psqtayb		m_35psqtayb
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_91gizcayu		m_91gizcayu
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_25pvcbork		m_25pvcbork
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_94zgvfthi		m_94zgvfthi
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_99tykouzy		m_99tykouzy
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_75lanvqdp		m_75lanvqdp
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;I)V	m_47vjbmvdk		m_47vjbmvdk
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;)Z	m_72sdwdkkn		runWildcard
+		p	1			server
+		p	2			source
+		p	3			args
+	m	(Lnet/minecraft/server/MinecraftServer;)Lnet/minecraft/C_59qbhmfto;	m_19awdtcil		getScoreboard
+		p	1			server
+	m	(Ljava/lang/String;ZLnet/minecraft/server/MinecraftServer;)Lnet/minecraft/C_64nyqfgnj;	m_37hbibpvz		getObjective
+		p	1			name
+		p	2			write
+		p	3			server
+	m	(Ljava/lang/String;Lnet/minecraft/server/MinecraftServer;)Lnet/minecraft/C_39xxckyth;	m_47ttyktyu		getTeam
+		p	1			name
+		p	2			server
+	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_75eqxaoih		addObjective
+		p	1			source
+		p	2			args
+		p	3			index
+		p	4			server
+	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_34ldybdxk		addTeam
+		p	1			source
+		p	2			args
+		p	3			index
+		p	4			server
+	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_56jgpfarx		updateTeam
+		p	1			source
+		p	2			args
+		p	3			index
+		p	4			server
+	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_91lcpejli		removeTeam
+		p	1			source
+		p	2			args
+		p	3			index
+		p	4			server
+	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_35oroueba		listTeams
+		p	1			source
+		p	2			args
+		p	3			index
+		p	4			server
+	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_77qwgqvgb		joinTeam
+		p	1			source
+		p	2			args
+		p	3			index
+		p	4			server
+	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_55qckiiny		leaveTeam
+		p	1			source
+		p	2			args
+		p	3			index
+		p	4			server
+	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_78hsdxjqi		emptyTeam
+		p	1			source
+		p	2			args
+		p	3			index
+		p	4			server
+	m	(Lnet/minecraft/C_06gpuubcg;Ljava/lang/String;Lnet/minecraft/server/MinecraftServer;)V	m_63vvgxhvi		removeObjective
+		p	1			source
+		p	2			name
+		p	3			server
+	m	(Lnet/minecraft/C_06gpuubcg;Lnet/minecraft/server/MinecraftServer;)V	m_62ukiitbq		listObjectives
+		p	1			source
+		p	2			server
+	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_41dawbupj		setDisplayObjective
+		p	1			source
+		p	2			args
+		p	3			index
+		p	4			server
+	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_35psqtayb		listPlayers
+		p	1			source
+		p	2			args
+		p	3			index
+		p	4			server
+	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_91gizcayu		setScore
+		p	1			source
+		p	2			args
+		p	3			index
+		p	4			server
+	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_25pvcbork		resetScore
+		p	1			source
+		p	2			args
+		p	3			index
+		p	4			server
+	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_94zgvfthi		enableTrigger
+		p	1			source
+		p	2			args
+		p	3			index
+		p	4			server
+	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_99tykouzy		testScore
+		p	1			source
+		p	2			args
+		p	3			index
+		p	4			server
+	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;ILnet/minecraft/server/MinecraftServer;)V	m_75lanvqdp		modifyScore
+		p	1			source
+		p	2			args
+		p	3			index
+		p	4			server
+	m	(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;I)V	m_47vjbmvdk		runTag
+		p	1			server
+		p	2			source
+		p	3			args
+		p	4			index
 	m	(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;Lnet/minecraft/C_76varpwca;)Ljava/util/List;	m_28cwyzvmv		m_28cwyzvmv
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(ZLnet/minecraft/server/MinecraftServer;)Ljava/util/List;	m_63ghsyqey		m_63ghsyqey
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/server/MinecraftServer;)Ljava/util/List;	m_57zetjxsx		m_57zetjxsx
-		p	1			p_1
+	m	(ZLnet/minecraft/server/MinecraftServer;)Ljava/util/List;	m_63ghsyqey		getObjectives
+		p	1			write
+		p	2			server
+	m	(Lnet/minecraft/server/MinecraftServer;)Ljava/util/List;	m_57zetjxsx		getTriggers
+		p	1			server
 c	net/minecraft/C_87mwfakre
 	m	()V	<init>	<init>	
 	m	(Lnet/minecraft/C_96dvkujix;)V	<init>		<init>
@@ -1365,11 +1365,11 @@ c	net/minecraft/C_94urwjljl
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lnet/minecraft/C_06gpuubcg;Lnet/minecraft/server/MinecraftServer;)Ljava/util/List;	m_35bbdqgdo		m_35bbdqgdo
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/server/MinecraftServer;)Ljava/util/Map;	m_67tlygmeq		m_67tlygmeq
-		p	1			p_1
+	m	(Lnet/minecraft/C_06gpuubcg;Lnet/minecraft/server/MinecraftServer;)Ljava/util/List;	m_35bbdqgdo		getAvailableCommands
+		p	1			source
+		p	2			server
+	m	(Lnet/minecraft/server/MinecraftServer;)Ljava/util/Map;	m_67tlygmeq		getCommands
+		p	1			server
 	m	(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;Lnet/minecraft/C_76varpwca;)Ljava/util/List;	m_28cwyzvmv		m_28cwyzvmv
 		p	1			p_1
 		p	2			p_2
