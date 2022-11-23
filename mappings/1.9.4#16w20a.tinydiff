@@ -583,8 +583,8 @@ c	net/minecraft/C_46zngekdb
 c	net/minecraft/C_47ldwddrb
 	f	Lnet/minecraft/C_56bwttqna;	f_17wtchnto		f_17wtchnto
 	m	()V	m_38mbfinky	beforeLoadedIntoWorld	
-	m	()Z	m_97goyefyy		m_97goyefyy
-	m	(Z)V	m_73txtvkcb		m_73txtvkcb
+	m	()Z	m_97goyefyy		isNoGravity
+	m	(Z)V	m_73txtvkcb		setNoGravity
 		p	1			p_1
 	m	()Lnet/minecraft/C_63sgdtzig;	m_30obvetih		m_30obvetih
 	m	()Lnet/minecraft/C_60pmlswez;	m_93cfhtboh		m_93cfhtboh
@@ -959,7 +959,7 @@ c	net/minecraft/C_83cmdfzkg$C_35qsjqzgp
 c	net/minecraft/C_84dqcqlog
 	m	(Lnet/minecraft/C_92rrzzavg$C_65phlzcds;)V	m_16vewmtgh	setGameMode	
 		p	1		gameMode	
-	m	(Lnet/minecraft/C_98uywqlim;)V	m_36vwneeaw		m_36vwneeaw
+	m	(Lnet/minecraft/C_98uywqlim;)V	m_36vwneeaw		openStructureBlockMenu
 		p	1			p_1
 	m	(Lnet/minecraft/C_65phlzcds;)V	m_16vewmtgh		setGameMode
 		p	1			gameMode
@@ -1171,42 +1171,42 @@ c	net/minecraft/C_98jlqnywr
 		p	4			p_4
 		p	5			p_5
 c	net/minecraft/C_98uywqlim
-	f	Z	f_87widjubb		f_87widjubb
-	f	Z	f_26dvfzltn		f_26dvfzltn
-	f	Z	f_65trucmbd		f_65trucmbd
+	f	Z	f_87widjubb		powered
+	f	Z	f_26dvfzltn		showAir
+	f	Z	f_65trucmbd		showBoundingBox
 	m	()Z	m_28ctaudxp	m_28ctaudxp	
-	m	()V	m_30cwyncvb		m_30cwyncvb
-	m	(Lnet/minecraft/C_84dqcqlog;)Z	m_94ybqrwcb		m_94ybqrwcb
-		p	1			p_1
-	m	()Ljava/lang/String;	m_92vhtfrha		m_92vhtfrha
-	m	(Lnet/minecraft/C_97zulxhng;)V	m_96lxzujkv		m_96lxzujkv
-		p	1			p_1
-	m	()Lnet/minecraft/C_76varpwca;	m_77lexhtsr		m_77lexhtsr
-	m	()Lnet/minecraft/C_76varpwca;	m_06ylozijj		m_06ylozijj
-	m	()Lnet/minecraft/C_63ehaunll;	m_68jhrankc		m_68jhrankc
-	m	()Lnet/minecraft/C_02mkxgffo;	m_16hfwwllr		m_16hfwwllr
-	m	()Ljava/lang/String;	m_81frrlwjx		m_81frrlwjx
+	m	()V	m_30cwyncvb		updateState
+	m	(Lnet/minecraft/C_84dqcqlog;)Z	m_94ybqrwcb		use
+		p	1			player
+	m	()Ljava/lang/String;	m_92vhtfrha		getName
+	m	(Lnet/minecraft/C_97zulxhng;)V	m_96lxzujkv		setAuthor
+		p	1			entity
+	m	()Lnet/minecraft/C_76varpwca;	m_77lexhtsr		getStructurePos
+	m	()Lnet/minecraft/C_76varpwca;	m_06ylozijj		getSize
+	m	()Lnet/minecraft/C_63ehaunll;	m_68jhrankc		getMirror
+	m	()Lnet/minecraft/C_02mkxgffo;	m_16hfwwllr		getRotation
+	m	()Ljava/lang/String;	m_81frrlwjx		getStructureMetadata
 	m	()Lnet/minecraft/C_98uywqlim$C_67nusdewq;	m_52pehwbpz		getMode
-	m	()V	m_01aopfrsn		m_01aopfrsn
-	m	()Z	m_01scvzqbn		m_01scvzqbn
-	m	(Lio/netty/buffer/ByteBuf;)V	m_77ksnfmfr		m_77ksnfmfr
-		p	1			p_1
-	m	()Z	m_00dnjrzsw		m_00dnjrzsw
-	m	(Z)Z	m_31zlbeonh		m_31zlbeonh
-		p	1			p_1
-	m	()Z	m_65hbwvpzf		m_65hbwvpzf
-	m	(Z)Z	m_28ctaudxp		m_28ctaudxp
-		p	1			p_1
-	m	()V	m_92ayuiuxt		m_92ayuiuxt
-	m	()Z	m_03gtajcsa		m_03gtajcsa
-	m	(Z)V	m_19fdkzpyk		m_19fdkzpyk
-		p	1			p_1
-	m	()Z	m_18ikqhmgq		m_18ikqhmgq
-	m	(Z)V	m_16ipaghxr		m_16ipaghxr
-		p	1			p_1
-	m	()Z	m_85bgncmba		m_85bgncmba
-	m	(Z)V	m_06ogfncdz		m_06ogfncdz
-		p	1			p_1
+	m	()V	m_01aopfrsn		cycleMode
+	m	()Z	m_01scvzqbn		ignoreEntities
+	m	(Lio/netty/buffer/ByteBuf;)V	m_77ksnfmfr		serialize
+		p	1			buffer
+	m	()Z	m_00dnjrzsw		saveStructure
+	m	(Z)Z	m_31zlbeonh		saveStructure
+		p	1			saveToFile
+	m	()Z	m_65hbwvpzf		loadStructure
+	m	(Z)Z	m_28ctaudxp		loadStructure
+		p	1			noResize
+	m	()V	m_92ayuiuxt		unloadStructure
+	m	()Z	m_03gtajcsa		isPowered
+	m	(Z)V	m_19fdkzpyk		setPowered
+		p	1			powered
+	m	()Z	m_18ikqhmgq		showAir
+	m	(Z)V	m_16ipaghxr		setShowAir
+		p	1			showAir
+	m	()Z	m_85bgncmba		showBoundingBox
+	m	(Z)V	m_06ogfncdz		setShowBoundingBox
+		p	1			showBoundingBox
 	m	()Lnet/minecraft/C_21uoltggz;	m_20zkqheah		m_20zkqheah
 c	net/minecraft/C_98uywqlim$C_67nusdewq
 	m	(Lnet/minecraft/C_98uywqlim$C_67nusdewq;)Ljava/lang/String;	m_57lcoeyua		m_57lcoeyua
