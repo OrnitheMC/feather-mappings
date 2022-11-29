@@ -9,10 +9,10 @@ c	net/minecraft/C_17wmevhba
 		p	1		size	
 	m	()I	m_83phzacbv	getFormatSize	
 c	net/minecraft/C_19wdelfat
-	m	()Z	m_48qenvoxr		m_48qenvoxr
+	m	()Z	m_48qenvoxr		isInvalid
 c	net/minecraft/C_20lpexrih
 	m	()I	m_08htmdjjq	end	
-	m	()V	m_08htmdjjq		m_08htmdjjq
+	m	()V	m_08htmdjjq		end
 c	net/minecraft/C_20vbkqxvz
 	m	()Z	m_97tfqykgn	m_97tfqykgn	
 c	net/minecraft/C_21yipcxzt
@@ -22,12 +22,12 @@ c	net/minecraft/C_21yipcxzt
 	m	(Ljava/nio/ByteBuffer;)V	m_81hfujzwt		m_81hfujzwt
 		p	1			p_1
 c	net/minecraft/C_29dghhgjh
-	f	Lnet/minecraft/C_17wmevhba;	f_58pourokq		f_58pourokq
-	f	Lnet/minecraft/C_17wmevhba;	f_31llbewwh		f_31llbewwh
-	f	Lnet/minecraft/C_17wmevhba;	f_44zavikyn		f_44zavikyn
-	f	Lnet/minecraft/C_17wmevhba;	f_92wpnnmwt		f_92wpnnmwt
-	f	Lnet/minecraft/C_17wmevhba;	f_34wyvitik		f_34wyvitik
-	f	Lnet/minecraft/C_17wmevhba;	f_23qrliubd		f_23qrliubd
+	f	Lnet/minecraft/C_17wmevhba;	f_58pourokq		POSITION_ELEMENT
+	f	Lnet/minecraft/C_17wmevhba;	f_31llbewwh		COLOR_ELEMENT
+	f	Lnet/minecraft/C_17wmevhba;	f_44zavikyn		UV0_ELEMENT
+	f	Lnet/minecraft/C_17wmevhba;	f_92wpnnmwt		UV1_ELEMENT
+	f	Lnet/minecraft/C_17wmevhba;	f_34wyvitik		NORMAL_ELEMENT
+	f	Lnet/minecraft/C_17wmevhba;	f_23qrliubd		PADDING_ELEMENT
 c	net/minecraft/C_36rbvvvbq
 	f	I	f_72rjczwlv	index	
 	f	I	f_18orcnadc	limit	
@@ -42,24 +42,24 @@ c	net/minecraft/C_36rbvvvbq
 		p	3		b	
 	m	()I	m_29bhcmcvv	end	
 	m	()I	m_42qrfhkfn	getLimit	
-	m	(FFF)V	m_06nvkgism		m_06nvkgism
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	()Lnet/minecraft/C_36rbvvvbq$C_16gttdmcd;	m_18qphrmve		m_18qphrmve
-	m	()I	m_95ytcjxiw		m_95ytcjxiw
-	m	(Ljava/nio/FloatBuffer;FFFII)F	m_85pjqjzeh		m_85pjqjzeh
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(FFF)V	m_06nvkgism		sortQuads
+		p	1			cameraX
+		p	2			cameraY
+		p	3			cameraZ
+	m	()Lnet/minecraft/C_36rbvvvbq$C_16gttdmcd;	m_18qphrmve		getState
+	m	()I	m_95ytcjxiw		getBufferIndex
+	m	(Ljava/nio/FloatBuffer;FFFII)F	m_85pjqjzeh		squaredDistance
+		p	0			buffer
+		p	1			x
+		p	2			y
+		p	3			z
 		p	4			p_4
 		p	5			p_5
 	m	(FFF)V	m_37fmxbede		m_37fmxbede
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	()V	m_29bhcmcvv		m_29bhcmcvv
+	m	()V	m_29bhcmcvv		end
 c	net/minecraft/C_36rbvvvbq$1
 	f	[I	f_90ptugsje	f_90ptugsje	
 	f	[F	f_44erovzvg		f_44erovzvg
@@ -72,8 +72,8 @@ c	net/minecraft/C_36rbvvvbq$1
 		p	1			p_1
 		p	2			p_2
 	m	(Ljava/lang/Object;Ljava/lang/Object;)I	compare		compare
-		p	1			p_1
-		p	2			p_2
+		p	1			i1
+		p	2			i2
 c	net/minecraft/C_36rbvvvbq$C_16gttdmcd
 	f	I	f_27unyypdz	index	
 	f	I	f_49wqxmalj	vertexCount	
@@ -87,9 +87,9 @@ c	net/minecraft/C_36rbvvvbq$C_16gttdmcd
 	m	()I	m_65gykpxge	getVertexCount	
 	m	(Lnet/minecraft/C_36rbvvvbq;[ILnet/minecraft/C_78rdifmbt;)V	<init>		<init>
 		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	()I	m_53pohmlbz		m_53pohmlbz
+		p	2			buffer
+		p	3			format
+	m	()I	m_53pohmlbz		getVertexCount
 c	net/minecraft/C_36rbvvvbq$2		2
 	f	[I	f_90ptugsje		f_90ptugsje
 	m	()V	<clinit>		<clinit>
@@ -147,9 +147,9 @@ c	net/minecraft/C_75omjbpxb
 	f	Lnet/minecraft/C_36bxmjvmi;	f_53tjxitmt		CRAFTING_TABLE_INTERACTIONS
 	f	Lnet/minecraft/C_36bxmjvmi;	f_37ioszzzn		CHESTS_OPENED
 c	net/minecraft/C_78rdifmbt
-	m	()I	m_38qkxeret		m_38qkxeret
-	m	(I)I	m_14uifkear		m_14uifkear
-		p	1			p_1
+	m	()I	m_38qkxeret		getIntSize
+	m	(I)I	m_14uifkear		getOffset
+		p	1			index
 c	net/minecraft/C_87pusyhkd
 	m	()V	m_16vskuuck		m_16vskuuck
 	m	(IIII)I	m_22przthmp		m_22przthmp

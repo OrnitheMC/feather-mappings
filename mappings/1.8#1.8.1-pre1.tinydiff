@@ -97,11 +97,11 @@ c	net/minecraft/C_13piauvdk
 		p	3			p_3
 	m	()Lcom/mojang/authlib/properties/PropertyMap;	m_08jksgurj		m_08jksgurj
 c	net/minecraft/C_15jjsjmaj
-	m	(Lnet/minecraft/C_54jdujmos;ILnet/minecraft/C_91glxqzmz;)V	m_04tdhjfwm		m_04tdhjfwm
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-	m	()Lnet/minecraft/C_91glxqzmz;	m_45jbeazqr		m_45jbeazqr
+	m	(Lnet/minecraft/C_54jdujmos;ILnet/minecraft/C_91glxqzmz;)V	m_04tdhjfwm		writeNbt
+		p	0			nbt
+		p	1			baseColor
+		p	2			patternsNbt
+	m	()Lnet/minecraft/C_91glxqzmz;	m_45jbeazqr		getPatternsNbt
 c	net/minecraft/C_15satvidx
 	m	(Lnet/minecraft/C_57ywipuwq;ZLnet/minecraft/C_71wxkaaxh;)V	<init>		<init>
 		p	1			material
@@ -290,8 +290,8 @@ c	net/minecraft/C_31mwdamss
 c	net/minecraft/C_31zirohwx
 	f	Ljavax/vecmath/Vector3f;	f_57iixxpez	f_57iixxpez	
 	f	Ljavax/vecmath/Vector3f;	f_78qffxbif	f_78qffxbif	
-	f	Lorg/lwjgl/util/vector/Vector3f;	f_57iixxpez		f_57iixxpez
-	f	Lorg/lwjgl/util/vector/Vector3f;	f_78qffxbif		f_78qffxbif
+	f	Lorg/lwjgl/util/vector/Vector3f;	f_57iixxpez		from
+	f	Lorg/lwjgl/util/vector/Vector3f;	f_78qffxbif		to
 	m	(Ljavax/vecmath/Vector3f;Ljavax/vecmath/Vector3f;Ljava/util/Map;Lnet/minecraft/C_16uwxdqhy;Z)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -299,11 +299,11 @@ c	net/minecraft/C_31zirohwx
 		p	4		p_4	
 		p	5		p_5	
 	m	(Lorg/lwjgl/util/vector/Vector3f;Lorg/lwjgl/util/vector/Vector3f;Ljava/util/Map;Lnet/minecraft/C_16uwxdqhy;Z)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	1			from
+		p	2			to
+		p	3			faces
+		p	4			rotation
+		p	5			shade
 c	net/minecraft/C_31zirohwx$C_24kquffjp
 	m	(Lcom/google/gson/JsonObject;)Ljavax/vecmath/Vector3f;	m_82jiumztm	m_82jiumztm	
 		p	1		p_1	
@@ -312,13 +312,13 @@ c	net/minecraft/C_31zirohwx$C_24kquffjp
 	m	(Lcom/google/gson/JsonObject;Ljava/lang/String;)Ljavax/vecmath/Vector3f;	m_32phkntqz	m_32phkntqz	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lcom/google/gson/JsonObject;)Lorg/lwjgl/util/vector/Vector3f;	m_82jiumztm		m_82jiumztm
-		p	1			p_1
-	m	(Lcom/google/gson/JsonObject;)Lorg/lwjgl/util/vector/Vector3f;	m_94fdykraj		m_94fdykraj
-		p	1			p_1
-	m	(Lcom/google/gson/JsonObject;Ljava/lang/String;)Lorg/lwjgl/util/vector/Vector3f;	m_32phkntqz		m_32phkntqz
-		p	1			p_1
-		p	2			p_2
+	m	(Lcom/google/gson/JsonObject;)Lorg/lwjgl/util/vector/Vector3f;	m_82jiumztm		deserializeTo
+		p	1			json
+	m	(Lcom/google/gson/JsonObject;)Lorg/lwjgl/util/vector/Vector3f;	m_94fdykraj		deserializeFrom
+		p	1			json
+	m	(Lcom/google/gson/JsonObject;Ljava/lang/String;)Lorg/lwjgl/util/vector/Vector3f;	m_32phkntqz		deserializeVector3f
+		p	1			json
+		p	2			key
 c	net/minecraft/C_32axzzcxd
 	m	(Lnet/minecraft/C_17agfiprw;)Lnet/minecraft/C_71wxkaaxh;	m_16eyhjqss		m_16eyhjqss
 		p	1			p_1
@@ -475,8 +475,8 @@ c	net/minecraft/C_58kgrgadv
 	m	(Lnet/minecraft/C_17agfiprw;)Lnet/minecraft/C_71wxkaaxh;	m_16eyhjqss		m_16eyhjqss
 		p	1			p_1
 c	net/minecraft/C_59qbhmfto
-	m	(Lnet/minecraft/C_47ldwddrb;)V	m_93egttmhv		m_93egttmhv
-		p	1			p_1
+	m	(Lnet/minecraft/C_47ldwddrb;)V	m_93egttmhv		onEntityRemoved
+		p	1			entity
 c	net/minecraft/C_60iaxekuo
 	m	()Ljava/lang/String;	m_82udcdowi		m_82udcdowi
 c	net/minecraft/C_60tkizndn
@@ -814,7 +814,7 @@ c	net/minecraft/C_85bwkvsib$1	1
 	m	(Ljava/lang/Object;)Z	apply	apply	
 		p	1		p_1	
 c	net/minecraft/C_85dcnxfay
-	f	Lnet/minecraft/C_46jsnynwl;	f_78bdfrjuz		f_78bdfrjuz
+	f	Lnet/minecraft/C_46jsnynwl;	f_78bdfrjuz		EPOLL_EVENT_LOOP_GROUP
 c	net/minecraft/C_85dcnxfay$2
 	m	()Lio/netty/channel/local/LocalEventLoopGroup;	m_63wqjqlzj	load	
 	m	()Lio/netty/channel/epoll/EpollEventLoopGroup;	m_37vvjrwqw		m_37vvjrwqw
@@ -842,7 +842,7 @@ c	net/minecraft/C_85dcnxfay$5
 	m	(Lnet/minecraft/C_85dcnxfay;)V	<init>		<init>
 		p	1			p_1
 	m	(Lio/netty/channel/Channel;)V	initChannel		initChannel
-		p	1			p_1
+		p	1			channel
 c	net/minecraft/C_85dcnxfay$6
 	f	Lnet/minecraft/C_65ttkuuty;	f_58bxdojfo	connection	
 	f	Lnet/minecraft/C_21gvykafx;	f_45nktcxph	reason	
@@ -869,7 +869,7 @@ c	net/minecraft/C_85dcnxfay$7		7
 		p	2			p_2
 		p	3			p_3
 	m	(Lio/netty/util/concurrent/Future;)V	operationComplete		operationComplete
-		p	1			p_1
+		p	1			future
 c	net/minecraft/C_85djrxdvl
 	f	Ljavax/vecmath/Vector3f;	f_85gauqoyn	f_85gauqoyn	
 	f	Ljavax/vecmath/Vector3f;	f_28melnoiu	f_28melnoiu	
@@ -952,8 +952,8 @@ c	net/minecraft/server/MinecraftServer
 	m	()Ljava/lang/String;	m_11upylbop	getPlugins	
 	m	(Ljava/lang/String;)Ljava/lang/String;	m_47tnvaymq	executeRconCommand	
 		p	1		command	
-	m	()Z	m_77xfcdhri		m_77xfcdhri
-	m	()Z	m_51ffwoxzd		m_51ffwoxzd
+	m	()Z	m_77xfcdhri		broadcastRconToOps
+	m	()Z	m_51ffwoxzd		useNativeTransport
 c	net/minecraft/C_22ytfbzfi		net/minecraft/C_22ytfbzfi
 	f	D	f_43esihdiu		f_43esihdiu
 	f	D	f_88ckfopse		f_88ckfopse

@@ -318,8 +318,8 @@ c	net/minecraft/C_13piauvdk
 c	net/minecraft/C_14oreowhs
 	m	()[Ljava/lang/String;	m_70wkvqkpo	getEntityIds	
 c	net/minecraft/C_16awhtorx
-	m	(Lnet/minecraft/C_76varpwca;)Lnet/minecraft/C_76varpwca;	m_71jofsbcn		m_71jofsbcn
-		p	1			p_1
+	m	(Lnet/minecraft/C_76varpwca;)Lnet/minecraft/C_76varpwca;	m_71jofsbcn		findLightningTarget
+		p	1			pos
 c	net/minecraft/C_16awhtorx$1
 	f	Lnet/minecraft/C_16awhtorx;	f_70wcfvljx		f_70wcfvljx
 	m	(Lnet/minecraft/C_16awhtorx;)V	<init>		<init>
@@ -327,7 +327,7 @@ c	net/minecraft/C_16awhtorx$1
 	m	(Lnet/minecraft/C_97zulxhng;)Z	m_02ixxpgfw		test
 		p	1			p_1
 	m	(Ljava/lang/Object;)Z	apply		apply
-		p	1			p_1
+		p	1			entity
 c	net/minecraft/C_18pioeyib
 	m	([Ljava/lang/String;I)Z	m_10qfuysiw	m_10qfuysiw	
 		p	1		p_1	
@@ -811,10 +811,10 @@ c	net/minecraft/C_77bpkvsyh
 		p	5			p_5
 c	net/minecraft/C_80vbagmut
 	m	(Lnet/minecraft/C_90egxktlb;)V	<init>		<init>
-		p	1			p_1
+		p	1			clipper
 c	net/minecraft/C_85hwjrnsi
-	m	(F)V	m_27pkszvzm		m_27pkszvzm
-		p	1			p_1
+	m	(F)V	m_27pkszvzm		translateRightArm
+		p	1			scale
 c	net/minecraft/C_88jrciray
 	m	(Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_84dqcqlog;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_17agfiprw;)V	m_42bqzdcta	m_42bqzdcta	
 		p	1		p_1	
@@ -881,12 +881,12 @@ c	net/minecraft/C_00rygukrg		net/minecraft/C_00rygukrg
 	m	(Lnet/minecraft/C_26szrsafr;)V	m_73mzxhtxq		m_73mzxhtxq
 		p	1			p_1
 	m	()V	m_65rxwrnkj		m_65rxwrnkj
-c	net/minecraft/C_05mjclwxm		net/minecraft/C_05mjclwxm
-	f	Lnet/minecraft/C_40uztjpfb;	f_86zwjmozw		f_86zwjmozw
-	f	Lnet/minecraft/C_40uztjpfb;	f_47dqnsvis		f_47dqnsvis
-	f	Lnet/minecraft/C_40uztjpfb;	f_15ycnbask		f_15ycnbask
+c	net/minecraft/C_05mjclwxm		net/minecraft/client/render/model/block/entity/BannerModel
+	f	Lnet/minecraft/C_40uztjpfb;	f_86zwjmozw		flag
+	f	Lnet/minecraft/C_40uztjpfb;	f_47dqnsvis		pole
+	f	Lnet/minecraft/C_40uztjpfb;	f_15ycnbask		bar
 	m	()V	<init>		<init>
-	m	()V	m_39dlbokvb		m_39dlbokvb
+	m	()V	m_39dlbokvb		render
 c	net/minecraft/C_15jjsjmaj		net/minecraft/block/entity/BannerBlockEntity
 	f	I	f_21asrbkpg		baseColor
 	f	Lnet/minecraft/C_91glxqzmz;	f_91qcthniq		patternsNbt
@@ -1205,10 +1205,10 @@ c	net/minecraft/C_87hkwxwgr		net/minecraft/C_87hkwxwgr
 		p	1			p_1
 c	net/minecraft/C_87mwfakre		net/minecraft/server/integrated/IntegratedCommandManager
 	m	()V	<init>		<init>
-c	net/minecraft/C_96zjlutid		net/minecraft/client/render/block/entity/BannerBlockEntityRenderer
-	f	Ljava/util/Map;	f_70lujakzg		f_70lujakzg
-	f	Lnet/minecraft/C_07ipdbewr;	f_47baasril		f_47baasril
-	f	Lnet/minecraft/C_05mjclwxm;	f_05adrioib		f_05adrioib
+c	net/minecraft/C_96zjlutid		net/minecraft/client/render/block/entity/BannerRenderer
+	f	Ljava/util/Map;	f_70lujakzg		TEXTURE_CACHE
+	f	Lnet/minecraft/C_07ipdbewr;	f_47baasril		BASE_TEXTURE
+	f	Lnet/minecraft/C_05mjclwxm;	f_05adrioib		model
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/C_15jjsjmaj;DDDFI)V	m_52vtagcdj		render
 		p	1			p_1
@@ -1217,8 +1217,8 @@ c	net/minecraft/C_96zjlutid		net/minecraft/client/render/block/entity/BannerBloc
 		p	6			p_6
 		p	8			p_8
 		p	9			p_9
-	m	(Lnet/minecraft/C_15jjsjmaj;)Lnet/minecraft/C_07ipdbewr;	m_87smzvajm		m_87smzvajm
-		p	1			p_1
+	m	(Lnet/minecraft/C_15jjsjmaj;)Lnet/minecraft/C_07ipdbewr;	m_87smzvajm		getTexture
+		p	1			banner
 	m	(Lnet/minecraft/C_87eagbyjs;DDDFI)V	m_94uzblhid		m_94uzblhid
 		p	1			p_1
 		p	2			p_2
@@ -1228,9 +1228,9 @@ c	net/minecraft/C_96zjlutid		net/minecraft/client/render/block/entity/BannerBloc
 		p	9			p_9
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/C_96zjlutid$1		1
-c	net/minecraft/C_96zjlutid$C_74pdcchzb		C_74pdcchzb
-	f	J	f_41onxtjos		f_41onxtjos
-	f	Lnet/minecraft/C_07ipdbewr;	f_72vnbdnxl		f_72vnbdnxl
+c	net/minecraft/C_96zjlutid$C_74pdcchzb		CachedTexture
+	f	J	f_41onxtjos		cachedTime
+	f	Lnet/minecraft/C_07ipdbewr;	f_72vnbdnxl		texture
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/C_96zjlutid$1;)V	<init>		<init>
 		p	1			p_1
