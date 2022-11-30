@@ -53,8 +53,8 @@ c	net/minecraft/C_00sqwbmcb
 c	net/minecraft/C_01evrhkkr
 	m	()Ljava/util/List;	m_61wnezqfk	m_61wnezqfk	
 c	net/minecraft/C_02cjhglkz
-	f	Lnet/minecraft/C_77fradnnx;	f_64mivhnyw		f_64mivhnyw
-	m	()Lnet/minecraft/C_77fradnnx;	m_93vrqdwbo		m_93vrqdwbo
+	f	Lnet/minecraft/C_77fradnnx;	f_64mivhnyw		modelShaper
+	m	()Lnet/minecraft/C_77fradnnx;	m_93vrqdwbo		getModelShaper
 c	net/minecraft/C_02onecotd
 	f	Ljava/util/List;	f_43wllsfjx	f_43wllsfjx	
 	m	(Ljava/lang/String;)Ljava/util/List;	m_10nihbipx	m_10nihbipx	
@@ -588,7 +588,7 @@ c	net/minecraft/C_36gogloxt
 c	net/minecraft/C_36syvpggt
 	f	[Ljava/lang/String;	f_04qggwjix	OVERLAYS	
 c	net/minecraft/C_40puvtgep
-	f	Lnet/minecraft/C_77fradnnx;	f_85wbxbufj		f_85wbxbufj
+	f	Lnet/minecraft/C_77fradnnx;	f_85wbxbufj		modelShaper
 	f	Ljava/util/Map;	f_31fnwqdal		f_31fnwqdal
 	f	Ljava/util/Map;	f_67xccipgb		f_67xccipgb
 	m	(Lnet/minecraft/C_09fopjucn;Lnet/minecraft/C_57dbhqlic;)V	<init>	<init>	
@@ -602,9 +602,9 @@ c	net/minecraft/C_40puvtgep
 		p	2		p_2	
 		p	3		p_3	
 	m	(Lnet/minecraft/C_09fopjucn;Lnet/minecraft/C_57dbhqlic;Lnet/minecraft/C_77fradnnx;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			resourceManager
+		p	2			blocksSprite
+		p	3			modelShaper
 	m	(Ljava/util/Collection;)V	m_51stdbupp		m_51stdbupp
 		p	1			p_1
 	m	(Lnet/minecraft/C_96zejhvkq;Lnet/minecraft/C_54kqlxagv;)V	m_29llllvkn		m_29llllvkn
@@ -1393,7 +1393,7 @@ c	net/minecraft/C_77bpkvsyh
 c	net/minecraft/C_77fradnnx
 	f	Ljava/util/Map;	f_74edfgslp	f_74edfgslp	
 	f	Ljava/util/Map;	f_22ohunuuw	f_22ohunuuw	
-	f	Lnet/minecraft/C_18yhjkwnu;	f_30ikgwqkl		f_30ikgwqkl
+	f	Lnet/minecraft/C_18yhjkwnu;	f_30ikgwqkl		models
 	m	(Lnet/minecraft/C_68zcrzyxg;ILnet/minecraft/C_05ktcjdzx;Lnet/minecraft/C_76varpwca;)Lnet/minecraft/C_07wswdqrf;	m_27lxxkmon	m_27lxxkmon	
 		p	1		p_1	
 		p	2		p_2	
@@ -1409,17 +1409,17 @@ c	net/minecraft/C_77fradnnx
 	m	(Lnet/minecraft/C_68zcrzyxg;Lnet/minecraft/C_05hvpvhjx;)V	m_38oyygzal	m_38oyygzal	
 		p	1		p_1	
 		p	2		p_2	
-	m	()Lnet/minecraft/C_18yhjkwnu;	m_83kkboiie		m_83kkboiie
+	m	()Lnet/minecraft/C_18yhjkwnu;	m_83kkboiie		getModels
 	m	(Lnet/minecraft/C_17agfiprw;Lnet/minecraft/C_05ktcjdzx;Lnet/minecraft/C_76varpwca;)Lnet/minecraft/C_07wswdqrf;	m_27lxxkmon		m_27lxxkmon
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lnet/minecraft/C_68zcrzyxg;Lnet/minecraft/C_31dhhsqqx;)V	m_72qwtzjno		m_72qwtzjno
-		p	1			p_1
-		p	2			p_2
-	m	([Lnet/minecraft/C_68zcrzyxg;)V	m_43mbpgffm		m_43mbpgffm
-		p	1			p_1
-	m	()V	m_53uviawqd		m_53uviawqd
+	m	(Lnet/minecraft/C_68zcrzyxg;Lnet/minecraft/C_31dhhsqqx;)V	m_72qwtzjno		addProvider
+		p	1			block
+		p	2			provider
+	m	([Lnet/minecraft/C_68zcrzyxg;)V	m_43mbpgffm		addCustom
+		p	1			blocks
+	m	()V	m_53uviawqd		init
 c	net/minecraft/C_77fradnnx$1		1
 	f	Lnet/minecraft/C_77fradnnx;	f_87lrusatp		f_87lrusatp
 	m	(Lnet/minecraft/C_77fradnnx;)V	<init>		<init>
@@ -1930,14 +1930,14 @@ c	net/minecraft/C_03apoauxc		net/minecraft/client/render/model/entity/RabbitMode
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-c	net/minecraft/C_03wsqqyjq		net/minecraft/C_03wsqqyjq
-	f	Lnet/minecraft/C_52qwlgkuh;	f_66mwiokdn		f_66mwiokdn
-	f	Ljava/lang/String;	f_59qvuvwhm		f_59qvuvwhm
-	f	Ljava/util/List;	f_40eyvzzlj		f_40eyvzzlj
+c	net/minecraft/C_03wsqqyjq		net/minecraft/client/resource/model/VariantBlockModelProvider
+	f	Lnet/minecraft/C_52qwlgkuh;	f_66mwiokdn		property
+	f	Ljava/lang/String;	f_59qvuvwhm		variant
+	f	Ljava/util/List;	f_40eyvzzlj		unusedProperties
 	m	(Lnet/minecraft/C_52qwlgkuh;Ljava/lang/String;Ljava/util/List;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			property
+		p	2			variant
+		p	3			unusedProperties
 	m	(Lnet/minecraft/C_17agfiprw;)Lnet/minecraft/C_54kqlxagv;	m_04krpsekg		m_04krpsekg
 		p	1			p_1
 	m	(Lnet/minecraft/C_52qwlgkuh;Ljava/lang/String;Ljava/util/List;Lnet/minecraft/C_03wsqqyjq$1;)V	<init>		<init>
@@ -1946,31 +1946,31 @@ c	net/minecraft/C_03wsqqyjq		net/minecraft/C_03wsqqyjq
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/C_03wsqqyjq$1		1
-c	net/minecraft/C_03wsqqyjq$C_34mfwediw		C_34mfwediw
-	f	Lnet/minecraft/C_52qwlgkuh;	f_81edpzwaw		f_81edpzwaw
-	f	Ljava/lang/String;	f_12cadwjya		f_12cadwjya
-	f	Ljava/util/List;	f_52gltjwzp		f_52gltjwzp
+c	net/minecraft/C_03wsqqyjq$C_34mfwediw		Builder
+	f	Lnet/minecraft/C_52qwlgkuh;	f_81edpzwaw		property
+	f	Ljava/lang/String;	f_12cadwjya		variant
+	f	Ljava/util/List;	f_52gltjwzp		unusedProperties
 	m	()V	<init>		<init>
-	m	(Lnet/minecraft/C_52qwlgkuh;)Lnet/minecraft/C_03wsqqyjq$C_34mfwediw;	m_70vpgmfwg		m_70vpgmfwg
-		p	1			p_1
-	m	(Ljava/lang/String;)Lnet/minecraft/C_03wsqqyjq$C_34mfwediw;	m_95imnkvvw		m_95imnkvvw
-		p	1			p_1
-	m	([Lnet/minecraft/C_52qwlgkuh;)Lnet/minecraft/C_03wsqqyjq$C_34mfwediw;	m_93hpbbjgr		m_93hpbbjgr
-		p	1			p_1
-	m	()Lnet/minecraft/C_03wsqqyjq;	m_75ehzkwhq		m_75ehzkwhq
-c	net/minecraft/C_18yhjkwnu		net/minecraft/C_18yhjkwnu
-	f	Ljava/util/Map;	f_39kyanswn		f_39kyanswn
-	f	Ljava/util/Set;	f_27bxdlwen		f_27bxdlwen
+	m	(Lnet/minecraft/C_52qwlgkuh;)Lnet/minecraft/C_03wsqqyjq$C_34mfwediw;	m_70vpgmfwg		setProperty
+		p	1			property
+	m	(Ljava/lang/String;)Lnet/minecraft/C_03wsqqyjq$C_34mfwediw;	m_95imnkvvw		setVariant
+		p	1			variant
+	m	([Lnet/minecraft/C_52qwlgkuh;)Lnet/minecraft/C_03wsqqyjq$C_34mfwediw;	m_93hpbbjgr		setUnusedProperties
+		p	1			properties
+	m	()Lnet/minecraft/C_03wsqqyjq;	m_75ehzkwhq		build
+c	net/minecraft/C_18yhjkwnu		net/minecraft/client/resource/model/BlockModels
+	f	Ljava/util/Map;	f_39kyanswn		providers
+	f	Ljava/util/Set;	f_27bxdlwen		custom
 	m	()V	<init>		<init>
-	m	(Lnet/minecraft/C_68zcrzyxg;Lnet/minecraft/C_31dhhsqqx;)V	m_55fkxzqkm		m_55fkxzqkm
-		p	1			p_1
-		p	2			p_2
-	m	([Lnet/minecraft/C_68zcrzyxg;)V	m_65kmkwpud		m_65kmkwpud
-		p	1			p_1
-	m	()Ljava/util/Map;	m_64lqcyrnn		m_64lqcyrnn
-c	net/minecraft/C_31dhhsqqx		net/minecraft/C_31dhhsqqx
-	m	(Lnet/minecraft/C_68zcrzyxg;)Ljava/util/Map;	m_43xwqtdwu		m_43xwqtdwu
-		p	1			p_1
+	m	(Lnet/minecraft/C_68zcrzyxg;Lnet/minecraft/C_31dhhsqqx;)V	m_55fkxzqkm		addProvider
+		p	1			block
+		p	2			provider
+	m	([Lnet/minecraft/C_68zcrzyxg;)V	m_65kmkwpud		addCustom
+		p	1			blocks
+	m	()Ljava/util/Map;	m_64lqcyrnn		provide
+c	net/minecraft/C_31dhhsqqx		net/minecraft/client/resource/model/BlockModelProvider
+	m	(Lnet/minecraft/C_68zcrzyxg;)Ljava/util/Map;	m_43xwqtdwu		provide
+		p	1			block
 c	net/minecraft/C_33ipnpzky		net/minecraft/client/render/entity/RabbitRenderer
 	f	Lnet/minecraft/C_07ipdbewr;	f_47hzoodvl		f_47hzoodvl
 	f	Lnet/minecraft/C_07ipdbewr;	f_70guagpgn		f_70guagpgn
@@ -2167,19 +2167,19 @@ c	net/minecraft/C_35uygbulw$C_97iklykcw		C_97iklykcw
 	m	()I	m_76etdalbu		m_76etdalbu
 	m	()I	m_01lzpippp		m_01lzpippp
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_37ordmayg		net/minecraft/C_37ordmayg
+c	net/minecraft/C_37ordmayg		net/minecraft/client/resource/model/SimpleBlockModelProvider
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/C_17agfiprw;)Lnet/minecraft/C_54kqlxagv;	m_04krpsekg		m_04krpsekg
 		p	1			p_1
-c	net/minecraft/C_43gyanncy		net/minecraft/C_43gyanncy
-	f	Ljava/util/Map;	f_08mpidlrl		f_08mpidlrl
+c	net/minecraft/C_43gyanncy		net/minecraft/client/resource/model/AbstractBlockModelProvider
+	f	Ljava/util/Map;	f_08mpidlrl		models
 	m	()V	<init>		<init>
-	m	(Ljava/util/Map;)Ljava/lang/String;	m_60qvrbezv		m_60qvrbezv
-		p	1			p_1
+	m	(Ljava/util/Map;)Ljava/lang/String;	m_60qvrbezv		propertiesAsString
+		p	1			properties
 	m	(Lnet/minecraft/C_68zcrzyxg;)Ljava/util/Map;	m_43xwqtdwu		m_43xwqtdwu
 		p	1			p_1
-	m	(Lnet/minecraft/C_17agfiprw;)Lnet/minecraft/C_54kqlxagv;	m_04krpsekg		m_04krpsekg
-		p	1			p_1
+	m	(Lnet/minecraft/C_17agfiprw;)Lnet/minecraft/C_54kqlxagv;	m_04krpsekg		provide
+		p	1			state
 c	net/minecraft/C_46jsnynwl		net/minecraft/util/LazySupplier
 	f	Ljava/lang/Object;	f_21nxwetzl		value
 	f	Z	f_06wwzrksp		loaded
