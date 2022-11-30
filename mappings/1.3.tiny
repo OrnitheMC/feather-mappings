@@ -11013,9 +11013,9 @@ c	net/minecraft/C_34yhivkbr	net/minecraft/client/gui/screen/world/CreateWorldScr
 	f	Lnet/minecraft/C_53lkvtkbk;	f_65tfsafte	displayNameField
 	f	Lnet/minecraft/C_53lkvtkbk;	f_50grmuvbw	seedField
 	f	Ljava/lang/String;	f_12zuntdue	saveDirectoryName
-	f	Ljava/lang/String;	f_33jlytayq	setGamemodeName
+	f	Ljava/lang/String;	f_33jlytayq	gameModeName
 	f	Z	f_15gnqwxpp	structures
-	f	Z	f_74bnpdvck	tweakedCheats
+	f	Z	f_74bnpdvck	allowCommands
 	f	Z	f_29jjxrulf	cheatsEnabled
 	f	Z	f_20glvmorp	bonusChest
 	f	Z	f_58zyuopqw	hardcore
@@ -11030,7 +11030,7 @@ c	net/minecraft/C_34yhivkbr	net/minecraft/client/gui/screen/world/CreateWorldScr
 	f	Ljava/lang/String;	f_30uetqqxh	firstGameModeDescriptionLine
 	f	Ljava/lang/String;	f_31tadzoin	secondGameModeDescriptionLine
 	f	Ljava/lang/String;	f_83samgffl	seed
-	f	Ljava/lang/String;	f_25auolloh	levelName
+	f	Ljava/lang/String;	f_25auolloh	worldName
 	f	I	f_12uwhxtzm	generatorType
 	f	[Ljava/lang/String;	f_69hcmawqs	ILLEGAL_FOLDER_NAMES
 	m	(Lnet/minecraft/C_31rdgoemj;)V	<init>	<init>
@@ -20700,23 +20700,23 @@ c	net/minecraft/C_61nkzwegy	net/minecraft/client/world/color/FoliageColors
 	m	()I	m_62upjfopk	getBirchColor
 	m	()I	m_06qymehdk	getDefaultColor
 	m	()V	<clinit>	<clinit>
-c	net/minecraft/C_61nlpnhez	net/minecraft/client/render/RenderData
+c	net/minecraft/C_61nlpnhez	net/minecraft/client/render/Camera
 	f	F	f_61burwlcv	x
 	f	F	f_75ccuxbbm	y
 	f	F	f_03akrbpvw	z
 	f	Ljava/nio/IntBuffer;	f_42tbuopuv	glIntBuffer
 	f	Ljava/nio/FloatBuffer;	f_21zshsctg	glFloatBuffer1
 	f	Ljava/nio/FloatBuffer;	f_81elibomt	glFloatBuffer2
-	f	Ljava/nio/FloatBuffer;	f_59bkkedxu	cameraPositions
-	f	F	f_67uhsnzik	cameraYawX
-	f	F	f_59vtzzojt	cameraPitchX
-	f	F	f_56ibolebp	cameraYawZ
-	f	F	f_08rygegue	cameraPitchZY
-	f	F	f_04khmuxqq	cameraPitchXY
+	f	Ljava/nio/FloatBuffer;	f_59bkkedxu	POSITION_BUFFER
+	f	F	f_67uhsnzik	dx
+	f	F	f_59vtzzojt	dy
+	f	F	f_56ibolebp	dz
+	f	F	f_08rygegue	forwards
+	f	F	f_04khmuxqq	sideways
 	m	()V	<init>	<init>
-	m	(Lnet/minecraft/C_84dqcqlog;Z)V	m_45smquqvx	updateRenderData
-		p	0		player
-		p	1		isThirdPerson
+	m	(Lnet/minecraft/C_84dqcqlog;Z)V	m_45smquqvx	setup
+		p	0		camera
+		p	1		thirdPerson
 	m	(Lnet/minecraft/C_97zulxhng;D)Lnet/minecraft/C_22bqrxeuv;	m_90fpljnyc	m_90fpljnyc
 		p	0		p_0
 		p	1		p_1
@@ -23284,12 +23284,12 @@ c	net/minecraft/C_67wiactvn	net/minecraft/world/biome/layer/ZoomLayer
 		p	0		seed
 		p	2		layer
 		p	3		magnification
-c	net/minecraft/C_67zgevxac	net/minecraft/client/render/BlockBreakingInfo
-	f	I	f_74zzvqdxy	entityId
+c	net/minecraft/C_67zgevxac	net/minecraft/client/world/BlockMiningProgress
+	f	I	f_74zzvqdxy	id
 	f	I	f_10uyncyhx	x
 	f	I	f_34zqqnoji	y
 	f	I	f_11vcnlgus	z
-	f	I	f_85gtdrhwi	stage
+	f	I	f_85gtdrhwi	progress
 	m	(IIII)V	<init>	<init>
 		p	1		entityId
 		p	2		x
@@ -23299,9 +23299,9 @@ c	net/minecraft/C_67zgevxac	net/minecraft/client/render/BlockBreakingInfo
 	m	()I	m_42kewyllf	getX
 	m	()I	m_41sxqotlb	getY
 	m	()I	m_13tcuxuce	getZ
-	m	(I)V	m_05cylfukg	setStage
-		p	1		stage
-	m	()I	m_56birklds	getStage
+	m	(I)V	m_05cylfukg	setProgress
+		p	1		progress
+	m	()I	m_56birklds	getProgress
 c	net/minecraft/C_68bxhbsdb	net/minecraft/world/biome/layer/ShoreLayer
 	m	(JLnet/minecraft/C_48ualqmqj;)V	<init>	<init>
 		p	1		seed
@@ -23520,7 +23520,7 @@ c	net/minecraft/C_68ydbefqv	net/minecraft/network/listener/PacketListener
 		p	1		packet
 	m	(Lnet/minecraft/C_46xtorrrs;)V	m_08unbaoec	handleBlocksUpdate
 		p	1		packet
-	m	(Lnet/minecraft/C_76kwkklrm;)V	m_15hhvspvu	handlePlayerAction
+	m	(Lnet/minecraft/C_76kwkklrm;)V	m_15hhvspvu	handlePlayerHandAction
 		p	1		packet
 	m	(Lnet/minecraft/C_22rpvsruc;)V	m_28oziwdus	handleBlockUpdate
 		p	1		packet
@@ -23546,7 +23546,7 @@ c	net/minecraft/C_68ydbefqv	net/minecraft/network/listener/PacketListener
 		p	1		packet
 	m	(Lnet/minecraft/C_46vjssuff;)V	m_50hqcabhc	handleEntityAnimation
 		p	1		packet
-	m	(Lnet/minecraft/C_90jpywgsy;)V	m_05uctwsft	handlePlayerCommand
+	m	(Lnet/minecraft/C_90jpywgsy;)V	m_05uctwsft	handlePlayerMovementAction
 		p	1		packet
 	m	(Lnet/minecraft/C_86yjpmalw;)V	m_43tozbfsi	handleHandshake
 		p	1		packet
@@ -25876,8 +25876,8 @@ c	net/minecraft/C_72robrvqq$C_01dzwypla	net/minecraft/world/biome/Biome$SpawnEnt
 		p	2		weight
 		p	3		minGroupSize
 		p	4		maxGroupSize
-c	net/minecraft/C_72tlvecqx	net/minecraft/client/render/debug/CameraView
-	m	(Lnet/minecraft/C_19wdelfat;)Z	m_32qbobdcg	isBoxInFrustum
+c	net/minecraft/C_72tlvecqx	net/minecraft/client/render/Culler
+	m	(Lnet/minecraft/C_19wdelfat;)Z	m_32qbobdcg	isVisible
 		p	1		box
 	m	(DDDDDD)Z	m_67vrfavlg	m_67vrfavlg
 		p	1		p_1
@@ -25893,7 +25893,7 @@ c	net/minecraft/C_72tlvecqx	net/minecraft/client/render/debug/CameraView
 		p	7		p_7
 		p	9		p_9
 		p	11		p_11
-	m	(DDD)V	m_27lbnobfw	setPos
+	m	(DDD)V	m_27lbnobfw	set
 		p	1		x
 		p	3		y
 		p	5		z
@@ -26834,7 +26834,7 @@ c	net/minecraft/C_76itfndic	net/minecraft/block/FlowingLiquidBlock
 		p	2		p_2
 		p	3		p_3
 		p	4		p_4
-c	net/minecraft/C_76kwkklrm	net/minecraft/network/packet/PlayerActionPacket
+c	net/minecraft/C_76kwkklrm	net/minecraft/network/packet/PlayerHandActionPacket
 	f	I	f_84xlkfeyt	x
 	f	I	f_20lguebll	y
 	f	I	f_80qfspxcw	z
@@ -27611,8 +27611,8 @@ c	net/minecraft/C_80oshoggh	net/minecraft/network/packet/PlayerXpPacket
 	m	(Lnet/minecraft/C_19sjytfcv;)Z	m_44fhokvca	m_44fhokvca
 		p	1		p_1
 	m	()Z	m_65pgxembj	m_65pgxembj
-c	net/minecraft/C_80vbagmut	net/minecraft/client/render/debug/StructureDebugRenderer
-	f	Lnet/minecraft/C_90egxktlb;	f_22wfdvvls	clipper
+c	net/minecraft/C_80vbagmut	net/minecraft/client/render/FrustumCuller
+	f	Lnet/minecraft/C_90egxktlb;	f_22wfdvvls	frustum
 	f	D	f_33gckfvhv	x
 	f	D	f_16pammsqs	y
 	f	D	f_31xunaedb	z
@@ -30059,7 +30059,7 @@ c	net/minecraft/C_90cfbwgae	argo/jdom/LeafFunctor
 		p	1		p_1
 	m	(Ljava/lang/Object;)Ljava/lang/Object;	m_97awzqbdi	typeSafeApplyTo
 		p	1		jsonNode
-c	net/minecraft/C_90egxktlb	net/minecraft/client/util/BaseClipper
+c	net/minecraft/C_90egxktlb	net/minecraft/client/render/Frustum
 	f	[[F	f_70gjmytkg	frustum
 	f	[F	f_76mvpyhem	projectionMatrix
 	f	[F	f_97qxvcbth	modelMatrix
@@ -30074,7 +30074,7 @@ c	net/minecraft/C_90egxktlb	net/minecraft/client/util/BaseClipper
 		p	2		p_2
 		p	3		p_3
 		p	4		p_4
-	m	(DDDDDD)Z	m_21doositn	doCulling
+	m	(DDDDDD)Z	m_21doositn	contains
 		p	1		minX
 		p	3		minY
 		p	5		minZ
@@ -30159,13 +30159,14 @@ c	net/minecraft/C_90hhamlow	net/minecraft/C_90hhamlow
 		p	1		p_1
 	m	(S)V	m_55lrxtjnm	m_55lrxtjnm
 		p	1		p_1
-c	net/minecraft/C_90jpywgsy	net/minecraft/network/packet/PlayerCommandPacket
-	f	I	f_73tyoumtx	entityId
-	f	I	f_14saawjmf	command
+c	net/minecraft/C_90jpywgsy	net/minecraft/network/packet/PlayerMovementActionPacket
+	f	I	f_73tyoumtx	id
+	f	I	f_14saawjmf	action
+		c	The type of interaction. This can be one of the following:\n<br> 0: start sneaking\n<br> 1: stop sneaking\n<br> 2: stop sleeping\n<br> 3: start sprinting\n<br> 4: stop sprinting\n<br> 5: riding jump\n<br> 6: open horse inventory
 	m	()V	<init>	<init>
 	m	(Lnet/minecraft/C_47ldwddrb;I)V	<init>	<init>
 		p	1		entity
-		p	2		command
+		p	2		action
 	m	(Ljava/io/DataInputStream;)V	m_00ycwkymm	m_00ycwkymm
 		p	1		p_1
 	m	(Ljava/io/DataOutputStream;)V	m_73uomkfhh	m_73uomkfhh

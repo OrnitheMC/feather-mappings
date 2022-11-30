@@ -454,7 +454,7 @@ c	net/minecraft/C_07tveanoq
 	f	Lnet/minecraft/C_07ipdbewr;	f_72uyyhlms	f_72uyyhlms	
 	f	Lnet/minecraft/C_07ipdbewr;	f_44sxchhnx		WORLD_BORDER_TEXTURE
 	f	Lnet/minecraft/C_28wsgstbh;	f_19pmcszim		f_19pmcszim
-	f	[Lnet/minecraft/C_23kgsbsml;	f_32kzktvrs		blockMineTextures
+	f	[Lnet/minecraft/C_23kgsbsml;	f_32kzktvrs		miningProgressTextures
 	m	()V	m_28icxvwnp	rebuildStaticEntities	
 	m	(D)V	m_37suleckd	m_37suleckd	
 		p	1		p_1	
@@ -992,9 +992,9 @@ c	net/minecraft/C_13holikot
 c	net/minecraft/C_13piauvdk
 	f	Lnet/minecraft/C_67djxmmnb;	f_37xpgpozt	f_37xpgpozt	
 	f	Z	f_98oemlegm		f_98oemlegm
-	f	Lnet/minecraft/C_28wsgstbh;	f_82csktkdv		f_82csktkdv
-	f	Lnet/minecraft/C_60kdcdvri;	f_47xygslnv		f_47xygslnv
-	f	Lnet/minecraft/C_65ojwbeub;	f_05fmrfigm		f_05fmrfigm
+	f	Lnet/minecraft/C_28wsgstbh;	f_82csktkdv		entityRenderDispatcher
+	f	Lnet/minecraft/C_60kdcdvri;	f_47xygslnv		itemRenderer
+	f	Lnet/minecraft/C_65ojwbeub;	f_05fmrfigm		heldItemRenderer
 	f	Lnet/minecraft/C_02cjhglkz;	f_37xpgpozt		modelManager
 	m	(Lnet/minecraft/C_33rxbrxcu;IIZZLjava/io/File;Ljava/io/File;Ljava/io/File;Ljava/net/Proxy;Ljava/lang/String;Lcom/mojang/authlib/properties/PropertyMap;Ljava/lang/String;)V	<init>	<init>	
 		p	1		p_1	
@@ -1019,14 +1019,14 @@ c	net/minecraft/C_13piauvdk
 		p	1			session
 	m	()V	m_37gzfglnp		init
 	m	()V	m_50hfsxqvn		m_50hfsxqvn
-	m	()V	m_57chpzfmc		m_57chpzfmc
-	m	()V	m_30sfennsv		m_30sfennsv
-	m	()V	m_57lvtjoch		m_57lvtjoch
-	m	()V	m_48xhdkxji		m_48xhdkxji
+	m	()V	m_57chpzfmc		initTwitchStream
+	m	()V	m_30sfennsv		initDisplay
+	m	()V	m_57lvtjoch		initDisplayMode
+	m	()V	m_48xhdkxji		initIcon
 	m	(Lnet/minecraft/C_52hzjdjla;)V	m_07pfdwaee		renderLoadingScreen
-		p	1			p_1
-	m	()V	m_13bsafilk		m_13bsafilk
-	m	()Lnet/minecraft/C_28wsgstbh;	m_26pjxwdxz		m_26pjxwdxz
+		p	1			textureManager
+	m	()V	m_13bsafilk		updateDisplay
+	m	()Lnet/minecraft/C_28wsgstbh;	m_26pjxwdxz		getEntityRenderDispatcher
 	m	()Lnet/minecraft/C_60kdcdvri;	m_09sixscwj		getItemRenderer
 	m	()Lnet/minecraft/C_65ojwbeub;	m_28dvewaio		getHeldItemRenderer
 c	net/minecraft/C_13piauvdk$1
@@ -2292,7 +2292,7 @@ c	net/minecraft/C_25zsfkouj
 	f	Z	f_34jikuegs	f_34jikuegs	
 	f	Lnet/minecraft/C_67djxmmnb;	f_74yxnkykn	f_74yxnkykn	
 	f	Lnet/minecraft/C_77fradnnx;	f_03jccsrkr	f_03jccsrkr	
-	f	Lnet/minecraft/C_77fradnnx;	f_08vacliml		f_08vacliml
+	f	Lnet/minecraft/C_77fradnnx;	f_08vacliml		modelShaper
 	m	(Lnet/minecraft/C_67djxmmnb;)V	<init>	<init>	
 		p	1		p_1	
 	m	(Lnet/minecraft/C_68zcrzyxg;Ljava/lang/String;)V	m_09wyexamh	m_09wyexamh	
@@ -11844,8 +11844,8 @@ c	net/minecraft/C_84ntaqokv$C_62fyqdqyu		Game
 	f	Z	f_69xsogcqp		demo
 	f	Ljava/lang/String;	f_51cxcgptw		version
 	m	(ZLjava/lang/String;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			demo
+		p	2			version
 c	net/minecraft/C_84ntaqokv$C_89fewxgfh		Display
 	f	I	f_43jnvpaqq		width
 	f	I	f_70fubyoae		height
