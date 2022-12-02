@@ -1,8 +1,8 @@
 tiny	2	0
 c	net/minecraft/C_13piauvdk
-	f	Lnet/minecraft/C_47lssdwgp;	f_18juzumub		f_18juzumub
+	f	Lnet/minecraft/C_47lssdwgp;	f_18juzumub		frameTimeLogger
 	f	J	f_50qepdyvu		f_50qepdyvu
-	m	()Lnet/minecraft/C_47lssdwgp;	m_03hffjfnf		m_03hffjfnf
+	m	()Lnet/minecraft/C_47lssdwgp;	m_03hffjfnf		getFrameTimeLogger
 c	net/minecraft/C_17wmevhba
 	f	I	f_93ibaoivx	formatSize	
 	m	(I)V	m_38vskjmzx	setFormatSize	
@@ -151,16 +151,16 @@ c	net/minecraft/C_78rdifmbt
 	m	(I)I	m_14uifkear		getOffset
 		p	1			index
 c	net/minecraft/C_87pusyhkd
-	m	()V	m_16vskuuck		m_16vskuuck
-	m	(IIII)I	m_22przthmp		m_22przthmp
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(IIF)I	m_60ekliyun		m_60ekliyun
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	()V	m_16vskuuck		drawTpsChart
+	m	(IIII)I	m_22przthmp		getFrameColor
+		p	1			frameTime
+		p	2			min
+		p	3			mid
+		p	4			max
+	m	(IIF)I	m_60ekliyun		lerpColor
+		p	1			from
+		p	2			to
+		p	3			delta
 c	net/minecraft/C_91atkoiux	net/minecraft/client/render/BufferElementComparator	
 	f	F	f_83zwxndhe	x	
 	f	F	f_84nwhluhu	y	
@@ -188,7 +188,7 @@ c	net/minecraft/C_94uisfslq
 		p	1			p_1
 c	net/minecraft/C_99sowdzft
 	f	I	f_67gfcvxuw		f_67gfcvxuw
-	f	Z	f_19cgjjydj		f_19cgjjydj
+	f	Z	f_19cgjjydj		debugTpsEnabled
 c	net/minecraft/realms/Tezzelator
 	m	()I	end	end	
 	m	(FFF)Lnet/minecraft/C_36rbvvvbq$C_16gttdmcd;	sortQuads	sortQuads	
@@ -204,19 +204,19 @@ c	net/minecraft/realms/Tezzelator
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/C_47lssdwgp		net/minecraft/C_47lssdwgp
-	f	[J	f_37nivzowx		f_37nivzowx
-	f	I	f_39fxcighg		f_39fxcighg
-	f	I	f_90yaxivra		f_90yaxivra
-	f	I	f_25nokixor		f_25nokixor
+c	net/minecraft/C_47lssdwgp		net/minecraft/client/FrameTimeLogger
+	f	[J	f_37nivzowx		frameTimes
+	f	I	f_39fxcighg		startTime
+	f	I	f_90yaxivra		length
+	f	I	f_25nokixor		endTime
 	m	()V	<init>		<init>
-	m	(J)V	m_36cmphbfc		m_36cmphbfc
-		p	1			p_1
-	m	(JI)I	m_04fylignr		m_04fylignr
-		p	1			p_1
-		p	3			p_3
-	m	()I	m_02jzajhhq		m_02jzajhhq
-	m	()I	m_53fjsbowe		m_53fjsbowe
-	m	(I)I	m_72nujkkmg		m_72nujkkmg
-		p	1			p_1
-	m	()[J	m_66oxyspwk		m_66oxyspwk
+	m	(J)V	m_36cmphbfc		log
+		p	1			frameTime
+	m	(JI)I	m_04fylignr		scaleFrameTime
+		p	1			frameTime
+		p	3			frameRate
+	m	()I	m_02jzajhhq		getStartTime
+	m	()I	m_53fjsbowe		getEndTime
+	m	(I)I	m_72nujkkmg		wrapIndex
+		p	1			index
+	m	()[J	m_66oxyspwk		getFrameTimes
