@@ -760,8 +760,8 @@ c	net/minecraft/C_04sxridaf	net/minecraft/client/world/ClientWorld
 	f	Lnet/minecraft/C_41yxvtewz;	f_32rwnrcwo	networkHandler
 	f	Lnet/minecraft/C_78mbjipan;	f_10gnlzobt	chunkCache
 	f	Lnet/minecraft/C_17nozgejl;	f_39ntoates	entitiesByNetworkId
-	f	Ljava/util/Set;	f_91tzifaqn	entitySet
-	f	Ljava/util/Set;	f_74vfjybca	entitiesToSpawn
+	f	Ljava/util/Set;	f_91tzifaqn	forcedEntities
+	f	Ljava/util/Set;	f_74vfjybca	pendingEntities
 	f	Lnet/minecraft/client/Minecraft;	f_98twcohra	client
 	f	Ljava/util/Set;	f_91ldunypx	removedChunks
 	m	(Lnet/minecraft/C_41yxvtewz;Lnet/minecraft/C_92rrzzavg;IILnet/minecraft/C_35cxspgmp;)V	<init>	<init>
@@ -793,12 +793,12 @@ c	net/minecraft/C_04sxridaf	net/minecraft/client/world/ClientWorld
 	m	(Lnet/minecraft/C_47ldwddrb;)V	m_72abjhhly	m_72abjhhly
 		p	1		p_1
 	m	(ILnet/minecraft/C_47ldwddrb;)V	m_03xrgyjtf	addEntity
-		p	1		id
+		p	1		networkId
 		p	2		entity
 	m	(I)Lnet/minecraft/C_47ldwddrb;	m_35nwxpend	m_35nwxpend
 		p	1		p_1
 	m	(I)Lnet/minecraft/C_47ldwddrb;	m_91xludixf	removeEntity
-		p	1		id
+		p	1		networkId
 	m	(IIIII)Z	m_02wtgfddw	setBlockWithMetadataFromPacket
 		p	1		x
 		p	2		y
@@ -1973,7 +1973,7 @@ c	net/minecraft/C_08jqhccnz	net/minecraft/network/packet/MenuClickButtonPacket
 		p	1		p_1
 	m	()I	m_85rpsnrmq	m_85rpsnrmq
 	m	()Ljava/lang/String;	m_12qudywtm	m_12qudywtm
-c	net/minecraft/C_08nhizqwk	net/minecraft/entity/EndCrystalEntity
+c	net/minecraft/C_08nhizqwk	net/minecraft/entity/EnderCrystalEntity
 	f	I	f_27vfgfsze	age
 	f	I	f_09fyripfs	explosionCountdown
 	m	(Lnet/minecraft/C_54ruxjwzt;)V	<init>	<init>
@@ -1982,7 +1982,7 @@ c	net/minecraft/C_08nhizqwk	net/minecraft/entity/EndCrystalEntity
 		p	1		world
 		p	2		x
 		p	4		y
-		p	6		p_6
+		p	6		z
 	m	()Z	m_58ayiunqx	m_58ayiunqx
 	m	()V	m_15qvbvywr	m_15qvbvywr
 	m	()V	m_28zixkoqt	m_28zixkoqt
@@ -5487,7 +5487,7 @@ c	net/minecraft/C_19zbapuxe	net/minecraft/C_19zbapuxe
 		p	3		p_3
 		p	4		p_4
 		p	5		p_5
-c	net/minecraft/C_20asondra	net/minecraft/world/gen/chunk/EndChunkGenerator
+c	net/minecraft/C_20asondra	net/minecraft/world/gen/chunk/TheEndChunkGenerator
 	f	Ljava/util/Random;	f_43bvzhxwi	random
 	f	Lnet/minecraft/C_02gjbxvbe;	f_77dkndsux	minLimitPerlinNoise
 	f	Lnet/minecraft/C_02gjbxvbe;	f_44khwdqym	maxLimitPerlinNoise
@@ -5678,7 +5678,7 @@ c	net/minecraft/C_20caozpyk	net/minecraft/item/ToolItem
 	m	()Z	m_67nmhqpeq	m_67nmhqpeq
 	m	()I	m_01iwkmhpu	m_01iwkmhpu
 	m	()Ljava/lang/String;	m_46qdnartw	getMaterialAsString
-c	net/minecraft/C_20eopyzkf	net/minecraft/entity/EyeOfEnderEntity
+c	net/minecraft/C_20eopyzkf	net/minecraft/entity/EnderEyeEntity
 	f	I	f_56ojlionb	f_56ojlionb
 	f	D	f_78kzexfcj	targetX
 	f	D	f_84baajagp	targetY
@@ -10578,7 +10578,7 @@ c	net/minecraft/C_33njhijgk	net/minecraft/crafting/BlockRecipes
 c	net/minecraft/C_33nnzhocs	net/minecraft/world/biome/OceanBiome
 	m	(I)V	<init>	<init>
 		p	1		p_1
-c	net/minecraft/C_33rxbrxcu	net/minecraft/client/util/Session
+c	net/minecraft/C_33rxbrxcu	net/minecraft/client/Session
 	f	Ljava/util/List;	f_19dkqstgd	f_19dkqstgd
 	f	Ljava/lang/String;	f_14tvonhnc	username
 	f	Ljava/lang/String;	f_33qlivtyl	id
@@ -19045,7 +19045,7 @@ c	net/minecraft/C_57gykmvey	net/minecraft/client/render/entity/BlazeRenderer
 		p	9		p_9
 c	net/minecraft/C_57sixadvf	argo/jdom/JsonRootNode
 	m	()V	<init>	<init>
-c	net/minecraft/C_57spjuaaw	net/minecraft/world/biome/EndBiome
+c	net/minecraft/C_57spjuaaw	net/minecraft/world/biome/TheEndBiome
 	m	(I)V	<init>	<init>
 		p	1		p_1
 	m	(F)I	m_29tzlyjhc	m_29tzlyjhc
@@ -23284,7 +23284,7 @@ c	net/minecraft/C_67wiactvn	net/minecraft/world/biome/layer/ZoomLayer
 		p	0		seed
 		p	2		layer
 		p	3		magnification
-c	net/minecraft/C_67zgevxac	net/minecraft/client/world/BlockMiningProgress
+c	net/minecraft/C_67zgevxac	net/minecraft/client/render/world/BlockMiningProgress
 	f	I	f_74zzvqdxy	id
 	f	I	f_10uyncyhx	x
 	f	I	f_34zqqnoji	y
@@ -26078,7 +26078,7 @@ c	net/minecraft/C_73zmuwwuw	org/bouncycastle/jcajce/provider/config/ProviderConf
 	m	(Ljava/lang/Object;)Z	equals	equals
 		p	1		obj
 	m	()I	hashCode	hashCode
-c	net/minecraft/C_74agxzbwc	net/minecraft/world/biome/EndBiomeDecorator
+c	net/minecraft/C_74agxzbwc	net/minecraft/world/biome/TheEndBiomeDecorator
 	f	Lnet/minecraft/C_95jgarkyq;	f_94uqscbdf	pillar
 	m	(Lnet/minecraft/C_72robrvqq;)V	<init>	<init>
 		p	1		p_1
@@ -26463,17 +26463,17 @@ c	net/minecraft/C_74ziujrao	net/minecraft/block/LilyPadBlock
 		p	3		p_3
 		p	4		p_4
 		p	5		p_5
-c	net/minecraft/C_75bmqgtry	net/minecraft/client/util/Clipper
-	f	Lnet/minecraft/C_75bmqgtry;	f_59kbjufuy	instance
+c	net/minecraft/C_75bmqgtry	net/minecraft/client/render/Frustum
+	f	Lnet/minecraft/C_75bmqgtry;	f_59kbjufuy	INSTANCE
 	f	Ljava/nio/FloatBuffer;	f_14pvxcnkt	projectionBuffer
 	f	Ljava/nio/FloatBuffer;	f_61mhmdfzr	modelBuffer
-	f	Ljava/nio/FloatBuffer;	f_21zhgebhd	f_21zhgebhd
+	f	Ljava/nio/FloatBuffer;	f_21zhgebhd	clipBuffer
 	m	()V	<init>	<init>
 	m	()Lnet/minecraft/C_90egxktlb;	m_73bzzddft	getInstance
 	m	([[FI)V	m_90rnsazaq	m_90rnsazaq
 		p	1		p_1
 		p	2		p_2
-	m	()V	m_32hfwifpi	start
+	m	()V	m_32hfwifpi	compute
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/C_75erofuyy	net/minecraft/block/BookshelfBlock
 	m	(II)V	<init>	<init>
@@ -30059,7 +30059,7 @@ c	net/minecraft/C_90cfbwgae	argo/jdom/LeafFunctor
 		p	1		p_1
 	m	(Ljava/lang/Object;)Ljava/lang/Object;	m_97awzqbdi	typeSafeApplyTo
 		p	1		jsonNode
-c	net/minecraft/C_90egxktlb	net/minecraft/client/render/Frustum
+c	net/minecraft/C_90egxktlb	net/minecraft/client/render/FrustumData
 	f	[[F	f_70gjmytkg	frustum
 	f	[F	f_76mvpyhem	projectionMatrix
 	f	[F	f_97qxvcbth	modelMatrix
@@ -30091,7 +30091,7 @@ c	net/minecraft/C_90egxktlb	net/minecraft/client/render/Frustum
 	m	(Lnet/minecraft/C_19wdelfat;)Z	m_27wnothar	m_27wnothar
 		p	1		p_1
 c	net/minecraft/C_90gyawlqo	net/minecraft/enchantment/Enchantment
-	f	[Lnet/minecraft/C_90gyawlqo;	f_94rkrutat	BY_ID
+	f	[Lnet/minecraft/C_90gyawlqo;	f_94rkrutat	BY_RAW_ID
 	f	Lnet/minecraft/C_90gyawlqo;	f_80vklfyyd	PROTECTION
 	f	Lnet/minecraft/C_90gyawlqo;	f_50gzihqlc	FIRE_PROTECTION
 	f	Lnet/minecraft/C_90gyawlqo;	f_07krsjfoc	FEATHER_FALLING
