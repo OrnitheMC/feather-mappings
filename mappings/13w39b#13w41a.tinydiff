@@ -1357,13 +1357,13 @@ c	net/minecraft/C_41xahvqjh
 		p	1			parent
 		p	2			title
 		p	3			reason
-c	net/minecraft/C_41yxvtewz
-	f	Lcom/google/gson/Gson;	f_90uouzkqw	f_90uouzkqw	
+c	net/minecraft/C_41yxvtewz	net/minecraft/client/network/handler/ClientNetworkHandler	net/minecraft/client/network/handler/ClientPlayNetworkHandler
+	f	Lcom/google/gson/Gson;	f_90uouzkqw	GSON	
 	f	Z	f_18wvvnydt	disconnected	
 	f	Lcom/mojang/authlib/minecraft/MinecraftSessionService;	f_31fcmrjxb	sessionService	
 	f	Lnet/minecraft/C_36abrcmve;	f_65fjdxsgn	connection	
 	f	Ljava/lang/String;	f_38tyxrtdu	f_38tyxrtdu	
-	f	Lnet/minecraft/C_51akkmkss;	f_70seqwxdx		f_70seqwxdx
+	f	Lnet/minecraft/C_51akkmkss;	f_70seqwxdx		connection
 	m	(Lnet/minecraft/C_13piauvdk;Ljava/lang/String;I)V	<init>	<init>	
 		p	1		client	
 		p	2		address	
@@ -1402,9 +1402,9 @@ c	net/minecraft/C_41yxvtewz
 		p	1		p_1	
 	m	()Lnet/minecraft/C_36abrcmve;	m_87frkpvjb	getConnection	
 	m	(Lnet/minecraft/C_13piauvdk;Lnet/minecraft/C_31rdgoemj;Lnet/minecraft/C_51akkmkss;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			client
+		p	2			screen
+		p	3			connection
 	m	()V	m_77bporpti		cleanUp
 	m	()V	m_18wifyzke		m_18wifyzke
 	m	(Lnet/minecraft/C_07fmxxrgd;)V	m_90oqkelpe		m_90oqkelpe
@@ -1420,7 +1420,7 @@ c	net/minecraft/C_41yxvtewz
 		p	2			p_2
 	m	(Lnet/minecraft/C_95faooggc;)V	m_19wzksfeu		m_19wzksfeu
 		p	1			p_1
-	m	()Lnet/minecraft/C_51akkmkss;	m_87frkpvjb		m_87frkpvjb
+	m	()Lnet/minecraft/C_51akkmkss;	m_87frkpvjb		getConnection
 c	net/minecraft/C_42uoqcgog	net/minecraft/network/packet/c2s/play/MenuClickSlotPacket	
 	f	I	f_42jbijnbt	menuId	
 	f	I	f_95cxnmrof	slotId	
@@ -2104,7 +2104,7 @@ c	net/minecraft/C_58wdmxzvg$C_67pbdeimp		Status
 		p	0			p_0
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/C_59mqpusow	net/minecraft/server/network/ServerNetworkIo	
-	f	Lorg/apache/logging/log4j/Logger;	f_09cpgaseq	f_09cpgaseq	
+	f	Lorg/apache/logging/log4j/Logger;	f_09cpgaseq	LOGGER	
 	f	Lnet/minecraft/server/MinecraftServer;	f_03kjrbodc	server	
 	f	Ljava/util/List;	f_49pixahtf	connections	
 	f	Z	f_35xakpeef	open	
@@ -2249,12 +2249,12 @@ c	net/minecraft/C_68cralyxh	net/minecraft/network/packet/EntityDataPacket	net/mi
 		p	1			p_1
 	m	(Lnet/minecraft/C_80inurxlz;)V	m_46qwjrofo		m_46qwjrofo
 		p	1			p_1
-c	net/minecraft/C_68ydbefqv	net/minecraft/network/listener/PacketListener	net/minecraft/client/network/listener/ClientPlayPacketListener
+c	net/minecraft/C_68ydbefqv	net/minecraft/network/PacketHandler	net/minecraft/client/network/handler/ClientPlayPacketHandler
 	m	()V	<init>	<init>	
 	m	()Z	m_14lqttvsj	isServer	
 	m	(Lnet/minecraft/C_19sjytfcv;)V	m_97plruhiz	handleUnknownPacket	
 		p	1		packet	
-	m	(Ljava/lang/String;[Ljava/lang/Object;)V	m_49lsowicz	disconnect	
+	m	(Ljava/lang/String;[Ljava/lang/Object;)V	m_49lsowicz	onDisconnect	
 		p	1		reason	
 		p	2		args	
 	m	(Lnet/minecraft/C_44ehmgtkt;)V	m_90oqkelpe	handlePlayerMove	
@@ -2291,8 +2291,8 @@ c	net/minecraft/C_68ydbefqv	net/minecraft/network/listener/PacketListener	net/mi
 		p	1		packet	
 	m	(Lnet/minecraft/C_58wdmxzvg;)V	m_59pmxsufu	handleClientStatus	
 		p	1		packet	
-	m	()Z	m_32wnqiiyn	canHandleOnCurrentThread	
-		c	Returns whether this packet handler can handle packets on the current thread or if\npackets should be queued to be handled on the main thread.	
+	m	()Z	m_32wnqiiyn	canHandleOffMainThread	
+		c	Returns whether this packet handler can handle packets off the main thread or if\npackets should be queued to be handled on the main thread.	
 	m	()Z	m_08laelphz	isDisconnected	
 	m	(Lnet/minecraft/C_15mlusgpl;)V	m_28rsvudpk		handleConfirmMenuAction
 		p	1			packet
@@ -2378,7 +2378,7 @@ c	net/minecraft/C_72zkbgjms
 		p	3			mipmaps
 	m	()Ljava/util/List;	m_54edhjssq		getMipmaps
 c	net/minecraft/C_75huluzub	net/minecraft/network/LocalConnection	
-	f	Lorg/apache/logging/log4j/Logger;	f_93sgtoplc	f_93sgtoplc	
+	f	Lorg/apache/logging/log4j/Logger;	f_93sgtoplc	LOGGER	
 	f	Ljava/net/SocketAddress;	f_86yoylsit	LOCAL_ADDRESS	
 	f	Ljava/util/List;	f_40gifrsdq	readQueue	
 	f	Lnet/minecraft/C_75huluzub;	f_98qctxims	boundConnection	
@@ -2388,7 +2388,7 @@ c	net/minecraft/C_75huluzub	net/minecraft/network/LocalConnection
 	f	[Ljava/lang/Object;	f_66wcebgtp	disconnectReasonArgs	
 	f	Z	f_24lzqagsj	paused	
 	m	(Lnet/minecraft/C_68ydbefqv;)V	<init>	<init>	
-		p	1		p_1	
+		p	1		listener	
 	m	(Lnet/minecraft/C_68ydbefqv;)V	m_16mrzjfuf	m_16mrzjfuf	
 		p	1		p_1	
 	m	(Lnet/minecraft/C_19sjytfcv;)V	m_61ppgrkac	m_61ppgrkac	
@@ -3040,7 +3040,7 @@ c	net/minecraft/C_01yqvmvjz		net/minecraft/network/SplitterHandler
 		p	1			context
 		p	2			buffer
 		p	3			output
-c	net/minecraft/C_02lgcirvj		net/minecraft/server/network/listener/ServerPlayPacketListener
+c	net/minecraft/C_02lgcirvj		net/minecraft/server/network/handler/ServerPlayPacketHandler
 	m	(Lnet/minecraft/C_23ydhjkwk;)V	m_38guivngk		handleHandSwing
 		p	1			packet
 	m	(Lnet/minecraft/C_09xamnvlb;)V	m_87lqwvaux		handleChatMessage
@@ -3346,7 +3346,7 @@ c	net/minecraft/C_32trrdzmf		net/minecraft/network/packet/c2s/play/SignUpdateC2S
 		p	1			p_1
 	m	(Lnet/minecraft/C_80inurxlz;)V	m_46qwjrofo		m_46qwjrofo
 		p	1			p_1
-c	net/minecraft/C_33nfqyvka		net/minecraft/server/network/listener/ServerLoginPacketListener
+c	net/minecraft/C_33nfqyvka		net/minecraft/server/network/handler/ServerLoginPacketHandler
 	m	(Lnet/minecraft/C_87zrltiqg;)V	m_16zqoqzrb		handleHello
 		p	1			packet
 	m	(Lnet/minecraft/C_91qpcboru;)V	m_59pmxsufu		handleKey
@@ -3878,23 +3878,23 @@ c	net/minecraft/C_48qzgozsi		com/mojang/blaze3d/vertex/BufferBuilderState
 	m	()Z	m_87ozqllny		hasBrightness
 	m	()Z	m_91cixbddk		hasNormals
 	m	()Z	m_19opcapli		hasColor
-c	net/minecraft/C_51akkmkss		net/minecraft/C_51akkmkss
-	m	(Lnet/minecraft/C_75mbakijj;)V	m_08nguizct		m_08nguizct
-		p	1			p_1
-	m	(Lnet/minecraft/C_80inurxlz;)V	m_16ixfdckp		m_16ixfdckp
-		p	1			p_1
-	m	(Lnet/minecraft/C_97ogqzfxl;)V	m_25yqcfncc		m_25yqcfncc
-		p	1			p_1
-	m	()V	m_58pmbnqll		m_58pmbnqll
-	m	()Ljava/net/SocketAddress;	m_24shfrlae		m_24shfrlae
-	m	(Lnet/minecraft/C_21uoltggz;)V	m_34raqeanh		m_34raqeanh
-		p	1			p_1
-	m	(Ljavax/crypto/SecretKey;)V	m_10imixyhr		m_10imixyhr
-		p	1			p_1
-	m	()Z	m_49uehdrri		m_49uehdrri
-	m	()Lnet/minecraft/C_80inurxlz;	m_82yeauftb		m_82yeauftb
-	m	()Lnet/minecraft/C_21uoltggz;	m_56quugdxl		m_56quugdxl
-	m	()Z	m_94iriubfl		m_94iriubfl
+c	net/minecraft/C_51akkmkss		net/minecraft/network/NetworkConnection
+	m	(Lnet/minecraft/C_75mbakijj;)V	m_08nguizct		setProtocol
+		p	1			protocol
+	m	(Lnet/minecraft/C_80inurxlz;)V	m_16ixfdckp		setListener
+		p	1			listener
+	m	(Lnet/minecraft/C_97ogqzfxl;)V	m_25yqcfncc		send
+		p	1			packet
+	m	()V	m_58pmbnqll		tick
+	m	()Ljava/net/SocketAddress;	m_24shfrlae		getAddress
+	m	(Lnet/minecraft/C_21uoltggz;)V	m_34raqeanh		disconnect
+		p	1			reason
+	m	(Ljavax/crypto/SecretKey;)V	m_10imixyhr		setupEncryption
+		p	1			key
+	m	()Z	m_49uehdrri		isOpen
+	m	()Lnet/minecraft/C_80inurxlz;	m_82yeauftb		getListener
+	m	()Lnet/minecraft/C_21uoltggz;	m_56quugdxl		getDisconnectReason
+	m	()Z	m_94iriubfl		isLocal
 c	net/minecraft/C_51eaepxxt		net/minecraft/client/gui/screen/multiplayer/MultiplayerServerListWidget
 	f	Lnet/minecraft/C_53qpytbmm;	f_42tssajkt		parent
 	f	Ljava/util/List;	f_47cuwddqt		servers
@@ -3962,7 +3962,7 @@ c	net/minecraft/C_51etyazsg$C_66dymegrr		Action
 	m	(Lnet/minecraft/C_51etyazsg$C_66dymegrr;)I	m_23eqhntaa		m_23eqhntaa
 		p	0			p_0
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_57rlldbju		net/minecraft/server/network/listener/ServerQueryPacketListener
+c	net/minecraft/C_57rlldbju		net/minecraft/server/network/handler/ServerQueryPacketHandler
 	m	(Lnet/minecraft/C_37goosphw;)V	m_31ekwjvcf		handlePing
 		p	1			packet
 	m	(Lnet/minecraft/C_21bqfrbwi;)V	m_22dspthut		handleServerStatus
@@ -4028,7 +4028,7 @@ c	net/minecraft/C_62ewuexxl		net/minecraft/server/network/handler/RemoteHandshak
 c	net/minecraft/C_62ewuexxl$1		1
 	f	[I	f_01tmrkzpb		NETWORK_STATE_VALUES
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_63ltmeiqk		net/minecraft/server/network/listener/ServerHandshakePacketListener
+c	net/minecraft/C_63ltmeiqk		net/minecraft/server/network/handler/ServerHandshakePacketHandler
 	m	(Lnet/minecraft/C_86yjpmalw;)V	m_45ekftgzf		handleHandshake
 		p	1			packet
 c	net/minecraft/C_63uoldfpb		net/minecraft/server/network/handler/ServerQueryNetworkHandler
@@ -4124,7 +4124,7 @@ c	net/minecraft/C_65ttkuuty$3		3
 		p	1			p_1
 	m	(Lio/netty/channel/Channel;)V	initChannel		initChannel
 		p	1			channel
-c	net/minecraft/C_67vhogdbn		net/minecraft/client/network/listener/ClientLoginPacketListener
+c	net/minecraft/C_67vhogdbn		net/minecraft/client/network/handler/ClientLoginPacketHandler
 	m	(Lnet/minecraft/C_82dbhilpa;)V	m_72avpqxdn		handleHello
 		p	1			packet
 	m	(Lnet/minecraft/C_25rxkvwee;)V	m_34ajibbdg		handleLoginSuccess
@@ -4147,7 +4147,7 @@ c	net/minecraft/C_72lfsnlfh		net/minecraft/network/packet/c2s/play/MenuClickButt
 	m	()Ljava/lang/String;	m_41vkeclbr		m_41vkeclbr
 	m	(Lnet/minecraft/C_80inurxlz;)V	m_46qwjrofo		m_46qwjrofo
 		p	1			p_1
-c	net/minecraft/C_74cpriuuv		net/minecraft/client/network/listener/ClientQueryPacketListener
+c	net/minecraft/C_74cpriuuv		net/minecraft/client/network/handler/ClientQueryPacketHandler
 	m	(Lnet/minecraft/C_40uidnoci;)V	m_76dsdcivh		handleServerStatus
 		p	1			packet
 	m	(Lnet/minecraft/C_24rhqcfrj;)V	m_92ppkzwgr		handlePing
@@ -4294,8 +4294,8 @@ c	net/minecraft/C_80gpjzzer		net/minecraft/C_80gpjzzer
 		p	1			p_1
 	m	(Lnet/minecraft/C_80inurxlz;)V	m_46qwjrofo		m_46qwjrofo
 		p	1			p_1
-c	net/minecraft/C_80inurxlz		net/minecraft/network/listener/PacketListener
-	m	(Lnet/minecraft/C_21uoltggz;)V	m_13sgmjuhk		disconnect
+c	net/minecraft/C_80inurxlz		net/minecraft/network/handler/PacketHandler
+	m	(Lnet/minecraft/C_21uoltggz;)V	m_13sgmjuhk		onDisconnect
 		p	1			reason
 	m	(Lnet/minecraft/C_75mbakijj;Lnet/minecraft/C_75mbakijj;)V	m_34ouwhybu		changeProtocol
 		p	1			from
@@ -4540,9 +4540,9 @@ c	net/minecraft/C_97ogqzfxl		net/minecraft/network/Packet
 	m	(Lnet/minecraft/C_40wzyxfpk;)V	m_73uomkfhh		write
 		p	1			buffer
 	m	(Lnet/minecraft/C_80inurxlz;)V	m_46qwjrofo		handle
-		p	1			listener
-	m	()Z	m_07kwbdqyv		canHandleOnCurrentThread
-		c		Returns whether this packet can be handled on  the current thread or if it should\nbe queued to be handled on the main thread.
+		p	1			handler
+	m	()Z	m_07kwbdqyv		canHandleOffMainThread
+		c		Returns whether this packet can be handled off the main thread or if it should\nbe queued to be handled on the main thread.
 	m	()Ljava/lang/String;	toString		toString
 	m	()Ljava/lang/String;	m_41vkeclbr		asString
 	m	()V	<clinit>		<clinit>
