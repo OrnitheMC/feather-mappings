@@ -171,7 +171,7 @@ c	net/minecraft/C_06ryzvjmf
 	m	(I)V	m_18ggmelza		setWarningBlocks
 		p	1			blocks
 c	net/minecraft/C_07tveanoq
-	m	(Lnet/minecraft/C_47ldwddrb;Lnet/minecraft/C_26szrsafr;D)I	m_30clhurll	m_30clhurll	
+	m	(Lnet/minecraft/C_47ldwddrb;Lnet/minecraft/C_26szrsafr;D)I	m_30clhurll	renderTerrain	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
@@ -189,15 +189,15 @@ c	net/minecraft/C_07tveanoq
 		p	8		p_8	
 		p	10		p_10	
 		p	12		p_12	
-	m	(Ljava/lang/String;DDDDDD)Lnet/minecraft/C_81rxpkmau;	m_96mvbtauo	createParticle	
-		p	1		particle	
-		p	2		minX	
-		p	4		minY	
-		p	6		minZ	
-		p	8		maxX	
-		p	10		maxY	
+	m	(Ljava/lang/String;DDDDDD)Lnet/minecraft/C_81rxpkmau;	m_96mvbtauo	tryAddParticle	
+		p	1		type	
+		p	2		x	
+		p	4		y	
+		p	6		z	
+		p	8		velocityX	
+		p	10		velocityY	
 		p	12		maxZ	
-	m	(Lnet/minecraft/C_47ldwddrb;Lnet/minecraft/C_26szrsafr;DI)I	m_30clhurll		m_30clhurll
+	m	(Lnet/minecraft/C_47ldwddrb;Lnet/minecraft/C_26szrsafr;DI)I	m_30clhurll		renderTerrain
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -232,7 +232,7 @@ c	net/minecraft/C_07tveanoq
 		p	10			velocityY
 		p	12			velocityZ
 		p	14			parameters
-	m	(IZDDDDDD[I)Lnet/minecraft/C_81rxpkmau;	m_96mvbtauo		addParticle
+	m	(IZDDDDDD[I)Lnet/minecraft/C_81rxpkmau;	m_96mvbtauo		tryAddParticle
 		p	1			type
 		p	2			ignoreDistance
 		p	3			x
@@ -307,7 +307,7 @@ c	net/minecraft/C_16awhtorx
 		p	11		velocityY	
 		p	13		velocityZ	
 		p	15		velocityScale	
-	m	(Lnet/minecraft/C_85yjoeawq;DDDIDDDD[I)V	m_29sjolhok		m_29sjolhok
+	m	(Lnet/minecraft/C_85yjoeawq;DDDIDDDD[I)V	m_29sjolhok		addParticle
 		p	1			p_1
 		p	2			p_2
 		p	4			p_4
@@ -338,7 +338,7 @@ c	net/minecraft/C_18zkzwffs
 	m	(ILnet/minecraft/C_85hxrxkvq;)V	m_92guyfiqr		register
 		p	1			type
 		p	2			factory
-	m	(Lnet/minecraft/C_47ldwddrb;I)V	m_20swmupfh		m_20swmupfh
+	m	(Lnet/minecraft/C_47ldwddrb;I)V	m_20swmupfh		addEmitter
 		p	1			p_1
 		p	2			p_2
 	m	(IDDDDDD[I)Lnet/minecraft/C_81rxpkmau;	m_12lwadmwn		addParticle
@@ -458,7 +458,7 @@ c	net/minecraft/C_30zdgghms
 	f	I	f_30gkmfbgv		borderWarningBlocks
 	f	I	f_70dsmsbxv		borderWarningTime
 	m	()D	m_15wibfmzv		getBorderSize
-	m	()I	m_23hibvzum		m_23hibvzum
+	m	()I	m_23hibvzum		getBorderSizeLerpTime
 	m	(I)V	m_91bztiyhs		m_91bztiyhs
 		p	1			p_1
 	m	()D	m_40bkxmcal		getBorderSizeLerpTarget
@@ -962,7 +962,7 @@ c	net/minecraft/C_95zrfkavi
 	m	()Z	m_64goyulqw		m_64goyulqw
 c	net/minecraft/C_99fdelfkn
 	m	(Ljava/lang/String;DDDDDD)V	m_27aiviame	addParticle	
-		p	1		name	
+		p	1		type	
 		p	2		x	
 		p	4		y	
 		p	6		z	
@@ -970,14 +970,14 @@ c	net/minecraft/C_99fdelfkn
 		p	10		velocityY	
 		p	12		velocityZ	
 	m	(IZDDDDDD[I)V	m_27aiviame		addParticle
-		p	1			id
-		p	2			x
-		p	3			y
-		p	5			z
-		p	7			velocityX
-		p	9			velocityY
-		p	11			velocityZ
-		p	13			scale
+		p	1			type
+		p	2			ignoreDistance
+		p	3			x
+		p	5			y
+		p	7			z
+		p	9			velocityX
+		p	11			velocityY
+		p	13			velocityZ
 		p	15			parameters
 c	net/minecraft/C_09rafugiz		net/minecraft/client/gui/spectator/SpectatorMenuCategory
 	m	()Ljava/util/List;	m_14oqbvnrn		getItems
@@ -1038,7 +1038,7 @@ c	net/minecraft/C_28waeuisk		net/minecraft/client/gui/spectator/SpectatorMenuLis
 	m	(Lnet/minecraft/C_86jyvuynh;)V	m_64isofqit		onSpectatorMenuClosed
 		p	1			menu
 c	net/minecraft/C_29yftnxia		net/minecraft/client/gui/spectator/RootCategory
-	f	Ljava/util/ArrayList;	f_82vwtphvy		f_82vwtphvy
+	f	Ljava/util/ArrayList;	f_82vwtphvy		items
 	m	()V	<init>		<init>
 	m	()Ljava/util/List;	m_14oqbvnrn		m_14oqbvnrn
 	m	()Lnet/minecraft/C_21uoltggz;	m_73mfwshiu		m_73mfwshiu
@@ -1046,7 +1046,7 @@ c	net/minecraft/C_39bcevcwl		net/minecraft/client/gui/spectator/SpectatorMenuIte
 	m	(Lnet/minecraft/C_86jyvuynh;)V	m_50zwqzdlf		select
 		p	1			hud
 	m	()Lnet/minecraft/C_21uoltggz;	m_64rbchdlg		getDisplayName
-	m	(I)V	m_27bxynnzz		m_27bxynnzz
+	m	(I)V	m_27bxynnzz		render
 		p	1			p_1
 c	net/minecraft/C_59doawuzn		net/minecraft/client/gui/SpectatorGui
 	f	Lnet/minecraft/C_07ipdbewr;	f_04fddfutn		WIDGETS_TEXTURE
@@ -1062,7 +1062,7 @@ c	net/minecraft/C_59doawuzn		net/minecraft/client/gui/SpectatorGui
 	m	(Lnet/minecraft/C_94uisfslq;F)V	m_76mrkcclk		renderHotbar
 		p	1			window
 		p	2			tickDelta
-	m	(IIIF)V	m_04vhsbngn		m_04vhsbngn
+	m	(IIIF)V	m_04vhsbngn		renderSlot
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
