@@ -4,7 +4,7 @@ c	net/minecraft/C_00sqwbmcb
 	m	()Lnet/minecraft/C_26szrsafr;	m_04syfpebq		m_04syfpebq
 c	net/minecraft/C_01mwapywk
 	m	()Lnet/minecraft/C_47ldwddrb;	m_62uliwgtr	getSpawnEntity	
-	m	(Lnet/minecraft/C_54ruxjwzt;)Lnet/minecraft/C_47ldwddrb;	m_62uliwgtr		getSpawnEntity
+	m	(Lnet/minecraft/C_54ruxjwzt;)Lnet/minecraft/C_47ldwddrb;	m_62uliwgtr		getDisplayEntity
 		p	1			world
 c	net/minecraft/C_04glhcdxz
 	f	Ljava/util/Map;	f_05jmiqquy	BY_CODE	
@@ -74,16 +74,16 @@ c	net/minecraft/C_07tveanoq
 	m	(ID)V	m_37suleckd	renderStages	
 		p	1		renderStage	
 		p	2		tickDelta	
-	m	(Lnet/minecraft/C_97zulxhng;Lnet/minecraft/C_26szrsafr;D)I	m_30clhurll		m_30clhurll
+	m	(Lnet/minecraft/C_97zulxhng;Lnet/minecraft/C_26szrsafr;D)I	m_30clhurll		renderTerrain
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(IILnet/minecraft/C_26szrsafr;D)I	m_57kuvbmjj		m_57kuvbmjj
+	m	(IILnet/minecraft/C_26szrsafr;D)I	m_57kuvbmjj		render
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(D)V	m_37suleckd		m_37suleckd
+	m	(D)V	m_37suleckd		renderStages
 		p	1			p_1
 c	net/minecraft/C_12xjwahqh	net/minecraft/world/biome/IntArrays	
 	f	I	f_88nfppwhn	num	
@@ -134,9 +134,9 @@ c	net/minecraft/C_20vbkqxvz
 	m	(ILnet/minecraft/C_97zulxhng;)V	m_23fmossrl	draw	
 		p	1		renderStage	
 		p	2		player	
-	m	(Lnet/minecraft/C_26szrsafr;)V	m_16ttthbmh		m_16ttthbmh
+	m	(Lnet/minecraft/C_26szrsafr;)V	m_16ttthbmh		startBufferBuilder
 		p	1			p_1
-	m	(Lnet/minecraft/C_26szrsafr;Lnet/minecraft/C_97zulxhng;)V	m_23fmossrl		m_23fmossrl
+	m	(Lnet/minecraft/C_26szrsafr;Lnet/minecraft/C_97zulxhng;)V	m_23fmossrl		draw
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_21keykoxl
@@ -299,11 +299,11 @@ c	net/minecraft/C_33wibuxgu
 c	net/minecraft/C_35fagcrzn
 	m	()Lnet/minecraft/C_26szrsafr;	m_04syfpebq		m_04syfpebq
 c	net/minecraft/C_38azozjhk
-	m	(Lnet/minecraft/C_39twncnab;Lnet/minecraft/C_76varpwca;I)V	m_92jhtxkub	m_92jhtxkub	
+	m	(Lnet/minecraft/C_39twncnab;Lnet/minecraft/C_76varpwca;I)V	m_92jhtxkub	renderRedstoneDiodeBlockWithRotation	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(Lnet/minecraft/C_39twncnab;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_69garkogr;)V	m_92jhtxkub		m_92jhtxkub
+	m	(Lnet/minecraft/C_39twncnab;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_69garkogr;)V	m_92jhtxkub		renderRedstoneDiodeBlockWithRotation
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -396,18 +396,18 @@ c	net/minecraft/C_56prnndub
 		p	0			from
 		p	1			to
 c	net/minecraft/C_58gxohdzd
-	m	(Lnet/minecraft/C_05ktcjdzx;Lnet/minecraft/C_76varpwca;I)Z	m_08mfrwgyb	m_08mfrwgyb	
+	m	(Lnet/minecraft/C_05ktcjdzx;Lnet/minecraft/C_76varpwca;I)Z	m_08mfrwgyb	shouldConnectTo	
 		p	0		p_0	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/C_05ktcjdzx;Lnet/minecraft/C_76varpwca;I)Z	m_05hdqttxr	m_05hdqttxr	
+	m	(Lnet/minecraft/C_05ktcjdzx;Lnet/minecraft/C_76varpwca;I)Z	m_05hdqttxr	connectsTo	
 		p	0		p_0	
 		p	1		p_1	
 		p	2		p_2	
 	m	(Lnet/minecraft/C_05ktcjdzx;Lnet/minecraft/C_76varpwca;)Z	m_35fqdngqn		m_35fqdngqn
 		p	0			p_0
 		p	1			p_1
-	m	(Lnet/minecraft/C_05ktcjdzx;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_69garkogr;)Z	m_08mfrwgyb		m_08mfrwgyb
+	m	(Lnet/minecraft/C_05ktcjdzx;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_69garkogr;)Z	m_08mfrwgyb		shouldConnectTo
 		p	0			p_0
 		p	1			p_1
 		p	2			p_2
@@ -887,7 +887,8 @@ c	net/minecraft/C_67bqawkmi
 	m	(I)I	m_70seukgew	getFacing	
 		c	Returns an int encoding the direction this block is facing, given its state (metadata).\nSee {@link net.minecraft.util.math.Facings Facings}.	
 		p	0		metadata	
-	m	(I)Lnet/minecraft/C_69garkogr;	m_70seukgew		m_70seukgew
+	m	(I)Lnet/minecraft/C_69garkogr;	m_70seukgew		getFacing
+		c		Returns an int encoding the direction this block is facing, given its state (metadata).\nSee {@link net.minecraft.util.math.Facings Facings}.
 		p	0			p_0
 c	net/minecraft/C_68zcrzyxg
 	m	()I	m_04syfpebq	getRenderLayer	
@@ -1312,22 +1313,22 @@ c	net/minecraft/C_74xopcpoa
 	m	()I	m_04syfpebq	m_04syfpebq	
 	m	()Lnet/minecraft/C_26szrsafr;	m_04syfpebq		m_04syfpebq
 c	net/minecraft/C_76pllagnz
-	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;I)Lnet/minecraft/C_76varpwca;	m_02dzrseiu	m_02dzrseiu	
+	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;I)Lnet/minecraft/C_76varpwca;	m_02dzrseiu	parseBlockPos	
 		p	0		p_0	
 		p	1		p_1	
 		p	2		p_2	
-	m	(DLjava/lang/String;)Lnet/minecraft/C_76pllagnz$C_03xingkwv;	m_73swrcnvy	m_73swrcnvy	
+	m	(DLjava/lang/String;)Lnet/minecraft/C_76pllagnz$C_03xingkwv;	m_73swrcnvy	parseCoordinate	
 		p	0		p_0	
 		p	2		p_2	
-	m	(DLjava/lang/String;II)Lnet/minecraft/C_76pllagnz$C_03xingkwv;	m_06ldizxqr	m_06ldizxqr	
+	m	(DLjava/lang/String;II)Lnet/minecraft/C_76pllagnz$C_03xingkwv;	m_06ldizxqr	parseCoordinate	
 		p	0		p_0	
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
-	m	(DLjava/lang/String;)D	m_24sycpiyb	m_24sycpiyb	
+	m	(DLjava/lang/String;)D	m_24sycpiyb	parseCoordinate	
 		p	0		p_0	
 		p	2		p_2	
-	m	(DLjava/lang/String;II)D	m_84ejrwqat	m_84ejrwqat	
+	m	(DLjava/lang/String;II)D	m_84ejrwqat	parseCoordinate	
 		p	0		p_0	
 		p	2		p_2	
 		p	3		p_3	
@@ -1364,7 +1365,7 @@ c	net/minecraft/C_76varpwca
 		p	5			p_5
 c	net/minecraft/C_78zngaodj
 	f	Lnet/minecraft/C_85hwjrnsi;	f_89ciqrevv	handmodel	
-	f	Lnet/minecraft/C_73hozaekk;	f_89ciqrevv		f_89ciqrevv
+	f	Lnet/minecraft/C_73hozaekk;	f_89ciqrevv		handmodel
 c	net/minecraft/C_79gpsrhag
 	m	(Lnet/minecraft/C_76varpwca;)Z	m_02dkeyjad		m_02dkeyjad
 		p	1			p_1
@@ -1405,13 +1406,13 @@ c	net/minecraft/C_84dqcqlog$1		1
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/C_85dnxtfbh
 	m	()I	m_04syfpebq	m_04syfpebq	
-	m	(Lnet/minecraft/C_05ktcjdzx;Lnet/minecraft/C_76varpwca;II)Z	m_00oebnvla	m_00oebnvla	
+	m	(Lnet/minecraft/C_05ktcjdzx;Lnet/minecraft/C_76varpwca;II)Z	m_00oebnvla	shouldConnectTo	
 		p	0		p_0	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 	m	()Lnet/minecraft/C_26szrsafr;	m_04syfpebq		m_04syfpebq
-	m	(Lnet/minecraft/C_05ktcjdzx;Lnet/minecraft/C_76varpwca;ILnet/minecraft/C_69garkogr;)Z	m_00oebnvla		m_00oebnvla
+	m	(Lnet/minecraft/C_05ktcjdzx;Lnet/minecraft/C_76varpwca;ILnet/minecraft/C_69garkogr;)Z	m_00oebnvla		shouldConnectTo
 		p	0			p_0
 		p	1			p_1
 		p	2			p_2
@@ -1497,7 +1498,7 @@ c	net/minecraft/C_94dfrnlhm$C_19gyehrdt
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(Lnet/minecraft/C_76varpwca;I)I	m_98qqaqihl	m_98qqaqihl	
+	m	(Lnet/minecraft/C_76varpwca;I)I	m_98qqaqihl	findWidth	
 		p	1		p_1	
 		p	2		p_2	
 	m	(Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_69garkogr$C_61vewjfoe;)V	<init>		<init>
@@ -1973,10 +1974,10 @@ c	net/minecraft/C_99oopkucy$1		1
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/C_99sowdzft
 	f	Z	f_50ddzvydb	showCape	
-	f	Ljava/util/Set;	f_70yhxjyea		f_70yhxjyea
-	m	(Lnet/minecraft/C_79gsdrgoz;Z)V	m_74hofwzhi		m_74hofwzhi
-		p	1			p_1
-		p	2			p_2
+	f	Ljava/util/Set;	f_70yhxjyea		playerModelParts
+	m	(Lnet/minecraft/C_79gsdrgoz;Z)V	m_74hofwzhi		setPlayerModelPart
+		p	1			part
+		p	2			enable
 c	net/minecraft/C_99sowdzft$C_12taoyedq
 	f	Lnet/minecraft/C_99sowdzft$C_12taoyedq;	f_97xjwpisr	SHOW_CAPE	
 c	net/minecraft/C_02fbvyddu		net/minecraft/server/command/FillCommand

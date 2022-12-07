@@ -154,7 +154,7 @@ c	net/minecraft/C_40wzyxfpk
 	m	([B)V	m_23armpjip		writeByteArray
 		p	1			bytes
 	m	()[B	m_30zjxptfe		readByteArray
-	m	()[B	m_36nvlrseo		m_36nvlrseo
+	m	()[B	m_36nvlrseo		getBytes
 	m	(Ljava/lang/Class;)Ljava/lang/Enum;	m_65nizxsjr		readEnum
 		p	1			type
 	m	(Ljava/lang/Enum;)V	m_38wbewwov		writeEnum
@@ -190,7 +190,7 @@ c	net/minecraft/C_43mnimvqq
 		p	1			packet
 c	net/minecraft/C_43mnimvqq$2
 	f	Lnet/minecraft/C_97ogqzfxl;	f_58ewzqhfs	packet	
-	f	Lnet/minecraft/C_26iwfcgbh;	f_58ewzqhfs		f_58ewzqhfs
+	f	Lnet/minecraft/C_26iwfcgbh;	f_58ewzqhfs		packet
 	m	(Lnet/minecraft/C_43mnimvqq;Lnet/minecraft/C_97ogqzfxl;)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -351,7 +351,7 @@ c	net/minecraft/C_65ttkuuty
 	m	(Lnet/minecraft/C_97ogqzfxl;[Lio/netty/util/concurrent/GenericFutureListener;)V	m_46kvymeyb	send	
 		p	1		packet	
 		p	2		listeners	
-	m	(Lnet/minecraft/C_97ogqzfxl;[Lio/netty/util/concurrent/GenericFutureListener;)V	m_25yqcfncc	sendPacket	
+	m	(Lnet/minecraft/C_97ogqzfxl;[Lio/netty/util/concurrent/GenericFutureListener;)V	m_25yqcfncc	sendNow	
 		p	1		packet	
 		p	2		listeners	
 	m	(Lio/netty/channel/ChannelHandlerContext;Lnet/minecraft/C_26iwfcgbh;)V	m_93mspppmf		channelRead0
@@ -363,12 +363,12 @@ c	net/minecraft/C_65ttkuuty
 		p	1			packet
 		p	2			listener
 		p	3			listeners
-	m	(Lnet/minecraft/C_26iwfcgbh;[Lio/netty/util/concurrent/GenericFutureListener;)V	m_25yqcfncc		sendPacket
+	m	(Lnet/minecraft/C_26iwfcgbh;[Lio/netty/util/concurrent/GenericFutureListener;)V	m_25yqcfncc		sendNow
 		p	1			packet
 		p	2			listeners
 c	net/minecraft/C_65ttkuuty$1
 	f	Lnet/minecraft/C_97ogqzfxl;	f_13ndpzqcb	packet	
-	f	Lnet/minecraft/C_26iwfcgbh;	f_13ndpzqcb		f_13ndpzqcb
+	f	Lnet/minecraft/C_26iwfcgbh;	f_13ndpzqcb		packet
 	m	(Lnet/minecraft/C_65ttkuuty;Lnet/minecraft/C_75mbakijj;Lnet/minecraft/C_75mbakijj;Lnet/minecraft/C_97ogqzfxl;[Lio/netty/util/concurrent/GenericFutureListener;)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -657,9 +657,9 @@ c	net/minecraft/C_97ogqzfxl	net/minecraft/network/Packet
 	m	(Lnet/minecraft/C_40wzyxfpk;)V	m_73uomkfhh	write	
 		p	1		buffer	
 	m	(Lnet/minecraft/C_80inurxlz;)V	m_46qwjrofo	handle	
-		p	1		listener	
-	m	()Z	m_07kwbdqyv	canHandleOnCurrentThread	
-		c	Returns whether this packet can be handled on  the current thread or if it should\nbe queued to be handled on the main thread.	
+		p	1		handler	
+	m	()Z	m_07kwbdqyv	canHandleOffMainThread	
+		c	Returns whether this packet can be handled off the main thread or if it should\nbe queued to be handled on the main thread.	
 	m	()Ljava/lang/String;	toString	toString	
 	m	()Ljava/lang/String;	m_41vkeclbr	asString	
 	m	(Lio/netty/buffer/ByteBuf;)[B	m_26ddxneep	m_26ddxneep	
@@ -708,7 +708,7 @@ c	net/minecraft/C_26iwfcgbh		net/minecraft/network/Packet
 	m	(Lnet/minecraft/C_40wzyxfpk;)V	m_73uomkfhh		read
 		p	1			buffer
 	m	(Lnet/minecraft/C_80inurxlz;)V	m_46qwjrofo		handle
-		p	1			listener
+		p	1			handler
 c	net/minecraft/C_66njumbke		net/minecraft/network/PacketUtils
 	m	(Lnet/minecraft/C_26iwfcgbh;Lnet/minecraft/C_80inurxlz;Lnet/minecraft/C_90iueaadh;)V	m_87zacpaed		ensureOnSameThread
 		p	0			packet
