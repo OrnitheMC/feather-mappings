@@ -8555,30 +8555,38 @@ c	net/minecraft/C_58kgrgadv
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/C_58mypyvam
-	f	[B	f_87cwobxaw	f_87cwobxaw	
-	f	[I	f_45vsowsbp	featureOrigin	
+	f	[B	f_87cwobxaw	MINOR_AXES	
+		c	Given a branch's major axis {@code a} this array stores that branch's minor\naxes at indices {@code a} and {@code a + 3}.\n\n<p>\nA branch's major axis is the axis along which it has the greatest length.\n\n<p>\nThe axes are as follows:\n<br> 0: x\n<br> 1: y\n<br> 2: z	
+	f	[I	f_45vsowsbp	origin	
+		c	The position of the base of the tree.	
 	f	D	f_91cpopkqt	f_91cpopkqt	
-	f	[[I	f_65eiavsiy	f_65eiavsiy	
-	f	Lnet/minecraft/C_76varpwca;	f_45vsowsbp		featureOrigin
-	f	Ljava/util/List;	f_02erxlfar		f_02erxlfar
-	m	(IIIFBLnet/minecraft/C_68zcrzyxg;)V	m_17gdvqmwx	method_8956	
+	f	[[I	f_65eiavsiy	branches	
+		c	Base and tip coordinates for each branch in the tree. The base of a branch is\nplaced at some height on the trunk, so the base x- and z-coordinates match\nthose of the trunk, and do not need to be stored. The remaining coordinates\nare stored in int arrays of length 4:\n\n<br> {\n<br> &nbsp; tip x-coordinate,\n<br> &nbsp; tip y-coordinate,\n<br> &nbsp; tip z-coordinate,\n<br> &nbsp; base y-coordinate\n<br> }	
+	f	Lnet/minecraft/C_76varpwca;	f_45vsowsbp		origin
+		c		The position of the base of the tree.
+	f	Ljava/util/List;	f_02erxlfar		branches
+		c		Base and tip coordinates for each branch in the tree. The base of a branch is\nplaced at some height on the trunk, so the base x- and z-coordinates match\nthose of the trunk, and do not need to be stored.
+	m	(IIIFBLnet/minecraft/C_68zcrzyxg;)V	m_17gdvqmwx	placeCluster	
+		c	Place a cluster layer centered at the given coordinates, perpendicular to the\ngiven major axis.	
 		p	1		x	
 		p	2		y	
 		p	3		z	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
-	m	(III)V	m_61nrxygpy	method_8955	
+		p	4		shape	
+		p	5		majorAxis	
+		p	6		clusterBlock	
+	m	(III)V	m_61nrxygpy	placeFoliageCluster	
+		c	Place a foliage cluster above the given coordinates.	
 		p	1		x	
-		p	2		y	
+		p	2		baseY	
 		p	3		z	
-	m	([I[ILnet/minecraft/C_68zcrzyxg;)V	m_71bdcadql	m_71bdcadql	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-	m	([I[I)I	m_75slevxxw	m_75slevxxw	
-		p	1		p_1	
-		p	2		p_2	
+	m	([I[ILnet/minecraft/C_68zcrzyxg;)V	m_71bdcadql	placeBranch	
+		p	1		from	
+		p	2		to	
+		p	3		log	
+	m	([I[I)I	m_75slevxxw	tryBranch	
+		c	Check if a branch can be placed between the two given positions.\n\n@return -1 if the branch can be placed, or the maximum possible length of the\n        branch along its major axis.	
+		p	1		from	
+		p	2		to	
 	m	(DDD)V	m_56xsisnea	m_56xsisnea	
 		p	1		p_1	
 		p	3		p_3	
@@ -8590,35 +8598,40 @@ c	net/minecraft/C_58mypyvam
 		p	4		p_4	
 		p	5		p_5	
 	m	()V	<clinit>	<clinit>	
-	m	(Lnet/minecraft/C_76varpwca;FLnet/minecraft/C_68zcrzyxg;)V	m_17gdvqmwx		method_8956
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lnet/minecraft/C_76varpwca;)V	m_61nrxygpy		method_8955
-		p	1			x
-	m	(Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_68zcrzyxg;)V	m_71bdcadql		m_71bdcadql
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lnet/minecraft/C_76varpwca;)I	m_21jtfrwmx		m_21jtfrwmx
-		p	1			p_1
-	m	(Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_76varpwca;)I	m_20vjjwzng		m_20vjjwzng
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_76varpwca;)I	m_75slevxxw		m_75slevxxw
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/C_76varpwca;FLnet/minecraft/C_68zcrzyxg;)V	m_17gdvqmwx		placeCluster
+		c		Place a cluster layer centered at the given coordinates.
+		p	1			pos
+		p	2			shape
+		p	3			clusterBlock
+	m	(Lnet/minecraft/C_76varpwca;)V	m_61nrxygpy		placeFoliageCluster
+		c		Place a foliage cluster above the given coordinates.
+		p	1			pos
+	m	(Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_68zcrzyxg;)V	m_71bdcadql		placeBranch
+		p	1			from
+		p	2			to
+		p	3			log
+	m	(Lnet/minecraft/C_76varpwca;)I	m_21jtfrwmx		max
+		c		Returns the largest of the absolute values of the given coordinates.
+		p	1			coordinates
+	m	(Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_76varpwca;)I	m_20vjjwzng		getLogAxis
+		c		Returns an axis based on the angle between the two given positions.
+		p	1			from
+		p	2			to
+	m	(Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_76varpwca;)I	m_75slevxxw		tryBranch
+		c		Check if a branch can be placed between the two given positions.\n\n@return -1 if the branch can be placed, or the maximum possible length of the\n        branch along its major axis.
+		p	1			from
+		p	2			to
 	m	()V	m_74escwiet		m_74escwiet
 	m	(Lnet/minecraft/C_54ruxjwzt;Ljava/util/Random;Lnet/minecraft/C_76varpwca;)Z	m_31xajxime		m_31xajxime
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/C_58mypyvam$C_94noicjis		C_94noicjis
-	f	I	f_61wttwqpl		f_61wttwqpl
+c	net/minecraft/C_58mypyvam$C_94noicjis		BranchPos
+	f	I	f_61wttwqpl		baseY
 	m	(Lnet/minecraft/C_76varpwca;I)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-	m	()I	m_05poigufj		m_05poigufj
+		p	1			tip
+		p	2			baseY
+	m	()I	m_05poigufj		getBaseY
 c	net/minecraft/C_58vmexswv
 	m	(Lnet/minecraft/C_72owraavl;Lnet/minecraft/C_84dqcqlog;Lnet/minecraft/C_54ruxjwzt;IIIIFFF)Z	m_12iriuvpj	m_12iriuvpj	
 		p	1		p_1	
@@ -14476,9 +14489,9 @@ c	net/minecraft/C_95jgarkyq
 		p	4		y	
 		p	5		z	
 	m	(DDD)V	m_56xsisnea	prepare	
-		p	1		x	
-		p	3		y	
-		p	5		z	
+		p	1		d0	
+		p	3		d1	
+		p	5		d2	
 	m	(Lnet/minecraft/C_54ruxjwzt;IIILnet/minecraft/C_68zcrzyxg;)V	m_53beczegz	setBlock	
 		p	1		world	
 		p	2		x	

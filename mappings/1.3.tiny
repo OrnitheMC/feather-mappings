@@ -19454,52 +19454,66 @@ c	net/minecraft/C_58mlpdlhh	net/minecraft/C_58mlpdlhh
 c	net/minecraft/C_58myigsvc	net/minecraft/C_58myigsvc
 	m	()V	<init>	<init>
 c	net/minecraft/C_58mypyvam	net/minecraft/world/gen/feature/LargeOakTreeFeature
-	f	[B	f_87cwobxaw	f_87cwobxaw
+	f	[B	f_87cwobxaw	MINOR_AXES
+		c	Given a branch's major axis {@code a} this array stores that branch's minor\naxes at indices {@code a} and {@code a + 3}.\n\n<p>\nA branch's major axis is the axis along which it has the greatest length.\n\n<p>\nThe axes are as follows:\n<br> 0: x\n<br> 1: y\n<br> 2: z
 	f	Ljava/util/Random;	f_84agmnugn	random
 	f	Lnet/minecraft/C_54ruxjwzt;	f_88hhqdcko	world
-	f	[I	f_45vsowsbp	featureOrigin
-	f	I	f_17kkcgdpb	f_17kkcgdpb
-	f	I	f_50ujrzhuf	f_50ujrzhuf
-	f	D	f_96ivormbf	f_96ivormbf
+	f	[I	f_45vsowsbp	origin
+		c	The position of the base of the tree.
+	f	I	f_17kkcgdpb	height
+		c	Total height of the tree, including the canopy.
+	f	I	f_50ujrzhuf	trunkHeight
+		c	Height of just the trunk of the tree.
+	f	D	f_96ivormbf	trunkScale
+		c	The portion of the total height of the tree that is taken up by the trunk.
 	f	D	f_91cpopkqt	f_91cpopkqt
-	f	D	f_37fhjddaa	f_37fhjddaa
-	f	D	f_72kiwgvbz	scaleY
-	f	D	f_98hcnlgud	scaleXZ
-	f	I	f_53ztfisbq	treeDiameter
-	f	I	f_05qizfcij	maxBranchLogCount
-	f	I	f_53bvidyye	maxLeafDistance
-	f	[[I	f_65eiavsiy	f_65eiavsiy
+	f	D	f_37fhjddaa	branchSlope
+	f	D	f_72kiwgvbz	branchLengthScale
+	f	D	f_98hcnlgud	branchDensity
+	f	I	f_53ztfisbq	trunkWidth
+		c	The width of the trunk, can be 1 or 2.
+	f	I	f_05qizfcij	maxTrunkHeight
+	f	I	f_53bvidyye	foliageClusterHeight
+	f	[[I	f_65eiavsiy	branches
+		c	Base and tip coordinates for each branch in the tree. The base of a branch is\nplaced at some height on the trunk, so the base x- and z-coordinates match\nthose of the trunk, and do not need to be stored. The remaining coordinates\nare stored in int arrays of length 4:\n\n<br> {\n<br> &nbsp; tip x-coordinate,\n<br> &nbsp; tip y-coordinate,\n<br> &nbsp; tip z-coordinate,\n<br> &nbsp; base y-coordinate\n<br> }
 	m	(Z)V	<init>	<init>
 		p	1		p_1
-	m	()V	m_26whqdvda	m_26whqdvda
-	m	(IIIFBI)V	m_17gdvqmwx	method_8956
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-		p	5		p_5
-		p	6		p_6
-	m	(I)F	m_11mnntwda	m_11mnntwda
-		p	1		p_1
-	m	(I)F	m_03dyafgrg	m_03dyafgrg
-		p	1		p_1
-	m	(III)V	m_61nrxygpy	method_8955
+	m	()V	m_26whqdvda	makeBranches
+		c	Compile an array of branches to place for this tree.
+	m	(IIIFBI)V	m_17gdvqmwx	placeCluster
+		c	Place a cluster layer centered at the given coordinates, perpendicular to the\ngiven major axis.
 		p	1		x
 		p	2		y
 		p	3		z
-	m	([I[II)V	m_71bdcadql	m_71bdcadql
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-	m	()V	m_23svjepga	m_23svjepga
-	m	(I)Z	m_18hgtyncy	m_18hgtyncy
-		p	1		p_1
-	m	()V	m_05zvuvmsm	m_05zvuvmsm
-	m	()V	m_75slqrgkk	m_75slqrgkk
-	m	([I[I)I	m_75slevxxw	m_75slevxxw
-		p	1		p_1
-		p	2		p_2
-	m	()Z	m_93sxkqhqa	m_93sxkqhqa
+		p	4		shape
+		p	5		majorAxis
+		p	6		clusterBlock
+	m	(I)F	m_11mnntwda	getTreeShape
+		c	Returns the shape of the tree at the given height. The shape controls the\nsize of branches at that height.
+		p	1		height
+	m	(I)F	m_03dyafgrg	getClusterShape
+		c	Returns the shape of the cluster at the given layer. The shape controls the\nsize and roundness of the layer.
+		p	1		layer
+	m	(III)V	m_61nrxygpy	placeFoliageCluster
+		c	Place a foliage cluster above the given coordinates.
+		p	1		x
+		p	2		baseY
+		p	3		z
+	m	([I[II)V	m_71bdcadql	placeBranch
+		p	1		from
+		p	2		to
+		p	3		log
+	m	()V	m_23svjepga	placeFoliage
+	m	(I)Z	m_18hgtyncy	shouldPlaceBranch
+		c	Check if branches should be placed at the given height above the base of the tree.
+		p	1		height
+	m	()V	m_05zvuvmsm	placeTrunk
+	m	()V	m_75slqrgkk	placeBranches
+	m	([I[I)I	m_75slevxxw	tryBranch
+		c	Check if a branch can be placed between the two given positions.\n\n@return -1 if the branch can be placed, or the maximum possible length of the\n        branch along its major axis.
+		p	1		from
+		p	2		to
+	m	()Z	m_93sxkqhqa	canPlace
 	m	(DDD)V	m_56xsisnea	m_56xsisnea
 		p	1		p_1
 		p	3		p_3
@@ -31542,9 +31556,9 @@ c	net/minecraft/C_95jgarkyq	net/minecraft/world/gen/feature/Feature
 		p	4		y
 		p	5		z
 	m	(DDD)V	m_56xsisnea	prepare
-		p	1		x
-		p	3		y
-		p	5		z
+		p	1		d0
+		p	3		d1
+		p	5		d2
 	m	(Lnet/minecraft/C_54ruxjwzt;IIII)V	m_53beczegz	setBlock
 		p	1		world
 		p	2		x
