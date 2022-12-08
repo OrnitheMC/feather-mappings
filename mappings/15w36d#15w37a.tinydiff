@@ -404,8 +404,8 @@ c	net/minecraft/C_11jekkleg
 	m	(Lnet/minecraft/C_98ulvanlt;)V	<init>	<init>	
 		p	1		p_1	
 	m	(II)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			chunkX
+		p	2			chunkZ
 c	net/minecraft/C_12cxqzqam
 	m	()Lnet/minecraft/C_36ghrohdl;	m_23aylrhnm	m_23aylrhnm	
 	m	()Lnet/minecraft/C_28xiejhdx;	m_23aylrhnm		m_23aylrhnm
@@ -1136,42 +1136,49 @@ c	net/minecraft/C_27zdjfshi
 		p	1			p_1
 c	net/minecraft/C_29hjezcud
 	f	Lorg/apache/logging/log4j/Logger;	f_48ltkubby	LOGGER	
-	f	[[I	f_38qqkpyro	adjacentChunkPositions	
-	f	Lcom/google/common/base/Predicate;	f_38jzknmuz		f_38jzknmuz
-	f	Lcom/google/common/base/Predicate;	f_18evtckat		f_18evtckat
-	f	Ljava/util/Set;	f_93mignzwq		f_93mignzwq
-	f	Ljava/util/List;	f_47npycrnu		f_47npycrnu
-	f	Z	f_96oapongq		f_96oapongq
-	f	Z	f_91htpwltk		f_91htpwltk
-	m	(IIZ)Lnet/minecraft/C_29hjezcud$C_25tdxvhlb;	m_10ztaxolc	getTracker	
+	f	[[I	f_38qqkpyro	adjacentChunkCoords	
+		c	Relative chunk coordinates for adjacent chunks for each of the cardinal directions.	
+	f	Lcom/google/common/base/Predicate;	f_38jzknmuz		TICKS_CHUNKS
+	f	Lcom/google/common/base/Predicate;	f_18evtckat		GENERATES_CHUNKS
+	f	Ljava/util/Set;	f_93mignzwq		dirty
+		c		Chunks that need to sync block data with clients.
+	f	Ljava/util/List;	f_47npycrnu		loading
+		c		Chunks that have not yet finished loading.
+	f	Z	f_96oapongq		sortLoading
+		c		Should loading chunks be re-sorted?
+	f	Z	f_91htpwltk		sortPopulating
+		c		Should populating chunks be re-sorted?
+	f	Ljava/util/List;	f_81cswdsoc	dirty	populating
+		c	Chunks that need to sync block data with clients.	Chunks that have not yet finished populating.
+	m	(IIZ)Lnet/minecraft/C_29hjezcud$C_25tdxvhlb;	m_10ztaxolc	getChunk	
 		p	1		chunkX	
 		p	2		chunkZ	
 		p	3		orCreate	
-	m	(Lnet/minecraft/C_53mtutqhz;)V	m_39dkqmqnu	onMovedChunk	
+	m	(Lnet/minecraft/C_53mtutqhz;)V	m_39dkqmqnu	updateChunkTracking	
 		p	1		player	
 	m	()Lorg/apache/logging/log4j/Logger;	m_19sozmrzk	m_19sozmrzk	
-	m	(Lnet/minecraft/C_29hjezcud;)Lnet/minecraft/C_16awhtorx;	m_27zwzgwpd	getWorldFrom	
-		p	0		playerWorldManager	
-	m	(Lnet/minecraft/C_29hjezcud;)Lnet/minecraft/C_57yiqephb;	m_82qwbqlsj	getPlayerChunkManagers	
-		p	0		playerWorldManager	
-	m	(Lnet/minecraft/C_29hjezcud;)Ljava/util/List;	m_62vpfnico	getNewPlayerChunkManagers	
-		p	0		playerWorldManager	
-	m	(Lnet/minecraft/C_29hjezcud;)Ljava/util/List;	m_03tzomvls	getDirtyPlayerChunkManagers	
-		p	0		playerWorldManager	
-	m	(II)Lnet/minecraft/C_25tdxvhlb;	m_12utztukt		m_12utztukt
-		p	1			p_1
-		p	2			p_2
-	m	(II)Lnet/minecraft/C_25tdxvhlb;	m_10ztaxolc		getTracker
-		p	1			p_1
-		p	2			p_2
-	m	()V	m_91uzwxxdf		m_91uzwxxdf
-	m	(II)J	m_88ewfvnqk		m_88ewfvnqk
-		p	0			p_0
-		p	1			p_1
-	m	(Lnet/minecraft/C_25tdxvhlb;)V	m_15drqjrwv		m_15drqjrwv
-		p	1			p_1
-	m	(Lnet/minecraft/C_25tdxvhlb;)V	m_44dhzozhm		m_44dhzozhm
-		p	1			p_1
+	m	(Lnet/minecraft/C_29hjezcud;)Lnet/minecraft/C_16awhtorx;	m_27zwzgwpd	m_27zwzgwpd	
+		p	0		p_0	
+	m	(Lnet/minecraft/C_29hjezcud;)Lnet/minecraft/C_57yiqephb;	m_82qwbqlsj	m_82qwbqlsj	
+		p	0		p_0	
+	m	(Lnet/minecraft/C_29hjezcud;)Ljava/util/List;	m_62vpfnico	m_62vpfnico	
+		p	0		p_0	
+	m	(Lnet/minecraft/C_29hjezcud;)Ljava/util/List;	m_03tzomvls	m_03tzomvls	
+		p	0		p_0	
+	m	(II)Lnet/minecraft/C_25tdxvhlb;	m_12utztukt		getLoadedChunk
+		p	1			chunkX
+		p	2			chunkZ
+	m	(II)Lnet/minecraft/C_25tdxvhlb;	m_10ztaxolc		getChunk
+		p	1			chunkX
+		p	2			chunkZ
+	m	()V	m_91uzwxxdf		markNeedsSorting
+	m	(II)J	m_88ewfvnqk		chunkPosToLong
+		p	0			chunkX
+		p	1			chunkZ
+	m	(Lnet/minecraft/C_25tdxvhlb;)V	m_15drqjrwv		markDirty
+		p	1			chunk
+	m	(Lnet/minecraft/C_25tdxvhlb;)V	m_44dhzozhm		unload
+		p	1			chunk
 	m	()Lcom/google/common/base/Predicate;	m_25xnbayhv		m_25xnbayhv
 c	net/minecraft/C_29hjezcud$1
 	f	Ljava/util/Iterator;	f_83ipbbvpy	f_83ipbbvpy	
@@ -1185,22 +1192,24 @@ c	net/minecraft/C_29hjezcud$1
 	m	(Lnet/minecraft/C_53mtutqhz;)Z	m_31nphaloz		m_31nphaloz
 		p	1			p_1
 	m	(Ljava/lang/Object;)Z	apply		apply
-		p	1			p_1
-c	net/minecraft/C_29hjezcud$C_25tdxvhlb	PlayerTracker	
+		p	1			player
+c	net/minecraft/C_29hjezcud$C_25tdxvhlb	ChunkHolder	
 	f	Ljava/util/List;	f_19rrmgcpx	players	
-	f	Lnet/minecraft/C_46yqrwxvx;	f_37arukfos	chunkPos	
+		c	Players within view distance of this chunk.	
+	f	Lnet/minecraft/C_46yqrwxvx;	f_37arukfos	pos	
 	f	[S	f_23sscgkmg	dirtySectionPositions	
 	f	I	f_95rqytark	blocksChanged	
 	f	I	f_47cgjpekx	dirtySections	
 	f	J	f_42hrhjxoq	lastUpdateTime	
-	f	Lnet/minecraft/C_29hjezcud;	f_94ukuloib	anonPlayerWorldManager	
+		c	The last time this chunk's inhabited time was updated.	
+	f	Lnet/minecraft/C_29hjezcud;	f_94ukuloib	f_94ukuloib	
 	m	(Lnet/minecraft/C_29hjezcud;II)V	<init>	<init>	
 		p	1		p_1	
 		p	2		chunkX	
 		p	3		chunkZ	
-	m	(Lnet/minecraft/C_53mtutqhz;)V	m_62dwqwfbp	add	
+	m	(Lnet/minecraft/C_53mtutqhz;)V	m_62dwqwfbp	addPlayer	
 		p	1		player	
-	m	(Lnet/minecraft/C_53mtutqhz;)V	m_55xxfgwxv	remove	
+	m	(Lnet/minecraft/C_53mtutqhz;)V	m_55xxfgwxv	removePlayer	
 		p	1		player	
 	m	()V	m_57ygjjons	updateInhabitedTime	
 	m	(Lnet/minecraft/C_98ulvanlt;)V	m_50duacfbs	updateInhabitedTime	
@@ -1211,9 +1220,9 @@ c	net/minecraft/C_29hjezcud$C_25tdxvhlb	PlayerTracker
 		p	3		sectionZ	
 	m	(Lnet/minecraft/C_26iwfcgbh;)V	m_40grxnjul	sendPacket	
 		p	1		packet	
-	m	()V	m_59vvjlcdu	tick	
+	m	()V	m_59vvjlcdu	sendChanges	
 	m	(Lnet/minecraft/C_87eagbyjs;)V	m_44eaelutq	sendBlockEntityUpdate	
-		p	1		block	
+		p	1		blockEntity	
 	m	(Lnet/minecraft/C_29hjezcud$C_25tdxvhlb;)Lnet/minecraft/C_46yqrwxvx;	m_56jkvszhd	getChunkpOS	
 		p	0		playerChunkManager	
 	m	(Lnet/minecraft/C_29hjezcud$C_25tdxvhlb;)Ljava/util/List;	m_30ibqqkdt	getPlayers	
@@ -1223,7 +1232,7 @@ c	net/minecraft/C_29hjezcud$2		2
 	m	(Lnet/minecraft/C_53mtutqhz;)Z	m_00bweemet		m_00bweemet
 		p	1			p_1
 	m	(Ljava/lang/Object;)Z	apply		apply
-		p	1			p_1
+		p	1			player
 c	net/minecraft/C_29hjezcud$3		3
 	f	Ljava/util/Iterator;	f_83ipbbvpy		f_83ipbbvpy
 	f	Lnet/minecraft/C_29hjezcud;	f_68oztphza		f_68oztphza
@@ -1240,8 +1249,8 @@ c	net/minecraft/C_29hjezcud$4		4
 		p	1			p_1
 		p	2			p_2
 	m	(Ljava/lang/Object;Ljava/lang/Object;)I	compare		compare
-		p	1			p_1
-		p	2			p_2
+		p	1			chunk1
+		p	2			chunk2
 c	net/minecraft/C_29hjezcud$5		5
 	f	Lnet/minecraft/C_29hjezcud;	f_20gvhgpca		f_20gvhgpca
 	m	(Lnet/minecraft/C_29hjezcud;)V	<init>		<init>
@@ -1250,8 +1259,8 @@ c	net/minecraft/C_29hjezcud$5		5
 		p	1			p_1
 		p	2			p_2
 	m	(Ljava/lang/Object;Ljava/lang/Object;)I	compare		compare
-		p	1			p_1
-		p	2			p_2
+		p	1			chunk1
+		p	2			chunk2
 c	net/minecraft/C_30bcwjyqy
 	f	Lnet/minecraft/C_68zcrzyxg$C_63ehaunll;	f_66kmlhxlf	mirror	
 	f	Lnet/minecraft/C_68zcrzyxg$C_02mkxgffo;	f_03apfaotg	rotation	
@@ -1599,7 +1608,7 @@ c	net/minecraft/C_38jsmvmjf
 	m	(II)Z	m_62rfhiyiy	m_62rfhiyiy	
 		p	1		p_1	
 		p	2		p_2	
-	m	(II)Lnet/minecraft/C_98ulvanlt;	m_26fewzbxf	getChunkNow	
+	m	(II)Lnet/minecraft/C_98ulvanlt;	m_26fewzbxf	loadChunk	
 		p	1		chunkX	
 		p	2		chunkZ	
 	m	(Lnet/minecraft/C_36ghrohdl;II)V	m_68fnijvgr	m_68fnijvgr	
@@ -1627,7 +1636,7 @@ c	net/minecraft/C_38jsmvmjf
 		p	1			world
 		p	2			storage
 		p	3			generator
-	m	(II)Lnet/minecraft/C_98ulvanlt;	m_68fnijvgr		getOrLoadChunk
+	m	(II)Lnet/minecraft/C_98ulvanlt;	m_68fnijvgr		loadChunk
 		p	1			chunkX
 		p	2			chunkZ
 	m	(II)Lnet/minecraft/C_98ulvanlt;	m_62rfhiyiy		m_62rfhiyiy
@@ -2135,7 +2144,8 @@ c	net/minecraft/C_53btdbapg
 	m	(Lnet/minecraft/C_17agfiprw;)Lnet/minecraft/C_74mkzdigl;	m_36tsytztv		m_36tsytztv
 		p	1			p_1
 c	net/minecraft/C_53mtutqhz
-	f	Ljava/util/List;	f_97qbrxzrt	loadedChunks	
+	f	Ljava/util/List;	f_97qbrxzrt	newLoadedChunks	
+		c	Coordinates of chunks that have come within view of the player, but have not yet\nbeen sent to the client.	
 c	net/minecraft/C_53tsulwnk
 	f	Lnet/minecraft/C_17agfiprw;	f_49ksxlopl		f_49ksxlopl
 	m	()V	<clinit>		<clinit>
@@ -4004,51 +4014,57 @@ c	net/minecraft/C_02mkxgffo		net/minecraft/util/BlockRotation
 c	net/minecraft/C_02mkxgffo$1		1
 	f	[I	f_34gtnnzfu		f_34gtnnzfu
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_25tdxvhlb		net/minecraft/C_25tdxvhlb
-	f	Lorg/apache/logging/log4j/Logger;	f_75ytyufrh		f_75ytyufrh
-	f	Lnet/minecraft/C_29hjezcud;	f_94ukuloib		f_94ukuloib
-	f	Ljava/util/List;	f_19rrmgcpx		f_19rrmgcpx
-	f	Lnet/minecraft/C_46yqrwxvx;	f_37arukfos		f_37arukfos
-	f	[S	f_23sscgkmg		f_23sscgkmg
-	f	Lnet/minecraft/C_98ulvanlt;	f_36jxvmjkq		f_36jxvmjkq
-	f	I	f_95rqytark		f_95rqytark
-	f	I	f_47cgjpekx		f_47cgjpekx
-	f	J	f_42hrhjxoq		f_42hrhjxoq
-	f	Z	f_39wjbhkqc		f_39wjbhkqc
+c	net/minecraft/C_25tdxvhlb		net/minecraft/server/ChunkHolder
+	f	Lorg/apache/logging/log4j/Logger;	f_75ytyufrh		LOGGER
+	f	Lnet/minecraft/C_29hjezcud;	f_94ukuloib		chunkMap
+	f	Ljava/util/List;	f_19rrmgcpx		players
+		c		Players within view distance of this chunk.
+	f	Lnet/minecraft/C_46yqrwxvx;	f_37arukfos		pos
+	f	[S	f_23sscgkmg		dirtySectionPositions
+	f	Lnet/minecraft/C_98ulvanlt;	f_36jxvmjkq		chunk
+	f	I	f_95rqytark		blocksChanged
+	f	I	f_47cgjpekx		dirtySections
+	f	J	f_42hrhjxoq		lastUpdateTime
+		c		The last time this chunk's inhabited time was updated.
+	f	Z	f_39wjbhkqc		populated
 	m	(Lnet/minecraft/C_29hjezcud;II)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	()Lnet/minecraft/C_46yqrwxvx;	m_56jkvszhd		m_56jkvszhd
-	m	(Lnet/minecraft/C_53mtutqhz;)V	m_62dwqwfbp		m_62dwqwfbp
-		p	1			p_1
-	m	(Lnet/minecraft/C_53mtutqhz;)V	m_55xxfgwxv		m_55xxfgwxv
-		p	1			p_1
-	m	(Z)Z	m_30dufofuh		m_30dufofuh
-		p	1			p_1
-	m	()Z	m_87nxmdzsn		m_87nxmdzsn
-	m	(Lnet/minecraft/C_53mtutqhz;)V	m_89erseiiw		m_89erseiiw
-		p	1			p_1
-	m	()V	m_57ygjjons		m_57ygjjons
-	m	(III)V	m_16ybsoyiz		m_16ybsoyiz
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lnet/minecraft/C_26iwfcgbh;)V	m_40grxnjul		m_40grxnjul
-		p	1			p_1
-	m	()V	m_59vvjlcdu		m_59vvjlcdu
-	m	(Lnet/minecraft/C_87eagbyjs;)V	m_44eaelutq		m_44eaelutq
-		p	1			p_1
-	m	(Lnet/minecraft/C_53mtutqhz;)Z	m_96dqxicnp		m_96dqxicnp
-		p	1			p_1
-	m	(Lcom/google/common/base/Predicate;)Z	m_95stkdptf		m_95stkdptf
-		p	1			p_1
-	m	(DLcom/google/common/base/Predicate;)Z	m_06uiqgahz		m_06uiqgahz
-		p	1			p_1
-		p	3			p_3
-	m	()Z	m_53jvbvlcf		m_53jvbvlcf
-	m	()Lnet/minecraft/C_98ulvanlt;	m_67iyliatb		m_67iyliatb
-	m	()D	m_70xvwzktx		m_70xvwzktx
+		p	1			chunkMap
+		p	2			chunkX
+		p	3			chunkZ
+	m	()Lnet/minecraft/C_46yqrwxvx;	m_56jkvszhd		getPos
+	m	(Lnet/minecraft/C_53mtutqhz;)V	m_62dwqwfbp		addPlayer
+		p	1			player
+	m	(Lnet/minecraft/C_53mtutqhz;)V	m_55xxfgwxv		removePlayer
+		p	1			player
+	m	(Z)Z	m_30dufofuh		load
+		p	1			orGenerate
+	m	()Z	m_87nxmdzsn		populate
+	m	(Lnet/minecraft/C_53mtutqhz;)V	m_89erseiiw		sendChunk
+		p	1			player
+	m	()V	m_57ygjjons		updateInhabitedTime
+	m	(III)V	m_16ybsoyiz		onBlockChanged
+		p	1			sectionX
+		p	2			y
+		p	3			sectionZ
+	m	(Lnet/minecraft/C_26iwfcgbh;)V	m_40grxnjul		sendPacket
+		p	1			packet
+	m	()V	m_59vvjlcdu		sendChanges
+	m	(Lnet/minecraft/C_87eagbyjs;)V	m_44eaelutq		sendBlockEntityUpdate
+		p	1			blockEntity
+	m	(Lnet/minecraft/C_53mtutqhz;)Z	m_96dqxicnp		hasPlayer
+		c		Check if the given player is within view distance of this chunk.
+		p	1			player
+	m	(Lcom/google/common/base/Predicate;)Z	m_95stkdptf		hasPlayer
+		c		Check if a player matching the given predicate is within view distance of this chunk.
+		p	1			predicate
+	m	(DLcom/google/common/base/Predicate;)Z	m_06uiqgahz		hasPlayer
+		c		Check if a player matching the given predicate is within the given range of this chunk.
+		p	1			range
+		p	3			predicate
+	m	()Z	m_53jvbvlcf		isPopulated
+	m	()Lnet/minecraft/C_98ulvanlt;	m_67iyliatb		getChunk
+	m	()D	m_70xvwzktx		squaredDistanceToNearestPlayer
+		c		Returns the square of the distance to the nearest player within view distance of this chunk.
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/C_28xiejhdx		net/minecraft/world/chunk/ChunkSource
 	m	(II)Lnet/minecraft/C_98ulvanlt;	m_67iolejpb		getChunk

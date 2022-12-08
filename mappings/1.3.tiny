@@ -8581,16 +8581,20 @@ c	net/minecraft/C_29gxyabci	net/minecraft/client/render/world/ChunkRenderReloade
 c	net/minecraft/C_29hjezcud	net/minecraft/server/ChunkMap
 	f	Lnet/minecraft/C_16awhtorx;	f_53uutpdtt	world
 	f	Ljava/util/List;	f_43fgtzngc	players
-	f	Lnet/minecraft/C_57yiqephb;	f_07culobxu	trackers
-	f	Ljava/util/List;	f_81cswdsoc	dirtyTrackers
+		c	All players in this world.
+	f	Lnet/minecraft/C_57yiqephb;	f_07culobxu	chunks
+		c	All loaded chunks.
+	f	Ljava/util/List;	f_81cswdsoc	dirty
+		c	Chunks that need to sync block data with clients.
 	f	I	f_92ogxgjvr	chunkViewDistance
-	f	[[I	f_38qqkpyro	adjacentChunkPositions
+	f	[[I	f_38qqkpyro	adjacentChunkCoords
+		c	Relative chunk coordinates for adjacent chunks for each of the cardinal directions.
 	m	(Lnet/minecraft/C_16awhtorx;I)V	<init>	<init>
 		p	1		world
 		p	2		viewDistance
 	m	()Lnet/minecraft/C_16awhtorx;	m_80ejnyied	getWorld
 	m	()V	m_28scdebao	tick
-	m	(IIZ)Lnet/minecraft/C_29hjezcud$C_25tdxvhlb;	m_10ztaxolc	getTracker
+	m	(IIZ)Lnet/minecraft/C_29hjezcud$C_25tdxvhlb;	m_10ztaxolc	getChunk
 		p	1		chunkX
 		p	2		chunkZ
 		p	3		orCreate
@@ -8598,46 +8602,47 @@ c	net/minecraft/C_29hjezcud	net/minecraft/server/ChunkMap
 		p	1		x
 		p	2		y
 		p	3		z
-	m	(Lnet/minecraft/C_53mtutqhz;)V	m_17fvhqeou	add
+	m	(Lnet/minecraft/C_53mtutqhz;)V	m_17fvhqeou	onPlayerAdded
 		p	1		player
-	m	(Lnet/minecraft/C_53mtutqhz;)V	m_39dkqmqnu	onMovedChunk
+	m	(Lnet/minecraft/C_53mtutqhz;)V	m_39dkqmqnu	updateChunkTracking
 		p	1		player
-	m	(Lnet/minecraft/C_53mtutqhz;)V	m_43fkvvvcb	remove
+	m	(Lnet/minecraft/C_53mtutqhz;)V	m_43fkvvvcb	onPlayerRemoved
 		p	1		player
 	m	(IIIII)Z	m_78ckheort	isChunkWithinView
 		p	1		chunkX
 		p	2		chunkZ
-		p	3		playerX
-		p	4		playerZ
+		p	3		playerChunkX
+		p	4		playerChunkZ
 		p	5		chunkViewDistance
-	m	(Lnet/minecraft/C_53mtutqhz;)V	m_38txfotsp	updateTracker
+	m	(Lnet/minecraft/C_53mtutqhz;)V	m_38txfotsp	onPlayerMoved
 		p	1		player
-	m	(Lnet/minecraft/C_53mtutqhz;II)Z	m_64icjkunp	isInViewOfPlayer
+	m	(Lnet/minecraft/C_53mtutqhz;II)Z	m_64icjkunp	isChunkWithinView
 		p	1		player
 		p	2		chunkX
 		p	3		chunkZ
 	m	(I)I	m_72iocxjih	getViewDistance
 		p	0		chunkViewDistance
-	m	(Lnet/minecraft/C_29hjezcud;)Lnet/minecraft/C_16awhtorx;	m_27zwzgwpd	getWorldFrom
-		p	0		playerWorldManager
-	m	(Lnet/minecraft/C_29hjezcud;)Lnet/minecraft/C_57yiqephb;	m_82qwbqlsj	getPlayerChunkManagers
-		p	0		playerWorldManager
-	m	(Lnet/minecraft/C_29hjezcud;)Ljava/util/List;	m_03tzomvls	getDirtyPlayerChunkManagers
-		p	0		playerWorldManager
-c	net/minecraft/C_29hjezcud$C_25tdxvhlb	net/minecraft/server/ChunkMap$PlayerTracker
+	m	(Lnet/minecraft/C_29hjezcud;)Lnet/minecraft/C_16awhtorx;	m_27zwzgwpd	m_27zwzgwpd
+		p	0		p_0
+	m	(Lnet/minecraft/C_29hjezcud;)Lnet/minecraft/C_57yiqephb;	m_82qwbqlsj	m_82qwbqlsj
+		p	0		p_0
+	m	(Lnet/minecraft/C_29hjezcud;)Ljava/util/List;	m_03tzomvls	m_03tzomvls
+		p	0		p_0
+c	net/minecraft/C_29hjezcud$C_25tdxvhlb	net/minecraft/server/ChunkMap$ChunkHolder
 	f	Ljava/util/List;	f_19rrmgcpx	players
-	f	Lnet/minecraft/C_46yqrwxvx;	f_37arukfos	chunkPos
+		c	Players within view distance of this chunk.
+	f	Lnet/minecraft/C_46yqrwxvx;	f_37arukfos	pos
 	f	[S	f_23sscgkmg	dirtySectionPositions
 	f	I	f_95rqytark	blocksChanged
 	f	I	f_47cgjpekx	dirtySections
-	f	Lnet/minecraft/C_29hjezcud;	f_94ukuloib	anonPlayerWorldManager
+	f	Lnet/minecraft/C_29hjezcud;	f_94ukuloib	f_94ukuloib
 	m	(Lnet/minecraft/C_29hjezcud;II)V	<init>	<init>
 		p	1		p_1
 		p	2		chunkX
 		p	3		chunkZ
-	m	(Lnet/minecraft/C_53mtutqhz;)V	m_62dwqwfbp	add
+	m	(Lnet/minecraft/C_53mtutqhz;)V	m_62dwqwfbp	addPlayer
 		p	1		player
-	m	(Lnet/minecraft/C_53mtutqhz;)V	m_55xxfgwxv	remove
+	m	(Lnet/minecraft/C_53mtutqhz;)V	m_55xxfgwxv	removePlayer
 		p	1		player
 	m	(III)V	m_16ybsoyiz	onBlockChanged
 		p	1		sectionX
@@ -8645,9 +8650,9 @@ c	net/minecraft/C_29hjezcud$C_25tdxvhlb	net/minecraft/server/ChunkMap$PlayerTrac
 		p	3		sectionZ
 	m	(Lnet/minecraft/C_19sjytfcv;)V	m_40grxnjul	sendPacket
 		p	1		packet
-	m	()V	m_59vvjlcdu	tick
+	m	()V	m_59vvjlcdu	sendChanges
 	m	(Lnet/minecraft/C_87eagbyjs;)V	m_44eaelutq	sendBlockEntityUpdate
-		p	1		block
+		p	1		blockEntity
 	m	(Lnet/minecraft/C_29hjezcud$C_25tdxvhlb;)Lnet/minecraft/C_46yqrwxvx;	m_56jkvszhd	getChunkpOS
 		p	0		playerChunkManager
 	m	(Lnet/minecraft/C_29hjezcud$C_25tdxvhlb;)Ljava/util/List;	m_30ibqqkdt	getPlayers
@@ -10295,9 +10300,9 @@ c	net/minecraft/C_31rdgoemj	net/minecraft/client/gui/screen/Screen
 	m	(I)V	m_55khebrye	drawBackgroundTexture
 		p	1		offset
 	m	()Z	m_77zbbemvw	shouldPauseGame
-	m	(ZI)V	m_67nnzlgea	m_67nnzlgea
-		p	1		p_1
-		p	2		p_2
+	m	(ZI)V	m_67nnzlgea	confirm
+		p	1		confirmed
+		p	2		id
 	m	()Z	m_77zhgdsgl	isControlDown
 	m	()Z	m_86hvixvsw	isShiftDown
 	m	()Z	m_71yziiczt	m_71yziiczt
@@ -11371,7 +11376,7 @@ c	net/minecraft/C_36ghrohdl	net/minecraft/world/chunk/ChunkSource
 	m	(II)Lnet/minecraft/C_98ulvanlt;	m_67iolejpb	getChunk
 		p	1		chunkX
 		p	2		chunkZ
-	m	(II)Lnet/minecraft/C_98ulvanlt;	m_93kdjcsob	getChunkNow
+	m	(II)Lnet/minecraft/C_98ulvanlt;	m_93kdjcsob	loadChunk
 		p	1		chunkX
 		p	2		chunkZ
 	m	(Lnet/minecraft/C_36ghrohdl;II)V	m_68fnijvgr	populate
@@ -12331,7 +12336,7 @@ c	net/minecraft/C_38jsmvmjf	net/minecraft/server/world/chunk/ServerChunkCache
 	m	(II)Lnet/minecraft/C_98ulvanlt;	m_67iolejpb	m_67iolejpb
 		p	1		p_1
 		p	2		p_2
-	m	(II)Lnet/minecraft/C_98ulvanlt;	m_02uwwofqp	loadChunk
+	m	(II)Lnet/minecraft/C_98ulvanlt;	m_02uwwofqp	loadChunkFromStorage
 		p	1		chunkX
 		p	2		chunkZ
 	m	(Lnet/minecraft/C_98ulvanlt;)V	m_17hkyabdu	saveEntities
@@ -17029,7 +17034,8 @@ c	net/minecraft/C_53mtutqhz	net/minecraft/server/entity/living/player/ServerPlay
 	f	Lnet/minecraft/C_22laqmhyu;	f_87jlmhmju	interactionManager
 	f	D	f_28skxodkj	trackedX
 	f	D	f_49miuosng	trackedZ
-	f	Ljava/util/List;	f_97qbrxzrt	loadedChunks
+	f	Ljava/util/List;	f_97qbrxzrt	newLoadedChunks
+		c	Coordinates of chunks that have come within view of the player, but have not yet\nbeen sent to the client.
 	f	Ljava/util/List;	f_62hveyjcq	removedEntities
 	f	I	f_91xbntfwh	f_91xbntfwh
 	f	I	f_18ruxztmm	lastHungerLevel
@@ -17567,7 +17573,7 @@ c	net/minecraft/C_54ruxjwzt	net/minecraft/world/World
 	f	J	f_42ycbwwvq	cloudColor
 	f	I	f_04haowmun	ambientDarkness
 	f	I	f_89bdfogla	randomTickLCG
-	f	I	f_63bvcpdvc	f_63bvcpdvc
+	f	I	f_63bvcpdvc	randomTickLCGIncrement
 	f	F	f_78irvanle	prevRain
 	f	F	f_11vftlyny	rain
 	f	F	f_16uidzhsr	prevThunder
