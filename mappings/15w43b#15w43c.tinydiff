@@ -50,9 +50,9 @@ c	net/minecraft/C_24qhtkqyz
 c	net/minecraft/C_24wwbijsp
 	f	Lnet/minecraft/C_23kgsbsml;	f_26jzaxamj		f_26jzaxamj
 	m	([IILnet/minecraft/C_69garkogr;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+		p	1		vertices	
+		p	2		tintIndex	
+		p	3		face	
 	m	([IILnet/minecraft/C_69garkogr;Lnet/minecraft/C_23kgsbsml;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -62,11 +62,11 @@ c	net/minecraft/C_24wwbijsp
 c	net/minecraft/C_28oawgdju
 	m	(F)I	m_56rtpicul	m_56rtpicul	
 		p	1		p_1	
-	m	(Ljava/util/Random;FLnet/minecraft/C_45ayztzfa;)Lnet/minecraft/C_72owraavl;	m_45morrivi	m_45morrivi	
+	m	(Ljava/util/Random;FLnet/minecraft/C_45ayztzfa;)Lnet/minecraft/C_72owraavl;	m_45morrivi	addRandomItem	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(Ljava/util/Collection;Ljava/util/Random;FLnet/minecraft/C_45ayztzfa;)V	m_45morrivi		m_45morrivi
+	m	(Ljava/util/Collection;Ljava/util/Random;FLnet/minecraft/C_45ayztzfa;)V	m_45morrivi		addRandomItem
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -98,10 +98,10 @@ c	net/minecraft/C_42soehjyi
 c	net/minecraft/C_43mnimvqq
 	m	()V	m_37edppqot		m_37edppqot
 c	net/minecraft/C_43qzjtpxb
-	m	()V	m_64zyasxjw	m_64zyasxjw	
-	m	(I)V	m_76smflzdh	m_76smflzdh	
-		p	1		p_1	
-	m	()V	m_76smflzdh		m_76smflzdh
+	m	()V	m_64zyasxjw	calculateTextureCoords	
+	m	(I)V	m_76smflzdh	calculateTextureCoords	
+		p	1		vertex	
+	m	()V	m_76smflzdh		calculateTextureCoords
 c	net/minecraft/C_43qzjtpxb$1	1	
 	f	[I	f_09lrjxwmu	f_09lrjxwmu	
 	m	()V	<clinit>	<clinit>	
@@ -133,7 +133,7 @@ c	net/minecraft/C_45ayztzfa
 		p	1			lootTable
 	m	()Lnet/minecraft/C_45gyacchp;	m_75wgzhnmd		getLootTables
 c	net/minecraft/C_45ayztzfa$C_91grnrnon
-	f	Lnet/minecraft/C_45gyacchp;	f_94kmpqbtv		f_94kmpqbtv
+	f	Lnet/minecraft/C_45gyacchp;	f_94kmpqbtv		world
 	f	F	f_74tekvlit		luck
 	m	()V	<init>	<init>	
 	m	(Lnet/minecraft/C_45gyacchp;)V	<init>		<init>
@@ -144,8 +144,8 @@ c	net/minecraft/C_45zomsjnb
 		p	2		p_2	
 	m	()V	m_79owxjjks	m_79owxjjks	
 c	net/minecraft/C_46cfbwipx
-	f	I	f_65hhkyuac	f_65hhkyuac	
-	f	I	f_27qlozqol	f_27qlozqol	
+	f	I	f_65hhkyuac	min	
+	f	I	f_27qlozqol	max	
 	f	F	f_65hhkyuac		min
 	f	F	f_27qlozqol		max
 	m	(II)V	<init>	<init>	
@@ -224,7 +224,7 @@ c	net/minecraft/C_72wztwywd
 	m	(IF)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Ljava/util/Random;Lnet/minecraft/C_45ayztzfa;)Lnet/minecraft/C_72owraavl;	m_60pndjlbf	m_60pndjlbf	
+	m	(Ljava/util/Random;Lnet/minecraft/C_45ayztzfa;)Lnet/minecraft/C_72owraavl;	m_60pndjlbf	addItems	
 		p	1		p_1	
 		p	2		p_2	
 	m	(Lnet/minecraft/C_72wztwywd;)Lnet/minecraft/C_30vndvelc;	m_07xpzyrct	m_07xpzyrct	
@@ -301,7 +301,7 @@ c	net/minecraft/C_05pokiiuh		net/minecraft/world/gen/loot/entries/ItemLootEntry
 	m	(Lcom/google/gson/JsonObject;Lcom/google/gson/JsonSerializationContext;)V	m_13showiyf		m_13showiyf
 		p	1			p_1
 		p	2			p_2
-	m	(Lcom/google/gson/JsonObject;Lcom/google/gson/JsonDeserializationContext;IF[Lnet/minecraft/C_25mesterx;)Lnet/minecraft/C_05pokiiuh;	m_79jzigyzj		m_79jzigyzj
+	m	(Lcom/google/gson/JsonObject;Lcom/google/gson/JsonDeserializationContext;IF[Lnet/minecraft/C_25mesterx;)Lnet/minecraft/C_05pokiiuh;	m_79jzigyzj		deserialize
 		p	0			p_0
 		p	1			p_1
 		p	2			p_2
@@ -352,7 +352,7 @@ c	net/minecraft/C_59iqkrqen		net/minecraft/world/gen/loot/entries/LootTableLootE
 	m	(Lcom/google/gson/JsonObject;Lcom/google/gson/JsonSerializationContext;)V	m_13showiyf		m_13showiyf
 		p	1			p_1
 		p	2			p_2
-	m	(Lcom/google/gson/JsonObject;Lcom/google/gson/JsonDeserializationContext;IF[Lnet/minecraft/C_25mesterx;)Lnet/minecraft/C_59iqkrqen;	m_67bjwvsuj		m_67bjwvsuj
+	m	(Lcom/google/gson/JsonObject;Lcom/google/gson/JsonDeserializationContext;IF[Lnet/minecraft/C_25mesterx;)Lnet/minecraft/C_59iqkrqen;	m_67bjwvsuj		deserialize
 		p	0			p_0
 		p	1			p_1
 		p	2			p_2
@@ -370,7 +370,7 @@ c	net/minecraft/C_65jaemvba		net/minecraft/world/gen/loot/entries/EmptyLootEntry
 	m	(Lcom/google/gson/JsonObject;Lcom/google/gson/JsonSerializationContext;)V	m_13showiyf		m_13showiyf
 		p	1			p_1
 		p	2			p_2
-	m	(Lcom/google/gson/JsonObject;Lcom/google/gson/JsonDeserializationContext;IF[Lnet/minecraft/C_25mesterx;)Lnet/minecraft/C_65jaemvba;	m_18yjclehz		m_18yjclehz
+	m	(Lcom/google/gson/JsonObject;Lcom/google/gson/JsonDeserializationContext;IF[Lnet/minecraft/C_25mesterx;)Lnet/minecraft/C_65jaemvba;	m_18yjclehz		deserialize
 		p	0			p_0
 		p	1			p_1
 		p	2			p_2
