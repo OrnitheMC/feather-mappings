@@ -18,11 +18,11 @@ c	net/minecraft/C_05ijunaom
 	f	Lnet/minecraft/C_61ukmpxfh;	f_11rvclqgl		SAND
 c	net/minecraft/C_10jfcylyk
 	f	Lnet/minecraft/C_35bnyciac;	f_35onkmlho		streamOverlay
-	m	(FF)V	m_36qcdsmlv		m_36qcdsmlv
+	m	(FF)V	m_36qcdsmlv		renderStreamOverlay
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_13piauvdk
-	f	Lnet/minecraft/C_71zsluxml;	f_62cwzgkun		f_62cwzgkun
+	f	Lnet/minecraft/C_71zsluxml;	f_62cwzgkun		twitchStream
 	m	(Lnet/minecraft/C_33rxbrxcu;IIZZLjava/io/File;Ljava/io/File;Ljava/io/File;Ljava/net/Proxy;Ljava/lang/String;)V	<init>	<init>	
 		p	1		session	
 		p	2		width	
@@ -46,8 +46,8 @@ c	net/minecraft/C_13piauvdk
 		p	9			p_9
 		p	10			p_10
 		p	11			p_11
-	m	()Lnet/minecraft/C_71zsluxml;	m_39enkugza		m_39enkugza
-	m	()V	m_94xwcvfmp		m_94xwcvfmp
+	m	()Lnet/minecraft/C_71zsluxml;	m_39enkugza		getTwitchStream
+	m	()V	m_94xwcvfmp		handleKeyBindings
 c	net/minecraft/C_18bbodugc
 c	net/minecraft/C_18bbodugc$C_26xrqqanu
 	f	Lnet/minecraft/C_18bbodugc$C_26xrqqanu;	f_41tsdmzwh		TWITCH_USER_INFO
@@ -94,7 +94,7 @@ c	net/minecraft/C_42bkuiaec
 	f	I	f_14yqlkokw		f_14yqlkokw
 c	net/minecraft/C_51oluaxjf
 	m	()Ljava/lang/String;	m_80eqgjbxf	executeMcoStat	
-	m	()Lnet/minecraft/C_81mzsyzpj;	m_80eqgjbxf		m_80eqgjbxf
+	m	()Lnet/minecraft/C_81mzsyzpj;	m_80eqgjbxf		executeMcoStat
 c	net/minecraft/C_51ripwuvk	net/minecraft/client/realms/gui/MoreInfoButtonWidget	
 	f	Lorg/apache/logging/log4j/Logger;	f_58mcjuhyi	LOGGER	
 	m	(IIIIILjava/lang/String;)V	<init>	<init>	
@@ -196,10 +196,10 @@ c	net/minecraft/C_67jzvrwcv
 	m	()Z	m_98awwagtc		m_98awwagtc
 	m	(Lnet/minecraft/C_67jzvrwcv;)Z	m_46hdtxijm		m_46hdtxijm
 		p	0			p_0
-	m	(Lnet/minecraft/C_67jzvrwcv;Ljava/util/List;)V	m_94vxovqjx		m_94vxovqjx
+	m	(Lnet/minecraft/C_67jzvrwcv;Ljava/util/List;)V	m_94vxovqjx		setClickable
 		p	0			p_0
 		p	1			p_1
-	m	(Lnet/minecraft/C_67jzvrwcv;)Ljava/util/Map;	m_74vaypngk		m_74vaypngk
+	m	(Lnet/minecraft/C_67jzvrwcv;)Ljava/util/Map;	m_74vaypngk		getSession
 		p	0			p_0
 	m	(Lnet/minecraft/C_67jzvrwcv;I)I	m_40dgrmiqm		m_40dgrmiqm
 		p	0			p_0
@@ -326,7 +326,7 @@ c	net/minecraft/C_73rbgtyni
 	f	Ljava/lang/Thread;	f_08hcjiazd	taskThread	
 	f	Lnet/minecraft/C_01ixjlzzi;	f_42iqmjrfe		f_42iqmjrfe
 c	net/minecraft/C_74ebmntga
-	m	(Ljava/net/URL;)Ljava/lang/String;	m_10gobtwef		m_10gobtwef
+	m	(Ljava/net/URL;)Ljava/lang/String;	m_10gobtwef		getUrlContents
 		p	0			url
 c	net/minecraft/C_77jecrlbg
 	m	(IIFFIIIIFF)V	m_40zrrrmrh		drawTexture
@@ -513,24 +513,24 @@ c	net/minecraft/C_23gokypgt		net/minecraft/C_23gokypgt
 		p	2			p_2
 		p	3			p_3
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_29pxubhlq		net/minecraft/C_09ooyeptg
-	f	Lcom/google/gson/Gson;	f_98penqtav		f_98penqtav
-	f	Ljava/lang/String;	f_68ckhydmb		f_68ckhydmb
-	f	Ljava/lang/String;	f_38hiputjr		f_38hiputjr
-	f	Ljava/util/Map;	f_01ipnhwpa		f_01ipnhwpa
+c	net/minecraft/C_29pxubhlq		net/minecraft/client/twitch/StreamMetadata
+	f	Lcom/google/gson/Gson;	f_98penqtav		GSON
+	f	Ljava/lang/String;	f_68ckhydmb		id
+	f	Ljava/lang/String;	f_38hiputjr		message
+	f	Ljava/util/Map;	f_01ipnhwpa		payload
 	m	(Ljava/lang/String;Ljava/lang/String;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			id
+		p	2			message
 	m	(Ljava/lang/String;)V	<init>		<init>
-		p	1			p_1
-	m	(Ljava/lang/String;)V	m_81pchrgtq		m_81pchrgtq
-		p	1			p_1
-	m	()Ljava/lang/String;	m_74pfsdgsc		m_74pfsdgsc
-	m	(Ljava/lang/String;Ljava/lang/String;)V	m_26feccqij		m_26feccqij
-		p	1			p_1
-		p	2			p_2
-	m	()Ljava/lang/String;	m_08necrzhf		m_08necrzhf
-	m	()Ljava/lang/String;	m_27yobkcig		m_27yobkcig
+		p	1			id
+	m	(Ljava/lang/String;)V	m_81pchrgtq		setMessage
+		p	1			message
+	m	()Ljava/lang/String;	m_74pfsdgsc		getMessage
+	m	(Ljava/lang/String;Ljava/lang/String;)V	m_26feccqij		put
+		p	1			key
+		p	2			value
+	m	()Ljava/lang/String;	m_08necrzhf		serialize
+	m	()Ljava/lang/String;	m_27yobkcig		getId
 	m	()Ljava/lang/String;	toString		toString
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/C_31qwcifjw		net/minecraft/C_73otxeozk
@@ -546,13 +546,13 @@ c	net/minecraft/C_31qwcifjw$1		1
 	m	()Ljava/lang/reflect/Type;	getRawType		getRawType
 	m	()Ljava/lang/reflect/Type;	getOwnerType		getOwnerType
 c	net/minecraft/C_35bnyciac		net/minecraft/client/gui/overlay/StreamOverlay
-	f	Lnet/minecraft/C_07ipdbewr;	f_68jejjauj		f_68jejjauj
-	f	Lnet/minecraft/C_13piauvdk;	f_42wjlxufm		f_42wjlxufm
+	f	Lnet/minecraft/C_07ipdbewr;	f_68jejjauj		STREAM_INDICATOR_TEXTURE
+	f	Lnet/minecraft/C_13piauvdk;	f_42wjlxufm		client
 	f	F	f_06hpdbydk		f_06hpdbydk
 	f	I	f_24yajqydk		f_24yajqydk
 	m	(Lnet/minecraft/C_13piauvdk;)V	<init>		<init>
-		p	1			p_1
-	m	(FF)V	m_55rkppeez		m_55rkppeez
+		p	1			client
+	m	(FF)V	m_55rkppeez		render
 		p	1			p_1
 		p	2			p_2
 	m	()I	m_84huuzcjd		m_84huuzcjd
@@ -830,7 +830,7 @@ c	net/minecraft/C_71zsluxml		net/minecraft/C_48kamxasz
 	f	Lorg/apache/logging/log4j/Marker;	f_44ugpmdwg		f_44ugpmdwg
 	f	Lnet/minecraft/C_37brtndlv;	f_41kmeqlyf		f_41kmeqlyf
 	f	Lnet/minecraft/C_09uyjsjtx;	f_76hmlkikd		f_76hmlkikd
-	f	Lnet/minecraft/C_13piauvdk;	f_51taqexib		f_51taqexib
+	f	Lnet/minecraft/C_13piauvdk;	f_51taqexib		client
 	f	Lnet/minecraft/C_21uoltggz;	f_06kvaaweb		f_06kvaaweb
 	f	Ljava/util/Map;	f_64oyhkirw		f_64oyhkirw
 	f	Lnet/minecraft/C_87nkhuldo;	f_43zlxxjri		f_43zlxxjri
@@ -1199,6 +1199,6 @@ c	net/minecraft/C_93wezenvn$C_90xhaejka		C_90xhaejka
 	m	()Lnet/minecraft/C_21uoltggz;	m_74snqexks		m_74snqexks
 	m	()Lnet/minecraft/C_21uoltggz;	m_89aksneee		m_89aksneee
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_99pxkmuhn		net/minecraft/C_99pxkmuhn
+c	net/minecraft/C_99pxkmuhn		net/minecraft/client/twitch/AchievementMetadata
 	m	(Lnet/minecraft/C_14hbkuyvc;)V	<init>		<init>
-		p	1			p_1
+		p	1			stat

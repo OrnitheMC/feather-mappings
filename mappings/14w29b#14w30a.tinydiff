@@ -222,9 +222,9 @@ c	net/minecraft/C_07tveanoq
 	f	Ljavax/vecmath/Vector3d;	f_22rmrpijo		f_22rmrpijo
 	f	Z	f_60mzvsdpq		f_60mzvsdpq
 	f	Lnet/minecraft/C_42nteilvc;	f_17jrfoxik		f_17jrfoxik
-	f	D	f_16yarzpqv		f_16yarzpqv
-	f	D	f_15eknjaxv		f_15eknjaxv
-	f	D	f_27kaxshjv		f_27kaxshjv
+	f	D	f_16yarzpqv		lastCameraX
+	f	D	f_15eknjaxv		lastCameraY
+	f	D	f_27kaxshjv		lastCameraZ
 	f	Z	f_43ambwsmz		viewChanged
 	m	(Z)V	m_07fhorffg	m_07fhorffg	
 		p	1		p_1	
@@ -234,7 +234,7 @@ c	net/minecraft/C_07tveanoq
 		p	1		cameraX	
 		p	2		cameraY	
 		p	3		cameraZ	
-	m	(Lnet/minecraft/C_47ldwddrb;Lnet/minecraft/C_26szrsafr;DI)I	m_30clhurll	m_30clhurll	
+	m	(Lnet/minecraft/C_47ldwddrb;Lnet/minecraft/C_26szrsafr;DI)I	m_30clhurll	renderTerrain	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
@@ -242,7 +242,7 @@ c	net/minecraft/C_07tveanoq
 	m	(II)V	m_53qenffpp	checkColorOcclusion	
 		p	1		start	
 		p	2		end	
-	m	(IILnet/minecraft/C_26szrsafr;D)I	m_57kuvbmjj	m_57kuvbmjj	
+	m	(IILnet/minecraft/C_26szrsafr;D)I	m_57kuvbmjj	render	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
@@ -318,8 +318,8 @@ c	net/minecraft/C_13piauvdk
 c	net/minecraft/C_14oreowhs
 	m	()[Ljava/lang/String;	m_70wkvqkpo	getEntityIds	
 c	net/minecraft/C_16awhtorx
-	m	(Lnet/minecraft/C_76varpwca;)Lnet/minecraft/C_76varpwca;	m_71jofsbcn		m_71jofsbcn
-		p	1			p_1
+	m	(Lnet/minecraft/C_76varpwca;)Lnet/minecraft/C_76varpwca;	m_71jofsbcn		findLightningTarget
+		p	1			pos
 c	net/minecraft/C_16awhtorx$1
 	f	Lnet/minecraft/C_16awhtorx;	f_70wcfvljx		f_70wcfvljx
 	m	(Lnet/minecraft/C_16awhtorx;)V	<init>		<init>
@@ -327,18 +327,18 @@ c	net/minecraft/C_16awhtorx$1
 	m	(Lnet/minecraft/C_97zulxhng;)Z	m_02ixxpgfw		test
 		p	1			p_1
 	m	(Ljava/lang/Object;)Z	apply		apply
-		p	1			p_1
+		p	1			entity
 c	net/minecraft/C_18pioeyib
 	m	([Ljava/lang/String;I)Z	m_10qfuysiw	m_10qfuysiw	
 		p	1		p_1	
 		p	2		p_2	
 c	net/minecraft/C_18zkzwffs
-	m	(Lnet/minecraft/C_47ldwddrb;I)V	m_20swmupfh	m_20swmupfh	
+	m	(Lnet/minecraft/C_47ldwddrb;I)V	m_20swmupfh	addEmitter	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/C_47ldwddrb;Lnet/minecraft/C_85yjoeawq;)V	m_20swmupfh		m_20swmupfh
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/C_47ldwddrb;Lnet/minecraft/C_85yjoeawq;)V	m_20swmupfh		addEmitter
+		p	1			entity
+		p	2			type
 c	net/minecraft/C_19fkshywn
 	f	I	f_14zqygcrl		f_14zqygcrl
 	m	(IFJLnet/minecraft/C_47ldwddrb;Lnet/minecraft/C_72tlvecqx;)V	m_23zbocxgy	m_23zbocxgy	
@@ -348,7 +348,7 @@ c	net/minecraft/C_19fkshywn
 		p	5		p_5	
 		p	6		p_6	
 c	net/minecraft/C_20vbkqxvz
-	f	Lnet/minecraft/C_36rbvvvbq$C_16gttdmcd;	f_85qcnwzla	f_85qcnwzla	
+	f	Lnet/minecraft/C_36rbvvvbq$C_16gttdmcd;	f_85qcnwzla	bufferBuilderState	
 	f	I	f_11dkkklui	glList	
 	f	Lnet/minecraft/C_76varpwca;	f_03mjkejet	f_03mjkejet	
 	f	Lnet/minecraft/C_76varpwca;	f_42iztttbc	f_42iztttbc	
@@ -428,7 +428,7 @@ c	net/minecraft/C_28wsgstbh
 	f	Ljava/util/Map;	f_45oahpuqr		f_45oahpuqr
 	f	Lnet/minecraft/C_59hcjgxkb;	f_93ozaravr		f_93ozaravr
 c	net/minecraft/C_29gxyabci	net/minecraft/client/render/world/ChunkRenderReloaderComparator	
-	f	Lnet/minecraft/C_47ldwddrb;	f_45mwaedka	f_45mwaedka	
+	f	Lnet/minecraft/C_47ldwddrb;	f_45mwaedka	camera	
 	m	(Lnet/minecraft/C_47ldwddrb;)V	<init>	<init>	
 		p	1		p_1	
 	m	(Lnet/minecraft/C_20vbkqxvz;Lnet/minecraft/C_20vbkqxvz;)I	m_00ladqygs	compare	
@@ -493,12 +493,12 @@ c	net/minecraft/C_37hlwxory
 c	net/minecraft/C_38vawxpad
 	m	()Ljava/lang/String;	m_29ufxmqnd		getModelType
 c	net/minecraft/C_40puvtgep
-	f	Lnet/minecraft/C_74tiiyhsp;	f_71ekuozvf		f_71ekuozvf
-	m	(Lnet/minecraft/C_74tiiyhsp;)Z	m_60oucgimu		m_60oucgimu
-		p	1			p_1
+	f	Lnet/minecraft/C_74tiiyhsp;	f_71ekuozvf		BLOCK_ENTITY_MARKER
+	m	(Lnet/minecraft/C_74tiiyhsp;)Z	m_60oucgimu		isBlockEntity
+		p	1			model
 c	net/minecraft/C_43kwhwbrq
 	f	I	f_69tgpbrpe	f_69tgpbrpe	
-	f	Lnet/minecraft/C_85yjoeawq;	f_83gsvplum		f_83gsvplum
+	f	Lnet/minecraft/C_85yjoeawq;	f_83gsvplum		type
 	m	(Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_47ldwddrb;I)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -508,8 +508,8 @@ c	net/minecraft/C_43kwhwbrq
 		p	2			target
 		p	3			type
 c	net/minecraft/C_47ldwddrb
-	m	()Z	m_41eufpmvb		m_41eufpmvb
-	m	(Z)V	m_43ezfsdhv		m_43ezfsdhv
+	m	()Z	m_41eufpmvb		isSilent
+	m	(Z)V	m_43ezfsdhv		setSilent
 		p	1			p_1
 c	net/minecraft/C_49gkjgzrn
 	m	(Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_84dqcqlog;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_17agfiprw;)V	m_42bqzdcta	m_42bqzdcta	
@@ -536,7 +536,7 @@ c	net/minecraft/C_51xsplsrp
 		p	4			p_4
 		p	5			p_5
 c	net/minecraft/C_51yvnkdmo
-	m	()Z	m_80gfpnygb		m_80gfpnygb
+	m	()Z	m_80gfpnygb		isCustomRenderer
 c	net/minecraft/C_52gznxwrf
 	f	Lnet/minecraft/C_04glhcdxz;	f_03jmnygoy		formatting
 	m	(Ljava/lang/String;IIILjava/lang/String;Ljava/lang/String;Lnet/minecraft/C_71wxkaaxh;)V	<init>	<init>	
@@ -578,9 +578,9 @@ c	net/minecraft/C_54jdujmos
 	m	()Z	m_30wfaahdl	isEmpty	
 	m	()Z	m_49ljpmspo		m_49ljpmspo
 c	net/minecraft/C_54ruxjwzt
-	m	(Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_68zcrzyxg;)Z	m_99qxcctum	m_99qxcctum	
-		p	1		p_1	
-		p	2		p_2	
+	m	(Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_68zcrzyxg;)Z	m_99qxcctum	setBlock	
+		p	1		pos	
+		p	2		block	
 	m	()V	m_09bgqxwcv	onEntityChanged	
 	m	(DDDD)Z	m_32grmmdzb		isPlayerWithinRange
 		p	1			x
@@ -603,10 +603,10 @@ c	net/minecraft/C_55xjetaze$1		1
 c	net/minecraft/C_58vpvenzh
 	m	()Z	m_49ljpmspo		m_49ljpmspo
 c	net/minecraft/C_59hcjgxkb
-	f	Z	f_15htrekik		f_15htrekik
+	f	Z	f_15htrekik		thinArms
 	m	(Lnet/minecraft/C_28wsgstbh;Z)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			dispatcher
+		p	2			thinArms
 c	net/minecraft/C_59raqzowc
 	f	Ljava/lang/Thread;	f_75cpuibhl	f_75cpuibhl	
 	m	(Ljava/lang/Thread;)V	m_90erdxwit	m_90erdxwit	
@@ -702,8 +702,8 @@ c	net/minecraft/C_64jzdrfwv
 		p	5			p_5
 c	net/minecraft/C_64klykcln
 c	net/minecraft/C_64klykcln$C_01hwnzkzi
-	m	(Z)V	m_94daoibek		m_94daoibek
-		p	1			p_1
+	m	(Z)V	m_94daoibek		setDesert
+		p	1			desert
 c	net/minecraft/C_65xzluxwk
 	f	Lnet/minecraft/C_59raqzowc;	f_80pffmewb		f_80pffmewb
 	m	(J)V	m_77oufjbaz	m_77oufjbaz	
@@ -733,7 +733,7 @@ c	net/minecraft/C_68jpdjizs	net/minecraft/C_68jpdjizs
 	m	(Z)V	m_80tjeqfkw	m_80tjeqfkw	
 		p	1		p_1	
 c	net/minecraft/C_68zcrzyxg
-	m	(Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_84dqcqlog;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_17agfiprw;)V	m_42bqzdcta	m_42bqzdcta	
+	m	(Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_84dqcqlog;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_17agfiprw;)V	m_42bqzdcta	afterMinedByPlayer	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
@@ -752,14 +752,14 @@ c	net/minecraft/C_69garkogr
 		p	1			dy
 		p	2			dz
 c	net/minecraft/C_69zzpsfpz
-	f	Lnet/minecraft/C_15jjsjmaj;	f_08ussydpe		f_08ussydpe
-	f	Lnet/minecraft/C_23redzvjz;	f_37wnmijoq		f_37wnmijoq
-	m	(Lnet/minecraft/C_68zcrzyxg;)V	m_38ztnxvfj	m_38ztnxvfj	
+	f	Lnet/minecraft/C_15jjsjmaj;	f_08ussydpe		banner
+	f	Lnet/minecraft/C_23redzvjz;	f_37wnmijoq		skull
+	m	(Lnet/minecraft/C_68zcrzyxg;)V	m_38ztnxvfj	render	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_72owraavl;)V	m_42vfpdqwn		m_42vfpdqwn
-		p	1			p_1
+	m	(Lnet/minecraft/C_72owraavl;)V	m_42vfpdqwn		render
+		p	1			stack
 c	net/minecraft/C_70btpfdhr
-	f	Lnet/minecraft/C_22hrpjhnf;	f_35qzjpxqo		f_35qzjpxqo
+	f	Lnet/minecraft/C_22hrpjhnf;	f_35qzjpxqo		LEGACY_DATA
 c	net/minecraft/C_70lkgqccr
 	m	(Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_84dqcqlog;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_17agfiprw;)V	m_42bqzdcta	m_42bqzdcta	
 		p	1		p_1	
@@ -785,16 +785,16 @@ c	net/minecraft/C_72cizqjxy
 		p	4			p_4
 		p	5			p_5
 c	net/minecraft/C_72owraavl
-	m	(Ljava/lang/String;Z)Lnet/minecraft/C_54jdujmos;	m_26pdmvgsv		getNbtCompound
+	m	(Ljava/lang/String;Z)Lnet/minecraft/C_54jdujmos;	m_26pdmvgsv		getNbt
 		p	1			key
 		p	2			orCreate
 c	net/minecraft/C_73hozaekk
-	f	Z	f_74zysuqsp		f_74zysuqsp
+	f	Z	f_74zysuqsp		thinArms
 	m	(F)V	<init>	<init>	
 		p	1		p_1	
 	m	(FZ)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			reduction
+		p	2			thinArms
 	m	(F)V	m_27pkszvzm		m_27pkszvzm
 		p	1			p_1
 c	net/minecraft/C_77bpkvsyh
@@ -811,10 +811,10 @@ c	net/minecraft/C_77bpkvsyh
 		p	5			p_5
 c	net/minecraft/C_80vbagmut
 	m	(Lnet/minecraft/C_90egxktlb;)V	<init>		<init>
-		p	1			p_1
+		p	1			frustum
 c	net/minecraft/C_85hwjrnsi
-	m	(F)V	m_27pkszvzm		m_27pkszvzm
-		p	1			p_1
+	m	(F)V	m_27pkszvzm		translateRightArm
+		p	1			scale
 c	net/minecraft/C_88jrciray
 	m	(Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_84dqcqlog;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_17agfiprw;)V	m_42bqzdcta	m_42bqzdcta	
 		p	1		p_1	
@@ -881,12 +881,12 @@ c	net/minecraft/C_00rygukrg		net/minecraft/C_00rygukrg
 	m	(Lnet/minecraft/C_26szrsafr;)V	m_73mzxhtxq		m_73mzxhtxq
 		p	1			p_1
 	m	()V	m_65rxwrnkj		m_65rxwrnkj
-c	net/minecraft/C_05mjclwxm		net/minecraft/client/render/entity/BannerEntityRenderer
-	f	Lnet/minecraft/C_40uztjpfb;	f_86zwjmozw		f_86zwjmozw
-	f	Lnet/minecraft/C_40uztjpfb;	f_47dqnsvis		f_47dqnsvis
-	f	Lnet/minecraft/C_40uztjpfb;	f_15ycnbask		f_15ycnbask
+c	net/minecraft/C_05mjclwxm		net/minecraft/client/render/model/block/entity/BannerModel
+	f	Lnet/minecraft/C_40uztjpfb;	f_86zwjmozw		flag
+	f	Lnet/minecraft/C_40uztjpfb;	f_47dqnsvis		pole
+	f	Lnet/minecraft/C_40uztjpfb;	f_15ycnbask		bar
 	m	()V	<init>		<init>
-	m	()V	m_39dlbokvb		m_39dlbokvb
+	m	()V	m_39dlbokvb		render
 c	net/minecraft/C_15jjsjmaj		net/minecraft/block/entity/BannerBlockEntity
 	f	I	f_21asrbkpg		baseColor
 	f	Lnet/minecraft/C_91glxqzmz;	f_91qcthniq		patternsNbt
@@ -911,7 +911,7 @@ c	net/minecraft/C_15jjsjmaj		net/minecraft/block/entity/BannerBlockEntity
 	m	()Ljava/util/List;	m_47mntwqzt		getColors
 	m	()Ljava/lang/String;	m_31nzhzzcl		getTexture
 	m	()V	m_46tcodezp		setPatterns
-	m	(Lnet/minecraft/C_72owraavl;)V	m_61efsriqo		removePatterns
+	m	(Lnet/minecraft/C_72owraavl;)V	m_61efsriqo		removeLastPattern
 		p	0			stack
 c	net/minecraft/C_15jjsjmaj$C_39smlivqr		Pattern
 	f	Lnet/minecraft/C_15jjsjmaj$C_39smlivqr;	f_32dzbrlxs		BASE
@@ -1022,7 +1022,7 @@ c	net/minecraft/C_22udhbxvz		net/minecraft/block/BannerBlock
 c	net/minecraft/C_22udhbxvz$1		1
 	f	[I	f_88fnzzptk		f_88fnzzptk
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_22udhbxvz$C_03qtcgzsr		StandingBannerBlock
+c	net/minecraft/C_22udhbxvz$C_03qtcgzsr		Standing
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_17agfiprw;Lnet/minecraft/C_68zcrzyxg;)V	m_67pgyitxj		m_67pgyitxj
 		p	1			p_1
@@ -1034,7 +1034,7 @@ c	net/minecraft/C_22udhbxvz$C_03qtcgzsr		StandingBannerBlock
 	m	(Lnet/minecraft/C_17agfiprw;)I	m_26dxpfxbg		m_26dxpfxbg
 		p	1			p_1
 	m	()Lnet/minecraft/C_58fhurugd;	m_87mkfttjy		m_87mkfttjy
-c	net/minecraft/C_22udhbxvz$C_71keetjfo		WallBannerBlock
+c	net/minecraft/C_22udhbxvz$C_71keetjfo		Wall
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/C_05ktcjdzx;Lnet/minecraft/C_76varpwca;)V	m_07ffufozh		m_07ffufozh
 		p	1			p_1
@@ -1049,7 +1049,7 @@ c	net/minecraft/C_22udhbxvz$C_71keetjfo		WallBannerBlock
 	m	(Lnet/minecraft/C_17agfiprw;)I	m_26dxpfxbg		m_26dxpfxbg
 		p	1			p_1
 	m	()Lnet/minecraft/C_58fhurugd;	m_87mkfttjy		m_87mkfttjy
-c	net/minecraft/C_28lujizar		net/minecraft/C_28lujizar
+c	net/minecraft/C_28lujizar		net/minecraft/item/BannerItem
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/C_72owraavl;Lnet/minecraft/C_84dqcqlog;Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_69garkogr;FFF)Z	m_12iriuvpj		m_12iriuvpj
 		p	1			p_1
@@ -1075,8 +1075,8 @@ c	net/minecraft/C_28lujizar		net/minecraft/C_28lujizar
 		p	2			p_2
 		p	3			p_3
 	m	()Lnet/minecraft/C_70okwidnp;	m_31tzhomjn		m_31tzhomjn
-	m	(Lnet/minecraft/C_72owraavl;)Lnet/minecraft/C_52gznxwrf;	m_75icawjjb		m_75icawjjb
-		p	1			p_1
+	m	(Lnet/minecraft/C_72owraavl;)Lnet/minecraft/C_52gznxwrf;	m_75icawjjb		getBaseColor
+		p	1			stack
 c	net/minecraft/C_36dgbgejf		net/minecraft/C_36dgbgejf
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_07tveanoq;Lnet/minecraft/C_76varpwca;I)Lnet/minecraft/C_20vbkqxvz;	m_84vrqgyim		m_84vrqgyim
@@ -1179,10 +1179,10 @@ c	net/minecraft/C_66eanvgnn$C_92wkxualw		DuplicatePatternRecipe
 		p	1			p_1
 	m	(Lnet/minecraft/C_66eanvgnn$1;)V	<init>		<init>
 		p	1			p_1
-c	net/minecraft/C_80ufowlws		net/minecraft/C_80ufowlws
-	f	Lnet/minecraft/C_11jtkwkqn;	f_69sgxpzbo		f_69sgxpzbo
+c	net/minecraft/C_80ufowlws		net/minecraft/client/resource/model/BuiltInModel
+	f	Lnet/minecraft/C_11jtkwkqn;	f_69sgxpzbo		transformations
 	m	(Lnet/minecraft/C_11jtkwkqn;)V	<init>		<init>
-		p	1			p_1
+		p	1			transformations
 	m	(Lnet/minecraft/C_69garkogr;)Ljava/util/List;	m_47nkkvoxj		m_47nkkvoxj
 		p	1			p_1
 	m	()Ljava/util/List;	m_72ycncrrh		m_72ycncrrh
@@ -1205,10 +1205,10 @@ c	net/minecraft/C_87hkwxwgr		net/minecraft/C_87hkwxwgr
 		p	1			p_1
 c	net/minecraft/C_87mwfakre		net/minecraft/server/integrated/IntegratedCommandManager
 	m	()V	<init>		<init>
-c	net/minecraft/C_96zjlutid		net/minecraft/client/render/block/entity/BannerBlockEntityRenderer
-	f	Ljava/util/Map;	f_70lujakzg		f_70lujakzg
-	f	Lnet/minecraft/C_07ipdbewr;	f_47baasril		f_47baasril
-	f	Lnet/minecraft/C_05mjclwxm;	f_05adrioib		f_05adrioib
+c	net/minecraft/C_96zjlutid		net/minecraft/client/render/block/entity/BannerRenderer
+	f	Ljava/util/Map;	f_70lujakzg		TEXTURE_CACHE
+	f	Lnet/minecraft/C_07ipdbewr;	f_47baasril		BASE_TEXTURE
+	f	Lnet/minecraft/C_05mjclwxm;	f_05adrioib		model
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/C_15jjsjmaj;DDDFI)V	m_52vtagcdj		render
 		p	1			p_1
@@ -1217,8 +1217,8 @@ c	net/minecraft/C_96zjlutid		net/minecraft/client/render/block/entity/BannerBloc
 		p	6			p_6
 		p	8			p_8
 		p	9			p_9
-	m	(Lnet/minecraft/C_15jjsjmaj;)Lnet/minecraft/C_07ipdbewr;	m_87smzvajm		m_87smzvajm
-		p	1			p_1
+	m	(Lnet/minecraft/C_15jjsjmaj;)Lnet/minecraft/C_07ipdbewr;	m_87smzvajm		getTexture
+		p	1			banner
 	m	(Lnet/minecraft/C_87eagbyjs;DDDFI)V	m_94uzblhid		m_94uzblhid
 		p	1			p_1
 		p	2			p_2
@@ -1228,9 +1228,9 @@ c	net/minecraft/C_96zjlutid		net/minecraft/client/render/block/entity/BannerBloc
 		p	9			p_9
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/C_96zjlutid$1		1
-c	net/minecraft/C_96zjlutid$C_74pdcchzb		C_74pdcchzb
-	f	J	f_41onxtjos		f_41onxtjos
-	f	Lnet/minecraft/C_07ipdbewr;	f_72vnbdnxl		f_72vnbdnxl
+c	net/minecraft/C_96zjlutid$C_74pdcchzb		CachedTexture
+	f	J	f_41onxtjos		cachedTime
+	f	Lnet/minecraft/C_07ipdbewr;	f_72vnbdnxl		texture
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/C_96zjlutid$1;)V	<init>		<init>
 		p	1			p_1

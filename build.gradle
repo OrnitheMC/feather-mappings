@@ -26,6 +26,7 @@ import net.fabricmc.tinyremapper.TinyUtils
 import net.ornithemc.nester.Nester
 import net.ornithemc.mappingutils.MappingUtils;
 import net.ornithemc.mappingutils.PropagationDirection;
+import net.ornithemc.mappingutils.PropagationOptions;
 import net.ornithemc.mappingutils.io.Format;
 import net.ornithemc.mappingutils.io.Mappings;
 import net.ornithemc.mappingutils.io.Mappings.ClassMapping;
@@ -623,7 +624,8 @@ static def insertMappings(minecraft_version, mappingsDir, separatedMappingsPath,
 	changes.setValidator(validator);
 
 	MappingsDiffTree tree = MappingsDiffTree.of(Format.TINY_V2, mappingsDir);
-	MappingUtils.insertMappings(dir, tree, changes, minecraft_version);
+	PropagationOptions options = new PropagationOptions.Builder().setPropagationDirection(dir).lenient().build();
+	MappingUtils.insertMappings(options, tree, changes, minecraft_version);
 
 	java.nio.file.Files.delete(separatedMappingsPath)
 	java.nio.file.Files.delete(workingMappingsPath)
@@ -1001,7 +1003,7 @@ task genFakeSource(type: JavaExec, dependsOn: ["mergeV2", "mapNamedJar"]) {
 		})
 	}
 
-	main "net.fabricmc.mappingpoet.Main"
+	mainClass.set("net.fabricmc.mappingpoet.Main")
 	classpath configurations.mappingPoet
 	// use merged v2 so we have all namespaces in jd
 	args mergeV2.output.getAbsolutePath(), namedJar.getAbsolutePath(), fakeSourceDir.getAbsolutePath(), libraries.getAbsolutePath()

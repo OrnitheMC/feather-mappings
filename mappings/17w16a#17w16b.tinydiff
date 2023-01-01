@@ -7,18 +7,18 @@ c	net/minecraft/C_00mebtneb
 	m	()Lnet/minecraft/C_00mebtneb;	m_06ttogkxb	m_06ttogkxb	
 	m	()Ljava/util/TreeMap;	m_92uhkbatv		m_92uhkbatv
 c	net/minecraft/C_10goezood
-	f	Lnet/minecraft/C_18wgmrdiz;	f_00pvpwlhu		f_00pvpwlhu
+	f	Lnet/minecraft/C_18wgmrdiz;	f_00pvpwlhu		ITEM_DURABILITY_CHANGED
 c	net/minecraft/C_18xqozqrz
-	f	I	f_94pzoasrd		f_94pzoasrd
+	f	I	f_94pzoasrd		resets
 c	net/minecraft/C_22fojldwe
 	m	(Lnet/minecraft/C_22fojldwe;)I	m_85gynhmyh		m_85gynhmyh
 		p	1			p_1
 	m	(Ljava/lang/Object;)I	compareTo		compareTo
 		p	1			p_1
 c	net/minecraft/C_29mggsfyj
-	m	(Z)V	m_04fglkdum	m_04fglkdum	
+	m	(Z)V	m_04fglkdum	markConditionMet	
 		p	1		p_1	
-	m	()Z	m_04fglkdum		m_04fglkdum
+	m	()Z	m_04fglkdum		markConditionMet
 c	net/minecraft/C_38nxknskq
 	m	(Lnet/minecraft/C_07ipdbewr;)V	m_17bgwdfcg	m_17bgwdfcg	
 		p	1		p_1	
@@ -31,7 +31,7 @@ c	net/minecraft/C_55vawjdef
 		p	1		p_1	
 		p	2		p_2	
 c	net/minecraft/C_60vdzacjc
-	f	Lnet/minecraft/C_00wwmnoap;	f_10ejzvofg		f_10ejzvofg
+	f	Lnet/minecraft/C_00wwmnoap;	f_10ejzvofg		durability
 	m	(Lnet/minecraft/C_30vndvelc;Ljava/lang/Integer;Lnet/minecraft/C_00wwmnoap;[Lnet/minecraft/C_71mcjtuns;Lnet/minecraft/C_03hbvqfov;)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -53,10 +53,11 @@ c	net/minecraft/C_72owraavl
 		c	Applies damage to this item stack and returns whether it is past the maximum damage value.	
 		p	1		amount	
 		p	2		random	
-	m	(ILjava/util/Random;Lnet/minecraft/C_53mtutqhz;)Z	m_41ltbfyzj		m_41ltbfyzj
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(ILjava/util/Random;Lnet/minecraft/C_53mtutqhz;)Z	m_41ltbfyzj		damage
+		c		Applies damage to this item stack and returns whether it is past the maximum damage value.
+		p	1			amount
+		p	2			random
+		p	3			player
 c	net/minecraft/C_78gjmlbvf
 	m	(Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_17agfiprw;)Z	m_29rnzstrg	m_29rnzstrg	
 		p	0		p_0	
@@ -95,9 +96,9 @@ c	net/minecraft/C_94dfrnlhm
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-c	net/minecraft/C_18wgmrdiz		net/minecraft/C_18wgmrdiz
-	f	Lnet/minecraft/C_07ipdbewr;	f_69tqwmnkb		f_69tqwmnkb
-	f	Ljava/util/Map;	f_57dxadsie		f_57dxadsie
+c	net/minecraft/C_18wgmrdiz		net/minecraft/advancement/criterion/ItemDurabilityChangedTrigger
+	f	Lnet/minecraft/C_07ipdbewr;	f_69tqwmnkb		ID
+	f	Ljava/util/Map;	f_57dxadsie		players
 	m	()V	<init>		<init>
 	m	()Lnet/minecraft/C_07ipdbewr;	m_91jiflxff		m_91jiflxff
 	m	(Lnet/minecraft/C_96gdiddjk;Lnet/minecraft/C_07cbiksnf$C_59cdtbrks;)V	m_82wtmjbfo		m_82wtmjbfo
@@ -111,36 +112,36 @@ c	net/minecraft/C_18wgmrdiz		net/minecraft/C_18wgmrdiz
 	m	(Lcom/google/gson/JsonObject;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/C_18wgmrdiz$C_13chufoel;	m_57unvocbl		m_57unvocbl
 		p	1			p_1
 		p	2			p_2
-	m	(Lnet/minecraft/C_53mtutqhz;Lnet/minecraft/C_72owraavl;I)V	m_34usagfcw		m_34usagfcw
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(Lnet/minecraft/C_53mtutqhz;Lnet/minecraft/C_72owraavl;I)V	m_34usagfcw		run
+		p	1			player
+		p	2			stack
+		p	3			durability
 	m	(Lcom/google/gson/JsonObject;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/C_47gzgidpa;	m_53fnujcwh		m_53fnujcwh
 		p	1			p_1
 		p	2			p_2
 	m	()Lnet/minecraft/C_07ipdbewr;	m_16yrkwfve		m_16yrkwfve
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_18wgmrdiz$C_13chufoel		C_13chufoel
-	f	Lnet/minecraft/C_60vdzacjc;	f_91fznufco		f_91fznufco
-	f	Lnet/minecraft/C_00wwmnoap;	f_32vkahfwr		f_32vkahfwr
-	f	Lnet/minecraft/C_00wwmnoap;	f_76zhdrmgr		f_76zhdrmgr
+c	net/minecraft/C_18wgmrdiz$C_13chufoel		Instance
+	f	Lnet/minecraft/C_60vdzacjc;	f_91fznufco		item
+	f	Lnet/minecraft/C_00wwmnoap;	f_32vkahfwr		durability
+	f	Lnet/minecraft/C_00wwmnoap;	f_76zhdrmgr		delta
 	m	(Lnet/minecraft/C_60vdzacjc;Lnet/minecraft/C_00wwmnoap;Lnet/minecraft/C_00wwmnoap;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lnet/minecraft/C_72owraavl;I)Z	m_81kaicdlv		m_81kaicdlv
-		p	1			p_1
-		p	2			p_2
-c	net/minecraft/C_18wgmrdiz$C_65twetpcg		C_65twetpcg
-	f	Lnet/minecraft/C_96gdiddjk;	f_07hivtmab		f_07hivtmab
-	f	Ljava/util/Set;	f_21kuvukis		f_21kuvukis
+		p	1			item
+		p	2			durability
+		p	3			delta
+	m	(Lnet/minecraft/C_72owraavl;I)Z	m_81kaicdlv		run
+		p	1			stack
+		p	2			durability
+c	net/minecraft/C_18wgmrdiz$C_65twetpcg		PlayerListeners
+	f	Lnet/minecraft/C_96gdiddjk;	f_07hivtmab		player
+	f	Ljava/util/Set;	f_21kuvukis		listeners
 	m	(Lnet/minecraft/C_96gdiddjk;)V	<init>		<init>
-		p	1			p_1
-	m	()Z	m_80bmkbakz		m_80bmkbakz
-	m	(Lnet/minecraft/C_07cbiksnf$C_59cdtbrks;)V	m_04kryvsgu		m_04kryvsgu
-		p	1			p_1
-	m	(Lnet/minecraft/C_07cbiksnf$C_59cdtbrks;)V	m_77xxebyrf		m_77xxebyrf
-		p	1			p_1
-	m	(Lnet/minecraft/C_72owraavl;I)V	m_96maimakm		m_96maimakm
-		p	1			p_1
-		p	2			p_2
+		p	1			player
+	m	()Z	m_80bmkbakz		isEmpty
+	m	(Lnet/minecraft/C_07cbiksnf$C_59cdtbrks;)V	m_04kryvsgu		add
+		p	1			listener
+	m	(Lnet/minecraft/C_07cbiksnf$C_59cdtbrks;)V	m_77xxebyrf		remove
+		p	1			listener
+	m	(Lnet/minecraft/C_72owraavl;I)V	m_96maimakm		run
+		p	1			stack
+		p	2			durability

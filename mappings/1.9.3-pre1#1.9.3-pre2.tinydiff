@@ -23,8 +23,8 @@ c	net/minecraft/C_00ycnduqy
 c	net/minecraft/C_01mwapywk
 	m	(Lnet/minecraft/C_54jdujmos;)V	m_43tgsrpxo	writeNbt	
 		p	1		nbt	
-	m	(Lnet/minecraft/C_54jdujmos;)Lnet/minecraft/C_54jdujmos;	m_43tgsrpxo		m_43tgsrpxo
-		p	1			p_1
+	m	(Lnet/minecraft/C_54jdujmos;)Lnet/minecraft/C_54jdujmos;	m_43tgsrpxo		writeNbt
+		p	1			nbt
 c	net/minecraft/C_02onecotd
 	m	(Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_17agfiprw;Lnet/minecraft/C_68zcrzyxg;)V	m_53wqopyeb	m_53wqopyeb	
 		p	1		p_1	
@@ -320,11 +320,11 @@ c	net/minecraft/C_18axwjkwf
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(Lnet/minecraft/C_17agfiprw;Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_68zcrzyxg;)V	m_53wqopyeb		m_53wqopyeb
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(Lnet/minecraft/C_17agfiprw;Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_68zcrzyxg;)V	m_53wqopyeb		updatePowered
+		p	1			state
+		p	2			world
+		p	3			pos
+		p	4			neighborBlock
 c	net/minecraft/C_18gwgzrqu
 	m	(Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_17agfiprw;Lnet/minecraft/C_68zcrzyxg;)V	m_67pgyitxj	m_67pgyitxj	
 		p	1		p_1	
@@ -460,8 +460,8 @@ c	net/minecraft/C_31pujbufv
 c	net/minecraft/C_33huxzuac
 	m	(Lnet/minecraft/C_54jdujmos;)V	m_69qvghznw	writeNbt	
 		p	1		nbt	
-	m	(Lnet/minecraft/C_54jdujmos;)Lnet/minecraft/C_54jdujmos;	m_69qvghznw		m_69qvghznw
-		p	1			p_1
+	m	(Lnet/minecraft/C_54jdujmos;)Lnet/minecraft/C_54jdujmos;	m_69qvghznw		writeNbt
+		p	1			nbt
 c	net/minecraft/C_33iwqiycd
 	m	(Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_17agfiprw;Lnet/minecraft/C_68zcrzyxg;)V	m_67pgyitxj	m_67pgyitxj	
 		p	1		p_1	
@@ -586,8 +586,8 @@ c	net/minecraft/C_46nyuprdc
 c	net/minecraft/C_47ldwddrb
 	m	(Lnet/minecraft/C_54jdujmos;)V	m_72wghlsoz	writeEntityNbt	
 		p	1		nbt	
-	m	(Lnet/minecraft/C_54jdujmos;)Lnet/minecraft/C_54jdujmos;	m_72wghlsoz		m_72wghlsoz
-		p	1			p_1
+	m	(Lnet/minecraft/C_54jdujmos;)Lnet/minecraft/C_54jdujmos;	m_72wghlsoz		writeEntityNbt
+		p	1			nbt
 c	net/minecraft/C_48nwbffvo
 	m	(IIII)V	m_43tkdkblw		m_43tkdkblw
 		p	1			p_1
@@ -790,12 +790,12 @@ c	net/minecraft/C_66hkjzvwp
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/C_66sakmsys
-	m	(Lnet/minecraft/C_54jdujmos;)V	m_11cfjeaep	m_11cfjeaep	
+	m	(Lnet/minecraft/C_54jdujmos;)V	m_11cfjeaep	writeNbt	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_54jdujmos;)Lnet/minecraft/C_54jdujmos;	m_11cfjeaep		m_11cfjeaep
-		p	1			p_1
+	m	(Lnet/minecraft/C_54jdujmos;)Lnet/minecraft/C_54jdujmos;	m_11cfjeaep		writeNbt
+		p	1			nbt
 c	net/minecraft/C_68ydbefqv
-	m	(Lnet/minecraft/C_02zysewcw;)V	m_34ydeekyg	onSignBlockEntityUpdate	
+	m	(Lnet/minecraft/C_02zysewcw;)V	m_34ydeekyg	handleSignBlockEntityUpdate	
 		p	1		packet	
 c	net/minecraft/C_68zcrzyxg
 	m	(Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_17agfiprw;Lnet/minecraft/C_68zcrzyxg;)V	m_67pgyitxj	update	
@@ -811,11 +811,12 @@ c	net/minecraft/C_68zcrzyxg
 		p	3		state	
 		p	4		type	
 		p	5		data	
-	m	(Lnet/minecraft/C_17agfiprw;Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_68zcrzyxg;)V	m_67pgyitxj		m_67pgyitxj
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(Lnet/minecraft/C_17agfiprw;Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_68zcrzyxg;)V	m_67pgyitxj		update
+		c		Performs a block update. This method is called when a neighboring block has updated\n(i.e. placed, broken, or otherwise changed state).
+		p	1			state
+		p	2			world
+		p	3			pos
+		p	4			neighborBlock
 	m	(Lnet/minecraft/C_17agfiprw;Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_76varpwca;II)Z	m_74xuvhzuv		doEvent
 		c		Performs a block event. Block events are queued on the server, and executed once per\ntick. Successful block events are synced with clients that are within range. Block events\nare most notably used by pistons to handle extension and retraction, but note blocks\nalso use them to play sounds.\n\n@return whether the block event was successful.
 		p	1			state
@@ -835,9 +836,9 @@ c	net/minecraft/C_70btpfdhr
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/C_71ngzmnib
-	m	(Ljava/lang/String;Lnet/minecraft/C_16thbufqf;)V	m_82ifwavdv		m_82ifwavdv
-		p	1			p_1
-		p	2			p_2
+	m	(Ljava/lang/String;Lnet/minecraft/C_16thbufqf;)V	m_82ifwavdv		stop
+		p	1			id
+		p	2			category
 c	net/minecraft/C_71nohxhyj
 	m	(Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_76varpwca;Lnet/minecraft/C_17agfiprw;Lnet/minecraft/C_68zcrzyxg;)V	m_67pgyitxj	m_67pgyitxj	
 		p	1		p_1	
@@ -873,7 +874,7 @@ c	net/minecraft/C_73elrkqyi
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/C_74ehhhztq
-	m	(Ljava/lang/String;Lnet/minecraft/C_16thbufqf;)V	m_18kemqaaw		m_18kemqaaw
+	m	(Ljava/lang/String;Lnet/minecraft/C_16thbufqf;)V	m_18kemqaaw		stop
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_74ggijjoc
@@ -977,8 +978,8 @@ c	net/minecraft/C_82derbuss
 c	net/minecraft/C_82xzoglpt
 	m	(Lnet/minecraft/C_54jdujmos;)V	m_62sctpoir	writeNbt	
 		p	1		nbt	
-	m	(Lnet/minecraft/C_54jdujmos;)Lnet/minecraft/C_54jdujmos;	m_62sctpoir		m_62sctpoir
-		p	1			p_1
+	m	(Lnet/minecraft/C_54jdujmos;)Lnet/minecraft/C_54jdujmos;	m_62sctpoir		writeNbt
+		p	1			nbt
 c	net/minecraft/C_85rvadrpl
 	m	(Lnet/minecraft/C_54jdujmos;)V	m_94xwefjdb	m_94xwefjdb	
 		p	1		p_1	
@@ -998,7 +999,7 @@ c	net/minecraft/C_87eagbyjs
 		p	1			nbt
 	m	(Lnet/minecraft/C_54jdujmos;)Lnet/minecraft/C_54jdujmos;	m_40qjqluen		writeMetadata
 		p	1			nbt
-	m	(Lnet/minecraft/C_54jdujmos;)Lnet/minecraft/C_87eagbyjs;	m_73ertbbws		m_73ertbbws
+	m	(Lnet/minecraft/C_54jdujmos;)Lnet/minecraft/C_87eagbyjs;	m_73ertbbws		fromNbt
 		p	0			p_0
 	m	()Lnet/minecraft/C_07gnyvbmi;	m_73cxtiwtd		createUpdatePacket
 	m	()Lnet/minecraft/C_54jdujmos;	m_50gizxlhr		toNbt
@@ -1087,7 +1088,7 @@ c	net/minecraft/C_99gjvzsdw
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-c	net/minecraft/C_60ejbbznl		net/minecraft/C_60ejbbznl
+c	net/minecraft/C_60ejbbznl		net/minecraft/block/state/BlockBehaviors
 	m	(Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_76varpwca;II)Z	m_08dmhvyxv		doEvent
 		p	1			world
 		p	2			pos
@@ -1097,7 +1098,7 @@ c	net/minecraft/C_60ejbbznl		net/minecraft/C_60ejbbznl
 		p	1			world
 		p	2			pos
 		p	3			neighborBlock
-c	net/minecraft/C_91rtlweny		net/minecraft/C_91rtlweny
+c	net/minecraft/C_91rtlweny		net/minecraft/server/command/StopSoundCommand
 	m	()V	<init>		<init>
 	m	()Ljava/lang/String;	m_78rblvqki		m_78rblvqki
 	m	()I	m_28lluscsi		m_28lluscsi

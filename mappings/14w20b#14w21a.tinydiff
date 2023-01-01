@@ -16,7 +16,7 @@ c	net/minecraft/C_06vgayeob
 		p	4			p_4
 		p	6			p_6
 c	net/minecraft/C_09mmamirh
-	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;Lnet/minecraft/C_05gpxwito;Ljava/lang/String;)Z	m_96hkxrare		execute
+	m	(Lnet/minecraft/C_06gpuubcg;[Ljava/lang/String;Lnet/minecraft/C_05gpxwito;Ljava/lang/String;)Z	m_96hkxrare		run
 		p	1			source
 		p	2			args
 		p	3			command
@@ -154,7 +154,7 @@ c	net/minecraft/C_40wzyxfpk
 	m	([B)V	m_23armpjip		writeByteArray
 		p	1			bytes
 	m	()[B	m_30zjxptfe		readByteArray
-	m	()[B	m_36nvlrseo		m_36nvlrseo
+	m	()[B	m_36nvlrseo		getBytes
 	m	(Ljava/lang/Class;)Ljava/lang/Enum;	m_65nizxsjr		readEnum
 		p	1			type
 	m	(Ljava/lang/Enum;)V	m_38wbewwov		writeEnum
@@ -190,7 +190,7 @@ c	net/minecraft/C_43mnimvqq
 		p	1			packet
 c	net/minecraft/C_43mnimvqq$2
 	f	Lnet/minecraft/C_97ogqzfxl;	f_58ewzqhfs	packet	
-	f	Lnet/minecraft/C_26iwfcgbh;	f_58ewzqhfs		f_58ewzqhfs
+	f	Lnet/minecraft/C_26iwfcgbh;	f_58ewzqhfs		packet
 	m	(Lnet/minecraft/C_43mnimvqq;Lnet/minecraft/C_97ogqzfxl;)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -224,10 +224,10 @@ c	net/minecraft/C_47ldwddrb
 		p	1			name
 	m	()Ljava/lang/String;	m_79bgxdrlp		getCustomName
 	m	()Z	m_46clautlf		hasCustomName
-	m	(Z)V	m_57xeftnvi		m_57xeftnvi
-		p	1			p_1
-	m	()Z	m_10ezrolak		m_10ezrolak
-	m	()Z	m_25xfudmzd		m_25xfudmzd
+	m	(Z)V	m_57xeftnvi		setCustomNameVisible
+		p	1			visible
+	m	()Z	m_10ezrolak		isCustomNameVisible
+	m	()Z	m_25xfudmzd		shouldShowNameTag
 c	net/minecraft/C_50stqtmin
 	m	()Ljava/lang/String;	m_41vkeclbr	m_41vkeclbr	
 c	net/minecraft/C_51etyazsg
@@ -351,7 +351,7 @@ c	net/minecraft/C_65ttkuuty
 	m	(Lnet/minecraft/C_97ogqzfxl;[Lio/netty/util/concurrent/GenericFutureListener;)V	m_46kvymeyb	send	
 		p	1		packet	
 		p	2		listeners	
-	m	(Lnet/minecraft/C_97ogqzfxl;[Lio/netty/util/concurrent/GenericFutureListener;)V	m_25yqcfncc	sendPacket	
+	m	(Lnet/minecraft/C_97ogqzfxl;[Lio/netty/util/concurrent/GenericFutureListener;)V	m_25yqcfncc	sendNow	
 		p	1		packet	
 		p	2		listeners	
 	m	(Lio/netty/channel/ChannelHandlerContext;Lnet/minecraft/C_26iwfcgbh;)V	m_93mspppmf		channelRead0
@@ -363,12 +363,12 @@ c	net/minecraft/C_65ttkuuty
 		p	1			packet
 		p	2			listener
 		p	3			listeners
-	m	(Lnet/minecraft/C_26iwfcgbh;[Lio/netty/util/concurrent/GenericFutureListener;)V	m_25yqcfncc		sendPacket
+	m	(Lnet/minecraft/C_26iwfcgbh;[Lio/netty/util/concurrent/GenericFutureListener;)V	m_25yqcfncc		sendNow
 		p	1			packet
 		p	2			listeners
 c	net/minecraft/C_65ttkuuty$1
 	f	Lnet/minecraft/C_97ogqzfxl;	f_13ndpzqcb	packet	
-	f	Lnet/minecraft/C_26iwfcgbh;	f_13ndpzqcb		f_13ndpzqcb
+	f	Lnet/minecraft/C_26iwfcgbh;	f_13ndpzqcb		packet
 	m	(Lnet/minecraft/C_65ttkuuty;Lnet/minecraft/C_75mbakijj;Lnet/minecraft/C_75mbakijj;Lnet/minecraft/C_97ogqzfxl;[Lio/netty/util/concurrent/GenericFutureListener;)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -468,8 +468,8 @@ c	net/minecraft/C_79yqaxgmd
 	m	()Ljava/lang/String;	m_41vkeclbr	m_41vkeclbr	
 c	net/minecraft/C_80inurxlz
 	m	(Lnet/minecraft/C_75mbakijj;Lnet/minecraft/C_75mbakijj;)V	m_34ouwhybu	changeProtocol	
-		p	1		prevProtocol	
-		p	2		newProtocol	
+		p	1		from	
+		p	2		to	
 	m	()V	m_18wifyzke	tick	
 c	net/minecraft/C_81psrrogw
 	m	()Ljava/lang/String;	m_19cyaenlc	m_19cyaenlc	
@@ -524,7 +524,7 @@ c	net/minecraft/C_85uudzdfb
 c	net/minecraft/C_86yjpmalw
 	m	()Z	m_07kwbdqyv	m_07kwbdqyv	
 c	net/minecraft/C_87eagbyjs
-	m	()Lnet/minecraft/C_97ogqzfxl;	m_73cxtiwtd	toUpdatePacket	
+	m	()Lnet/minecraft/C_97ogqzfxl;	m_73cxtiwtd	createUpdatePacket	
 	m	()Lnet/minecraft/C_26iwfcgbh;	m_73cxtiwtd		createUpdatePacket
 c	net/minecraft/C_87hmxdond
 	m	(Lcom/google/common/collect/BiMap;I)Lnet/minecraft/C_26iwfcgbh;	m_48zaffnsm		m_48zaffnsm
@@ -619,21 +619,21 @@ c	net/minecraft/C_95wukzoyl
 c	net/minecraft/C_96zvjfuar
 	m	()Ljava/lang/String;	m_41vkeclbr	m_41vkeclbr	
 c	net/minecraft/C_97kferplt
-	m	(Lnet/minecraft/C_47ldwddrb;DDD)V	m_85idohcmj		m_85idohcmj
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
-		p	6			p_6
-	m	(Lnet/minecraft/C_47ldwddrb;)Z	m_41jkwxyvo		m_41jkwxyvo
-		p	1			p_1
-	m	(Lnet/minecraft/C_47ldwddrb;DDDLjava/lang/String;FD)V	m_36thkibqb		m_36thkibqb
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
-		p	6			p_6
-		p	8			p_8
-		p	9			p_9
-		p	10			p_10
+	m	(Lnet/minecraft/C_47ldwddrb;DDD)V	m_85idohcmj		renderNameTag
+		p	1			entity
+		p	2			dx
+		p	4			dy
+		p	6			dz
+	m	(Lnet/minecraft/C_47ldwddrb;)Z	m_41jkwxyvo		shouldRenderNameTag
+		p	1			entity
+	m	(Lnet/minecraft/C_47ldwddrb;DDDLjava/lang/String;FD)V	m_36thkibqb		renderNameTags
+		p	1			entity
+		p	2			dx
+		p	4			dy
+		p	6			dz
+		p	8			name
+		p	9			tickDelta
+		p	10			squaredDistance
 c	net/minecraft/C_97nrjjoys
 	m	(Ljava/lang/String;Lio/netty/buffer/ByteBuf;)V	<init>	<init>	
 		p	1		channel	
@@ -641,25 +641,25 @@ c	net/minecraft/C_97nrjjoys
 	m	(Ljava/lang/String;Lnet/minecraft/C_40wzyxfpk;)V	<init>		<init>
 		p	1			channel
 		p	2			data
-c	net/minecraft/C_97ogqzfxl	net/minecraft/network/Packet	
+c	net/minecraft/C_97ogqzfxl	net/minecraft/network/packet/Packet	
 	f	Lorg/apache/logging/log4j/Logger;	f_40ictogqr	LOGGER	
 	m	()V	<init>	<init>	
 	m	(Lcom/google/common/collect/BiMap;I)Lnet/minecraft/C_97ogqzfxl;	m_40wbiuude	create	
 		p	0		map	
 		p	1		id	
-	m	(Lio/netty/buffer/ByteBuf;[B)V	m_32efyddfn	writeRawData	
+	m	(Lio/netty/buffer/ByteBuf;[B)V	m_32efyddfn	writeData	
 		p	0		buffer	
 		p	1		data	
-	m	(Lio/netty/buffer/ByteBuf;)[B	m_56sozwmbh	readRawData	
+	m	(Lio/netty/buffer/ByteBuf;)[B	m_56sozwmbh	readData	
 		p	0		buffer	
 	m	(Lnet/minecraft/C_40wzyxfpk;)V	m_00ycwkymm	read	
 		p	1		buffer	
 	m	(Lnet/minecraft/C_40wzyxfpk;)V	m_73uomkfhh	write	
 		p	1		buffer	
-	m	(Lnet/minecraft/C_80inurxlz;)V	m_46qwjrofo	apply	
-		p	1		listener	
-	m	()Z	m_07kwbdqyv	canHandleOnCurrentThread	
-		c	Returns whether this packet can be handled on  the current thread or if it should\nbe queued to be handled on the main thread.	
+	m	(Lnet/minecraft/C_80inurxlz;)V	m_46qwjrofo	handle	
+		p	1		handler	
+	m	()Z	m_07kwbdqyv	canHandleOffMainThread	
+		c	Returns whether this packet can be handled off the main thread or if it should\nbe queued to be handled on the main thread.	
 	m	()Ljava/lang/String;	toString	toString	
 	m	()Ljava/lang/String;	m_41vkeclbr	asString	
 	m	(Lio/netty/buffer/ByteBuf;)[B	m_26ddxneep	m_26ddxneep	
@@ -702,13 +702,13 @@ c	net/minecraft/C_21nakfjdw		net/minecraft/network/DifferentThreadException
 	m	()V	<init>		<init>
 	m	()Ljava/lang/Throwable;	fillInStackTrace		fillInStackTrace
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_26iwfcgbh		net/minecraft/network/Packet
+c	net/minecraft/C_26iwfcgbh		net/minecraft/network/packet/Packet
 	m	(Lnet/minecraft/C_40wzyxfpk;)V	m_00ycwkymm		write
 		p	1			buffer
 	m	(Lnet/minecraft/C_40wzyxfpk;)V	m_73uomkfhh		read
 		p	1			buffer
-	m	(Lnet/minecraft/C_80inurxlz;)V	m_46qwjrofo		apply
-		p	1			listener
+	m	(Lnet/minecraft/C_80inurxlz;)V	m_46qwjrofo		handle
+		p	1			handler
 c	net/minecraft/C_66njumbke		net/minecraft/network/PacketUtils
 	m	(Lnet/minecraft/C_26iwfcgbh;Lnet/minecraft/C_80inurxlz;Lnet/minecraft/C_90iueaadh;)V	m_87zacpaed		ensureOnSameThread
 		p	0			packet
