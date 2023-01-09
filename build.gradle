@@ -208,8 +208,8 @@ def buildMappingGroup = "mapping build"
 def mapJarGroup = "jar mapping"
 def mappingsDir = file("mappings/")
 def workingDir = file("run/")
-def separatedMappings = new File(workingDir, "${minecraft_version}.tiny")
-def workingMappings = new File(workingDir, "${minecraft_version}-changed.tiny")
+def separatedMappings = new File(workingDir, "${minecraft_version}")
+def workingMappings = new File(workingDir, "${minecraft_version}-changed")
 def cacheFilesMinecraft = file(".gradle/minecraft")
 def tempDir = file(".gradle/temp")
 def mergedFile = new File(cacheFilesMinecraft, "${minecraft_version}-merged.jar")
@@ -226,23 +226,38 @@ def REMOVE_DUMMY = new MappingValidator() {
 
 	@Override
 	public boolean validate(ClassMapping c) {
-		return MappingsDiff.safeIsDiff(c.src(), c.getComplete()) || !c.getJavadoc().isEmpty() || c.hasChildren();
+		if (!MappingsDiff.safeIsDiff(ClassMapping.getSimplified(c.src()), c.get())) {
+			c.set("");
+			return !c.getJavadoc().isEmpty() || c.hasChildren();
+		}
+
+		return true;
 	}
 
 	@Override
 	public boolean validate(FieldMapping f) {
-		return MappingsDiff.safeIsDiff(f.src(), f.get()) || !f.getJavadoc().isEmpty();
+		if (!MappingsDiff.safeIsDiff(f.src(), f.get())) {
+			f.set("");
+			return !f.getJavadoc().isEmpty();
+		}
+
+		return true;
 	}
 
 	@Override
 	public boolean validate(MethodMapping m) {
-		return MappingsDiff.safeIsDiff(m.src(), m.get()) || (!m.get().startsWith("m_") && !m.get().equals("<init>") && !m.get().equals("<clinit>")) || !m.getJavadoc().isEmpty() || m.hasChildren();
+		if (!MappingsDiff.safeIsDiff(m.src(), m.get()) && (m.get().startsWith("m_") || m.get().equals("<init>") || m.get().equals("<clinit>"))) {
+			m.set("");
+			return !m.getJavadoc().isEmpty() || m.hasChildren();
+		}
+
+		return true;
 	}
 
 	@Override
 	public boolean validate(ParameterMapping p) {
 		if (p.get().startsWith("p_")) {
-			p.set(p.src());
+			p.set("");
 			return !p.getJavadoc().isEmpty();
 		}
 
@@ -599,7 +614,7 @@ task mapCalamusJar(dependsOn: [downloadMcLibs, downloadCalamus, nestJar]) {
 task separateMappings() {
 	group = featherGroup
 	inputs.dir mappingsDir
-	outputs.files(separatedMappings, workingMappings)
+	outputs.dirs(separatedMappings, workingMappings)
 
 	//Force the task to always run
 	outputs.upToDateWhen { false }
@@ -610,17 +625,17 @@ task separateMappings() {
 		MappingsDiffTree tree = MappingsDiffTree.of(Format.TINY_V2, mappingsDir.toPath())
 		Mappings mappings = MappingUtils.separateMappings(tree, minecraft_version);
 
-		Format.TINY_V2.writeMappings(separatedMappings.toPath(), mappings)
+		Format.ENIGMA_DIR.writeMappings(separatedMappings.toPath(), mappings)
 		mappings.setValidator(REMOVE_DUMMY)
-		Format.TINY_V2.writeMappings(workingMappings.toPath(), mappings)
+		Format.ENIGMA_DIR.writeMappings(workingMappings.toPath(), mappings)
 	}
 }
 
 static def insertMappings(minecraft_version, mappingsDir, separatedMappingsPath, workingMappingsPath, dir, validator) {
-	Mappings separatedMappings = Format.TINY_V2.readMappings(separatedMappingsPath);
-	Mappings workingMappings = Format.TINY_V2.readMappings(workingMappingsPath);
+	Mappings separatedMappings = Format.ENIGMA_DIR.readMappings(separatedMappingsPath);
+	Mappings workingMappings = Format.ENIGMA_DIR.readMappings(workingMappingsPath);
 
-	MappingsDiff changes = MappingUtils.diffMappings(Format.TINY_V2, separatedMappings, workingMappings);
+	MappingsDiff changes = MappingUtils.diffMappings(separatedMappings, workingMappings);
 	changes.setValidator(validator);
 
 	MappingsDiffTree tree = MappingsDiffTree.of(Format.TINY_V2, mappingsDir);
