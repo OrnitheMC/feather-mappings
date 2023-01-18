@@ -476,7 +476,7 @@ task nestJar(dependsOn: [mergeJars, downloadCalamusV2]) {
 		File nests = downloadCalamusV2.outputs.files.files.find { it.name.endsWith(".nest") }
 
 		if (nests.exists()) {
-			Nester.nestJar(Paths.get(new Nester.Options().silent(true), mergedFile.getAbsolutePath()), Paths.get(nestedJar.getAbsolutePath()), Paths.get(nests.getAbsolutePath()))
+			Nester.nestJar(new Nester.Options().silent(true), Paths.get(mergedFile.getAbsolutePath()), Paths.get(nestedJar.getAbsolutePath()), Paths.get(nests.getAbsolutePath()))
 		}
 	}
 
