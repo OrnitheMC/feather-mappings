@@ -6,6 +6,9 @@ MAPPINGS_DIR = 'mappings'
 GRADLE_TASKS = ['clean', 'feather', 'build', 'javadoc', 'javadocJar', 'checkMappings', 'mapCalamusJar', 'mapNamedJar', 'decompileCFR', 'decompileQuiltflower', 'decompileProcyon', 'publish', 'separateMappings', 'insertMappings', 'propagateMappingsDown', 'propagateMappingsUp', 'propagateMappings']
 GRADLEW = 'gradlew' if os.name == 'nt' else './gradlew'
 
+# some jank to hide versions that are giving problems
+UNAVAILABLE_VERSIONS = ['13w03a','13w05a','13w06a']
+
 def main():
     possible_versions = find_minecraft_versions()
     versions = []
@@ -17,7 +20,10 @@ def main():
         arg = args[i]
         
         if arg in possible_versions:
-            versions.append(arg)
+            if arg in UNAVAILABLE_VERSIONS:
+                raise Exception('version ' + arg + ' is unavailable at the moment!')
+            else:
+                versions.append(arg)
         elif arg in GRADLE_TASKS:
             tasks.append(arg)
         else:
@@ -27,12 +33,15 @@ def main():
         if 'MC_VERSION' in os.environ:
             version = os.environ['MC_VERSION']
             
-            if is_minecraft_version(version):
-                versions.append(version)
+            if version in possible_versions:
+                if version in UNAVAILABLE_VERSIONS:
+                    raise Exception('version ' + version + ' is unavailable at the moment!')
+                else:
+                    versions.append(version)
             else:
                 raise Exception('no minecraft version given!')
         else:
-            versions = possible_versions
+            versions = [version for version in possible_versions if version not in UNAVAILABLE_VERSIONS]
     if len(tasks) == 0:
         raise Exception('no gradle tasks given!')
     
