@@ -3956,7 +3956,7 @@ c	net/minecraft/C_16awhtorx	net/minecraft/server/world/ServerWorld
 		p	6		profiler
 	m	()V	m_13jgakjyi	m_13jgakjyi
 	m	(Lnet/minecraft/C_56bgmwkdt;III)Lnet/minecraft/C_72robrvqq$C_01dzwypla;	m_23vghxrkv	pickSpawnEntry
-		p	1		group
+		p	1		category
 		p	2		x
 		p	3		y
 		p	4		z
@@ -11390,7 +11390,7 @@ c	net/minecraft/C_36ghrohdl	net/minecraft/world/chunk/ChunkSource
 	m	()Z	m_29espozvh	canSave
 	m	()Ljava/lang/String;	m_07fsczwqs	getName
 	m	(Lnet/minecraft/C_56bgmwkdt;III)Ljava/util/List;	m_26beqyhgu	getSpawnEntries
-		p	1		spawnGroup
+		p	1		category
 		p	2		x
 		p	3		y
 		p	4		z
@@ -18844,12 +18844,12 @@ c	net/minecraft/C_55xhoghmq	net/minecraft/item/WoodenDoorItem
 		p	3		z
 		p	4		metadata
 		p	5		block
-c	net/minecraft/C_56bgmwkdt	net/minecraft/entity/living/mob/MobSpawnGroup
+c	net/minecraft/C_56bgmwkdt	net/minecraft/entity/living/mob/MobCategory
 	f	Lnet/minecraft/C_56bgmwkdt;	f_86rqdfhsg	MONSTER
 	f	Lnet/minecraft/C_56bgmwkdt;	f_81bzmpxqh	CREATURE
 	f	Lnet/minecraft/C_56bgmwkdt;	f_24vcrrrxq	WATER_CREATURE
 	f	Ljava/lang/Class;	f_44eipfwwn	type
-	f	I	f_45hpkrvqk	capacity
+	f	I	f_45hpkrvqk	cap
 	f	Lnet/minecraft/C_57ywipuwq;	f_05vybkmgb	spawnableMaterial
 	f	Z	f_48qynxpym	peaceful
 	f	[Lnet/minecraft/C_56bgmwkdt;	f_73nhvwsbw	f_73nhvwsbw
@@ -18864,7 +18864,7 @@ c	net/minecraft/C_56bgmwkdt	net/minecraft/entity/living/mob/MobSpawnGroup
 		p	5		p_5
 		p	6		p_6
 	m	()Ljava/lang/Class;	m_27nteepkl	getType
-	m	()I	m_87hlnbjki	getCapacity
+	m	()I	m_87hlnbjki	getCap
 	m	()Lnet/minecraft/C_57ywipuwq;	m_58yjirxzk	getSpawnableMaterial
 	m	()Z	m_83wqwrfna	isPeaceful
 	m	()V	<clinit>	<clinit>
@@ -24444,20 +24444,21 @@ c	net/minecraft/C_69rhmjfst	net/minecraft/client/gui/ChatGui
 	m	()Z	m_52qvfvsea	isChatFocused
 	m	(I)V	m_17kcnawsh	removeMessage
 		p	1		id
-c	net/minecraft/C_69vgsoprk	net/minecraft/entity/living/mob/MobSpawnerHelper
-	f	Ljava/util/HashMap;	f_71ulchejq	spawnedMobs
+c	net/minecraft/C_69vgsoprk	net/minecraft/world/NaturalSpawner
+	f	Ljava/util/HashMap;	f_71ulchejq	entitySpawningChunks
+		c	This map keeps track of chunks that allow mob spawning. Mob spawning can occur within\na 15x15 grid of chunks around players. The ring of chunks around that are lazy chunks,\nwhich do not allow mob spawning, but to contribute to the mob cap.
 	f	[Ljava/lang/Class;	f_01youyqot	f_01youyqot
 	m	()V	<init>	<init>
 	m	(Lnet/minecraft/C_54ruxjwzt;II)Lnet/minecraft/C_22bqrxeuv;	m_62iavwtfb	getRandomPosInChunk
 		p	0		world
-		p	1		x
-		p	2		z
+		p	1		chunkX
+		p	2		chunkZ
 	m	(Lnet/minecraft/C_16awhtorx;ZZ)I	m_07gztnqry	spawnEntities
 		p	0		p_0
 		p	1		p_1
 		p	2		p_2
-	m	(Lnet/minecraft/C_56bgmwkdt;Lnet/minecraft/C_54ruxjwzt;III)Z	m_86cpouoah	canSpawn
-		p	0		spawnGroup
+	m	(Lnet/minecraft/C_56bgmwkdt;Lnet/minecraft/C_54ruxjwzt;III)Z	m_86cpouoah	isValidSpawnPos
+		p	0		category
 		p	1		world
 		p	2		x
 		p	3		y
@@ -24471,13 +24472,13 @@ c	net/minecraft/C_69vgsoprk	net/minecraft/entity/living/mob/MobSpawnerHelper
 	m	(Lnet/minecraft/C_54ruxjwzt;Ljava/util/List;)Z	m_68edvrkfx	m_68edvrkfx
 		p	0		p_0
 		p	1		p_1
-	m	(Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_72robrvqq;IIIILjava/util/Random;)V	m_97rczugcr	populateEntities
+	m	(Lnet/minecraft/C_54ruxjwzt;Lnet/minecraft/C_72robrvqq;IIIILjava/util/Random;)V	m_97rczugcr	populateChunk
 		p	0		world
 		p	1		biome
-		p	2		chunkStartX
-		p	3		chunkStartY
-		p	4		chunkSizeX
-		p	5		chunkSizeY
+		p	2		chunkCenterX
+		p	3		chunkCenterZ
+		p	4		rangeX
+		p	5		rangeZ
 		p	6		random
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/C_69zzpsfpz	net/minecraft/client/render/item/BlockEntityItemRenderer
@@ -25851,7 +25852,7 @@ c	net/minecraft/C_72robrvqq	net/minecraft/world/biome/Biome
 	m	(F)I	m_29tzlyjhc	getSkyColor
 		p	1		temperature
 	m	(Lnet/minecraft/C_56bgmwkdt;)Ljava/util/List;	m_06ayjzvka	getSpawnEntries
-		p	1		spawnGroup
+		p	1		category
 	m	()Z	m_24rosmxhk	isSnowy
 	m	()Z	m_60oaymfra	canRain
 	m	()Z	m_31vpdmhdt	isHumid
