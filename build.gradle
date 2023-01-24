@@ -226,7 +226,7 @@ def REMOVE_DUMMY = new MappingValidator() {
 
 	@Override
 	public boolean validate(ClassMapping c) {
-		if (!MappingsDiff.safeIsDiff(ClassMapping.getSimplified(c.src()), c.get())) {
+		if (!MappingsDiff.safeIsDiff(ClassMapping.getSimplified(c.src()), c.get()) && c.get().startsWith("C_")) {
 			c.set("");
 			return !c.getJavadoc().isEmpty() || c.hasChildren();
 		}
@@ -236,7 +236,7 @@ def REMOVE_DUMMY = new MappingValidator() {
 
 	@Override
 	public boolean validate(FieldMapping f) {
-		if (!MappingsDiff.safeIsDiff(f.src(), f.get())) {
+		if (!MappingsDiff.safeIsDiff(f.src(), f.get()) && f.get().startsWith("f_")) {
 			f.set("");
 			return !f.getJavadoc().isEmpty();
 		}
@@ -286,7 +286,7 @@ def INSERT_DUMMY = new MappingsDiffValidator() {
 		return check(p);
 	}
 
-	private boolean check(Diff<?> d) {
+	private boolean check(Diff d) {
 		if (d.isDiff()) {
 			if (d.get(DiffSide.A).isEmpty()) {
 				// new mappings should be ignored, as any un-mapped members
