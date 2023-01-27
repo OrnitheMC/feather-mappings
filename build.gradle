@@ -100,11 +100,52 @@ plugins {
 }
 
 def ENV = System.getenv()
-def minecraft_version = ENV.MC_VERSION
-def build_number = nextBuildNumber(ENV, minecraft_version)
-def featherVersion = "${minecraft_version}+build.${build_number}"
+def version_id = ENV.MC_VERSION
+def environment = parseEnvironment(version_id)
+def minecraft_version = parseVersion(version_id, environment)
+def build_number = nextBuildNumber(ENV, version_id)
+def featherVersion = "${version_id}+build.${build_number}"
 
-static def nextBuildNumber(ENV, minecraft_version) {
+enum Environment {
+
+	MERGED, CLIENT, SERVER
+
+	public boolean isMerged() {
+		return this == MERGED
+	}
+
+	public boolean isClient() {
+		return this == MERGED || this == CLIENT
+	}
+
+	public boolean isServer() {
+		return this == MERGED || this == SERVER
+	}
+}
+
+static Environment parseEnvironment(String id) {
+	if (id.endsWith("-client")) {
+		return Environment.CLIENT
+	}
+	if (id.endsWith("-server")) {
+		return Environment.SERVER
+	}
+
+	return Environment.MERGED
+}
+
+static String parseVersion(String id, Environment environment) {
+	switch (environment) {
+	case Environment.CLIENT:
+		return id.substring(0, id.length() - "-client".length())
+	case Environment.SERVER:
+		return id.substring(0, id.length() - "-server".length())
+	case Environment.MERGED:
+		return id
+	}
+}
+
+static def nextBuildNumber(ENV, version_id) {
 	if (ENV.MAVEN_URL) {
 		def build_number = 0
 
@@ -112,7 +153,7 @@ static def nextBuildNumber(ENV, minecraft_version) {
 			def xml = new URL("https://maven.ornithemc.net/releases/net/ornithemc/feather/maven-metadata.xml").text
 			def metadata = new XmlSlurper().parseText(xml)
 
-			def version_build = "${minecraft_version}+build."
+			def version_build = "${version_id}+build."
 			def i = version_build.length()
 
 			metadata.versioning.versions.version.each {
@@ -208,17 +249,20 @@ def buildMappingGroup = "mapping build"
 def mapJarGroup = "jar mapping"
 def mappingsDir = file("mappings/")
 def workingDir = file("run/")
-def separatedMappings = new File(workingDir, "${minecraft_version}")
-def workingMappings = new File(workingDir, "${minecraft_version}-changed")
+def separatedMappings = new File(workingDir, "${version_id}")
+def workingMappings = new File(workingDir, "${version_id}-changed")
 def cacheFilesMinecraft = file(".gradle/minecraft")
 def tempDir = file(".gradle/temp")
-def mergedFile = new File(cacheFilesMinecraft, "${minecraft_version}-merged.jar")
-def nestedJar = new File(cacheFilesMinecraft, "${minecraft_version}-merged-nested.jar")
-def calamusJar = file("${minecraft_version}-calamus.jar")
-def namedJar = file("${minecraft_version}-named.jar")
+def mergedJar = new File(cacheFilesMinecraft, "${version_id}-merged.jar")
+def nestedJar = new File(cacheFilesMinecraft, "${version_id}-nested.jar")
+def calamusJar = file("${version_id}-calamus.jar")
+def namedJar = file("${version_id}-named.jar")
+def versionDetails = null
 def versionFile = new File(cacheFilesMinecraft, "${minecraft_version}.json")
+def versionDetailsFile = new File(cacheFilesMinecraft, "${minecraft_version}-details.json")
 def clientJar = new File(cacheFilesMinecraft, "${minecraft_version}-client.jar")
 def serverJar = new File(cacheFilesMinecraft, "${minecraft_version}-server.jar")
+def mainJar = null
 def libraries = new File(cacheFilesMinecraft, "libraries")
 def libs = new File("build/libs/")
 
@@ -351,6 +395,9 @@ task downloadWantedVersionManifest(dependsOn: downloadVersionsManifest) {
 	inputs.property "releaseTime", manifestVersion.isPresent() ? manifestVersion.get().releaseTime : -1
 
 	outputs.file versionFile
+	outputs.upToDateWhen {
+		return false
+	}
 
 	doLast {
 		manifestVersion = getManifestVersion(manifestFile, minecraft_version)
@@ -367,56 +414,109 @@ task downloadWantedVersionManifest(dependsOn: downloadVersionsManifest) {
 
 }
 
-task downloadMcJars(dependsOn: downloadWantedVersionManifest) {
+task downloadVersionDetails(dependsOn: downloadVersionsManifest) {
 	group = setupGroup
-	inputs.files versionFile
+	def manifestFile = downloadVersionsManifest.outputs.files.singleFile
+	def manifestVersion = getManifestVersion(manifestFile, minecraft_version)
+	inputs.property "manifestUrl", manifestVersion.isPresent() ? manifestVersion.get().url : -1
 
-	outputs.files(clientJar, serverJar)
-
+	outputs.file versionDetailsFile
 	outputs.upToDateWhen {
-		def version = new JsonSlurper().parseText(FileUtils.readFileToString(versionFile, Charset.defaultCharset()))
-		return clientJar.exists() && serverJar.exists() && validateChecksum(clientJar, version.downloads.client.sha1) && validateChecksum(serverJar, version.downloads.server.sha1)
+		return false
 	}
 
 	doLast {
-		if (!versionFile.exists()) {
-			throw new RuntimeException("Can't download the jars without the ${versionFile.name} file!")
+		if (manifestVersion.isPresent() || versionDetailsFile.exists()) {
+			if (manifestVersion.isPresent()) {
+				FileUtils.copyURLToFile(new URL(manifestVersion.get().details), versionDetailsFile)
+			}
+		} else {
+			throw new RuntimeException("No version details for Minecraft version ${minecraft_version} (Did you forget to set the MC_VERSION environment variable?)")
 		}
 
-		//reload in case it changed
-		def version = new JsonSlurper().parseText(FileUtils.readFileToString(versionFile, Charset.defaultCharset()))
+		versionDetails = new JsonSlurper().parseText(FileUtils.readFileToString(versionDetailsFile, Charset.defaultCharset()))
 
-		logger.lifecycle(":downloading minecraft jars")
-
-		download {
-			src new URL(version.downloads.client.url)
-			dest clientJar
-			overwrite false
+		if (versionDetails.sharedMappings) {
+			if (!environment.isMerged()) {
+				throw new RuntimeException("Minecraft version ${minecraft_version} is only available as merged but was requested for ${environment}!")
+			}
+		} else {
+			if (environment.isMerged()) {
+				throw new RuntimeException("Minecraft version ${minecraft_version} cannot be merged - please select either the client or server environment!")
+			}
+			if (environment.isClient() && !versionDetails.client) {
+				throw new RuntimeException("Minecraft version ${minecraft_version} does not have a client jar!")
+			}
+			if (environment.isServer() && !versionDetails.server) {
+				throw new RuntimeException("Minecraft version ${minecraft_version} does not have a server jar!")
+			}
 		}
 
-		download {
-			src new URL(version.downloads.server.url)
-			dest serverJar
-			overwrite false
+		switch (environment) {
+		case Environment.CLIENT:
+			mainJar = clientJar
+			break
+		case Environment.SERVER:
+			mainJar = serverJar
+			break
+		case Environment.MERGED:
+			mainJar = mergedJar
+			break
 		}
 	}
+}
+
+task downloadMcJars(dependsOn: downloadVersionDetails) {
+    group = setupGroup
+    inputs.files versionDetailsFile
+
+    outputs.files(clientJar, serverJar)
+    outputs.upToDateWhen {
+        def validClient = (!environment.isClient() || (clientJar.exists() && validateChecksum(clientJar, versionDetails.downloads.client.sha1)))
+        def validServer = (!environment.isServer() || (serverJar.exists() && validateChecksum(serverJar, versionDetails.downloads.server.sha1)))
+
+        return validClient && validServer
+    }
+
+    doLast {
+        if (!versionDetailsFile.exists() || versionDetails == null) {
+            throw new RuntimeException("Can't download the jars without the ${versionDetailsFile.name} file!")
+        }
+
+        logger.lifecycle(":downloading minecraft jar(s) for ${version_id}")
+
+        if (environment.isClient()) {
+            download {
+                src new URL(versionDetails.downloads.client.url)
+                dest clientJar
+                overwrite false
+            }
+        }
+        if (environment.isServer()) {
+            download {
+                src new URL(versionDetails.downloads.server.url)
+                dest serverJar
+                overwrite false
+            }
+        }
+    }
 }
 
 task downloadCalamus(dependsOn: downloadMcJars, type: Download) {
 	group = buildMappingGroup
-	def url = "https://github.com/OrnitheMC/calamus/raw/main/mappings/${minecraft_version}.tiny"
+	def url = "https://github.com/OrnitheMC/calamus/raw/main/mappings/${version_id}.tiny"
 	src UrlEscapers.urlFragmentEscaper().escape(url)
-	dest new File(cacheFilesMinecraft, "${minecraft_version}-calamus.tiny")
+	dest new File(cacheFilesMinecraft, "${version_id}-calamus.tiny")
 }
 
 task downloadCalamusV2(dependsOn: downloadMcJars, type: Download) {
 	group = buildMappingGroup
-	def url = "https://maven.ornithemc.net/releases/net/ornithemc/calamus/${minecraft_version}/calamus-${minecraft_version}-v2.jar"
+	def url = "https://maven.ornithemc.net/releases/net/ornithemc/calamus/${version_id}/calamus-${version_id}-v2.jar"
 	src UrlEscapers.urlFragmentEscaper().escape(url)
-	dest new File(cacheFilesMinecraft, "${minecraft_version}-calamus-v2.jar")
+	dest new File(cacheFilesMinecraft, "${version_id}-calamus-v2.jar")
 
-	def output = new File(cacheFilesMinecraft, "${minecraft_version}-calamus-v2.tiny")
-	def nests = new File(cacheFilesMinecraft, "${minecraft_version}.nest")
+	def output = new File(cacheFilesMinecraft, "${version_id}-calamus-v2.tiny")
+	def nests = new File(cacheFilesMinecraft, "${version_id}.nest")
 	outputs.files(output, nests)
 
 	doLast {
@@ -440,46 +540,34 @@ task downloadCalamusV2(dependsOn: downloadMcJars, type: Download) {
 }
 
 task mergeJars(dependsOn: downloadMcJars) {
-	group = setupGroup
-	inputs.files downloadMcJars.outputs.files.files
-	outputs.file(mergedFile)
+    group = setupGroup
+    inputs.files downloadMcJars.outputs.files.files
 
-	doLast {
-		logger.lifecycle(":merging jars")
-		def client = inputs.files.files.find { it.name.endsWith("-client.jar") }
-		def server = inputs.files.files.find { it.name.endsWith("-server.jar") }
-		def merged = mergedFile
+    outputs.file(mergedJar)
 
-		if (merged.exists()) {
-			return
-		}
-
-		def jarMerger = new JarMerger(client, server, merged)
-		jarMerger.merge()
-		jarMerger.close()
-	}
-
+    doLast {
+        if (environment.isMerged() && !mergedJar.exists()) {
+            logger.lifecycle(":merging jars")
+            def jarMerger = new JarMerger(clientJar, serverJar, mergedJar)
+            jarMerger.merge()
+            jarMerger.close()
+        }
+    }
 }
 
 task nestJar(dependsOn: [mergeJars, downloadCalamusV2]) {
-	group = setupGroup
-	inputs.file mergedFile
-	outputs.file(nestedJar)
+    group = setupGroup
 
-	doLast {
-		logger.lifecycle(":nesting jar")
+    outputs.file(nestedJar)
 
-		if (nestedJar.exists()) {
-			return
-		}
+    doLast {
+		File nestsFile = new File(cacheFilesMinecraft, "${version_id}.nest")
 
-		File nests = downloadCalamusV2.outputs.files.files.find { it.name.endsWith(".nest") }
-
-		if (nests.exists()) {
-			Nester.nestJar(new Nester.Options().silent(true), Paths.get(mergedFile.getAbsolutePath()), Paths.get(nestedJar.getAbsolutePath()), Paths.get(nests.getAbsolutePath()))
-		}
-	}
-
+        if (!nestedJar.exists() && nestsFile.exists()) {
+            logger.lifecycle(":nesting jar")
+            Nester.nestJar(new Nester.Options().silent(true), Paths.get(mainJar.getAbsolutePath()), Paths.get(nestedJar.getAbsolutePath()), Paths.get(nestsFile.getAbsolutePath()))
+        }
+    }
 }
 
 
@@ -528,7 +616,7 @@ task invertCalamus(dependsOn: downloadCalamus, type: FileOutput) {
 	group = buildMappingGroup
 	def v1Input = downloadCalamus.dest
 
-	output = new File(cacheFilesMinecraft, "${minecraft_version}-calamus-inverted.tiny")
+	output = new File(cacheFilesMinecraft, "${version_id}-calamus-inverted.tiny")
 	outputs.file(output)
 
 	outputs.upToDateWhen { false }
@@ -548,9 +636,9 @@ task invertCalamus(dependsOn: downloadCalamus, type: FileOutput) {
 
 task invertCalamusV2(dependsOn: downloadCalamusV2, type: FileOutput) {
 	group = buildMappingGroup
-	def v2Input = new File(cacheFilesMinecraft, "${minecraft_version}-calamus-v2.tiny")
+	def v2Input = new File(cacheFilesMinecraft, "${version_id}-calamus-v2.tiny")
 
-	output = new File(cacheFilesMinecraft, "${minecraft_version}-calamus-inverted-v2.tiny")
+	output = new File(cacheFilesMinecraft, "${version_id}-calamus-inverted-v2.tiny")
 	outputs.file(output)
 
 	outputs.upToDateWhen { false }
@@ -572,7 +660,7 @@ task patchCalamus(dependsOn: [nestJar, downloadCalamus]) {
 	group = buildMappingGroup
 	def calamusTinyInput = downloadCalamus.dest
 
-	def outputFile = new File(cacheFilesMinecraft, "${minecraft_version}-calamus-full.tiny")
+	def outputFile = new File(cacheFilesMinecraft, "${version_id}-calamus-full.tiny")
 	outputs.file(outputFile)
 
 	outputs.upToDateWhen { false }
@@ -580,7 +668,7 @@ task patchCalamus(dependsOn: [nestJar, downloadCalamus]) {
 	doLast {
 		logger.lifecycle(":patching calamus")
 
-		File jarFile = nestedJar.exists() ? nestedJar : mergedFile
+		File jarFile = nestedJar.exists() ? nestedJar : mainJar
 		String[] args = [
 				jarFile.getAbsolutePath(),
 				calamusTinyInput.getAbsolutePath(),
@@ -603,7 +691,7 @@ task mapCalamusJar(dependsOn: [downloadMcLibs, downloadCalamus, nestJar]) {
 	doLast {
 		logger.lifecycle(":mapping minecraft to calamus")
 
-		File jarFile = nestedJar.exists() ? nestedJar : mergedFile
+		File jarFile = nestedJar.exists() ? nestedJar : mainJar
 		def tinyInput = downloadCalamus.dest
 
 		mapJar(calamusJar, jarFile, tinyInput, libraries, "official", "calamus")
@@ -620,10 +708,10 @@ task separateMappings() {
 	outputs.upToDateWhen { false }
 
 	doLast {
-		logger.lifecycle(":separating mappings for " + minecraft_version)
+		logger.lifecycle(":separating mappings for ${version_id}")
 
 		MappingsDiffTree tree = MappingsDiffTree.of(Format.TINY_V2, mappingsDir.toPath())
-		Mappings mappings = MappingUtils.separateMappings(tree, minecraft_version);
+		Mappings mappings = MappingUtils.separateMappings(tree, version_id);
 
 		Format.ENIGMA_DIR.writeMappings(separatedMappings.toPath(), mappings)
 		mappings.setValidator(REMOVE_DUMMY)
@@ -631,7 +719,7 @@ task separateMappings() {
 	}
 }
 
-static def insertMappings(minecraft_version, mappingsDir, separatedMappingsPath, workingMappingsPath, dir, validator) {
+static def insertMappings(version_id, mappingsDir, separatedMappingsPath, workingMappingsPath, dir, validator) {
 	Mappings separatedMappings = Format.ENIGMA_DIR.readMappings(separatedMappingsPath);
 	Mappings workingMappings = Format.ENIGMA_DIR.readMappings(workingMappingsPath);
 
@@ -640,7 +728,7 @@ static def insertMappings(minecraft_version, mappingsDir, separatedMappingsPath,
 
 	MappingsDiffTree tree = MappingsDiffTree.of(Format.TINY_V2, mappingsDir);
 	PropagationOptions options = new PropagationOptions.Builder().setPropagationDirection(dir).lenient().build();
-	MappingUtils.insertMappings(options, tree, changes, minecraft_version);
+	MappingUtils.insertMappings(options, tree, changes, version_id);
 
 	net.ornithemc.mappingutils.FileUtils.delete(separatedMappingsPath.toFile())
 	net.ornithemc.mappingutils.FileUtils.delete(workingMappingsPath.toFile())
@@ -649,36 +737,36 @@ static def insertMappings(minecraft_version, mappingsDir, separatedMappingsPath,
 task insertMappings() {
 	group = featherGroup
 	doLast {
-		logger.lifecycle(":saving mappings for " + minecraft_version)
+		logger.lifecycle(":saving mappings for ${version_id}")
 
-		insertMappings(minecraft_version, mappingsDir.toPath(), separatedMappings.toPath(), workingMappings.toPath(), PropagationDirection.NONE, INSERT_DUMMY)
+		insertMappings(version_id, mappingsDir.toPath(), separatedMappings.toPath(), workingMappings.toPath(), PropagationDirection.NONE, INSERT_DUMMY)
 	}
 }
 
 task propagateMappingsDown() {
 	group = featherGroup
 	doLast {
-		logger.lifecycle(":saving mappings for " + minecraft_version)
+		logger.lifecycle(":saving mappings for ${version_id}")
 
-		insertMappings(minecraft_version, mappingsDir.toPath(), separatedMappings.toPath(), workingMappings.toPath(), PropagationDirection.DOWN, INSERT_DUMMY)
+		insertMappings(version_id, mappingsDir.toPath(), separatedMappings.toPath(), workingMappings.toPath(), PropagationDirection.DOWN, INSERT_DUMMY)
 	}
 }
 
 task propagateMappingsUp() {
 	group = featherGroup
 	doLast {
-		logger.lifecycle(":saving mappings for " + minecraft_version)
+		logger.lifecycle(":saving mappings for ${version_id}")
 
-		insertMappings(minecraft_version, mappingsDir.toPath(), separatedMappings.toPath(), workingMappings.toPath(), PropagationDirection.UP, INSERT_DUMMY)
+		insertMappings(version_id, mappingsDir.toPath(), separatedMappings.toPath(), workingMappings.toPath(), PropagationDirection.UP, INSERT_DUMMY)
 	}
 }
 
 task propagateMappings() {
 	group = featherGroup
 	doLast {
-		logger.lifecycle(":saving mappings for " + minecraft_version)
+		logger.lifecycle(":saving mappings for ${version_id}")
 
-		insertMappings(minecraft_version, mappingsDir.toPath(), separatedMappings.toPath(), workingMappings.toPath(), PropagationDirection.BOTH, INSERT_DUMMY)
+		insertMappings(version_id, mappingsDir.toPath(), separatedMappings.toPath(), workingMappings.toPath(), PropagationDirection.BOTH, INSERT_DUMMY)
 	}
 }
 
@@ -713,7 +801,7 @@ task separateMappingsForBuild(type: WithV2FileOutput) {
 
 	doLast {
 		MappingsDiffTree tree = MappingsDiffTree.of(Format.TINY_V2, mappingsDir.toPath())
-		Mappings mappings = MappingUtils.separateMappings(tree, minecraft_version);
+		Mappings mappings = MappingUtils.separateMappings(tree, version_id);
 
 		mappings.setValidator(REMOVE_DUMMY)
 		Format.TINY_V2.writeMappings(v2Output.toPath(), mappings)
@@ -732,7 +820,7 @@ task checkMappings(dependsOn: [mapCalamusJar, separateMappingsForBuild]) {
 	doLast {
 		logger.lifecycle(":checking mappings")
 
-		File jarFile = nestedJar.exists() ? nestedJar : mergedFile
+		File jarFile = nestedJar.exists() ? nestedJar : mainJar
 		String[] args = [
 				jarFile.getAbsolutePath(),
 				separateMappingsForBuild.v2Output.getAbsolutePath()
@@ -906,7 +994,7 @@ task buildTinyWithEnum(dependsOn: "mergeTiny", type: FileOutput) {
 	doLast {
 		logger.lifecycle(":seeking auto-mappable fields")
 
-		File jarFile = nestedJar.exists() ? nestedJar : mergedFile
+		File jarFile = nestedJar.exists() ? nestedJar : mainJar
 		String[] argsPropose = [
 				jarFile.getAbsolutePath(), // must use official jar
 				noEnum.getAbsolutePath(),
