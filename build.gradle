@@ -43,7 +43,7 @@ import net.ornithemc.mappingutils.io.diff.MappingsDiff.FieldDiff;
 import net.ornithemc.mappingutils.io.diff.MappingsDiff.MethodDiff;
 import net.ornithemc.mappingutils.io.diff.MappingsDiff.ParameterDiff;
 import net.ornithemc.mappingutils.io.diff.MappingsDiffValidator;
-import net.ornithemc.mappingutils.io.diff.tree.MappingsDiffTree;
+import net.ornithemc.mappingutils.io.diff.graph.VersionGraph;
 import org.apache.commons.io.FileUtils
 
 import java.nio.charset.Charset
@@ -426,6 +426,8 @@ task downloadVersionDetails(dependsOn: downloadVersionsManifest) {
 	}
 
 	doLast {
+		manifestVersion = getManifestVersion(manifestFile, minecraft_version)
+		//nb need to re-read here in case it didn't exist before
 		if (manifestVersion.isPresent() || versionDetailsFile.exists()) {
 			if (manifestVersion.isPresent()) {
 				FileUtils.copyURLToFile(new URL(manifestVersion.get().details), versionDetailsFile)
@@ -540,34 +542,40 @@ task downloadCalamusV2(dependsOn: downloadMcJars, type: Download) {
 }
 
 task mergeJars(dependsOn: downloadMcJars) {
-    group = setupGroup
-    inputs.files downloadMcJars.outputs.files.files
+	group = setupGroup
+	inputs.files downloadMcJars.outputs.files.files
 
-    outputs.file(mergedJar)
+	outputs.file(mergedJar)
+	outputs.upToDateWhen {
+		return false
+	}
 
-    doLast {
-        if (environment.isMerged() && !mergedJar.exists()) {
-            logger.lifecycle(":merging jars")
-            def jarMerger = new JarMerger(clientJar, serverJar, mergedJar)
-            jarMerger.merge()
-            jarMerger.close()
-        }
-    }
+	doLast {
+		if (environment.isMerged() && !mergedJar.exists()) {
+			logger.lifecycle(":merging jars")
+			def jarMerger = new JarMerger(clientJar, serverJar, mergedJar)
+			jarMerger.merge()
+			jarMerger.close()
+		}
+	}
 }
 
 task nestJar(dependsOn: [mergeJars, downloadCalamusV2]) {
-    group = setupGroup
+	group = setupGroup
 
-    outputs.file(nestedJar)
+	outputs.file(nestedJar)
+	outputs.upToDateWhen {
+		return false
+	}
 
-    doLast {
+	doLast {
 		File nestsFile = new File(cacheFilesMinecraft, "${version_id}.nest")
 
-        if (!nestedJar.exists() && nestsFile.exists()) {
-            logger.lifecycle(":nesting jar")
-            Nester.nestJar(new Nester.Options().silent(true), Paths.get(mainJar.getAbsolutePath()), Paths.get(nestedJar.getAbsolutePath()), Paths.get(nestsFile.getAbsolutePath()))
-        }
-    }
+		if (!nestedJar.exists() && nestsFile.exists()) {
+			logger.lifecycle(":nesting jar")
+			Nester.nestJar(new Nester.Options().silent(true), Paths.get(mainJar.getAbsolutePath()), Paths.get(nestedJar.getAbsolutePath()), Paths.get(nestsFile.getAbsolutePath()))
+		}
+	}
 }
 
 
@@ -710,8 +718,8 @@ task separateMappings() {
 	doLast {
 		logger.lifecycle(":separating mappings for ${version_id}")
 
-		MappingsDiffTree tree = MappingsDiffTree.of(Format.TINY_V2, mappingsDir.toPath())
-		Mappings mappings = MappingUtils.separateMappings(tree, version_id);
+		VersionGraph graph = VersionGraph.of(Format.TINY_V2, mappingsDir.toPath())
+		Mappings mappings = MappingUtils.separateMappings(graph, version_id);
 
 		Format.ENIGMA_DIR.writeMappings(separatedMappings.toPath(), mappings)
 		mappings.setValidator(REMOVE_DUMMY)
@@ -726,9 +734,9 @@ static def insertMappings(version_id, mappingsDir, separatedMappingsPath, workin
 	MappingsDiff changes = MappingUtils.diffMappings(separatedMappings, workingMappings);
 	changes.setValidator(validator);
 
-	MappingsDiffTree tree = MappingsDiffTree.of(Format.TINY_V2, mappingsDir);
+	VersionGraph graph = VersionGraph.of(Format.TINY_V2, mappingsDir);
 	PropagationOptions options = new PropagationOptions.Builder().setPropagationDirection(dir).lenient().build();
-	MappingUtils.insertMappings(options, tree, changes, version_id);
+	MappingUtils.insertMappings(options, graph, changes, version_id);
 
 	net.ornithemc.mappingutils.FileUtils.delete(separatedMappingsPath.toFile())
 	net.ornithemc.mappingutils.FileUtils.delete(workingMappingsPath.toFile())
@@ -800,8 +808,8 @@ task separateMappingsForBuild(type: WithV2FileOutput) {
 	outputs.upToDateWhen { false }
 
 	doLast {
-		MappingsDiffTree tree = MappingsDiffTree.of(Format.TINY_V2, mappingsDir.toPath())
-		Mappings mappings = MappingUtils.separateMappings(tree, version_id);
+		VersionGraph graph = VersionGraph.of(Format.TINY_V2, mappingsDir.toPath())
+		Mappings mappings = MappingUtils.separateMappings(graph, version_id);
 
 		mappings.setValidator(REMOVE_DUMMY)
 		Format.TINY_V2.writeMappings(v2Output.toPath(), mappings)
