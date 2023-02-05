@@ -6,26 +6,27 @@ c	net/minecraft/C_0077087
 	f	I	f_6852919	f_6852919	
 	f	I	f_6529599	f_6529599	
 c	net/minecraft/C_0215467
-	f	Lnet/minecraft/C_0215467;	f_8454668		f_8454668
-	f	Lnet/minecraft/C_0215467;	f_6638388		f_6638388
-	f	Lnet/minecraft/C_0215467;	f_7773694		f_7773694
-	m	(Lnet/minecraft/C_1352131;Ljava/util/List;)V	m_4060365	m_4060365	
+	f	Lnet/minecraft/C_0215467;	f_8454668		SKULL
+	f	Lnet/minecraft/C_0215467;	f_6638388		CARROT_ON_A_STICK
+	f	Lnet/minecraft/C_0215467;	f_7773694		NETHER_STAR
+	m	(Lnet/minecraft/C_1352131;Ljava/util/List;)V	m_4060365	addHoverText	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/C_1352131;Lnet/minecraft/C_6419746;Ljava/util/List;Z)V	m_4060365		m_4060365
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(Lnet/minecraft/C_1352131;Lnet/minecraft/C_6419746;Ljava/util/List;Z)V	m_4060365		addHoverText
+		p	1			stack
+		p	2			player
+		p	3			tooltip
+		p	4			advanced
 c	net/minecraft/C_0460294
-	f	Z	f_0507293		f_0507293
-	m	()V	m_8576276		m_8576276
+	f	Z	f_0507293		convertedZombie
+		c		This field will be set to true when a villager gets created by the means of converting a zombie.\nIn next mobTick() it will be set to false and awards all the players in the village with a reputation bonus.
+	m	()V	m_8576276		setConvertedZombie
 c	net/minecraft/C_1352131
-	m	(Z)Ljava/util/List;	m_6152130	m_6152130	
+	m	(Z)Ljava/util/List;	m_6152130	getTooltip	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_6419746;Z)Ljava/util/List;	m_6152130		m_6152130
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/C_6419746;Z)Ljava/util/List;	m_6152130		getTooltip
+		p	1			player
+		p	2			advanced
 c	net/minecraft/C_1445285
 	m	(Lnet/minecraft/C_6926903;)Z	m_9934004	m_9934004	
 		p	1		p_1	
@@ -47,16 +48,16 @@ c	net/minecraft/C_2331873
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_2717113
-	f	Lnet/minecraft/C_6419746;	f_1572614		f_1572614
+	f	Lnet/minecraft/C_6419746;	f_1572614		player
 	m	(Lnet/minecraft/C_9378205;)V	<init>	<init>	
 		p	1		p_1	
 	m	(Lnet/minecraft/C_9378205;Z)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
 	m	(Lnet/minecraft/C_9378205;ZLnet/minecraft/C_6419746;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			playerInventory
+		p	2			isServer
+		p	3			player
 c	net/minecraft/C_2841372
 	f	[B	f_5066519		f_5066519
 	m	(Lnet/minecraft/C_0370453;JZ)V	<init>	<init>	
@@ -66,15 +67,15 @@ c	net/minecraft/C_2841372
 	m	([B)V	m_2510207	m_2510207	
 		p	1		p_1	
 	m	(Lnet/minecraft/C_0370453;JZLjava/lang/String;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
-		p	5			p_5
+		p	1			world
+		p	2			seed
+		p	4			structures
+		p	5			preset
 	m	([B)V	m_0562608		m_0562608
 		p	1			p_1
 c	net/minecraft/C_2936744
-	m	(I)V	m_6932632		m_6932632
-		p	1			p_1
+	m	(I)V	m_6932632		updateAllReputations
+		p	1			reputation
 c	net/minecraft/C_3239731
 	f	Lnet/minecraft/C_1511008;	f_4132714		f_4132714
 c	net/minecraft/C_3374379
@@ -83,21 +84,21 @@ c	net/minecraft/C_3374379
 	m	(Lnet/minecraft/C_1352131;)Z	m_3496264		m_3496264
 		p	1			p_1
 c	net/minecraft/C_3532226
-	f	Lnet/minecraft/C_6675444;	f_0441151		f_0441151
+	f	Lnet/minecraft/C_6675444;	f_0441151		UNDEAD_FILTER
 	m	(Lnet/minecraft/C_9679079;)V	m_9269164		m_9269164
 		p	1			p_1
 	m	(Lnet/minecraft/C_9679079;)V	m_0968723		m_0968723
 		p	1			p_1
 	m	()Ljava/lang/String;	m_3561991		m_3561991
-	m	()V	m_6685647		m_6685647
+	m	()V	m_6685647		onSummoned
 	m	()V	m_0751440		m_0751440
 	m	()I	m_2747122		m_2747122
 	m	(ZI)V	m_6230061		m_6230061
 		p	1			p_1
 		p	2			p_2
-	m	()I	m_4654718		m_4654718
-	m	(I)V	m_6080009		m_6080009
-		p	1			p_1
+	m	()I	m_4654718		getInvulerabilityTimer
+	m	(I)V	m_6080009		setInvulerabilityTimer
+		p	1			properrty
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/C_3532226$1		$1
 	m	()V	<init>		<init>
@@ -110,16 +111,16 @@ c	net/minecraft/C_3700498
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/C_4275645
-	m	()V	m_7614426		m_7614426
+	m	()V	m_7614426		glTranslateUp
 c	net/minecraft/C_4431218
-	f	F	f_2397130		f_2397130
-	f	F	f_0640756		f_0640756
+	f	F	f_2397130		skyDarkness
+	f	F	f_0640756		lastSkyDarkness
 c	net/minecraft/C_4562553
-	m	(Lnet/minecraft/C_2161915;III)Z	m_8449743		m_8449743
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(Lnet/minecraft/C_2161915;III)Z	m_8449743		renderBeaconBlock
+		p	1			beaconBlock
+		p	2			x
+		p	3			y
+		p	4			z
 c	net/minecraft/C_4708867
 	m	(Lnet/minecraft/C_1352131;)Z	m_3496264		m_3496264
 		p	1			p_1
@@ -130,28 +131,28 @@ c	net/minecraft/C_5284605
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_5394592
-	m	(Lnet/minecraft/C_6926903;)Lnet/minecraft/C_1352131;	m_6378272	m_6378272	
+	m	(Lnet/minecraft/C_6926903;)Lnet/minecraft/C_1352131;	m_6378272	getResult	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_6926903;Lnet/minecraft/C_0370453;)Lnet/minecraft/C_1352131;	m_6378272		m_6378272
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/C_6926903;Lnet/minecraft/C_0370453;)Lnet/minecraft/C_1352131;	m_6378272		getResult
+		p	1			inventory
+		p	2			world
 c	net/minecraft/C_5650427
-	f	Ljava/lang/String;	f_9306927		f_9306927
+	f	Ljava/lang/String;	f_9306927		generatorOptions
 c	net/minecraft/C_5745262
 c	net/minecraft/C_5745262$C_6236717
-	f	I	f_2087186		f_2087186
-	f	I	f_2649628		f_2649628
-	m	(Ljava/util/Random;)I	m_3638287		m_3638287
-		p	1			p_1
+	f	I	f_2087186		cropA
+	f	I	f_2649628		cropBId
+	m	(Ljava/util/Random;)I	m_3638287		pickCrop
+		p	1			random
 c	net/minecraft/C_5745262$C_6949383
-	f	I	f_5474802		f_5474802
-	f	I	f_0316315		f_0316315
-	f	I	f_9166519		f_9166519
-	f	I	f_3856551		f_3856551
-	m	(Ljava/util/Random;)I	m_5606019		m_5606019
-		p	1			p_1
+	f	I	f_5474802		cropAId
+	f	I	f_0316315		cropBId
+	f	I	f_9166519		cropCId
+	f	I	f_3856551		cropDId
+	m	(Ljava/util/Random;)I	m_5606019		pickCrop
+		p	1			random
 c	net/minecraft/C_5956923
-	f	Lnet/minecraft/C_5956923;	f_7055160		f_7055160
+	f	Lnet/minecraft/C_5956923;	f_7055160		SKULL
 c	net/minecraft/C_6258321
 	m	(Lnet/minecraft/C_6926903;)Z	m_9934004	m_9934004	
 		p	1		p_1	
@@ -159,11 +160,11 @@ c	net/minecraft/C_6258321
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_6299977
-	m	(Lnet/minecraft/C_6926903;)Z	m_9934004	m_9934004	
+	m	(Lnet/minecraft/C_6926903;)Z	m_9934004	matches	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_6926903;Lnet/minecraft/C_0370453;)Z	m_9934004		m_9934004
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/C_6926903;Lnet/minecraft/C_0370453;)Z	m_9934004		matches
+		p	1			inventory
+		p	2			world
 c	net/minecraft/C_6692940
 	f	[F	f_0478255		f_0478255
 	m	(I)I	m_8556604	m_8556604	
@@ -184,8 +185,8 @@ c	net/minecraft/C_7115529
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/C_7589371
-	f	Ljava/lang/String;	f_6789993		f_6789993
-	m	()Ljava/lang/String;	m_6277139		m_6277139
+	f	Ljava/lang/String;	f_6789993		generatorOptions
+	m	()Ljava/lang/String;	m_6277139		getGeneratorOptions
 c	net/minecraft/C_8077673
 	m	(I)I	m_1077962		m_1077962
 		p	1			p_1
@@ -206,10 +207,10 @@ c	net/minecraft/C_8939747
 		p	2			p_2
 c	net/minecraft/C_8969736
 	m	(IIII)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	1			textureOffsetU
+		p	2			textureOffsetV
+		p	3			textureWidth
+		p	4			textureHeight
 c	net/minecraft/C_9310981
 	m	()V	m_3209174		m_3209174
 	m	(Lnet/minecraft/C_4512400;)Z	m_2676324		m_2676324
@@ -219,9 +220,9 @@ c	net/minecraft/C_9310981
 	m	(I)V	m_5280156		m_5280156
 		p	1			p_1
 	m	()Ljava/lang/String;	m_3561991		m_3561991
-	m	()I	m_1919945		m_1919945
-	m	(I)V	m_3419220		m_3419220
-		p	1			p_1
+	m	()I	m_1919945		getType
+	m	(I)V	m_3419220		setType
+		p	1			type
 	m	(Lnet/minecraft/C_9679079;)V	m_0968723		m_0968723
 		p	1			p_1
 	m	(Lnet/minecraft/C_9679079;)V	m_9269164		m_9269164
@@ -236,15 +237,15 @@ c	net/minecraft/C_9626871
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/C_9958006
-	f	Z	f_4927110		f_4927110
-	m	(Lnet/minecraft/C_3925281;)V	m_0893931	m_0893931	
+	f	Z	f_4927110		modifiesSkyColor
+	m	(Lnet/minecraft/C_3925281;)V	m_0893931	update	
 		p	0		p_0	
-	m	(Lnet/minecraft/C_3925281;Z)V	m_0893931		m_0893931
-		p	0			p_0
-		p	1			p_1
-c	net/minecraft/C_0589287		net/minecraft/C_0589287
+	m	(Lnet/minecraft/C_3925281;Z)V	m_0893931		update
+		p	0			boss
+		p	1			modifiesSkyColor
+c	net/minecraft/C_0589287		net/minecraft/block/SkullBlock
 	m	(I)V	<init>		<init>
-		p	1			p_1
+		p	1			id
 	m	()I	m_6723889		m_6723889
 	m	()Z	m_5503270		m_5503270
 	m	()Z	m_2625446		m_2625446
@@ -304,54 +305,54 @@ c	net/minecraft/C_0589287		net/minecraft/C_0589287
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lnet/minecraft/C_0370453;IIILnet/minecraft/C_1448004;)V	m_0946321		m_0946321
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	(Lnet/minecraft/C_0370453;IIII)Z	m_2580157		m_2580157
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-c	net/minecraft/C_1119130		net/minecraft/C_1119130
-	f	Lnet/minecraft/C_6692940;	f_0654622		f_0654622
-	f	F	f_6873362		f_6873362
-	f	F	f_2896099		f_2896099
+	m	(Lnet/minecraft/C_0370453;IIILnet/minecraft/C_1448004;)V	m_0946321		trySpawnWither
+		p	1			world
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			skull
+	m	(Lnet/minecraft/C_0370453;IIII)Z	m_2580157		isSkull
+		p	1			world
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			type
+c	net/minecraft/C_1119130		net/minecraft/entity/ai/goal/PlayerControlGoal
+	f	Lnet/minecraft/C_6692940;	f_0654622		mob
+	f	F	f_6873362		maxVelocity
+	f	F	f_2896099		speed
 	m	(Lnet/minecraft/C_6692940;F)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
 	m	()V	m_4664854		m_4664854
 	m	()Z	m_2579867		m_2579867
 	m	()V	m_3472786		m_3472786
-c	net/minecraft/C_1448004		net/minecraft/C_1448004
-	f	I	f_2397653		f_2397653
-	f	I	f_9339524		f_9339524
+c	net/minecraft/C_1448004		net/minecraft/block/entity/SkullBlockEntity
+	f	I	f_2397653		skullType
+	f	I	f_9339524		rotation
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/C_9679079;)V	m_7455031		m_7455031
 		p	1			p_1
 	m	(Lnet/minecraft/C_9679079;)V	m_5478226		m_5478226
 		p	1			p_1
 	m	()Lnet/minecraft/C_4589719;	m_0857531		m_0857531
-	m	(I)V	m_6440914		m_6440914
+	m	(I)V	m_6440914		setSkullType
 		p	1			p_1
-	m	()I	m_9857295		m_9857295
-	m	()I	m_1261421		m_1261421
-	m	(I)V	m_5468509		m_5468509
-		p	1			p_1
-c	net/minecraft/C_2957941		net/minecraft/C_2957941
+	m	()I	m_9857295		getType
+	m	()I	m_1261421		getRotation
+	m	(I)V	m_5468509		setRotation
+		p	1			rotation
+c	net/minecraft/C_2957941		net/minecraft/client/render/entity/SkeletonRenderer
 	m	()V	<init>		<init>
-	m	(Lnet/minecraft/C_9310981;F)V	m_0203942		m_0203942
+	m	(Lnet/minecraft/C_9310981;F)V	m_0203942		scale
 		p	1			p_1
 		p	2			p_2
 	m	()V	m_7614426		m_7614426
 	m	(Lnet/minecraft/C_6692940;F)V	m_8946474		m_8946474
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/C_5758267		net/minecraft/C_5758267
-	f	[Ljava/lang/String;	f_8733924		f_8733924
+c	net/minecraft/C_5758267		net/minecraft/item/SkullItem
+	f	[Ljava/lang/String;	f_8733924		SKULL_TYPES
 	f	[I	f_2283877		f_2283877
 	m	(I)V	<init>		<init>
 		p	1			p_1
@@ -377,22 +378,22 @@ c	net/minecraft/C_5758267		net/minecraft/C_5758267
 	m	(Lnet/minecraft/C_1352131;)Ljava/lang/String;	m_3166020		m_3166020
 		p	1			p_1
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_6725621		net/minecraft/C_6725621
+c	net/minecraft/C_6725621		net/minecraft/item/NetherStarItem
 	m	(I)V	<init>		<init>
 		p	1			p_1
 	m	(Lnet/minecraft/C_1352131;)Z	m_3184506		m_3184506
 		p	1			p_1
-c	net/minecraft/C_6744226		net/minecraft/C_6744226
+c	net/minecraft/C_6744226		net/minecraft/item/CarrotOnAStickItem
 	m	(I)V	<init>		<init>
 		p	1			p_1
 	m	()Z	m_4870037		m_4870037
 	m	()Z	m_9375395		m_9375395
-c	net/minecraft/C_9121319		net/minecraft/C_9121319
-	f	Lnet/minecraft/C_9121319;	f_5121452		f_5121452
-	f	Lnet/minecraft/C_8969736;	f_7122965		f_7122965
-	f	Lnet/minecraft/C_8969736;	f_4537108		f_4537108
+c	net/minecraft/C_9121319		net/minecraft/client/render/block/entity/SkullRenderer
+	f	Lnet/minecraft/C_9121319;	f_5121452		instance
+	f	Lnet/minecraft/C_8969736;	f_7122965		model
+	f	Lnet/minecraft/C_8969736;	f_4537108		humanoidModel
 	m	()V	<init>		<init>
-	m	(Lnet/minecraft/C_1448004;DDDF)V	m_2354041		m_2354041
+	m	(Lnet/minecraft/C_1448004;DDDF)V	m_2354041		render
 		p	1			p_1
 		p	2			p_2
 		p	4			p_4
@@ -400,7 +401,7 @@ c	net/minecraft/C_9121319		net/minecraft/C_9121319
 		p	8			p_8
 	m	(Lnet/minecraft/C_2161066;)V	m_2045648		m_2045648
 		p	1			p_1
-	m	(FFFIFI)V	m_4596938		m_4596938
+	m	(FFFIFI)V	m_4596938		render
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3

@@ -6,9 +6,9 @@ c	net/minecraft/C_0319517
 c	net/minecraft/C_0350689
 	m	()F	m_0205980		m_0205980
 c	net/minecraft/C_0370453
-	m	(Lnet/minecraft/C_3488719;Lnet/minecraft/C_4512400;)Z	m_1474213		m_1474213
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/C_3488719;Lnet/minecraft/C_4512400;)Z	m_1474213		isWithinBorder
+		p	1			border
+		p	2			entity
 c	net/minecraft/C_0951925
 	m	(I)V	m_8333059	m_8333059	
 		p	1		p_1	
@@ -17,7 +17,7 @@ c	net/minecraft/C_0951925
 		p	2			p_2
 	m	()Z	m_1456593		m_1456593
 c	net/minecraft/C_0951925$C_3679852
-	f	Ljava/util/List;	f_7138303		f_7138303
+	f	Ljava/util/List;	f_7138303		players
 	m	(I)V	m_8333059	m_8333059	
 		p	1		p_1	
 	m	(FI)V	m_8333059		m_8333059
@@ -38,7 +38,7 @@ c	net/minecraft/C_2544704
 c	net/minecraft/C_2544704$2
 	f	[I	f_1863765		f_1863765
 c	net/minecraft/C_2631437
-	f	Z	f_6129913		f_6129913
+	f	Z	f_6129913		forceUpdate
 c	net/minecraft/C_2825800
 	m	(Lio/netty/buffer/ByteBuf;)[B	m_8308233		m_8308233
 		p	0			p_0
@@ -64,7 +64,7 @@ c	net/minecraft/C_5102762$1
 	m	(Lcom/mojang/authlib/GameProfile;Lcom/mojang/authlib/GameProfile;)I	m_5144827	m_5144827	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/C_4953007;Lnet/minecraft/C_4953007;)I	m_4025630		m_4025630
+	m	(Lnet/minecraft/C_4953007;Lnet/minecraft/C_4953007;)I	m_4025630		compare
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_5102762$2	$2	
@@ -79,19 +79,19 @@ c	net/minecraft/C_5477499
 	m	(Lnet/minecraft/C_5477499;)V	<init>		<init>
 		p	1			p_1
 c	net/minecraft/C_5528511
-	f	I	f_8582047		f_8582047
-	f	Ljava/lang/String;	f_5168395		f_5168395
-	f	Ljava/lang/String;	f_1960188		f_1960188
-	f	I	f_6698730		f_6698730
-	f	I	f_0662089		f_0662089
-	f	I	f_6132975		f_6132975
-	m	()V	m_4213771		m_4213771
-	m	(Ljava/lang/String;Ljava/lang/String;III)V	m_1923047		m_1923047
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+	f	I	f_8582047		titleTime
+	f	Ljava/lang/String;	f_5168395		title
+	f	Ljava/lang/String;	f_1960188		subtitle
+	f	I	f_6698730		titleFadeInTime
+	f	I	f_0662089		titleDuration
+	f	I	f_6132975		titleFadeOutTime
+	m	()V	m_4213771		resetTitleTimes
+	m	(Ljava/lang/String;Ljava/lang/String;III)V	m_1923047		setTitles
+		p	1			title
+		p	2			subtitle
+		p	3			titleFadeInTime
+		p	4			titleDuration
+		p	5			titleFadeOutTime
 c	net/minecraft/C_5528511$1
 	f	Lnet/minecraft/C_9999339;	f_0605404		f_0605404
 	m	(Lnet/minecraft/C_5528511;)V	<init>	<init>	
@@ -100,28 +100,28 @@ c	net/minecraft/C_5528511$1
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_6326307
-	m	(I)V	m_8333059	m_8333059	
+	m	(I)V	m_8333059	render	
 		p	1		p_1	
-	m	(FI)V	m_8333059		m_8333059
-		p	1			p_1
-		p	2			p_2
-	m	()Z	m_1456593		m_1456593
+	m	(FI)V	m_8333059		render
+		p	1			tickDelta
+		p	2			slot
+	m	()Z	m_1456593		isEnabled
 c	net/minecraft/C_6391117
-	m	(Lnet/minecraft/C_9833662;)V	m_2978646		m_2978646
-		p	1			p_1
+	m	(Lnet/minecraft/C_9833662;)V	m_2978646		handleTitles
+		p	1			packet
 c	net/minecraft/C_7128826
-	m	(IIIF)V	m_2651243	m_2651243	
+	m	(IIIF)V	m_2651243	renderSlot	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
-	m	(Lnet/minecraft/C_6441603;FIILnet/minecraft/C_2256821;)V	m_1977214		m_1977214
+	m	(Lnet/minecraft/C_6441603;FIILnet/minecraft/C_2256821;)V	m_1977214		renderMenu
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	(IIIFLnet/minecraft/C_6326307;)V	m_2651243		m_2651243
+	m	(IIIFLnet/minecraft/C_6326307;)V	m_2651243		renderSlot
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -135,10 +135,10 @@ c	net/minecraft/C_7307466
 		p	2			p_2
 	m	()Z	m_1456593		m_1456593
 c	net/minecraft/C_7316172
-	f	Lnet/minecraft/C_6326307;	f_6225058		f_6225058
-	f	Ljava/util/List;	f_4780610		f_4780610
-	m	()Ljava/util/List;	m_4565298		m_4565298
-	m	()Lnet/minecraft/C_2256821;	m_0909912		m_0909912
+	f	Lnet/minecraft/C_6326307;	f_6225058		SCROLL_RIGHT_DISABLED
+	f	Ljava/util/List;	f_4780610		previousPages
+	m	()Ljava/util/List;	m_4565298		getItems
+	m	()Lnet/minecraft/C_2256821;	m_0909912		getSelectedPage
 c	net/minecraft/C_7316172$1
 	m	(I)V	m_8333059	m_8333059	
 		p	1		p_1	
@@ -147,14 +147,14 @@ c	net/minecraft/C_7316172$1
 		p	2			p_2
 	m	()Z	m_1456593		m_1456593
 c	net/minecraft/C_7316172$C_0884144
-	f	Z	f_2322222		f_2322222
+	f	Z	f_2322222		enabled
 	m	(I)V	<init>	<init>	
 		p	1		p_1	
 	m	(I)V	m_8333059	m_8333059	
 		p	1		p_1	
 	m	(IZ)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			slot
+		p	2			enabled
 	m	(FI)V	m_8333059		m_8333059
 		p	1			p_1
 		p	2			p_2
@@ -167,44 +167,44 @@ c	net/minecraft/C_7316172$C_8720911
 		p	2			p_2
 	m	()Z	m_1456593		m_1456593
 c	net/minecraft/C_7765078
-	m	(FFF)I	m_4875235		m_4875235
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-	m	(III)I	m_6928903		m_6928903
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
+	m	(FFF)I	m_4875235		packRGB
+		p	0			r
+		p	1			g
+		p	2			b
+	m	(III)I	m_6928903		packRGB
+		p	0			r
+		p	1			g
+		p	2			b
 c	net/minecraft/C_8086782
 	m	()Z	m_1296728		m_1296728
 c	net/minecraft/C_9025643
-	m	(Lnet/minecraft/C_5956923;Lnet/minecraft/C_5956923;)Z	m_7282386		m_7282386
+	m	(Lnet/minecraft/C_5956923;Lnet/minecraft/C_5956923;)Z	m_7282386		canReplace
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/C_1110506		net/minecraft/C_1110506
-	f	Ljava/lang/String;	f_6785302		f_6785302
+c	net/minecraft/C_1110506		net/minecraft/text/SelectorText
+	f	Ljava/lang/String;	f_6785302		pattern
 	m	(Ljava/lang/String;)V	<init>		<init>
-		p	1			p_1
-	m	()Ljava/lang/String;	m_8915486		m_8915486
+		p	1			pattern
+	m	()Ljava/lang/String;	m_8915486		getPattern
 	m	()Ljava/lang/String;	m_8715800		m_8715800
-	m	()Lnet/minecraft/C_1110506;	m_1445406		m_1445406
+	m	()Lnet/minecraft/C_1110506;	m_1445406		copy
 	m	(Ljava/lang/Object;)Z	equals		equals
 		p	1			p_1
 	m	()Ljava/lang/String;	toString		toString
 	m	()Lnet/minecraft/C_3673881;	m_0602357		m_0602357
-c	net/minecraft/C_2256821		net/minecraft/C_2256821
-	f	Lnet/minecraft/C_9664247;	f_0624464		f_0624464
-	f	Ljava/util/List;	f_7433295		f_7433295
-	f	I	f_4802120		f_4802120
+c	net/minecraft/C_2256821		net/minecraft/client/gui/spectator/SpectatorMenuPage
+	f	Lnet/minecraft/C_9664247;	f_0624464		category
+	f	Ljava/util/List;	f_7433295		items
+	f	I	f_4802120		selectedSlot
 	m	(Lnet/minecraft/C_9664247;Ljava/util/List;I)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(I)Lnet/minecraft/C_6326307;	m_5365770		m_5365770
-		p	1			p_1
-	m	()I	m_3753918		m_3753918
-c	net/minecraft/C_4354962		net/minecraft/C_4354962
-	f	Lorg/apache/logging/log4j/Logger;	f_6163244		f_6163244
+		p	1			category
+		p	2			items
+		p	3			selectedSlot
+	m	(I)Lnet/minecraft/C_6326307;	m_5365770		getItem
+		p	1			slot
+	m	()I	m_3753918		getSelectedSlot
+c	net/minecraft/C_4354962		net/minecraft/server/command/TitleCommand
+	f	Lorg/apache/logging/log4j/Logger;	f_6163244		LOGGER
 	m	()V	<init>		<init>
 	m	()Ljava/lang/String;	m_5188068		m_5188068
 	m	()I	m_1252306		m_1252306
@@ -220,45 +220,45 @@ c	net/minecraft/C_4354962		net/minecraft/C_4354962
 		p	1			p_1
 		p	2			p_2
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_9833662		net/minecraft/C_9833662
-	f	Lnet/minecraft/C_9833662$C_2090249;	f_7379842		f_7379842
-	f	Lnet/minecraft/C_3673881;	f_3408692		f_3408692
-	f	I	f_5236504		f_5236504
-	f	I	f_4307468		f_4307468
-	f	I	f_0736821		f_0736821
+c	net/minecraft/C_9833662		net/minecraft/network/packet/s2c/play/TitlesS2CPacket
+	f	Lnet/minecraft/C_9833662$C_2090249;	f_7379842		type
+	f	Lnet/minecraft/C_3673881;	f_3408692		text
+	f	I	f_5236504		fadeIn
+	f	I	f_4307468		duration
+	f	I	f_0736821		fadeOut
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/C_9833662$C_2090249;Lnet/minecraft/C_3673881;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			type
+		p	2			text
 	m	(III)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			fadeIn
+		p	2			duration
+		p	3			fadeOut
 	m	(Lnet/minecraft/C_9833662$C_2090249;Lnet/minecraft/C_3673881;III)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	1			type
+		p	2			text
+		p	3			fadeIn
+		p	4			duration
+		p	5			fadeOut
 	m	(Lnet/minecraft/C_4800753;)V	m_6089323		m_6089323
 		p	1			p_1
 	m	(Lnet/minecraft/C_4800753;)V	m_9250463		m_9250463
 		p	1			p_1
-	m	(Lnet/minecraft/C_6391117;)V	m_1879586		m_1879586
+	m	(Lnet/minecraft/C_6391117;)V	m_1879586		apply
 		p	1			p_1
-	m	()Lnet/minecraft/C_9833662$C_2090249;	m_1886314		m_1886314
-	m	()Lnet/minecraft/C_3673881;	m_3582005		m_3582005
-	m	()I	m_0304861		m_0304861
-	m	()I	m_2149364		m_2149364
-	m	()I	m_2949352		m_2949352
+	m	()Lnet/minecraft/C_9833662$C_2090249;	m_1886314		getType
+	m	()Lnet/minecraft/C_3673881;	m_3582005		getText
+	m	()I	m_0304861		getFadeIn
+	m	()I	m_2149364		getDuration
+	m	()I	m_2949352		getFadeOut
 	m	(Lnet/minecraft/C_4657865;)V	m_4654498		m_4654498
 		p	1			p_1
-c	net/minecraft/C_9833662$C_2090249		net/minecraft/C_9833662$C_2090249
-	f	Lnet/minecraft/C_9833662$C_2090249;	f_2490768		f_2490768
-	f	Lnet/minecraft/C_9833662$C_2090249;	f_0050418		f_0050418
-	f	Lnet/minecraft/C_9833662$C_2090249;	f_3826342		f_3826342
-	f	Lnet/minecraft/C_9833662$C_2090249;	f_0494134		f_0494134
-	f	Lnet/minecraft/C_9833662$C_2090249;	f_5972185		f_5972185
+c	net/minecraft/C_9833662$C_2090249		net/minecraft/network/packet/s2c/play/TitlesS2CPacket$Type
+	f	Lnet/minecraft/C_9833662$C_2090249;	f_2490768		TITLE
+	f	Lnet/minecraft/C_9833662$C_2090249;	f_0050418		SUBTITLE
+	f	Lnet/minecraft/C_9833662$C_2090249;	f_3826342		TIMES
+	f	Lnet/minecraft/C_9833662$C_2090249;	f_0494134		CLEAR
+	f	Lnet/minecraft/C_9833662$C_2090249;	f_5972185		RESET
 	f	I	f_7999782		f_7999782
 	f	[Lnet/minecraft/C_9833662$C_2090249;	f_2348640		f_2348640
 	m	()[Lnet/minecraft/C_9833662$C_2090249;	values		values
@@ -271,7 +271,7 @@ c	net/minecraft/C_9833662$C_2090249		net/minecraft/C_9833662$C_2090249
 	m	()I	m_9592576		m_9592576
 	m	(I)Lnet/minecraft/C_9833662$C_2090249;	m_9527565		m_9527565
 		p	0			p_0
-	m	(Ljava/lang/String;)Lnet/minecraft/C_9833662$C_2090249;	m_1176214		m_1176214
-		p	0			p_0
-	m	()[Ljava/lang/String;	m_0276893		m_0276893
+	m	(Ljava/lang/String;)Lnet/minecraft/C_9833662$C_2090249;	m_1176214		byName
+		p	0			name
+	m	()[Ljava/lang/String;	m_0276893		getNames
 	m	()V	<clinit>		<clinit>

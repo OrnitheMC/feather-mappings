@@ -1,7 +1,7 @@
 tiny	2	0
-c	net/minecraft/C_0077087
-	f	I	f_0527222	f_0527222	
-	f	I	f_9274020		f_9274020
+c	net/minecraft/C_0077087	net/minecraft/block/entity/MobSpawnerBlockEntity	net/minecraft/block/spawner/MobSpawner
+	f	I	f_0527222	delay	
+	f	I	f_9274020		delay
 	m	()V	m_3195536	m_3195536	
 	m	(Lnet/minecraft/C_9679079;)V	m_5478226	m_5478226	
 		p	1		p_1	
@@ -11,46 +11,46 @@ c	net/minecraft/C_0077087
 	m	(II)V	m_2885793	m_2885793	
 		p	1		p_1	
 		p	2		p_2	
-	m	()V	m_9611858		m_9611858
-	m	(Lnet/minecraft/C_9679079;)V	m_2158131		m_2158131
-		p	1			p_1
-	m	(Lnet/minecraft/C_9679079;)V	m_6378506		m_6378506
-		p	1			p_1
-	m	(I)Z	m_9818709		m_9818709
-		p	1			p_1
-	m	()Lnet/minecraft/C_0077087$C_4768317;	m_2321140		m_2321140
-	m	(Lnet/minecraft/C_0077087$C_4768317;)V	m_6996735		m_6996735
-		p	1			p_1
-	m	(I)V	m_7757493		m_7757493
-		p	1			p_1
-	m	()Lnet/minecraft/C_0370453;	m_7875987		m_7875987
-	m	()I	m_7353004		m_7353004
-	m	()I	m_4144022		m_4144022
-	m	()I	m_0446613		m_0446613
+	m	()V	m_9611858		tick
+	m	(Lnet/minecraft/C_9679079;)V	m_2158131		readNbt
+		p	1			nbt
+	m	(Lnet/minecraft/C_9679079;)V	m_6378506		writeNbt
+		p	1			nbt
+	m	(I)Z	m_9818709		doEntityEvent
+		p	1			event
+	m	()Lnet/minecraft/C_0077087$C_4768317;	m_2321140		getNextEntry
+	m	(Lnet/minecraft/C_0077087$C_4768317;)V	m_6996735		setNextEntry
+		p	1			entry
+	m	(I)V	m_7757493		broadcastEntityEvent
+		p	1			event
+	m	()Lnet/minecraft/C_0370453;	m_7875987		getWorld
+	m	()I	m_7353004		getX
+	m	()I	m_4144022		getY
+	m	()I	m_0446613		getZ
 c	net/minecraft/C_0370453
-	m	(III)I	m_4079249	m_4079249	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-	m	(IIIIII)I	m_5610216	m_5610216	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
-	m	(IIIIII)I	m_2036766	m_2036766	
+	m	(III)I	m_4079249	getOpacity	
+		p	1		x	
+		p	2		y	
+		p	3		z	
+	m	(IIIIII)I	m_5610216	getRawLight	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
 		p	5		p_5	
 		p	6		p_6	
-	m	(IIILnet/minecraft/C_9362196;)I	m_5610216		m_5610216
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(IIIIII)I	m_2036766	getRawBrightness	
+		p	1		p_1	
+		p	2		p_2	
+		p	3		p_3	
+		p	4		p_4	
+		p	5		p_5	
+		p	6		p_6	
+	m	(IIILnet/minecraft/C_9362196;)I	m_5610216		getRawLight
+		p	1			x
+		p	2			y
+		p	3			z
+		p	4			type
 c	net/minecraft/C_0845477
 	f	Ljava/util/List;	f_8743856	f_8743856	
 	m	()V	<clinit>	<clinit>	
@@ -69,7 +69,7 @@ c	net/minecraft/C_0933376
 		p	6			p_6
 		p	7			p_7
 c	net/minecraft/C_1119130
-	m	(I)Z	m_2645801		m_2645801
+	m	(I)Z	m_2645801		canStepOnto
 		p	1			p_1
 c	net/minecraft/C_1807519
 	m	(Lnet/minecraft/C_0077087;DDDF)V	m_1832613
@@ -77,11 +77,11 @@ c	net/minecraft/C_1807519
 		p	4		p_4	
 		p	6		p_6	
 		p	8		p_8	
-		p	0			p_0
-		p	3			p_3
-		p	5			p_5
-		p	7			p_7
-	m	(Lnet/minecraft/C_2942217;DDDF)V	m_0032135		m_0032135
+		p	0			mobSpawner
+		p	3			y
+		p	5			z
+		p	7			tickDelta
+	m	(Lnet/minecraft/C_2942217;DDDF)V	m_0032135		render
 		p	1			p_1
 		p	2			p_2
 		p	4			p_4
@@ -103,12 +103,12 @@ c	net/minecraft/C_2050118
 		p	5			p_5
 		p	6			p_6
 c	net/minecraft/C_2493338
-	m	(II)V	m_2885793	m_2885793	
-		p	1		p_1	
-		p	2		p_2	
-	m	(II)Z	m_2885793		m_2885793
-		p	1			p_1
-		p	2			p_2
+	m	(II)V	m_2885793	doEvent	
+		p	1		type	
+		p	2		data	
+	m	(II)Z	m_2885793		doEvent
+		p	1			type
+		p	2			data
 c	net/minecraft/C_2615101
 	m	(II)V	m_2885793	m_2885793	
 		p	1		p_1	
@@ -132,32 +132,34 @@ c	net/minecraft/C_2813598
 		p	5			p_5
 		p	6			p_6
 c	net/minecraft/C_4562553
-	f	Z	f_3885835		f_3885835
+	f	Z	f_3885835		doAmbientOcclusionOverOne
 c	net/minecraft/C_5956923
-	m	(Lnet/minecraft/C_0370453;IIIII)V	m_1231525	m_1231525	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
-	m	(Lnet/minecraft/C_0370453;IIIII)Z	m_1231525		m_1231525
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
+	m	(Lnet/minecraft/C_0370453;IIIII)V	m_1231525	doEvent	
+		c	Performs a block event. Block events are queued on the server, and executed once per\ntick. Successful block events are synced with clients that are within range. Block events\nare most notably used by pistons to handle extension and retraction, but note blocks\nalso use them to play sounds.	
+		p	1		world	
+		p	2		x	
+		p	3		y	
+		p	4		z	
+		p	5		type	
+		p	6		data	
+	m	(Lnet/minecraft/C_0370453;IIIII)Z	m_1231525		doEvent
+		c		Performs a block event. Block events are queued on the server, and executed once per\ntick. Successful block events are synced with clients that are within range. Block events\nare most notably used by pistons to handle extension and retraction, but note blocks\nalso use them to play sounds.\n\n@return whether the block event was successful.
+		p	1			world
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			type
+		p	6			data
 c	net/minecraft/C_6070393
 	f	I	f_9968171	f_9968171	
-	f	I	f_7846944		f_7846944
+	f	I	f_7846944		chestType
 	m	(II)V	m_2885793	m_2885793	
 		p	1		p_1	
 		p	2		p_2	
 	m	(II)Z	m_2885793		m_2885793
 		p	1			p_1
 		p	2			p_2
-	m	()I	m_7799965		m_7799965
+	m	()I	m_7799965		getChestType
 c	net/minecraft/C_6525852
 	m	(Lnet/minecraft/C_0370453;IIIII)V	m_1231525	m_1231525	
 		p	1		p_1	
@@ -189,17 +191,17 @@ c	net/minecraft/C_7286521
 		p	5			p_5
 		p	6			p_6
 c	net/minecraft/C_7751524
-	f	F	f_3273472		f_3273472
-	f	F	f_4614662		f_4614662
-	m	(Z)V	m_3917890		m_3917890
-		p	1			p_1
+	f	F	f_3273472		ageWidth
+	f	F	f_4614662		ageHeight
+	m	(Z)V	m_3917890		setAgeSize
+		p	1			isBaby
 	m	(FF)V	m_4195706		m_4195706
 		p	1			p_1
 		p	2			p_2
-	m	(F)V	m_0673176		m_0673176
-		p	1			p_1
-c	net/minecraft/C_2942217		net/minecraft/C_2942217
-	f	Lnet/minecraft/C_0077087;	f_0321565		f_0321565
+	m	(F)V	m_0673176		resizeBounds
+		p	1			size
+c	net/minecraft/C_2942217		net/minecraft/block/entity/MobSpawnerBlockEntity
+	f	Lnet/minecraft/C_0077087;	f_0321565		spawner
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/C_9679079;)V	m_5478226		m_5478226
 		p	1			p_1
@@ -210,9 +212,9 @@ c	net/minecraft/C_2942217		net/minecraft/C_2942217
 	m	(II)Z	m_2885793		m_2885793
 		p	1			p_1
 		p	2			p_2
-	m	()Lnet/minecraft/C_0077087;	m_8920248		m_8920248
-c	net/minecraft/C_2942217$1		net/minecraft/C_2942217$1
-	f	Lnet/minecraft/C_2942217;	f_1648298		f_1648298
+	m	()Lnet/minecraft/C_0077087;	m_8920248		getSpawner
+c	net/minecraft/C_2942217$1		net/minecraft/block/entity/MobSpawnerBlockEntity$1
+	f	Lnet/minecraft/C_2942217;	f_1648298		anonMobSpawner
 	m	(Lnet/minecraft/C_2942217;)V	<init>		<init>
 		p	1			p_1
 	m	(I)V	m_7757493		m_7757493
@@ -223,8 +225,8 @@ c	net/minecraft/C_2942217$1		net/minecraft/C_2942217$1
 	m	()I	m_0446613		m_0446613
 	m	(Lnet/minecraft/C_0077087$C_4768317;)V	m_6996735		m_6996735
 		p	1			p_1
-c	net/minecraft/C_7013776		net/minecraft/C_7013776
-	f	Lnet/minecraft/C_0077087;	f_9346965		f_9346965
+c	net/minecraft/C_7013776		net/minecraft/entity/vehicle/SpawnerMinecartEntity
+	f	Lnet/minecraft/C_0077087;	f_9346965		spawner
 	m	(Lnet/minecraft/C_0370453;)V	<init>		<init>
 		p	1			p_1
 	m	(Lnet/minecraft/C_0370453;DDD)V	<init>		<init>
@@ -241,9 +243,9 @@ c	net/minecraft/C_7013776		net/minecraft/C_7013776
 	m	(B)V	m_3491698		m_3491698
 		p	1			p_1
 	m	()V	m_6052512		m_6052512
-	m	()Lnet/minecraft/C_0077087;	m_8814379		m_8814379
-c	net/minecraft/C_7013776$1		net/minecraft/C_7013776$1
-	f	Lnet/minecraft/C_7013776;	f_7813513		f_7813513
+	m	()Lnet/minecraft/C_0077087;	m_8814379		getSpawnerBehavior
+c	net/minecraft/C_7013776$1		net/minecraft/entity/vehicle/SpawnerMinecartEntity$1
+	f	Lnet/minecraft/C_7013776;	f_7813513		anonSpawnerCart
 	m	(Lnet/minecraft/C_7013776;)V	<init>		<init>
 		p	1			p_1
 	m	(I)V	m_7757493		m_7757493
@@ -252,9 +254,9 @@ c	net/minecraft/C_7013776$1		net/minecraft/C_7013776$1
 	m	()I	m_7353004		m_7353004
 	m	()I	m_4144022		m_4144022
 	m	()I	m_0446613		m_0446613
-c	net/minecraft/C_7561850		net/minecraft/C_7561850
+c	net/minecraft/C_7561850		net/minecraft/client/render/entity/SpawnerMinecartRenderer
 	m	()V	<init>		<init>
-	m	(Lnet/minecraft/C_7013776;FLnet/minecraft/C_5956923;I)V	m_2262485		m_2262485
+	m	(Lnet/minecraft/C_7013776;FLnet/minecraft/C_5956923;I)V	m_2262485		renderSpawnerMinecart
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3

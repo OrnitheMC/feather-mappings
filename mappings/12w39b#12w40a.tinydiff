@@ -13,24 +13,24 @@ c	net/minecraft/C_0370453
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(IIILnet/minecraft/C_9362196;)I	m_2036766	m_2036766	
+	m	(IIILnet/minecraft/C_9362196;)I	m_2036766	getRawBrightness	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
-	m	(Lnet/minecraft/C_9362196;III)V	m_9974936	m_9974936	
+	m	(Lnet/minecraft/C_9362196;III)V	m_9974936	getRawBrightness	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
-	m	(Lnet/minecraft/C_9362196;IIIZ)V	m_3337918	m_3337918	
+	m	(Lnet/minecraft/C_9362196;IIIZ)V	m_3337918	checkLight	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
 		p	5		p_5	
 	m	()V	m_5420611	m_5420611	
-	m	()Z	m_7519668	m_7519668	
+	m	()Z	m_7519668	updateLights	
 	m	(IIIIZ)I	m_7891417	m_7891417	
 		p	1		p_1	
 		p	2		p_2	
@@ -55,55 +55,55 @@ c	net/minecraft/C_0370453
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
-	m	(III)I	m_4079249		m_4079249
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(III)I	m_9974936		m_9974936
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(IIIZ)I	m_6751739		m_6751739
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(II)I	m_7525376		m_7525376
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/C_9362196;III)I	m_6779254		m_6779254
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(IIIIII)I	m_5610216		m_5610216
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-	m	(IIIIII)I	m_2036766		m_2036766
+	m	(III)I	m_4079249		getOpacity
+		p	1			x
+		p	2			y
+		p	3			z
+	m	(III)I	m_9974936		getRawBrightness
+		p	1			x
+		p	2			y
+		p	3			z
+	m	(IIIZ)I	m_6751739		getRawBrightness
+		p	1			x
+		p	2			y
+		p	3			z
+		p	4			useNeighborLight
+	m	(II)I	m_7525376		getLowestHeight
+		p	1			x
+		p	2			z
+	m	(Lnet/minecraft/C_9362196;III)I	m_6779254		getBrightness
+		p	1			type
+		p	2			x
+		p	3			y
+		p	4			z
+	m	(IIIIII)I	m_5610216		getRawLight
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
 		p	6			p_6
-	m	(Lnet/minecraft/C_9362196;III)V	m_3337918		m_3337918
+	m	(IIIIII)I	m_2036766		getRawBrightness
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
+		p	5			p_5
+		p	6			p_6
+	m	(Lnet/minecraft/C_9362196;III)V	m_3337918		checkLight
+		p	1			type
+		p	2			x
+		p	3			y
+		p	4			z
 c	net/minecraft/C_0750548
 	f	Z	f_7211309	f_7211309	
 c	net/minecraft/C_0836437
-c	net/minecraft/C_0836437$C_3850370		$C_3850370
-	f	Z	f_8086522		f_8086522
+c	net/minecraft/C_0836437$C_3850370		$WitchHut
+	f	Z	f_8086522		hasWitch
 	m	(Ljava/util/Random;II)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			random
+		p	2			x
+		p	3			z
 	m	(Lnet/minecraft/C_0370453;Ljava/util/Random;Lnet/minecraft/C_8368700;)Z	m_6187562		m_6187562
 		p	1			p_1
 		p	2			p_2
@@ -114,18 +114,20 @@ c	net/minecraft/C_0906783
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/C_0939655
-	m	(IIZLnet/minecraft/C_6419746;)Lnet/minecraft/C_1352131;	m_6851759	m_6851759	
+	m	(IIZLnet/minecraft/C_6419746;)Lnet/minecraft/C_1352131;	m_6851759	onClickSlot	
+		c	Handle an interaction with an inventory slot.\n\n<p>\nThe following action types are in use:\n<br>0: pickup      - move a stack between the inventory and the cursor\n<br>1: quick move  - move a stack between the inventory and the hotbar\n<br>2: swap        - swap an inventory stack and a hotbar stack\n<br>3: clone       - use the pick item key on an inventory slot\n<br>4: throw       - use the drop item key on an inventory slot\n<br>5: quick craft - click-and-drag a stack over an inventory slot\n<br>6: pickup all  - double click with a stack on an inventory slot	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
-	m	(Lnet/minecraft/C_0930733;)V	m_9946518		m_9946518
-		p	1			p_1
-	m	(IIILnet/minecraft/C_6419746;)Lnet/minecraft/C_1352131;	m_6851759		m_6851759
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(Lnet/minecraft/C_0930733;)V	m_9946518		removeListener
+		p	1			listener
+	m	(IIILnet/minecraft/C_6419746;)Lnet/minecraft/C_1352131;	m_6851759		onClickSlot
+		c		Handle an interaction with an inventory slot.\n\n<p>\nThe following action types are in use:\n<br>0: pickup      - move a stack between the inventory and the cursor\n<br>1: quick move  - move a stack between the inventory and the hotbar\n<br>2: swap        - swap an inventory stack and a hotbar stack\n<br>3: clone       - use the pick item key on an inventory slot\n<br>4: throw       - use the drop item key on an inventory slot\n<br>5: quick craft - click-and-drag a stack over an inventory slot\n<br>6: pickup all  - double click with a stack on an inventory slot
+		p	1			id
+		p	2			clickData
+		p	3			action
+		p	4			player
 c	net/minecraft/C_1022183
 	m	(IIIIIZ)I	m_3354812	m_3354812	
 		p	1		p_1	
@@ -135,57 +137,57 @@ c	net/minecraft/C_1022183
 		p	5		p_5	
 		p	6		p_6	
 c	net/minecraft/C_1214488
-	f	Lnet/minecraft/C_4227521;	f_9453280		f_9453280
-	m	(Lnet/minecraft/C_0370453;IIILjava/util/Random;)V	m_4830353	m_4830353	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-	m	(Lnet/minecraft/C_0370453;Lnet/minecraft/C_1352131;Ljava/util/Random;IIIDDD)V	m_3127187	m_3127187	
-		p	0		p_0	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
-		p	8		p_8	
-		p	10		p_10	
-	m	(Lnet/minecraft/C_6086278;Lnet/minecraft/C_0370453;Lnet/minecraft/C_1352131;Ljava/util/Random;IIIIIDDD)I	m_6849415	m_6849415	
-		p	0		p_0	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
-		p	7		p_7	
-		p	8		p_8	
-		p	9		p_9	
-		p	11		p_11	
-		p	13		p_13	
-	m	(Lnet/minecraft/C_0370453;III)V	m_4830353		m_4830353
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/C_1370254;)Lnet/minecraft/C_7384429;	m_0711004		m_0711004
-		p	0			p_0
+	f	Lnet/minecraft/C_4227521;	f_9453280		BEHAVIORS
+	m	(Lnet/minecraft/C_0370453;IIILjava/util/Random;)V	m_4830353	dispense	
+		p	1		world	
+		p	2		x	
+		p	3		y	
+		p	4		z	
+		p	5		random	
+	m	(Lnet/minecraft/C_0370453;Lnet/minecraft/C_1352131;Ljava/util/Random;IIIDDD)V	m_3127187	dispenseItem	
+		p	0		world	
+		p	1		stack	
+		p	2		random	
+		p	3		velocity	
+		p	4		dx	
+		p	5		dz	
+		p	6		x	
+		p	8		y	
+		p	10		z	
+	m	(Lnet/minecraft/C_6086278;Lnet/minecraft/C_0370453;Lnet/minecraft/C_1352131;Ljava/util/Random;IIIIIDDD)I	m_6849415	dispense	
+		p	0		dispenser	
+		p	1		world	
+		p	2		stack	
+		p	3		random	
+		p	4		x	
+		p	5		y	
+		p	6		z	
+		p	7		dx	
+		p	8		dz	
+		p	9		dispenseX	
+		p	11		dispenseY	
+		p	13		dispenseZ	
+	m	(Lnet/minecraft/C_0370453;III)V	m_4830353		dispense
+		p	1			world
+		p	2			x
+		p	3			y
+		p	4			z
+	m	(Lnet/minecraft/C_1370254;)Lnet/minecraft/C_7384429;	m_0711004		getDispensePos
+		p	0			block
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/C_1800208
-	m	(IIIZLnet/minecraft/C_6419746;)Lnet/minecraft/C_1352131;	m_3895470	m_3895470	
+	m	(IIIZLnet/minecraft/C_6419746;)Lnet/minecraft/C_1352131;	m_3895470	clickSlot	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
 		p	5		p_5	
-	m	(IIIILnet/minecraft/C_6419746;)Lnet/minecraft/C_1352131;	m_3895470		m_3895470
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+	m	(IIIILnet/minecraft/C_6419746;)Lnet/minecraft/C_1352131;	m_3895470		clickSlot
+		p	1			syncId
+		p	2			slotId
+		p	3			clickData
+		p	4			actionType
+		p	5			player
 c	net/minecraft/C_1907065
 	m	(III)Z	m_9385358	m_9385358	
 		p	1		p_1	
@@ -200,38 +202,38 @@ c	net/minecraft/C_1907065
 		p	6		p_6	
 c	net/minecraft/C_2542228
 	f	I	f_2757981	f_2757981	
-	f	I	f_2515382		f_2515382
-	f	I	f_1283811		f_1283811
-	f	I	f_7757504		f_7757504
+	f	I	f_2515382		size
+	f	I	f_1283811		distance
+	f	I	f_7757504		minDistance
 	m	(I)V	<init>	<init>	
 		p	1		p_1	
 	m	()V	<init>		<init>
 	m	(Ljava/util/Map;)V	<init>		<init>
-		p	1			p_1
+		p	1			options
 c	net/minecraft/C_2841372
 	f	Lnet/minecraft/C_2542228;	f_7469773	f_7469773	
-	f	Ljava/util/List;	f_2881095		f_2881095
-	f	Z	f_3572726		f_3572726
-	f	Lnet/minecraft/C_7589707;	f_4041528		f_4041528
-	f	Lnet/minecraft/C_7589707;	f_3224920		f_3224920
+	f	Ljava/util/List;	f_2881095		structures
+	f	Z	f_3572726		hasDungeons
+	f	Lnet/minecraft/C_7589707;	f_4041528		waterLake
+	f	Lnet/minecraft/C_7589707;	f_3224920		lavaLake
 c	net/minecraft/C_3117018
-	m	(IIIZ)I	m_5239985		m_5239985
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/C_9362196;III)I	m_2661892		m_2661892
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(IIIZ)I	m_5239985		getLightLevel
+		p	1			x
+		p	2			y
+		p	3			z
+		p	4			useNeighborLight
+	m	(Lnet/minecraft/C_9362196;III)I	m_2661892		getBlockLightLevel
+		p	1			type
+		p	2			x
+		p	3			y
+		p	4			z
 c	net/minecraft/C_3284123
 	f	Z	f_5565040		f_5565040
 	m	(I)V	m_5109117		m_5109117
 		p	1			p_1
 c	net/minecraft/C_3559344
-	f	Ljava/util/Map;	f_8524315		f_8524315
-	m	()Ljava/util/Map;	m_7226084		m_7226084
+	f	Ljava/util/Map;	f_8524315		features
+	m	()Ljava/util/Map;	m_7226084		getFeatures
 c	net/minecraft/C_3776460
 	m	(III)Z	m_9385358	m_9385358	
 		p	1		p_1	
@@ -258,36 +260,36 @@ c	net/minecraft/C_4135566
 		p	7			p_7
 		p	8			p_8
 c	net/minecraft/C_5265945
-	m	(Ljava/lang/String;ILnet/minecraft/C_7850878;[Lnet/minecraft/C_4703389;)V	m_4060553	m_4060553	
+	m	(Ljava/lang/String;ILnet/minecraft/C_7850878;[Lnet/minecraft/C_4703389;)V	m_4060553	addPreset	
 		p	0		p_0	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(Ljava/lang/String;ILnet/minecraft/C_7850878;[Lnet/minecraft/C_4703389;)V	m_2827485		m_2827485
+	m	(Ljava/lang/String;ILnet/minecraft/C_7850878;[Lnet/minecraft/C_4703389;)V	m_2827485		addRedstonePreset
 		p	0			p_0
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Ljava/lang/String;ILnet/minecraft/C_7850878;Ljava/util/List;[Lnet/minecraft/C_4703389;)V	m_4060553		m_4060553
+	m	(Ljava/lang/String;ILnet/minecraft/C_7850878;Ljava/util/List;[Lnet/minecraft/C_4703389;)V	m_4060553		addPreset
 		p	0			p_0
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/C_5487272
-	f	Lnet/minecraft/C_3821343;	f_5297868		f_5297868
-	m	(Lnet/minecraft/C_3821343;IIZ)V	m_4207163	m_4207163	
+	f	Lnet/minecraft/C_3821343;	f_5297868		hoveredSlot
+	m	(Lnet/minecraft/C_3821343;IIZ)V	m_4207163	clickSlot	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
-	m	(Lnet/minecraft/C_3821343;III)V	m_4207163		m_4207163
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(I)Z	m_1538521		m_1538521
-		p	1			p_1
+	m	(Lnet/minecraft/C_3821343;III)V	m_4207163		clickSlot
+		p	1			invSlot
+		p	2			slotId
+		p	3			clickData
+		p	4			actionType
+	m	(I)Z	m_1538521		moveHoveredSlotToHotbar
+		p	1			key
 c	net/minecraft/C_5665470
 	m	(IIIIIZ)I	m_3354812	m_3354812	
 		p	1		p_1	
@@ -297,7 +299,7 @@ c	net/minecraft/C_5665470
 		p	5		p_5	
 		p	6		p_6	
 c	net/minecraft/C_5956923
-	f	[Z	f_1272210		f_1272210
+	f	[Z	f_1272210		USES_NEIGHBOR_LIGHT
 	m	(III)Z	m_9385358	m_9385358	
 		p	1		p_1	
 		p	2		p_2	
@@ -310,7 +312,7 @@ c	net/minecraft/C_5956923
 		p	5		p_5	
 		p	6		p_6	
 c	net/minecraft/C_6303764
-	f	Lnet/minecraft/C_3973837;	f_8334561		f_8334561
+	f	Lnet/minecraft/C_3973837;	f_8334561		listener
 	m	(Lnet/minecraft/C_3821343;IIZ)V	m_4207163	m_4207163	
 		p	1		p_1	
 		p	2		p_2	
@@ -322,7 +324,7 @@ c	net/minecraft/C_6303764
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/C_6419746
-	f	I	f_9535602		f_9535602
+	f	I	f_9535602		lastXpSoundTime
 c	net/minecraft/C_6692940
 	m	(DZ)V	m_8539799		m_8539799
 		p	1			p_1
@@ -340,12 +342,12 @@ c	net/minecraft/C_6720525
 		p	5		p_5	
 		p	6		p_6	
 c	net/minecraft/C_7042828
-	f	Ljava/util/List;	f_0267276		f_0267276
-	f	I	f_2725262		f_2725262
-	f	I	f_3998895		f_3998895
+	f	Ljava/util/List;	f_0267276		spawnEntries
+	f	I	f_2725262		distance
+	f	I	f_3998895		minDistance
 	m	(Ljava/util/Map;)V	<init>		<init>
-		p	1			p_1
-	m	()Ljava/util/List;	m_6699783		m_6699783
+		p	1			options
+	m	()Ljava/util/List;	m_6699783		getSpawnEntries
 c	net/minecraft/C_7266062
 	f	I	f_3888710		f_3888710
 c	net/minecraft/C_7286521
@@ -361,17 +363,17 @@ c	net/minecraft/C_7286521
 		p	5		p_5	
 		p	6		p_6	
 c	net/minecraft/C_7765078
-	m	(Ljava/lang/String;II)I	m_9584473		m_9584473
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-	m	(Ljava/lang/String;D)D	m_9380726		m_9380726
-		p	0			p_0
-		p	1			p_1
-	m	(Ljava/lang/String;DD)D	m_0950567		m_0950567
-		p	0			p_0
-		p	1			p_1
-		p	3			p_3
+	m	(Ljava/lang/String;II)I	m_9584473		parseInt
+		p	0			s
+		p	1			defaultValue
+		p	2			min
+	m	(Ljava/lang/String;D)D	m_9380726		parseDouble
+		p	0			s
+		p	1			defaultValue
+	m	(Ljava/lang/String;DD)D	m_0950567		parseDouble
+		p	0			s
+		p	1			defaultValue
+		p	3			min
 c	net/minecraft/C_8061012
 	m	()I	m_8925375		m_8925375
 c	net/minecraft/C_8177732
@@ -411,13 +413,13 @@ c	net/minecraft/C_8472011
 		p	5		p_5	
 		p	6		p_6	
 c	net/minecraft/C_8529965
-	f	D	f_3943411		f_3943411
-	f	I	f_8946104		f_8946104
+	f	D	f_3943411		distance
+	f	I	f_8946104		spread
 	m	(Ljava/util/Map;)V	<init>		<init>
-		p	1			p_1
+		p	1			options
 c	net/minecraft/C_8676485
 	f	Z	f_8509650	f_8509650	
-	f	I	f_1321570		f_1321570
+	f	I	f_1321570		action
 	m	(IIIZLnet/minecraft/C_1352131;S)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -426,14 +428,14 @@ c	net/minecraft/C_8676485
 		p	5		p_5	
 		p	6		p_6	
 	m	(IIIILnet/minecraft/C_1352131;S)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
+		p	1			menuId
+		p	2			slotId
+		p	3			clickData
+		p	4			action
+		p	5			stack
+		p	6			actionId
 c	net/minecraft/C_8962428
-	f	Z	f_1004398		f_1004398
+	f	Z	f_1004398		recheckGap
 	m	(III)Lnet/minecraft/C_5956923;	m_2845415	m_2845415	
 		p	1		p_1	
 		p	2		p_2	
@@ -454,20 +456,20 @@ c	net/minecraft/C_8962428
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(II)V	m_7288228		m_7288228
-		p	1			p_1
-		p	2			p_2
-	m	()V	m_9445485		m_9445485
-	m	(IIII)V	m_5546332		m_5546332
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(III)I	m_9895187		m_9895187
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	()V	m_3800302		m_3800302
+	m	(II)V	m_7288228		queueLightUpdate
+		p	1			sectionX
+		p	2			sectionZ
+	m	()V	m_9445485		recheckGaps
+	m	(IIII)V	m_5546332		checkSkylight
+		p	1			x
+		p	2			z
+		p	3			minY
+		p	4			maxY
+	m	(III)I	m_9895187		getOpacityAt
+		p	1			sectionX
+		p	2			y
+		p	3			sectionZ
+	m	()V	m_3800302		tick
 c	net/minecraft/C_9310561
 	m	(IIIIIZ)I	m_3354812	m_3354812	
 		p	1		p_1	
@@ -485,12 +487,12 @@ c	net/minecraft/C_9368328
 		p	5		p_5	
 		p	6		p_6	
 c	net/minecraft/C_9408914
-	f	D	f_8024337		f_8024337
+	f	D	f_8024337		spawnChance
 	m	(Ljava/util/Map;)V	<init>		<init>
-		p	1			p_1
+		p	1			options
 c	net/minecraft/server/MinecraftServer
-	m	()V	m_7428641		m_7428641
-	m	()I	m_8925375		m_8925375
+	m	()V	m_7428641		bootstrap
+	m	()I	m_8925375		getSpawnProtectionRadius
 c	net/minecraft/server/MinecraftServer$1
 	f	J	f_4780316	f_4780316	
 	f	Lnet/minecraft/server/MinecraftServer;	f_4160365	f_4160365	
@@ -662,31 +664,31 @@ c	net/minecraft/server/MinecraftServer$9		$9
 		p	1			p_1
 	m	()Ljava/lang/String;	m_5262393		m_5262393
 	m	()Ljava/lang/Object;	call		call
-c	net/minecraft/C_0886424		net/minecraft/C_0886424
-	m	(DDDFF)V	m_2736923		m_2736923
-		p	1			p_1
-		p	3			p_3
-		p	5			p_5
-		p	7			p_7
-		p	8			p_8
-c	net/minecraft/C_1370254		net/minecraft/C_1370254
+c	net/minecraft/C_0886424		net/minecraft/entity/Dispensable
+	m	(DDDFF)V	m_2736923		setVelocity
+		p	1			velocityX
+		p	3			velocityY
+		p	5			velocityZ
+		p	7			min
+		p	8			scale
+c	net/minecraft/C_1370254		net/minecraft/world/IBlockSource
 	m	()D	m_4576962		m_4576962
 	m	()D	m_1294248		m_1294248
 	m	()D	m_1305458		m_1305458
-	m	()I	m_6845188		m_6845188
-	m	()I	m_2314971		m_2314971
-	m	()I	m_3405886		m_3405886
-	m	()I	m_6476600		m_6476600
-	m	()Lnet/minecraft/C_2493338;	m_2025988		m_2025988
-c	net/minecraft/C_2180571		net/minecraft/C_2180571
-	f	Ljava/lang/Object;	f_2779248		f_2779248
+	m	()I	m_6845188		getBlockX
+	m	()I	m_2314971		getBlockY
+	m	()I	m_3405886		getBlockZ
+	m	()I	m_6476600		getBlockMetadata
+	m	()Lnet/minecraft/C_2493338;	m_2025988		getBlockEntity
+c	net/minecraft/C_2180571		net/minecraft/util/registry/DefaultedRegistry
+	f	Ljava/lang/Object;	f_2779248		defaultValue
 	m	(Ljava/lang/Object;)V	<init>		<init>
-		p	1			p_1
+		p	1			defaultValue
 	m	(Ljava/lang/Object;)Ljava/lang/Object;	m_4042023		m_4042023
 		p	1			p_1
-c	net/minecraft/C_2657159		net/minecraft/C_2657159
-	m	()Lnet/minecraft/C_0370453;	m_7551708		m_7551708
-c	net/minecraft/C_2994238		net/minecraft/C_2994238
+c	net/minecraft/C_2657159		net/minecraft/world/IWorldPosition
+	m	()Lnet/minecraft/C_0370453;	m_7551708		getWorld
+c	net/minecraft/C_2994238		net/minecraft/world/gen/feature/UpsideDownGlowstoneClusterFeature
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/C_0370453;Ljava/util/Random;III)Z	m_5533038		m_5533038
 		p	1			p_1
@@ -694,8 +696,8 @@ c	net/minecraft/C_2994238		net/minecraft/C_2994238
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-c	net/minecraft/C_3973837		net/minecraft/C_3973837
-	f	Lnet/minecraft/client/Minecraft;	f_9671290		f_9671290
+c	net/minecraft/C_3973837		net/minecraft/client/gui/screen/inventory/menu/CreativeInventoryListener
+	f	Lnet/minecraft/client/Minecraft;	f_9671290		client
 	m	(Lnet/minecraft/client/Minecraft;)V	<init>		<init>
 		p	1			p_1
 	m	(Lnet/minecraft/C_0939655;Ljava/util/List;)V	m_8689948		m_8689948
@@ -709,24 +711,25 @@ c	net/minecraft/C_3973837		net/minecraft/C_3973837
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/C_4227521		net/minecraft/C_4227521
-	m	(Ljava/lang/Object;)Ljava/lang/Object;	m_4042023		m_4042023
-		p	1			p_1
-	m	(Ljava/lang/Object;Ljava/lang/Object;)V	m_3132505		m_3132505
-		p	1			p_1
-		p	2			p_2
-c	net/minecraft/C_5053520		net/minecraft/C_5053520
-	f	Lnet/minecraft/C_5053520;	f_3392320		f_3392320
-	m	(Lnet/minecraft/C_1370254;Lnet/minecraft/C_1352131;)Lnet/minecraft/C_1352131;	m_2304965		m_2304965
-		p	1			p_1
-		p	2			p_2
+c	net/minecraft/C_4227521		net/minecraft/util/registry/Registry
+	m	(Ljava/lang/Object;)Ljava/lang/Object;	m_4042023		get
+		p	1			key
+	m	(Ljava/lang/Object;Ljava/lang/Object;)V	m_3132505		put
+		p	1			key
+		p	2			value
+c	net/minecraft/C_5053520		net/minecraft/block/dispenser/DispenseBehavior
+	f	Lnet/minecraft/C_5053520;	f_3392320		NONE
+	m	(Lnet/minecraft/C_1370254;Lnet/minecraft/C_1352131;)Lnet/minecraft/C_1352131;	m_2304965		dispense
+		c		Dispense the given item at the given location.\n\n@return the remainder after the item has been dispensed.
+		p	1			source
+		p	2			stack
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_5053520$1		net/minecraft/C_5053520$1
+c	net/minecraft/C_5053520$1		net/minecraft/block/dispenser/DispenseBehavior$1
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/C_1370254;Lnet/minecraft/C_1352131;)Lnet/minecraft/C_1352131;	m_2304965		m_2304965
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/C_5336934		net/minecraft/C_5336934
+c	net/minecraft/C_5336934		net/minecraft/world/gen/feature/GlowstoneClusterFeature
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/C_0370453;Ljava/util/Random;III)Z	m_5533038		m_5533038
 		p	1			p_1
@@ -734,29 +737,29 @@ c	net/minecraft/C_5336934		net/minecraft/C_5336934
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-c	net/minecraft/C_5998977		net/minecraft/C_5998977
+c	net/minecraft/C_5998977		net/minecraft/block/dispenser/DispenseItemBehavior
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/C_1370254;Lnet/minecraft/C_1352131;)Lnet/minecraft/C_1352131;	m_2304965		m_2304965
 		p	1			p_1
 		p	2			p_2
-	m	(Lnet/minecraft/C_1370254;Lnet/minecraft/C_1352131;)Lnet/minecraft/C_1352131;	m_6359839		m_6359839
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/C_0370453;Lnet/minecraft/C_1352131;ILnet/minecraft/C_7487478;Lnet/minecraft/C_7384429;)V	m_7208954		m_7208954
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/C_1370254;)V	m_9972970		m_9972970
-		p	1			p_1
-	m	(Lnet/minecraft/C_1370254;Lnet/minecraft/C_7487478;)V	m_4296221		m_4296221
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/C_7487478;)I	m_2435321		m_2435321
-		p	1			p_1
-c	net/minecraft/C_6508923		net/minecraft/C_6508923
-	f	I	f_3195433		f_3195433
+	m	(Lnet/minecraft/C_1370254;Lnet/minecraft/C_1352131;)Lnet/minecraft/C_1352131;	m_6359839		dispenseItem
+		p	1			source
+		p	2			stack
+	m	(Lnet/minecraft/C_0370453;Lnet/minecraft/C_1352131;ILnet/minecraft/C_7487478;Lnet/minecraft/C_7384429;)V	m_7208954		spawnItem
+		p	0			world
+		p	1			stack
+		p	2			offset
+		p	3			facing
+		p	4			pos
+	m	(Lnet/minecraft/C_1370254;)V	m_9972970		playSound
+		p	1			source
+	m	(Lnet/minecraft/C_1370254;Lnet/minecraft/C_7487478;)V	m_4296221		doWorldEvent
+		p	1			source
+		p	2			facing
+	m	(Lnet/minecraft/C_7487478;)I	m_2435321		toInt
+		p	1			dir
+c	net/minecraft/C_6508923		net/minecraft/world/gen/feature/LiquidPocketFeature
+	f	I	f_3195433		liquidId
 	m	(I)V	<init>		<init>
 		p	1			p_1
 	m	(Lnet/minecraft/C_0370453;Ljava/util/Random;III)Z	m_5533038		m_5533038
@@ -765,31 +768,31 @@ c	net/minecraft/C_6508923		net/minecraft/C_6508923
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-c	net/minecraft/C_6639776		net/minecraft/C_6639776
-	f	Ljava/util/Map;	f_6770921		f_6770921
+c	net/minecraft/C_6639776		net/minecraft/util/registry/MappedRegistry
+	f	Ljava/util/Map;	f_6770921		entries
 	m	()V	<init>		<init>
 	m	(Ljava/lang/Object;)Ljava/lang/Object;	m_4042023		m_4042023
 		p	1			p_1
 	m	(Ljava/lang/Object;Ljava/lang/Object;)V	m_3132505		m_3132505
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/C_7384429		net/minecraft/C_7384429
-	m	()D	m_4576962		m_4576962
-	m	()D	m_1294248		m_1294248
-	m	()D	m_1305458		m_1305458
-c	net/minecraft/C_7487478		net/minecraft/C_7487478
-	f	Lnet/minecraft/C_7487478;	f_6664666		f_6664666
-	f	Lnet/minecraft/C_7487478;	f_8785640		f_8785640
-	f	Lnet/minecraft/C_7487478;	f_7266152		f_7266152
-	f	Lnet/minecraft/C_7487478;	f_8680169		f_8680169
-	f	Lnet/minecraft/C_7487478;	f_8130364		f_8130364
-	f	Lnet/minecraft/C_7487478;	f_1529876		f_1529876
-	f	I	f_1072088		f_1072088
-	f	I	f_5331356		f_5331356
-	f	I	f_5120991		f_5120991
-	f	I	f_0544791		f_0544791
-	f	I	f_9164733		f_9164733
-	f	[Lnet/minecraft/C_7487478;	f_2842661		f_2842661
+c	net/minecraft/C_7384429		net/minecraft/util/math/IPosition
+	m	()D	m_4576962		getX
+	m	()D	m_1294248		getY
+	m	()D	m_1305458		getZ
+c	net/minecraft/C_7487478		net/minecraft/util/math/Direction
+	f	Lnet/minecraft/C_7487478;	f_6664666		DOWN
+	f	Lnet/minecraft/C_7487478;	f_8785640		UP
+	f	Lnet/minecraft/C_7487478;	f_7266152		NORTH
+	f	Lnet/minecraft/C_7487478;	f_8680169		SOUTH
+	f	Lnet/minecraft/C_7487478;	f_8130364		EAST
+	f	Lnet/minecraft/C_7487478;	f_1529876		WEST
+	f	I	f_1072088		id
+	f	I	f_5331356		opposite
+	f	I	f_5120991		offsetX
+	f	I	f_0544791		offsetY
+	f	I	f_9164733		offsetZ
+	f	[Lnet/minecraft/C_7487478;	f_2842661		ALL
 	f	[Lnet/minecraft/C_7487478;	f_1440671		f_1440671
 	m	()[Lnet/minecraft/C_7487478;	values		values
 	m	(Ljava/lang/String;)Lnet/minecraft/C_7487478;	valueOf		valueOf
@@ -797,37 +800,37 @@ c	net/minecraft/C_7487478		net/minecraft/C_7487478
 	m	(Ljava/lang/String;IIIIII)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-	m	()I	m_9729999		m_9729999
-	m	()I	m_3969764		m_3969764
-	m	(I)Lnet/minecraft/C_7487478;	m_8406144		m_8406144
-		p	0			p_0
+		p	3			id
+		p	4			opposite
+		p	5			offsetX
+		p	6			offsetY
+		p	7			offsetZ
+	m	()I	m_9729999		getOffsetX
+	m	()I	m_3969764		getOffsetZ
+	m	(I)Lnet/minecraft/C_7487478;	m_8406144		byId
+		p	0			id
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_7787666		net/minecraft/C_7787666
-	f	D	f_9603282		f_9603282
-	f	D	f_5742585		f_5742585
-	f	D	f_1752390		f_1752390
+c	net/minecraft/C_7787666		net/minecraft/util/math/Position
+	f	D	f_9603282		x
+	f	D	f_5742585		y
+	f	D	f_1752390		z
 	m	(DDD)V	<init>		<init>
-		p	1			p_1
-		p	3			p_3
-		p	5			p_5
+		p	1			x
+		p	3			y
+		p	5			z
 	m	()D	m_4576962		m_4576962
 	m	()D	m_1294248		m_1294248
 	m	()D	m_1305458		m_1305458
-c	net/minecraft/C_8528739		net/minecraft/C_8528739
-	f	Lnet/minecraft/C_0370453;	f_8093098		f_8093098
-	f	I	f_0028721		f_0028721
-	f	I	f_5609824		f_5609824
-	f	I	f_3429160		f_3429160
+c	net/minecraft/C_8528739		net/minecraft/world/BlockSource
+	f	Lnet/minecraft/C_0370453;	f_8093098		world
+	f	I	f_0028721		x
+	f	I	f_5609824		y
+	f	I	f_3429160		z
 	m	(Lnet/minecraft/C_0370453;III)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	1			world
+		p	2			x
+		p	3			y
+		p	4			z
 	m	()Lnet/minecraft/C_0370453;	m_7551708		m_7551708
 	m	()D	m_4576962		m_4576962
 	m	()D	m_1294248		m_1294248
@@ -837,8 +840,8 @@ c	net/minecraft/C_8528739		net/minecraft/C_8528739
 	m	()I	m_3405886		m_3405886
 	m	()I	m_6476600		m_6476600
 	m	()Lnet/minecraft/C_2493338;	m_2025988		m_2025988
-c	net/minecraft/C_8862821		net/minecraft/C_8862821
-c	net/minecraft/C_8957665		net/minecraft/C_8957665
+c	net/minecraft/C_8862821		net/minecraft/world/WorldPosition
+c	net/minecraft/C_8957665		net/minecraft/world/gen/feature/FirePatchFeature
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/C_0370453;Ljava/util/Random;III)Z	m_5533038		m_5533038
 		p	1			p_1
@@ -846,15 +849,15 @@ c	net/minecraft/C_8957665		net/minecraft/C_8957665
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-c	net/minecraft/C_9868849		net/minecraft/C_9868849
+c	net/minecraft/C_9868849		net/minecraft/block/dispenser/DispenseProjectileBehavior
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/C_1370254;Lnet/minecraft/C_1352131;)Lnet/minecraft/C_1352131;	m_6359839		m_6359839
 		p	1			p_1
 		p	2			p_2
 	m	(Lnet/minecraft/C_1370254;)V	m_9972970		m_9972970
 		p	1			p_1
-	m	(Lnet/minecraft/C_0370453;Lnet/minecraft/C_7384429;)Lnet/minecraft/C_0886424;	m_0995220		m_0995220
-		p	1			p_1
-		p	2			p_2
-	m	()F	m_0246019		m_0246019
-	m	()F	m_4427132		m_4427132
+	m	(Lnet/minecraft/C_0370453;Lnet/minecraft/C_7384429;)Lnet/minecraft/C_0886424;	m_0995220		createProjectile
+		p	1			world
+		p	2			pos
+	m	()F	m_0246019		getVariation
+	m	()F	m_4427132		getForce

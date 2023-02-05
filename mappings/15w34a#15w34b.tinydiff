@@ -1,13 +1,13 @@
 tiny	2	0
 c	net/minecraft/C_0215467
-	f	Ljava/util/UUID;	f_7231054		f_7231054
+	f	Ljava/util/UUID;	f_7231054		ATTACK_SPEED_MODIFIER_UUID
 c	net/minecraft/C_0535218
 	f	Z	f_5702163		f_5702163
 	m	(Ljava/lang/String;)V	<init>	<init>	
-		p	1		p_1	
+		p	1		command	
 	m	(Ljava/lang/String;Lnet/minecraft/C_9546534;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		command	
+		p	2		pos	
 	m	(Ljava/lang/String;Lnet/minecraft/C_9546534;Z)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -27,20 +27,22 @@ c	net/minecraft/C_4686283$C_0471538		$C_0471538
 		p	13			p_13
 		p	15			p_15
 c	net/minecraft/C_5103078
-	f	Z	f_8584674		f_8584674
-	m	()Z	m_9652211		m_9652211
-	m	(Z)V	m_9501277		m_9501277
-		p	1			p_1
+	f	Z	f_8584674		synced
+	m	()Z	m_9652211		isAuto
+	m	(Z)V	m_9501277		setSynced
+		p	1			synced
 c	net/minecraft/C_5173637
-	f	Z	f_3470437	f_3470437	
-	f	Z	f_2192433	f_2192433	
-	f	I	f_0074108	f_0074108	
-	f	Ljava/util/List;	f_0269294	f_0269294	
+	f	Z	f_3470437	reset	
+	f	Z	f_2192433	completed	
+	f	I	f_0074108	currentMessageId	
+	f	Ljava/util/List;	f_0269294	messageHistory	
 	f	Lnet/minecraft/C_9564318;	f_6083695		f_6083695
-	m	()V	m_5835169	m_5835169	
-	m	(Ljava/lang/String;Ljava/lang/String;)V	m_8992013	m_8992013	
-		p	1		p_1	
-		p	2		p_2	
+	m	()V	m_5835169	reset	
+	m	(Ljava/lang/String;Ljava/lang/String;)V	m_8992013	goThroughHistory	
+		p	1		text	
+		p	2		cursor	
+	m	([Ljava/lang/String;)V	m_1189769	setMessageHistory	m_1189769
+		p	1		messages	p_1
 c	net/minecraft/C_5173637$C_0785227		$C_0785227
 	f	Lnet/minecraft/client/Minecraft;	f_8414769		f_8414769
 	m	(Lnet/minecraft/C_6516620;)V	<init>		<init>
@@ -72,8 +74,8 @@ c	net/minecraft/C_6319393$2		$2
 	f	[I	f_0619625		f_0619625
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/C_6354938
-	m	(I)V	m_0033061		m_0033061
-		p	1			p_1
+	m	(I)V	m_0033061		setSuccessCount
+		p	1			successCount
 c	net/minecraft/C_6419746
 	f	Lnet/minecraft/C_1352131;	f_0581634		f_0581634
 	m	()I	m_2747122	m_2747122	
@@ -102,34 +104,34 @@ c	net/minecraft/C_8082714$1		$1
 c	net/minecraft/C_8797746
 	f	Lnet/minecraft/C_7920333;	f_3539534		f_3539534
 c	net/minecraft/C_9100652
-	f	Lnet/minecraft/C_9100652;	f_1350011		f_1350011
+	f	Lnet/minecraft/C_9100652;	f_1350011		DAMAGE_INDICATOR
 c	net/minecraft/C_9378205
-	m	()I	m_3435879	m_3435879	
+	m	()I	m_3435879	getArmorProtectionValue	
 c	net/minecraft/C_9405026
 	f	F	f_6907444		f_6907444
 	m	(FLnet/minecraft/C_0215467$C_8388538;Ljava/util/Set;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+		p	1		baseAttackDamage	
+		p	2		material	
+		p	3		effectiveBlocks	
 	m	(FFLnet/minecraft/C_0215467$C_8388538;Ljava/util/Set;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/server/MinecraftServer
-	m	(Lnet/minecraft/C_0608479;Ljava/lang/String;Lnet/minecraft/C_9546534;)Ljava/util/List;	m_2851561	m_2851561	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-	m	(Lnet/minecraft/C_0608479;Ljava/lang/String;Lnet/minecraft/C_9546534;Z)Ljava/util/List;	m_2851561		m_2851561
+	m	(Lnet/minecraft/C_0608479;Ljava/lang/String;Lnet/minecraft/C_9546534;)Ljava/util/List;	m_2851561	getCommandSuggestions	
+		p	1		source	
+		p	2		command	
+		p	3		pos	
+	m	(Lnet/minecraft/C_0608479;Ljava/lang/String;Lnet/minecraft/C_9546534;Z)Ljava/util/List;	m_2851561		getCommandSuggestions
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-c	net/minecraft/C_0284979		net/minecraft/C_0284979
+c	net/minecraft/C_0284979		net/minecraft/C_73zbdntjc
 	m	([Ljava/lang/String;)V	m_1189769		m_1189769
 		p	1			p_1
-c	net/minecraft/C_9564318		net/minecraft/C_9564318
+c	net/minecraft/C_9564318		net/minecraft/C_88zimjhjy
 	f	Lnet/minecraft/C_6516620;	f_5937300		f_5937300
 	f	Z	f_7024707		f_7024707
 	f	Z	f_4041980		f_4041980

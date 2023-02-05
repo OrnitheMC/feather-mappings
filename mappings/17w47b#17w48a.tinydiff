@@ -304,9 +304,9 @@ c	net/minecraft/C_1713479
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_1800208
-	m	(Lnet/minecraft/C_0370453;Lnet/minecraft/C_8533982;Lnet/minecraft/C_6188183;)Lnet/minecraft/C_8392184;	m_3498730	m_3498730	
-		p	1		p_1	
-		p	2		p_2	
+	m	(Lnet/minecraft/C_0370453;Lnet/minecraft/C_8533982;Lnet/minecraft/C_6188183;)Lnet/minecraft/C_8392184;	m_3498730	createPlayerEntity	
+		p	1		world	
+		p	2		statHandler	
 		p	3		p_3	
 	m	(Lnet/minecraft/C_0370453;Lnet/minecraft/C_8533982;Lnet/minecraft/C_4693257;)Lnet/minecraft/C_8392184;	m_3498730		m_3498730
 		p	1			p_1
@@ -413,7 +413,7 @@ c	net/minecraft/C_3176661
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/C_3318621
-	m	()V	m_9316833	m_9316833	
+	m	()V	m_9316833	sendRenameUpdates	
 c	net/minecraft/C_3439046
 	m	(Lnet/minecraft/C_3908218;Lnet/minecraft/C_7487478;Ljava/util/Random;)Ljava/util/List;	m_9534664	m_9534664	
 		p	1		p_1	
@@ -491,7 +491,7 @@ c	net/minecraft/C_4484044
 	m	(Lnet/minecraft/C_7265303;)V	m_4304331		m_4304331
 		p	1			p_1
 c	net/minecraft/C_4603311
-	f	Lnet/minecraft/C_4603311;	f_0971620	f_0971620	
+	f	Lnet/minecraft/C_4603311;	f_0971620	ITEM_INSTANCE	
 	f	Lnet/minecraft/C_4603311;	f_0969557		f_0969557
 c	net/minecraft/C_4645137
 	m	(Lnet/minecraft/C_3908218;Lnet/minecraft/C_7487478;Ljava/util/Random;)Ljava/util/List;	m_9534664	m_9534664	
@@ -579,37 +579,37 @@ c	net/minecraft/C_5284605
 		p	1			p_1
 	m	()Lnet/minecraft/C_8113396;	m_5933558		m_5933558
 c	net/minecraft/C_5394592
-	f	Lnet/minecraft/C_2202859;	f_2922751	f_2922751	
+	f	Lnet/minecraft/C_2202859;	f_2922751	REGISTRY	
 	f	I	f_1928932		f_1928932
 	f	I	f_6285960		f_6285960
 	f	Ljava/util/Map;	f_4103083		f_4103083
 	f	Z	f_4412087		f_4412087
-	m	()Z	m_6076393	m_6076393	
-	m	()Z	m_5059845	m_5059845	
-	m	(Lcom/google/gson/JsonObject;)Lnet/minecraft/C_6299977;	m_5743806	m_5743806	
-		p	0		p_0	
-	m	(Ljava/lang/String;Lnet/minecraft/C_6299977;)V	m_3709008	m_3709008	
-		p	0		p_0	
-		p	1		p_1	
-	m	(Lnet/minecraft/C_9661642;Lnet/minecraft/C_6299977;)V	m_5534665	m_5534665	
-		p	0		p_0	
-		p	1		p_1	
+	m	()Z	m_6076393	init	
+	m	()Z	m_5059845	load	
+	m	(Lcom/google/gson/JsonObject;)Lnet/minecraft/C_6299977;	m_5743806	parseRecipe	
+		p	0		json	
+	m	(Ljava/lang/String;Lnet/minecraft/C_6299977;)V	m_3709008	register	
+		p	0		id	
+		p	1		recipe	
+	m	(Lnet/minecraft/C_9661642;Lnet/minecraft/C_6299977;)V	m_5534665	register	
+		p	0		id	
+		p	1		recipe	
 	m	(Lnet/minecraft/C_6926903;Lnet/minecraft/C_0370453;)Lnet/minecraft/C_1352131;	m_6378272
-		p	0		p_0	
+		p	0		inventory	
 		p	2			p_2
 	m	(Lnet/minecraft/C_6926903;Lnet/minecraft/C_0370453;)Lnet/minecraft/C_6299977;	m_4193731
-		p	0		p_0	
+		p	0		inventory	
 		p	2			p_2
 	m	(Lnet/minecraft/C_6926903;Lnet/minecraft/C_0370453;)Lnet/minecraft/C_0160011;	m_3550295
-		p	0		p_0	
+		p	0		inventory	
 		p	2			p_2
 	m	(Lnet/minecraft/C_9661642;)Lnet/minecraft/C_6299977;	m_8917768
-		p	0		p_0	
+		p	0		id	
 		p	1			p_1
-	m	(Lnet/minecraft/C_6299977;)I	m_1535505	m_1535505	
-		p	0		p_0	
-	m	(I)Lnet/minecraft/C_6299977;	m_9969293	m_9969293	
-		p	0		p_0	
+	m	(Lnet/minecraft/C_6299977;)I	m_1535505	getRawId	
+		p	0		recipe	
+	m	(I)Lnet/minecraft/C_6299977;	m_9969293	getRecipe	
+		p	0		rawId	
 	m	(Lnet/minecraft/C_7489448;)V	m_5909961		m_5909961
 		p	1			p_1
 	m	()Z	m_9020046		m_9020046
@@ -755,10 +755,10 @@ c	net/minecraft/C_6507974$C_9198834
 		p	2			p_2
 c	net/minecraft/C_6797444
 c	net/minecraft/C_6797444$C_1246169
-	f	Lnet/minecraft/C_6299977;	f_4305052	f_4305052	
+	f	Lnet/minecraft/C_6299977;	f_4305052	recipe	
 	f	Lnet/minecraft/C_9661642;	f_4305052		f_4305052
 	m	(Lnet/minecraft/C_6299977;)V	<init>	<init>	
-		p	1		p_1	
+		p	1		recipe	
 	m	(Lnet/minecraft/C_9661642;)V	<init>		<init>
 		p	1			p_1
 c	net/minecraft/C_7171107
@@ -855,9 +855,9 @@ c	net/minecraft/C_9368328
 	m	(Lnet/minecraft/C_0370453;Lnet/minecraft/C_9546534;)V	m_7347992	m_7347992	
 		p	0		p_0	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_0370453;Lnet/minecraft/C_9546534;)V	m_2924333	m_2924333	
-		p	0		p_0	
-		p	1		p_1	
+	m	(Lnet/minecraft/C_0370453;Lnet/minecraft/C_9546534;)V	m_2924333	setDirt	
+		p	0		world	
+		p	1		pos	
 	m	(Lnet/minecraft/C_3908218;Lnet/minecraft/C_0370453;Lnet/minecraft/C_9546534;)V	m_7347992		m_7347992
 		p	0			p_0
 		p	1			p_1

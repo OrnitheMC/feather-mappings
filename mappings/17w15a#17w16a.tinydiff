@@ -31,7 +31,7 @@ c	net/minecraft/C_0626016
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/C_0646374
-	f	Lnet/minecraft/C_0646374;	f_6041223		f_6041223
+	f	Lnet/minecraft/C_0646374;	f_6041223		PUSH_ONLY
 c	net/minecraft/C_0650401
 	m	(Lnet/minecraft/C_7445186;Lnet/minecraft/C_3908218;Lnet/minecraft/C_9546534;Lnet/minecraft/C_7487478;)Lnet/minecraft/C_0784495;	m_4005170		m_4005170
 		p	1			p_1
@@ -43,8 +43,8 @@ c	net/minecraft/C_0762528
 	m	(Lnet/minecraft/C_7265303;)Lnet/minecraft/C_1786827;	m_3688454		m_3688454
 		p	1			p_1
 c	net/minecraft/C_0876160
-	m	(I)Ljava/lang/String;	m_2264352		m_2264352
-		p	0			p_0
+	m	(I)Ljava/lang/String;	m_2264352		getName
+		p	0			type
 c	net/minecraft/C_0906767
 	m	(Lnet/minecraft/C_7445186;Lnet/minecraft/C_3908218;Lnet/minecraft/C_9546534;Lnet/minecraft/C_7487478;)Lnet/minecraft/C_0784495;	m_4005170		m_4005170
 		p	1			p_1
@@ -66,103 +66,104 @@ c	net/minecraft/C_1296870
 	m	(Lnet/minecraft/C_7265303;)Lnet/minecraft/C_1786827;	m_3688454		m_3688454
 		p	1			p_1
 c	net/minecraft/C_1413243
-	f	Lorg/apache/logging/log4j/Logger;	f_5440021	f_5440021	
-	f	Ljava/util/regex/Pattern;	f_9807867		f_9807867
-	f	Ljava/util/regex/Pattern;	f_0673887		f_0673887
-	f	Ljava/util/regex/Pattern;	f_6748985		f_6748985
-	f	Ljava/util/regex/Pattern;	f_2915964		f_2915964
-	f	Ljava/util/regex/Pattern;	f_9685231		f_9685231
-	f	Ljava/util/regex/Pattern;	f_3563611		f_3563611
-	f	Ljava/lang/String;	f_0114009		f_0114009
-	f	I	f_6166677		f_6166677
-	m	(Ljava/lang/String;)I	m_7903815	m_7903815	
-		p	0		p_0	
-	m	([Ljava/lang/String;)Lnet/minecraft/C_1413243$C_2923412;	m_0148516	m_0148516	
-		p	0		p_0	
-	m	(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/C_1413243$C_2923412;	m_0977584	m_0977584	
-		p	0		p_0	
-		p	1		p_1	
-	m	(Ljava/lang/String;Z)Lnet/minecraft/C_1413243$C_2923412;	m_2646529	m_2646529	
-		p	0		p_0	
-		p	1		p_1	
-	m	(Ljava/lang/String;Z)Ljava/lang/String;	m_0411416	m_0411416	
-		p	0		p_0	
-		p	1		p_1	
-	m	(Ljava/lang/String;I)Ljava/lang/String;	m_3910596	m_3910596	
-		p	0		p_0	
-		p	1		p_1	
-	m	(Ljava/lang/String;Z)Ljava/lang/String;	m_9600238	m_9600238	
-		p	0		p_0	
-		p	1		p_1	
-	m	(Ljava/lang/String;Z)Ljava/lang/String;	m_9863643	m_9863643	
-		p	0		p_0	
-		p	1		p_1	
-	m	(Ljava/lang/String;C)I	m_5667751	m_5667751	
-		p	0		p_0	
-		p	1		p_1	
-	m	(Ljava/lang/String;I)Z	m_5105442	m_5105442	
-		p	0		p_0	
-		p	1		p_1	
-	m	()Lnet/minecraft/C_9679079;	m_6172961		m_6172961
+	f	Lorg/apache/logging/log4j/Logger;	f_5440021	LOGGER	
+	f	Ljava/util/regex/Pattern;	f_9807867		DOUBLE_PATTERN_NO_SUFFIX
+	f	Ljava/util/regex/Pattern;	f_0673887		DOUBLE_PATTERN
+	f	Ljava/util/regex/Pattern;	f_6748985		FLOAT_PATTERN
+	f	Ljava/util/regex/Pattern;	f_2915964		BYTE_PATTERN
+	f	Ljava/util/regex/Pattern;	f_9685231		LONG_PATTERN
+	f	Ljava/util/regex/Pattern;	f_3563611		SHORT_PATTERN
+	f	Ljava/lang/String;	f_0114009		rawNbt
+	f	I	f_6166677		position
+	m	(Ljava/lang/String;)I	m_7903815	getTopElementCount	
+		p	0		rawNbt	
+	m	([Ljava/lang/String;)Lnet/minecraft/C_1413243$C_2923412;	m_0148516	parseNbtEntry	
+		p	0		rawEntry	
+	m	(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/C_1413243$C_2923412;	m_0977584	parseNbtEntry	
+		p	0		key	
+		p	1		rawElement	
+	m	(Ljava/lang/String;Z)Lnet/minecraft/C_1413243$C_2923412;	m_2646529	parseNbtEntry	
+		p	0		rawEntry	
+		p	1		allowNoSeparator	
+	m	(Ljava/lang/String;Z)Ljava/lang/String;	m_0411416	getNextEntry	
+		p	0		rawNbt	
+		p	1		expectSeparator	
+	m	(Ljava/lang/String;I)Ljava/lang/String;	m_3910596	getNextEntry	
+		p	0		rawNbt	
+		p	1		separatorIndex	
+	m	(Ljava/lang/String;Z)Ljava/lang/String;	m_9600238	getKey	
+		p	0		rawEntry	
+		p	1		allowNoSeparator	
+	m	(Ljava/lang/String;Z)Ljava/lang/String;	m_9863643	getValue	
+		p	0		rawEntry	
+		p	1		allowNoSeparator	
+	m	(Ljava/lang/String;C)I	m_5667751	findSeparator	
+		c	Find a character that separates nbt elements. This is either the character that\nseparates key/value pairs or the character that separates elements in a list.\n\n@return the index of the character	
+		p	0		rawNbt	
+		p	1		chr	
+	m	(Ljava/lang/String;I)Z	m_5105442	isEscaped	
+		p	0		rawNbt	
+		p	1		index	
+	m	()Lnet/minecraft/C_9679079;	m_6172961		parse
 	m	(Ljava/lang/String;)V	<init>		<init>
-		p	1			p_1
-	m	()Ljava/lang/String;	m_1864190		m_1864190
-	m	(Ljava/lang/String;)Lnet/minecraft/C_5571811;	m_9830207		m_9830207
-		p	1			p_1
-	m	()Lnet/minecraft/C_0876160;	m_1534224		m_1534224
-	m	(Ljava/lang/String;)Lnet/minecraft/C_0876160;	m_9732414		m_9732414
-		p	1			p_1
-	m	()Ljava/lang/String;	m_6160686		m_6160686
-	m	()Ljava/lang/String;	m_0448964		m_0448964
-	m	()Lnet/minecraft/C_0876160;	m_2935064		m_2935064
-	m	()Lnet/minecraft/C_0876160;	m_3337232		m_3337232
-	m	()Lnet/minecraft/C_9679079;	m_3996897		m_3996897
-	m	()Lnet/minecraft/C_0876160;	m_9418166		m_9418166
-	m	()Lnet/minecraft/C_0876160;	m_3207748		m_3207748
-	m	(BB)Ljava/util/List;	m_3247655		m_3247655
-		p	1			p_1
-		p	2			p_2
-	m	()V	m_0529213		m_0529213
-	m	()Z	m_3846704		m_3846704
-	m	(C)V	m_3631368		m_3631368
-		p	1			p_1
-	m	(C)Z	m_1789239		m_1789239
-		p	1			p_1
-	m	(I)Z	m_0237780		m_0237780
-		p	1			p_1
-	m	()Z	m_5400020		m_5400020
-	m	(I)C	m_6861417		m_6861417
-		p	1			p_1
-	m	()C	m_3331875		m_3331875
-	m	()C	m_7373772		m_7373772
-c	net/minecraft/C_1413243$C_2897148	$C_2897148	
-	f	Ljava/util/List;	f_9138501	f_9138501	
+		p	1			rawNbt
+	m	()Ljava/lang/String;	m_1864190		readKey
+	m	(Ljava/lang/String;)Lnet/minecraft/C_5571811;	m_9830207		nbtException
+		p	1			message
+	m	()Lnet/minecraft/C_0876160;	m_1534224		readElement
+	m	(Ljava/lang/String;)Lnet/minecraft/C_0876160;	m_9732414		parseElement
+		p	1			s
+	m	()Ljava/lang/String;	m_6160686		readQuotedString
+	m	()Ljava/lang/String;	m_0448964		readString
+	m	()Lnet/minecraft/C_0876160;	m_2935064		readValue
+	m	()Lnet/minecraft/C_0876160;	m_3337232		readListOrArray
+	m	()Lnet/minecraft/C_9679079;	m_3996897		readCompound
+	m	()Lnet/minecraft/C_0876160;	m_9418166		readList
+	m	()Lnet/minecraft/C_0876160;	m_3207748		readArray
+	m	(BB)Ljava/util/List;	m_3247655		readArray
+		p	1			arrayType
+		p	2			elementType
+	m	()V	m_0529213		skipWhitespace
+	m	()Z	m_3846704		hasSeparator
+	m	(C)V	m_3631368		expect
+		p	1			chr
+	m	(C)Z	m_1789239		isValidChar
+		p	1			chr
+	m	(I)Z	m_0237780		canRead
+		p	1			offset
+	m	()Z	m_5400020		canRead
+	m	(I)C	m_6861417		read
+		p	1			offset
+	m	()C	m_3331875		peek
+	m	()C	m_7373772		read
+c	net/minecraft/C_1413243$C_2897148	$CompoundEntry	
+	f	Ljava/util/List;	f_9138501	entries	
 	m	(Ljava/lang/String;)V	<init>	<init>	
-		p	1		p_1	
+		p	1		key	
 	m	()Lnet/minecraft/C_0876160;	m_6528550	m_6528550	
-c	net/minecraft/C_1413243$C_2923412	$C_2923412	
-	f	Ljava/lang/String;	f_3613077	f_3613077	
+c	net/minecraft/C_1413243$C_2923412	$Entry	
+	f	Ljava/lang/String;	f_3613077	key	
 	m	()V	<init>	<init>	
-	m	()Lnet/minecraft/C_0876160;	m_6528550	m_6528550	
-c	net/minecraft/C_1413243$C_7420007	$C_7420007	
-	f	Ljava/util/regex/Pattern;	f_4486277	f_4486277	
-	f	Ljava/util/regex/Pattern;	f_7273755	f_7273755	
-	f	Ljava/util/regex/Pattern;	f_0558288	f_0558288	
-	f	Ljava/util/regex/Pattern;	f_1320016	f_1320016	
-	f	Ljava/util/regex/Pattern;	f_7875192	f_7875192	
-	f	Ljava/util/regex/Pattern;	f_0340560	f_0340560	
-	f	Ljava/util/regex/Pattern;	f_4771348	f_4771348	
-	f	Lcom/google/common/base/Splitter;	f_4536358	f_4536358	
-	f	Ljava/lang/String;	f_4262292	f_4262292	
+	m	()Lnet/minecraft/C_0876160;	m_6528550	getValue	
+c	net/minecraft/C_1413243$C_7420007	$PrimitiveEntry	
+	f	Ljava/util/regex/Pattern;	f_4486277	DOUBLE_WITH_SUFFIX_PATTERN	
+	f	Ljava/util/regex/Pattern;	f_7273755	FLOAT_PATTERN	
+	f	Ljava/util/regex/Pattern;	f_0558288	BYTE_PATTERN	
+	f	Ljava/util/regex/Pattern;	f_1320016	LONG_PATTERN	
+	f	Ljava/util/regex/Pattern;	f_7875192	SHORT_PATTERN	
+	f	Ljava/util/regex/Pattern;	f_0340560	INT_PATTERN	
+	f	Ljava/util/regex/Pattern;	f_4771348	DOUBLE_PATTERN	
+	f	Lcom/google/common/base/Splitter;	f_4536358	LIST_ELEMENT_SPLITTER	
+	f	Ljava/lang/String;	f_4262292	rawValue	
 	m	(Ljava/lang/String;Ljava/lang/String;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		key	
+		p	2		rawValue	
 	m	()Lnet/minecraft/C_0876160;	m_6528550	m_6528550	
 	m	()V	<clinit>	<clinit>	
-c	net/minecraft/C_1413243$C_7725572	$C_7725572	
-	f	Ljava/util/List;	f_6101873	f_6101873	
+c	net/minecraft/C_1413243$C_7725572	$ListEntry	
+	f	Ljava/util/List;	f_6101873	entries	
 	m	(Ljava/lang/String;)V	<init>	<init>	
-		p	1		p_1	
+		p	1		key	
 	m	()Lnet/minecraft/C_0876160;	m_6528550	m_6528550	
 c	net/minecraft/C_1445285
 	m	(Lnet/minecraft/C_9661642;Lnet/minecraft/C_1352131;Ljava/util/List;)V	<init>	<init>	
@@ -225,8 +226,8 @@ c	net/minecraft/C_2970949
 		p	1			p_1
 c	net/minecraft/C_3089894
 	f	Lnet/minecraft/C_9661642;	f_4721370	f_4721370	
-	f	[Lnet/minecraft/C_3089894$C_4004237;	f_5024484	f_5024484	
-	f	[Lnet/minecraft/C_3089894$C_6750304;	f_5024484		f_5024484
+	f	[Lnet/minecraft/C_3089894$C_4004237;	f_5024484	toasts	
+	f	[Lnet/minecraft/C_3089894$C_6750304;	f_5024484		toasts
 	m	(Lnet/minecraft/C_1322485;)V	m_7828843	m_7828843	
 		p	1		p_1	
 	m	(Lnet/minecraft/C_6299977;)V	m_6140673	m_6140673	
@@ -238,15 +239,15 @@ c	net/minecraft/C_3089894
 	m	(Lnet/minecraft/C_3089894$C_4004237;)V	m_5938090	m_5938090	
 		p	1		p_1	
 	m	()Lnet/minecraft/C_9661642;	m_0283004	m_0283004	
-	m	(Lnet/minecraft/C_3089894;)Lnet/minecraft/client/Minecraft;	m_6421456	m_6421456	
+	m	(Lnet/minecraft/C_3089894;)Lnet/minecraft/client/Minecraft;	m_6421456	getClient	
 		p	0		p_0	
 	m	()V	<clinit>	<clinit>	
-	m	(Ljava/lang/Class;Ljava/lang/Object;)Lnet/minecraft/C_7476141;	m_4027934		m_4027934
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/C_7476141;)V	m_1068069		m_1068069
-		p	1			p_1
-	m	()Lnet/minecraft/client/Minecraft;	m_6421456		m_6421456
+	m	(Ljava/lang/Class;Ljava/lang/Object;)Lnet/minecraft/C_7476141;	m_4027934		get
+		p	1			type
+		p	2			token
+	m	(Lnet/minecraft/C_7476141;)V	m_1068069		add
+		p	1			toast
+	m	()Lnet/minecraft/client/Minecraft;	m_6421456		getClient
 c	net/minecraft/C_3089894$C_1910882	$C_1910882	
 	f	Lnet/minecraft/C_3089894$C_7324572;	f_2729474	f_2729474	
 	f	Ljava/lang/String;	f_6190887	f_6190887	
@@ -305,21 +306,21 @@ c	net/minecraft/C_3089894$C_9155402	$C_9155402
 	m	()Z	m_1088833	m_1088833	
 	m	(Lnet/minecraft/C_1352131;)V	m_0102036	m_0102036	
 		p	1		p_1	
-c	net/minecraft/C_3089894$C_6750304		$C_6750304
-	f	Lnet/minecraft/C_7476141;	f_0952216		f_0952216
-	f	J	f_6486138		f_6486138
-	f	J	f_5018507		f_5018507
-	f	Lnet/minecraft/C_7476141$C_3198019;	f_7470135		f_7470135
+c	net/minecraft/C_3089894$C_6750304		$ToastInstance
+	f	Lnet/minecraft/C_7476141;	f_0952216		toast
+	f	J	f_6486138		time
+	f	J	f_5018507		visibleTime
+	f	Lnet/minecraft/C_7476141$C_3198019;	f_7470135		visibility
 	f	Lnet/minecraft/C_3089894;	f_4562184		f_4562184
 	m	(Lnet/minecraft/C_3089894;Lnet/minecraft/C_7476141;)V	<init>		<init>
 		p	1			p_1
-		p	2			p_2
-	m	()Lnet/minecraft/C_7476141;	m_3426619		m_3426619
-	m	(J)F	m_2866074		m_2866074
-		p	1			p_1
-	m	(II)Z	m_4555593		m_4555593
-		p	1			p_1
-		p	2			p_2
+		p	2			toast
+	m	()Lnet/minecraft/C_7476141;	m_3426619		getToast
+	m	(J)F	m_2866074		getVisibility
+		p	1			time
+	m	(II)Z	m_4555593		render
+		p	1			x
+		p	2			y
 	m	(Lnet/minecraft/C_3089894;Lnet/minecraft/C_7476141;Lnet/minecraft/C_3089894$1;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -343,7 +344,7 @@ c	net/minecraft/C_3559494
 	m	(Lnet/minecraft/C_7265303;)Lnet/minecraft/C_1786827;	m_3688454		m_3688454
 		p	1			p_1
 c	net/minecraft/C_4063921
-	f	Lnet/minecraft/C_7618455;	f_7685087		f_7685087
+	f	Lnet/minecraft/C_7618455;	f_7685087		tutorialStep
 	f	Lnet/minecraft/C_6829526;	f_1832113		f_1832113
 	f	Lnet/minecraft/C_6829526;	f_6754459		f_6754459
 c	net/minecraft/C_4231952
@@ -404,9 +405,9 @@ c	net/minecraft/C_4971174
 		p	4			p_4
 c	net/minecraft/C_5117106
 	m	(Ljava/util/List;)V	<init>		<init>
-		p	1			p_1
-	m	(Ljava/util/List;)[B	m_5436119		m_5436119
-		p	0			p_0
+		p	1			value
+	m	(Ljava/util/List;)[B	m_5436119		buildArray
+		p	0			value
 c	net/minecraft/C_5185167
 	m	()Lnet/minecraft/C_1786827;	m_3688454	m_3688454	
 	m	(Lnet/minecraft/C_7265303;)Lnet/minecraft/C_1786827;	m_3688454		m_3688454
@@ -453,15 +454,15 @@ c	net/minecraft/C_5542674
 		p	1			p_1
 c	net/minecraft/C_5571811
 	m	(Ljava/lang/String;)V	<init>	<init>	
-		p	1		p_1	
+		p	1		cause	
 	m	(Ljava/lang/String;Ljava/lang/String;I)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Ljava/lang/String;I)Ljava/lang/String;	m_5266633		m_5266633
-		p	0			p_0
-		p	1			p_1
-c	net/minecraft/C_5613573	net/minecraft/C_5613573	
+		p	1			message
+		p	2			rawNbt
+		p	3			position
+	m	(Ljava/lang/String;I)Ljava/lang/String;	m_5266633		buildContext
+		p	0			rawNbt
+		p	1			position
+c	net/minecraft/C_5613573	net/minecraft/C_79hqcuyvv	
 	m	()V	<init>	<init>	
 	m	(Lnet/minecraft/C_0512768;Lnet/minecraft/C_0512768;)I	m_8139858	m_8139858	
 		p	1		p_1	
@@ -483,7 +484,7 @@ c	net/minecraft/C_5994201
 	m	()Lnet/minecraft/C_1786827;	m_3688454	m_3688454	
 	m	(Lnet/minecraft/C_7265303;)Lnet/minecraft/C_1786827;	m_3688454		m_3688454
 		p	1			p_1
-c	net/minecraft/C_6055601	net/minecraft/C_6055601	
+c	net/minecraft/C_6055601	net/minecraft/C_56faiozwn	
 	m	(F)V	<init>	<init>	
 		p	1		p_1	
 	m	(Lnet/minecraft/C_4512400;FFFFFF)V	m_8946096	m_8946096	
@@ -558,11 +559,11 @@ c	net/minecraft/C_6303764
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/C_6354938
-	f	J	f_7224733		f_7224733
-	m	(Lnet/minecraft/C_0370453;)V	m_6010174	m_6010174	
-		p	1		p_1	
-	m	(Lnet/minecraft/C_0370453;)Z	m_6010174		m_6010174
-		p	1			p_1
+	f	J	f_7224733		lastExecution
+	m	(Lnet/minecraft/C_0370453;)V	m_6010174	run	
+		p	1		world	
+	m	(Lnet/minecraft/C_0370453;)Z	m_6010174		run
+		p	1			world
 c	net/minecraft/C_6419746
 	m	()Lnet/minecraft/C_1786827;	m_3688454	m_3688454	
 	m	(Lnet/minecraft/C_7265303;)Lnet/minecraft/C_1786827;	m_3688454		m_3688454
@@ -585,20 +586,20 @@ c	net/minecraft/C_6659150
 		p	4			p_4
 c	net/minecraft/C_6666685
 	m	(Ljava/util/List;)V	<init>		<init>
-		p	1			p_1
-	m	(Ljava/util/List;)[I	m_0205659		m_0205659
-		p	0			p_0
+		p	1			value
+	m	(Ljava/util/List;)[I	m_0205659		buildArray
+		p	0			value
 c	net/minecraft/C_6692940
-	m	()Lnet/minecraft/C_1786827;	m_3688454	m_3688454	
+	m	()Lnet/minecraft/C_1786827;	m_3688454	getHurtSound	
 	m	()Lnet/minecraft/C_7514144;	m_3035319	m_3035319	
-	m	(Lnet/minecraft/C_7265303;)Lnet/minecraft/C_1786827;	m_3688454		m_3688454
+	m	(Lnet/minecraft/C_7265303;)Lnet/minecraft/C_1786827;	m_3688454		getHurtSound
 		p	1			p_1
 c	net/minecraft/C_6731240
 	m	()Lnet/minecraft/C_1786827;	m_3688454	m_3688454	
 	m	(Lnet/minecraft/C_7265303;)Lnet/minecraft/C_1786827;	m_3688454		m_3688454
 		p	1			p_1
 c	net/minecraft/C_6829526
-	f	Ljava/util/List;	f_1672450	f_1672450	
+	f	Ljava/util/List;	f_1672450	ALL	
 	f	Ljava/util/Map;	f_7568662		f_7568662
 	f	Ljava/util/Map;	f_7443158		f_7443158
 	m	(Ljava/lang/String;)Ljava/util/function/Supplier;	m_4763628		m_4763628
@@ -635,19 +636,19 @@ c	net/minecraft/C_7240894
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/C_7286521
-	m	(Lnet/minecraft/C_3908218;Lnet/minecraft/C_0370453;Lnet/minecraft/C_9546534;Lnet/minecraft/C_7487478;Z)Z	m_7878217	m_7878217	
+	m	(Lnet/minecraft/C_3908218;Lnet/minecraft/C_0370453;Lnet/minecraft/C_9546534;Lnet/minecraft/C_7487478;Z)Z	m_7878217	canMoveBlock	
 		p	0		p_0	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
-	m	(Lnet/minecraft/C_3908218;Lnet/minecraft/C_0370453;Lnet/minecraft/C_9546534;Lnet/minecraft/C_7487478;ZLnet/minecraft/C_7487478;)Z	m_7878217		m_7878217
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+	m	(Lnet/minecraft/C_3908218;Lnet/minecraft/C_0370453;Lnet/minecraft/C_9546534;Lnet/minecraft/C_7487478;ZLnet/minecraft/C_7487478;)Z	m_7878217		canMoveBlock
+		p	0			state
+		p	1			world
+		p	2			pos
+		p	3			dir
+		p	4			allowBreaking
+		p	5			fromDir
 c	net/minecraft/C_7286521$1
 	f	[I	f_0842904		f_0842904
 c	net/minecraft/C_7410869
@@ -683,11 +684,11 @@ c	net/minecraft/C_7956549
 	m	(Lnet/minecraft/C_7265303;)Lnet/minecraft/C_1786827;	m_3688454		m_3688454
 		p	1			p_1
 c	net/minecraft/C_8030696
-	m	(Lnet/minecraft/C_9546534;)Z	m_4821881	m_4821881	
-		p	1		p_1	
-	m	(Lnet/minecraft/C_9546534;Lnet/minecraft/C_7487478;)Z	m_4821881		m_4821881
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/C_9546534;)Z	m_4821881	addColumn	
+		p	1		pos	
+	m	(Lnet/minecraft/C_9546534;Lnet/minecraft/C_7487478;)Z	m_4821881		addColumn
+		p	1			block
+		p	2			fromDir
 c	net/minecraft/C_8163842
 	m	()Lnet/minecraft/C_1786827;	m_3688454	m_3688454	
 	m	(Lnet/minecraft/C_7265303;)Lnet/minecraft/C_1786827;	m_3688454		m_3688454
@@ -696,7 +697,7 @@ c	net/minecraft/C_8233973
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/C_8249166
 	f	Ljava/util/regex/Pattern;	f_5897839		f_5897839
-c	net/minecraft/C_8365838	net/minecraft/C_8365838	
+c	net/minecraft/C_8365838	net/minecraft/C_61cpgbepw	
 	m	(F)V	<init>	<init>	
 		p	1		p_1	
 	m	(FFII)V	<init>	<init>	
@@ -761,22 +762,22 @@ c	net/minecraft/C_9121642
 	m	(Lnet/minecraft/C_7265303;)Lnet/minecraft/C_1786827;	m_3688454		m_3688454
 		p	1			p_1
 c	net/minecraft/C_9221482
-	f	Lnet/minecraft/C_1786827;	f_6517142		f_6517142
-	f	Lnet/minecraft/C_1786827;	f_4700714		f_4700714
-	f	Lnet/minecraft/C_1786827;	f_0945274		f_0945274
-	f	Lnet/minecraft/C_1786827;	f_1965385		f_1965385
-	f	Lnet/minecraft/C_1786827;	f_3834817		f_3834817
-	f	Lnet/minecraft/C_1786827;	f_3158862		f_3158862
-	f	Lnet/minecraft/C_1786827;	f_6171552		f_6171552
-	f	Lnet/minecraft/C_1786827;	f_8757541		f_8757541
-	f	Lnet/minecraft/C_1786827;	f_3507197		f_3507197
-	f	Lnet/minecraft/C_1786827;	f_5147398		f_5147398
-	f	Lnet/minecraft/C_1786827;	f_7088591		f_7088591
-	f	Lnet/minecraft/C_1786827;	f_7803409		f_7803409
-	f	Lnet/minecraft/C_1786827;	f_5094399		f_5094399
-	f	Lnet/minecraft/C_1786827;	f_9565243		f_9565243
-	f	Lnet/minecraft/C_1786827;	f_5174145		f_5174145
-	f	Lnet/minecraft/C_1786827;	f_7040798		f_7040798
+	f	Lnet/minecraft/C_1786827;	f_6517142		ENTITY_BOAT_PADDLE_LAND
+	f	Lnet/minecraft/C_1786827;	f_4700714		ENTITY_BOAT_PADDLE_WATER
+	f	Lnet/minecraft/C_1786827;	f_0945274		ENTITY_BOBBER_RETRIEVE
+	f	Lnet/minecraft/C_1786827;	f_1965385		ENTITY_ENDEREYE_DEATH
+	f	Lnet/minecraft/C_1786827;	f_3834817		BLOCK_END_PORTAL_FRAME_FILL
+	f	Lnet/minecraft/C_1786827;	f_3158862		BLOCK_END_PORTAL_SPAWN
+	f	Lnet/minecraft/C_1786827;	f_6171552		ENTITY_ILLUSION_ILLAGER_AMBIENT
+	f	Lnet/minecraft/C_1786827;	f_8757541		ENTITY_ILLUSION_ILLAGER_DEATH
+	f	Lnet/minecraft/C_1786827;	f_3507197		ENTITY_ILLUSION_ILLAGER_HURT
+	f	Lnet/minecraft/C_1786827;	f_5147398		BLOCK_NOTE_BELL
+	f	Lnet/minecraft/C_1786827;	f_7088591		BLOCK_NOTE_CHIME
+	f	Lnet/minecraft/C_1786827;	f_7803409		BLOCK_NOTE_FLUTE
+	f	Lnet/minecraft/C_1786827;	f_5094399		BLOCK_NOTE_GUITAR
+	f	Lnet/minecraft/C_1786827;	f_9565243		BLOCK_NOTE_XYLOPHONE
+	f	Lnet/minecraft/C_1786827;	f_5174145		ENTITY_PLAYER_HURT_DROWN
+	f	Lnet/minecraft/C_1786827;	f_7040798		ENTITY_PLAYER_HURT_ON_FIRE
 c	net/minecraft/C_9253971
 	m	()Lnet/minecraft/C_1786827;	m_3688454	m_3688454	
 	m	(Lnet/minecraft/C_7265303;)Lnet/minecraft/C_1786827;	m_3688454		m_3688454
@@ -862,30 +863,30 @@ c	net/minecraft/C_9378205
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_9679079
-	f	Ljava/util/regex/Pattern;	f_4275289		f_4275289
-	m	(Ljava/lang/String;)Ljava/lang/String;	m_9626986		m_9626986
-		p	0			p_0
+	f	Ljava/util/regex/Pattern;	f_4275289		SIMPLE_VALUE_PATTERN
+	m	(Ljava/lang/String;)Ljava/lang/String;	m_9626986		handleQuotesAndEscapes
+		p	0			s
 c	net/minecraft/C_9789628
 	m	(Lnet/minecraft/C_0370453;Lnet/minecraft/C_9546534;Lnet/minecraft/C_3908218;)Z	m_3450481
 		p	3		p_3	
 		p	0			p_0
-	m	(Lnet/minecraft/C_0370453;Lnet/minecraft/C_9546534;)V	m_3069163	m_3069163	
+	m	(Lnet/minecraft/C_0370453;Lnet/minecraft/C_9546534;)V	m_3069163	runChain	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/C_3908218;Lnet/minecraft/C_0370453;Lnet/minecraft/C_9546534;Lnet/minecraft/C_6354938;Z)V	m_1499430		m_1499430
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	(Lnet/minecraft/C_0370453;Lnet/minecraft/C_9546534;Lnet/minecraft/C_7487478;)V	m_3069163		m_3069163
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/C_3908218;Lnet/minecraft/C_0370453;Lnet/minecraft/C_9546534;Lnet/minecraft/C_6354938;Z)V	m_1499430		run
+		p	1			state
+		p	2			world
+		p	3			pos
+		p	4			executor
+		p	5			runCommand
+	m	(Lnet/minecraft/C_0370453;Lnet/minecraft/C_9546534;Lnet/minecraft/C_7487478;)V	m_3069163		runChain
+		p	0			world
+		p	1			pos
+		p	2			dir
 c	net/minecraft/client/Minecraft
-	f	Lnet/minecraft/C_1186819;	f_7407343		f_7407343
-	m	()Lnet/minecraft/C_1186819;	m_0113272		m_0113272
-c	net/minecraft/C_0109568		net/minecraft/C_0109568
+	f	Lnet/minecraft/C_1186819;	f_7407343		tutorial
+	m	()Lnet/minecraft/C_1186819;	m_0113272		getTutorial
+c	net/minecraft/C_0109568		net/minecraft/C_03yqarjmm
 	f	Lnet/minecraft/C_6101761;	f_5793809		f_5793809
 	m	(Lnet/minecraft/C_0370453;)V	<init>		<init>
 		p	1			p_1
@@ -898,7 +899,7 @@ c	net/minecraft/C_0109568		net/minecraft/C_0109568
 	m	()Lnet/minecraft/C_6247783;	m_7947154		m_7947154
 	m	()Lnet/minecraft/C_0109568$C_8587320;	m_8129644		m_8129644
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_0109568$C_8587320		net/minecraft/C_0109568$C_8587320
+c	net/minecraft/C_0109568$C_8587320		net/minecraft/C_03yqarjmm$C_8587320
 	f	Lnet/minecraft/C_0109568$C_8587320;	f_9357778		f_9357778
 	f	Lnet/minecraft/C_0109568$C_8587320;	f_5254936		f_5254936
 	f	Lnet/minecraft/C_0109568$C_8587320;	f_8202165		f_8202165
@@ -911,36 +912,36 @@ c	net/minecraft/C_0109568$C_8587320		net/minecraft/C_0109568$C_8587320
 		p	1			p_1
 		p	2			p_2
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_1186819		net/minecraft/C_1186819
-	f	Lnet/minecraft/client/Minecraft;	f_4442750		f_4442750
-	f	Lnet/minecraft/C_5585420;	f_4857272		f_4857272
+c	net/minecraft/C_1186819		net/minecraft/client/tutorial/Tutorial
+	f	Lnet/minecraft/client/Minecraft;	f_4442750		client
+	f	Lnet/minecraft/C_5585420;	f_4857272		currentStep
 	m	(Lnet/minecraft/client/Minecraft;)V	<init>		<init>
-		p	1			p_1
-	m	(Lnet/minecraft/C_8063475;)V	m_8828674		m_8828674
-		p	1			p_1
-	m	(Lnet/minecraft/C_7320314;)V	m_2131541		m_2131541
-		p	1			p_1
-	m	(Lnet/minecraft/C_2955638;Lnet/minecraft/C_1736404;)V	m_2090688		m_2090688
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/C_2955638;Lnet/minecraft/C_9546534;Lnet/minecraft/C_3908218;F)V	m_6350021		m_6350021
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	()V	m_2168719		m_2168719
-	m	(Lnet/minecraft/C_1352131;)V	m_7417009		m_7417009
-		p	1			p_1
-	m	()V	m_2285883		m_2285883
-	m	()V	m_2967900		m_2967900
-	m	()V	m_4589909		m_4589909
+		p	1			client
+	m	(Lnet/minecraft/C_8063475;)V	m_8828674		onPlayerInput
+		p	1			input
+	m	(Lnet/minecraft/C_7320314;)V	m_2131541		onMouseInput
+		p	1			input
+	m	(Lnet/minecraft/C_2955638;Lnet/minecraft/C_1736404;)V	m_2090688		onLookAt
+		p	1			world
+		p	2			result
+	m	(Lnet/minecraft/C_2955638;Lnet/minecraft/C_9546534;Lnet/minecraft/C_3908218;F)V	m_6350021		onMineBlock
+		p	1			world
+		p	2			pos
+		p	3			state
+		p	4			progress
+	m	()V	m_2168719		onOpenInventory
+	m	(Lnet/minecraft/C_1352131;)V	m_7417009		onPickUpItem
+		p	1			stack
+	m	()V	m_2285883		stop
+	m	()V	m_2967900		start
+	m	()V	m_4589909		tick
 	m	()Z	m_7293692		m_7293692
-	m	(Lnet/minecraft/C_7618455;)V	m_4611760		m_4611760
-		p	1			p_1
-	m	()Lnet/minecraft/client/Minecraft;	m_1272962		m_1272962
-	m	(Ljava/lang/String;)Lnet/minecraft/C_3673881;	m_9863819		m_9863819
-		p	0			p_0
-c	net/minecraft/C_2002710		net/minecraft/C_2002710
+	m	(Lnet/minecraft/C_7618455;)V	m_4611760		setStep
+		p	1			step
+	m	()Lnet/minecraft/client/Minecraft;	m_1272962		getClient
+	m	(Ljava/lang/String;)Lnet/minecraft/C_3673881;	m_9863819		nameKey
+		p	0			key
+c	net/minecraft/C_2002710		net/minecraft/C_28qjrlwnx
 	f	Ljava/util/List;	f_2880307		f_2880307
 	f	J	f_6675561		f_6675561
 	f	Z	f_1069364		f_1069364
@@ -954,14 +955,14 @@ c	net/minecraft/C_2002710		net/minecraft/C_2002710
 	m	(Lnet/minecraft/C_3089894;Lnet/minecraft/C_6299977;)V	m_2854638		m_2854638
 		p	0			p_0
 		p	1			p_1
-c	net/minecraft/C_2384544		net/minecraft/C_2384544
+c	net/minecraft/C_2384544		net/minecraft/C_41gscgdfn
 	f	Lnet/minecraft/C_1322485;	f_1237751		f_1237751
 	m	(Lnet/minecraft/C_1322485;)V	<init>		<init>
 		p	1			p_1
 	m	(Lnet/minecraft/C_3089894;J)Lnet/minecraft/C_7476141$C_3198019;	m_1088833		m_1088833
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/C_4225189		net/minecraft/C_4225189
+c	net/minecraft/C_4225189		net/minecraft/C_77zdzgtgw
 	f	I	f_7611495		f_7611495
 	f	[[Lnet/minecraft/C_7514144;	f_0511275		f_0511275
 	m	(Lnet/minecraft/C_0370453;)V	<init>		<init>
@@ -992,8 +993,8 @@ c	net/minecraft/C_4225189		net/minecraft/C_4225189
 	m	(Z)V	m_6542542		m_6542542
 		p	1			p_1
 	m	()Lnet/minecraft/C_0109568$C_8587320;	m_8129644		m_8129644
-c	net/minecraft/C_4225189$1		net/minecraft/C_4225189$1
-c	net/minecraft/C_4225189$C_5716870		net/minecraft/C_4225189$C_5716870
+c	net/minecraft/C_4225189$1		net/minecraft/C_77zdzgtgw$1
+c	net/minecraft/C_4225189$C_5716870		net/minecraft/C_77zdzgtgw$C_5716870
 	f	I	f_2734053		f_2734053
 	f	Lnet/minecraft/C_4225189;	f_2457942		f_2457942
 	m	(Lnet/minecraft/C_4225189;)V	<init>		<init>
@@ -1008,7 +1009,7 @@ c	net/minecraft/C_4225189$C_5716870		net/minecraft/C_4225189$C_5716870
 	m	(Lnet/minecraft/C_4225189;Lnet/minecraft/C_4225189$1;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/C_4225189$C_8977019		net/minecraft/C_4225189$C_8977019
+c	net/minecraft/C_4225189$C_8977019		net/minecraft/C_77zdzgtgw$C_8977019
 	f	Lnet/minecraft/C_4225189;	f_4096963		f_4096963
 	m	(Lnet/minecraft/C_4225189;)V	<init>		<init>
 		p	1			p_1
@@ -1021,52 +1022,52 @@ c	net/minecraft/C_4225189$C_8977019		net/minecraft/C_4225189$C_8977019
 	m	(Lnet/minecraft/C_4225189;Lnet/minecraft/C_4225189$1;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/C_4516246		net/minecraft/C_4516246
-	f	Ljava/util/Set;	f_9948873		f_9948873
-	f	Lnet/minecraft/C_3673881;	f_5032109		f_5032109
-	f	Lnet/minecraft/C_3673881;	f_8831013		f_8831013
-	f	Lnet/minecraft/C_1186819;	f_9177286		f_9177286
-	f	Lnet/minecraft/C_8543698;	f_3178739		f_3178739
-	f	I	f_5372062		f_5372062
+c	net/minecraft/C_4516246		net/minecraft/client/tutorial/FindTreeTutorialStep
+	f	Ljava/util/Set;	f_9948873		TREE_BLOCKS
+	f	Lnet/minecraft/C_3673881;	f_5032109		TITLE
+	f	Lnet/minecraft/C_3673881;	f_8831013		DESCRIPTION
+	f	Lnet/minecraft/C_1186819;	f_9177286		tutorial
+	f	Lnet/minecraft/C_8543698;	f_3178739		toast
+	f	I	f_5372062		ticks
 	m	(Lnet/minecraft/C_1186819;)V	<init>		<init>
-		p	1			p_1
+		p	1			tutorial
 	m	()V	m_0847747		m_0847747
 	m	()V	m_1030223		m_1030223
 	m	(Lnet/minecraft/C_2955638;Lnet/minecraft/C_1736404;)V	m_9402538		m_9402538
 		p	1			p_1
 		p	2			p_2
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_5585420		net/minecraft/C_5585420
-	m	()V	m_1030223		m_1030223
-	m	()V	m_0847747		m_0847747
-	m	(Lnet/minecraft/C_8063475;)V	m_1459357		m_1459357
-		p	1			p_1
-	m	(Lnet/minecraft/C_7320314;)V	m_4122203		m_4122203
-		p	1			p_1
-	m	(Lnet/minecraft/C_2955638;Lnet/minecraft/C_1736404;)V	m_9402538		m_9402538
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/C_2955638;Lnet/minecraft/C_9546534;Lnet/minecraft/C_3908218;F)V	m_2408438		m_2408438
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	()V	m_2899361		m_2899361
-	m	(Lnet/minecraft/C_1352131;)V	m_7617674		m_7617674
-		p	1			p_1
-c	net/minecraft/C_5719325		net/minecraft/C_5719325
-	f	Lnet/minecraft/C_1186819;	f_2624434		f_2624434
+c	net/minecraft/C_5585420		net/minecraft/client/tutorial/TutorialStep
+	m	()V	m_1030223		clear
+	m	()V	m_0847747		tick
+	m	(Lnet/minecraft/C_8063475;)V	m_1459357		onPlayerInput
+		p	1			input
+	m	(Lnet/minecraft/C_7320314;)V	m_4122203		onMouseInput
+		p	1			input
+	m	(Lnet/minecraft/C_2955638;Lnet/minecraft/C_1736404;)V	m_9402538		onLookAt
+		p	1			world
+		p	2			result
+	m	(Lnet/minecraft/C_2955638;Lnet/minecraft/C_9546534;Lnet/minecraft/C_3908218;F)V	m_2408438		onMineBlock
+		p	1			world
+		p	2			pos
+		p	3			state
+		p	4			progress
+	m	()V	m_2899361		onOpenInventory
+	m	(Lnet/minecraft/C_1352131;)V	m_7617674		onPickUpItem
+		p	1			stack
+c	net/minecraft/C_5719325		net/minecraft/client/tutorial/NoneTutorialStep
+	f	Lnet/minecraft/C_1186819;	f_2624434		tutorial
 	m	(Lnet/minecraft/C_1186819;)V	<init>		<init>
-		p	1			p_1
-c	net/minecraft/C_6073931		net/minecraft/C_6073931
-	f	Ljava/util/Set;	f_6221172		f_6221172
-	f	Lnet/minecraft/C_3673881;	f_6978870		f_6978870
-	f	Lnet/minecraft/C_3673881;	f_7952725		f_7952725
-	f	Lnet/minecraft/C_1186819;	f_6346997		f_6346997
-	f	Lnet/minecraft/C_8543698;	f_9724785		f_9724785
-	f	I	f_9011070		f_9011070
+		p	1			tutorial
+c	net/minecraft/C_6073931		net/minecraft/client/tutorial/PunchTreeTutorialStep
+	f	Ljava/util/Set;	f_6221172		TREE_TRUNK_BLOCKS
+	f	Lnet/minecraft/C_3673881;	f_6978870		TITLE
+	f	Lnet/minecraft/C_3673881;	f_7952725		DESCRIPTION
+	f	Lnet/minecraft/C_1186819;	f_6346997		tutorial
+	f	Lnet/minecraft/C_8543698;	f_9724785		toast
+	f	I	f_9011070		ticks
 	m	(Lnet/minecraft/C_1186819;)V	<init>		<init>
-		p	1			p_1
+		p	1			tutorial
 	m	()V	m_0847747		m_0847747
 	m	()V	m_1030223		m_1030223
 	m	(Lnet/minecraft/C_2955638;Lnet/minecraft/C_9546534;Lnet/minecraft/C_3908218;F)V	m_2408438		m_2408438
@@ -1075,23 +1076,23 @@ c	net/minecraft/C_6073931		net/minecraft/C_6073931
 		p	3			p_3
 		p	4			p_4
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_6204647		net/minecraft/C_6204647
-	f	Lnet/minecraft/C_3673881;	f_3114419		f_3114419
-	f	Lnet/minecraft/C_3673881;	f_0168296		f_0168296
-	f	Lnet/minecraft/C_3673881;	f_0864086		f_0864086
-	f	Lnet/minecraft/C_3673881;	f_0371421		f_0371421
-	f	Lnet/minecraft/C_1186819;	f_2072918		f_2072918
-	f	Lnet/minecraft/C_8543698;	f_6306054		f_6306054
-	f	Lnet/minecraft/C_8543698;	f_7060557		f_7060557
-	f	I	f_1258090		f_1258090
-	f	I	f_3900114		f_3900114
-	f	I	f_2813147		f_2813147
-	f	Z	f_0434965		f_0434965
-	f	Z	f_9760279		f_9760279
-	f	I	f_8739732		f_8739732
-	f	I	f_1956761		f_1956761
+c	net/minecraft/C_6204647		net/minecraft/client/tutorial/MovementTutorialStep
+	f	Lnet/minecraft/C_3673881;	f_3114419		MOVE_TITLE
+	f	Lnet/minecraft/C_3673881;	f_0168296		MOVE_DESCRIPTION
+	f	Lnet/minecraft/C_3673881;	f_0864086		LOOK_TITLE
+	f	Lnet/minecraft/C_3673881;	f_0371421		LOOK_DESCRIPTION
+	f	Lnet/minecraft/C_1186819;	f_2072918		tutorial
+	f	Lnet/minecraft/C_8543698;	f_6306054		moveToast
+	f	Lnet/minecraft/C_8543698;	f_7060557		lookToast
+	f	I	f_1258090		ticks
+	f	I	f_3900114		moveTicks
+	f	I	f_2813147		lookTicks
+	f	Z	f_0434965		moved
+	f	Z	f_9760279		looked
+	f	I	f_8739732		moveTime
+	f	I	f_1956761		lookTime
 	m	(Lnet/minecraft/C_1186819;)V	<init>		<init>
-		p	1			p_1
+		p	1			tutorial
 	m	()V	m_0847747		m_0847747
 	m	()V	m_1030223		m_1030223
 	m	(Lnet/minecraft/C_8063475;)V	m_1459357		m_1459357
@@ -1099,7 +1100,7 @@ c	net/minecraft/C_6204647		net/minecraft/C_6204647
 	m	(Lnet/minecraft/C_7320314;)V	m_4122203		m_4122203
 		p	1			p_1
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_6254461		net/minecraft/C_6254461
+c	net/minecraft/C_6254461		net/minecraft/C_80dnoxhqs
 	f	Lnet/minecraft/C_6254461$C_7324572;	f_2891707		f_2891707
 	f	Ljava/lang/String;	f_3965633		f_3965633
 	f	Ljava/lang/String;	f_7429802		f_7429802
@@ -1122,7 +1123,7 @@ c	net/minecraft/C_6254461		net/minecraft/C_6254461
 		p	2			p_2
 		p	3			p_3
 	m	()Ljava/lang/Object;	m_6130998		m_6130998
-c	net/minecraft/C_6254461$C_7324572		net/minecraft/C_6254461$C_7324572
+c	net/minecraft/C_6254461$C_7324572		net/minecraft/C_80dnoxhqs$C_7324572
 	f	Lnet/minecraft/C_6254461$C_7324572;	f_3572220		f_3572220
 	f	Lnet/minecraft/C_6254461$C_7324572;	f_3087886		f_3087886
 	f	[Lnet/minecraft/C_6254461$C_7324572;	f_6097045		f_6097045
@@ -1133,29 +1134,29 @@ c	net/minecraft/C_6254461$C_7324572		net/minecraft/C_6254461$C_7324572
 		p	1			p_1
 		p	2			p_2
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_6785795		net/minecraft/C_6785795
-	f	Lnet/minecraft/C_3673881;	f_6816318		f_6816318
-	f	Lnet/minecraft/C_3673881;	f_8355971		f_8355971
-	f	Lnet/minecraft/C_1186819;	f_8653812		f_8653812
-	f	Lnet/minecraft/C_8543698;	f_2199712		f_2199712
-	f	I	f_9164087		f_9164087
+c	net/minecraft/C_6785795		net/minecraft/client/tutorial/OpenInventoryTutorialStep
+	f	Lnet/minecraft/C_3673881;	f_6816318		TITLE
+	f	Lnet/minecraft/C_3673881;	f_8355971		DESCRIPTION
+	f	Lnet/minecraft/C_1186819;	f_8653812		tutorial
+	f	Lnet/minecraft/C_8543698;	f_2199712		toast
+	f	I	f_9164087		ticks
 	m	(Lnet/minecraft/C_1186819;)V	<init>		<init>
-		p	1			p_1
+		p	1			tutorial
 	m	()V	m_0847747		m_0847747
 	m	()V	m_1030223		m_1030223
 	m	()V	m_2899361		m_2899361
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_7476141		net/minecraft/C_7476141
-	f	Lnet/minecraft/C_9661642;	f_3137317		f_3137317
-	f	Ljava/lang/Object;	f_6752104		f_6752104
-	m	(Lnet/minecraft/C_3089894;J)Lnet/minecraft/C_7476141$C_3198019;	m_1088833		m_1088833
-		p	1			p_1
-		p	2			p_2
-	m	()Ljava/lang/Object;	m_6130998		m_6130998
+c	net/minecraft/C_7476141		net/minecraft/client/gui/toast/Toast
+	f	Lnet/minecraft/C_9661642;	f_3137317		TEXTURES
+	f	Ljava/lang/Object;	f_6752104		NONE
+	m	(Lnet/minecraft/C_3089894;J)Lnet/minecraft/C_7476141$C_3198019;	m_1088833		getVisibility
+		p	1			gui
+		p	2			animationTime
+	m	()Ljava/lang/Object;	m_6130998		getToken
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_7476141$C_3198019		net/minecraft/C_7476141$C_3198019
-	f	Lnet/minecraft/C_7476141$C_3198019;	f_2090654		f_2090654
-	f	Lnet/minecraft/C_7476141$C_3198019;	f_2252613		f_2252613
+c	net/minecraft/C_7476141$C_3198019		net/minecraft/client/gui/toast/Toast$Visibility
+	f	Lnet/minecraft/C_7476141$C_3198019;	f_2090654		SHOW
+	f	Lnet/minecraft/C_7476141$C_3198019;	f_2252613		HIDE
 	f	[Lnet/minecraft/C_7476141$C_3198019;	f_2768826		f_2768826
 	m	()[Lnet/minecraft/C_7476141$C_3198019;	values		values
 	m	(Ljava/lang/String;)Lnet/minecraft/C_7476141$C_3198019;	valueOf		valueOf
@@ -1164,28 +1165,28 @@ c	net/minecraft/C_7476141$C_3198019		net/minecraft/C_7476141$C_3198019
 		p	1			p_1
 		p	2			p_2
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_7563699		net/minecraft/C_7563699
-	f	Lnet/minecraft/C_3673881;	f_5493547		f_5493547
-	f	Lnet/minecraft/C_3673881;	f_0944408		f_0944408
-	f	Lnet/minecraft/C_1186819;	f_1235613		f_1235613
-	f	Lnet/minecraft/C_8543698;	f_1353258		f_1353258
-	f	I	f_0506804		f_0506804
+c	net/minecraft/C_7563699		net/minecraft/client/tutorial/CraftPlanksTutorialStep
+	f	Lnet/minecraft/C_3673881;	f_5493547		TITLE
+	f	Lnet/minecraft/C_3673881;	f_0944408		DESCRIPTION
+	f	Lnet/minecraft/C_1186819;	f_1235613		tutorial
+	f	Lnet/minecraft/C_8543698;	f_1353258		toast
+	f	I	f_0506804		ticks
 	m	(Lnet/minecraft/C_1186819;)V	<init>		<init>
-		p	1			p_1
+		p	1			tutorial
 	m	()V	m_0847747		m_0847747
 	m	()V	m_1030223		m_1030223
 	m	(Lnet/minecraft/C_1352131;)V	m_7617674		m_7617674
 		p	1			p_1
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_7618455		net/minecraft/C_7618455
-	f	Lnet/minecraft/C_7618455;	f_9724581		f_9724581
-	f	Lnet/minecraft/C_7618455;	f_5013996		f_5013996
-	f	Lnet/minecraft/C_7618455;	f_2648483		f_2648483
-	f	Lnet/minecraft/C_7618455;	f_1350992		f_1350992
-	f	Lnet/minecraft/C_7618455;	f_5967207		f_5967207
-	f	Lnet/minecraft/C_7618455;	f_7128128		f_7128128
-	f	Ljava/lang/String;	f_7817390		f_7817390
-	f	Ljava/util/function/Function;	f_4234201		f_4234201
+c	net/minecraft/C_7618455		net/minecraft/client/tutorial/TutorialSteps
+	f	Lnet/minecraft/C_7618455;	f_9724581		MOVEMENT
+	f	Lnet/minecraft/C_7618455;	f_5013996		FIND_TREE
+	f	Lnet/minecraft/C_7618455;	f_2648483		PUNCH_TREE
+	f	Lnet/minecraft/C_7618455;	f_1350992		OPEN_INVENTORY
+	f	Lnet/minecraft/C_7618455;	f_5967207		CRAFT_PLANKS
+	f	Lnet/minecraft/C_7618455;	f_7128128		NONE
+	f	Ljava/lang/String;	f_7817390		id
+	f	Ljava/util/function/Function;	f_4234201		factory
 	f	[Lnet/minecraft/C_7618455;	f_9877282		f_9877282
 	m	()[Lnet/minecraft/C_7618455;	values		values
 	m	(Ljava/lang/String;)Lnet/minecraft/C_7618455;	valueOf		valueOf
@@ -1193,33 +1194,33 @@ c	net/minecraft/C_7618455		net/minecraft/C_7618455
 	m	(Ljava/lang/String;ILjava/lang/String;Ljava/util/function/Function;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/C_1186819;)Lnet/minecraft/C_5585420;	m_8405905		m_8405905
-		p	1			p_1
-	m	()Ljava/lang/String;	m_2029935		m_2029935
-	m	(Ljava/lang/String;)Lnet/minecraft/C_7618455;	m_1614023		m_1614023
-		p	0			p_0
+		p	3			id
+		p	4			factory
+	m	(Lnet/minecraft/C_1186819;)Lnet/minecraft/C_5585420;	m_8405905		create
+		p	1			tutorial
+	m	()Ljava/lang/String;	m_2029935		getId
+	m	(Ljava/lang/String;)Lnet/minecraft/C_7618455;	m_1614023		byId
+		p	0			id
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_7975491		net/minecraft/C_7975491
-	f	Ljava/util/function/Function;	f_9221659		f_9221659
-	f	Ljava/lang/String;	f_2007598		f_2007598
-	f	Ljava/util/function/Supplier;	f_0251382		f_0251382
+c	net/minecraft/C_7975491		net/minecraft/text/KeybindingText
+	f	Ljava/util/function/Function;	f_9221659		KEY_RESOLVER
+	f	Ljava/lang/String;	f_2007598		name
+	f	Ljava/util/function/Supplier;	f_0251382		nameResolver
 	m	(Ljava/lang/String;)V	<init>		<init>
-		p	1			p_1
+		p	1			name
 	m	()Ljava/lang/String;	m_8715800		m_8715800
 	m	()Lnet/minecraft/C_7975491;	m_4692561		m_4692561
 	m	(Ljava/lang/Object;)Z	equals		equals
 		p	1			p_1
 	m	()Ljava/lang/String;	toString		toString
-	m	()Ljava/lang/String;	m_8509890		m_8509890
+	m	()Ljava/lang/String;	m_8509890		getName
 	m	()Lnet/minecraft/C_3673881;	m_0602357		m_0602357
 	m	(Ljava/lang/String;)Ljava/util/function/Supplier;	m_2646407		m_2646407
-		p	0			p_0
+		p	0			name
 	m	(Ljava/lang/String;)Ljava/lang/String;	m_3059256		m_3059256
 		p	0			p_0
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_8543698		net/minecraft/C_8543698
+c	net/minecraft/C_8543698		net/minecraft/client/tutorial/TutorialToast
 	f	Lnet/minecraft/C_8543698$C_4643665;	f_7731237		f_7731237
 	f	Ljava/lang/String;	f_1934505		f_1934505
 	f	Ljava/lang/String;	f_2163401		f_2163401
@@ -1236,17 +1237,17 @@ c	net/minecraft/C_8543698		net/minecraft/C_8543698
 	m	(Lnet/minecraft/C_3089894;J)Lnet/minecraft/C_7476141$C_3198019;	m_1088833		m_1088833
 		p	1			p_1
 		p	2			p_2
-	m	()V	m_9619752		m_9619752
-	m	(F)V	m_4013345		m_4013345
+	m	()V	m_9619752		hide
+	m	(F)V	m_4013345		setProgress
 		p	1			p_1
-c	net/minecraft/C_8543698$C_4643665		net/minecraft/C_8543698$C_4643665
-	f	Lnet/minecraft/C_8543698$C_4643665;	f_5627527		f_5627527
-	f	Lnet/minecraft/C_8543698$C_4643665;	f_6890414		f_6890414
-	f	Lnet/minecraft/C_8543698$C_4643665;	f_4527802		f_4527802
-	f	Lnet/minecraft/C_8543698$C_4643665;	f_8054948		f_8054948
-	f	Lnet/minecraft/C_8543698$C_4643665;	f_3157975		f_3157975
-	f	I	f_4796360		f_4796360
-	f	I	f_5808908		f_5808908
+c	net/minecraft/C_8543698$C_4643665		net/minecraft/client/tutorial/TutorialToast$Icon
+	f	Lnet/minecraft/C_8543698$C_4643665;	f_5627527		MOVEMENT_KEYS
+	f	Lnet/minecraft/C_8543698$C_4643665;	f_6890414		MOUSE
+	f	Lnet/minecraft/C_8543698$C_4643665;	f_4527802		TREE
+	f	Lnet/minecraft/C_8543698$C_4643665;	f_8054948		RECIPE_BOOK
+	f	Lnet/minecraft/C_8543698$C_4643665;	f_3157975		WOODEN_PLANKS
+	f	I	f_4796360		u
+	f	I	f_5808908		v
 	f	[Lnet/minecraft/C_8543698$C_4643665;	f_5811223		f_5811223
 	m	()[Lnet/minecraft/C_8543698$C_4643665;	values		values
 	m	(Ljava/lang/String;)Lnet/minecraft/C_8543698$C_4643665;	valueOf		valueOf
@@ -1254,14 +1255,14 @@ c	net/minecraft/C_8543698$C_4643665		net/minecraft/C_8543698$C_4643665
 	m	(Ljava/lang/String;III)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/C_9188712;II)V	m_3418407		m_3418407
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	3			u
+		p	4			v
+	m	(Lnet/minecraft/C_9188712;II)V	m_3418407		draw
+		p	1			gui
+		p	2			x
+		p	3			y
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_8823968		net/minecraft/C_8823968
+c	net/minecraft/C_8823968		net/minecraft/C_80gynchky
 	f	Lnet/minecraft/C_9661642;	f_2543105		f_2543105
 	m	(Lnet/minecraft/C_5761426;)V	<init>		<init>
 		p	1			p_1
@@ -1323,7 +1324,7 @@ c	net/minecraft/C_8823968		net/minecraft/C_8823968
 		p	8			p_8
 		p	9			p_9
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_8823968$1		net/minecraft/C_8823968$1
+c	net/minecraft/C_8823968$1		net/minecraft/C_80gynchky$1
 	f	Lnet/minecraft/C_8823968;	f_6676942		f_6676942
 	m	(Lnet/minecraft/C_8823968;Lnet/minecraft/C_4355345;)V	<init>		<init>
 		p	1			p_1
@@ -1339,7 +1340,7 @@ c	net/minecraft/C_8823968$1		net/minecraft/C_8823968$1
 		p	8			p_8
 	m	(Lnet/minecraft/C_6912424;)V	m_2136320		m_2136320
 		p	1			p_1
-c	net/minecraft/C_9224327		net/minecraft/C_9224327
+c	net/minecraft/C_9224327		net/minecraft/C_72gounizc
 	f	Lnet/minecraft/C_6101761;	f_5542828		f_5542828
 	f	I	f_3417184		f_3417184
 	f	Lnet/minecraft/C_9224327$C_7790773;	f_0471311		f_0471311
@@ -1361,7 +1362,7 @@ c	net/minecraft/C_9224327		net/minecraft/C_9224327
 	m	(Lnet/minecraft/C_9224327;)Lnet/minecraft/C_2924703;	m_0386441		m_0386441
 		p	0			p_0
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_9224327$C_4343115		net/minecraft/C_9224327$C_4343115
+c	net/minecraft/C_9224327$C_4343115		net/minecraft/C_72gounizc$C_4343115
 	f	Lnet/minecraft/C_9224327;	f_1024672		f_1024672
 	m	(Lnet/minecraft/C_9224327;)V	<init>		<init>
 		p	1			p_1
@@ -1369,7 +1370,7 @@ c	net/minecraft/C_9224327$C_4343115		net/minecraft/C_9224327$C_4343115
 	m	()V	m_4664854		m_4664854
 	m	()V	m_6635039		m_6635039
 	m	()V	m_3472786		m_3472786
-c	net/minecraft/C_9224327$C_5444162		net/minecraft/C_9224327$C_5444162
+c	net/minecraft/C_9224327$C_5444162		net/minecraft/C_72gounizc$C_5444162
 	f	I	f_1733543		f_1733543
 	f	I	f_2230558		f_2230558
 	f	Lnet/minecraft/C_9224327;	f_4432138		f_4432138
@@ -1385,7 +1386,7 @@ c	net/minecraft/C_9224327$C_5444162		net/minecraft/C_9224327$C_5444162
 	m	()I	m_5527679		m_5527679
 	m	()Lnet/minecraft/C_1786827;	m_2190312		m_2190312
 	m	()Lnet/minecraft/C_9224327$C_7790773;	m_0523334		m_0523334
-c	net/minecraft/C_9224327$C_7790773		net/minecraft/C_9224327$C_7790773
+c	net/minecraft/C_9224327$C_7790773		net/minecraft/C_72gounizc$C_7790773
 	f	Lnet/minecraft/C_9224327$C_7790773;	f_7698643		f_7698643
 	f	Lnet/minecraft/C_9224327$C_7790773;	f_4291284		f_4291284
 	f	Lnet/minecraft/C_9224327$C_7790773;	f_6850016		f_6850016

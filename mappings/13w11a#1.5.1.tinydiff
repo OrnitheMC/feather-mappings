@@ -1,22 +1,22 @@
 tiny	2	0
 c	net/minecraft/C_3117018
 	m	(Lnet/minecraft/C_0370453;IIIIII)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
-		p	7		p_7	
+		p	1		world	
+		p	2		minX	
+		p	3		minY	
+		p	4		minZ	
+		p	5		maxX	
+		p	6		maxY	
+		p	7		maxZ	
 	m	(Lnet/minecraft/C_0370453;IIIIIII)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
+		p	1			world
+		p	2			minX
+		p	3			minY
+		p	4			minZ
+		p	5			maxX
+		p	6			maxY
+		p	7			maxZ
+		p	8			offset
 c	net/minecraft/C_4562553
 	f	F	f_2497766	f_2497766	
 	f	F	f_9755663	f_9755663	
@@ -38,14 +38,14 @@ c	net/minecraft/C_4562553
 	f	Z	f_8696904	f_8696904	
 	f	Z	f_0008906	f_0008906	
 	f	Z	f_1899506	f_1899506	
-	m	(Lnet/minecraft/C_5956923;IIIFFF)Z	m_9323085		m_9323085
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
+	m	(Lnet/minecraft/C_5956923;IIIFFF)Z	m_9323085		renderBlock2
+		p	1			block
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			r
+		p	6			g
+		p	7			b
 c	net/minecraft/C_5487272
 	m	(Ljava/lang/String;II)V	m_5455534	m_5455534	
 		p	1		p_1	
@@ -60,8 +60,8 @@ c	net/minecraft/C_5487272
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/C_6136080
-	f	[I	f_6397555		f_6397555
-	f	[I	f_4795621		f_4795621
+	f	[I	f_6397555		INGREDIENT_SLOTS
+	f	[I	f_4795621		POTION_SLOTS
 	m	(I)I	m_0172636	m_0172636	
 		p	1		p_1	
 	m	(I)I	m_9259411	m_9259411	
@@ -78,9 +78,9 @@ c	net/minecraft/C_6136080
 		p	3			p_3
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/C_6551235
-	f	[I	f_0870203		f_0870203
-	f	[I	f_3662855		f_3662855
-	f	[I	f_4019158		f_4019158
+	f	[I	f_0870203		INVENTORY_SLOTS_TOP
+	f	[I	f_3662855		INVENTORY_SLOTS_BOTTOM
+	f	[I	f_4019158		INVENTORY_SLOTS_SIDES
 	m	(I)I	m_0172636	m_0172636	
 		p	1		p_1	
 	m	(I)I	m_9259411	m_9259411	
@@ -97,26 +97,26 @@ c	net/minecraft/C_6551235
 		p	3			p_3
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/C_6552068
-	m	(Lnet/minecraft/C_6515566;Lnet/minecraft/C_0934204;II)Z	m_9328928		m_9328928
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lnet/minecraft/C_0934204;Lnet/minecraft/C_1352131;II)Z	m_3807735		m_3807735
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lnet/minecraft/C_0934204;Lnet/minecraft/C_1352131;II)Z	m_0696606		m_0696606
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lnet/minecraft/C_0934204;Lnet/minecraft/C_1352131;II)Lnet/minecraft/C_1352131;	m_6127496		m_6127496
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(Lnet/minecraft/C_6515566;Lnet/minecraft/C_0934204;II)Z	m_9328928		pullItems
+		p	0			hopper
+		p	1			inventory
+		p	2			slot
+		p	3			side
+	m	(Lnet/minecraft/C_0934204;Lnet/minecraft/C_1352131;II)Z	m_3807735		canPushItems
+		p	0			inventory
+		p	1			stack
+		p	2			slot
+		p	3			side
+	m	(Lnet/minecraft/C_0934204;Lnet/minecraft/C_1352131;II)Z	m_0696606		canPullItems
+		p	0			inventory
+		p	1			stack
+		p	2			slot
+		p	3			face
+	m	(Lnet/minecraft/C_0934204;Lnet/minecraft/C_1352131;II)Lnet/minecraft/C_1352131;	m_6127496		pushItems
+		p	0			inventory
+		p	1			stack
+		p	2			slot
+		p	3			side
 c	net/minecraft/C_6692940
 c	net/minecraft/C_6692940$1		$1
 	f	Lnet/minecraft/C_9183578;	f_7656070		f_7656070
@@ -172,17 +172,17 @@ c	net/minecraft/C_7484163
 c	net/minecraft/C_9183578
 	m	()Z	m_1343539		m_1343539
 c	net/minecraft/C_9322795
-	m	(I)I	m_0172636	m_0172636	
+	m	(I)I	m_0172636	getSlots	
 		p	1		p_1	
-	m	(I)I	m_9259411	m_9259411	
+	m	(I)I	m_9259411	canHopperRemoveStack	
 		p	1		p_1	
-	m	(I)[I	m_0172636		m_0172636
-		p	1			p_1
-	m	(ILnet/minecraft/C_1352131;I)Z	m_8355395		m_8355395
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(ILnet/minecraft/C_1352131;I)Z	m_9259411		m_9259411
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(I)[I	m_0172636		getSlots
+		p	1			side
+	m	(ILnet/minecraft/C_1352131;I)Z	m_8355395		canHopperAddStack
+		p	1			slot
+		p	2			stack
+		p	3			side
+	m	(ILnet/minecraft/C_1352131;I)Z	m_9259411		canHopperRemoveStack
+		p	1			slot
+		p	2			stack
+		p	3			side

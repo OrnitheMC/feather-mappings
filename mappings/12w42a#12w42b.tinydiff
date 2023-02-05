@@ -4,19 +4,19 @@ c	net/minecraft/C_0077087
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_0370453
-	m	(IIIIII)V	m_8495846		m_8495846
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-	m	(IIIII)V	m_2962309		m_2962309
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+	m	(IIIIII)V	m_8495846		scheduleTick
+		p	1			x
+		p	2			y
+		p	3			z
+		p	4			blockId
+		p	5			delay
+		p	6			priority
+	m	(IIIII)V	m_2962309		doGlobalEvent
+		p	1			type
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			data
 c	net/minecraft/C_0750548
 	m	(IIIIII)V	m_8495846		m_8495846
 		p	1			p_1
@@ -26,14 +26,14 @@ c	net/minecraft/C_0750548
 		p	5			p_5
 		p	6			p_6
 c	net/minecraft/C_0763597
-	m	()F	m_1206213		m_1206213
+	m	()F	m_1206213		getWalkSpeed
 c	net/minecraft/C_1426667
-	m	(IIIII)V	m_8043058		m_8043058
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+	m	(IIIII)V	m_8043058		doGlobalEvent
+		p	1			type
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			data
 c	net/minecraft/C_1981359
 	m	()Ljava/lang/String;	m_4711771		m_4711771
 	m	()Ljava/lang/String;	m_3688454		m_3688454
@@ -46,8 +46,8 @@ c	net/minecraft/C_2158219
 		p	4			p_4
 		p	5			p_5
 c	net/minecraft/C_2734448
-	f	I	f_6302880		f_6302880
-	f	Ljava/lang/String;	f_1947551		f_1947551
+	f	I	f_6302880		protocol
+	f	Ljava/lang/String;	f_1947551		version
 c	net/minecraft/C_3155567
 	m	(Lnet/minecraft/C_2734448;)V	m_6150642
 		p	1		p_1	
@@ -62,23 +62,25 @@ c	net/minecraft/C_3532226
 	m	()Ljava/lang/String;	m_3688454		m_3688454
 	m	()Ljava/lang/String;	m_4029792		m_4029792
 c	net/minecraft/C_4589719
-	m	(Ljava/io/DataInputStream;Z)Lnet/minecraft/C_4589719;	m_7379762	m_7379762	
-		p	0		p_0	
-		p	1		p_1	
-	m	(Ljava/io/DataInputStream;ZLjava/net/Socket;)Lnet/minecraft/C_4589719;	m_7379762		m_7379762
+	m	(Ljava/io/DataInputStream;Z)Lnet/minecraft/C_4589719;	m_7379762	deserialize	
+		p	0		input	
+		p	1		server	
+	m	(Ljava/io/DataInputStream;ZLjava/net/Socket;)Lnet/minecraft/C_4589719;	m_7379762		deserialize
 		p	0			p_0
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_4674783
-	f	I	f_6929071		f_6929071
-	m	(I)V	m_3303719		m_3303719
-		p	1			p_1
+	f	I	f_6929071		priority
+	m	(I)V	m_3303719		setPriority
+		p	1			priority
 c	net/minecraft/C_5185167
 	m	(B)V	m_3491698		m_3491698
 		p	1			p_1
 c	net/minecraft/C_5938340
-	m	()I	m_4764753		m_4764753
-	m	()I	m_0756993		m_0756993
+	m	()I	m_4764753		getSize
+		c		Get the number of elements currently present in the pool.
+	m	()I	m_0756993		getSizeThisTick
+		c		Get the number of elements that have been created by this pool this tick.
 c	net/minecraft/C_6315069
 	m	(Lnet/minecraft/C_0370453;IIII)V	m_6550023		m_6550023
 		p	1			p_1
@@ -87,7 +89,7 @@ c	net/minecraft/C_6315069
 		p	4			p_4
 		p	5			p_5
 c	net/minecraft/C_7972231
-	f	Z	f_1698130		f_1698130
+	f	Z	f_1698130		global
 	m	(IIIII)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -95,16 +97,16 @@ c	net/minecraft/C_7972231
 		p	4		p_4	
 		p	5		p_5	
 	m	(IIIIIZ)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-	m	()Z	m_7124980		m_7124980
+		p	1			event
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			data
+		p	6			global
+	m	()Z	m_7124980		isGlobal
 c	net/minecraft/C_8171482
-	m	(F)V	m_4084101		m_4084101
-		p	1			p_1
+	m	(F)V	m_4084101		setWalkSpeed
+		p	1			walkSpeed
 c	net/minecraft/C_8230509
 	m	(IIIII)V	m_8043058		m_8043058
 		p	1			p_1
@@ -119,9 +121,9 @@ c	net/minecraft/C_8667903
 	m	()Ljava/lang/String;	m_3688454		m_3688454
 	m	()Ljava/lang/String;	m_4029792		m_4029792
 c	net/minecraft/C_9376914
-	m	(Lnet/minecraft/C_0370453;IIII)V	m_6550023		m_6550023
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+	m	(Lnet/minecraft/C_0370453;IIII)V	m_6550023		onTickFallingBlockEntity
+		p	1			world
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			metadata

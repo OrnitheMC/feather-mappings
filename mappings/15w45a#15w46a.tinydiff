@@ -1,13 +1,13 @@
 tiny	2	0
 c	net/minecraft/C_0728379
-	m	([FIIII)[F	m_1203994	m_1203994	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
+	m	([FIIII)[F	m_1203994	getDownfall	
+		p	1		downfall	
+		p	2		x	
+		p	3		z	
+		p	4		width	
+		p	5		length	
 c	net/minecraft/C_1402981
-	f	Ljava/util/List;	f_1811826		f_1811826
+	f	Ljava/util/List;	f_1811826		BIOMES
 c	net/minecraft/C_1438789
 c	net/minecraft/C_1438789$C_2796109
 	f	Lnet/minecraft/C_8879308;	f_6789255	f_6789255	
@@ -22,7 +22,7 @@ c	net/minecraft/C_1438789$C_2796109
 		p	3			p_3
 c	net/minecraft/C_1881591
 c	net/minecraft/C_1881591$C_3384323
-	m	()Ljava/util/List;	m_4576182		m_4576182
+	m	()Ljava/util/List;	m_4576182		getConnections
 c	net/minecraft/C_2544704
 	m	(Lnet/minecraft/C_5288965;)V	m_3302843	m_3302843	
 		p	1		p_1	
@@ -99,34 +99,37 @@ c	net/minecraft/C_3908218
 	m	(Lnet/minecraft/C_9231157;)Z	m_1602197		m_1602197
 		p	1			p_1
 c	net/minecraft/C_4945758
-	f	Lnet/minecraft/C_5477499;	f_4443424	f_4443424	
-	f	[Lnet/minecraft/C_5477499;	f_4443424		f_4443424
-	m	(Lnet/minecraft/C_3908218;)I	m_4796051		m_4796051
-		p	0			p_0
-c	net/minecraft/C_5288965	net/minecraft/C_5288965	
-	f	I	f_9652424	f_9652424	
+	f	Lnet/minecraft/C_5477499;	f_4443424	SHAPES	
+	f	[Lnet/minecraft/C_5477499;	f_4443424		SHAPES
+	m	(Lnet/minecraft/C_3908218;)I	m_4796051		getShapeIndex
+		p	0			state
+c	net/minecraft/C_5288965	net/minecraft/network/packet/s2c/play/CompressionThresholdS2CPacket	
+	f	I	f_9652424	compressionThreshold	
 	m	()V	<init>	<init>	
 	m	(Lnet/minecraft/C_4800753;)V	m_6089323	m_6089323	
 		p	1		p_1	
 	m	(Lnet/minecraft/C_4800753;)V	m_9250463	m_9250463	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_6391117;)V	m_3104601	m_3104601	
+	m	(Lnet/minecraft/C_6391117;)V	m_3104601	apply	
 		p	1		p_1	
-	m	()I	m_7986896	m_7986896	
+	m	()I	m_7986896	getCompressionThreshold	
 	m	(Lnet/minecraft/C_4657865;)V	m_4654498	m_4654498	
 		p	1		p_1	
 c	net/minecraft/C_5445015
-	m	(Lnet/minecraft/C_3908218;)Z	m_2904831		m_2904831
-		p	0			p_0
+	m	(Lnet/minecraft/C_3908218;)Z	m_2904831		canSpawnInside
+		p	0			state
 c	net/minecraft/C_5477499
-	m	(DDD)Lnet/minecraft/C_5477499;	m_3835753	m_3835753	
-		p	1		p_1	
-		p	3		p_3	
-		p	5		p_5	
-	m	(D)Lnet/minecraft/C_5477499;	m_7170637		m_7170637
-		p	1			p_1
-	m	(D)Lnet/minecraft/C_5477499;	m_3835753		m_3835753
-		p	1			p_1
+	m	(DDD)Lnet/minecraft/C_5477499;	m_3835753	contract	
+		c	Create a new {@code Box} that is contracted by the given amounts. The minimum and maximum\nvalues are increased and decreased respectively by the amounts given. This means the\nnew {@code Box} will be smaller by twice the amounts given on each axis.	
+		p	1		dx	
+		p	3		dy	
+		p	5		dz	
+	m	(D)Lnet/minecraft/C_5477499;	m_7170637		expand
+		c		Create a new {@code Box} that is expanded by the given amount. The minimum and maximum\nvalues are decreased and increased respectively by the amount given. This means the\nnew {@code Box} will be bigger by twice the amount given on each axis.
+		p	1			amount
+	m	(D)Lnet/minecraft/C_5477499;	m_3835753		contract
+		c		Create a new {@code Box} that is contracted by the given amount. The minimum and maximum\nvalues are increased and decreased respectively by the amount given. This means the\nnew {@code Box} will be smaller by twice the amount given on each axis.
+		p	1			amount
 c	net/minecraft/C_5492706
 	f	I	f_6150040		f_6150040
 	m	(II)V	m_7560139		m_7560139
@@ -136,27 +139,27 @@ c	net/minecraft/C_5860422
 	m	(Lnet/minecraft/C_3908218;)Z	m_2625446		m_2625446
 		p	1			p_1
 c	net/minecraft/C_6391117
-	m	(Lnet/minecraft/C_5288965;)V	m_3302843	m_3302843	
-		p	1		p_1	
+	m	(Lnet/minecraft/C_5288965;)V	m_3302843	handleCompressionThreshold	
+		p	1		packet	
 c	net/minecraft/C_6507974
 c	net/minecraft/C_6507974$C_9198834
 	m	(Lnet/minecraft/C_9231157;)Z	m_1602197		m_1602197
 		p	1			p_1
 c	net/minecraft/C_6799968
-	m	(Lnet/minecraft/C_0370453;Lnet/minecraft/C_9546534;)Lnet/minecraft/C_5477499;	m_5960458	m_5960458	
+	m	(Lnet/minecraft/C_0370453;Lnet/minecraft/C_9546534;)Lnet/minecraft/C_5477499;	m_5960458	getShape	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/C_0370453;Lnet/minecraft/C_9546534;F)Lnet/minecraft/C_5477499;	m_8579065	m_8579065	
+	m	(Lnet/minecraft/C_0370453;Lnet/minecraft/C_9546534;F)Lnet/minecraft/C_5477499;	m_8579065	getShape	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(Lnet/minecraft/C_7445186;Lnet/minecraft/C_9546534;)Lnet/minecraft/C_5477499;	m_5960458		m_5960458
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/C_7445186;Lnet/minecraft/C_9546534;F)Lnet/minecraft/C_5477499;	m_8579065		m_8579065
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(Lnet/minecraft/C_7445186;Lnet/minecraft/C_9546534;)Lnet/minecraft/C_5477499;	m_5960458		getShape
+		p	1			world
+		p	2			pos
+	m	(Lnet/minecraft/C_7445186;Lnet/minecraft/C_9546534;F)Lnet/minecraft/C_5477499;	m_8579065		getShape
+		p	1			world
+		p	2			pos
+		p	3			progress
 c	net/minecraft/C_7844238
 	f	Lnet/minecraft/C_7844238$C_3751525;	f_3442143	f_3442143	
 	f	Z	f_2215491	f_2215491	
@@ -219,7 +222,7 @@ c	net/minecraft/C_7844238$C_7849674
 		p	5			p_5
 		p	7			p_7
 c	net/minecraft/C_7850878
-	m	()I	m_0024614	m_0024614	
+	m	()I	m_0024614	getScaledDownfall	
 c	net/minecraft/C_8030362
 	m	(Lnet/minecraft/C_3908218;)Z	m_2625446		m_2625446
 		p	1			p_1
@@ -231,7 +234,7 @@ c	net/minecraft/C_8241601
 		p	4			p_4
 c	net/minecraft/C_8277356
 c	net/minecraft/C_8277356$C_9824246
-	f	[F	f_1710193	f_1710193	
+	f	[F	f_1710193	downfall	
 c	net/minecraft/C_8392184
 	m	(Lnet/minecraft/C_9183578;)V	m_3690308		m_3690308
 		p	1			p_1

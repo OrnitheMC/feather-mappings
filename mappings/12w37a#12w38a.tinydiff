@@ -71,9 +71,9 @@ c	net/minecraft/C_0909530
 		p	6			p_6
 		p	7			p_7
 c	net/minecraft/C_0942651
-	f	F	f_0604310		f_0604310
-	f	F	f_6446447		f_6446447
-	f	F	f_6373810		f_6373810
+	f	F	f_0604310		translateX
+	f	F	f_6446447		translateY
+	f	F	f_6373810		translateZ
 c	net/minecraft/C_1023933
 	m	(IIII)V	m_0411800		m_0411800
 		p	1			p_1
@@ -81,26 +81,26 @@ c	net/minecraft/C_1023933
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/C_1076798
-	f	[Ljava/lang/String;	f_6209430		f_6209430
-	m	(DD)I	m_0179701		m_0179701
-		p	0			p_0
-		p	2			p_2
+	f	[Ljava/lang/String;	f_6209430		NAMES
+	m	(DD)I	m_0179701		fromRelativePosition
+		p	0			dx
+		p	2			dz
 c	net/minecraft/C_1511008
-	m	(FFFFFF)V	m_6000379	m_6000379	
+	m	(FFFFFF)V	m_6000379	setAngles	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
 		p	5		p_5	
 		p	6		p_6	
-	m	(FFFFFFLnet/minecraft/C_4512400;)V	m_6000379		m_6000379
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
+	m	(FFFFFFLnet/minecraft/C_4512400;)V	m_6000379		setAngles
+		p	1			handSwing
+		p	2			handSwingAmount
+		p	3			age
+		p	4			yaw
+		p	5			pitch
+		p	6			scale
+		p	7			entity
 c	net/minecraft/C_1555382
 	m	(FFFFFF)V	m_6000379	m_6000379	
 		p	1		p_1	
@@ -122,7 +122,7 @@ c	net/minecraft/C_1631059
 		p	1		p_1	
 	m	(FZ)V	<init>		<init>
 		p	1			p_1
-		p	2			p_2
+		p	2			hasBase
 c	net/minecraft/C_1720077
 	m	(FFFFFF)V	m_6000379	m_6000379	
 		p	1		p_1	
@@ -207,8 +207,8 @@ c	net/minecraft/C_3173937
 		p	6			p_6
 		p	7			p_7
 c	net/minecraft/C_3186311
-	m	(I)V	m_1925460		m_1925460
-		p	1			p_1
+	m	(I)V	m_1925460		setPotionValue
+		p	1			damage
 c	net/minecraft/C_3239731
 	f	Lnet/minecraft/C_1511008;	f_4132714	f_4132714	
 c	net/minecraft/C_3374379
@@ -250,7 +250,7 @@ c	net/minecraft/C_4193606
 		p	6			p_6
 		p	7			p_7
 c	net/minecraft/C_4275645
-	m	(Lnet/minecraft/C_6692940;Lnet/minecraft/C_1352131;)V	m_5151510		m_5151510
+	m	(Lnet/minecraft/C_6692940;Lnet/minecraft/C_1352131;)V	m_5151510		updateHoldingItem
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_4308028
@@ -261,9 +261,9 @@ c	net/minecraft/C_4308028
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/C_4512400
-	f	F	f_0889030		f_0889030
-	f	I	f_9984534		f_9984534
-	m	()I	m_3661697		m_3661697
+	f	F	f_0889030		distanceMoved
+	f	I	f_9984534		facing
+	m	()I	m_3661697		getLastPortalFacing
 c	net/minecraft/C_4708867
 	m	(IIII)V	m_0411800		m_0411800
 		p	1			p_1
@@ -271,8 +271,8 @@ c	net/minecraft/C_4708867
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/C_4747856
-	f	Lnet/minecraft/C_4747856;	f_8887150		f_8887150
-	f	Z	f_2082788		f_2082788
+	f	Lnet/minecraft/C_4747856;	f_8887150		AMBIENT
+	f	Z	f_2082788		rare
 	m	(Ljava/lang/String;ILjava/lang/Class;ILnet/minecraft/C_9458947;Z)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -283,12 +283,12 @@ c	net/minecraft/C_4747856
 	m	(Ljava/lang/String;ILjava/lang/Class;ILnet/minecraft/C_9458947;ZZ)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-	m	()Z	m_6143715		m_6143715
+		p	3			type
+		p	4			cap
+		p	5			spawnableMaterial
+		p	6			peaceful
+		p	7			rare
+	m	()Z	m_6143715		isRare
 c	net/minecraft/C_4763919
 	m	(FFFFFF)V	m_6000379	m_6000379	
 		p	1		p_1	
@@ -306,7 +306,7 @@ c	net/minecraft/C_4763919
 		p	6			p_6
 		p	7			p_7
 c	net/minecraft/C_5010126
-	f	Lnet/minecraft/C_7266062;	f_2813046		f_2813046
+	f	Lnet/minecraft/C_7266062;	f_2813046		monsterEggVein
 c	net/minecraft/C_5185167
 	m	(IIII)V	m_0411800		m_0411800
 		p	1			p_1
@@ -316,18 +316,18 @@ c	net/minecraft/C_5185167
 c	net/minecraft/C_5265945
 	m	()V	m_8488277		m_8488277
 c	net/minecraft/C_5445015
-	m	(Lnet/minecraft/C_0750548;ZZ)I	m_8562986	m_8562986	
+	m	(Lnet/minecraft/C_0750548;ZZ)I	m_8562986	spawnEntities	
 		p	0		p_0	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/C_0750548;ZZZ)I	m_8562986		m_8562986
+	m	(Lnet/minecraft/C_0750548;ZZZ)I	m_8562986		spawnEntities
 		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			world
+		p	2			allowAnimals
+		p	3			allowMonsters
 c	net/minecraft/C_5956923
-	f	Lnet/minecraft/C_5956923$C_4270455;	f_8708679		f_8708679
-	f	Lnet/minecraft/C_5956923$C_4270455;	f_3422392		f_3422392
+	f	Lnet/minecraft/C_5956923$C_4270455;	f_8708679		SNOW_SOUND
+	f	Lnet/minecraft/C_5956923$C_4270455;	f_3422392		LADDER_SOUND
 c	net/minecraft/C_7033908
 	f	Lnet/minecraft/C_9158733;	f_0576231	f_0576231	
 c	net/minecraft/C_7110236
@@ -347,31 +347,31 @@ c	net/minecraft/C_7110236
 		p	6			p_6
 		p	7			p_7
 c	net/minecraft/C_7265303
-	f	Z	f_8613529		f_8613529
-	m	()Z	m_2283038		m_2283038
-	m	()Lnet/minecraft/C_7265303;	m_3165044		m_3165044
+	f	Z	f_8613529		magic
+	m	()Z	m_2283038		getMagic
+	m	()Lnet/minecraft/C_7265303;	m_3165044		setUsesMagic
 c	net/minecraft/C_7540941
 	m	(Lnet/minecraft/C_9546534;)Lnet/minecraft/C_9158733;	m_6789846	m_6789846	
 		p	1		p_1	
 	m	()Lnet/minecraft/C_9158733;	m_8338448	m_8338448	
-	m	(Lnet/minecraft/C_9546534;III)Ljava/util/List;	m_0431899		m_0431899
+	m	(Lnet/minecraft/C_9546534;III)Ljava/util/List;	m_0431899		getMatching
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/C_7636273
-	m	()V	m_5293522	m_5293522	
-	m	(Lnet/minecraft/C_6419746;)V	m_5293522		m_5293522
-		p	1			p_1
+	m	()V	m_5293522	renderPlayerHandModel	
+	m	(Lnet/minecraft/C_6419746;)V	m_5293522		renderPlayerHandModel
+		p	1			player
 c	net/minecraft/C_7653458
-	f	Lnet/minecraft/C_6675444;	f_9483733		f_9483733
+	f	Lnet/minecraft/C_6675444;	f_9483733		FILTER
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/C_7653458$1		$1
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/C_4512400;)Z	m_6450662		m_6450662
 		p	1			p_1
 c	net/minecraft/C_7850878
-	f	Ljava/util/List;	f_3630203		f_3630203
+	f	Ljava/util/List;	f_3630203		ambientEntries
 c	net/minecraft/C_7993731
 	m	(FFFFFF)V	m_6000379	m_6000379	
 		p	1		p_1	
@@ -405,6 +405,7 @@ c	net/minecraft/C_8314478
 		p	6			p_6
 		p	7			p_7
 c	net/minecraft/C_8377262
+	c		This class is used for some, but not all humanoid mobs. Entities that use this class or extend from it are:\n<ul>\n<li>Zombie/Zombie Villager</li>\n<li>Player</li>\n<li>Skelleto</li>\n</ul>\n\nMobs that don't use this class but are humanoid:\n<ul>\n<li>Witch</li>\n<li>Villager</li>\n<li>Iron Golem</li>\n<li>Wither Skelleton</li>\n</ul>
 	m	(FFFFFF)V	m_6000379	m_6000379	
 		p	1		p_1	
 		p	2		p_2	
@@ -421,12 +422,12 @@ c	net/minecraft/C_8377262
 		p	6			p_6
 		p	7			p_7
 c	net/minecraft/C_8759111
-	m	(Lnet/minecraft/C_7824851;[Ljava/lang/String;)Z	m_7440442	m_7440442	
+	m	(Lnet/minecraft/C_7824851;[Ljava/lang/String;)Z	m_7440442	getIndexOfTargetSelector	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/C_7824851;[Ljava/lang/String;)I	m_7440442		m_7440442
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/C_7824851;[Ljava/lang/String;)I	m_7440442		getIndexOfTargetSelector
+		p	1			command
+		p	2			args
 c	net/minecraft/C_8906814
 	m	(IIII)V	m_0411800		m_0411800
 		p	1			p_1
@@ -477,12 +478,12 @@ c	net/minecraft/C_9310981
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/C_9378205
-	m	()I	m_7648517	m_7648517	
-	m	(II)I	m_7648517		m_7648517
+	m	()I	m_7648517	getRemovedAmount	
+	m	(II)I	m_7648517		getRemovedAmount
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_9413139
-	f	Lnet/minecraft/C_0942651;	f_6644766		f_6644766
+	f	Lnet/minecraft/C_0942651;	f_6644766		nose
 	m	(FF)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -494,10 +495,10 @@ c	net/minecraft/C_9413139
 		p	5		p_5	
 		p	6		p_6	
 	m	(FFII)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	1			reduction
+		p	2			pivotPoint
+		p	3			textureWidth
+		p	4			textureHeight
 	m	(FFFFFFLnet/minecraft/C_4512400;)V	m_6000379		m_6000379
 		p	1			p_1
 		p	2			p_2
@@ -543,10 +544,10 @@ c	net/minecraft/C_9546534
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(Lnet/minecraft/C_9546534;)D	m_6169439	m_6169439	
+	m	(Lnet/minecraft/C_9546534;)D	m_6169439	squaredDistanceTo	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_9546534;)F	m_6169439		m_6169439
-		p	1			p_1
+	m	(Lnet/minecraft/C_9546534;)F	m_6169439		squaredDistanceTo
+		p	1			pos
 c	net/minecraft/C_9617058
 	m	(FFFFFF)V	m_6000379	m_6000379	
 		p	1		p_1	
@@ -579,15 +580,15 @@ c	net/minecraft/C_9929432
 		p	5			p_5
 		p	6			p_6
 		p	7			p_7
-c	net/minecraft/C_1095352		net/minecraft/C_1095352
-	f	Lnet/minecraft/C_0942651;	f_2685234		f_2685234
-	f	Lnet/minecraft/C_0942651;	f_2515989		f_2515989
-	f	Lnet/minecraft/C_0942651;	f_7653240		f_7653240
-	f	Lnet/minecraft/C_0942651;	f_7988624		f_7988624
-	f	Lnet/minecraft/C_0942651;	f_3068449		f_3068449
-	f	Lnet/minecraft/C_0942651;	f_3357807		f_3357807
+c	net/minecraft/C_1095352		net/minecraft/client/render/model/entity/BatModel
+	f	Lnet/minecraft/C_0942651;	f_2685234		head
+	f	Lnet/minecraft/C_0942651;	f_2515989		body
+	f	Lnet/minecraft/C_0942651;	f_7653240		rightWing
+	f	Lnet/minecraft/C_0942651;	f_7988624		leftWing
+	f	Lnet/minecraft/C_0942651;	f_3068449		rightWingTip
+	f	Lnet/minecraft/C_0942651;	f_3357807		leftWingTip
 	m	()V	<init>		<init>
-	m	()I	m_5319521		m_5319521
+	m	()I	m_5319521		maxHands
 	m	(Lnet/minecraft/C_4512400;FFFFFF)V	m_8946096		m_8946096
 		p	1			p_1
 		p	2			p_2
@@ -596,14 +597,14 @@ c	net/minecraft/C_1095352		net/minecraft/C_1095352
 		p	5			p_5
 		p	6			p_6
 		p	7			p_7
-c	net/minecraft/C_1981359		net/minecraft/C_1981359
-	f	I	f_7038512		f_7038512
+c	net/minecraft/C_1981359		net/minecraft/entity/living/mob/hostile/WitchEntity
+	f	I	f_7038512		drinkTimeLeft
 	m	(Lnet/minecraft/C_0370453;)V	<init>		<init>
 		p	1			p_1
 	m	()V	m_3209174		m_3209174
-	m	(Z)V	m_0955635		m_0955635
-		p	1			p_1
-	m	()Z	m_8610078		m_8610078
+	m	(Z)V	m_0955635		setAgressive
+		p	1			agressive
+	m	()Z	m_8610078		isAgressive
 	m	()I	m_9711778		m_9711778
 	m	()Z	m_2089589		m_2089589
 	m	()V	m_3181366		m_3181366
@@ -615,35 +616,35 @@ c	net/minecraft/C_1981359		net/minecraft/C_1981359
 	m	()F	m_1972659		m_1972659
 	m	(Lnet/minecraft/C_6692940;)V	m_9697853		m_9697853
 		p	1			p_1
-c	net/minecraft/C_3252357		net/minecraft/C_3252357
-	f	Lnet/minecraft/C_9546534;	f_2396324		f_2396324
+c	net/minecraft/C_3252357		net/minecraft/util/math/PlayerDistanceToPosComparator
+	f	Lnet/minecraft/C_9546534;	f_2396324		pos
 	m	(Lnet/minecraft/C_9546534;)V	<init>		<init>
-		p	1			p_1
-	m	(Lnet/minecraft/C_9158733;Lnet/minecraft/C_9158733;)I	m_1038565		m_1038565
+		p	1			pos
+	m	(Lnet/minecraft/C_9158733;Lnet/minecraft/C_9158733;)I	m_1038565		compare
 		p	1			p_1
 		p	2			p_2
 	m	(Ljava/lang/Object;Ljava/lang/Object;)I	compare		compare
-		p	1			p_1
-		p	2			p_2
-c	net/minecraft/C_6384872		net/minecraft/C_6384872
+		p	1			player1
+		p	2			player2
+c	net/minecraft/C_6384872		net/minecraft/entity/living/mob/ambient/AmbientEntity
 	m	(Lnet/minecraft/C_0370453;)V	<init>		<init>
 		p	1			p_1
-c	net/minecraft/C_8290398		net/minecraft/C_8290398
-	f	Lnet/minecraft/C_9970537;	f_1491393		f_1491393
+c	net/minecraft/C_8290398		net/minecraft/client/render/entity/WitchRenderer
+	f	Lnet/minecraft/C_9970537;	f_1491393		model
 	f	I	f_1164668		f_1164668
 	m	()V	<init>		<init>
-	m	(Lnet/minecraft/C_1981359;DDDFF)V	m_6016987		m_6016987
+	m	(Lnet/minecraft/C_1981359;DDDFF)V	m_6016987		render
 		p	1			p_1
 		p	2			p_2
 		p	4			p_4
 		p	6			p_6
 		p	8			p_8
 		p	9			p_9
-	m	(Lnet/minecraft/C_1981359;F)V	m_0648901		m_0648901
+	m	(Lnet/minecraft/C_1981359;F)V	m_0648901		renderDecoration
 		p	1			p_1
 		p	2			p_2
-	m	()V	m_3212709		m_3212709
-	m	(Lnet/minecraft/C_1981359;F)V	m_2674184		m_2674184
+	m	()V	m_3212709		glTranslate
+	m	(Lnet/minecraft/C_1981359;F)V	m_2674184		scale
 		p	1			p_1
 		p	2			p_2
 	m	(Lnet/minecraft/C_6692940;F)V	m_8946474		m_8946474
@@ -666,15 +667,15 @@ c	net/minecraft/C_8290398		net/minecraft/C_8290398
 		p	6			p_6
 		p	8			p_8
 		p	9			p_9
-c	net/minecraft/C_8667903		net/minecraft/C_8667903
-	f	Lnet/minecraft/C_9546534;	f_8378040		f_8378040
+c	net/minecraft/C_8667903		net/minecraft/entity/living/mob/ambient/BatEntity
+	f	Lnet/minecraft/C_9546534;	f_8378040		hangPos
 	m	(Lnet/minecraft/C_0370453;)V	<init>		<init>
 		p	1			p_1
 	m	()V	m_3209174		m_3209174
 	m	()I	m_9711778		m_9711778
-	m	()Z	m_0258033		m_0258033
-	m	(Z)V	m_0873598		m_0873598
-		p	1			p_1
+	m	()Z	m_0258033		isRoosting
+	m	(Z)V	m_0873598		setRoosting
+		p	1			roosting
 	m	()Z	m_2089589		m_2089589
 	m	()V	m_6052512		m_6052512
 	m	()V	m_2273784		m_2273784
@@ -690,25 +691,25 @@ c	net/minecraft/C_8667903		net/minecraft/C_8667903
 		p	1			p_1
 	m	()Z	m_5538957		m_5538957
 	m	()V	m_5642833		m_5642833
-c	net/minecraft/C_9458921		net/minecraft/C_9458921
-	f	I	f_0061230		f_0061230
+c	net/minecraft/C_9458921		net/minecraft/client/render/entity/BatRenderer
+	f	I	f_0061230		handModel
 	m	()V	<init>		<init>
-	m	(Lnet/minecraft/C_8667903;DDDFF)V	m_7645778		m_7645778
+	m	(Lnet/minecraft/C_8667903;DDDFF)V	m_7645778		render
 		p	1			p_1
 		p	2			p_2
 		p	4			p_4
 		p	6			p_6
 		p	8			p_8
 		p	9			p_9
-	m	(Lnet/minecraft/C_8667903;F)V	m_0666838		m_0666838
+	m	(Lnet/minecraft/C_8667903;F)V	m_0666838		scale
 		p	1			p_1
 		p	2			p_2
-	m	(Lnet/minecraft/C_8667903;DDD)V	m_7031342		m_7031342
+	m	(Lnet/minecraft/C_8667903;DDD)V	m_7031342		applyTranslation
 		p	1			p_1
 		p	2			p_2
 		p	4			p_4
 		p	6			p_6
-	m	(Lnet/minecraft/C_8667903;FFF)V	m_5954855		m_5954855
+	m	(Lnet/minecraft/C_8667903;FFF)V	m_5954855		applyRotation
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -740,37 +741,37 @@ c	net/minecraft/C_9458921		net/minecraft/C_9458921
 		p	6			p_6
 		p	8			p_8
 		p	9			p_9
-c	net/minecraft/C_9748595		net/minecraft/C_9748595
-	f	Ljava/util/regex/Pattern;	f_1270878		f_1270878
-	f	Ljava/util/regex/Pattern;	f_3986303		f_3986303
-	f	Ljava/util/regex/Pattern;	f_5505923		f_5505923
-	m	(Lnet/minecraft/C_0608479;Ljava/lang/String;)Lnet/minecraft/C_9158733;	m_0561358		m_0561358
+c	net/minecraft/C_9748595		net/minecraft/server/command/TargetSelector
+	f	Ljava/util/regex/Pattern;	f_1270878		TARGET_SELECTOR_PATTERN
+	f	Ljava/util/regex/Pattern;	f_3986303		VALUE_PATTERN
+	f	Ljava/util/regex/Pattern;	f_5505923		ARG_PATTERN
+	m	(Lnet/minecraft/C_0608479;Ljava/lang/String;)Lnet/minecraft/C_9158733;	m_0561358		selectFirstPlayer
+		p	0			source
+		p	1			s
+	m	(Lnet/minecraft/C_0608479;Ljava/lang/String;)Ljava/lang/String;	m_5635081		getSelectionAsText
 		p	0			p_0
 		p	1			p_1
-	m	(Lnet/minecraft/C_0608479;Ljava/lang/String;)Ljava/lang/String;	m_5635081		m_5635081
-		p	0			p_0
-		p	1			p_1
-	m	(Lnet/minecraft/C_0608479;Ljava/lang/String;)[Lnet/minecraft/C_9158733;	m_1370772		m_1370772
-		p	0			p_0
-		p	1			p_1
-	m	(Ljava/lang/String;)Z	m_6892484		m_6892484
-		p	0			p_0
-	m	(Ljava/lang/String;Ljava/lang/String;)Z	m_0963249		m_0963249
-		p	0			p_0
-		p	1			p_1
-	m	(Ljava/lang/String;)Z	m_5233453		m_5233453
-		p	0			p_0
-	m	(Ljava/lang/String;)I	m_8848746		m_8848746
-		p	0			p_0
-	m	(Ljava/lang/String;)I	m_7403384		m_7403384
-		p	0			p_0
-	m	(Ljava/lang/String;)Ljava/util/Map;	m_1716657		m_1716657
-		p	0			p_0
+	m	(Lnet/minecraft/C_0608479;Ljava/lang/String;)[Lnet/minecraft/C_9158733;	m_1370772		select
+		p	0			source
+		p	1			s
+	m	(Ljava/lang/String;)Z	m_6892484		matchesMultiple
+		p	0			s
+	m	(Ljava/lang/String;Ljava/lang/String;)Z	m_0963249		matchesRawTarget
+		p	0			s
+		p	1			rawTarget
+	m	(Ljava/lang/String;)Z	m_5233453		isValid
+		p	0			s
+	m	(Ljava/lang/String;)I	m_8848746		getMinRotation
+		p	0			s
+	m	(Ljava/lang/String;)I	m_7403384		getTargetCount
+		p	0			rawTarget
+	m	(Ljava/lang/String;)Ljava/util/Map;	m_1716657		parseArgs
+		p	0			s
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_9970537		net/minecraft/C_9970537
-	f	Z	f_0564341		f_0564341
-	f	Lnet/minecraft/C_0942651;	f_8471920		f_8471920
-	f	Lnet/minecraft/C_0942651;	f_0520399		f_0520399
+c	net/minecraft/C_9970537		net/minecraft/client/render/model/entity/WitchModel
+	f	Z	f_0564341		heldItemId
+	f	Lnet/minecraft/C_0942651;	f_8471920		mole
+	f	Lnet/minecraft/C_0942651;	f_0520399		hat
 	m	(F)V	<init>		<init>
 		p	1			p_1
 	m	(FFFFFFLnet/minecraft/C_4512400;)V	m_6000379		m_6000379

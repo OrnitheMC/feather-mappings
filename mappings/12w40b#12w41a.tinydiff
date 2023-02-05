@@ -1,18 +1,18 @@
 tiny	2	0
 c	net/minecraft/C_0939655
-	m	(I)Lnet/minecraft/C_1352131;	m_1166741	m_1166741	
+	m	(I)Lnet/minecraft/C_1352131;	m_1166741	quickMoveStack	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_6419746;I)Lnet/minecraft/C_1352131;	m_1166741		m_1166741
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/C_6419746;I)Lnet/minecraft/C_1352131;	m_1166741		quickMoveStack
+		p	1			player
+		p	2			id
 c	net/minecraft/C_1352131
-	m	()Ljava/lang/String;	m_5092212		m_5092212
-	m	(Ljava/lang/String;)V	m_6328663		m_6328663
-		p	1			p_1
-	m	()Z	m_8351117		m_8351117
-	m	()I	m_8104897		m_8104897
-	m	(I)V	m_1947842		m_1947842
-		p	1			p_1
+	m	()Ljava/lang/String;	m_5092212		getHoverName
+	m	(Ljava/lang/String;)V	m_6328663		setName
+		p	1			name
+	m	()Z	m_8351117		hasCustomHoverName
+	m	()I	m_8104897		getRepairCost
+	m	(I)V	m_1947842		setRepairCost
+		p	1			cost
 c	net/minecraft/C_1363738
 	m	(Lnet/minecraft/C_1352131;)V	m_6406613	m_6406613	
 		p	1		p_1	
@@ -20,11 +20,11 @@ c	net/minecraft/C_1363738
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_2059681
-	m	(Ljava/util/Collection;)Z	m_3090340		m_3090340
-		p	0			p_0
+	m	(Ljava/util/Collection;)Z	m_3090340		isAllAmbient
+		p	0			effects
 c	net/minecraft/C_2417857
-	f	I	f_6758194		f_6758194
-	f	I	f_7810289		f_7810289
+	f	I	f_6758194		fuseTime
+	f	I	f_7810289		explosionRadius
 c	net/minecraft/C_2717113
 	m	(I)Lnet/minecraft/C_1352131;	m_1166741	m_1166741	
 		p	1		p_1	
@@ -32,18 +32,18 @@ c	net/minecraft/C_2717113
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_3821343
-	m	(Lnet/minecraft/C_1352131;)V	m_6406613	m_6406613	
+	m	(Lnet/minecraft/C_1352131;)V	m_6406613	onStackRemovedByPlayer	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_6419746;Lnet/minecraft/C_1352131;)V	m_6406613		m_6406613
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/C_6419746;)Z	m_2069335		m_2069335
-		p	1			p_1
+	m	(Lnet/minecraft/C_6419746;Lnet/minecraft/C_1352131;)V	m_6406613		onStackRemovedByPlayer
+		p	1			player
+		p	2			stack
+	m	(Lnet/minecraft/C_6419746;)Z	m_2069335		canPickUp
+		p	1			playerEntity
 c	net/minecraft/C_4063921
-	f	Z	f_2166302		f_2166302
-	m	()V	m_7196977		m_7196977
+	f	Z	f_2166302		showCape
+	m	()V	m_7196977		syncClientSettings
 c	net/minecraft/C_4063921$C_2281868
-	f	Lnet/minecraft/C_4063921$C_2281868;	f_9789501		f_9789501
+	f	Lnet/minecraft/C_4063921$C_2281868;	f_9789501		SHOW_CAPE
 c	net/minecraft/C_4303950
 	m	(Lnet/minecraft/C_1352131;)V	m_6406613	m_6406613	
 		p	1		p_1	
@@ -51,31 +51,31 @@ c	net/minecraft/C_4303950
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_4562553
-	m	(Lnet/minecraft/C_6315069;III)Z	m_6339836		m_6339836
+	m	(Lnet/minecraft/C_6315069;III)Z	m_6339836		renderAnvilBlockByMetadata
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(Lnet/minecraft/C_6315069;IIIIZ)Z	m_4218185		m_4218185
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-	m	(Lnet/minecraft/C_6315069;IIIIFFFFZZI)F	m_7930986		m_7930986
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
-		p	9			p_9
-		p	10			p_10
-		p	11			p_11
-		p	12			p_12
+	m	(Lnet/minecraft/C_6315069;IIIIZ)Z	m_4218185		renderAnvil
+		p	1			anvil
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			metadata
+		p	6			isFallingBlock
+	m	(Lnet/minecraft/C_6315069;IIIIFFFFZZI)F	m_7930986		renderAnvilBox
+		p	1			anvil
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			spriteIndex
+		p	6			heightOffset
+		p	7			xSize
+		p	8			ySize
+		p	9			zSize
+		p	10			rotated
+		p	11			isFallingBlock
+		p	12			metadata
 c	net/minecraft/C_5202885
 	m	(I)Lnet/minecraft/C_1352131;	m_1166741	m_1166741	
 		p	1		p_1	
@@ -89,11 +89,11 @@ c	net/minecraft/C_5362943
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_5548895
-	f	F	f_2346965		f_2346965
-	m	(F)V	m_2754715		m_2754715
-		p	1			p_1
+	f	F	f_2346965		alpha
+	m	(F)V	m_2754715		setAlpha
+		p	1			alpha
 c	net/minecraft/C_5956923
-	f	Lnet/minecraft/C_5956923;	f_4978084		f_4978084
+	f	Lnet/minecraft/C_5956923;	f_4978084		ANVIL
 c	net/minecraft/C_6126827
 	m	(I)Lnet/minecraft/C_1352131;	m_1166741	m_1166741	
 		p	1		p_1	
@@ -114,16 +114,16 @@ c	net/minecraft/C_6303764$C_7855822
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_6419746
-	m	(III)V	m_5201034		m_5201034
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(I)Z	m_1226921		m_1226921
-		p	1			p_1
-	m	(IZ)V	m_1755882		m_1755882
-		p	1			p_1
-		p	2			p_2
-	m	()Z	m_3970389		m_3970389
+	m	(III)V	m_5201034		openAnvilMenu
+		p	1			x
+		p	2			y
+		p	3			z
+	m	(I)Z	m_1226921		hidesCape
+		p	1			value
+	m	(IZ)V	m_1755882		setHidesCape
+		p	1			value
+		p	2			hideCape
+	m	()Z	m_3970389		hidesCape
 c	net/minecraft/C_6448305
 	m	(I)Lnet/minecraft/C_1352131;	m_1166741	m_1166741	
 		p	1		p_1	
@@ -131,16 +131,16 @@ c	net/minecraft/C_6448305
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_6516620
-	m	(I)V	m_3043660		m_3043660
-		p	1			p_1
-	m	(Z)V	m_4433833		m_4433833
-		p	1			p_1
+	m	(I)V	m_3043660		setUneditableColor
+		p	1			color
+	m	(Z)V	m_4433833		setEditable
+		p	1			editable
 c	net/minecraft/C_6614298
-	m	(Lnet/minecraft/C_1352131;)Ljava/util/Map;	m_2701267		m_2701267
-		p	0			p_0
-	m	(Ljava/util/Map;Lnet/minecraft/C_1352131;)V	m_1484087		m_1484087
-		p	0			p_0
-		p	1			p_1
+	m	(Lnet/minecraft/C_1352131;)Ljava/util/Map;	m_2701267		getEnchantments
+		p	0			stack
+	m	(Ljava/util/Map;Lnet/minecraft/C_1352131;)V	m_1484087		setEnchantments
+		p	0			enchantments
+		p	1			stack
 c	net/minecraft/C_6679595
 	m	(I)Lnet/minecraft/C_1352131;	m_1166741	m_1166741	
 		p	1		p_1	
@@ -166,11 +166,11 @@ c	net/minecraft/C_7116876
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_7164216
-	f	[Lnet/minecraft/C_4063921$C_2281868;	f_6723240		f_6723240
-	f	Ljava/lang/String;	f_3346967		f_3346967
-	f	I	f_5789418		f_5789418
+	f	[Lnet/minecraft/C_4063921$C_2281868;	f_6723240		CAPE_OPTIONS
+	f	Ljava/lang/String;	f_3346967		multiplayerOptionsTitle
+	f	I	f_5789418		seperatorWidth
 c	net/minecraft/C_7265303
-	f	Lnet/minecraft/C_7265303;	f_6975023		f_6975023
+	f	Lnet/minecraft/C_7265303;	f_6975023		ANVIL
 c	net/minecraft/C_7880682
 	m	(F)V	m_2534516		m_2534516
 		p	1			p_1
@@ -191,15 +191,15 @@ c	net/minecraft/C_9158733
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/C_9183578
-	f	Z	f_3459083		f_3459083
+	f	Z	f_3459083		ambient
 	m	(IIIZ)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	()Z	m_1810443		m_1810443
+		p	1			id
+		p	2			duration
+		p	3			amplifier
+		p	4			ambient
+	m	()Z	m_1810443		isAmbient
 c	net/minecraft/C_9334212
-	f	Z	f_5955838		f_5955838
+	f	Z	f_5955838		showCape
 	m	(Ljava/lang/String;IIZI)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -207,20 +207,20 @@ c	net/minecraft/C_9334212
 		p	4		p_4	
 		p	5		p_5	
 	m	(Ljava/lang/String;IIZIZ)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-	m	()Z	m_2015590		m_2015590
+		p	1			language
+		p	2			viewDistance
+		p	3			chatVisibility
+		p	4			chatColors
+		p	5			difficulty
+		p	6			showCape
+	m	()Z	m_2015590		getShowCape
 c	net/minecraft/C_9376914
 	m	(IILnet/minecraft/C_9458947;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/C_9458947
-	f	Lnet/minecraft/C_9458947;	f_2632883		f_2632883
+	f	Lnet/minecraft/C_9458947;	f_2632883		ANVIL
 c	net/minecraft/C_9701290
 	m	(I)Lnet/minecraft/C_1352131;	m_1166741	m_1166741	
 		p	1		p_1	
@@ -233,16 +233,16 @@ c	net/minecraft/C_9701290$C_5722998
 	m	(Lnet/minecraft/C_6419746;Lnet/minecraft/C_1352131;)V	m_6406613		m_6406613
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/C_3318621		net/minecraft/C_3318621
-	f	Lnet/minecraft/C_3567190;	f_4911859		f_4911859
-	f	Lnet/minecraft/C_6516620;	f_4631550		f_4631550
+c	net/minecraft/C_3318621		net/minecraft/client/gui/screen/inventory/menu/AnvilScreen
+	f	Lnet/minecraft/C_3567190;	f_4911859		anvilScreenHandler
+	f	Lnet/minecraft/C_6516620;	f_4631550		renameTextField
 	f	Z	f_1152031		f_1152031
 	m	(Lnet/minecraft/C_9378205;Lnet/minecraft/C_0370453;III)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	1			playerInventory
+		p	2			world
+		p	3			x
+		p	4			y
+		p	5			z
 	m	()V	m_2742206		m_2742206
 	m	()V	m_8488277		m_8488277
 	m	(II)V	m_9875822		m_9875822
@@ -274,15 +274,15 @@ c	net/minecraft/C_3318621		net/minecraft/C_3318621
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/C_3567190		net/minecraft/C_3567190
-	f	Lnet/minecraft/C_0934204;	f_6717660		f_6717660
-	f	Lnet/minecraft/C_0934204;	f_2713965		f_2713965
-	f	Lnet/minecraft/C_0370453;	f_2348953		f_2348953
-	f	I	f_2116686		f_2116686
-	f	I	f_5276546		f_5276546
-	f	I	f_4051735		f_4051735
-	f	I	f_5984119		f_5984119
-	f	Ljava/lang/String;	f_8526581		f_8526581
+c	net/minecraft/C_3567190		net/minecraft/inventory/menu/AnvilMenu
+	f	Lnet/minecraft/C_0934204;	f_6717660		resultInventory
+	f	Lnet/minecraft/C_0934204;	f_2713965		inputInventory
+	f	Lnet/minecraft/C_0370453;	f_2348953		world
+	f	I	f_2116686		x
+	f	I	f_5276546		y
+	f	I	f_4051735		z
+	f	I	f_5984119		repairCost
+	f	Ljava/lang/String;	f_8526581		itemName
 	m	(Lnet/minecraft/C_9378205;Lnet/minecraft/C_0370453;III)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -291,7 +291,7 @@ c	net/minecraft/C_3567190		net/minecraft/C_3567190
 		p	5			p_5
 	m	(Lnet/minecraft/C_0934204;)V	m_3044139		m_3044139
 		p	1			p_1
-	m	()V	m_9310155		m_9310155
+	m	()V	m_9310155		updateResult
 	m	(Lnet/minecraft/C_0930733;)V	m_0973565		m_0973565
 		p	1			p_1
 	m	(II)V	m_5325295		m_5325295
@@ -304,24 +304,24 @@ c	net/minecraft/C_3567190		net/minecraft/C_3567190
 	m	(Lnet/minecraft/C_6419746;I)Lnet/minecraft/C_1352131;	m_1166741		m_1166741
 		p	1			p_1
 		p	2			p_2
-	m	(Ljava/lang/String;)V	m_5734663		m_5734663
-		p	1			p_1
-	m	(Lnet/minecraft/C_3567190;)Lnet/minecraft/C_0934204;	m_4759537		m_4759537
-		p	0			p_0
-c	net/minecraft/C_3567190$1		net/minecraft/C_3567190$1
-	f	Lnet/minecraft/C_3567190;	f_1149209		f_1149209
+	m	(Ljava/lang/String;)V	m_5734663		setItemName
+		p	1			name
+	m	(Lnet/minecraft/C_3567190;)Lnet/minecraft/C_0934204;	m_4759537		method_8126
+		p	0			anvilScreenHandler
+c	net/minecraft/C_3567190$1		net/minecraft/inventory/menu/AnvilMenu$1
+	f	Lnet/minecraft/C_3567190;	f_1149209		screenHandler
 	m	(Lnet/minecraft/C_3567190;Ljava/lang/String;I)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 	m	()I	m_4207567		m_4207567
 	m	()V	m_1325730		m_1325730
-c	net/minecraft/C_3567190$2		net/minecraft/C_3567190$2
-	f	Lnet/minecraft/C_0370453;	f_7977948		f_7977948
-	f	I	f_1920691		f_1920691
-	f	I	f_3315835		f_3315835
-	f	I	f_8859964		f_8859964
-	f	Lnet/minecraft/C_3567190;	f_7318737		f_7318737
+c	net/minecraft/C_3567190$2		net/minecraft/inventory/menu/AnvilMenu$2
+	f	Lnet/minecraft/C_0370453;	f_7977948		world
+	f	I	f_1920691		blockX
+	f	I	f_3315835		blockY
+	f	I	f_8859964		blockZ
+	f	Lnet/minecraft/C_3567190;	f_7318737		instance
 	m	(Lnet/minecraft/C_3567190;Lnet/minecraft/C_0934204;IIILnet/minecraft/C_0370453;III)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -339,11 +339,11 @@ c	net/minecraft/C_3567190$2		net/minecraft/C_3567190$2
 	m	(Lnet/minecraft/C_6419746;Lnet/minecraft/C_1352131;)V	m_6406613		m_6406613
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/C_6315069		net/minecraft/C_6315069
-	f	[Ljava/lang/String;	f_8400677		f_8400677
-	f	I	f_2944476		f_2944476
+c	net/minecraft/C_6315069		net/minecraft/block/AnvilBlock
+	f	[Ljava/lang/String;	f_8400677		VARIANTS
+	f	I	f_2944476		blockSprite
 	m	(I)V	<init>		<init>
-		p	1			p_1
+		p	1			id
 	m	()Z	m_2625446		m_2625446
 	m	()Z	m_5503270		m_5503270
 	m	(II)I	m_1061835		m_1061835
@@ -375,7 +375,7 @@ c	net/minecraft/C_6315069		net/minecraft/C_6315069
 		p	2			p_2
 		p	3			p_3
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/C_6507556		net/minecraft/C_6507556
+c	net/minecraft/C_6507556		net/minecraft/item/AnvilItem
 	m	(Lnet/minecraft/C_5956923;)V	<init>		<init>
 		p	1			p_1
 	m	(I)I	m_1984388		m_1984388
