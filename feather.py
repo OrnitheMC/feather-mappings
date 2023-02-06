@@ -7,7 +7,7 @@ GRADLE_TASKS = ['clean', 'feather', 'build', 'javadoc', 'javadocJar', 'checkMapp
 GRADLEW = 'gradlew' if os.name == 'nt' else './gradlew'
 
 # some jank to hide versions that are giving problems
-UNAVAILABLE_VERSIONS = ['13w03a','13w05a','13w06a']
+UNAVAILABLE_VERSIONS = []
 
 def main():
     possible_versions = find_minecraft_versions()
