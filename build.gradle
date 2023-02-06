@@ -249,8 +249,7 @@ def buildMappingGroup = "mapping build"
 def mapJarGroup = "jar mapping"
 def mappingsDir = file("mappings/")
 def workingDir = file("run/")
-def separatedMappings = new File(workingDir, "${version_id}")
-def workingMappings = new File(workingDir, "${version_id}-changed")
+def workingMappings = new File(workingDir, "${version_id}")
 def cacheFilesMinecraft = file(".gradle/minecraft")
 def tempDir = file(".gradle/temp")
 def mergedJar = new File(cacheFilesMinecraft, "${version_id}-merged.jar")
@@ -710,7 +709,7 @@ task mapCalamusJar(dependsOn: [downloadMcLibs, downloadCalamus, nestJar]) {
 task separateMappings() {
 	group = featherGroup
 	inputs.dir mappingsDir
-	outputs.dirs(separatedMappings, workingMappings)
+	outputs.dirs(workingMappings)
 
 	//Force the task to always run
 	outputs.upToDateWhen { false }
@@ -721,24 +720,26 @@ task separateMappings() {
 		VersionGraph graph = VersionGraph.of(Format.TINY_V2, mappingsDir.toPath())
 		Mappings mappings = MappingUtils.separateMappings(graph, version_id);
 
-		Format.ENIGMA_DIR.writeMappings(separatedMappings.toPath(), mappings)
 		mappings.setValidator(REMOVE_DUMMY)
 		Format.ENIGMA_DIR.writeMappings(workingMappings.toPath(), mappings)
 	}
 }
 
-static def insertMappings(version_id, mappingsDir, separatedMappingsPath, workingMappingsPath, dir, validator) {
-	Mappings separatedMappings = Format.ENIGMA_DIR.readMappings(separatedMappingsPath);
+static def insertMappings(version_id, mappingsDir, workingMappingsPath, dir, validator) {
+	VersionGraph graph = VersionGraph.of(Format.TINY_V2, mappingsDir);
+
+	Mappings separatedMappings = MappingUtils.separateMappings(graph, version_id);
 	Mappings workingMappings = Format.ENIGMA_DIR.readMappings(workingMappingsPath);
+	// enigma format does not have namespace info...
+	workingMappings.setSrcNamespace(separatedMappings.getSrcNamespace())
+	workingMappings.setDstNamespace(separatedMappings.getDstNamespace())
 
 	MappingsDiff changes = MappingUtils.diffMappings(separatedMappings, workingMappings);
 	changes.setValidator(validator);
 
-	VersionGraph graph = VersionGraph.of(Format.TINY_V2, mappingsDir);
 	PropagationOptions options = new PropagationOptions.Builder().setPropagationDirection(dir).lenient().build();
 	MappingUtils.insertMappings(options, graph, changes, version_id);
 
-	net.ornithemc.mappingutils.FileUtils.delete(separatedMappingsPath.toFile())
 	net.ornithemc.mappingutils.FileUtils.delete(workingMappingsPath.toFile())
 }
 
@@ -747,7 +748,7 @@ task insertMappings() {
 	doLast {
 		logger.lifecycle(":saving mappings for ${version_id}")
 
-		insertMappings(version_id, mappingsDir.toPath(), separatedMappings.toPath(), workingMappings.toPath(), PropagationDirection.NONE, INSERT_DUMMY)
+		insertMappings(version_id, mappingsDir.toPath(), workingMappings.toPath(), PropagationDirection.NONE, INSERT_DUMMY)
 	}
 }
 
@@ -756,7 +757,7 @@ task propagateMappingsDown() {
 	doLast {
 		logger.lifecycle(":saving mappings for ${version_id}")
 
-		insertMappings(version_id, mappingsDir.toPath(), separatedMappings.toPath(), workingMappings.toPath(), PropagationDirection.DOWN, INSERT_DUMMY)
+		insertMappings(version_id, mappingsDir.toPath(), workingMappings.toPath(), PropagationDirection.DOWN, INSERT_DUMMY)
 	}
 }
 
@@ -765,7 +766,7 @@ task propagateMappingsUp() {
 	doLast {
 		logger.lifecycle(":saving mappings for ${version_id}")
 
-		insertMappings(version_id, mappingsDir.toPath(), separatedMappings.toPath(), workingMappings.toPath(), PropagationDirection.UP, INSERT_DUMMY)
+		insertMappings(version_id, mappingsDir.toPath(), workingMappings.toPath(), PropagationDirection.UP, INSERT_DUMMY)
 	}
 }
 
@@ -774,7 +775,7 @@ task propagateMappings() {
 	doLast {
 		logger.lifecycle(":saving mappings for ${version_id}")
 
-		insertMappings(version_id, mappingsDir.toPath(), separatedMappings.toPath(), workingMappings.toPath(), PropagationDirection.BOTH, INSERT_DUMMY)
+		insertMappings(version_id, mappingsDir.toPath(), workingMappings.toPath(), PropagationDirection.BOTH, INSERT_DUMMY)
 	}
 }
 
