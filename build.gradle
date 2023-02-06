@@ -270,7 +270,7 @@ def REMOVE_DUMMY = new MappingValidator() {
 
 	@Override
 	public boolean validate(ClassMapping c) {
-		if (!MappingsDiff.safeIsDiff(ClassMapping.getSimplified(c.src()), c.get()) && c.get().startsWith("C_")) {
+		if (!MappingsDiff.safeIsDiff(ClassMapping.getSimplified(c.src()), c.get()) && (c.get().startsWith("C_") || c.get().startsWith("net/minecraft/C_"))) {
 			c.set("");
 			return !c.getJavadoc().isEmpty() || c.hasChildren();
 		}
