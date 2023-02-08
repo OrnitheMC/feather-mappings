@@ -37,29 +37,29 @@ c	net/minecraft/C_0370453
 		p	3		y	
 		p	4		z	
 		p	5		face	
-	m	(Lnet/minecraft/C_4512400;Lnet/minecraft/C_4512400;FZ)Lnet/minecraft/C_3891110;	m_2102196	m_2102196	
+	m	(Lnet/minecraft/C_4512400;Lnet/minecraft/C_4512400;FZ)Lnet/minecraft/C_3891110;	m_2102196	pathFindEntity	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
-	m	(Lnet/minecraft/C_4512400;IIIFZ)Lnet/minecraft/C_3891110;	m_8357412	m_8357412	
+	m	(Lnet/minecraft/C_4512400;IIIFZ)Lnet/minecraft/C_3891110;	m_8357412	pathFindPos	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
 		p	5		p_5	
 		p	6		p_6	
-	m	(Lnet/minecraft/C_6419746;IIII)V	m_3950983		m_3950983
+	m	(Lnet/minecraft/C_6419746;IIII)V	m_3950983		extinguishFire
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	(Lnet/minecraft/C_4512400;Lnet/minecraft/C_4512400;F)Lnet/minecraft/C_3891110;	m_2102196		m_2102196
+	m	(Lnet/minecraft/C_4512400;Lnet/minecraft/C_4512400;F)Lnet/minecraft/C_3891110;	m_2102196		pathFindEntity
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lnet/minecraft/C_4512400;IIIF)Lnet/minecraft/C_3891110;	m_8357412		m_8357412
+	m	(Lnet/minecraft/C_4512400;IIIF)Lnet/minecraft/C_3891110;	m_8357412		pathFindPos
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -88,7 +88,7 @@ c	net/minecraft/C_1352131
 		p	1		world	
 		p	2		player	
 		p	3		amount	
-	m	(Lnet/minecraft/C_0370453;Lnet/minecraft/C_6419746;)V	m_2381937		m_2381937
+	m	(Lnet/minecraft/C_0370453;Lnet/minecraft/C_6419746;)V	m_2381937		onResult
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/C_1363738
@@ -99,7 +99,7 @@ c	net/minecraft/C_1363738
 		p	1		p_1	
 		p	2		p_2	
 c	net/minecraft/C_1636823	net/minecraft/entity/ai/goal/StayIndoorsGoal	
-	f	Lnet/minecraft/C_6692940;	f_3367782	f_3367782	
+	f	Lnet/minecraft/C_6692940;	f_3367782	entity	
 	f	Lnet/minecraft/C_8645542;	f_8488548	door	
 	f	I	f_9384219	x	
 	f	I	f_6584400	y	
@@ -117,7 +117,7 @@ c	net/minecraft/C_1636823	net/minecraft/entity/ai/goal/StayIndoorsGoal
 c	net/minecraft/C_1790902
 	m	(Lnet/minecraft/C_4512400;)Z	m_1871629	canSee	
 		p	1		entity	
-	m	(Lnet/minecraft/C_6692940;)Z	m_1871629		m_1871629
+	m	(Lnet/minecraft/C_6692940;)Z	m_1871629		canSee
 		p	1			p_1
 c	net/minecraft/C_2417857
 	m	()Z	m_2089589	m_2089589	
@@ -156,7 +156,7 @@ c	net/minecraft/C_2924703
 		p	1		p_1	
 		p	2		p_2	
 	m	()Lnet/minecraft/C_3891110;	m_9149907	getCurrentPath	
-	m	(Lnet/minecraft/C_3891110;)V	m_4359595	m_4359595	
+	m	(Lnet/minecraft/C_3891110;)V	m_4359595	avoidSunLight	
 		p	1		p_1	
 c	net/minecraft/C_2936744	net/minecraft/world/village/Village	
 	f	Lnet/minecraft/C_0370453;	f_1808031	world	
@@ -174,14 +174,14 @@ c	net/minecraft/C_2936744	net/minecraft/world/village/Village
 		p	1		x	
 		p	2		y	
 		p	3		z	
-	m	(III)Z	m_4610768	m_4610768	
+	m	(III)Z	m_4610768	getDoor	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 	m	(Lnet/minecraft/C_8645542;)V	m_5856469	addDoor	
 		p	1		door	
 	m	()Z	m_6516776	hasNoDoors	
-	m	(I)V	m_8683781	m_8683781	
+	m	(I)V	m_8683781	cleanUpDoors	
 		p	1		p_1	
 	m	(III)Z	m_7013811	isWoodenDoor	
 		p	1		x	
@@ -274,7 +274,7 @@ c	net/minecraft/C_5312038	net/minecraft/world/village/SavedVillageData
 	m	()V	m_8900364	addDoorsToVillages	
 	m	(Lnet/minecraft/C_9546534;)V	m_0496625	findDoorsAround	
 		p	1		pos	
-	m	(III)Z	m_3475586	m_3475586	
+	m	(III)Z	m_3475586	getDoor	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
@@ -382,7 +382,7 @@ c	net/minecraft/C_9310981
 		p	1			p_1
 c	net/minecraft/C_9365458
 	f	Lnet/minecraft/C_9478749;	f_0392743	pet	
-	f	Lnet/minecraft/C_0123721;	f_0392743		f_0392743
+	f	Lnet/minecraft/C_0123721;	f_0392743		pet
 	m	(Lnet/minecraft/C_9478749;)V	<init>	<init>	
 		p	1		pet	
 	m	(Lnet/minecraft/C_0123721;)V	<init>		<init>

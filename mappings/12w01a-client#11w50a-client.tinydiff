@@ -13,13 +13,13 @@ c	net/minecraft/C_0215467
 	m	(II)I	m_9742512	getSpriteWithStage	
 		p	1		p_1	
 		p	2		p_2	
-	m	(I)I	m_2175364		m_2175364
+	m	(I)I	m_2175364		getDisplayColor
 		p	1			p_1
 c	net/minecraft/C_0330113	net/minecraft/C_0330113	
 c	net/minecraft/C_0370453
 	m	()D	m_3769422	getHorizonHeight	
 c	net/minecraft/C_0372407	net/minecraft/entity/ai/goal/Goal	
-	f	Ljava/util/ArrayList;	f_4429713	f_4429713	
+	f	Ljava/util/ArrayList;	f_4429713	controls	
 	m	()V	<init>	<init>	
 	m	()Z	m_2579867	canStart	
 	m	()Z	m_0396519	shouldContinue	
@@ -27,16 +27,16 @@ c	net/minecraft/C_0372407	net/minecraft/entity/ai/goal/Goal
 	m	()V	m_4664854	start	
 	m	()V	m_6635039	stop	
 	m	()V	m_3472786	tick	
-	m	(Lnet/minecraft/C_0330113;)V	m_4622054	m_4622054	
+	m	(Lnet/minecraft/C_0330113;)V	m_4622054	setControls	
 		p	1		p_1	
-	m	()Ljava/util/ArrayList;	m_2927582	m_2927582	
+	m	()Ljava/util/ArrayList;	m_2927582	getControls	
 c	net/minecraft/C_1082413
 	f	Lnet/minecraft/C_1568676;	f_0382697	doneButton	
 	m	(Lnet/minecraft/C_1082413;)Lnet/minecraft/C_1568676;	m_5084434	getDoneButton	
 		p	0		screen	
 c	net/minecraft/C_1122660	net/minecraft/entity/ai/goal/MeleeAttackGoal	
 	f	Lnet/minecraft/C_0370453;	f_4473741	world	
-	f	Lnet/minecraft/C_7768521;	f_2958245	f_2958245	
+	f	Lnet/minecraft/C_7768521;	f_2958245	entity	
 	f	Lnet/minecraft/C_6692940;	f_6087627	f_6087627	
 	f	I	f_9928562	attackCooldown	
 	f	F	f_9185639	speed	
@@ -56,7 +56,7 @@ c	net/minecraft/C_1122660	net/minecraft/entity/ai/goal/MeleeAttackGoal
 	m	()Z	m_0396519	m_0396519	
 c	net/minecraft/C_1169171
 	f	Ljava/util/HashMap;	f_2677417	rawIdToSpawnEggData	
-	f	Ljava/util/List;	f_2677417		f_2677417
+	f	Ljava/util/List;	f_2677417		rawIdToSpawnEggData
 	m	(Ljava/lang/Class;Ljava/lang/String;I)V	m_8954187	register	
 		p	0		type	
 		p	1		id	
@@ -67,7 +67,7 @@ c	net/minecraft/C_1169171
 		p	2		rawId	
 		p	3		baseColor	
 		p	4		spotsColor	
-	m	(Ljava/lang/Class;Ljava/lang/String;IZ)V	m_8954187		m_8954187
+	m	(Ljava/lang/Class;Ljava/lang/String;IZ)V	m_8954187		register
 		p	0			p_0
 		p	1			p_1
 		p	2			p_2
@@ -85,15 +85,15 @@ c	net/minecraft/C_1352131
 		p	0		stack1	
 		p	1		stack2	
 c	net/minecraft/C_2582862	net/minecraft/entity/ai/goal/GoalSelector	
-	f	Ljava/util/ArrayList;	f_2575809	f_2575809	
-	f	Ljava/util/ArrayList;	f_4748297	f_4748297	
+	f	Ljava/util/ArrayList;	f_2575809	goals	
+	f	Ljava/util/ArrayList;	f_4748297	activeGoals	
 	m	()V	<init>	<init>	
-	m	(Lnet/minecraft/C_0372407;)V	m_1064541	m_1064541	
+	m	(Lnet/minecraft/C_0372407;)V	m_1064541	addGoal	
 		p	1		p_1	
 	m	()V	m_3976298	tick	
-	m	(Lnet/minecraft/C_0372407;)Z	m_6640991	m_6640991	
+	m	(Lnet/minecraft/C_0372407;)Z	m_6640991	canUse	
 		p	1		p_1	
-	m	(Lnet/minecraft/C_0372407;Lnet/minecraft/C_0372407;)Z	m_4944694	m_4944694	
+	m	(Lnet/minecraft/C_0372407;Lnet/minecraft/C_0372407;)Z	m_4944694	differentControlBits	
 		p	1		p_1	
 		p	2		p_2	
 c	net/minecraft/C_2644203	net/minecraft/C_2644203	
@@ -149,11 +149,11 @@ c	net/minecraft/C_2924703	net/minecraft/entity/ai/pathing/EntityNavigation
 	m	(Lnet/minecraft/C_6692940;Lnet/minecraft/C_0370453;)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
-	m	(DDD)V	m_7959359	m_7959359	
+	m	(DDD)V	m_7959359	startMovingTo	
 		p	1		p_1	
 		p	3		p_3	
 		p	5		p_5	
-	m	(Lnet/minecraft/C_6692940;)V	m_8123643	m_8123643	
+	m	(Lnet/minecraft/C_6692940;)V	m_8123643	startMovingTo	
 		p	1		p_1	
 	m	()V	m_1294001	tick	
 	m	()Z	m_7711157	isIdle	
@@ -210,7 +210,7 @@ c	net/minecraft/C_3788429	net/minecraft/entity/ai/control/MovementControl
 	m	(Lnet/minecraft/C_6692940;F)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
-	m	(DDD)V	m_7867267	m_7867267	
+	m	(DDD)V	m_7867267	update	
 		p	1		p_1	
 		p	3		p_3	
 		p	5		p_5	

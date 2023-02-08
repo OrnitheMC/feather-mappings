@@ -25,18 +25,18 @@ c	net/minecraft/C_0370453
 	f	Ljava/util/List;	f_2837313	tickingBlockEntities	
 	f	Ljava/util/List;	f_9140700	pendingBlockEntities	
 	f	Ljava/util/List;	f_7481161	removedBlockEntities	
-	f	Lit/unimi/dsi/fastutil/objects/ObjectLinkedOpenHashSet;	f_0087313		f_0087313
-	f	Lit/unimi/dsi/fastutil/objects/ObjectLinkedOpenHashSet;	f_5777169		f_5777169
-	f	Lit/unimi/dsi/fastutil/objects/ObjectLinkedOpenHashSet;	f_7084560		f_7084560
-	f	Lit/unimi/dsi/fastutil/objects/ObjectLinkedOpenHashSet;	f_2837313		f_2837313
-	f	Lit/unimi/dsi/fastutil/objects/ObjectLinkedOpenHashSet;	f_9140700		f_9140700
-	f	Lit/unimi/dsi/fastutil/objects/ObjectLinkedOpenHashSet;	f_7481161		f_7481161
+	f	Lit/unimi/dsi/fastutil/objects/ObjectLinkedOpenHashSet;	f_0087313		entities
+	f	Lit/unimi/dsi/fastutil/objects/ObjectLinkedOpenHashSet;	f_5777169		entitiesToRemove
+	f	Lit/unimi/dsi/fastutil/objects/ObjectLinkedOpenHashSet;	f_7084560		blockEntities
+	f	Lit/unimi/dsi/fastutil/objects/ObjectLinkedOpenHashSet;	f_2837313		tickingBlockEntities
+	f	Lit/unimi/dsi/fastutil/objects/ObjectLinkedOpenHashSet;	f_9140700		pendingBlockEntities
+	f	Lit/unimi/dsi/fastutil/objects/ObjectLinkedOpenHashSet;	f_7481161		removedBlockEntities
 	m	()V	m_5904960	tick	
 	m	(Lnet/minecraft/C_4512400;Lnet/minecraft/C_5477499;)Ljava/util/List;	m_7610414	getEntities	
 		p	1		exclude	
 		p	2		box	
 	m	()Ljava/util/List;	m_6693667	getEntities	
-	m	(Ljava/util/function/BooleanSupplier;)V	m_5904960		m_5904960
+	m	(Ljava/util/function/BooleanSupplier;)V	m_5904960		tick
 		p	1			p_1
 	m	(Lnet/minecraft/C_4512400;Lnet/minecraft/C_7345216;Lnet/minecraft/C_7345216;Ljava/util/Set;Z)Ljava/util/stream/Stream;	m_5878369		m_5878369
 		p	1			p_1
@@ -190,8 +190,8 @@ c	net/minecraft/C_2635968
 	m	(Lnet/minecraft/C_3673881;)V	m_6452257		m_6452257
 		p	1			p_1
 c	net/minecraft/C_2866462
-	f	Lit/unimi/dsi/fastutil/objects/Object2ObjectMap;	f_4074620	f_4074620	
-	f	Ljava/util/Map;	f_4074620		f_4074620
+	f	Lit/unimi/dsi/fastutil/objects/Object2ObjectMap;	f_4074620	chunkSaveQueue	
+	f	Ljava/util/Map;	f_4074620		chunkSaveQueue
 	m	(II)Z	m_5077695	m_5077695	
 		p	1		p_1	
 		p	2		p_2	
@@ -309,7 +309,7 @@ c	net/minecraft/C_3825014$C_0048054
 c	net/minecraft/C_4135566
 	f	Lnet/minecraft/C_4512400;	f_6919968	shooter	
 	f	Lnet/minecraft/C_6101761;	f_9826404		f_9826404
-	f	Ljava/util/UUID;	f_6919968		f_6919968
+	f	Ljava/util/UUID;	f_6919968		shooter
 	m	(Lnet/minecraft/C_4512400;)V	m_0867485		m_0867485
 		p	1			p_1
 	m	()Lnet/minecraft/C_4512400;	m_9781342		m_9781342
@@ -350,7 +350,7 @@ c	net/minecraft/C_4431218
 	m	(Lnet/minecraft/C_7131921;)V	m_2679997		m_2679997
 		p	1			p_1
 c	net/minecraft/C_4621059
-	m	(Lnet/minecraft/C_5250955;Lnet/minecraft/C_8962428;)V	m_1883857	m_1883857	
+	m	(Lnet/minecraft/C_5250955;Lnet/minecraft/C_8962428;)V	m_1883857	saveEntities	
 		p	1		p_1	
 		p	2		p_2	
 	m	()V	m_5550699	tick	
@@ -449,7 +449,7 @@ c	net/minecraft/C_5173637$C_8555704	C_8555704
 	m	(Lcom/mojang/brigadier/suggestion/Suggestion;)Ljava/lang/String;	m_5721935	m_5721935	
 		p	1		p_1	
 c	net/minecraft/C_5528511
-	m	(F)V	m_4715242	m_4715242	
+	m	(F)V	m_4715242	renderVignette	
 		p	1		p_1	
 	m	()Lnet/minecraft/C_6419746;	m_8164791		m_8164791
 	m	()Lnet/minecraft/C_6692940;	m_9010480		m_9010480
@@ -459,7 +459,7 @@ c	net/minecraft/C_5528511
 		p	1			p_1
 	m	(Lnet/minecraft/C_4512400;)V	m_9585496		m_9585496
 		p	1			p_1
-	m	(Lnet/minecraft/C_4512400;)V	m_4715242		m_4715242
+	m	(Lnet/minecraft/C_4512400;)V	m_4715242		renderVignette
 		p	1			p_1
 c	net/minecraft/C_5727037
 	f	Lnet/minecraft/C_9378205;	f_0267460		f_0267460
@@ -546,7 +546,7 @@ c	net/minecraft/C_6562961
 	m	(II)Z	m_0424767	doesChunkExist	
 		p	1		chunkX	
 		p	2		chunkZ	
-	m	(IIZZ)Lnet/minecraft/C_8962428;	m_1708093		m_1708093
+	m	(IIZZ)Lnet/minecraft/C_8962428;	m_1708093		getChunk
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -555,7 +555,7 @@ c	net/minecraft/C_6562961
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Ljava/util/function/BooleanSupplier;)Z	m_5169555		m_5169555
+	m	(Ljava/util/function/BooleanSupplier;)Z	m_5169555		tick
 		p	1			p_1
 c	net/minecraft/C_6668692
 	f	Lnet/minecraft/C_6516620;	f_8575388		f_8575388
@@ -704,13 +704,13 @@ c	net/minecraft/C_7750814
 		p	2		textureWidth	
 		p	3		textureHeight	
 		p	4		buffer	
-	m	(Ljava/io/File;IILnet/minecraft/C_6005783;Ljava/util/function/Consumer;)V	m_2444669		m_2444669
+	m	(Ljava/io/File;IILnet/minecraft/C_6005783;Ljava/util/function/Consumer;)V	m_2444669		saveScreenshot
 		p	0			p_0
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(Ljava/io/File;Ljava/lang/String;IILnet/minecraft/C_6005783;Ljava/util/function/Consumer;)V	m_6156098		m_6156098
+	m	(Ljava/io/File;Ljava/lang/String;IILnet/minecraft/C_6005783;Ljava/util/function/Consumer;)V	m_6156098		saveScreenshot
 		p	0			p_0
 		p	1			p_1
 		p	2			p_2
@@ -1042,9 +1042,9 @@ c	net/minecraft/server/MinecraftServer
 	m	()V	m_0076519	tick	
 	m	()V	m_6479584	tickWorlds	
 	m	()Z	m_3368791		m_3368791
-	m	(Ljava/util/function/BooleanSupplier;)V	m_0076519		m_0076519
+	m	(Ljava/util/function/BooleanSupplier;)V	m_0076519		tick
 		p	1			p_1
-	m	(Ljava/util/function/BooleanSupplier;)V	m_6479584		m_6479584
+	m	(Ljava/util/function/BooleanSupplier;)V	m_6479584		tickWorlds
 		p	1			p_1
 c	net/minecraft/C_0097073		net/minecraft/C_0097073
 	m	(Lnet/minecraft/C_4512400;Lnet/minecraft/C_5477499;Ljava/util/function/Predicate;)Ljava/util/List;	m_9622363		m_9622363
