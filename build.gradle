@@ -150,7 +150,7 @@ static def nextBuildNumber(ENV, version_id) {
 		def build_number = 0
 
 		try {
-			def xml = new URL("https://maven.ornithemc.net/releases/net/ornithemc/feather/maven-metadata.xml").text
+			def xml = new URL("https://maven.ornithemc.net/releases/net/ornithemc/feather-old/maven-metadata.xml").text
 			def metadata = new XmlSlurper().parseText(xml)
 
 			def version_build = "${version_id}+build."
@@ -505,7 +505,7 @@ task downloadMcJars(dependsOn: downloadVersionDetails) {
 
 task downloadCalamus(dependsOn: downloadMcJars, type: Download) {
 	group = buildMappingGroup
-	def url = "https://github.com/OrnitheMC/calamus/raw/main/mappings/${version_id}.tiny"
+	def url = "https://github.com/OrnitheMC/calamus/raw/old/mappings/${version_id}.tiny"
 	src UrlEscapers.urlFragmentEscaper().escape(url)
 	dest new File(cacheFilesMinecraft, "${version_id}-calamus.tiny")
 }
@@ -1295,7 +1295,7 @@ publishing {
 	publications {
 		maven(MavenPublication) {
 			groupId 'net.ornithemc'
-			artifactId "feather"
+			artifactId "feather-old"
 			version featherVersion
 
 			artifact(compressTiny.output) {
