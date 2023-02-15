@@ -24,6 +24,8 @@ import net.fabricmc.tinyremapper.OutputConsumerPath
 import net.fabricmc.tinyremapper.TinyRemapper
 import net.fabricmc.tinyremapper.TinyUtils
 import net.ornithemc.nester.Nester
+import net.ornithemc.nester.nest.NesterIo
+import net.ornithemc.nester.nest.Nests
 import net.ornithemc.mappingutils.MappingUtils;
 import net.ornithemc.mappingutils.PropagationDirection;
 import net.ornithemc.mappingutils.PropagationOptions;
@@ -82,7 +84,7 @@ buildscript {
 		classpath "net.ornithemc:mapping-utils:${project.mapping_utils_version}"
 		classpath "commons-io:commons-io:2.8.0"
 		classpath 'de.undercouch:gradle-download-task:4.1.1'
-		classpath "net.ornithemc:name-proposal:${project.name_proposal_version}"
+		classpath "org.quiltmc:quilt-enigma-plugin:${project.quilt_enigma_plugin_version}"
 		classpath "net.fabricmc.unpick:unpick:${project.unpick_version}"
 		classpath "net.fabricmc.unpick:unpick-format-utils:${project.unpick_version}"
 		classpath "org.codehaus.groovy:groovy-json:3.0.9"
@@ -225,8 +227,8 @@ configurations {
 
 dependencies {
 	enigmaRuntime "net.ornithemc:enigma-swing:${project.enigma_version}"
-	enigmaRuntime "net.ornithemc:name-proposal:${project.name_proposal_version}"
-	javadocClasspath "net.ornithemc:ornithe-loader:${project.ornithe_loader_version}"
+	enigmaRuntime "org.quiltmc:quilt-enigma-plugin:${project.quilt_enigma_plugin_version}"
+	javadocClasspath "org.quiltmc:quilt-loader:${project.quilt_loader_version}"
 	javadocClasspath "com.google.code.findbugs:jsr305:3.0.2"
 	decompileClasspath "net.fabricmc:cfr:${project.cfr_version}"
 	decompileClasspath "org.quiltmc:quiltflower:${project.quiltflower_version}"
@@ -253,23 +255,29 @@ def workingMappings = new File(workingDir, "${version_id}")
 def cacheFilesMinecraft = file(".gradle/minecraft")
 def tempDir = file(".gradle/temp")
 def mergedJar = new File(cacheFilesMinecraft, "${version_id}-merged.jar")
-def nestedJar = new File(cacheFilesMinecraft, "${version_id}-nested.jar")
 def calamusJar = file("${version_id}-calamus.jar")
+def nestedJar = file("${version_id}-calamus-nested.jar")
 def namedJar = file("${version_id}-named.jar")
 def versionDetails = null
 def versionFile = new File(cacheFilesMinecraft, "${minecraft_version}.json")
 def versionDetailsFile = new File(cacheFilesMinecraft, "${minecraft_version}-details.json")
 def clientJar = new File(cacheFilesMinecraft, "${minecraft_version}-client.jar")
 def serverJar = new File(cacheFilesMinecraft, "${minecraft_version}-server.jar")
+def calamusV1File = new File(cacheFilesMinecraft, "${version_id}-calamus.tiny")
+def calamusV2File = new File(cacheFilesMinecraft, "${version_id}-calamus-v2.tiny")
+def nestsFile = new File(cacheFilesMinecraft, "${version_id}.nest")
+def calamusNestsFile = new File(cacheFilesMinecraft, "${version_id}-calamus.nest")
 def mainJar = null
 def libraries = new File(cacheFilesMinecraft, "libraries")
 def libs = new File("build/libs/")
+
+def namespace = "intermediary"
 
 def REMOVE_DUMMY = new MappingValidator() {
 
 	@Override
 	public boolean validate(ClassMapping c) {
-		if (!MappingsDiff.safeIsDiff(ClassMapping.getSimplified(c.src()), c.get()) && (c.get().startsWith("C_") || c.get().startsWith("net/minecraft/C_"))) {
+		if (!MappingsDiff.safeIsDiff(ClassMapping.getSimplified(c.src()), c.get()) && (c.get().startsWith("C_") || c.get().startsWith("net/minecraft/unmapped/C_"))) {
 			c.set("");
 			return !c.getJavadoc().isEmpty() || c.hasChildren();
 		}
@@ -507,35 +515,44 @@ task downloadCalamus(dependsOn: downloadMcJars, type: Download) {
 	group = buildMappingGroup
 	def url = "https://github.com/OrnitheMC/calamus/raw/main/mappings/${version_id}.tiny"
 	src UrlEscapers.urlFragmentEscaper().escape(url)
-	dest new File(cacheFilesMinecraft, "${version_id}-calamus.tiny")
+	dest calamusV1File
 }
 
 task downloadCalamusV2(dependsOn: downloadMcJars, type: Download) {
 	group = buildMappingGroup
-	def url = "https://maven.ornithemc.net/releases/net/ornithemc/calamus/${version_id}/calamus-${version_id}-v2.jar"
+	def url = "https://maven.ornithemc.net/releases/net/ornithemc/calamus-${namespace}/${version_id}/calamus-${namespace}-${version_id}-v2.jar"
 	src UrlEscapers.urlFragmentEscaper().escape(url)
 	dest new File(cacheFilesMinecraft, "${version_id}-calamus-v2.jar")
 
-	def output = new File(cacheFilesMinecraft, "${version_id}-calamus-v2.tiny")
-	def nests = new File(cacheFilesMinecraft, "${version_id}.nest")
-	outputs.files(output, nests)
+	outputs.file(calamusV2File)
 
 	doLast {
 		copy {
 			from({ zipTree(downloadCalamusV2.dest) }) {
 				from 'mappings/mappings.tiny'
-				rename 'mappings.tiny', "../${output.name}"
+				rename 'mappings.tiny', "../${calamusV2File.name}"
 			}
 
-			into output.parentFile
+			into calamusV2File.parentFile
 		}
-		copy {
-			from({ zipTree(downloadCalamusV2.dest) }) {
-				from 'mappings/mappings.nest'
-				rename 'mappings.nest', "../${nests.name}"
-			}
+	}
+}
 
-			into nests.parentFile
+task downloadNests() {
+	outputs.file(nestsFile)
+
+	//Force the task to always run
+	outputs.upToDateWhen { false }
+
+	doLast {
+		try {
+			download {
+				src new URL("https://github.com/OrnitheMC/nests/raw/main/nests/${version_id}.nest")
+				dest nestsFile
+				overwrite true
+			}
+		} catch (Exception ignored) {
+			// not all versions have/need nests
 		}
 	}
 }
@@ -558,25 +575,6 @@ task mergeJars(dependsOn: downloadMcJars) {
 		}
 	}
 }
-
-task nestJar(dependsOn: [mergeJars, downloadCalamusV2]) {
-	group = setupGroup
-
-	outputs.file(nestedJar)
-	outputs.upToDateWhen {
-		return false
-	}
-
-	doLast {
-		File nestsFile = new File(cacheFilesMinecraft, "${version_id}.nest")
-
-		if (!nestedJar.exists() && nestsFile.exists()) {
-			logger.lifecycle(":nesting jar")
-			Nester.nestJar(new Nester.Options().silent(true), Paths.get(mainJar.getAbsolutePath()), Paths.get(nestedJar.getAbsolutePath()), Paths.get(nestsFile.getAbsolutePath()))
-		}
-	}
-}
-
 
 task downloadMcLibs(dependsOn: downloadWantedVersionManifest) {
 	group = setupGroup
@@ -634,7 +632,7 @@ task invertCalamus(dependsOn: downloadCalamus, type: FileOutput) {
 		String[] v1Args = [
 				v1Input.getAbsolutePath(),
 				output.getAbsolutePath(),
-				"calamus", "official"
+				namespace, "official"
 		]
 
 		new CommandReorderTiny().run(v1Args)
@@ -656,14 +654,14 @@ task invertCalamusV2(dependsOn: downloadCalamusV2, type: FileOutput) {
 		String[] v2Args = [
 				v2Input.getAbsolutePath(),
 				output.getAbsolutePath(),
-				"calamus", "official"
+				namespace, "official"
 		]
 
 		new CommandReorderTinyV2().run(v2Args)
 	}
 }
 
-task patchCalamus(dependsOn: [nestJar, downloadCalamus]) {
+task patchCalamus(dependsOn: [mergeJars, downloadCalamus]) {
 	group = buildMappingGroup
 	def calamusTinyInput = downloadCalamus.dest
 
@@ -675,9 +673,8 @@ task patchCalamus(dependsOn: [nestJar, downloadCalamus]) {
 	doLast {
 		logger.lifecycle(":patching calamus")
 
-		File jarFile = nestedJar.exists() ? nestedJar : mainJar
 		String[] args = [
-				jarFile.getAbsolutePath(),
+				mainJar.getAbsolutePath(),
 				calamusTinyInput.getAbsolutePath(),
 				outputFile.getAbsolutePath(),
 				"--writeAll"
@@ -687,7 +684,7 @@ task patchCalamus(dependsOn: [nestJar, downloadCalamus]) {
 	}
 }
 
-task mapCalamusJar(dependsOn: [downloadMcLibs, downloadCalamus, nestJar]) {
+task mapCalamusJar(dependsOn: [downloadMcLibs, downloadCalamus, mergeJars]) {
 	group = mapJarGroup
 	inputs.files downloadMcLibs.outputs.files.files
 	outputs.file(calamusJar)
@@ -698,15 +695,42 @@ task mapCalamusJar(dependsOn: [downloadMcLibs, downloadCalamus, nestJar]) {
 	doLast {
 		logger.lifecycle(":mapping minecraft to calamus")
 
-		File jarFile = nestedJar.exists() ? nestedJar : mainJar
-		def tinyInput = downloadCalamus.dest
-
-		mapJar(calamusJar, jarFile, tinyInput, libraries, "official", "calamus")
+		mapJar(calamusJar, mainJar, downloadCalamus.dest, libraries, "official", namespace)
 	}
 }
 
+task patchNests(dependsOn: [downloadNests, downloadCalamus]) {
+	outputs.file(calamusNestsFile)
 
-task separateMappings() {
+	//Force the task to always run
+	outputs.upToDateWhen { false }
+
+	doLast {
+		if (nestsFile.exists()) {
+			logger.lifecycle(":mapping nests to calamus")
+			MappingUtils.mapNests(nestsFile.toPath(), calamusNestsFile.toPath(), Format.TINY_V1, calamusV1File.toPath())
+		}
+	}
+}
+
+task nestJar(dependsOn: [mapCalamusJar, patchNests]) {
+	group = setupGroup
+
+	outputs.file(nestedJar)
+	outputs.upToDateWhen {
+		return false
+	}
+
+	doLast {
+		logger.lifecycle(":nesting jar")
+
+		if (calamusNestsFile.exists()) {
+			Nester.nestJar(new Nester.Options().silent(true), Paths.get(calamusJar.getAbsolutePath()), Paths.get(nestedJar.getAbsolutePath()), Paths.get(calamusNestsFile.getAbsolutePath()))
+		}
+	}
+}
+
+task separateMappings(dependsOn: patchNests) {
 	group = featherGroup
 	inputs.dir mappingsDir
 	outputs.dirs(workingMappings)
@@ -720,12 +744,19 @@ task separateMappings() {
 		VersionGraph graph = VersionGraph.of(Format.TINY_V2, mappingsDir.toPath())
 		Mappings mappings = MappingUtils.separateMappings(graph, version_id);
 
+		if (calamusNestsFile.exists()) {
+			Nests nests = Nests.empty()
+			NesterIo.read(nests, calamusNestsFile.toPath())
+
+			mappings = MappingUtils.applyNests(mappings, nests)
+		}
+
 		mappings.setValidator(REMOVE_DUMMY)
 		Format.ENIGMA_DIR.writeMappings(workingMappings.toPath(), mappings)
 	}
 }
 
-static def insertMappings(version_id, mappingsDir, workingMappingsPath, dir, validator) {
+static def insertMappings(version_id, mappingsDir, workingMappingsPath, nestsPath, dir, validator) {
 	VersionGraph graph = VersionGraph.of(Format.TINY_V2, mappingsDir);
 
 	Mappings separatedMappings = MappingUtils.separateMappings(graph, version_id);
@@ -733,6 +764,13 @@ static def insertMappings(version_id, mappingsDir, workingMappingsPath, dir, val
 	// enigma format does not have namespace info...
 	workingMappings.setSrcNamespace(separatedMappings.getSrcNamespace())
 	workingMappings.setDstNamespace(separatedMappings.getDstNamespace())
+
+	if (nestsPath.toFile().exists()) {
+		Nests nests = Nests.empty()
+		NesterIo.read(nests, nestsPath)
+
+		workingMappings = MappingUtils.undoNests(workingMappings, nests)
+	}
 
 	MappingsDiff changes = MappingUtils.diffMappings(separatedMappings, workingMappings);
 	changes.setValidator(validator);
@@ -743,43 +781,43 @@ static def insertMappings(version_id, mappingsDir, workingMappingsPath, dir, val
 	net.ornithemc.mappingutils.FileUtils.delete(workingMappingsPath.toFile())
 }
 
-task insertMappings() {
+task insertMappings(dependsOn: patchNests) {
 	group = featherGroup
 	doLast {
 		logger.lifecycle(":saving mappings for ${version_id}")
 
-		insertMappings(version_id, mappingsDir.toPath(), workingMappings.toPath(), PropagationDirection.NONE, INSERT_DUMMY)
+		insertMappings(version_id, mappingsDir.toPath(), workingMappings.toPath(), calamusNestsFile.toPath(), PropagationDirection.NONE, INSERT_DUMMY)
 	}
 }
 
-task propagateMappingsDown() {
+task propagateMappingsDown(dependsOn: patchNests) {
 	group = featherGroup
 	doLast {
 		logger.lifecycle(":saving mappings for ${version_id}")
 
-		insertMappings(version_id, mappingsDir.toPath(), workingMappings.toPath(), PropagationDirection.DOWN, INSERT_DUMMY)
+		insertMappings(version_id, mappingsDir.toPath(), workingMappings.toPath(), calamusNestsFile.toPath(), PropagationDirection.DOWN, INSERT_DUMMY)
 	}
 }
 
-task propagateMappingsUp() {
+task propagateMappingsUp(dependsOn: patchNests) {
 	group = featherGroup
 	doLast {
 		logger.lifecycle(":saving mappings for ${version_id}")
 
-		insertMappings(version_id, mappingsDir.toPath(), workingMappings.toPath(), PropagationDirection.UP, INSERT_DUMMY)
+		insertMappings(version_id, mappingsDir.toPath(), workingMappings.toPath(), calamusNestsFile.toPath(), PropagationDirection.UP, INSERT_DUMMY)
 	}
 }
 
-task propagateMappings() {
+task propagateMappings(dependsOn: patchNests) {
 	group = featherGroup
 	doLast {
 		logger.lifecycle(":saving mappings for ${version_id}")
 
-		insertMappings(version_id, mappingsDir.toPath(), workingMappings.toPath(), PropagationDirection.BOTH, INSERT_DUMMY)
+		insertMappings(version_id, mappingsDir.toPath(), workingMappings.toPath(), calamusNestsFile.toPath(), PropagationDirection.BOTH, INSERT_DUMMY)
 	}
 }
 
-task feather(dependsOn: [mapCalamusJar, separateMappings]) {
+task feather(dependsOn: [nestJar, separateMappings]) {
 	group = featherGroup
 	doLast {
 		ant.setLifecycleLogLevel "WARN"
@@ -791,7 +829,7 @@ task feather(dependsOn: [mapCalamusJar, separateMappings]) {
 		) {
 			jvmarg(value: "-Xmx2048m")
 			arg(value: '-jar')
-			arg(value: calamusJar.getAbsolutePath())
+			arg(value: (calamusNestsFile.exists() ? nestedJar : calamusJar).getAbsolutePath())
 			arg(value: '-mappings')
 			arg(value: workingMappings.getAbsolutePath())
 			arg(value: '-profile')
@@ -818,7 +856,7 @@ task separateMappingsForBuild(type: WithV2FileOutput) {
 		new ConvertMappingsCommand().run(
 			"tinyv2",
 			v2Output.getAbsolutePath(),
-			"tiny:calamus:named",
+			"tiny:${namespace}:named",
 			v1Output.getAbsolutePath())
 	}
 }
@@ -829,9 +867,8 @@ task checkMappings(dependsOn: [mapCalamusJar, separateMappingsForBuild]) {
 	doLast {
 		logger.lifecycle(":checking mappings")
 
-		File jarFile = nestedJar.exists() ? nestedJar : mainJar
 		String[] args = [
-				jarFile.getAbsolutePath(),
+				mainJar.getAbsolutePath(),
 				separateMappingsForBuild.v2Output.getAbsolutePath()
 		]
 
@@ -862,14 +899,14 @@ task buildFeatherTiny(dependsOn: [mapCalamusJar, separateMappingsForBuild], type
 				calamusJar.getAbsolutePath(),
 				"tinyv2",
 				separateMappingsForBuild.v2Output.getAbsolutePath(),
-				"tinyv2:calamus:named",
+				"tinyv2:${namespace}:named",
 				v2Output.getAbsolutePath()
 		)
 
 		new ConvertMappingsCommand().run(
 				"tinyv2",
 				v2Output.getAbsolutePath(),
-				"tiny:calamus:named",
+				"tiny:${namespace}:named",
 				v1Output.getAbsolutePath())
 	}
 }
@@ -891,7 +928,7 @@ task mergeTiny(dependsOn: ["buildFeatherTiny", "invertCalamus"], type: FileOutpu
 				calamusTinyInput.getAbsolutePath(),
 				featherTinyInput.getAbsolutePath(),
 				unorderedResultMappings.getAbsolutePath(),
-				"calamus",
+				namespace,
 				"official"
 		]
 
@@ -901,7 +938,7 @@ task mergeTiny(dependsOn: ["buildFeatherTiny", "invertCalamus"], type: FileOutpu
 		String[] args2 = [
 				unorderedResultMappings.getAbsolutePath(),
 				output.getAbsolutePath(),
-				"official", "calamus", "named"
+				"official", namespace, "named"
 		]
 
 		new CommandReorderTiny().run(args2)
@@ -1003,9 +1040,8 @@ task buildTinyWithEnum(dependsOn: "mergeTiny", type: FileOutput) {
 	doLast {
 		logger.lifecycle(":seeking auto-mappable fields")
 
-		File jarFile = nestedJar.exists() ? nestedJar : mainJar
 		String[] argsPropose = [
-				jarFile.getAbsolutePath(), // must use official jar
+				mainJar.getAbsolutePath(), // must use official jar
 				noEnum.getAbsolutePath(),
 				output.getAbsolutePath()
 		]
@@ -1025,7 +1061,7 @@ task mapNamedJar(dependsOn: ["mergeV2", mapCalamusJar]) {
 	doLast {
 		logger.lifecycle(":mapping minecraft to named")
 
-		mapJar(namedJar, calamusJar, mergeV2.output, libraries, "calamus", "named")
+		mapJar(namedJar, calamusJar, mergeV2.output, libraries, namespace, "named")
 	}
 }
 
@@ -1062,7 +1098,7 @@ task mergeV2(dependsOn: ["v2UnmergedFeatherJar", "invertCalamusV2"], type: FileO
 				invertCalamusV2.output.getAbsolutePath(),
 				insertAutoGeneratedEnumMappings.output.getAbsolutePath(),
 				mergedV2.getAbsolutePath(),
-				"calamus",
+				namespace,
 				"official"
 		]
 
@@ -1073,7 +1109,7 @@ task mergeV2(dependsOn: ["v2UnmergedFeatherJar", "invertCalamusV2"], type: FileO
 				mergedV2.getAbsolutePath(),
 				output.getAbsolutePath(),
 				"official",
-				"calamus",
+				namespace,
 				"named"
 		]
 		new CommandReorderTinyV2().run(args)
@@ -1250,7 +1286,7 @@ javadoc {
 				'https://commons.apache.org/proper/commons-io/javadocs/api-2.5',
 				'https://commons.apache.org/proper/commons-codec/archives/1.10/apidocs',
 				'https://commons.apache.org/proper/commons-compress/javadocs/api-1.8.1/',
-				"https://maven.ornithemc.net/javadocs/releases/net/ornithemc/ornithe-loader-${project.ornithe_loader_version}/",
+				"https://maven.quiltmc.org/javadocs/release/net/quiltmc/quilt-loader-${project.quilt_loader_version}/",
 				"https://docs.oracle.com/en/java/javase/11/docs/api/"
 				// Need to add loader jd publication for env annotations!
 		)
