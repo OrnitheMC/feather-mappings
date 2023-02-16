@@ -3,7 +3,7 @@ c	net/minecraft/unmapped/C_0022186
 	m	(Lnet/minecraft/unmapped/C_5553933;)V	<init>	<init>	
 		p	1		p_1	
 c	net/minecraft/unmapped/C_0539808
-	m	(Lnet/minecraft/unmapped/C_6607881;Lnet/minecraft/unmapped/C_0539808;)V	m_6092854		m_6092854
+	m	(Lnet/minecraft/unmapped/C_6607881;Lnet/minecraft/unmapped/C_0539808;)V	m_6092854		damageEntity
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/unmapped/C_0819633
@@ -16,9 +16,9 @@ c	net/minecraft/unmapped/C_0819633
 c	net/minecraft/unmapped/C_2208347
 	f	Lnet/minecraft/unmapped/C_0561170;	f_7028991	f_7028991	
 c	net/minecraft/unmapped/C_2950542
-	f	Z	f_4190594		f_4190594
-	m	()Lnet/minecraft/unmapped/C_2950542;	m_3777447		m_3777447
-	m	()Z	m_9599399		m_9599399
+	f	Z	f_4190594		thorns
+	m	()Lnet/minecraft/unmapped/C_2950542;	m_3777447		setThorns
+	m	()Z	m_9599399		hasThorns
 c	net/minecraft/unmapped/C_4517657
 	m	()Lnet/minecraft/unmapped/C_0150343;	m_3554210	m_3554210	
 c	net/minecraft/unmapped/C_4972050
@@ -27,7 +27,7 @@ c	net/minecraft/unmapped/C_5775997
 	m	(Lnet/minecraft/unmapped/C_5553933;)V	<init>	<init>	
 		p	1		p_1	
 c	net/minecraft/unmapped/C_7106153
-	f	Lnet/minecraft/unmapped/C_0561170;	f_1436088	f_1436088	
+	f	Lnet/minecraft/unmapped/C_0561170;	f_1436088	STEVE_TEXTURE	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_8099772
 	m	()Lnet/minecraft/unmapped/C_0150343;	m_3554210	m_3554210	
@@ -35,23 +35,41 @@ c	net/minecraft/unmapped/C_8365102
 	m	()Lnet/minecraft/unmapped/C_0150343;	m_3554210	m_3554210	
 	m	()Z	m_0974034		m_0974034
 c	net/minecraft/unmapped/C_9285671
-	m	()V	m_8862556		m_8862556
+	m	()V	m_8862556		reset
 c	net/minecraft/unmapped/C_9590849
 	m	(Ljava/lang/String;)Ljava/util/UUID;	m_7562374		m_7562374
 		p	0			p_0
-c	net/minecraft/unmapped/C_0083539		net/minecraft/unmapped/C_0083539
-	f	Ljava/util/HashMap;	f_7854069		f_7854069
-	m	(Ljava/lang/Class;)Lnet/minecraft/unmapped/C_0150343;	m_5360691		m_5360691
-		p	0			p_0
+c	net/minecraft/unmapped/C_0083539		net/minecraft/entity/living/mob/MobEnvironment
+	f	Ljava/util/HashMap;	f_7854069		BY_TYPE
+	m	(Ljava/lang/Class;)Lnet/minecraft/unmapped/C_0150343;	m_5360691		get
+		p	0			type
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_5946149		net/minecraft/unmapped/C_5946149
-	f	Lnet/minecraft/unmapped/C_0561170;	f_3344807		f_3344807
-	f	Lnet/minecraft/unmapped/C_0561170;	f_1399950		f_1399950
-	m	()Lnet/minecraft/unmapped/C_0561170;	m_8990473		m_8990473
-	m	(Ljava/util/UUID;)Lnet/minecraft/unmapped/C_0561170;	m_2817663		m_2817663
-		p	0			p_0
-	m	(Ljava/util/UUID;)Ljava/lang/String;	m_5086989		m_5086989
-		p	0			p_0
-	m	(Ljava/util/UUID;)Z	m_5861628		m_5861628
-		p	0			p_0
+c	net/minecraft/unmapped/C_5946149		net/minecraft/client/resource/skin/DefaultSkinUtils
+	f	Lnet/minecraft/unmapped/C_0561170;	f_3344807		STEVE_SKIN
+	f	Lnet/minecraft/unmapped/C_0561170;	f_1399950		ALEX_SKIN
+	m	()Lnet/minecraft/unmapped/C_0561170;	m_8990473		getDefaultSkin
+	m	(Ljava/util/UUID;)Lnet/minecraft/unmapped/C_0561170;	m_2817663		getDefaultSkin
+		p	0			uuid
+	m	(Ljava/util/UUID;)Ljava/lang/String;	m_5086989		getDefaultModelType
+		p	0			uuid
+	m	(Ljava/util/UUID;)Z	m_5861628		isAlexDefault
+		p	0			uuid
 	m	()V	<clinit>		<clinit>
+c	net/minecraft/unmapped/C_0975786
+	f	Lcom/google/common/base/Predicate;	f_0842606	f_0842606	classToFleeFrom
+c	net/minecraft/unmapped/C_5005702
+	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;)Z	m_4842222	m_4842222	canSitOnBlock
+c	net/minecraft/unmapped/C_5587144
+	f	Ljava/util/Set;	f_4890713	f_4890713	blocksToPickup
+c	net/minecraft/unmapped/C_8398976
+	f	Ljava/util/Set;	f_2775791	f_2775791	renderdChunkBlockRenderers
+	m	(Lnet/minecraft/unmapped/C_0539808;DLnet/minecraft/unmapped/C_8847418;IZ)V	m_4843024	m_4843024	renderTerrain
+c	net/minecraft/unmapped/C_9139005
+	m	(Lnet/minecraft/unmapped/C_7106153;)V	m_3660833	m_3660833	bindDecorationTexture
+c	net/minecraft/unmapped/C_9672101
+	m	(Lnet/minecraft/unmapped/C_6607881;Lnet/minecraft/unmapped/C_0539808;I)V	m_0846447	m_0846447	applyDamageWildcard
+c	net/minecraft/unmapped/C_3352951
+	f	Lnet/minecraft/realms/ServerPing;	f_5560157	f_5560157	server
+	f	Lnet/minecraft/realms/RealmsServerStatusPinger;	f_2305980	f_2305980	pinger
+c	net/minecraft/unmapped/C_2019151
+	m	(Lnet/minecraft/unmapped/C_3504190;FFFF)V	m_9682248	m_9682248	render
