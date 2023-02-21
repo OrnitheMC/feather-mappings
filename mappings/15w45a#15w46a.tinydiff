@@ -1,6 +1,6 @@
 tiny	2	0
 c	net/minecraft/unmapped/C_0371393
-	f	Ljava/util/List;	f_1811826		f_1811826
+	f	Ljava/util/List;	f_1811826		BIOMES
 c	net/minecraft/unmapped/C_1023567
 	m	(Lnet/minecraft/unmapped/C_0658987;)V	m_9471042		m_9471042
 		p	1			p_1
@@ -87,10 +87,10 @@ c	net/minecraft/unmapped/C_1572627$C_2478639		C_2478639
 		p	1			p_1
 c	net/minecraft/unmapped/C_1712153
 c	net/minecraft/unmapped/C_1712153$C_8764295
-	f	[F	f_0191549	f_0191549	
+	f	[F	f_0191549	downfall	
 c	net/minecraft/unmapped/C_2144954
-	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_2904831		m_2904831
-		p	0			p_0
+	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_2904831		canSpawnInside
+		p	0			state
 c	net/minecraft/unmapped/C_2441996
 	m	(Lnet/minecraft/unmapped/C_7612169;)Z	m_1602197		m_1602197
 		p	1			p_1
@@ -157,7 +157,7 @@ c	net/minecraft/unmapped/C_3828683$C_7077359	C_7077359
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_4311389
 c	net/minecraft/unmapped/C_4311389$C_6397411
-	m	()Ljava/util/List;	m_4576182		m_4576182
+	m	()Ljava/util/List;	m_4576182		getConnections
 c	net/minecraft/unmapped/C_4378535
 	m	([FIIII)[F	m_9972444	m_9972444	
 		p	1		p_1	
@@ -177,59 +177,62 @@ c	net/minecraft/unmapped/C_4787932
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/unmapped/C_5577922
-	m	(DDD)Lnet/minecraft/unmapped/C_5577922;	m_1735654	m_1735654	
-		p	1		p_1	
-		p	3		p_3	
-		p	5		p_5	
-	m	(D)Lnet/minecraft/unmapped/C_5577922;	m_7170637		m_7170637
-		p	1			p_1
-	m	(D)Lnet/minecraft/unmapped/C_5577922;	m_1735654		m_1735654
-		p	1			p_1
+	m	(DDD)Lnet/minecraft/unmapped/C_5577922;	m_1735654	contract	
+		c	Create a new {@code Box} that is contracted by the given amounts. The minimum and maximum\nvalues are increased and decreased respectively by the amounts given. This means the\nnew {@code Box} will be smaller by twice the amounts given on each axis.	
+		p	1		dx	
+		p	3		dy	
+		p	5		dz	
+	m	(D)Lnet/minecraft/unmapped/C_5577922;	m_7170637		expand
+		c		Create a new {@code Box} that is expanded by the given amount. The minimum and maximum\nvalues are decreased and increased respectively by the amount given. This means the\nnew {@code Box} will be bigger by twice the amount given on each axis.
+		p	1			amount
+	m	(D)Lnet/minecraft/unmapped/C_5577922;	m_1735654		contract
+		c		Create a new {@code Box} that is contracted by the given amount. The minimum and maximum\nvalues are increased and decreased respectively by the amount given. This means the\nnew {@code Box} will be smaller by twice the amount given on each axis.
+		p	1			amount
 c	net/minecraft/unmapped/C_5722573
 	m	(Lnet/minecraft/unmapped/C_6447889;)V	m_3803478	m_3803478	
 		p	1		p_1	
 c	net/minecraft/unmapped/C_6100478
-	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_5577922;	m_5960458	m_5960458	
+	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_5577922;	m_5960458	getShape	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;F)Lnet/minecraft/unmapped/C_5577922;	m_8579065	m_8579065	
+	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;F)Lnet/minecraft/unmapped/C_5577922;	m_8579065	getShape	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_5577922;	m_5960458		m_5960458
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;F)Lnet/minecraft/unmapped/C_5577922;	m_8579065		m_8579065
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_5577922;	m_5960458		getShape
+		p	1			world
+		p	2			pos
+	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;F)Lnet/minecraft/unmapped/C_5577922;	m_8579065		getShape
+		p	1			world
+		p	2			pos
+		p	3			progress
 c	net/minecraft/unmapped/C_6203608
 	m	(Lnet/minecraft/unmapped/C_3674802;)Z	m_0933464		m_0933464
 		p	1			p_1
-c	net/minecraft/unmapped/C_6447889	net/minecraft/unmapped/C_6447889	
-	f	I	f_9381381	f_9381381	
+c	net/minecraft/unmapped/C_6447889	net/minecraft/network/packet/s2c/play/CompressionThresholdS2CPacket	
+	f	I	f_9381381	compressionThreshold	
 	m	()V	<init>	<init>	
 	m	(Lnet/minecraft/unmapped/C_7240405;)V	m_4792371	m_4792371	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_7240405;)V	m_6110406	m_6110406	
 		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_7250084;)V	m_4637169	m_4637169	
+	m	(Lnet/minecraft/unmapped/C_7250084;)V	m_4637169	apply	
 		p	1		p_1	
-	m	()I	m_3862217	m_3862217	
+	m	()I	m_3862217	getCompressionThreshold	
 	m	(Lnet/minecraft/unmapped/C_5444260;)V	m_7216666	m_7216666	
 		p	1		p_1	
 c	net/minecraft/unmapped/C_6928498
-	m	()I	m_4496526	m_4496526	
+	m	()I	m_4496526	getScaledDownfall	
 c	net/minecraft/unmapped/C_7235516
-	m	([FIIII)[F	m_9972444	m_9972444	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
+	m	([FIIII)[F	m_9972444	getDownfall	
+		p	1		downfall	
+		p	2		x	
+		p	3		z	
+		p	4		width	
+		p	5		length	
 c	net/minecraft/unmapped/C_7250084
-	m	(Lnet/minecraft/unmapped/C_6447889;)V	m_3803478	m_3803478	
-		p	1		p_1	
+	m	(Lnet/minecraft/unmapped/C_6447889;)V	m_3803478	handleCompressionThreshold	
+		p	1		packet	
 c	net/minecraft/unmapped/C_7284070
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_2441996;Z)V	m_2815546		m_2815546
 		p	1			p_1
@@ -244,10 +247,10 @@ c	net/minecraft/unmapped/C_9264598$C_3876783
 	m	(Lnet/minecraft/unmapped/C_7612169;)Z	m_1602197		m_1602197
 		p	1			p_1
 c	net/minecraft/unmapped/C_9469238
-	f	Lnet/minecraft/unmapped/C_5577922;	f_4443424	f_4443424	
-	f	[Lnet/minecraft/unmapped/C_5577922;	f_4443424		f_4443424
-	m	(Lnet/minecraft/unmapped/C_2441996;)I	m_4796051		m_4796051
-		p	0			p_0
+	f	Lnet/minecraft/unmapped/C_5577922;	f_4443424	SHAPES	
+	f	[Lnet/minecraft/unmapped/C_5577922;	f_4443424		SHAPES
+	m	(Lnet/minecraft/unmapped/C_2441996;)I	m_4796051		getShapeIndex
+		p	0			state
 c	net/minecraft/unmapped/C_9986135
 	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_6174711		m_6174711
 		p	1			p_1
