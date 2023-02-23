@@ -14,7 +14,7 @@ c	net/minecraft/server/MinecraftServer
 		p	4			p_4
 	m	(Lnet/minecraft/unmapped/C_8054043;)V	m_4020281		prepareWorlds
 		p	1			p_1
-	m	()Ljava/lang/Iterable;	m_4775141		m_4775141
+	m	()Ljava/lang/Iterable;	m_4775141		getWorlds
 	m	(Lnet/minecraft/unmapped/C_0013174;)[J	m_5456156		m_5456156
 		p	0			p_0
 c	net/minecraft/unmapped/C_0013174
@@ -50,15 +50,15 @@ c	net/minecraft/unmapped/C_0013174
 	m	(Lnet/minecraft/unmapped/C_0013174;)Lnet/minecraft/unmapped/C_0561170;	m_2824254		m_2824254
 		p	0			p_0
 c	net/minecraft/unmapped/C_0097073
-	m	(Lnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_7345216;ZLjava/util/Set;)Ljava/util/stream/Stream;	m_7529636	m_7529636	
+	m	(Lnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_7345216;ZLjava/util/Set;)Ljava/util/stream/Stream;	m_7529636	getEntityCollisions	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
-	m	(Lnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_7345216;Ljava/util/Set;)Ljava/util/stream/Stream;	m_7529636		m_7529636
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(Lnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_7345216;Ljava/util/Set;)Ljava/util/stream/Stream;	m_7529636		getEntityCollisions
+		p	1			exclude
+		p	2			box
+		p	3			entities
 c	net/minecraft/unmapped/C_0281639
 	f	Ljava/io/File;	f_8199338	dataDir	
 	m	(Ljava/lang/String;)Ljava/io/File;	m_8775644	m_8775644	
@@ -584,14 +584,14 @@ c	net/minecraft/unmapped/C_5553933
 	f	Lnet/minecraft/unmapped/C_1559260;	f_5882502	savedDataStorage	
 	f	Ljava/util/List;	f_4021110		f_4021110
 	f	Ljava/util/List;	f_6372114		f_6372114
-	f	Ljava/util/List;	f_9918712		f_9918712
-	f	Ljava/util/List;	f_7595325		f_7595325
-	f	Ljava/util/List;	f_8720665		f_8720665
-	f	Ljava/util/List;	f_3641881		f_3641881
+	f	Ljava/util/List;	f_9918712		blockEntities
+	f	Ljava/util/List;	f_7595325		tickingBlockEntities
+	f	Ljava/util/List;	f_8720665		pendingBlockEntities
+	f	Ljava/util/List;	f_3641881		blockEntitiesToUnload
 	f	Ljava/util/List;	f_8066356		f_8066356
 	f	Lnet/minecraft/unmapped/C_0739569;	f_3166346		f_3166346
 	f	Lnet/minecraft/unmapped/C_8054043;	f_4414368		f_4414368
-	f	Z	f_6384774		f_6384774
+	f	Z	f_6384774		isTickingBlockEntities
 	m	(Lnet/minecraft/unmapped/C_5528202;Lnet/minecraft/unmapped/C_6152184;Lnet/minecraft/unmapped/C_3198459;Lnet/minecraft/unmapped/C_8525326;Z)V	<init>	<init>	
 		p	1		storage	
 		p	2		data	
@@ -649,8 +649,8 @@ c	net/minecraft/unmapped/C_5553933
 		p	6			p_6
 	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_3622326;	m_8275527		m_8275527
 		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_3622326;)V	m_4263679		m_4263679
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_3622326;)V	m_4263679		unloadBlockEntity
+		p	1			pos
 	m	(Lnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_7345216;Lnet/minecraft/unmapped/C_7345216;Ljava/util/Set;)Ljava/util/stream/Stream;	m_5878369		m_5878369
 		p	1			p_1
 		p	2			p_2
@@ -762,7 +762,7 @@ c	net/minecraft/unmapped/C_7549223
 	f	J	f_5413473	sizeChangeEnd	
 	f	J	f_4675511	sizeChangeStart	
 	f	Lnet/minecraft/unmapped/C_7549223$C_3918686;	f_9204949		f_9204949
-	m	()V	m_5646028		m_5646028
+	m	()V	m_5646028		tick
 	m	(Lnet/minecraft/unmapped/C_7549223;)I	m_6543468		m_6543468
 		p	0			p_0
 c	net/minecraft/unmapped/C_7549223$1		1

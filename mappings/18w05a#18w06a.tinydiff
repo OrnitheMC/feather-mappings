@@ -7507,13 +7507,13 @@ c	net/minecraft/unmapped/C_6849228
 	f	Z	f_0822984	terrainPopulated	
 	f	Z	f_1631600	lightPopulated	
 	f	[Lnet/minecraft/unmapped/C_6928498;	f_2932859		biomes
-	f	Ljava/util/Map;	f_7832837		f_7832837
+	f	Ljava/util/Map;	f_7832837		pendingBlockEntities
 	f	Ljava/util/Map;	f_4242426		f_4242426
-	f	Ljava/util/Map;	f_6037182		f_6037182
-	f	Ljava/util/Map;	f_1826136		f_1826136
-	f	[Lit/unimi/dsi/fastutil/shorts/ShortList;	f_8180662		f_8180662
+	f	Ljava/util/Map;	f_6037182		structureStarts
+	f	Ljava/util/Map;	f_1826136		structureReferences
+	f	[Lit/unimi/dsi/fastutil/shorts/ShortList;	f_8180662		postProcessing
 	f	[Lit/unimi/dsi/fastutil/shorts/ShortList;	f_3784082		f_3784082
-	f	Lnet/minecraft/unmapped/C_3331146;	f_7959769		f_7959769
+	f	Lnet/minecraft/unmapped/C_3331146;	f_7959769		status
 	f	I	f_0719588		f_0719588
 	m	(Lnet/minecraft/unmapped/C_5553933;II)V	<init>	<init>	
 		p	1		world	
@@ -7572,10 +7572,10 @@ c	net/minecraft/unmapped/C_6849228
 	m	(Z)V	m_1713986	setLightPopulated	
 		p	1		populated	
 	m	(Lnet/minecraft/unmapped/C_5553933;II[Lnet/minecraft/unmapped/C_6928498;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	1			world
+		p	2			chunkX
+		p	3			chunkZ
+		p	4			biomes
 	m	(Lnet/minecraft/unmapped/C_5553933;II[Lnet/minecraft/unmapped/C_6928498;Lnet/minecraft/unmapped/C_0992231;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -7583,34 +7583,34 @@ c	net/minecraft/unmapped/C_6849228
 		p	4			p_4
 		p	5			p_5
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0960638;II)V	<init>		<init>
-		p	1			p_1
+		p	1			world
 		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	3			chunkX
+		p	4			chunkZ
 	m	(IIILnet/minecraft/unmapped/C_2441996;)V	m_2068120		resetLightAt
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_2891045;Lnet/minecraft/unmapped/C_3674802;)I	m_6852630		m_6852630
-		p	1			p_1
-		p	2			p_2
+		p	1			x
+		p	2			y
+		p	3			z
+		p	4			state
+	m	(Lnet/minecraft/unmapped/C_2891045;Lnet/minecraft/unmapped/C_3674802;)I	m_6852630		getLight
+		p	1			type
+		p	2			pos
 	m	(Lnet/minecraft/unmapped/C_2891045;Lnet/minecraft/unmapped/C_3674802;Z)I	m_7384565		m_7384565
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_2891045;Lnet/minecraft/unmapped/C_3674802;I)V	m_3564112		m_3564112
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(Lnet/minecraft/unmapped/C_2891045;Lnet/minecraft/unmapped/C_3674802;I)V	m_3564112		setLight
+		p	1			type
+		p	2			pos
+		p	3			light
 	m	(Lnet/minecraft/unmapped/C_2891045;ZLnet/minecraft/unmapped/C_3674802;I)V	m_2148279		m_2148279
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
 	m	(Lnet/minecraft/unmapped/C_3674802;I)I	m_9345141		getOpacity
-		p	1			p_1
-		p	2			p_2
+		p	1			pos
+		p	2			ambientDarkness
 	m	(Lnet/minecraft/unmapped/C_3674802;IZ)I	m_6556593		m_6556593
 		p	1			p_1
 		p	2			p_2
@@ -7628,7 +7628,7 @@ c	net/minecraft/unmapped/C_6849228
 	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_3622326;	m_8048103		m_8048103
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_6928498;	m_7352473		getBiome
-		p	1			p_1
+		p	1			pos
 	m	()[Lnet/minecraft/unmapped/C_6928498;	m_1272190		m_1272190
 	m	()Ljava/util/Set;	m_5824327		m_5824327
 	m	(Lnet/minecraft/unmapped/C_5503280$C_6055071;)Lnet/minecraft/unmapped/C_5503280;	m_6941329		m_6941329
@@ -7640,17 +7640,17 @@ c	net/minecraft/unmapped/C_6849228
 		p	1			p_1
 		p	2			p_2
 	m	()Ljava/util/Map;	m_6340457		m_6340457
-	m	(Ljava/util/Map;)V	m_7734219		m_7734219
-		p	1			p_1
+	m	(Ljava/util/Map;)V	m_7734219		setStructureStarts
+		p	1			starts
 	m	(Ljava/lang/String;)Lit/unimi/dsi/fastutil/longs/LongSet;	m_5234960		m_5234960
 		p	1			p_1
 	m	(Ljava/lang/String;J)V	m_8546445		m_8546445
 		p	1			p_1
 		p	2			p_2
 	m	()Ljava/util/Map;	m_9358366		m_9358366
-	m	(Ljava/util/Map;)V	m_1624950		m_1624950
-		p	1			p_1
-	m	()V	m_9576800		m_9576800
+	m	(Ljava/util/Map;)V	m_1624950		setStructureReferences
+		p	1			references
+	m	()V	m_9576800		postProcess
 	m	()[Lit/unimi/dsi/fastutil/shorts/ShortList;	m_1340183		m_1340183
 	m	()[Lit/unimi/dsi/fastutil/shorts/ShortList;	m_7755614		m_7755614
 	m	(SI)V	m_0826239		m_0826239
@@ -7662,14 +7662,14 @@ c	net/minecraft/unmapped/C_6849228
 	m	()Lnet/minecraft/unmapped/C_3331146;	m_5940343		m_5940343
 	m	(Lnet/minecraft/unmapped/C_3331146;)V	m_1603727		m_1603727
 		p	1			p_1
-	m	(Ljava/lang/String;)V	m_8728269		m_8728269
-		p	1			p_1
+	m	(Ljava/lang/String;)V	m_8728269		setStatus
+		p	1			status
 	m	()V	m_0918438		m_0918438
 	m	()V	m_2866126		m_2866126
 	m	(Ljava/lang/String;)Lit/unimi/dsi/fastutil/longs/LongSet;	m_4607093		m_4607093
-		p	0			p_0
+		p	0			key
 	m	(Ljava/lang/String;)Lit/unimi/dsi/fastutil/longs/LongSet;	m_1839507		m_1839507
-		p	0			p_0
+		p	0			key
 	m	(Lnet/minecraft/unmapped/C_5503280$C_6055071;)Lnet/minecraft/unmapped/C_5503280;	m_0417558		m_0417558
 		p	1			p_1
 	m	()[Lnet/minecraft/unmapped/C_8042654;	m_3040753	getSections	m_3040753
@@ -7692,6 +7692,7 @@ c	net/minecraft/unmapped/C_6849228
 		p	2		state	p_2
 	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_2441996;	m_6686868	getBlockState	m_6686868
 		p	1		pos	p_1
+	m	(Lnet/minecraft/unmapped/C_0539808;)V	m_4806932	addEntity	removeEntity
 c	net/minecraft/unmapped/C_6872172
 	f	I	f_5583199	size	
 	m	(I)V	<init>	<init>	
@@ -11171,28 +11172,28 @@ c	net/minecraft/unmapped/C_0635266		net/minecraft/unmapped/C_0635266
 	f	Lnet/minecraft/unmapped/C_2441996;	f_7832125		f_7832125
 	m	(Lnet/minecraft/unmapped/C_2441996;)V	<init>		<init>
 		p	1			p_1
-c	net/minecraft/unmapped/C_0636026		net/minecraft/unmapped/C_0636026
-	m	(Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_2441996;)Lnet/minecraft/unmapped/C_2441996;	m_0222822		m_0222822
+c	net/minecraft/unmapped/C_0636026		net/minecraft/world/chunk/ChunkAccess
+	m	(Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_2441996;)Lnet/minecraft/unmapped/C_2441996;	m_0222822		setBlockState
 		p	1			p_1
 		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3622326;)V	m_8176130		m_8176130
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_0539808;)V	m_4616455		m_4616455
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_3331146;)V	m_1603727		m_1603727
-		p	1			p_1
-	m	()[Lnet/minecraft/unmapped/C_8042654;	m_3040753		m_3040753
-	m	(Lnet/minecraft/unmapped/C_2891045;Lnet/minecraft/unmapped/C_3674802;Z)I	m_7384565		m_7384565
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3622326;)V	m_8176130		setBlockEntity
+		p	1			pos
+		p	2			blockEntity
+	m	(Lnet/minecraft/unmapped/C_0539808;)V	m_4616455		addEntity
+		p	1			entity
+	m	(Lnet/minecraft/unmapped/C_3331146;)V	m_1603727		setStatus
+		p	1			status
+	m	()[Lnet/minecraft/unmapped/C_8042654;	m_3040753		getSections
+	m	(Lnet/minecraft/unmapped/C_2891045;Lnet/minecraft/unmapped/C_3674802;Z)I	m_7384565		getLight
+		p	1			type
+		p	2			pos
 		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_3674802;IZ)I	m_6556593		m_6556593
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/unmapped/C_3674802;IZ)I	m_6556593		getLight
+		p	1			pos
+		p	2			ambientDarkness
 		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_3674802;)Z	m_3357022		m_3357022
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_3674802;)Z	m_3357022		hasSkyAccess
+		p	1			pos
 	m	(II)I	m_6231990		m_6231990
 		p	1			p_1
 		p	2			p_2
@@ -11200,44 +11201,44 @@ c	net/minecraft/unmapped/C_0636026		net/minecraft/unmapped/C_0636026
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	()Lnet/minecraft/unmapped/C_7141926;	m_2722900		m_2722900
-	m	(J)V	m_2399911		m_2399911
-		p	1			p_1
-	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_2706017;	m_1135547		m_1135547
-		p	1			p_1
-	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_2706017;)V	m_0947452		m_0947452
-		p	1			p_1
-		p	2			p_2
-	m	(Ljava/lang/String;)Lit/unimi/dsi/fastutil/longs/LongSet;	m_5234960		m_5234960
-		p	1			p_1
-	m	(Ljava/lang/String;J)V	m_8546445		m_8546445
-		p	1			p_1
-		p	2			p_2
-	m	()[Lnet/minecraft/unmapped/C_6928498;	m_1272190		m_1272190
+	m	()Lnet/minecraft/unmapped/C_7141926;	m_2722900		getPos
+	m	(J)V	m_2399911		setLastSaveTime
+		p	1			time
+	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_2706017;	m_1135547		getStructureStart
+		p	1			type
+	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_2706017;)V	m_0947452		setStructureStart
+		p	1			type
+		p	2			start
+	m	(Ljava/lang/String;)Lit/unimi/dsi/fastutil/longs/LongSet;	m_5234960		getStructureReferences
+		p	1			type
+	m	(Ljava/lang/String;J)V	m_8546445		addStructureReference
+		p	1			type
+		p	2			reference
+	m	()[Lnet/minecraft/unmapped/C_6928498;	m_1272190		getBiomes
 	m	(Z)V	m_1530040		m_1530040
 		p	1			p_1
 	m	()Z	m_7926118		m_7926118
-	m	()Lnet/minecraft/unmapped/C_3331146;	m_5940343		m_5940343
-	m	(Lnet/minecraft/unmapped/C_3674802;)V	m_9656101		m_9656101
-		p	1			p_1
+	m	()Lnet/minecraft/unmapped/C_3331146;	m_5940343		getStatus
+	m	(Lnet/minecraft/unmapped/C_3674802;)V	m_9656101		removeBlockEntity
+		p	1			pos
 	m	([Lit/unimi/dsi/fastutil/shorts/ShortList;I)Lit/unimi/dsi/fastutil/shorts/ShortList;	m_9950150		m_9950150
 		p	1			p_1
 		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_2891045;ZLnet/minecraft/unmapped/C_3674802;I)V	m_2148279		m_2148279
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_2891045;ZLnet/minecraft/unmapped/C_3674802;I)V	m_2148279		setLight
+		p	1			type
 		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_3674802;)V	m_3512185		m_3512185
-		p	1			p_1
+		p	3			pos
+		p	4			light
+	m	(Lnet/minecraft/unmapped/C_3674802;)V	m_3512185		markForPostProcessing
+		p	1			pos
 	m	(Lnet/minecraft/unmapped/C_3674802;)V	m_3049974		m_3049974
 		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_0306414		m_0306414
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_0306414		loadBlockEntity
+		p	1			nbt
 	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_2018497;	m_9283651		m_9283651
 		p	1			p_1
-	m	([Lnet/minecraft/unmapped/C_6928498;)V	m_4398743		m_4398743
-		p	1			p_1
+	m	([Lnet/minecraft/unmapped/C_6928498;)V	m_4398743		setBiomes
+		p	1			biomes
 	m	([Lnet/minecraft/unmapped/C_5503280$C_6055071;)V	m_1987965		m_1987965
 		p	1			p_1
 	m	()Ljava/util/List;	m_2188938		m_2188938
@@ -11676,7 +11677,7 @@ c	net/minecraft/unmapped/C_2113478		net/minecraft/unmapped/C_2113478
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-c	net/minecraft/unmapped/C_2137190		net/minecraft/unmapped/C_2137190
+c	net/minecraft/unmapped/C_2137190		net/minecraft/world/WorldView
 	m	(Lnet/minecraft/unmapped/C_3674802;)Z	m_6918486		isAir
 		p	1			pos
 	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_6928498;	m_4932347		getBiome
@@ -11977,7 +11978,7 @@ c	net/minecraft/unmapped/C_3294752		net/minecraft/unmapped/C_3294752
 		p	1			p_1
 c	net/minecraft/unmapped/C_3296740		net/minecraft/unmapped/C_3296740
 	m	()V	<init>		<init>
-c	net/minecraft/unmapped/C_3331146		net/minecraft/unmapped/C_3331146
+c	net/minecraft/unmapped/C_3331146		net/minecraft/world/chunk/ChunkStatus
 	f	Lnet/minecraft/unmapped/C_3331146;	f_2214294		f_2214294
 	f	Lnet/minecraft/unmapped/C_3331146;	f_9467860		f_9467860
 	f	Lnet/minecraft/unmapped/C_3331146;	f_2358578		f_2358578
@@ -12956,12 +12957,12 @@ c	net/minecraft/unmapped/C_5204887		net/minecraft/unmapped/C_5204887
 		p	4			p_4
 		p	5			p_5
 	m	()V	m_1976244		m_1976244
-c	net/minecraft/unmapped/C_5250955		net/minecraft/unmapped/C_5250955
-	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_3622326;	m_8048103		m_8048103
-		p	1			p_1
+c	net/minecraft/unmapped/C_5250955		net/minecraft/world/BlockView
+	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_3622326;	m_8048103		getBlockEntity
+		p	1			pos
 	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_2441996;	m_6686868		getBlockState
-		p	1			p_1
-	m	()I	m_7760842		m_7760842
+		p	1			pos
+	m	()I	m_7760842		getMaxLight
 c	net/minecraft/unmapped/C_5306262		net/minecraft/unmapped/C_5306262
 	f	Ljava/util/List;	f_9567092		f_9567092
 	m	()V	<init>		<init>
@@ -14493,8 +14494,8 @@ c	net/minecraft/unmapped/C_9789416		net/minecraft/unmapped/C_9789416
 	m	(II)I	m_5558064		m_5558064
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_9844932		net/minecraft/unmapped/C_9844932
-	m	()J	m_7021533		m_7021533
+c	net/minecraft/unmapped/C_9844932		net/minecraft/world/WorldAccess
+	m	()J	m_7021533		getSeed
 	m	(Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1241852;)Z	m_0159225		m_0159225
 		p	1			p_1
 		p	2			p_2
