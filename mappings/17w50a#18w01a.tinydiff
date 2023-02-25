@@ -108,7 +108,7 @@ c	net/minecraft/unmapped/C_0759248
 	m	(Ljava/lang/String;)Z	m_5288968	hasTranslation	
 		p	1		key	
 c	net/minecraft/unmapped/C_0852140
-	f	Lnet/minecraft/unmapped/C_9086953;	f_6398659		f_6398659
+	f	Lnet/minecraft/unmapped/C_9086953;	f_6398659		ANVIL
 c	net/minecraft/unmapped/C_0852140$C_3638900
 	m	()Ljava/util/Collection;	m_3757900		m_3757900
 c	net/minecraft/unmapped/C_0890491
@@ -660,8 +660,8 @@ c	net/minecraft/unmapped/C_2441996
 	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;)I	m_9724520		getOpacity
 		p	1			world
 		p	2			pos
-	m	()I	m_0653905		getMetadata
-	m	()Z	m_2228291		canBeReplaced
+	m	()I	m_0653905		getLightLevel
+	m	()Z	m_2228291		isAir
 	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;)Z	m_6499087		m_6499087
 		p	1			world
 		p	2			pos
@@ -705,20 +705,20 @@ c	net/minecraft/unmapped/C_2441996
 	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;)Z	m_7355359		isOpaqueCube
 		p	1			world
 		p	2			pos
-	m	()Z	m_6127176		m_6127176
-	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3544601;)Z	m_0076895		m_0076895
-		p	1			world
-		p	2			pos
+	m	()Z	m_6127176		hasAmbientOcclusion
+	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3544601;)Z	m_0076895		shouldNotRender
+		p	1			neighborState
+		p	2			face
 	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_7345216;	m_6633175		getShape
 		p	1			world
 		p	2			pos
 	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_7345216;	m_8095213		getCollisionShape
 		p	1			world
 		p	2			pos
-	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_7345216;	m_9134088		m_9134088
+	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_7345216;	m_9134088		getOcclusionShape
 		p	1			p_1
 		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_7345216;	m_7097833		m_7097833
+	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_7345216;	m_7097833		getInteractionShape
 		p	1			p_1
 		p	2			p_2
 	m	()Z	m_9385155		isFullBlock
@@ -799,8 +799,8 @@ c	net/minecraft/unmapped/C_2441996
 	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;)Z	m_5209710		canWalkThrough
 		p	1			world
 		p	2			pos
-	m	(Lnet/minecraft/unmapped/C_7300213;)Z	m_7607927		m_7607927
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_7300213;)Z	m_7607927		canBeReplaced
+		p	1			ctx
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;)Z	m_1637730		canSurvive
 		p	1			world
 		p	2			pos
@@ -1626,30 +1626,30 @@ c	net/minecraft/unmapped/C_8969331
 c	net/minecraft/unmapped/C_8969331$C_9229843
 	m	()Lcom/google/gson/JsonElement;	m_0141038		m_0141038
 c	net/minecraft/unmapped/C_9086953
-	m	(Ljava/util/function/Function;)Lcom/google/gson/JsonObject;	m_6966059		m_6966059
-		p	1			p_1
-	m	()Ljava/util/Collection;	m_3757900		m_3757900
+	m	(Ljava/util/function/Function;)Lcom/google/gson/JsonObject;	m_6966059		serialize
+		p	1			valueToId
+	m	()Ljava/util/Collection;	m_3757900		entries
 c	net/minecraft/unmapped/C_9086953$C_3118013
-	m	()Lnet/minecraft/unmapped/C_0561170;	m_5728549		m_5728549
+	m	()Lnet/minecraft/unmapped/C_0561170;	m_5728549		getId
 	m	(Lcom/google/gson/JsonArray;Ljava/util/function/Function;)V	m_3731815		m_3731815
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/unmapped/C_9086953$C_5115864
-	m	(Lnet/minecraft/unmapped/C_9086953$C_6105569;)Lnet/minecraft/unmapped/C_9086953$C_5115864;	m_2856626		m_2856626
-		p	1			p_1
-	m	([Ljava/lang/Object;)Lnet/minecraft/unmapped/C_9086953$C_5115864;	m_0565524		m_0565524
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_9086953;)Lnet/minecraft/unmapped/C_9086953$C_5115864;	m_3171647		m_3171647
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_9086953$C_6105569;)Lnet/minecraft/unmapped/C_9086953$C_5115864;	m_2856626		add
+		p	1			value
+	m	([Ljava/lang/Object;)Lnet/minecraft/unmapped/C_9086953$C_5115864;	m_0565524		add
+		p	1			values
+	m	(Lnet/minecraft/unmapped/C_9086953;)Lnet/minecraft/unmapped/C_9086953$C_5115864;	m_3171647		add
+		p	1			value
 c	net/minecraft/unmapped/C_9086953$C_6105569
-	m	(Lcom/google/gson/JsonArray;Ljava/util/function/Function;)V	m_3731815		m_3731815
-		p	1			p_1
-		p	2			p_2
+	m	(Lcom/google/gson/JsonArray;Ljava/util/function/Function;)V	m_3731815		serialize
+		p	1			json
+		p	2			valueToId
 c	net/minecraft/unmapped/C_9086953$C_6187198
 	m	(Lcom/google/gson/JsonArray;Ljava/util/function/Function;)V	m_3731815		m_3731815
 		p	1			p_1
 		p	2			p_2
-	m	()Ljava/util/Collection;	m_0889805		m_0889805
+	m	()Ljava/util/Collection;	m_0889805		values
 c	net/minecraft/unmapped/C_9225316
 	m	()Ljava/lang/String;	m_6689989	getName	
 	m	()Lnet/minecraft/unmapped/C_9550253;	m_6689989		getName
