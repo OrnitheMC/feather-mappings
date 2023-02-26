@@ -102,7 +102,10 @@ plugins {
 }
 
 def ENV = System.getenv()
-def version_id = ENV.MC_VERSION
+def version_id = ENV.MC_VERSION ?: {
+	project.logger.error("MC_VERSION environment variable not set, defaulting to 1.7.2")
+	return "1.7.2"
+}()
 def environment = parseEnvironment(version_id)
 def minecraft_version = parseVersion(version_id, environment)
 def build_number = nextBuildNumber(ENV, version_id)
@@ -236,15 +239,6 @@ dependencies {
 	mappingPoetJar "net.fabricmc:mappingpoet:${project.mapping_poet_version}"
 }
 
-configurations.all {
-	resolutionStrategy {
-		dependencySubstitution {
-			substitute module('org.lwjgl.lwjgl:lwjgl_util:2.9.1-nightly-20131017') with module('org.lwjgl.lwjgl:lwjgl_util:2.9.0')
-			substitute module('org.lwjgl.lwjgl:lwjgl:2.9.1-nightly-20131017') with module('org.lwjgl.lwjgl:lwjgl:2.9.0')
-		}
-	}
-}
-
 def setupGroup = "jar setup"
 def featherGroup = "feather"
 def buildMappingGroup = "mapping build"
@@ -252,23 +246,27 @@ def mapJarGroup = "jar mapping"
 def mappingsDir = file("mappings/")
 def workingDir = file("run/")
 def workingMappings = new File(workingDir, "${version_id}")
-def cacheFilesMinecraft = file(".gradle/minecraft")
+def cacheFilesMinecraft = new File(project.gradle.gradleUserHomeDir, "caches/feather-build-cache/")
 def tempDir = file(".gradle/temp")
-def mergedJar = new File(cacheFilesMinecraft, "${version_id}-merged.jar")
-def calamusJar = file("${version_id}-calamus.jar")
-def nestedJar = file("${version_id}-calamus-nested.jar")
-def namedJar = file("${version_id}-named.jar")
+def mergedJar = new File(cacheFilesMinecraft, "merged/${version_id}-merged.jar")
+def namedJarsDir = new File(cacheFilesMinecraft, "named-jars/")
+def calamusJar = new File(namedJarsDir, "${version_id}-calamus.jar")
+def nestedJar = new File(namedJarsDir, "${version_id}-calamus-nested.jar")
+def namedJar = new File(namedJarsDir, "${version_id}-named.jar")
 def versionDetails = null
-def versionFile = new File(cacheFilesMinecraft, "${minecraft_version}.json")
-def versionDetailsFile = new File(cacheFilesMinecraft, "${minecraft_version}-details.json")
-def clientJar = new File(cacheFilesMinecraft, "${minecraft_version}-client.jar")
-def serverJar = new File(cacheFilesMinecraft, "${minecraft_version}-server.jar")
-def calamusV1File = new File(cacheFilesMinecraft, "${version_id}-calamus.tiny")
-def calamusV2File = new File(cacheFilesMinecraft, "${version_id}-calamus-v2.tiny")
-def nestsFile = new File(cacheFilesMinecraft, "${version_id}.nest")
-def calamusNestsFile = new File(cacheFilesMinecraft, "${version_id}-calamus.nest")
+def versionJsons = new File(cacheFilesMinecraft, "version-jsons/")
+def versionFile = new File(versionJsons, "${minecraft_version}.json")
+def versionDetailsFile = new File(versionJsons, "${minecraft_version}-details.json")
+def gameJars = new File(cacheFilesMinecraft, "game-jars/")
+def clientJar = new File(gameJars, "${minecraft_version}-client.jar")
+def serverJar = new File(gameJars, "${minecraft_version}-server.jar")
+def mappingsCacheDir = new File(cacheFilesMinecraft, "mappings/")
+def calamusV1File = new File(mappingsCacheDir, "${version_id}-calamus.tiny")
+def calamusV2File = new File(mappingsCacheDir, "${version_id}-calamus-v2.tiny")
+def nestsFile = new File(mappingsCacheDir, "${version_id}.nest")
+def calamusNestsFile = new File(mappingsCacheDir, "${version_id}-calamus.nest")
 def mainJar = null
-def libraries = new File(cacheFilesMinecraft, "libraries")
+def libraries = new File(cacheFilesMinecraft, "libraries/")
 def libs = new File("build/libs/")
 
 def namespace = "intermediary"
@@ -522,7 +520,7 @@ task downloadCalamusV2(dependsOn: downloadMcJars, type: Download) {
 	group = buildMappingGroup
 	def url = "https://maven.ornithemc.net/releases/net/ornithemc/calamus-${namespace}/${version_id}/calamus-${namespace}-${version_id}-v2.jar"
 	src UrlEscapers.urlFragmentEscaper().escape(url)
-	dest new File(cacheFilesMinecraft, "${version_id}-calamus-v2.jar")
+	dest new File(mappingsCacheDir, "${version_id}-calamus-v2.jar")
 
 	outputs.file(calamusV2File)
 
@@ -621,7 +619,7 @@ task invertCalamus(dependsOn: downloadCalamus, type: FileOutput) {
 	group = buildMappingGroup
 	def v1Input = downloadCalamus.dest
 
-	output = new File(cacheFilesMinecraft, "${version_id}-calamus-inverted.tiny")
+	output = new File(mappingsCacheDir, "${version_id}-calamus-inverted.tiny")
 	outputs.file(output)
 
 	outputs.upToDateWhen { false }
@@ -641,9 +639,9 @@ task invertCalamus(dependsOn: downloadCalamus, type: FileOutput) {
 
 task invertCalamusV2(dependsOn: downloadCalamusV2, type: FileOutput) {
 	group = buildMappingGroup
-	def v2Input = new File(cacheFilesMinecraft, "${version_id}-calamus-v2.tiny")
+	def v2Input = new File(mappingsCacheDir, "${version_id}-calamus-v2.tiny")
 
-	output = new File(cacheFilesMinecraft, "${version_id}-calamus-inverted-v2.tiny")
+	output = new File(mappingsCacheDir, "${version_id}-calamus-inverted-v2.tiny")
 	outputs.file(output)
 
 	outputs.upToDateWhen { false }
@@ -665,7 +663,7 @@ task patchCalamus(dependsOn: [mergeJars, downloadCalamus]) {
 	group = buildMappingGroup
 	def calamusTinyInput = downloadCalamus.dest
 
-	def outputFile = new File(cacheFilesMinecraft, "${version_id}-calamus-full.tiny")
+	def outputFile = new File(mappingsCacheDir, "${version_id}-calamus-full.tiny")
 	outputs.file(outputFile)
 
 	outputs.upToDateWhen { false }
