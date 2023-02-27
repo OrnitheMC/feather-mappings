@@ -96,21 +96,21 @@ c	net/minecraft/unmapped/C_1264786
 	m	(I)Lnet/minecraft/unmapped/C_3755722;	m_4768058		m_4768058
 		p	1			p_1
 c	net/minecraft/unmapped/C_1400640
-	f	Ljava/util/Map;	f_5382129		f_5382129
-	m	(Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	m_7467434		m_7467434
-		p	1			p_1
-	m	(Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	m_6203461		m_6203461
-		p	1			p_1
-	m	(Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;Ljava/lang/String;)Ljava/util/concurrent/CompletableFuture;	m_5951460		m_5951460
-		p	1			p_1
-		p	2			p_2
+	f	Ljava/util/Map;	f_5382129		vagueProperties
+	m	(Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	m_7467434		suggestVaguePropertyOrEnd
+		p	1			builder
+	m	(Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	m_6203461		suggestVagueProperty
+		p	1			builder
+	m	(Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;Ljava/lang/String;)Ljava/util/concurrent/CompletableFuture;	m_5951460		suggestVagueValue
+		p	1			builder
+		p	2			property
 	m	(Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	m_3874747		m_3874747
 		p	1			p_1
-	m	()V	m_7264450		m_7264450
-	m	()Ljava/util/Map;	m_3192288		m_3192288
+	m	()V	m_7264450		parseVagueProperties
+	m	()Ljava/util/Map;	m_3192288		getVagueProperties
 	m	(Ljava/lang/String;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	m_9864278		m_9864278
 		p	1			p_1
-		p	2			p_2
+		p	2			builder
 c	net/minecraft/unmapped/C_1428858
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;)I	m_3157258		m_3157258
 		p	1			p_1
@@ -142,7 +142,7 @@ c	net/minecraft/unmapped/C_2788493
 	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_0597873		m_0597873
 		p	1			p_1
 c	net/minecraft/unmapped/C_2826261
-	f	Lcom/mojang/brigadier/exceptions/SimpleCommandExceptionType;	f_3123709		f_3123709
+	f	Lcom/mojang/brigadier/exceptions/SimpleCommandExceptionType;	f_3123709		MIXED_TYPE_EXCEPTION
 c	net/minecraft/unmapped/C_3050439
 	m	(Lnet/minecraft/unmapped/C_7135514;Ljava/lang/String;)V	<init>	<init>	
 		p	1		p_1	
@@ -158,7 +158,7 @@ c	net/minecraft/unmapped/C_3285536
 		p	1			p_1
 c	net/minecraft/unmapped/C_3307010
 c	net/minecraft/unmapped/C_3307010$C_8127325
-	f	Ljava/util/Map;	f_9916315		f_9916315
+	f	Ljava/util/Map;	f_9916315		vagueProperties
 	m	(Lnet/minecraft/unmapped/C_9086953;Lnet/minecraft/unmapped/C_2018497;)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -167,9 +167,9 @@ c	net/minecraft/unmapped/C_3307010$C_8127325
 		p	2		p_2	
 		p	3		p_3	
 	m	(Lnet/minecraft/unmapped/C_9086953;Ljava/util/Map;Lnet/minecraft/unmapped/C_2018497;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			tag
+		p	2			vagueProperties
+		p	3			nbt
 	m	(Lnet/minecraft/unmapped/C_9086953;Ljava/util/Map;Lnet/minecraft/unmapped/C_2018497;Lnet/minecraft/unmapped/C_3307010$1;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -366,11 +366,11 @@ c	net/minecraft/unmapped/C_8177352
 c	net/minecraft/unmapped/C_8482681
 	f	Lnet/minecraft/unmapped/C_8482681;	f_4513560	f_4513560	
 	m	()V	<clinit>	<clinit>	
-	m	(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/unmapped/C_8482681;	m_1878984		m_1878984
-		p	0			p_0
-	m	(Lcom/mojang/brigadier/StringReader;Z)Lnet/minecraft/unmapped/C_8482681;	m_2289409		m_2289409
-		p	0			p_0
-		p	1			p_1
+	m	(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/unmapped/C_8482681;	m_1878984		parseInt
+		p	0			reader
+	m	(Lcom/mojang/brigadier/StringReader;Z)Lnet/minecraft/unmapped/C_8482681;	m_2289409		parseDouble
+		p	0			reader
+		p	1			centered
 c	net/minecraft/unmapped/C_8528326
 	f	Ljava/util/function/Predicate;	f_5359222		f_5359222
 	f	Ljava/lang/String;	f_1506764		name
@@ -460,25 +460,25 @@ c	net/minecraft/unmapped/C_9932820
 		p	3		p_3	
 	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_0597873		m_0597873
 		p	1			p_1
-c	net/minecraft/unmapped/C_0090483		net/minecraft/unmapped/C_0090483
-	f	D	f_3579913		f_3579913
-	f	D	f_3267199		f_3267199
-	f	D	f_2794020		f_2794020
+c	net/minecraft/unmapped/C_0090483		net/minecraft/command/argument/LocalCoordinates
+	f	D	f_3579913		left
+	f	D	f_3267199		upwards
+	f	D	f_2794020		forwards
 	m	(DDD)V	<init>		<init>
-		p	1			p_1
-		p	3			p_3
-		p	5			p_5
+		p	1			x
+		p	3			y
+		p	5			z
 	m	(Lnet/minecraft/unmapped/C_1630803;)Lnet/minecraft/unmapped/C_0557736;	m_5536225		m_5536225
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_1630803;)Lnet/minecraft/unmapped/C_7150949;	m_3172128		m_3172128
 		p	1			p_1
-	m	(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/unmapped/C_0090483;	m_1197617		m_1197617
-		p	0			p_0
-	m	(Lcom/mojang/brigadier/StringReader;I)D	m_3711827		m_3711827
-		p	0			p_0
-		p	1			p_1
+	m	(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/unmapped/C_0090483;	m_1197617		parse
+		p	0			reader
+	m	(Lcom/mojang/brigadier/StringReader;I)D	m_3711827		parseDouble
+		p	0			reader
+		p	1			pos
 	m	(Ljava/lang/Object;)Z	equals		equals
-		p	1			p_1
+		p	1			obj
 	m	()I	hashCode		hashCode
 c	net/minecraft/unmapped/C_2830440		net/minecraft/unmapped/C_2830440
 	m	(Lnet/minecraft/unmapped/C_1241852;)V	<init>		<init>
