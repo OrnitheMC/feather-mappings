@@ -57,10 +57,10 @@ c	net/minecraft/unmapped/C_0088668
 	m	(Ljava/lang/String;)Ljava/lang/String;	m_4199826		m_4199826
 		p	1			p_1
 c	net/minecraft/unmapped/C_0197802
-	f	Lcom/mojang/brigadier/exceptions/DynamicCommandExceptionType;	f_9083823	f_9083823	
-	m	(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Lnet/minecraft/unmapped/C_0561170;	m_4907940	m_4907940	
-		p	0		p_0	
-		p	1		p_1	
+	f	Lcom/mojang/brigadier/exceptions/DynamicCommandExceptionType;	f_9083823	UNKNOWN_ENTITY_EXCEPTION	
+	m	(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Lnet/minecraft/unmapped/C_0561170;	m_4907940	getEntityType	
+		p	0		ctx	
+		p	1		arg	
 	m	(Ljava/lang/Object;)Lcom/mojang/brigadier/Message;	m_5722474	m_5722474	
 		p	0		p_0	
 c	net/minecraft/unmapped/C_0259655
@@ -278,7 +278,7 @@ c	net/minecraft/unmapped/C_1849144
 	m	(Lcom/mojang/datafixers/Dynamic;)Lcom/mojang/datafixers/Dynamic;	m_9425336		m_9425336
 		p	0			p_0
 c	net/minecraft/unmapped/C_1945050
-	f	Ljava/lang/Integer;	f_9485799		f_9485799
+	f	Ljava/lang/Integer;	f_9485799		color
 	m	(Ljava/lang/String;ILjava/lang/String;CI)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -295,24 +295,24 @@ c	net/minecraft/unmapped/C_1945050
 	m	(Ljava/lang/String;ILjava/lang/String;CILjava/lang/Integer;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
+		p	3			name
+		p	4			code
+		p	5			index
+		p	6			color
 	m	(Ljava/lang/String;ILjava/lang/String;CZILjava/lang/Integer;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-	m	(Ljava/lang/String;)Ljava/lang/String;	m_9640244		m_9640244
-		p	0			p_0
-	m	()Ljava/lang/Integer;	m_0127490		m_0127490
-	m	()Z	m_4130882		m_4130882
-	m	(C)Lnet/minecraft/unmapped/C_1945050;	m_6673206		m_6673206
-		p	0			p_0
+		p	3			name
+		p	4			code
+		p	5			modifier
+		p	6			index
+		p	7			color
+	m	(Ljava/lang/String;)Ljava/lang/String;	m_9640244		getLastColors
+		p	0			s
+	m	()Ljava/lang/Integer;	m_0127490		getColor
+	m	()Z	m_4130882		shouldReset
+	m	(C)Lnet/minecraft/unmapped/C_1945050;	m_6673206		byCode
+		p	0			code
 c	net/minecraft/unmapped/C_2137190
 	m	(Lnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_5577922;DDD)Lnet/minecraft/unmapped/C_7345216;	m_2984178	m_2984178	
 		p	1		p_1	
@@ -843,17 +843,17 @@ c	net/minecraft/unmapped/C_4246226$C_5744550
 	m	(Lnet/minecraft/unmapped/C_9548941$C_1481519;)Lnet/minecraft/unmapped/C_4246226$C_5744550;	m_4784143		m_4784143
 		p	1			p_1
 c	net/minecraft/unmapped/C_4354908
-	f	I	f_9119481		f_9119481
-	f	I	f_6069586		f_6069586
-	f	F	f_3006673		f_3006673
-	f	F	f_2166133		f_2166133
-	f	I	f_9226528		f_9226528
-	f	Z	f_5991779		f_5991779
-	m	()F	m_0145539		m_0145539
-	m	()F	m_8943183		m_8943183
+	f	I	f_9119481		received
+	f	I	f_6069586		sent
+	f	F	f_3006673		averageReceived
+	f	F	f_2166133		averageSent
+	f	I	f_9226528		ticks
+	f	Z	f_5991779		exceptionCaught
+	m	()F	m_0145539		getAverageRecevied
+	m	()F	m_8943183		getAverageSent
 	m	(Lnet/minecraft/unmapped/C_9550253;Lio/netty/util/concurrent/Future;)V	m_0955934		m_0955934
 		p	1			p_1
-		p	2			p_2
+		p	2			future
 c	net/minecraft/unmapped/C_4354908$C_9727267
 	m	(Lnet/minecraft/unmapped/C_5385258;)V	<init>	<init>	
 		p	1		p_1	
@@ -1005,7 +1005,7 @@ c	net/minecraft/unmapped/C_5374641
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/unmapped/C_5385258
-	m	()Z	m_5265626		m_5265626
+	m	()Z	m_5265626		canBeSkipped
 c	net/minecraft/unmapped/C_5553933
 	m	(II)Z	m_8253267	doesChunkExist	
 		p	1		chunkX	
@@ -1161,11 +1161,11 @@ c	net/minecraft/unmapped/C_7180857
 c	net/minecraft/unmapped/C_7240405
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_7240405;	m_2829207	writeString	
 		p	1		s	
-	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_7240405;	m_6655898		m_6655898
-		p	1			p_1
+	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_7240405;	m_6655898		writeString
+		p	1			s
 	m	(Ljava/lang/String;I)Lnet/minecraft/unmapped/C_7240405;	m_2829207		writeString
-		p	1			p_1
-		p	2			p_2
+		p	1			s
+		p	2			maxLength
 c	net/minecraft/unmapped/C_7438519
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_5250955;Lnet/minecraft/unmapped/C_3674802;)I	m_3157258		m_3157258
 		p	1			p_1
@@ -1713,9 +1713,9 @@ c	net/minecraft/unmapped/C_2591639$C_2995171		C_2995171
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/unmapped/C_3160113		net/minecraft/unmapped/C_3160113
+c	net/minecraft/unmapped/C_3160113		net/minecraft/network/SkipPacketException
 	m	(Ljava/lang/Throwable;)V	<init>		<init>
-		p	1			p_1
+		p	1			cause
 c	net/minecraft/unmapped/C_3310179		net/minecraft/unmapped/C_3310179
 	m	()F	m_8530833		m_8530833
 	m	(Lnet/minecraft/unmapped/C_0876962;ZFFLnet/minecraft/unmapped/C_8373595;FFFF)V	m_8715475		m_8715475
