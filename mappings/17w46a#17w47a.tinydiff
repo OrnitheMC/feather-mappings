@@ -1867,12 +1867,12 @@ c	net/minecraft/unmapped/C_1241852
 		p	1			state
 		p	2			world
 		p	3			pos
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
-		p	9			p_9
+		p	4			player
+		p	5			hand
+		p	6			face
+		p	7			dx
+		p	8			dy
+		p	9			dz
 	m	(Lnet/minecraft/unmapped/C_7300213;)Lnet/minecraft/unmapped/C_2441996;	m_7685061		getPlacementState
 		p	1			ctx
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_9590849;)V	m_9344716		startMining
@@ -3939,10 +3939,10 @@ c	net/minecraft/unmapped/C_2920619	net/minecraft/util/JsonSet
 		p	1		element	
 	m	()Lcom/google/gson/JsonElement;	m_4824346	toJson	
 c	net/minecraft/unmapped/C_2921623
-	f	Lcom/mojang/brigadier/CommandSuggestions$Provider;	f_7884920	f_7884920	
-	f	Lcom/mojang/brigadier/CommandSuggestions$Provider;	f_4750254	f_4750254	
-	f	Lcom/mojang/brigadier/suggestion/SuggestionProvider;	f_7884920		f_7884920
-	f	Lcom/mojang/brigadier/suggestion/SuggestionProvider;	f_4750254		f_4750254
+	f	Lcom/mojang/brigadier/CommandSuggestions$Provider;	f_7884920	SELECTED_DATAPACK_SUGGESTIONS	
+	f	Lcom/mojang/brigadier/CommandSuggestions$Provider;	f_4750254	AVAILABLE_DATAPACK_SUGGESTIONS	
+	f	Lcom/mojang/brigadier/suggestion/SuggestionProvider;	f_7884920		SELECTED_DATAPACK_SUGGESTIONS
+	f	Lcom/mojang/brigadier/suggestion/SuggestionProvider;	f_4750254		AVAILABLE_DATAPACK_SUGGESTIONS
 	m	(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Ljava/util/concurrent/CompletableFuture;	m_4240958	m_4240958	
 		p	0		p_0	
 		p	1		p_1	
@@ -3953,8 +3953,8 @@ c	net/minecraft/unmapped/C_2921623
 		p	0			p_0
 		p	1			p_1
 	m	(Lcom/mojang/brigadier/context/CommandContext;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	m_0345448		m_0345448
-		p	0			p_0
-		p	1			p_1
+		p	0			ctx
+		p	1			builder
 c	net/minecraft/unmapped/C_2927159
 	m	()I	m_3484653	m_3484653	
 c	net/minecraft/unmapped/C_2938580
@@ -13735,13 +13735,13 @@ c	net/minecraft/unmapped/C_9436529
 		p	7			p_7
 		p	8			p_8
 		p	9			p_9
-	m	(Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;Z)V	m_6412911		m_6412911
+	m	(Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;Z)V	m_6412911		playPressSound
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(Z)Lnet/minecraft/unmapped/C_7721249;	m_8142372		m_8142372
-		p	1			p_1
+	m	(Z)Lnet/minecraft/unmapped/C_7721249;	m_8142372		getPressSound
+		p	1			pressed
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_2441996;)V	m_4217571		m_4217571
 		p	1			p_1
 		p	2			p_2
@@ -13763,9 +13763,9 @@ c	net/minecraft/unmapped/C_9436529
 		p	3			p_3
 		p	4			p_4
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;)V	m_9718682		updateNeighbors
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			state
+		p	2			world
+		p	3			pos
 c	net/minecraft/unmapped/C_9436529$1
 	f	[I	f_6631284		f_6631284
 c	net/minecraft/unmapped/C_9445209
@@ -15599,8 +15599,8 @@ c	net/minecraft/unmapped/C_2152715		net/minecraft/unmapped/C_2152715
 		p	4			p_4
 	m	(Lnet/minecraft/unmapped/C_3544601$C_7482212;)Lit/unimi/dsi/fastutil/doubles/DoubleList;	m_1807702		m_1807702
 		p	1			p_1
-c	net/minecraft/unmapped/C_2312124		net/minecraft/unmapped/C_2312124
-	f	Lnet/minecraft/unmapped/C_2925148;	f_0586410		f_0586410
+c	net/minecraft/unmapped/C_2312124		net/minecraft/block/FaceAttachedHorizontalFacingBlock
+	f	Lnet/minecraft/unmapped/C_2925148;	f_0586410		FACE
 	m	(Lnet/minecraft/unmapped/C_8048208;Lnet/minecraft/unmapped/C_9335057;Z)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -15618,8 +15618,8 @@ c	net/minecraft/unmapped/C_2312124		net/minecraft/unmapped/C_2312124
 		p	4			p_4
 		p	5			p_5
 		p	6			p_6
-	m	(Lnet/minecraft/unmapped/C_2441996;)Lnet/minecraft/unmapped/C_3544601;	m_8723765		m_8723765
-		p	0			p_0
+	m	(Lnet/minecraft/unmapped/C_2441996;)Lnet/minecraft/unmapped/C_3544601;	m_8723765		getFacing
+		p	0			state
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_2312124$1		1
 	f	[I	f_8304452		f_8304452
