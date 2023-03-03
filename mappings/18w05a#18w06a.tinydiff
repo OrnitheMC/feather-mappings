@@ -1896,7 +1896,7 @@ c	net/minecraft/unmapped/C_1316134
 	f	Ljava/util/Set;	f_3272393	chunksToUnload	
 	f	Lit/unimi/dsi/fastutil/longs/LongSet;	f_3272393		chunksToUnload
 	f	Lnet/minecraft/unmapped/C_3492960;	f_4549504		f_4549504
-	f	Lnet/minecraft/unmapped/C_7197374;	f_2105655		f_2105655
+	f	Lnet/minecraft/unmapped/C_7197374;	f_2105655		taskManager
 	m	(Lnet/minecraft/unmapped/C_3865296;Lnet/minecraft/unmapped/C_3015672;Lnet/minecraft/unmapped/C_0705111;)V	<init>	<init>	
 		p	1		world	
 		p	2		storage	
@@ -1908,10 +1908,10 @@ c	net/minecraft/unmapped/C_1316134
 		p	2		name	
 		p	3		pos	
 	m	(Lnet/minecraft/unmapped/C_3865296;Lnet/minecraft/unmapped/C_3015672;Lnet/minecraft/unmapped/C_0705111;Lnet/minecraft/unmapped/C_2528621;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	1			world
+		p	2			storage
+		p	3			generator
+		p	4			eventLoop
 	m	(II)Lnet/minecraft/unmapped/C_6849228;	m_6914180		m_6914180
 		p	1			p_1
 		p	2			p_2
@@ -1924,14 +1924,14 @@ c	net/minecraft/unmapped/C_1316134
 	m	(II)Ljava/util/concurrent/CompletableFuture;	m_9598700		m_9598700
 		p	1			p_1
 		p	2			p_2
-	m	(IILjava/lang/Throwable;)Lnet/minecraft/unmapped/C_1038756;	m_2123662		m_2123662
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_0636026;)Lnet/minecraft/unmapped/C_6849228;	m_0597442		m_0597442
-		p	1			p_1
+	m	(IILjava/lang/Throwable;)Lnet/minecraft/unmapped/C_1038756;	m_2123662		createChunkGenerationCrashException
+		p	1			chunkX
+		p	2			chunkZ
+		p	3			cause
+	m	(Lnet/minecraft/unmapped/C_0636026;)Lnet/minecraft/unmapped/C_6849228;	m_0597442		completeLoadChunk
+		p	1			chunk
 	m	(Lnet/minecraft/unmapped/C_0636026;)V	m_3241806		saveChunk
-		p	1			p_1
+		p	1			chunk
 	m	()V	close		close
 	m	()Lnet/minecraft/unmapped/C_0705111;	m_4829896		m_4829896
 	m	(Lnet/minecraft/unmapped/C_0636026;)V	m_0594204		m_0594204
@@ -7584,7 +7584,7 @@ c	net/minecraft/unmapped/C_6849228
 		p	5			p_5
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0960638;II)V	<init>		<init>
 		p	1			world
-		p	2			p_2
+		p	2			proto
 		p	3			chunkX
 		p	4			chunkZ
 	m	(IIILnet/minecraft/unmapped/C_2441996;)V	m_2068120		resetLightAt
@@ -10529,10 +10529,10 @@ c	net/minecraft/unmapped/C_9830617
 		p	5			p_5
 		p	6			p_6
 c	net/minecraft/unmapped/C_9848147
-	m	(II)Lnet/minecraft/unmapped/C_0636026;	m_6525570		m_6525570
+	m	(II)Lnet/minecraft/unmapped/C_0636026;	m_6525570		getChunk
 		p	1			p_1
 		p	2			p_2
-	m	()Lnet/minecraft/unmapped/C_0705111;	m_4829896		m_4829896
+	m	()Lnet/minecraft/unmapped/C_0705111;	m_4829896		getGenerator
 	m	()V	close		close
 c	net/minecraft/unmapped/C_9890847
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_7345216;	m_5507773	m_5507773	
@@ -11333,29 +11333,29 @@ c	net/minecraft/unmapped/C_0937684		net/minecraft/unmapped/C_0937684
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/unmapped/C_0960638		net/minecraft/unmapped/C_0960638
-	f	Lorg/apache/logging/log4j/Logger;	f_5582595		f_5582595
-	f	Lnet/minecraft/unmapped/C_7141926;	f_3206248		f_3206248
+c	net/minecraft/unmapped/C_0960638		net/minecraft/world/chunk/ProtoChunk
+	f	Lorg/apache/logging/log4j/Logger;	f_5582595		LOGGER
+	f	Lnet/minecraft/unmapped/C_7141926;	f_3206248		pos
 	f	Z	f_9398140		f_9398140
-	f	[Lnet/minecraft/unmapped/C_6928498;	f_0561976		f_0561976
+	f	[Lnet/minecraft/unmapped/C_6928498;	f_0561976		biomes
 	f	Ljava/util/Map;	f_1481138		f_1481138
-	f	Lnet/minecraft/unmapped/C_3331146;	f_8608123		f_8608123
-	f	Ljava/util/Map;	f_8550580		f_8550580
-	f	Ljava/util/Map;	f_8563174		f_8563174
-	f	[Lnet/minecraft/unmapped/C_8042654;	f_1976388		f_1976388
-	f	Ljava/util/List;	f_5575945		f_5575945
-	f	Ljava/util/List;	f_9019967		f_9019967
+	f	Lnet/minecraft/unmapped/C_3331146;	f_8608123		status
+	f	Ljava/util/Map;	f_8550580		blockEntities
+	f	Ljava/util/Map;	f_8563174		pendingBlockEntities
+	f	[Lnet/minecraft/unmapped/C_8042654;	f_1976388		sections
+	f	Ljava/util/List;	f_5575945		entities
+	f	Ljava/util/List;	f_9019967		lights
 	f	[Lit/unimi/dsi/fastutil/shorts/ShortList;	f_7002674		f_7002674
-	f	[Lit/unimi/dsi/fastutil/shorts/ShortList;	f_8178768		f_8178768
-	f	Ljava/util/Map;	f_9573524		f_9573524
-	f	Ljava/util/Map;	f_6418432		f_6418432
+	f	[Lit/unimi/dsi/fastutil/shorts/ShortList;	f_8178768		postProcessing
+	f	Ljava/util/Map;	f_9573524		structures
+	f	Ljava/util/Map;	f_6418432		structureReferences
 	f	Lnet/minecraft/unmapped/C_0992231;	f_4195115		f_4195115
 	m	(IILnet/minecraft/unmapped/C_0992231;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			chunkX
+		p	2			chunkZ
 		p	3			p_3
 	m	(Lnet/minecraft/unmapped/C_7141926;Lnet/minecraft/unmapped/C_0992231;)V	<init>		<init>
-		p	1			p_1
+		p	1			pos
 		p	2			p_2
 	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_2441996;	m_6686868		m_6686868
 		p	1			p_1
@@ -11466,7 +11466,7 @@ c	net/minecraft/unmapped/C_0960638		net/minecraft/unmapped/C_0960638
 	m	()Lnet/minecraft/unmapped/C_0992231;	m_1828948		m_1828948
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_0306414		m_0306414
 		p	1			p_1
-	m	()Ljava/util/Map;	m_5785385		m_5785385
+	m	()Ljava/util/Map;	m_5785385		getPendingBlockEntities
 	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_2018497;	m_9283651		m_9283651
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_3674802;)V	m_9656101		m_9656101
@@ -11696,7 +11696,7 @@ c	net/minecraft/unmapped/C_2137190		net/minecraft/world/WorldView
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_3674802;	m_5219499		m_5219499
 		p	1			p_1
-	m	()Lnet/minecraft/unmapped/C_7549223;	m_3660681		m_3660681
+	m	()Lnet/minecraft/unmapped/C_7549223;	m_3660681		getWorldBorder
 	m	(Lnet/minecraft/unmapped/C_3674802;)Z	m_8161458		m_8161458
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_5577922;)Ljava/util/List;	m_9684691		m_9684691
@@ -13731,7 +13731,7 @@ c	net/minecraft/unmapped/C_7197374		net/minecraft/unmapped/C_7197374
 	f	I	f_3574738		f_3574738
 	m	(Lnet/minecraft/unmapped/C_0114090;)V	<init>		<init>
 		p	1			p_1
-	m	()V	m_2756522		m_2756522
+	m	()V	m_2756522		stop
 	m	()V	m_7344564		m_7344564
 	m	(Ljava/lang/Object;)Ljava/util/concurrent/CompletableFuture;	m_9195414		m_9195414
 		p	1			p_1
