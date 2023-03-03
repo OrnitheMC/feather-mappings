@@ -1558,31 +1558,31 @@ c	net/minecraft/unmapped/C_0175717	net/minecraft/server/command/GameModeCommand
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_9590849;	m_9015779	m_9015779
 		p	1		p_1
 	m	()[Ljava/lang/String;	m_3498106	getPlayerNames
-c	net/minecraft/unmapped/C_0181673	net/minecraft/unmapped/C_0181673
-	f	Ljava/util/List;	f_1472866	f_1472866
-	f	Ljava/util/Set;	f_6098563	f_6098563
-	f	Ljava/lang/Object;	f_8752254	f_8752254
-	f	Ljava/io/File;	f_9999839	f_9999839
+c	net/minecraft/unmapped/C_0181673	net/minecraft/world/chunk/storage/McRegionChunkStorage
+	f	Ljava/util/List;	f_1472866	chunkSaveQueue
+	f	Ljava/util/Set;	f_6098563	queuedChunks
+	f	Ljava/lang/Object;	f_8752254	lock
+	f	Ljava/io/File;	f_9999839	dir
 	m	(Ljava/io/File;)V	<init>	<init>
-		p	1		p_1
+		p	1		dir
 	m	(Lnet/minecraft/unmapped/C_5553933;II)Lnet/minecraft/unmapped/C_6849228;	m_0835514	m_0835514
 		p	1		p_1
 		p	2		p_2
 		p	3		p_3
-	m	(Lnet/minecraft/unmapped/C_5553933;IILnet/minecraft/unmapped/C_2018497;)Lnet/minecraft/unmapped/C_6849228;	m_0432573	m_0432573
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
+	m	(Lnet/minecraft/unmapped/C_5553933;IILnet/minecraft/unmapped/C_2018497;)Lnet/minecraft/unmapped/C_6849228;	m_0432573	loadChunk
+		p	1		world
+		p	2		chunkX
+		p	3		chunkZ
+		p	4		nbt
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_6849228;)V	m_6783567	m_6783567
 		p	1		p_1
 		p	2		p_2
-	m	(Lnet/minecraft/unmapped/C_7141926;Lnet/minecraft/unmapped/C_2018497;)V	m_2376198	m_2376198
-		p	1		p_1
-		p	2		p_2
+	m	(Lnet/minecraft/unmapped/C_7141926;Lnet/minecraft/unmapped/C_2018497;)V	m_2376198	queueSaveChunk
+		p	1		pos
+		p	2		nbt
 	m	()Z	m_4993113	m_4993113
-	m	(Lnet/minecraft/unmapped/C_7417433;)V	m_1426363	m_1426363
-		p	1		p_1
+	m	(Lnet/minecraft/unmapped/C_7417433;)V	m_1426363	saveChunk
+		p	1		chunkNbt
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_6849228;)V	m_6437512	m_6437512
 		p	1		p_1
 		p	2		p_2
@@ -2079,28 +2079,28 @@ c	net/minecraft/unmapped/C_0266138	net/minecraft/client/render/item/BlockEntityI
 		p	3		tickDelta
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/unmapped/C_0268929	net/minecraft/world/gen/structure/LootEntry
-	f	I	f_8845088	f_8845088
-	f	I	f_7937753	f_7937753
-	f	I	f_7694028	f_7694028
-	f	I	f_1124031	f_1124031
+	f	I	f_8845088	itemId
+	f	I	f_7937753	itemMetadata
+	f	I	f_7694028	minItemChance
+	f	I	f_1124031	maxItemChance
 	m	(IIIII)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-		p	5		p_5
+		p	1		itemId
+		p	2		itemMetadata
+		p	3		minItemChance
+		p	4		maxItemChance
+		p	5		weight
 	m	(Ljava/util/Random;[Lnet/minecraft/unmapped/C_0268929;Lnet/minecraft/unmapped/C_1582062;I)V	m_8137112	addLoot
-		p	0		p_0
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
+		p	0		random
+		p	1		entries
+		p	2		chest
+		p	3		amount
 	m	(Ljava/util/Random;[Lnet/minecraft/unmapped/C_0268929;Lnet/minecraft/unmapped/C_6606781;I)V	m_4969539	addLoot
 		p	0		rand
 		p	1		entries
-		p	2		dispenserBlockEntity
+		p	2		dispenser
 		p	3		amount
 c	net/minecraft/unmapped/C_0281639	net/minecraft/world/storage/RegionWorldStorage
-	f	Ljava/util/logging/Logger;	f_2578344	f_2578344
+	f	Ljava/util/logging/Logger;	f_2578344	LOGGER
 	f	Ljava/io/File;	f_3210731	dir
 	f	Ljava/io/File;	f_5702939	playerDataDir
 	f	Ljava/io/File;	f_8199338	dataDir
@@ -2611,7 +2611,7 @@ c	net/minecraft/unmapped/C_0415052	net/minecraft/world/village/trade/TradeOffer
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_8843388	readNbt
 		p	1		nbt
 	m	()Lnet/minecraft/unmapped/C_2018497;	m_7958119	toNbt
-c	net/minecraft/unmapped/C_0432100	net/minecraft/unmapped/C_5106386__C_0432100
+c	net/minecraft/unmapped/C_0432100	net/minecraft/world/storage/McRegionWorldStorageSource__C_0432100
 	f	Ljava/io/File;	f_3499937	f_3499937
 	f	I	f_4053779	f_4053779
 	f	I	f_4166444	f_4166444
@@ -5278,7 +5278,7 @@ c	net/minecraft/unmapped/C_1197137	net/minecraft/enchantment/EnchantmentHelper
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/unmapped/C_1202026	net/minecraft/world/gen/structure/VillagePieces__VillagePiece
 	f	I	f_7344992	villageCount
-	f	Lnet/minecraft/unmapped/C_3849939;	f_0801017	f_0801017
+	f	Lnet/minecraft/unmapped/C_3849939;	f_0801017	start
 	m	(Lnet/minecraft/unmapped/C_3849939;I)V	<init>	<init>
 		p	1		startPiece
 		p	2		generationDepth
@@ -5641,12 +5641,12 @@ c	net/minecraft/unmapped/C_1241852	net/minecraft/block/Block
 		p	2		x
 		p	3		y
 		p	4		z
-	m	(Lnet/minecraft/unmapped/C_5553933;IIII)Z	m_1694712	m_1694712
-		p	0		p_0
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
+	m	(Lnet/minecraft/unmapped/C_5553933;IIII)Z	m_1694712	useNeighborLight
+		p	0		world
+		p	1		x
+		p	2		y
+		p	3		z
+		p	4		dir
 	m	(Lnet/minecraft/unmapped/C_8030141;IIII)Z	m_9355066	shouldRenderFace
 		p	1		world
 		p	2		x
@@ -5721,10 +5721,10 @@ c	net/minecraft/unmapped/C_1241852	net/minecraft/block/Block
 		p	4		z
 		p	5		neighborBlockId
 	m	(Lnet/minecraft/unmapped/C_5553933;III)V	m_4127898	m_4127898
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
+		p	1		world
+		p	2		x
+		p	3		y
+		p	4		z
 	m	()I	m_0006289	getTickRate
 	m	(Lnet/minecraft/unmapped/C_5553933;III)V	m_2420716	onAdded
 		p	1		world
@@ -5841,10 +5841,10 @@ c	net/minecraft/unmapped/C_1241852	net/minecraft/block/Block
 		p	7		dy
 		p	8		dz
 	m	(Lnet/minecraft/unmapped/C_5553933;III)V	m_5187672	m_5187672
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
+		p	1		world
+		p	2		x
+		p	3		y
+		p	4		z
 	m	(Lnet/minecraft/unmapped/C_5553933;IIILnet/minecraft/unmapped/C_9590849;)V	m_9344716	startMining
 		p	1		world
 		p	2		x
@@ -5872,10 +5872,10 @@ c	net/minecraft/unmapped/C_1241852	net/minecraft/block/Block
 		p	3		y
 		p	4		z
 	m	(Lnet/minecraft/unmapped/C_8030141;III)Z	m_8566724	m_8566724
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
+		p	1		world
+		p	2		x
+		p	3		y
+		p	4		z
 	m	(Lnet/minecraft/unmapped/C_8030141;IIII)Z	m_7017977	isEmittingWeakPower
 		c	Returns whether weak redstone power is emitted by this block in the given direction.\n\n<p>\nNOTE: directions in redstone power related methods are backwards, so blocks should\ncheck for power emitted in the direction <i>opposite</i> of the one given.
 		p	1		world
@@ -7787,7 +7787,7 @@ c	net/minecraft/unmapped/C_1813707	net/minecraft/unmapped/C_1813707
 		p	2		p_2
 		p	3		p_3
 	m	()[B	m_2820952	m_2820952
-c	net/minecraft/unmapped/C_1820784	net/minecraft/unmapped/C_5106386__C_1820784
+c	net/minecraft/unmapped/C_1820784	net/minecraft/world/storage/McRegionWorldStorageSource__C_1820784
 	f	Ljava/util/regex/Pattern;	f_9510150	f_9510150
 	m	()V	<init>	<init>
 	m	(Ljava/io/File;)Z	accept	accept
@@ -8748,16 +8748,16 @@ c	net/minecraft/unmapped/C_2137690	net/minecraft/unmapped/C_2137690
 c	net/minecraft/unmapped/C_2144954	net/minecraft/world/NaturalSpawner
 	f	Ljava/util/HashMap;	f_7536298	mobSpawningChunks
 		c	This map keeps track of chunks that allow mob spawning. Mob spawning can occur within\na 15x15 grid of chunks around players. The ring of chunks around that are lazy chunks,\nwhich do not allow mob spawning, but to contribute to the mob cap.
-	f	[Ljava/lang/Class;	f_5422681	f_5422681
+	f	[Ljava/lang/Class;	f_5422681	MONSTER_TYPES
 	m	()V	<init>	<init>
 	m	(Lnet/minecraft/unmapped/C_5553933;II)Lnet/minecraft/unmapped/C_1842758;	m_2544799	getRandomPosInChunk
 		p	0		world
 		p	1		chunkX
 		p	2		chunkZ
 	m	(Lnet/minecraft/unmapped/C_3865296;ZZ)I	m_7552313	spawnEntities
-		p	0		p_0
-		p	1		p_1
-		p	2		p_2
+		p	0		world
+		p	1		allowAnimals
+		p	2		allowMonsters
 	m	(Lnet/minecraft/unmapped/C_0902334;Lnet/minecraft/unmapped/C_5553933;III)Z	m_5378384	isValidSpawnPos
 		p	0		category
 		p	1		world
@@ -8771,8 +8771,8 @@ c	net/minecraft/unmapped/C_2144954	net/minecraft/world/NaturalSpawner
 		p	3		p_3
 		p	4		p_4
 	m	(Lnet/minecraft/unmapped/C_5553933;Ljava/util/List;)Z	m_8289803	m_8289803
-		p	0		p_0
-		p	1		p_1
+		p	0		world
+		p	1		players
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_6928498;IIIILjava/util/Random;)V	m_5749594	populateChunk
 		p	0		world
 		p	1		biome
@@ -8933,7 +8933,7 @@ c	net/minecraft/unmapped/C_2207032	net/minecraft/world/storage/RegionWorldStorag
 	m	(Ljava/lang/String;)V	m_0893658	m_0893658
 		p	1		p_1
 	m	([Ljava/io/File;)V	m_3461181	deleteFilesAndDirs
-		p	0		p_0
+		p	0		files
 	m	(Ljava/lang/String;Z)Lnet/minecraft/unmapped/C_5528202;	m_0190283	m_0190283
 		p	1		p_1
 		p	2		p_2
@@ -9447,7 +9447,7 @@ c	net/minecraft/unmapped/C_2358978	net/minecraft/world/gen/feature/SugarcaneFeat
 		p	5		p_5
 c	net/minecraft/unmapped/C_2361607	net/minecraft/crafting/recipe/CraftingRecipe
 	m	(Lnet/minecraft/unmapped/C_5217418;)Z	m_8374711	matches
-		p	1		p_1
+		p	1		inventory
 	m	(Lnet/minecraft/unmapped/C_5217418;)Lnet/minecraft/unmapped/C_2454309;	m_8420863	getResult
 		p	1		inventory
 	m	()I	m_7285375	getInputCount
@@ -11681,9 +11681,9 @@ c	net/minecraft/unmapped/C_2986085	net/minecraft/world/chunk/ChunkNibbleStorage
 		p	2		y
 		p	3		z
 		p	4		value
-	m	()Z	m_0005999	m_0005999
-	m	(I)V	m_5219207	m_5219207
-		p	1		p_1
+	m	()Z	m_0005999	hasData
+	m	(I)V	m_5219207	fill
+		p	1		value
 c	net/minecraft/unmapped/C_2998483	net/minecraft/block/GravelBlock
 	m	(II)V	<init>	<init>
 		p	1		p_1
@@ -12245,8 +12245,8 @@ c	net/minecraft/unmapped/C_3115568	net/minecraft/smelting/SmeltingManager
 		p	1		input
 		p	2		output
 		p	3		xp
-	m	(I)Z	m_0460522	m_0460522
-		p	1		p_1
+	m	(I)Z	m_0460522	hasRecipe
+		p	1		input
 	m	(I)Lnet/minecraft/unmapped/C_2454309;	m_5662794	getResult
 		p	1		input
 	m	()Ljava/util/Map;	m_0943271	getRecipes
@@ -13647,7 +13647,7 @@ c	net/minecraft/unmapped/C_3422238	net/minecraft/entity/FishingBobberEntity
 c	net/minecraft/unmapped/C_3424041	net/minecraft/world/gen/structure/VillagePieces
 	m	()V	<init>	<init>
 	m	(Ljava/util/Random;I)Ljava/util/ArrayList;	m_7698282	getPieceChance
-		p	0		p_0
+		p	0		random
 		p	1		p_1
 	m	(Ljava/util/List;)I	m_3920182	getTotalWeight
 		c	Will return the total weight of the given piece weights if more pieces can still be generated, or -1.
@@ -15006,12 +15006,12 @@ c	net/minecraft/unmapped/C_3768607	net/minecraft/client/entity/particle/Enchanti
 	m	(F)F	m_9376546	m_9376546
 		p	1		p_1
 	m	()V	m_7274048	m_7274048
-c	net/minecraft/unmapped/C_3791388	net/minecraft/unmapped/C_3791388
+c	net/minecraft/unmapped/C_3791388	net/minecraft/unmapped/C_1487830__C_3791388
 	f	Z	f_8266462	f_8266462
 	f	Z	f_5780619	f_5780619
 	f	Z	f_0776358	f_0776358
 	f	Z	f_4647334	f_4647334
-	f	[Lnet/minecraft/unmapped/C_0268929;	f_4901239	f_4901239
+	f	[Lnet/minecraft/unmapped/C_0268929;	f_4901239	LOOT
 	f	[Lnet/minecraft/unmapped/C_0268929;	f_4963929	f_4963929
 	f	Lnet/minecraft/unmapped/C_5179105;	f_6308801	f_6308801
 	m	(Ljava/util/Random;II)V	<init>	<init>
@@ -15135,7 +15135,7 @@ c	net/minecraft/unmapped/C_3817789	net/minecraft/client/entity/particle/Critical
 		p	6		p_6
 		p	7		p_7
 	m	()V	m_7274048	m_7274048
-c	net/minecraft/unmapped/C_3828378	net/minecraft/unmapped/C_5106386__C_3828378
+c	net/minecraft/unmapped/C_3828378	net/minecraft/world/storage/McRegionWorldStorageSource__C_3828378
 	f	Ljava/util/regex/Pattern;	f_7411005	f_7411005
 	m	()V	<init>	<init>
 	m	(Ljava/io/File;Ljava/lang/String;)Z	accept	accept
@@ -17472,7 +17472,7 @@ c	net/minecraft/unmapped/C_4749412	net/minecraft/block/BrewingStandBlock
 		p	2		p_2
 		p	3		p_3
 		p	4		p_4
-c	net/minecraft/unmapped/C_4755101	net/minecraft/unmapped/C_5106386__1
+c	net/minecraft/unmapped/C_4755101	net/minecraft/world/storage/McRegionWorldStorageSource__1
 c	net/minecraft/unmapped/C_4764902	net/minecraft/client/entity/particle/ItemParticle
 	m	(Lnet/minecraft/unmapped/C_5553933;DDDLnet/minecraft/unmapped/C_3755722;)V	<init>	<init>
 		p	1		p_1
@@ -18190,14 +18190,14 @@ c	net/minecraft/unmapped/C_5103435	net/minecraft/item/MilkBucketItem
 		p	1		p_1
 		p	2		p_2
 		p	3		p_3
-c	net/minecraft/unmapped/C_5106386	net/minecraft/unmapped/C_5106386
+c	net/minecraft/unmapped/C_5106386	net/minecraft/world/storage/McRegionWorldStorageSource
 	m	(Ljava/io/File;)V	<init>	<init>
 		p	1		p_1
 	m	()Ljava/lang/String;	m_4374621	m_4374621
 	m	()Ljava/util/List;	m_7840427	m_7840427
-	m	()I	m_0618658	m_0618658
-	m	(Ljava/io/File;)J	m_8756178	m_8756178
-		p	1		p_1
+	m	()I	m_0618658	getVersion
+	m	(Ljava/io/File;)J	m_8756178	getFileSize
+		p	1		file
 	m	()V	m_9169783	m_9169783
 	m	(Ljava/lang/String;Z)Lnet/minecraft/unmapped/C_5528202;	m_0190283	m_0190283
 		p	1		p_1
@@ -18209,11 +18209,11 @@ c	net/minecraft/unmapped/C_5106386	net/minecraft/unmapped/C_5106386
 	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_3893367;)Z	m_1146771	m_1146771
 		p	1		p_1
 		p	2		p_2
-	m	(Ljava/io/File;Ljava/util/List;Ljava/util/List;)V	m_1820854	m_1820854
+	m	(Ljava/io/File;Ljava/util/List;Ljava/util/List;)V	m_1820854	collectRegions
 		p	1		p_1
 		p	2		p_2
 		p	3		p_3
-	m	(Ljava/io/File;Ljava/util/List;IILnet/minecraft/unmapped/C_3893367;)V	m_8431714	m_8431714
+	m	(Ljava/io/File;Ljava/util/List;IILnet/minecraft/unmapped/C_3893367;)V	m_8431714	convertRegionsToAnvil
 		p	1		p_1
 		p	2		p_2
 		p	3		p_3
@@ -18318,10 +18318,10 @@ c	net/minecraft/unmapped/C_5179105	net/minecraft/unmapped/C_5179105
 	m	(Lnet/minecraft/unmapped/C_2515472;)V	<init>	<init>
 		p	1		p_1
 c	net/minecraft/unmapped/C_5185137	net/minecraft/SharedConstants
-	f	Ljava/lang/String;	f_2752942	f_2752942
+	f	Ljava/lang/String;	f_2752942	VALID_CHAT_CHARACTERS
 	f	[C	f_4584085	INVALID_FILE_CHARS
 	m	()V	<init>	<init>
-	m	()Ljava/lang/String;	m_2792302	m_2792302
+	m	()Ljava/lang/String;	m_2792302	getValidChatCharString
 	m	(C)Z	m_5716650	isValidChatChar
 		p	0		chr
 	m	(Ljava/lang/String;)Ljava/lang/String;	m_9602451	stripInvalidChars
@@ -18730,7 +18730,7 @@ c	net/minecraft/unmapped/C_5330203	net/minecraft/unmapped/C_5330203
 c	net/minecraft/unmapped/C_5333728	net/minecraft/block/SpongeBlock
 	m	(I)V	<init>	<init>
 		p	1		id
-c	net/minecraft/unmapped/C_5333899	net/minecraft/unmapped/C_5333899
+c	net/minecraft/unmapped/C_5333899	net/minecraft/world/storage/MemoryWorldStorageSource
 	m	()V	<init>	<init>
 	m	()Ljava/lang/String;	m_4374621	m_4374621
 	m	(Ljava/lang/String;Z)Lnet/minecraft/unmapped/C_5528202;	m_0190283	m_0190283
@@ -19247,7 +19247,7 @@ c	net/minecraft/unmapped/C_5473482	net/minecraft/client/render/entity/VillagerRe
 		p	8		p_8
 		p	9		p_9
 c	net/minecraft/unmapped/C_5478016	net/minecraft/world/storage/WorldStorageSource
-	m	()Ljava/lang/String;	m_4374621	m_4374621
+	m	()Ljava/lang/String;	m_4374621	getName
 	m	(Ljava/lang/String;Z)Lnet/minecraft/unmapped/C_5528202;	m_0190283	get
 		p	1		worldName
 		p	2		createPlayerDataDir
@@ -19255,15 +19255,15 @@ c	net/minecraft/unmapped/C_5478016	net/minecraft/world/storage/WorldStorageSourc
 	m	()V	m_9169783	clearRegionIo
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_6152184;	m_7688776	getData
 		p	1		worldName
-	m	(Ljava/lang/String;)Z	m_9742803	m_9742803
-		p	1		p_1
+	m	(Ljava/lang/String;)Z	m_9742803	canCreate
+		p	1		worldName
 	m	(Ljava/lang/String;)V	m_0893658	delete
-		p	1		p_1
+		p	1		worldName
 	m	(Ljava/lang/String;Ljava/lang/String;)V	m_8536651	rename
 		p	1		worldName
 		p	2		newName
-	m	(Ljava/lang/String;)Z	m_9683189	m_9683189
-		p	1		p_1
+	m	(Ljava/lang/String;)Z	m_9683189	isConvertible
+		p	1		worldName
 	m	(Ljava/lang/String;)Z	m_8248981	needsConversion
 		p	1		worldName
 	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_3893367;)Z	m_1146771	convert
@@ -23975,7 +23975,7 @@ c	net/minecraft/unmapped/C_6849228	net/minecraft/world/chunk/WorldChunk
 		c	The y-coordinate of the highest non-air block for each column in this chunk.
 	f	I	f_5716244	chunkX
 	f	I	f_9091555	chunkZ
-	f	Z	f_3840639	f_3840639
+	f	Z	f_3840639	recheckGap
 	f	Ljava/util/Map;	f_9853033	blockEntities
 	f	[Ljava/util/List;	f_6611626	entitiesBySection
 	f	Z	f_0822984	terrainPopulated
@@ -24002,24 +24002,24 @@ c	net/minecraft/unmapped/C_6849228	net/minecraft/world/chunk/WorldChunk
 	m	(II)I	m_5956776	getHeight
 		p	1		sectionX
 		p	2		sectionZ
-	m	()Lnet/minecraft/unmapped/C_8042654;	m_8147318	m_8147318
+	m	()Lnet/minecraft/unmapped/C_8042654;	m_8147318	getHighestSection
 	m	()I	m_7457880	getHighestSectionOffset
 	m	()[Lnet/minecraft/unmapped/C_8042654;	m_3040753	getSections
 	m	()V	m_0132610	populateHeightmap
 	m	()V	m_2337228	populateSkylight
-	m	(II)V	m_4547048	m_4547048
-		p	1		p_1
-		p	2		p_2
-	m	()V	m_1946802	m_1946802
+	m	(II)V	m_4547048	queueLightUpdate
+		p	1		sectionX
+		p	2		sectionZ
+	m	()V	m_1946802	recheckGaps
 	m	(III)V	m_9722426	checkSkylight
 		p	1		x
 		p	2		z
 		p	3		maxY
 	m	(IIII)V	m_6932136	checkSkylight
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
+		p	1		x
+		p	2		z
+		p	3		minY
+		p	4		maxY
 	m	(III)V	m_2068120	resetLightAt
 		p	1		sectionX
 		p	2		y
@@ -24105,13 +24105,13 @@ c	net/minecraft/unmapped/C_6849228	net/minecraft/world/chunk/WorldChunk
 		p	1		type
 		p	2		box
 		p	3		entities
-	m	()I	m_5964147	m_5964147
+	m	()I	m_5964147	getEntityCount
 	m	(Z)Z	m_1741167	shouldSave
 		p	1		saveEntities
 	m	(J)Ljava/util/Random;	m_2695492	getRandomForSlime
 		p	1		seed
 	m	()Z	m_5909771	isEmpty
-	m	()V	m_1060925	m_1060925
+	m	()V	m_1060925	printCompressedSize
 	m	(Lnet/minecraft/unmapped/C_9848147;Lnet/minecraft/unmapped/C_9848147;II)V	m_3676242	populate
 		p	1		source
 		p	2		generator
@@ -24120,7 +24120,7 @@ c	net/minecraft/unmapped/C_6849228	net/minecraft/world/chunk/WorldChunk
 	m	(II)I	m_2705510	getPrecipitationHeightAt
 		p	1		sectionX
 		p	2		sectionZ
-	m	()V	m_5909979	m_5909979
+	m	()V	m_5909979	tick
 	m	()Lnet/minecraft/unmapped/C_7141926;	m_2722900	getPos
 	m	(II)Z	m_3541347	isEmpty
 		p	1		minY
@@ -26192,12 +26192,12 @@ c	net/minecraft/unmapped/C_7400754	net/minecraft/entity/player/PlayerInventory
 	m	()V	m_7226012	m_7226012
 	m	(Lnet/minecraft/unmapped/C_7400754;)V	m_7412451	copy
 		p	1		inventory
-c	net/minecraft/unmapped/C_7417433	net/minecraft/unmapped/C_7417433
-	f	Lnet/minecraft/unmapped/C_7141926;	f_0150961	f_0150961
-	f	Lnet/minecraft/unmapped/C_2018497;	f_9257554	f_9257554
+c	net/minecraft/unmapped/C_7417433	net/minecraft/world/chunk/storage/McRegionChunkStorage__ChunkNbt
+	f	Lnet/minecraft/unmapped/C_7141926;	f_0150961	pos
+	f	Lnet/minecraft/unmapped/C_2018497;	f_9257554	data
 	m	(Lnet/minecraft/unmapped/C_7141926;Lnet/minecraft/unmapped/C_2018497;)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
+		p	1		pos
+		p	2		data
 c	net/minecraft/unmapped/C_7418157	net/minecraft/world/gen/feature/EndPillarFeature
 	f	I	f_4857632	blockId
 	m	(I)V	<init>	<init>
@@ -26680,13 +26680,13 @@ c	net/minecraft/unmapped/C_7585705	net/minecraft/crafting/CraftingManager
 	m	()Lnet/minecraft/unmapped/C_7585705;	m_3645662	getInstance
 	m	()V	<init>	<init>
 	m	(Lnet/minecraft/unmapped/C_2454309;[Ljava/lang/Object;)V	m_9425091	registerShaped
-		p	1		p_1
-		p	2		p_2
+		p	1		result
+		p	2		args
 	m	(Lnet/minecraft/unmapped/C_2454309;[Ljava/lang/Object;)V	m_1199382	registerShapeless
 		p	1		result
 		p	2		args
 	m	(Lnet/minecraft/unmapped/C_5217418;)Lnet/minecraft/unmapped/C_2454309;	m_9000025	getResult
-		p	1		p_1
+		p	1		inventory
 	m	()Ljava/util/List;	m_1640005	getRecipes
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/unmapped/C_7587089	net/minecraft/world/gen/structure/FortressPieces__CorridorBalcony
@@ -27253,9 +27253,9 @@ c	net/minecraft/unmapped/C_7729027	net/minecraft/world/storage/PlayerDataStorage
 	m	(Lnet/minecraft/unmapped/C_9590849;)V	m_2120928	savePlayerData
 		p	1		player
 	m	(Lnet/minecraft/unmapped/C_9590849;)V	m_9301204	loadPlayerData
-		p	1		p_1
-	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_2018497;	m_4745173	m_4745173
-		p	1		p_1
+		p	1		player
+	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_2018497;	m_4745173	loadPlayerData
+		p	1		player
 	m	()[Ljava/lang/String;	m_8627592	getSavedPlayerIds
 c	net/minecraft/unmapped/C_7729099	argo/jdom/JsonStringNodeBuilder
 	f	Ljava/lang/String;	f_7886344	value
@@ -28005,12 +28005,12 @@ c	net/minecraft/unmapped/C_8030141	net/minecraft/world/IWorld
 	m	(II)Lnet/minecraft/unmapped/C_6928498;	m_4932347	getBiome
 		p	1		x
 		p	2		z
-	m	()Lnet/minecraft/unmapped/C_7235516;	m_0161628	m_0161628
-	m	(Lnet/minecraft/unmapped/C_2891045;III)I	m_0780794	m_0780794
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
+	m	()Lnet/minecraft/unmapped/C_7235516;	m_0161628	getBiomeSource
+	m	(Lnet/minecraft/unmapped/C_2891045;III)I	m_0780794	getLight
+		p	1		type
+		p	2		x
+		p	3		y
+		p	4		z
 	m	()I	m_8568350	getHeight
 	m	()Z	m_5923188	isSaved
 	m	(III)Z	m_6985202	hasSolidTop
@@ -28048,7 +28048,7 @@ c	net/minecraft/unmapped/C_8042654	net/minecraft/world/chunk/WorldChunkSection
 		p	4		metadata
 	m	()Z	m_8323966	isEmpty
 	m	()Z	m_5666479	hasRandomTickingBlocks
-	m	()I	m_5978921	m_5978921
+	m	()I	m_5978921	getRandomTickingBlockCount
 	m	()I	m_8362961	getOffsetY
 	m	(IIII)V	m_2998811	setSkyLight
 		p	1		x
@@ -28069,7 +28069,7 @@ c	net/minecraft/unmapped/C_8042654	net/minecraft/world/chunk/WorldChunkSection
 		p	2		y
 		p	3		z
 	m	()V	m_7392493	validateBlockCounters
-	m	()I	m_9308910	m_9308910
+	m	()I	m_9308910	getNonAirBlockCount
 	m	()[B	m_1626953	getBlockIdsLower
 	m	()V	m_0187424	removeBlockIdsUpper
 	m	()Lnet/minecraft/unmapped/C_2986085;	m_1215160	getBlockIdsUpperStorage
@@ -29532,7 +29532,7 @@ c	net/minecraft/unmapped/C_8406714	net/minecraft/client/gui/ToastGui
 		p	1		achieved
 	m	()V	m_8899167	render
 	m	()V	m_9041917	tick
-c	net/minecraft/unmapped/C_8413123	net/minecraft/unmapped/C_8413123
+c	net/minecraft/unmapped/C_8413123	net/minecraft/world/storage/MemoryWorldStorage
 	m	()V	<init>	<init>
 	m	()Lnet/minecraft/unmapped/C_6152184;	m_1613201	m_1613201
 	m	()V	m_8310025	m_8310025
@@ -30422,11 +30422,11 @@ c	net/minecraft/unmapped/C_8779590	net/minecraft/world/gen/structure/VillagePiec
 		p	4		x
 		p	5		z
 	m	(Lnet/minecraft/unmapped/C_3849939;ILjava/util/Random;Lnet/minecraft/unmapped/C_7492943;I)V	<init>	<init>
-		p	1		p_1
+		p	1		start
 		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-		p	5		p_5
+		p	3		random
+		p	4		box
+		p	5		facing
 	m	(Lnet/minecraft/unmapped/C_2381425;Ljava/util/List;Ljava/util/Random;)V	m_5961758	m_5961758
 		p	1		p_1
 		p	2		p_2
@@ -30767,13 +30767,13 @@ c	net/minecraft/unmapped/C_8891094	net/minecraft/world/gen/chunk/FlatChunkGenera
 	f	Lnet/minecraft/unmapped/C_5553933;	f_1785703	world
 	f	Ljava/util/Random;	f_8147931	random
 	f	Z	f_7588320	hasDecoration
-	f	Lnet/minecraft/unmapped/C_5366629;	f_7003110	f_7003110
+	f	Lnet/minecraft/unmapped/C_5366629;	f_7003110	village
 	m	(Lnet/minecraft/unmapped/C_5553933;JZ)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	4		p_4
-	m	([B)V	m_2266963	m_2266963
-		p	1		p_1
+		p	1		world
+		p	2		seed
+		p	4		decoration
+	m	([B)V	m_2266963	populateBlocks
+		p	1		blocks
 	m	(II)Lnet/minecraft/unmapped/C_6849228;	m_0804715	m_0804715
 		p	1		p_1
 		p	2		p_2
@@ -31234,7 +31234,7 @@ c	net/minecraft/unmapped/C_8983523	net/minecraft/server/network/handler/ServerLo
 c	net/minecraft/unmapped/C_8995777	net/minecraft/unmapped/C_8995777
 	m	(I)V	<init>	<init>
 		p	1		p_1
-c	net/minecraft/unmapped/C_9003429	net/minecraft/unmapped/C_9003429
+c	net/minecraft/unmapped/C_9003429	net/minecraft/world/chunk/storage/MemoryChunkStorage
 	m	()V	<init>	<init>
 	m	(Lnet/minecraft/unmapped/C_5553933;II)Lnet/minecraft/unmapped/C_6849228;	m_0835514	m_0835514
 		p	1		p_1
@@ -33820,7 +33820,7 @@ c	net/minecraft/unmapped/C_9785392	net/minecraft/nbt/NbtLong
 	m	(Ljava/lang/Object;)Z	equals	equals
 		p	1		p_1
 	m	()I	hashCode	hashCode
-c	net/minecraft/unmapped/C_9806649	net/minecraft/unmapped/C_9806649
+c	net/minecraft/unmapped/C_9806649	net/minecraft/world/storage/McRegionWorldStorage
 	m	(Ljava/io/File;Ljava/lang/String;Z)V	<init>	<init>
 		p	1		p_1
 		p	2		p_2
