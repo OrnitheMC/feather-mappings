@@ -685,7 +685,7 @@ c	net/minecraft/server/C_9375659	net/minecraft/server/dedicated/ServerProperties
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/server/C_9992501	net/minecraft/server/PlayerManager	
 	f	Ljava/text/SimpleDateFormat;	f_0390286	DATE_FORMAT	
-	f	Ljava/util/logging/Logger;	f_1581917	f_1581917	
+	f	Ljava/util/logging/Logger;	f_1581917	LOGGER	
 	f	Lnet/minecraft/server/MinecraftServer;	f_7216101	server	
 	f	Ljava/util/List;	f_9738318	players	
 	f	Lnet/minecraft/server/C_6509480;	f_3549956	playerBans	
@@ -711,12 +711,12 @@ c	net/minecraft/server/C_9992501	net/minecraft/server/PlayerManager
 		p	2		prevWorld	
 	m	()I	m_8388212	getViewDistance	
 	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_7169022	loadSinglePlayerData	
-		p	1		p_1	
+		p	1		player	
 	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_8134419	saveData	
 		p	1		player	
 	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_8571484	add	
 		p	1		player	
-	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_4168801	updateTrackedPos	
+	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_4168801	move	
 		p	1		player	
 	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_1048368	remove	
 		p	1		player	
@@ -752,14 +752,14 @@ c	net/minecraft/server/C_9992501	net/minecraft/server/PlayerManager
 		p	1		playerName	
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_3292284;	m_4343635	get	
 		p	1		playerName	
-	m	(Ljava/lang/String;Ljava/lang/String;)V	m_2975022	m_2975022	
-		p	1		p_1	
-		p	2		p_2	
+	m	(Ljava/lang/String;Ljava/lang/String;)V	m_2975022	sendMessageToPlayer	
+		p	1		name	
+		p	2		message	
 	m	(DDDDILnet/minecraft/unmapped/C_5385258;)V	m_8373724	sendToAround	
 		p	1		x	
 		p	3		y	
 		p	5		z	
-		p	7		maxDistance	
+		p	7		range	
 		p	9		dimensionId	
 		p	10		packet	
 	m	(Lnet/minecraft/unmapped/C_9590849;DDDDILnet/minecraft/unmapped/C_5385258;)V	m_0300341	sendToAround	
@@ -767,14 +767,14 @@ c	net/minecraft/server/C_9992501	net/minecraft/server/PlayerManager
 		p	2		x	
 		p	4		y	
 		p	6		z	
-		p	8		maxDistance	
+		p	8		range	
 		p	10		dimensionId	
 		p	11		packet	
-	m	(Ljava/lang/String;)V	m_6033980	m_6033980	
-		p	1		p_1	
-	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_5385258;)Z	m_8664902	m_8664902	
-		p	1		p_1	
-		p	2		p_2	
+	m	(Ljava/lang/String;)V	m_6033980	sendMessage	
+		p	1		message	
+	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_5385258;)Z	m_8664902	sendToPlayer	
+		p	1		name	
+		p	2		packet	
 	m	()V	m_9408530	saveData	
 	m	(Ljava/lang/String;)V	m_5311516	addToWhitelist	
 		p	1		playerName	
@@ -4283,7 +4283,7 @@ c	net/minecraft/unmapped/C_9826170		net/minecraft/unmapped/C_9826170
 		p	1			p_1
 c	net/minecraft/unmapped/C_9992501		net/minecraft/server/PlayerManager
 	f	Ljava/text/SimpleDateFormat;	f_0390286		DATE_FORMAT
-	f	Ljava/util/logging/Logger;	f_1581917		f_1581917
+	f	Ljava/util/logging/Logger;	f_1581917		LOGGER
 	f	Lnet/minecraft/server/MinecraftServer;	f_7216101		server
 	f	Ljava/util/List;	f_9738318		players
 	f	Lnet/minecraft/unmapped/C_6509480;	f_3549956		playerBans
@@ -4309,12 +4309,12 @@ c	net/minecraft/unmapped/C_9992501		net/minecraft/server/PlayerManager
 		p	2			prevWorld
 	m	()I	m_8388212		getViewDistance
 	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_7169022		loadSinglePlayerData
-		p	1			p_1
+		p	1			player
 	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_8134419		saveData
 		p	1			player
 	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_8571484		add
 		p	1			player
-	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_4168801		updateTrackedPos
+	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_4168801		move
 		p	1			player
 	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_1048368		remove
 		p	1			player
@@ -4354,7 +4354,7 @@ c	net/minecraft/unmapped/C_9992501		net/minecraft/server/PlayerManager
 		p	1			x
 		p	3			y
 		p	5			z
-		p	7			maxDistance
+		p	7			range
 		p	9			dimensionId
 		p	10			packet
 	m	(Lnet/minecraft/unmapped/C_9590849;DDDDILnet/minecraft/unmapped/C_5385258;)V	m_0300341		sendToAround
@@ -4362,7 +4362,7 @@ c	net/minecraft/unmapped/C_9992501		net/minecraft/server/PlayerManager
 		p	2			x
 		p	4			y
 		p	6			z
-		p	8			maxDistance
+		p	8			range
 		p	10			dimensionId
 		p	11			packet
 	m	()V	m_9408530		saveData

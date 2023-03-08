@@ -859,7 +859,7 @@ c	net/minecraft/server/C_9375659	net/minecraft/server/dedicated/ServerProperties
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/server/C_9992501	net/minecraft/server/PlayerManager
 	f	Ljava/text/SimpleDateFormat;	f_0390286	DATE_FORMAT
-	f	Ljava/util/logging/Logger;	f_1581917	f_1581917
+	f	Ljava/util/logging/Logger;	f_1581917	LOGGER
 	f	Lnet/minecraft/server/MinecraftServer;	f_7216101	server
 	f	Ljava/util/List;	f_9738318	players
 	f	Lnet/minecraft/server/C_6509480;	f_3549956	playerBans
@@ -885,12 +885,12 @@ c	net/minecraft/server/C_9992501	net/minecraft/server/PlayerManager
 		p	2		prevWorld
 	m	()I	m_8388212	getViewDistance
 	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_7169022	loadSinglePlayerData
-		p	1		p_1
+		p	1		player
 	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_8134419	saveData
 		p	1		player
 	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_8571484	add
 		p	1		player
-	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_4168801	updateTrackedPos
+	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_4168801	move
 		p	1		player
 	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_1048368	remove
 		p	1		player
@@ -926,14 +926,14 @@ c	net/minecraft/server/C_9992501	net/minecraft/server/PlayerManager
 		p	1		playerName
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_3292284;	m_4343635	get
 		p	1		playerName
-	m	(Ljava/lang/String;Ljava/lang/String;)V	m_2975022	m_2975022
-		p	1		p_1
-		p	2		p_2
+	m	(Ljava/lang/String;Ljava/lang/String;)V	m_2975022	sendMessageToPlayer
+		p	1		name
+		p	2		message
 	m	(DDDDILnet/minecraft/unmapped/C_5385258;)V	m_8373724	sendToAround
 		p	1		x
 		p	3		y
 		p	5		z
-		p	7		maxDistance
+		p	7		range
 		p	9		dimensionId
 		p	10		packet
 	m	(Lnet/minecraft/unmapped/C_9590849;DDDDILnet/minecraft/unmapped/C_5385258;)V	m_0300341	sendToAround
@@ -941,14 +941,14 @@ c	net/minecraft/server/C_9992501	net/minecraft/server/PlayerManager
 		p	2		x
 		p	4		y
 		p	6		z
-		p	8		maxDistance
+		p	8		range
 		p	10		dimensionId
 		p	11		packet
-	m	(Ljava/lang/String;)V	m_6033980	m_6033980
-		p	1		p_1
-	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_5385258;)Z	m_8664902	m_8664902
-		p	1		p_1
-		p	2		p_2
+	m	(Ljava/lang/String;)V	m_6033980	sendMessage
+		p	1		message
+	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_5385258;)Z	m_8664902	sendToPlayer
+		p	1		name
+		p	2		packet
 	m	()V	m_9408530	saveData
 	m	(Ljava/lang/String;)V	m_5311516	addToWhitelist
 		p	1		playerName
@@ -3063,7 +3063,7 @@ c	net/minecraft/unmapped/C_0539808	net/minecraft/entity/Entity
 	m	()Z	m_9931460	isInWall
 	m	(Lnet/minecraft/unmapped/C_9590849;)Z	m_4185556	interact
 		p	1		player
-	m	(Lnet/minecraft/unmapped/C_0539808;)Lnet/minecraft/unmapped/C_5577922;	m_0588937	getHardCollisionBox
+	m	(Lnet/minecraft/unmapped/C_0539808;)Lnet/minecraft/unmapped/C_5577922;	m_0588937	getCollisionShape
 		p	1		collidingEntity
 	m	()V	m_1849804	tickRiding
 	m	()V	m_9438827	updateRiderPositon
@@ -5675,13 +5675,13 @@ c	net/minecraft/unmapped/C_1241852	net/minecraft/block/Block
 		p	2		x
 		p	3		y
 		p	4		z
-	m	(Lnet/minecraft/unmapped/C_5553933;IIILnet/minecraft/unmapped/C_5577922;Ljava/util/List;Lnet/minecraft/unmapped/C_0539808;)V	m_6210370	getCollisionBoxes
+	m	(Lnet/minecraft/unmapped/C_5553933;IIILnet/minecraft/unmapped/C_5577922;Ljava/util/List;Lnet/minecraft/unmapped/C_0539808;)V	m_6210370	getCollisions
 		p	1		world
 		p	2		x
 		p	3		y
 		p	4		z
-		p	5		entityBox
-		p	6		boxes
+		p	5		box
+		p	6		collisions
 		p	7		entity
 	m	(Lnet/minecraft/unmapped/C_5553933;III)Lnet/minecraft/unmapped/C_5577922;	m_4350289	getCollisionShape
 		p	1		world
@@ -5691,7 +5691,7 @@ c	net/minecraft/unmapped/C_1241852	net/minecraft/block/Block
 	m	()Z	m_1635166	isOpaqueCube
 	m	(IZ)Z	m_7371947	hasCollision
 		p	1		metadata
-		p	2		allowFluids
+		p	2		allowLiquids
 	m	()Z	m_0674178	hasCollision
 	m	(Lnet/minecraft/unmapped/C_5553933;IIILjava/util/Random;)V	m_7197439	tick
 		c	Performs a scheduled tick. Blocks that want to perform some action after a delay can\ntell the world to schedule the update, which is then executed by calling this method.
@@ -7430,7 +7430,7 @@ c	net/minecraft/unmapped/C_1712153	net/minecraft/world/biome/BiomeCache
 	m	(II)F	m_6687505	m_6687505
 		p	1		p_1
 		p	2		p_2
-	m	()V	m_2658360	cleanUp
+	m	()V	m_2658360	tick
 	m	(II)[Lnet/minecraft/unmapped/C_6928498;	m_4794726	getBiomesInChunk
 		p	1		x
 		p	2		z
@@ -14962,11 +14962,11 @@ c	net/minecraft/unmapped/C_3767424	net/minecraft/server/ChunkMap
 		p	1		x
 		p	2		y
 		p	3		z
-	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_6496477	onPlayerAdded
+	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_6496477	addPlayer
 		p	1		player
-	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_2837704	updateChunkTracking
+	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_2837704	trackNewLoadedChunks
 		p	1		player
-	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_3800116	onPlayerRemoved
+	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_3800116	removePlayer
 		p	1		player
 	m	(IIIII)Z	m_6152545	isChunkWithinView
 		p	1		chunkX
@@ -14974,7 +14974,7 @@ c	net/minecraft/unmapped/C_3767424	net/minecraft/server/ChunkMap
 		p	3		playerChunkX
 		p	4		playerChunkZ
 		p	5		chunkViewDistance
-	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_9288032	onPlayerMoved
+	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_9288032	movePlayer
 		p	1		player
 	m	(Lnet/minecraft/unmapped/C_3292284;II)Z	m_5083715	isChunkWithinView
 		p	1		player
@@ -19501,7 +19501,7 @@ c	net/minecraft/unmapped/C_5553933	net/minecraft/world/World
 	f	Lnet/minecraft/unmapped/C_6152184;	f_0991863	data
 	f	Z	f_3144070	isSearchingSpawnPoint
 	f	Lnet/minecraft/unmapped/C_1559260;	f_5882502	savedDataStorage
-	f	Lnet/minecraft/unmapped/C_1713911;	f_8010404	villageData
+	f	Lnet/minecraft/unmapped/C_1713911;	f_8010404	villages
 	f	Lnet/minecraft/unmapped/C_0851212;	f_5377930	villageSiege
 	f	Lnet/minecraft/unmapped/C_8525326;	f_7807819	profiler
 	f	Ljava/util/ArrayList;	f_4294659	collisions
@@ -19803,7 +19803,7 @@ c	net/minecraft/unmapped/C_5553933	net/minecraft/world/World
 	m	(Lnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_5577922;)Ljava/util/List;	m_6852194	getCollisions
 		p	1		entity
 		p	2		box
-	m	(Lnet/minecraft/unmapped/C_5577922;)Ljava/util/List;	m_7366237	getCollisionBoxes
+	m	(Lnet/minecraft/unmapped/C_5577922;)Ljava/util/List;	m_7366237	getBlockCollisions
 		p	1		box
 	m	(F)I	m_6704966	calculateAmbientDarkness
 		p	1		tickDelta
@@ -25570,7 +25570,7 @@ c	net/minecraft/unmapped/C_7235516	net/minecraft/world/biome/BiomeSource
 		p	3		z
 		p	4		biomes
 		p	5		random
-	m	()V	m_6055899	cleanCache
+	m	()V	m_6055899	tick
 c	net/minecraft/unmapped/C_7238350	net/minecraft/server/command/exception/IncorrectUsageException
 	m	(Ljava/lang/String;[Ljava/lang/Object;)V	<init>	<init>
 		p	1		p_1
@@ -33063,7 +33063,7 @@ c	net/minecraft/unmapped/C_9590849	net/minecraft/entity/living/player/PlayerEnti
 	f	Z	f_6446018	f_6446018
 	f	I	f_5412755	f_5412755
 	f	Ljava/lang/String;	f_4437619	name
-	f	I	f_3365159	f_3365159
+	f	I	f_3365159	dimensionId
 	f	Ljava/lang/String;	f_5067293	f_5067293
 	f	I	f_0674572	xpCooldown
 	f	D	f_3954147	lastCapeX
