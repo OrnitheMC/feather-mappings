@@ -6718,8 +6718,8 @@ c	net/minecraft/unmapped/C_0013174		net/minecraft/world/dimension/DimensionType
 	m	(I)Lnet/minecraft/unmapped/C_0013174;	m_9734665		byId
 		p	0			id
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_0080511		net/minecraft/unmapped/C_0080511
-	f	Lnet/minecraft/unmapped/C_6697291;	f_4925759		f_4925759
+c	net/minecraft/unmapped/C_0080511		net/minecraft/client/render/model/entity/ShulkerBulletModel
+	f	Lnet/minecraft/unmapped/C_6697291;	f_4925759		bulletModel
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_0539808;FFFFFF)V	m_7620620		m_7620620
 		p	1			p_1
@@ -6911,43 +6911,43 @@ c	net/minecraft/unmapped/C_0715798$C_6559228		C_6559228
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/unmapped/C_0884802		net/minecraft/unmapped/C_0884802
-	f	Lnet/minecraft/unmapped/C_6607881;	f_4659006		f_4659006
-	f	Lnet/minecraft/unmapped/C_0539808;	f_6729648		f_6729648
-	f	Lnet/minecraft/unmapped/C_3544601;	f_1685754		f_1685754
-	f	I	f_4622505		f_4622505
-	f	D	f_9516044		f_9516044
-	f	D	f_7139787		f_7139787
-	f	D	f_3656429		f_3656429
-	f	Ljava/util/UUID;	f_7447946		f_7447946
-	f	Lnet/minecraft/unmapped/C_3674802;	f_4505134		f_4505134
-	f	Ljava/util/UUID;	f_8925112		f_8925112
-	f	Lnet/minecraft/unmapped/C_3674802;	f_2068061		f_2068061
+c	net/minecraft/unmapped/C_0884802		net/minecraft/entity/projectile/ShulkerBulletEntity
+	f	Lnet/minecraft/unmapped/C_6607881;	f_4659006		owner
+	f	Lnet/minecraft/unmapped/C_0539808;	f_6729648		target
+	f	Lnet/minecraft/unmapped/C_3544601;	f_1685754		direction
+	f	I	f_4622505		steps
+	f	D	f_9516044		targetXDelta
+	f	D	f_7139787		targetYDelta
+	f	D	f_3656429		targetZDelta
+	f	Ljava/util/UUID;	f_7447946		ownerUuid
+	f	Lnet/minecraft/unmapped/C_3674802;	f_4505134		ownerPos
+	f	Ljava/util/UUID;	f_8925112		targetUuid
+	f	Lnet/minecraft/unmapped/C_3674802;	f_2068061		targetPos
 	m	(Lnet/minecraft/unmapped/C_5553933;)V	<init>		<init>
-		p	1			p_1
+		p	1			world
 	m	(Lnet/minecraft/unmapped/C_5553933;DDDDDD)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
-		p	6			p_6
-		p	8			p_8
-		p	10			p_10
-		p	12			p_12
+		p	1			world
+		p	2			x
+		p	4			y
+		p	6			z
+		p	8			velocityX
+		p	10			velocityY
+		p	12			velocityZ
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_6607881;Lnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_3544601$C_7482212;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	1			world
+		p	2			owner
+		p	3			target
+		p	4			direction
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_1129840		m_1129840
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_7694759		m_7694759
 		p	1			p_1
 	m	()V	m_1700770		m_1700770
 	m	()Lnet/minecraft/unmapped/C_3544601;	m_9528772		m_9528772
-	m	(Lnet/minecraft/unmapped/C_3544601;)V	m_8530484		m_8530484
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_3544601$C_7482212;)V	m_8206320		m_8206320
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_3544601;)V	m_8530484		setDirection
+		p	1			direction
+	m	(Lnet/minecraft/unmapped/C_3544601$C_7482212;)V	m_8206320		chooseDirectionAxis
+		p	1			forbiddenAxis
 	m	()V	m_7274048		m_7274048
 	m	()Z	m_1903739		m_1903739
 	m	(D)Z	m_4981405		m_4981405
@@ -6956,8 +6956,8 @@ c	net/minecraft/unmapped/C_0884802		net/minecraft/unmapped/C_0884802
 		p	1			p_1
 	m	(F)I	m_7418247		m_7418247
 		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_7794883;)V	m_0088226		m_0088226
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_7794883;)V	m_0088226		hitTarget
+		p	1			hitResult
 	m	()Z	m_3104437		m_3104437
 	m	(Lnet/minecraft/unmapped/C_1161898;F)Z	m_8726131		m_8726131
 		p	1			p_1
@@ -7143,15 +7143,15 @@ c	net/minecraft/unmapped/C_2424347		net/minecraft/potion/Potions
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_8703287;	m_0669971		get
 		p	0			id
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_2742384		net/minecraft/unmapped/C_2742384
-	f	Lnet/minecraft/unmapped/C_0561170;	f_0845681		f_0845681
-	f	Lnet/minecraft/unmapped/C_0080511;	f_8886522		f_8886522
+c	net/minecraft/unmapped/C_2742384		net/minecraft/client/render/entity/ShulkerBulletRenderer
+	f	Lnet/minecraft/unmapped/C_0561170;	f_0845681		SPARK_TEXTURE
+	f	Lnet/minecraft/unmapped/C_0080511;	f_8886522		model
 	m	(Lnet/minecraft/unmapped/C_3362006;)V	<init>		<init>
 		p	1			p_1
 	m	(FFF)F	m_0990896		m_0990896
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			prevYaw
+		p	2			yaw
+		p	3			tickDelta
 	m	(Lnet/minecraft/unmapped/C_0884802;DDDFF)V	m_5229175		m_5229175
 		p	1			p_1
 		p	2			p_2
@@ -7261,14 +7261,14 @@ c	net/minecraft/unmapped/C_2974946$C_2603156		C_2603156
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/unmapped/C_3006973		net/minecraft/unmapped/C_3006973
-	m	(Lnet/minecraft/unmapped/C_0539808;ZZLnet/minecraft/unmapped/C_0539808;)Lnet/minecraft/unmapped/C_7794883;	m_8710690		m_8710690
-		p	0			p_0
+c	net/minecraft/unmapped/C_3006973		net/minecraft/util/ProjectileUtils
+	m	(Lnet/minecraft/unmapped/C_0539808;ZZLnet/minecraft/unmapped/C_0539808;)Lnet/minecraft/unmapped/C_7794883;	m_8710690		getPotentialHit
+		p	0			projectile
 		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_0539808;F)V	m_8559441		m_8559441
-		p	0			p_0
+		p	2			allowHittingOwner
+		p	3			owner
+	m	(Lnet/minecraft/unmapped/C_0539808;F)V	m_8559441		updatePitchAndYaw
+		p	0			projectile
 		p	1			p_1
 c	net/minecraft/unmapped/C_3125244		net/minecraft/unmapped/C_3125244
 	m	(Lnet/minecraft/unmapped/C_5553933;DDDDDD)V	<init>		<init>
