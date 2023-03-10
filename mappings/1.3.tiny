@@ -984,7 +984,7 @@ c	net/minecraft/server/C_9992501	net/minecraft/server/PlayerManager
 	m	()V	m_9197741	disconnectAll
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/server/MinecraftServer	net/minecraft/server/MinecraftServer
-	f	Ljava/util/logging/Logger;	f_6379402	f_6379402
+	f	Ljava/util/logging/Logger;	f_6379402	LOGGER
 	f	Lnet/minecraft/server/MinecraftServer;	f_1995187	instance
 	f	Lnet/minecraft/unmapped/C_5478016;	f_5849755	worldStorageSource
 	f	Lnet/minecraft/unmapped/C_7377641;	f_3392446	snooper
@@ -1176,7 +1176,7 @@ c	net/minecraft/server/MinecraftServer	net/minecraft/server/MinecraftServer
 		p	1		playerManager
 	m	(Lnet/minecraft/unmapped/C_4223822;)V	m_7575169	setDefaultGameMode
 		p	1		gamemode
-	m	()Lnet/minecraft/unmapped/C_1228817;	m_0846664	getNetworkIo
+	m	()Lnet/minecraft/unmapped/C_1228817;	m_0846664	getConnection
 	m	()Z	m_6649268	isLoading
 	m	()Z	m_8325482	hasGui
 	m	(Lnet/minecraft/unmapped/C_4223822;Z)Ljava/lang/String;	m_3739797	publish
@@ -2493,15 +2493,15 @@ c	net/minecraft/unmapped/C_0384808	net/minecraft/world/gen/structure/StrongholdP
 		p	2		p_2
 		p	3		p_3
 	m	()V	<clinit>	<clinit>
-c	net/minecraft/unmapped/C_0390784	net/minecraft/server/integrated/IntegratedServerNetworkIo
+c	net/minecraft/unmapped/C_0390784	net/minecraft/server/integrated/IntegratedConnectionListener
 	f	Lnet/minecraft/unmapped/C_5355424;	f_2098690	connection
 	f	Lnet/minecraft/unmapped/C_5355424;	f_4356003	playerConnection
 	f	Ljava/lang/String;	f_5060112	playerName
-	f	Z	f_1478934	hasPlayerConnection
+	f	Z	f_1478934	connected
 	f	Lnet/minecraft/unmapped/C_0563666;	f_1687763	listenThread
 	m	(Lnet/minecraft/unmapped/C_4301088;)V	<init>	<init>
 		p	1		server
-	m	(Lnet/minecraft/unmapped/C_5355424;Ljava/lang/String;)V	m_7290726	setPlayerConnection
+	m	(Lnet/minecraft/unmapped/C_5355424;Ljava/lang/String;)V	m_7290726	setConnection
 		p	1		connection
 		p	2		playerName
 	m	()Ljava/lang/String;	m_5917128	getPort
@@ -3206,7 +3206,7 @@ c	net/minecraft/unmapped/C_0557736	net/minecraft/util/math/Vec3d
 		p	1		angle
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/unmapped/C_0563666	net/minecraft/server/network/ListenThread
-	f	Ljava/util/logging/Logger;	f_8149377	f_8149377
+	f	Ljava/util/logging/Logger;	f_8149377	LOGGER
 	f	Ljava/util/List;	f_5487039	connections
 	f	Ljava/util/HashMap;	f_1994394	addresses
 	f	I	f_1249074	connectionCounter
@@ -3222,7 +3222,7 @@ c	net/minecraft/unmapped/C_0563666	net/minecraft/server/network/ListenThread
 	m	()V	run	run
 	m	(Lnet/minecraft/unmapped/C_8983523;)V	m_8766922	addConnection
 		p	1		connection
-	m	(Ljava/net/InetAddress;)Z	m_2934211	isLocalAddress
+	m	(Ljava/net/InetAddress;)Z	m_2934211	isLocal
 		p	0		address
 	m	(Ljava/net/InetAddress;)V	m_0402437	close
 		p	1		address
@@ -5388,8 +5388,8 @@ c	net/minecraft/unmapped/C_1214754	net/minecraft/client/entity/living/player/Rem
 		p	1		p_1
 	m	(Ljava/lang/String;)Z	m_3648734	m_3648734
 		p	1		p_1
-c	net/minecraft/unmapped/C_1228817	net/minecraft/server/network/ServerNetworkIo
-	f	Ljava/util/logging/Logger;	f_7461704	f_7461704
+c	net/minecraft/unmapped/C_1228817	net/minecraft/server/network/ConnectionListener
+	f	Ljava/util/logging/Logger;	f_7461704	LOGGER
 	f	Lnet/minecraft/server/MinecraftServer;	f_8916835	server
 	f	Ljava/util/List;	f_9098705	connections
 	f	Z	f_1025432	open
@@ -6978,7 +6978,7 @@ c	net/minecraft/unmapped/C_1555023	net/minecraft/server/dedicated/DedicatedServe
 	f	Lnet/minecraft/server/C_9375659;	f_4008432	properties
 	f	Z	f_3480008	shouldGenerateStructures
 	f	Lnet/minecraft/unmapped/C_4223822;	f_1199756	defaultGameMode
-	f	Lnet/minecraft/unmapped/C_1228817;	f_5898506	networkIo
+	f	Lnet/minecraft/unmapped/C_1228817;	f_5898506	connection
 	f	Z	f_6706398	hasGui
 	m	(Ljava/io/File;)V	<init>	<init>
 		p	1		gameDir
@@ -12065,7 +12065,7 @@ c	net/minecraft/unmapped/C_3060676	net/minecraft/block/StemBlock
 		p	2		p_2
 		p	3		p_3
 		p	4		p_4
-c	net/minecraft/unmapped/C_3061522	net/minecraft/server/dedicated/DedicatedServerNetworkIo
+c	net/minecraft/unmapped/C_3061522	net/minecraft/server/dedicated/DedicatedConnectionListener
 	f	Lnet/minecraft/unmapped/C_0563666;	f_3418983	listenThread
 	m	(Lnet/minecraft/server/MinecraftServer;Ljava/net/InetAddress;I)V	<init>	<init>
 		p	1		server
@@ -16424,16 +16424,16 @@ c	net/minecraft/unmapped/C_4292131	net/minecraft/block/HorizontalFacingBlock
 		p	0		metadata
 c	net/minecraft/unmapped/C_4301088	net/minecraft/server/integrated/IntegratedServer
 	f	Lnet/minecraft/client/Minecraft;	f_0534799	client
-	f	Lnet/minecraft/unmapped/C_2670477;	f_9347592	info
-	f	Lnet/minecraft/unmapped/C_0390784;	f_1915890	networkIo
+	f	Lnet/minecraft/unmapped/C_2670477;	f_9347592	settings
+	f	Lnet/minecraft/unmapped/C_0390784;	f_1915890	connection
 	f	Z	f_8131956	paused
 	f	Z	f_2315641	published
 	f	Lnet/minecraft/unmapped/C_6349691;	f_8761007	pinger
 	m	(Lnet/minecraft/client/Minecraft;Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/unmapped/C_2670477;)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
+		p	1		client
+		p	2		worldDir
+		p	3		worldName
+		p	4		settings
 	m	(Ljava/lang/String;Ljava/lang/String;JLnet/minecraft/unmapped/C_1518925;)V	m_8050829	m_8050829
 		p	1		p_1
 		p	2		p_2

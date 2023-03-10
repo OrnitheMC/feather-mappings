@@ -8,7 +8,7 @@ c	net/minecraft/server/MinecraftServer
 	f	[J	f_5607049	averageSentPacketSize	
 	f	[J	f_9117836	averageReceivedPacketCount	
 	f	[J	f_1135252	averageReceivedPacketSize	
-	f	Lnet/minecraft/unmapped/C_8345387;	f_4118979		networkIo
+	f	Lnet/minecraft/unmapped/C_8345387;	f_4118979		connection
 	f	Lnet/minecraft/unmapped/C_8607758;	f_9953853		status
 	f	Ljava/util/Random;	f_9587859		random
 	f	J	f_0164288		lastPlayerSampleUpdate
@@ -18,7 +18,7 @@ c	net/minecraft/server/MinecraftServer
 		p	2		p_2	
 	m	(I)V	m_6180401	setDifficulty	
 		p	1		difficulty	
-	m	()Lnet/minecraft/unmapped/C_1228817;	m_0846664	getNetworkIo	
+	m	()Lnet/minecraft/unmapped/C_1228817;	m_0846664	getConnection	
 	m	()Lnet/minecraft/unmapped/C_9550096;	m_1447652		getDefaultDifficulty
 	m	(Z)V	m_7640190		saveWorlds
 		p	1			silent
@@ -26,7 +26,7 @@ c	net/minecraft/server/MinecraftServer
 		p	1			status
 	m	(Lnet/minecraft/unmapped/C_9550096;)V	m_6180401		setDifficulty
 		p	1			difficulty
-	m	()Lnet/minecraft/unmapped/C_8345387;	m_0846664		getNetworkIo
+	m	()Lnet/minecraft/unmapped/C_8345387;	m_0846664		getConnection
 	m	()Lnet/minecraft/unmapped/C_8607758;	m_9396229		getStatus
 c	net/minecraft/unmapped/C_0014534	net/minecraft/network/packet/MenuClickButtonPacket	
 	f	I	f_2264965	menuId	
@@ -162,16 +162,16 @@ c	net/minecraft/unmapped/C_0332750	net/minecraft/network/packet/ChatMessagePacke
 	m	()Ljava/lang/String;	m_5210952		getMessageJson
 	m	(Lnet/minecraft/unmapped/C_5444260;)V	m_7216666		m_7216666
 		p	1			p_1
-c	net/minecraft/unmapped/C_0390784	net/minecraft/server/integrated/IntegratedServerNetworkIo	
+c	net/minecraft/unmapped/C_0390784	net/minecraft/server/integrated/IntegratedConnectionListener	
 	f	Lorg/apache/logging/log4j/Logger;	f_7197318	f_7197318	
 	f	Lnet/minecraft/unmapped/C_5355424;	f_2098690	connection	
 	f	Lnet/minecraft/unmapped/C_5355424;	f_4356003	playerConnection	
 	f	Lcom/mojang/authlib/GameProfile;	f_5060112	playerName	
-	f	Z	f_1478934	hasPlayerConnection	
+	f	Z	f_1478934	connected	
 	f	Lnet/minecraft/unmapped/C_0563666;	f_1687763	listenThread	
 	m	(Lnet/minecraft/unmapped/C_4301088;)V	<init>	<init>	
 		p	1		server	
-	m	(Lnet/minecraft/unmapped/C_5355424;Lcom/mojang/authlib/GameProfile;)V	m_7290726	setPlayerConnection	
+	m	(Lnet/minecraft/unmapped/C_5355424;Lcom/mojang/authlib/GameProfile;)V	m_7290726	setConnection	
 		p	1		p_1	
 		p	2		p_2	
 	m	()Ljava/lang/String;	m_5917128	getPort	
@@ -378,7 +378,7 @@ c	net/minecraft/unmapped/C_1137800	net/minecraft/network/packet/PlayerSpawnPoint
 	m	()Ljava/lang/String;	m_4149431		m_4149431
 	m	(Lnet/minecraft/unmapped/C_5444260;)V	m_7216666		m_7216666
 		p	1			p_1
-c	net/minecraft/unmapped/C_1228817	net/minecraft/server/network/ServerNetworkIo	
+c	net/minecraft/unmapped/C_1228817	net/minecraft/server/network/ConnectionListener	
 	f	Lorg/apache/logging/log4j/Logger;	f_4157125	LOGGER	
 	f	Lnet/minecraft/server/MinecraftServer;	f_8916835	server	
 	f	Ljava/util/List;	f_9098705	connections	
@@ -466,7 +466,7 @@ c	net/minecraft/unmapped/C_1533205
 	m	(Ljava/lang/String;)V	m_1622917		setIcon
 		p	1			icon
 c	net/minecraft/unmapped/C_1555023
-	f	Lnet/minecraft/unmapped/C_1228817;	f_5898506	networkIo	
+	f	Lnet/minecraft/unmapped/C_1228817;	f_5898506	connection	
 	m	()I	m_1447652	m_1447652	
 	m	()Lnet/minecraft/unmapped/C_1228817;	m_0846664	m_0846664	
 	m	()Lnet/minecraft/unmapped/C_9550096;	m_1447652		m_1447652
@@ -905,7 +905,7 @@ c	net/minecraft/unmapped/C_3027966	net/minecraft/network/packet/AddPlayerPacket	
 	m	()Ljava/lang/String;	m_4149431		m_4149431
 	m	(Lnet/minecraft/unmapped/C_5444260;)V	m_7216666		m_7216666
 		p	1			p_1
-c	net/minecraft/unmapped/C_3061522	net/minecraft/server/dedicated/DedicatedServerNetworkIo	
+c	net/minecraft/unmapped/C_3061522	net/minecraft/server/dedicated/DedicatedConnectionListener	
 	f	Lnet/minecraft/unmapped/C_0563666;	f_3418983	listenThread	
 	m	(Lnet/minecraft/server/MinecraftServer;Ljava/net/InetAddress;I)V	<init>	<init>	
 		p	1		server	
@@ -1307,7 +1307,7 @@ c	net/minecraft/unmapped/C_4290763
 	m	(Lio/netty/buffer/ByteBuf;)V	m_2923386		m_2923386
 		p	1			p_1
 c	net/minecraft/unmapped/C_4301088
-	f	Lnet/minecraft/unmapped/C_0390784;	f_1915890	networkIo	
+	f	Lnet/minecraft/unmapped/C_0390784;	f_1915890	connection	
 	m	()I	m_1447652	m_1447652	
 	m	()Lnet/minecraft/unmapped/C_0390784;	m_7884134	m_7884134	
 	m	()Lnet/minecraft/unmapped/C_1228817;	m_0846664	m_0846664	
@@ -4064,7 +4064,7 @@ c	net/minecraft/unmapped/C_8248479		net/minecraft/network/packet/c2s/play/Comman
 	m	()Ljava/lang/String;	m_4149431		m_4149431
 	m	(Lnet/minecraft/unmapped/C_5444260;)V	m_7216666		m_7216666
 		p	1			p_1
-c	net/minecraft/unmapped/C_8345387		net/minecraft/server/network/ServerNetworkIo
+c	net/minecraft/unmapped/C_8345387		net/minecraft/server/network/ConnectionListener
 	f	Lorg/apache/logging/log4j/Logger;	f_8794897		LOGGER
 	f	Lnet/minecraft/server/MinecraftServer;	f_0042547		server
 	f	Z	f_8742362		isOpen
@@ -4077,7 +4077,7 @@ c	net/minecraft/unmapped/C_8345387		net/minecraft/server/network/ServerNetworkIo
 	m	(Ljava/net/InetAddress;I)V	m_8606616		bind
 		p	1			address
 		p	2			port
-	m	()Ljava/net/SocketAddress;	m_5107116		bind
+	m	()Ljava/net/SocketAddress;	m_5107116		bindLocal
 	m	()V	m_0310166		close
 	m	()V	m_7439393		tick
 	m	()Lnet/minecraft/server/MinecraftServer;	m_0540389		getServer
