@@ -1271,13 +1271,13 @@ c	net/minecraft/unmapped/C_0979881	com/mojang/blaze3d/platform/TextureUtil
 	m	(I)F	m_8124875	m_8124875	
 		p	0		p_0	
 	m	()I	m_6984163	genTextures	
-	m	(I)V	m_3765285	deleteTexture	
-		p	0		texture	
+	m	(I)V	m_3765285	deleteTextures	
+		p	0		id	
 	m	(ILjava/awt/image/BufferedImage;)I	m_3862315	uploadTexture	
-		p	0		texture	
+		p	0		id	
 		p	1		image	
 	m	(I[III)V	m_5404645	uploadTexture	
-		p	0		texture	
+		p	0		id	
 		p	1		pixels	
 		p	2		width	
 		p	3		height	
@@ -1315,12 +1315,12 @@ c	net/minecraft/unmapped/C_0979881	com/mojang/blaze3d/platform/TextureUtil
 		p	6		blur	
 		p	7		clamped	
 		p	8		mipmap	
-	m	(ILjava/awt/image/BufferedImage;ZZ)I	m_4331575	uploadTexture	
+	m	(ILjava/awt/image/BufferedImage;ZZ)I	m_4331575	upload	
 		p	0		texture	
 		p	1		image	
-		p	2		p_2	
-		p	3		p_3	
-	m	(III)V	m_6605934	prepareImage	
+		p	2		blur	
+		p	3		mipmap	
+	m	(III)V	m_6605934	prepare	
 		p	0		id	
 		p	1		width	
 		p	2		height	
@@ -1329,14 +1329,14 @@ c	net/minecraft/unmapped/C_0979881	com/mojang/blaze3d/platform/TextureUtil
 		p	1		mipmapLevel	
 		p	2		width	
 		p	3		height	
-	m	(ILjava/awt/image/BufferedImage;IIZZ)I	m_3086106	m_3086106	
+	m	(ILjava/awt/image/BufferedImage;IIZZ)I	m_3086106	upload	
 		p	0		id	
 		p	1		texture	
 		p	2		xOffset	
 		p	3		yOffset	
-		p	4		p_4	
-		p	5		p_5	
-	m	(Ljava/awt/image/BufferedImage;IIZZ)V	m_0974084	m_0974084	
+		p	4		blur	
+		p	5		mipmap	
+	m	(Ljava/awt/image/BufferedImage;IIZZ)V	m_0974084	upload	
 		p	0		texture	
 		p	1		xOffset	
 		p	2		yOffset	
@@ -1357,7 +1357,7 @@ c	net/minecraft/unmapped/C_0979881	com/mojang/blaze3d/platform/TextureUtil
 		p	1		offset	
 		p	2		size	
 	m	(I)V	m_1192743	bind	
-		p	0		id	
+		p	0		texture	
 	m	(Lnet/minecraft/unmapped/C_6577431;Lnet/minecraft/unmapped/C_0561170;)[I	m_0899679	getPixels	
 		p	0		resourceManager	
 		p	1		id	
@@ -3394,23 +3394,23 @@ c	net/minecraft/unmapped/C_3754158$C_5567883		C_5567883
 	m	()I	m_6870619		m_6870619
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_3779718
-	f	[I	f_2862021	rgbArray	
+	f	[I	f_2862021	pixels	
 	f	I	f_4031444	width	
 	f	I	f_9300604	height	
-	f	Lnet/minecraft/unmapped/C_7131921;	f_2862021		rgbArray
+	f	Lnet/minecraft/unmapped/C_7131921;	f_2862021		pixels
 	m	(Ljava/awt/image/BufferedImage;)V	<init>	<init>	
 		p	1		image	
 	m	(II)V	<init>	<init>	
 		p	1		width	
 		p	2		height	
-	m	()[I	m_1823577	getRgbArray	
+	m	()[I	m_1823577	getPixels	
 	m	(Lnet/minecraft/unmapped/C_7131921;)V	<init>		<init>
 		p	1			p_1
 	m	(IIZ)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	()Lnet/minecraft/unmapped/C_7131921;	m_1823577		getRgbArray
+	m	()Lnet/minecraft/unmapped/C_7131921;	m_1823577		getPixels
 	m	(Lnet/minecraft/unmapped/C_7131921;)V	m_9977239		m_9977239
 		p	1			p_1
 	m	()V	close		close
@@ -3696,10 +3696,10 @@ c	net/minecraft/unmapped/C_4257480
 	f	[F	f_8945572		f_8945572
 	m	(Ljava/lang/String;)V	<init>	<init>	
 		p	1		name	
-	m	(Lnet/minecraft/unmapped/C_0561170;)Lnet/minecraft/unmapped/C_4257480;	m_8238283	m_8238283	
-		p	0		p_0	
-	m	(Lnet/minecraft/unmapped/C_4257480;)V	m_7989708	copyData	
-		p	1		sprite	
+	m	(Lnet/minecraft/unmapped/C_0561170;)Lnet/minecraft/unmapped/C_4257480;	m_8238283	builtIn	
+		p	0		id	
+	m	(Lnet/minecraft/unmapped/C_4257480;)V	m_7989708	set	
+		p	1		other	
 	m	()I	m_8554210	getX	
 	m	()I	m_1426877	getY	
 	m	()Ljava/lang/String;	m_5074155	getName	
@@ -3712,14 +3712,14 @@ c	net/minecraft/unmapped/C_4257480
 	m	(Lnet/minecraft/unmapped/C_7171701;Z)V	m_3578200	m_3578200	
 		p	1		p_1	
 		p	2		p_2	
-	m	([[IIII)[[I	m_3853051	m_3853051	
-		p	0		p_0	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+	m	([[IIII)[[I	m_3853051	resize	
+		p	0		image	
+		p	1		width	
+		p	2		height	
+		p	3		size	
 	m	(Ljava/util/List;)V	m_7227753	setFrames	
 		p	1		frames	
-	m	()V	m_1224824	nullify	
+	m	()V	m_1224824	clear	
 	m	(Lnet/minecraft/unmapped/C_0561170;II)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -4799,28 +4799,28 @@ c	net/minecraft/unmapped/C_6082933	net/minecraft/client/texture/LoadTextureCallb
 	m	(Lnet/minecraft/unmapped/C_6088271;)V	m_4748118	onTextureLoaded	
 		p	1		atlas	
 c	net/minecraft/unmapped/C_6088271
-	f	Lnet/minecraft/unmapped/C_0561170;	f_8742392	f_8742392	
+	f	Lnet/minecraft/unmapped/C_0561170;	f_8742392	MISSING_TEXTURE_ID	
 	f	Ljava/util/Map;	f_3873032	spritesToLoad	
-	f	Lnet/minecraft/unmapped/C_6082933;	f_8321401	f_8321401	
+	f	Lnet/minecraft/unmapped/C_6082933;	f_8321401	loadCallback	
 	f	Ljava/util/Set;	f_8445468		f_8445468
 	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_6082933;)V	<init>	<init>	
+		p	1		path	
+		p	2		loadCallback	
+	m	()V	m_3134138	loadMissingTexture	
+	m	(Lnet/minecraft/unmapped/C_6577431;Lnet/minecraft/unmapped/C_6082933;)V	m_9937140	load	
+		p	1		resourceManager	
+		p	2		callback	
+	m	(Lnet/minecraft/unmapped/C_4257480;)Lnet/minecraft/unmapped/C_0561170;	m_2280147	getResourceId	
+		p	1		p_1	
+	m	(Lnet/minecraft/unmapped/C_0561170;)Lnet/minecraft/unmapped/C_4257480;	m_2775250	loadSprite	
 		p	1		id	
-		p	2		name	
-	m	()V	m_3134138	init	
-	m	(Lnet/minecraft/unmapped/C_6577431;Lnet/minecraft/unmapped/C_6082933;)V	m_9937140	m_9937140	
-		p	1		p_1	
-		p	2		p_2	
-	m	(Lnet/minecraft/unmapped/C_4257480;)Lnet/minecraft/unmapped/C_0561170;	m_2280147	getNewIdentifier	
-		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_0561170;)Lnet/minecraft/unmapped/C_4257480;	m_2775250	m_2775250	
-		p	1		p_1	
-	m	()Lnet/minecraft/unmapped/C_4257480;	m_9754427	m_9754427	
-	m	(Lnet/minecraft/unmapped/C_6577431;Ljava/lang/Iterable;)V	m_9937140		m_9937140
+	m	()Lnet/minecraft/unmapped/C_4257480;	m_9754427	getMissingTextureId	
+	m	(Lnet/minecraft/unmapped/C_6577431;Ljava/lang/Iterable;)V	m_9937140		load
 		p	1			p_1
 		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_0561170;)Lnet/minecraft/unmapped/C_0561170;	m_2280147		getNewIdentifier
+	m	(Lnet/minecraft/unmapped/C_0561170;)Lnet/minecraft/unmapped/C_0561170;	m_2280147		getResourceId
 		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_6577431;Lnet/minecraft/unmapped/C_0561170;)V	m_2775250		m_2775250
+	m	(Lnet/minecraft/unmapped/C_6577431;Lnet/minecraft/unmapped/C_0561170;)V	m_2775250		loadSprite
 		p	1			p_1
 		p	2			p_2
 	m	()V	m_1972470		m_1972470
