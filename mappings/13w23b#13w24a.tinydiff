@@ -1314,10 +1314,10 @@ c	net/minecraft/unmapped/C_1958650		net/minecraft/client/resource/metadata/seria
 	m	()Ljava/lang/String;	m_2384264		getName
 c	net/minecraft/unmapped/C_2126928		net/minecraft/client/resource/pack/ZippedResourcePack
 	f	Lcom/google/common/base/Splitter;	f_8901884		TYPE_NAMESPACE_SPLITTER
-	f	Ljava/util/zip/ZipFile;	f_0925735		file
+	f	Ljava/util/zip/ZipFile;	f_0925735		zip
 	m	(Ljava/io/File;)V	<init>		<init>
 		p	1			p_1
-	m	()Ljava/util/zip/ZipFile;	m_9225516		getZipFile
+	m	()Ljava/util/zip/ZipFile;	m_9225516		openZip
 	m	(Ljava/lang/String;)Ljava/io/InputStream;	m_0769004		m_0769004
 		p	1			p_1
 	m	(Ljava/lang/String;)Z	m_0522695		m_0522695
@@ -1326,26 +1326,26 @@ c	net/minecraft/unmapped/C_2126928		net/minecraft/client/resource/pack/ZippedRes
 	m	()V	finalize		finalize
 	m	()V	close		close
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_2983776		net/minecraft/client/resource/pack/ResourcePackLoader
+c	net/minecraft/unmapped/C_2983776		net/minecraft/client/resource/pack/ResourcePacks
 	f	Ljava/io/FileFilter;	f_3329323		RESOURCE_PACK_FILTER
 	f	Ljava/io/File;	f_8402787		dir
-	f	Lnet/minecraft/unmapped/C_7532262;	f_6120754		defaultResourcePack
-	f	Lnet/minecraft/unmapped/C_1296613;	f_1943001		metadataSerializerRegistry
-	f	Ljava/util/List;	f_3470950		availableResourcePacks
-	f	Ljava/util/List;	f_2374268		appliedResourcePacks
+	f	Lnet/minecraft/unmapped/C_7532262;	f_6120754		defaultPack
+	f	Lnet/minecraft/unmapped/C_1296613;	f_1943001		metadataSerializers
+	f	Ljava/util/List;	f_3470950		availablePacks
+	f	Ljava/util/List;	f_2374268		appliedPacks
 	m	(Ljava/io/File;Lnet/minecraft/unmapped/C_7532262;Lnet/minecraft/unmapped/C_1296613;Lnet/minecraft/unmapped/C_1331819;)V	<init>		<init>
 		p	1			dir
 		p	2			defaultResourcePack
-		p	3			metadataSerializerRegistry
+		p	3			metadataSerializers
 		p	4			options
-	m	()V	m_0411631		initDirectory
-	m	()Ljava/util/List;	m_5490508		getResourcePackFiles
+	m	()V	m_0411631		mkdirs
+	m	()Ljava/util/List;	m_5490508		collectAvailablePackFiles
 	m	()V	m_1483825		loadResourcePacks
-	m	()Ljava/util/List;	m_1955522		getAvailableResourcePacks
-	m	()Ljava/util/List;	m_4263554		getAppliedResourcePacks
-	m	()Ljava/lang/String;	m_2439860		getTopAppliedResourcePackName
-	m	([Lnet/minecraft/unmapped/C_6945562;)V	m_6393957		setAppliedResourcePacks
-		p	1			entries
+	m	()Ljava/util/List;	m_1955522		getAvailable
+	m	()Ljava/util/List;	m_4263554		getApplied
+	m	()Ljava/lang/String;	m_2439860		getTopAppliedName
+	m	([Lnet/minecraft/unmapped/C_6945562;)V	m_6393957		apply
+		p	1			packs
 	m	()Ljava/io/File;	m_0966053		getDirectory
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_3064756		net/minecraft/client/render/entity/CaveSpiderRenderer
@@ -1400,7 +1400,7 @@ c	net/minecraft/unmapped/C_3378372		net/minecraft/client/resource/metadata/seria
 		p	1			json
 		p	2			key
 		p	3			defaultValue
-c	net/minecraft/unmapped/C_3383261		net/minecraft/client/resource/pack/ResourcePackLoader__1
+c	net/minecraft/unmapped/C_3383261		net/minecraft/client/resource/pack/ResourcePacks__1
 	m	()V	<init>		<init>
 	m	(Ljava/io/File;)Z	accept		accept
 		p	1			file
@@ -1473,15 +1473,15 @@ c	net/minecraft/unmapped/C_4858765		net/minecraft/client/resource/metadata/seria
 c	net/minecraft/unmapped/C_5195890		net/minecraft/client/resource/pack/DirectoryResourcePack__1
 	m	()V	<init>		<init>
 	m	(Ljava/io/File;)Z	accept		accept
-		p	1			p_1
+		p	1			f
 c	net/minecraft/unmapped/C_6504242		net/minecraft/entity/living/mob/hostile/SpiderEntity__Data
 	f	I	f_4195728		effect
 	m	()V	<init>		<init>
 	m	(Ljava/util/Random;)V	m_4038043		setEffect
 		p	1			random
-c	net/minecraft/unmapped/C_6945562		net/minecraft/client/resource/pack/ResourcePackLoader__Entry
+c	net/minecraft/unmapped/C_6945562		net/minecraft/client/resource/pack/ResourcePacks__Entry
 	f	Ljava/io/File;	f_5735327		file
-	f	Lnet/minecraft/unmapped/C_7532262;	f_2548161		resourcePack
+	f	Lnet/minecraft/unmapped/C_7532262;	f_2548161		pack
 	f	Lnet/minecraft/unmapped/C_9632344;	f_0232758		metadata
 	f	Ljava/awt/image/BufferedImage;	f_2144218		icon
 	f	Lnet/minecraft/unmapped/C_0561170;	f_7099490		iconId
@@ -1491,9 +1491,9 @@ c	net/minecraft/unmapped/C_6945562		net/minecraft/client/resource/pack/ResourceP
 		p	2			file
 	m	()V	m_2352548		load
 	m	(Lnet/minecraft/unmapped/C_0876962;)V	m_7655703		bindIconTexture
-		p	1			textureManager
+		p	1			manager
 	m	()V	m_3085042		close
-	m	()Lnet/minecraft/unmapped/C_7532262;	m_5481385		getResourcePack
+	m	()Lnet/minecraft/unmapped/C_7532262;	m_5481385		get
 	m	()Ljava/lang/String;	m_1414106		getName
 	m	()Ljava/lang/String;	m_6528018		getDescription
 	m	(Ljava/lang/Object;)Z	equals		equals
@@ -1528,7 +1528,7 @@ c	net/minecraft/unmapped/C_9155254		net/minecraft/client/resource/metadata/seria
 		p	2			type
 		p	3			jsonSerializationContext
 c	net/minecraft/unmapped/C_9427820		net/minecraft/client/resource/pack/DirectoryResourcePack
-	f	Ljava/io/FileFilter;	f_9934180		f_9934180
+	f	Ljava/io/FileFilter;	f_9934180		DIRECTORY_FILTER
 	m	(Ljava/io/File;)V	<init>		<init>
 		p	1			p_1
 	m	(Ljava/lang/String;)Ljava/io/InputStream;	m_0769004		m_0769004
