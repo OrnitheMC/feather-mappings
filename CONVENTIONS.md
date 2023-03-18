@@ -40,7 +40,6 @@ Avoid abbreviations unless it's a common one everyone knows and other Feather Ma
 form. Full names are easier to read quickly and remember ("Which words were abbreviated?") and they often don't take more
 time to type thanks to IDE autocompletion. Common abbreviations you should use are:
 
-- "id" for "identifier"
 - "pos" for "position"
 - "nbt" for "named binary tag"
 - "init" for "initialize"
@@ -66,6 +65,10 @@ visibility problems in the future.
 Consistency is important as it makes code more readable and names easier to memorize. When possible, use terms that are present
 in other Feather Mappings names, in libraries used by Minecraft, or in vanilla strings. The rest of this section lists common names and
 name patterns you should use.
+
+### Ids and keys
+
+Use "location" for `Identifier`s that point to resources of the game (textures, sounds, functions, etc.), use "key" for `String`s and `Identifiers` that are used as registry keys or translation keys, and use "id" for `int`s that are used to uniquely identify objects (e.g. block ids, item ids, enchantment ids).
 
 ### Ticks and updates
 
