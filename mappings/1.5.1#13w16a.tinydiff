@@ -23,7 +23,7 @@ c	net/minecraft/client/Minecraft	net/minecraft/client/Minecraft
 	f	Ljava/awt/Canvas;	f_0769488	canvas	
 	f	Z	f_5452485	paused	
 	f	Z	f_1118421	f_1118421	
-	f	Lnet/minecraft/unmapped/C_0876962;	f_9413506	f_9413506	
+	f	Lnet/minecraft/unmapped/C_0876962;	f_9413506	textureManager	
 	f	Lnet/minecraft/unmapped/C_3831727;	f_0426313	textRenderer	
 	f	Lnet/minecraft/unmapped/C_3831727;	f_7716697	shadowTextRenderer	
 	f	Lnet/minecraft/unmapped/C_3020744;	f_0723335	currentScreen	
@@ -42,7 +42,7 @@ c	net/minecraft/client/Minecraft	net/minecraft/client/Minecraft
 	f	Lnet/minecraft/client/MinecraftApplet;	f_6777402	applet	
 	f	Lnet/minecraft/unmapped/C_1872000;	f_3843367	soundSystem	
 	f	Lnet/minecraft/unmapped/C_0113445;	f_3438392	mouse	
-	f	Lnet/minecraft/unmapped/C_7105334;	f_6618555	f_6618555	
+	f	Lnet/minecraft/unmapped/C_7105334;	f_6618555	texturePacks	
 	f	Ljava/io/File;	f_3475389	runDir	
 	f	Lnet/minecraft/unmapped/C_5478016;	f_3063307	worldStorageSource	
 	f	I	f_0727858	currentFps	
@@ -767,8 +767,8 @@ c	net/minecraft/unmapped/C_1331819
 	f	Lnet/minecraft/client/Minecraft;	f_1674215	client	
 	f	Lnet/minecraft/unmapped/C_8105098;	f_1674215		client
 	m	(Lnet/minecraft/client/Minecraft;Ljava/io/File;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		client	
+		p	2		dir	
 	m	(Lnet/minecraft/unmapped/C_8105098;Ljava/io/File;)V	<init>		<init>
 		p	1			client
 		p	2			file
@@ -3438,16 +3438,16 @@ c	net/minecraft/unmapped/C_7043755	argo/jdom/JsonNodeSelectors__3
 	m	(Ljava/lang/Object;)Z	m_1114828	m_1114828	
 		p	1		p_1	
 c	net/minecraft/unmapped/C_7105334
-	f	Lnet/minecraft/client/Minecraft;	f_8102433	f_8102433	
-	f	Lnet/minecraft/unmapped/C_8105098;	f_8102433		f_8102433
+	f	Lnet/minecraft/client/Minecraft;	f_8102433	client	
+	f	Lnet/minecraft/unmapped/C_8105098;	f_8102433		client
 	m	(Ljava/io/File;Lnet/minecraft/client/Minecraft;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		dir	
+		p	2		client	
 	m	(Lnet/minecraft/unmapped/C_7105334;)Lnet/minecraft/client/Minecraft;	m_5397757	m_5397757	
 		p	0		p_0	
 	m	(Ljava/io/File;Lnet/minecraft/unmapped/C_8105098;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			dir
+		p	2			client
 	m	(Lnet/minecraft/unmapped/C_7105334;)Lnet/minecraft/unmapped/C_8105098;	m_5397757		m_5397757
 		p	0			p_0
 c	net/minecraft/unmapped/C_7145858	net/minecraft/client/Minecraft__5	net/minecraft/client/Minecraft__3
@@ -5747,13 +5747,13 @@ c	net/minecraft/unmapped/C_8105098		net/minecraft/client/Minecraft
 	f	Lnet/minecraft/unmapped/C_1331819;	f_9967940		options
 	f	Lnet/minecraft/unmapped/C_1872000;	f_3843367		soundSystem
 	f	Lnet/minecraft/unmapped/C_0113445;	f_3438392		mouse
-	f	Lnet/minecraft/unmapped/C_7105334;	f_6618555		loader
+	f	Lnet/minecraft/unmapped/C_7105334;	f_6618555		texturePacks
 	f	Ljava/io/File;	f_3475389		runDir
 	f	Ljava/net/Proxy;	f_9200886		proxy
 	f	Lnet/minecraft/unmapped/C_5478016;	f_3063307		worldStorageSource
 	f	I	f_0727858		currentFps
 	f	I	f_3484203		blockPlaceDelay
-	f	Z	f_0616432		hasServerResourcePack
+	f	Z	f_0616432		reloadTextures
 	f	Lnet/minecraft/unmapped/C_2854223;	f_8029336		statHandler
 	f	Ljava/lang/String;	f_6808466		serverAddress
 	f	I	f_0532278		serverPort
@@ -5862,7 +5862,7 @@ c	net/minecraft/unmapped/C_8105098		net/minecraft/client/Minecraft
 	m	(Lnet/minecraft/unmapped/C_2975244;)Lnet/minecraft/unmapped/C_2975244;	m_8470592		populateCrashReport
 		p	1			report
 	m	()Lnet/minecraft/unmapped/C_8105098;	m_0408063		getInstance
-	m	()V	m_9244967		m_9244967
+	m	()V	m_9244967		markTexturesDirty
 	m	(Lnet/minecraft/unmapped/C_7377641;)V	m_7142032		m_7142032
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_7377641;)V	m_7339992		m_7339992
@@ -5871,7 +5871,7 @@ c	net/minecraft/unmapped/C_8105098		net/minecraft/client/Minecraft
 	m	()Z	m_5733001		m_5733001
 	m	(Lnet/minecraft/unmapped/C_1533205;)V	m_9718735		setCurrentServerEntry
 		p	1			serverEntry
-	m	()Lnet/minecraft/unmapped/C_1533205;	m_2062451		m_2062451
+	m	()Lnet/minecraft/unmapped/C_1533205;	m_2062451		getCurrentServerEntry
 	m	()Z	m_3844208		isIntegratedServerRunning
 	m	()Z	m_9805322		isInSingleplayer
 	m	()Lnet/minecraft/unmapped/C_4301088;	m_4351464		getServer
