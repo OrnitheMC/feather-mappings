@@ -497,7 +497,7 @@ c	net/minecraft/client/Minecraft	net/minecraft/client/Minecraft
 	f	Ljava/lang/String;	f_3533455	f_3533455
 	f	Ljava/awt/Canvas;	f_0769488	canvas
 	f	Z	f_5452485	paused
-	f	Z	f_1118421	f_1118421
+	f	Z	f_1118421	stopped
 	f	Lnet/minecraft/unmapped/C_0876962;	f_9413506	textureManager
 	f	Lnet/minecraft/unmapped/C_3831727;	f_0426313	textRenderer
 	f	Lnet/minecraft/unmapped/C_3831727;	f_7716697	shadowTextRenderer
@@ -623,9 +623,9 @@ c	net/minecraft/client/Minecraft	net/minecraft/client/Minecraft
 	m	(Lnet/minecraft/unmapped/C_7873567;Ljava/lang/String;)V	m_9890357	setWorld
 		p	1		world
 		p	2		title
-	m	(Ljava/lang/String;Ljava/io/File;)V	m_4132893	m_4132893
-		p	1		p_1
-		p	2		p_2
+	m	(Ljava/lang/String;Ljava/io/File;)V	m_4132893	loadSound
+		p	1		path
+		p	2		file
 	m	()Ljava/lang/String;	m_3552812	getChunkDebugInfo
 	m	()Ljava/lang/String;	m_0587428	getEntityDebugInfo
 	m	()Ljava/lang/String;	m_2222940	getChunkSourceDebugInfo
@@ -667,9 +667,9 @@ c	net/minecraft/client/Minecraft	net/minecraft/client/Minecraft
 	m	()Z	m_7273062	isFullscreen
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/client/MinecraftApplet	net/minecraft/client/MinecraftApplet
-	f	Ljava/awt/Canvas;	f_5159283	f_5159283
-	f	Lnet/minecraft/client/Minecraft;	f_8871640	f_8871640
-	f	Ljava/lang/Thread;	f_4196404	f_4196404
+	f	Ljava/awt/Canvas;	f_5159283	canvas
+	f	Lnet/minecraft/client/Minecraft;	f_8871640	client
+	f	Ljava/lang/Thread;	f_4196404	thread
 	m	()V	<init>	<init>
 	m	()V	init	init
 	m	()V	m_1383095	m_1383095
@@ -1777,7 +1777,7 @@ c	net/minecraft/unmapped/C_0218708	net/minecraft/entity/ai/goal/AbstractDoorInte
 		p	2		y
 		p	3		z
 c	net/minecraft/unmapped/C_0219615	net/minecraft/world/gen/structure/VillagePieces__LampPost
-	f	I	f_7064496	f_7064496
+	f	I	f_7064496	hpos
 	m	(Lnet/minecraft/unmapped/C_3849939;ILjava/util/Random;Lnet/minecraft/unmapped/C_7492943;I)V	<init>	<init>
 		p	1		startPiece
 		p	2		generationDepth
@@ -1909,16 +1909,16 @@ c	net/minecraft/unmapped/C_0254692	net/minecraft/entity/projectile/SmallFireball
 	m	(Lnet/minecraft/unmapped/C_1161898;I)Z	m_8726131	m_8726131
 		p	1		p_1
 		p	2		p_2
-c	net/minecraft/unmapped/C_0256098	net/minecraft/unmapped/C_0256098
-	f	Ljava/util/Random;	f_0897168	f_0897168
-	f	Ljava/util/Map;	f_0583945	f_0583945
-	f	Ljava/util/List;	f_5865294	f_5865294
-	f	I	f_2537300	f_2537300
-	f	Z	f_0793881	f_0793881
+c	net/minecraft/unmapped/C_0256098	net/minecraft/client/sound/system/Sounds
+	f	Ljava/util/Random;	f_0897168	random
+	f	Ljava/util/Map;	f_0583945	soundsByPath
+	f	Ljava/util/List;	f_5865294	sounds
+	f	I	f_2537300	soundCount
+	f	Z	f_0793881	trimTrailingDigits
 	m	()V	<init>	<init>
 	m	(Ljava/lang/String;Ljava/io/File;)Lnet/minecraft/unmapped/C_8806455;	m_9143237	load
-		p	1		p_1
-		p	2		p_2
+		p	1		path
+		p	2		file
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_8806455;	m_5129252	getRandom
 		p	1		path
 	m	()Lnet/minecraft/unmapped/C_8806455;	m_5612138	getRandom
@@ -2469,7 +2469,7 @@ c	net/minecraft/unmapped/C_0355969	net/minecraft/client/render/world/BlockMining
 	m	()I	m_7395778	getProgress
 c	net/minecraft/unmapped/C_0384808	net/minecraft/world/gen/structure/StrongholdPieces__RoomCrossing
 	f	[Lnet/minecraft/unmapped/C_0268929;	f_7065010	LOOT_ENTRIES
-	f	Lnet/minecraft/unmapped/C_0341503;	f_6806130	f_6806130
+	f	Lnet/minecraft/unmapped/C_0341503;	f_6806130	entranceType
 	f	I	f_0597098	type
 	m	(ILjava/util/Random;Lnet/minecraft/unmapped/C_7492943;I)V	<init>	<init>
 		p	1		generationDepth
@@ -3368,7 +3368,7 @@ c	net/minecraft/unmapped/C_0607826	net/minecraft/entity/vehicle/BoatEntity
 	m	(Lnet/minecraft/unmapped/C_9590849;)Z	m_4185556	m_4185556
 		p	1		p_1
 	m	(I)V	m_3795038	setDamage
-		p	1		p_1
+		p	1		damage
 	m	()I	m_1515300	getDamage
 	m	(I)V	m_1375950	setBreakingWindow
 		c	When a boat is hit it starts wiggling. You need to consequitively hit it in that window to be able to do\nenough damage until the boat breaks. This method sets that value in the datatracker.\nThe value is initially set to 10 when hit and decreases by one each tick when the boat is not hit.
@@ -3499,8 +3499,8 @@ c	net/minecraft/unmapped/C_0674816	net/minecraft/item/AxeItem
 		p	2		p_2
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/unmapped/C_0674995	net/minecraft/server/dedicated/gui/DedicatedServerGui
-	f	Ljava/util/logging/Logger;	f_3118234	f_3118234
-	f	Z	f_4741900	f_4741900
+	f	Ljava/util/logging/Logger;	f_3118234	LOGGER
+	f	Z	f_4741900	created
 	f	Lnet/minecraft/unmapped/C_1555023;	f_2883604	server
 	m	(Lnet/minecraft/unmapped/C_1555023;)V	m_8927020	create
 		p	0		server
@@ -3583,7 +3583,7 @@ c	net/minecraft/unmapped/C_0709683	net/minecraft/entity/player/HungerManager
 		p	1		food
 		p	2		saturation
 	m	(Lnet/minecraft/unmapped/C_2643505;)V	m_3880189	add
-		p	1		p_1
+		p	1		item
 	m	(Lnet/minecraft/unmapped/C_9590849;)V	m_9508676	tick
 		p	1		player
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_7073654	readNbt
@@ -3694,19 +3694,19 @@ c	net/minecraft/unmapped/C_0759248	net/minecraft/locale/LanguageManager
 	f	Ljava/util/Properties;	f_6169381	translations
 	f	Ljava/util/TreeMap;	f_8452266	languageNames
 	f	Ljava/lang/String;	f_2809028	currentLanguage
-	f	Z	f_6833655	f_6833655
+	f	Z	f_6833655	unicode
 	m	(Ljava/lang/String;)V	<init>	<init>
 		p	1		defaultLanguage
 	m	()Lnet/minecraft/unmapped/C_0759248;	m_0787762	getInstance
 	m	()V	m_1195152	load
 	m	()Ljava/util/TreeMap;	m_3746409	getLanguageNames
-	m	(Ljava/util/Properties;Ljava/lang/String;)V	m_2304208	m_2304208
-		p	1		p_1
-		p	2		p_2
-	m	(Ljava/lang/String;)V	m_1454478	m_1454478
-		p	1		p_1
+	m	(Ljava/util/Properties;Ljava/lang/String;)V	m_2304208	loadTranslations
+		p	1		translations
+		p	2		language
+	m	(Ljava/lang/String;)V	m_1454478	setLanguage
+		p	1		language
 	m	()Ljava/lang/String;	m_2823481	getCurrentLanguage
-	m	()Z	m_4481166	m_4481166
+	m	()Z	m_4481166	isUnicode
 	m	(Ljava/lang/String;)Ljava/lang/String;	m_1043181	translate
 		p	1		key
 	m	(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;	m_3124880	translate
@@ -3724,7 +3724,7 @@ c	net/minecraft/unmapped/C_0760609	net/minecraft/server/dedicated/gui/LogHandler
 	m	(Lnet/minecraft/unmapped/C_5971432;)V	<init>	<init>
 		p	1		p_1
 	m	(Ljava/util/logging/LogRecord;)Ljava/lang/String;	format	format
-		p	1		p_1
+		p	1		logs
 c	net/minecraft/unmapped/C_0769577	net/minecraft/enchantment/BetterLootEnchantment
 	m	(IILnet/minecraft/unmapped/C_9491517;)V	<init>	<init>
 		p	1		p_1
@@ -4177,25 +4177,25 @@ c	net/minecraft/unmapped/C_0927368	net/minecraft/enchantment/EnchantmentEntry
 c	net/minecraft/unmapped/C_0933845	net/minecraft/world/gen/carver/NetherCaveCarver
 	m	()V	<init>	<init>
 	m	(II[BDDD)V	m_6997038	place
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-		p	6		p_6
-		p	8		p_8
+		p	1		chunkX
+		p	2		chunkZ
+		p	3		blockIds
+		p	4		x
+		p	6		y
+		p	8		z
 	m	(II[BDDDFFFIID)V	m_7655365	placeBranch
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-		p	6		p_6
-		p	8		p_8
-		p	10		p_10
-		p	11		p_11
-		p	12		p_12
-		p	13		p_13
-		p	14		p_14
-		p	15		p_15
+		p	1		chunkX
+		p	2		chunkZ
+		p	3		blockIds
+		p	4		x
+		p	6		y
+		p	8		z
+		p	10		baseWidth
+		p	11		yaw
+		p	12		pitch
+		p	13		branch
+		p	14		branchCount
+		p	15		widthHeightRatio
 	m	(Lnet/minecraft/unmapped/C_5553933;IIII[B)V	m_8454429	m_8454429
 		p	1		p_1
 		p	2		p_2
@@ -5033,9 +5033,9 @@ c	net/minecraft/unmapped/C_1156131	net/minecraft/world/gen/feature/DungeonFeatur
 		p	3		p_3
 		p	4		p_4
 		p	5		p_5
-	m	(Ljava/util/Random;)Lnet/minecraft/unmapped/C_2454309;	m_0527158	m_0527158
-		p	1		p_1
-	m	(Ljava/util/Random;)Ljava/lang/String;	m_7694918	getRandomDungeonType
+	m	(Ljava/util/Random;)Lnet/minecraft/unmapped/C_2454309;	m_0527158	pickLoot
+		p	1		random
+	m	(Ljava/util/Random;)Ljava/lang/String;	m_7694918	pickDungeonType
 		p	1		random
 c	net/minecraft/unmapped/C_1161898	net/minecraft/entity/damage/DamageSource
 	f	Lnet/minecraft/unmapped/C_1161898;	f_9677791	FIRE
@@ -7078,7 +7078,7 @@ c	net/minecraft/unmapped/C_1566859	net/minecraft/network/packet/ClientStatusPack
 		p	1		p_1
 	m	()I	m_4040470	m_4040470
 c	net/minecraft/unmapped/C_1567607	net/minecraft/server/network/handler/ServerPlayNetworkHandler
-	f	Ljava/util/logging/Logger;	f_6517535	f_6517535
+	f	Ljava/util/logging/Logger;	f_6517535	LOGGER
 	f	Lnet/minecraft/unmapped/C_5123829;	f_4285152	connection
 	f	Z	f_9063117	disconnected
 	f	Lnet/minecraft/server/MinecraftServer;	f_7245439	server
@@ -7896,30 +7896,30 @@ c	net/minecraft/unmapped/C_1870930	net/minecraft/world/gen/structure/StructurePi
 	m	()I	m_0567680	getBlockId
 	m	()I	m_4391745	getMetadata
 c	net/minecraft/unmapped/C_1872000	net/minecraft/client/sound/system/SoundEngine
-	f	Lpaulscode/sound/SoundSystem;	f_7021715	f_7021715
+	f	Lpaulscode/sound/SoundSystem;	f_7021715	system
 	f	Lnet/minecraft/unmapped/C_0256098;	f_2393180	sounds
 	f	Lnet/minecraft/unmapped/C_0256098;	f_1941717	records
 	f	Lnet/minecraft/unmapped/C_0256098;	f_3668329	music
 	f	I	f_8599770	nextSoundEventIndex
 	f	Lnet/minecraft/client/C_1331819;	f_9261647	options
-	f	Z	f_4350060	f_4350060
+	f	Z	f_4350060	started
 	f	Ljava/util/Random;	f_3747829	random
 	f	I	f_6265858	musicCooldown
 	m	()V	<init>	<init>
-	m	(Lnet/minecraft/client/C_1331819;)V	m_0786842	m_0786842
+	m	(Lnet/minecraft/client/C_1331819;)V	m_0786842	load
 		p	1		p_1
 	m	()V	m_9496102	start
 	m	()V	m_1108475	volumeChanged
 	m	()V	m_4462481	close
 	m	(Ljava/lang/String;Ljava/io/File;)V	m_8307895	loadSound
-		p	1		p_1
-		p	2		p_2
+		p	1		path
+		p	2		dir
 	m	(Ljava/lang/String;Ljava/io/File;)V	m_9373155	loadRecord
-		p	1		p_1
-		p	2		p_2
+		p	1		path
+		p	2		fil
 	m	(Ljava/lang/String;Ljava/io/File;)V	m_9949884	loadMusic
-		p	1		p_1
-		p	2		p_2
+		p	1		path
+		p	2		file
 	m	()V	m_6693242	tickMusic
 	m	(Lnet/minecraft/unmapped/C_6607881;F)V	m_8976754	tickListener
 		p	1		listener
@@ -9710,7 +9710,7 @@ c	net/minecraft/unmapped/C_2430465	net/minecraft/stat/Stat__1
 	m	(I)Ljava/lang/String;	m_5296171	m_5296171
 		p	1		p_1
 c	net/minecraft/unmapped/C_2435239	net/minecraft/world/gen/structure/VillagePieces__BlacksmithHouse
-	f	I	f_7194059	f_7194059
+	f	I	f_7194059	hpos
 	m	(Lnet/minecraft/unmapped/C_3849939;ILjava/util/Random;Lnet/minecraft/unmapped/C_7492943;I)V	<init>	<init>
 		p	1		startPiece
 		p	2		generationDepth
@@ -9809,7 +9809,7 @@ c	net/minecraft/unmapped/C_2454309	net/minecraft/item/ItemStack
 	m	(I)Lnet/minecraft/unmapped/C_2454309;	m_1980273	split
 		p	1		amount
 	m	()Lnet/minecraft/unmapped/C_3755722;	m_2410511	getItem
-	m	()I	m_1344167	m_1344167
+	m	()I	m_1344167	getSprite
 	m	(Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_5553933;IIIIFFF)Z	m_8878857	use
 		p	1		player
 		p	2		world
@@ -12106,7 +12106,7 @@ c	net/minecraft/unmapped/C_3076931	net/minecraft/inventory/menu/BrewingStandMenu
 		p	1		p_1
 	m	()I	m_8462429	m_8462429
 c	net/minecraft/unmapped/C_3078426	net/minecraft/world/gen/structure/VillagePieces__TallHouse
-	f	I	f_4965167	f_4965167
+	f	I	f_4965167	hpos
 	f	Z	f_7876137	isTall
 	f	I	f_7759976	tablePlacement
 	m	(Lnet/minecraft/unmapped/C_3849939;ILjava/util/Random;Lnet/minecraft/unmapped/C_7492943;I)V	<init>	<init>
@@ -13015,8 +13015,8 @@ c	net/minecraft/unmapped/C_3250247	net/minecraft/server/world/PortalForcer
 		p	1		p_1
 		p	2		p_2
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0539808;)Z	m_5561286	generateNetherPortal
-		p	1		p_1
-		p	2		p_2
+		p	1		world
+		p	2		entity
 c	net/minecraft/unmapped/C_3251471	net/minecraft/item/EnderEyeItem
 	m	(I)V	<init>	<init>
 		p	1		p_1
@@ -13127,7 +13127,7 @@ c	net/minecraft/unmapped/C_3292284	net/minecraft/server/entity/living/player/Ser
 	f	Ljava/util/List;	f_4684838	newLoadedChunks
 		c	Coordinates of chunks that have come within view of the player, but have not yet\nbeen sent to the client.
 	f	Ljava/util/List;	f_9113152	removedEntities
-	f	I	f_2269199	f_2269199
+	f	I	f_2269199	lastHealth
 	f	I	f_1497569	lastHungerLevel
 	f	Z	f_9468149	wasHungry
 	f	I	f_7833862	lastXp
@@ -13272,8 +13272,8 @@ c	net/minecraft/unmapped/C_3292284	net/minecraft/server/entity/living/player/Ser
 	m	()Z	m_6968013	m_6968013
 	m	()I	m_2067301	getChatVisibility
 	m	(Ljava/lang/String;I)V	m_1496454	sendResourcePack
-		p	1		p_1
-		p	2		p_2
+		p	1		url
+		p	2		resolution
 c	net/minecraft/unmapped/C_3294178	net/minecraft/network/packet/PlayerSleepPacket
 	f	I	f_6721929	id
 	f	I	f_1317588	x
@@ -13648,7 +13648,7 @@ c	net/minecraft/unmapped/C_3424041	net/minecraft/world/gen/structure/VillagePiec
 	m	()V	<init>	<init>
 	m	(Ljava/util/Random;I)Ljava/util/ArrayList;	m_7698282	getPieceChance
 		p	0		random
-		p	1		p_1
+		p	1		weight
 	m	(Ljava/util/List;)I	m_3920182	getTotalWeight
 		c	Will return the total weight of the given piece weights if more pieces can still be generated, or -1.
 		p	0		weights
@@ -14250,7 +14250,7 @@ c	net/minecraft/unmapped/C_3600794	net/minecraft/server/rcon/RconServer
 	m	()V	m_3127092	m_3127092
 c	net/minecraft/unmapped/C_3604445	net/minecraft/world/gen/structure/StrongholdPieces__Library
 	f	[Lnet/minecraft/unmapped/C_0268929;	f_8258880	LOOT_ENTRIES
-	f	Lnet/minecraft/unmapped/C_0341503;	f_1677247	f_1677247
+	f	Lnet/minecraft/unmapped/C_0341503;	f_1677247	entranceType
 	f	Z	f_8166773	isTall
 	m	(ILjava/util/Random;Lnet/minecraft/unmapped/C_7492943;I)V	<init>	<init>
 		p	1		generationDepth
@@ -14775,7 +14775,7 @@ c	net/minecraft/unmapped/C_3755722	net/minecraft/item/Item
 	f	I	f_1913083	id
 	f	I	f_4614873	maxStackSize
 	f	I	f_3245983	maxDamage
-	f	I	f_4664543	f_4664543
+	f	I	f_4664543	sprite
 	f	Z	f_7213272	handheld
 	f	Z	f_4646313	stackable
 	f	Lnet/minecraft/unmapped/C_3755722;	f_5018636	recipeRemainder
@@ -14784,17 +14784,17 @@ c	net/minecraft/unmapped/C_3755722	net/minecraft/item/Item
 	f	Ljava/lang/String;	f_1866993	key
 	m	(I)V	<init>	<init>
 		p	1		id
-	m	(I)Lnet/minecraft/unmapped/C_3755722;	m_9844916	m_9844916
-		p	1		p_1
+	m	(I)Lnet/minecraft/unmapped/C_3755722;	m_9844916	setSprite
+		p	1		sprite
 	m	(I)Lnet/minecraft/unmapped/C_3755722;	m_4768058	setMaxStackSize
 		p	1		size
-	m	(II)Lnet/minecraft/unmapped/C_3755722;	m_6480791	m_6480791
-		p	1		p_1
-		p	2		p_2
+	m	(II)Lnet/minecraft/unmapped/C_3755722;	m_6480791	setSprite
+		p	1		u
+		p	2		v
 	m	(I)I	m_9183979	getSprite
-		p	1		p_1
+		p	1		metadata
 	m	(Lnet/minecraft/unmapped/C_2454309;)I	m_3412136	getSprite
-		p	1		p_1
+		p	1		stack
 	m	(Lnet/minecraft/unmapped/C_2454309;Lnet/minecraft/unmapped/C_5553933;IIII)Z	m_8892445	m_8892445
 		p	1		p_1
 		p	2		p_2
@@ -14919,8 +14919,8 @@ c	net/minecraft/unmapped/C_3755722	net/minecraft/item/Item
 	m	()I	m_9593556	getEnchantability
 	m	()Z	m_1032203	isLayered
 	m	(II)I	m_5730681	getSprite
-		p	1		p_1
-		p	2		p_2
+		p	1		metadata
+		p	2		stage
 	m	(ILnet/minecraft/unmapped/C_0191817;Ljava/util/List;)V	m_1746706	addToCreativeMenu
 		p	1		id
 		p	2		group
@@ -15364,13 +15364,13 @@ c	net/minecraft/unmapped/C_3849939	net/minecraft/world/gen/structure/VillagePiec
 	f	Ljava/util/ArrayList;	f_9370210	buildingPieces
 	f	Ljava/util/ArrayList;	f_6952578	roadPieces
 	m	(Lnet/minecraft/unmapped/C_7235516;ILjava/util/Random;IILjava/util/ArrayList;I)V	<init>	<init>
-		p	1		p_1
+		p	1		biomeSource
 		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-		p	5		p_5
-		p	6		p_6
-		p	7		p_7
+		p	3		random
+		p	4		x
+		p	5		z
+		p	6		weights
+		p	7		size
 	m	()Lnet/minecraft/unmapped/C_7235516;	m_3121059	getBiomeSource
 c	net/minecraft/unmapped/C_3865296	net/minecraft/server/world/ServerWorld
 	f	Lnet/minecraft/server/MinecraftServer;	f_4443467	server
@@ -15561,7 +15561,7 @@ c	net/minecraft/unmapped/C_3930157	net/minecraft/network/packet/AddEntityPacket
 	m	()Ljava/lang/String;	m_8387532	m_8387532
 c	net/minecraft/unmapped/C_3937547	net/minecraft/world/gen/structure/StrongholdPieces__SpiralStaircase
 	f	Z	f_7254135	isSource
-	f	Lnet/minecraft/unmapped/C_0341503;	f_1760811	f_1760811
+	f	Lnet/minecraft/unmapped/C_0341503;	f_1760811	entranceType
 	m	(ILjava/util/Random;II)V	<init>	<init>
 		p	1		generationDepth
 		p	2		random
@@ -15644,7 +15644,7 @@ c	net/minecraft/unmapped/C_3944207	net/minecraft/item/SaddleItem
 		p	2		p_2
 		p	3		p_3
 c	net/minecraft/unmapped/C_3945056	net/minecraft/world/gen/structure/VillagePieces__BalconyHouse
-	f	I	f_0945978	f_0945978
+	f	I	f_0945978	hpos
 	f	Z	f_0635708	hasRooftopTerrace
 	m	(Lnet/minecraft/unmapped/C_3849939;ILjava/util/Random;Lnet/minecraft/unmapped/C_7492943;I)V	<init>	<init>
 		p	1		statPiece
@@ -16604,7 +16604,7 @@ c	net/minecraft/unmapped/C_4323228	argo/jdom/JsonNodeSelectors__2
 	m	(Ljava/lang/Object;)Z	m_1114828	m_1114828
 		p	1		p_1
 c	net/minecraft/unmapped/C_4352715	net/minecraft/world/gen/structure/StrongholdPieces__Prison
-	f	Lnet/minecraft/unmapped/C_0341503;	f_5494354	f_5494354
+	f	Lnet/minecraft/unmapped/C_0341503;	f_5494354	entranceType
 	m	(ILjava/util/Random;Lnet/minecraft/unmapped/C_7492943;I)V	<init>	<init>
 		p	1		generationDepth
 		p	2		random
@@ -16639,12 +16639,12 @@ c	net/minecraft/unmapped/C_4361568	net/minecraft/world/biome/ForestBiome
 		p	1		p_1
 c	net/minecraft/unmapped/C_4378535	net/minecraft/world/biome/FixedBiomeSource
 	f	Lnet/minecraft/unmapped/C_6928498;	f_1191002	biome
-	f	F	f_3959335	f_3959335
+	f	F	f_3959335	temperature
 	f	F	f_4670822	downfall
 	m	(Lnet/minecraft/unmapped/C_6928498;FF)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
+		p	1		biome
+		p	2		temperature
+		p	3		downfall
 	m	(Lnet/minecraft/unmapped/C_7141926;)Lnet/minecraft/unmapped/C_6928498;	m_1230475	m_1230475
 		p	1		p_1
 	m	(II)Lnet/minecraft/unmapped/C_6928498;	m_3272604	m_3272604
@@ -17034,11 +17034,11 @@ c	net/minecraft/unmapped/C_4580495	net/minecraft/item/Item__ToolMaterial
 	m	(Ljava/lang/String;IIIFII)V	<init>	<init>
 		p	1		p_1
 		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-		p	5		p_5
-		p	6		p_6
-		p	7		p_7
+		p	3		strength
+		p	4		maxDurability
+		p	5		miningSpeed
+		p	6		attackDamage
+		p	7		enchantability
 	m	()I	m_7235845	getMaxDurability
 	m	()F	m_3376513	getMiningSpeed
 	m	()I	m_4591088	getAttackDamage
@@ -18093,7 +18093,7 @@ c	net/minecraft/unmapped/C_5025378	net/minecraft/entity/ai/goal/ProjectileAttack
 	m	()V	m_3798730	m_3798730
 	m	()V	m_7043303	m_7043303
 c	net/minecraft/unmapped/C_5027001	net/minecraft/world/gen/structure/VillagePieces__LargeFarm
-	f	I	f_6486640	f_6486640
+	f	I	f_6486640	hpos
 	m	(Lnet/minecraft/unmapped/C_3849939;ILjava/util/Random;Lnet/minecraft/unmapped/C_7492943;I)V	<init>	<init>
 		p	1		startPiece
 		p	2		generationDepth
@@ -19598,7 +19598,7 @@ c	net/minecraft/unmapped/C_5553933	net/minecraft/world/World
 		p	3		z
 		p	4		blockId
 		p	5		metadata
-		p	6		notifyBlockChanged
+		p	6		notifyListeners
 	m	(IIII)Z	m_4155590	setBlockQuietly
 		p	1		x
 		p	2		y
@@ -21040,20 +21040,20 @@ c	net/minecraft/unmapped/C_5764537	org/bouncycastle/jce/provider/BouncyCastlePro
 	f	Ljava/lang/ThreadLocal;	f_3777985	f_3777985
 	m	()V	<init>	<init>
 	m	()V	<clinit>	<clinit>
-c	net/minecraft/unmapped/C_5773087	net/minecraft/unmapped/C_5773087
-	f	I	f_6016917	f_6016917
-	f	I	f_4145532	f_4145532
-	f	I	f_8621789	f_8621789
-	f	I	f_2149181	f_2149181
-	f	B	f_9199459	f_9199459
-	f	B	f_1417479	f_1417479
-	f	B	f_9573215	f_9573215
+c	net/minecraft/unmapped/C_5773087	net/minecraft/network/packet/AddItemPacket
+	f	I	f_6016917	id
+	f	I	f_4145532	x
+	f	I	f_8621789	y
+	f	I	f_2149181	z
+	f	B	f_9199459	velocityX
+	f	B	f_1417479	velocityY
+	f	B	f_9573215	velocityZ
 	f	I	f_1665590	f_1665590
 	f	I	f_7114894	f_7114894
 	f	I	f_0613043	f_0613043
 	m	()V	<init>	<init>
 	m	(Lnet/minecraft/unmapped/C_8300121;)V	<init>	<init>
-		p	1		p_1
+		p	1		item
 	m	(Ljava/io/DataInputStream;)V	m_4792371	m_4792371
 		p	1		p_1
 	m	(Ljava/io/DataOutputStream;)V	m_6110406	m_6110406
@@ -21518,22 +21518,22 @@ c	net/minecraft/unmapped/C_5956487	net/minecraft/client/ClientPlayerInteractionM
 	f	I	f_6458245	targetBlockY
 	f	I	f_7761219	targetBlockZ
 	f	F	f_4924894	miningProgress
-	f	F	f_9881329	f_9881329
+	f	F	f_9881329	lastMiningProgress
 	f	F	f_5259368	miningSoundTimer
 	f	I	f_3767729	miningCooldown
 	f	Z	f_6035426	isMiningBlock
 	f	Lnet/minecraft/unmapped/C_4223822;	f_8408497	gameMode
 	f	I	f_7072846	selectedHotbarSlot
 	m	(Lnet/minecraft/client/Minecraft;Lnet/minecraft/unmapped/C_5722573;)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
+		p	1		client
+		p	2		networkHandler
 	m	(Lnet/minecraft/client/Minecraft;Lnet/minecraft/unmapped/C_5956487;IIII)V	m_5156846	mineBlockInCreative
-		p	0		p_0
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-		p	5		p_5
+		p	0		client
+		p	1		interactionManager
+		p	2		x
+		p	3		y
+		p	4		z
+		p	5		face
 	m	(Lnet/minecraft/unmapped/C_9590849;)V	m_1855318	refreshAbilities
 		p	1		player
 	m	()Z	m_5680255	isInSpectatorMode
@@ -21605,14 +21605,14 @@ c	net/minecraft/unmapped/C_5956487	net/minecraft/client/ClientPlayerInteractionM
 c	net/minecraft/unmapped/C_5971432	net/minecraft/server/dedicated/gui/LogHandler
 	f	[I	f_2515251	f_2515251
 	f	I	f_7600584	f_7600584
-	f	Ljava/util/logging/Formatter;	f_9160783	f_9160783
-	f	Ljavax/swing/JTextArea;	f_1727419	f_1727419
+	f	Ljava/util/logging/Formatter;	f_9160783	formatter
+	f	Ljavax/swing/JTextArea;	f_1727419	textArea
 	m	(Ljavax/swing/JTextArea;)V	<init>	<init>
-		p	1		p_1
+		p	1		textArea
 	m	()V	close	close
 	m	()V	flush	flush
 	m	(Ljava/util/logging/LogRecord;)V	publish	publish
-		p	1		p_1
+		p	1		logs
 c	net/minecraft/unmapped/C_5977019	net/minecraft/network/packet/EntityVelocityPacket
 	f	I	f_1823422	id
 	f	I	f_0291044	velocityX
@@ -22612,7 +22612,7 @@ c	net/minecraft/unmapped/C_6318874	net/minecraft/network/packet/WorldChunkPacket
 	f	I	f_4549348	sectionsWithBlockIdsUpper
 	m	()V	<init>	<init>
 c	net/minecraft/unmapped/C_6337073	net/minecraft/world/gen/structure/StrongholdPieces__FiveWayCrossing
-	f	Lnet/minecraft/unmapped/C_0341503;	f_4661173	f_4661173
+	f	Lnet/minecraft/unmapped/C_0341503;	f_4661173	entranceType
 	f	Z	f_0161999	leftLow
 	f	Z	f_1282175	leftHigh
 	f	Z	f_8591185	rightLow
@@ -22639,7 +22639,7 @@ c	net/minecraft/unmapped/C_6337073	net/minecraft/world/gen/structure/StrongholdP
 		p	2		p_2
 		p	3		p_3
 c	net/minecraft/unmapped/C_6349691	net/minecraft/server/integrated/LanServerPinger
-	f	Ljava/util/logging/Logger;	f_3848831	f_3848831
+	f	Ljava/util/logging/Logger;	f_3848831	LOGGER
 	f	Ljava/lang/String;	f_7255285	motd
 	f	Ljava/net/DatagramSocket;	f_8883514	socket
 	f	Z	f_8863951	isRunning
@@ -22703,7 +22703,7 @@ c	net/minecraft/unmapped/C_6371508	net/minecraft/server/dedicated/command/Whitel
 		p	1		p_1
 		p	2		p_2
 c	net/minecraft/unmapped/C_6382621	net/minecraft/world/gen/structure/StrongholdPieces__StraightCorridor
-	f	Lnet/minecraft/unmapped/C_0341503;	f_5410108	f_5410108
+	f	Lnet/minecraft/unmapped/C_0341503;	f_5410108	entranceType
 	f	Z	f_8283653	left
 	f	Z	f_6918674	right
 	m	(ILjava/util/Random;Lnet/minecraft/unmapped/C_7492943;I)V	<init>	<init>
@@ -23483,7 +23483,7 @@ c	net/minecraft/unmapped/C_6655517	net/minecraft/network/packet/KeepAlivePacket
 	m	()Z	m_4140229	m_4140229
 c	net/minecraft/unmapped/C_6664589	net/minecraft/world/gen/structure/StrongholdPieces__ChestCorridor
 	f	[Lnet/minecraft/unmapped/C_0268929;	f_0218657	LOOT_ENTRIES
-	f	Lnet/minecraft/unmapped/C_0341503;	f_4375438	f_4375438
+	f	Lnet/minecraft/unmapped/C_0341503;	f_4375438	entranceType
 	f	Z	f_2104607	hasChest
 	m	(ILjava/util/Random;Lnet/minecraft/unmapped/C_7492943;I)V	<init>	<init>
 		p	1		generationDepth
@@ -25609,8 +25609,8 @@ c	net/minecraft/unmapped/C_7250084	net/minecraft/network/PacketHandler
 		p	1		packet
 	m	(Lnet/minecraft/unmapped/C_4052742;)V	m_1021167	handleRemoveEntities
 		p	1		packet
-	m	(Lnet/minecraft/unmapped/C_5773087;)V	m_2783999	m_2783999
-		p	1		p_1
+	m	(Lnet/minecraft/unmapped/C_5773087;)V	m_2783999	handleAddItem
+		p	1		packet
 	m	(Lnet/minecraft/unmapped/C_0042939;)V	m_1045207	handleEntityPickup
 		p	1		packet
 	m	(Lnet/minecraft/unmapped/C_0332750;)V	m_1958969	handleChatMessage
@@ -25726,7 +25726,7 @@ c	net/minecraft/unmapped/C_7250084	net/minecraft/network/PacketHandler
 	m	()Z	m_4883381	canHandleOffMainThread
 		c	Returns whether this packet handler can handle packets off the main thread or if\npackets should be queued to be handled on the main thread.
 c	net/minecraft/unmapped/C_7253309	net/minecraft/world/gen/structure/StrongholdPieces__LeftTurn
-	f	Lnet/minecraft/unmapped/C_0341503;	f_6372748	f_6372748
+	f	Lnet/minecraft/unmapped/C_0341503;	f_6372748	entranceType
 	m	(ILjava/util/Random;Lnet/minecraft/unmapped/C_7492943;I)V	<init>	<init>
 		p	1		generationDepth
 		p	2		random
@@ -26114,37 +26114,37 @@ c	net/minecraft/unmapped/C_7400754	net/minecraft/entity/player/PlayerInventory
 	m	()Lnet/minecraft/unmapped/C_2454309;	m_6205225	getMainHandStack
 	m	()I	m_4471377	getHotbarSize
 	m	(I)I	m_7450750	indexOfItem
-		p	1		p_1
+		p	1		itemId
 	m	(II)I	m_4661195	indexOfItemWithMetaData
-		p	1		p_1
-		p	2		p_2
+		p	1		itemId
+		p	2		metadata
 	m	(Lnet/minecraft/unmapped/C_2454309;)I	m_3423639	indexOfItemStack
-		p	1		itemStack
+		p	1		stack
 	m	()I	m_5178097	getEmptySlot
 	m	(IIZZ)V	m_2955308	pickItem
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
+		p	1		itemId
+		p	2		metadata
+		p	3		damageable
+		p	4		creativeMode
 	m	(I)V	m_1336763	scrollInHotbar
 		p	1		scroll
 	m	()V	m_6306689	m_6306689
 	m	(Lnet/minecraft/unmapped/C_3755722;I)V	m_9324905	creativePickItem
 		p	1		item
-		p	2		metaData
+		p	2		metadata
 	m	(Lnet/minecraft/unmapped/C_2454309;)I	m_3573304	putStackInInventory
 		c	Puts Items where the will fit in the inventory\n\n@return Whatever is left of the stack, 0 If the whole stack fit.
-		p	1		itemStack
+		p	1		stack
 	m	()V	m_8379345	tickItems
 	m	(I)Z	m_4650010	consumeOne
-		p	1		p_1
+		p	1		itemId
 	m	(I)Z	m_1084929	contains
-		p	1		p_1
+		p	1		itemId
 	m	(II)V	m_5531820	m_5531820
 		p	1		p_1
 		p	2		p_2
 	m	(Lnet/minecraft/unmapped/C_2454309;)Z	m_4327429	insertStack
-		p	1		itemStack
+		p	1		stack
 	m	(II)Lnet/minecraft/unmapped/C_2454309;	m_0904339	m_0904339
 		p	1		p_1
 		p	2		p_2
@@ -26164,15 +26164,15 @@ c	net/minecraft/unmapped/C_7400754	net/minecraft/entity/player/PlayerInventory
 		p	1		p_1
 	m	()Ljava/lang/String;	m_2448201	m_2448201
 	m	()I	m_7072579	m_7072579
-	m	(Lnet/minecraft/unmapped/C_0539808;)I	m_7519739	m_7519739
-		p	1		p_1
+	m	(Lnet/minecraft/unmapped/C_0539808;)I	m_7519739	getAttackDamage
+		p	1		target
 	m	(Lnet/minecraft/unmapped/C_1241852;)Z	m_8592876	canToolBreak
 		p	1		block
 	m	(I)Lnet/minecraft/unmapped/C_2454309;	m_4468417	getArmor
 		p	1		slot
 	m	()I	m_7807951	getArmorProtectionValue
 	m	(I)V	m_3102583	damageArmor
-		p	1		p_1
+		p	1		damage
 	m	()V	m_6389707	dropAll
 	m	()V	m_6769151	m_6769151
 	m	(Lnet/minecraft/unmapped/C_7400754;)Z	m_1033637	m_1033637
@@ -26625,7 +26625,7 @@ c	net/minecraft/unmapped/C_7521657	net/minecraft/unmapped/C_3169474__3
 		p	6		p_6
 	m	()Lnet/minecraft/unmapped/C_9848147;	m_7881827	m_7881827
 c	net/minecraft/unmapped/C_7522998	net/minecraft/world/gen/structure/VillagePieces__ClerkHouse
-	f	I	f_8894213	f_8894213
+	f	I	f_8894213	hpos
 	m	(Lnet/minecraft/unmapped/C_3849939;ILjava/util/Random;Lnet/minecraft/unmapped/C_7492943;I)V	<init>	<init>
 		p	1		startPiece
 		p	2		generationDepth
@@ -27748,11 +27748,11 @@ c	net/minecraft/unmapped/C_7901749	net/minecraft/item/SpawnEggItem
 		p	9		p_9
 		p	10		p_10
 	m	(Lnet/minecraft/unmapped/C_5553933;IDDD)Z	m_9040877	spawnEntity
-		p	0		p_0
-		p	1		p_1
-		p	2		p_2
-		p	4		p_4
-		p	6		p_6
+		p	0		world
+		p	1		type
+		p	2		x
+		p	4		y
+		p	6		z
 	m	(ILnet/minecraft/unmapped/C_0191817;Ljava/util/List;)V	m_1746706	m_1746706
 		p	1		p_1
 		p	2		p_2
@@ -28454,7 +28454,7 @@ c	net/minecraft/unmapped/C_8124234	net/minecraft/block/PistonBaseBlock
 		p	4		z
 		p	5		dir
 c	net/minecraft/unmapped/C_8136609	net/minecraft/world/gen/structure/VillagePieces__TinyHouse
-	f	I	f_2325589	f_2325589
+	f	I	f_2325589	hpos
 	m	(Lnet/minecraft/unmapped/C_3849939;ILjava/util/Random;Lnet/minecraft/unmapped/C_7492943;I)V	<init>	<init>
 		p	1		startPiece
 		p	2		generationDepth
@@ -28776,8 +28776,8 @@ c	net/minecraft/unmapped/C_8180393	net/minecraft/entity/ai/pathing/PathNode
 	m	()Ljava/lang/String;	toString	toString
 c	net/minecraft/unmapped/C_8183022	net/minecraft/server/command/handler/CommandHandler
 	m	(Lnet/minecraft/unmapped/C_1730529;Ljava/lang/String;)V	m_9274967	run
-		p	1		p_1
-		p	2		p_2
+		p	1		source
+		p	2		command
 	m	(Lnet/minecraft/unmapped/C_1730529;Ljava/lang/String;)Ljava/util/List;	m_3901694	getSuggestions
 		p	1		source
 		p	2		command
@@ -29651,7 +29651,7 @@ c	net/minecraft/unmapped/C_8457140	net/minecraft/item/WrittenBookItem
 		p	1		p_1
 c	net/minecraft/unmapped/C_8469009	net/minecraft/world/gen/structure/VillagePieces__SmallHouse
 	f	[Lnet/minecraft/unmapped/C_0268929;	f_5844537	LOOT_ENTRIES
-	f	I	f_7409859	f_7409859
+	f	I	f_7409859	hpos
 	f	Z	f_0157781	hasChest
 	m	(Lnet/minecraft/unmapped/C_3849939;ILjava/util/Random;Lnet/minecraft/unmapped/C_7492943;I)V	<init>	<init>
 		p	1		startPiece
@@ -30290,7 +30290,7 @@ c	net/minecraft/unmapped/C_8718968	net/minecraft/block/StonebrickBlock
 		p	3		p_3
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/unmapped/C_8720625	net/minecraft/world/gen/structure/VillagePieces__PriestHouse
-	f	I	f_5909785	f_5909785
+	f	I	f_5909785	hpos
 	m	(Lnet/minecraft/unmapped/C_3849939;ILjava/util/Random;Lnet/minecraft/unmapped/C_7492943;I)V	<init>	<init>
 		p	1		startPiece
 		p	2		generationDepth
@@ -30414,7 +30414,7 @@ c	net/minecraft/unmapped/C_8767726	net/minecraft/server/command/exception/Comman
 		p	2		p_2
 c	net/minecraft/unmapped/C_8779590	net/minecraft/world/gen/structure/VillagePieces__Well
 	f	Z	f_1400559	f_1400559
-	f	I	f_5048264	f_5048264
+	f	I	f_5048264	hpos
 	m	(Lnet/minecraft/unmapped/C_3849939;ILjava/util/Random;II)V	<init>	<init>
 		p	1		startPiece
 		p	2		generationDepth
@@ -31182,7 +31182,7 @@ c	net/minecraft/unmapped/C_8980628	net/minecraft/client/render/entity/EntityRend
 	m	()Lnet/minecraft/unmapped/C_3831727;	m_1544268	getFontRenderer
 c	net/minecraft/unmapped/C_8983523	net/minecraft/server/network/handler/ServerLoginNetworkHandler
 	f	[B	f_0319434	nonce
-	f	Ljava/util/logging/Logger;	f_7653113	f_7653113
+	f	Ljava/util/logging/Logger;	f_7653113	LOGGER
 	f	Ljava/util/Random;	f_7735870	RANDOM
 	f	Lnet/minecraft/unmapped/C_3499589;	f_6623633	connection
 	f	Z	f_1648859	disconnected
@@ -32672,10 +32672,10 @@ c	net/minecraft/unmapped/C_9470286	net/minecraft/world/gen/structure/StructureFe
 	m	(II)Z	m_3576475	m_3576475
 		p	1		p_1
 		p	2		p_2
-	m	(III)Z	m_0193043	getStructure
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
+	m	(III)Z	m_0193043	isInsideStructure
+		p	1		x
+		p	2		y
+		p	3		z
 	m	(Lnet/minecraft/unmapped/C_5553933;III)Lnet/minecraft/unmapped/C_1842758;	m_1618395	findNearestStructure
 		p	1		world
 		p	2		x
@@ -32706,12 +32706,12 @@ c	net/minecraft/unmapped/C_9482064	net/minecraft/inventory/menu/PlayerMenu
 	m	(I)Lnet/minecraft/unmapped/C_2454309;	m_1225782	m_1225782
 		p	1		p_1
 c	net/minecraft/unmapped/C_9482745	net/minecraft/entity/vehicle/MinecartEntity
-	f	[Lnet/minecraft/unmapped/C_2454309;	f_1065264	f_1065264
-	f	I	f_6978703	f_6978703
+	f	[Lnet/minecraft/unmapped/C_2454309;	f_1065264	inventory
+	f	I	f_6978703	fuel
 	f	Z	f_7742916	yawFlipped
-	f	I	f_4490849	f_4490849
-	f	D	f_7901534	f_7901534
-	f	D	f_0756456	f_0756456
+	f	I	f_4490849	type
+	f	D	f_7901534	pushX
+	f	D	f_0756456	pushZ
 	f	[[[I	f_5754041	ADJACENT_RAIL_POSITIONS_BY_SHAPE
 	f	I	f_9778638	clientInterpolationSteps
 	f	D	f_1680671	clientX
@@ -32791,13 +32791,13 @@ c	net/minecraft/unmapped/C_9482745	net/minecraft/entity/vehicle/MinecartEntity
 		p	5		p_5
 	m	(Lnet/minecraft/unmapped/C_9590849;)Z	m_7523250	m_7523250
 		p	1		p_1
-	m	()Z	m_6725589	m_6725589
-	m	(Z)V	m_6179832	m_6179832
-		p	1		p_1
+	m	()Z	m_6725589	hasFuel
+	m	(Z)V	m_6179832	setHasFuel
+		p	1		hasFuel
 	m	()V	m_6217589	m_6217589
 	m	()V	m_7226012	m_7226012
 	m	(I)V	m_5124812	setDamageWobbleStrength
-		p	1		p_1
+		p	1		strength
 	m	()I	m_7734358	getDamageWobbleStrength
 	m	(I)V	m_2242598	setDamageWobbleTicks
 		p	1		ticks
@@ -33879,7 +33879,7 @@ c	net/minecraft/unmapped/C_9865017	net/minecraft/world/map/SavedMapData__Holder
 		c	Packs data for a map update packet in a byte array. The first byte encodes the type\nof update:\n<br>0: colors\n<br>1: decorations\n<br>2: scale
 		p	1		stack
 c	net/minecraft/unmapped/C_9868114	net/minecraft/world/gen/structure/StrongholdPieces__StraightStairs
-	f	Lnet/minecraft/unmapped/C_0341503;	f_5912266	f_5912266
+	f	Lnet/minecraft/unmapped/C_0341503;	f_5912266	entranceType
 	m	(ILjava/util/Random;Lnet/minecraft/unmapped/C_7492943;I)V	<init>	<init>
 		p	1		generationDepth
 		p	2		random

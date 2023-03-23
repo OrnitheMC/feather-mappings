@@ -22,7 +22,7 @@ c	net/minecraft/client/Minecraft	net/minecraft/client/Minecraft
 	f	Ljava/lang/String;	f_3533455	f_3533455	
 	f	Ljava/awt/Canvas;	f_0769488	canvas	
 	f	Z	f_5452485	paused	
-	f	Z	f_1118421	f_1118421	
+	f	Z	f_1118421	stopped	
 	f	Lnet/minecraft/unmapped/C_0876962;	f_9413506	textureManager	
 	f	Lnet/minecraft/unmapped/C_3831727;	f_0426313	textRenderer	
 	f	Lnet/minecraft/unmapped/C_3831727;	f_7716697	shadowTextRenderer	
@@ -136,9 +136,9 @@ c	net/minecraft/client/Minecraft	net/minecraft/client/Minecraft
 	m	(Lnet/minecraft/unmapped/C_7873567;Ljava/lang/String;)V	m_9890357	setWorld	
 		p	1		world	
 		p	2		title	
-	m	(Ljava/lang/String;Ljava/io/File;)V	m_4132893	m_4132893	
-		p	1		p_1	
-		p	2		p_2	
+	m	(Ljava/lang/String;Ljava/io/File;)V	m_4132893	loadSound	
+		p	1		path	
+		p	2		file	
 	m	()Ljava/lang/String;	m_3552812	getChunkDebugInfo	
 	m	()Ljava/lang/String;	m_0587428	getEntityDebugInfo	
 	m	()Ljava/lang/String;	m_2222940	getChunkSourceDebugInfo	
@@ -180,9 +180,9 @@ c	net/minecraft/client/Minecraft	net/minecraft/client/Minecraft
 	m	()Lnet/minecraft/unmapped/C_6001689;	m_0623619	m_0623619	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/client/MinecraftApplet	net/minecraft/client/MinecraftApplet	
-	f	Ljava/awt/Canvas;	f_5159283	f_5159283	
-	f	Lnet/minecraft/client/Minecraft;	f_8871640	f_8871640	
-	f	Ljava/lang/Thread;	f_4196404	f_4196404	
+	f	Ljava/awt/Canvas;	f_5159283	canvas	
+	f	Lnet/minecraft/client/Minecraft;	f_8871640	client	
+	f	Ljava/lang/Thread;	f_4196404	thread	
 	m	()V	<init>	<init>	
 	m	()V	init	init	
 	m	()V	m_1383095	m_1383095	
@@ -434,7 +434,7 @@ c	net/minecraft/unmapped/C_0607826
 	m	(Lnet/minecraft/unmapped/C_9590849;)Z	m_4185556	m_4185556	
 		p	1		p_1	
 	m	(I)V	m_3795038	setDamage	
-		p	1		p_1	
+		p	1		damage	
 	m	()I	m_1515300	getDamage	
 	m	(Lnet/minecraft/unmapped/C_1161898;F)Z	m_8726131		m_8726131
 		p	1			p_1
@@ -1698,7 +1698,7 @@ c	net/minecraft/unmapped/C_3273480
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/unmapped/C_3292284
-	f	I	f_2269199	f_2269199	
+	f	I	f_2269199	lastHealth	
 	f	F	f_2269199		lastHealth
 	m	(I)V	m_9455713	m_9455713	
 		p	1		p_1	
@@ -2241,11 +2241,11 @@ c	net/minecraft/unmapped/C_4580495
 	m	(Ljava/lang/String;IIIFII)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
-		p	7		p_7	
+		p	3		strength	
+		p	4		maxDurability	
+		p	5		miningSpeed	
+		p	6		attackDamage	
+		p	7		enchantability	
 	m	()I	m_4591088	getAttackDamage	
 	m	(Ljava/lang/String;IIIFFI)V	<init>		<init>
 		p	1			p_1
@@ -2844,15 +2844,15 @@ c	net/minecraft/unmapped/C_5956487
 	f	Lnet/minecraft/client/Minecraft;	f_1173078	client	
 	f	Lnet/minecraft/unmapped/C_8105098;	f_1173078		client
 	m	(Lnet/minecraft/client/Minecraft;Lnet/minecraft/unmapped/C_5722573;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		client	
+		p	2		networkHandler	
 	m	(Lnet/minecraft/client/Minecraft;Lnet/minecraft/unmapped/C_5956487;IIII)V	m_5156846	mineBlockInCreative	
-		p	0		p_0	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
+		p	0		client	
+		p	1		interactionManager	
+		p	2		x	
+		p	3		y	
+		p	4		z	
+		p	5		face	
 	m	(Lnet/minecraft/unmapped/C_8105098;Lnet/minecraft/unmapped/C_5722573;)V	<init>		<init>
 		p	1			client
 		p	2			networkHandler
@@ -3607,11 +3607,11 @@ c	net/minecraft/unmapped/C_7393303	org/bouncycastle/jcajce/provider/util/Algorit
 	m	(Lnet/minecraft/unmapped/C_4120457;)V	m_3514811	configure	
 		p	1		p_1	
 c	net/minecraft/unmapped/C_7400754
-	m	(Lnet/minecraft/unmapped/C_0539808;)I	m_7519739	m_7519739	
-		p	1		p_1	
+	m	(Lnet/minecraft/unmapped/C_0539808;)I	m_7519739	getAttackDamage	
+		p	1		target	
 	m	(I)V	m_3102583	damageArmor	
-		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_0539808;)F	m_7519739		m_7519739
+		p	1		damage	
+	m	(Lnet/minecraft/unmapped/C_0539808;)F	m_7519739		getAttackDamage
 		p	1			p_1
 	m	(F)V	m_3102583		damageArmor
 		p	1			armor
@@ -4637,7 +4637,7 @@ c	net/minecraft/unmapped/C_9482745
 		p	1		p_1	
 		p	2		p_2	
 	m	(I)V	m_5124812	setDamageWobbleStrength	
-		p	1		p_1	
+		p	1		strength	
 	m	()I	m_7734358	getDamageWobbleStrength	
 	m	(Lnet/minecraft/unmapped/C_1161898;F)Z	m_8726131		m_8726131
 		p	1			p_1
