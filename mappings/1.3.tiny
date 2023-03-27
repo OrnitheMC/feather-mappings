@@ -4924,8 +4924,8 @@ c	net/minecraft/unmapped/C_1128759	net/minecraft/client/render/texture/HttpTextu
 	f	I	f_2541373	f_2541373
 	f	Z	f_3694259	f_3694259
 	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_0066205;)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
+		p	1		url
+		p	2		processor
 c	net/minecraft/unmapped/C_1137800	net/minecraft/network/packet/PlayerSpawnPointPacket
 	f	I	f_8507091	spawnX
 	f	I	f_6368137	spawnY
@@ -11015,17 +11015,17 @@ c	net/minecraft/unmapped/C_2755677	net/minecraft/block/ClayBlock
 		p	1		p_1
 c	net/minecraft/unmapped/C_2768817	net/minecraft/client/render/MapRenderer
 	f	[I	f_4252557	colors
-	f	I	f_6749836	f_6749836
+	f	I	f_6749836	texture
 	f	Lnet/minecraft/client/C_1331819;	f_6299810	options
-	f	Lnet/minecraft/unmapped/C_3831727;	f_2303418	f_2303418
+	f	Lnet/minecraft/unmapped/C_3831727;	f_2303418	textRenderer
 	m	(Lnet/minecraft/unmapped/C_3831727;Lnet/minecraft/client/C_1331819;Lnet/minecraft/unmapped/C_0876962;)V	<init>	<init>
 		p	1		p_1
 		p	2		p_2
 		p	3		p_3
 	m	(Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_0876962;Lnet/minecraft/unmapped/C_8307016;)V	m_1330537	render
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
+		p	1		player
+		p	2		textureManager
+		p	3		mapData
 c	net/minecraft/unmapped/C_2774025	net/minecraft/server/dedicated/gui/PlayerListGui
 	f	Lnet/minecraft/server/MinecraftServer;	f_4382006	server
 	f	I	f_5199519	tick
@@ -15170,9 +15170,9 @@ c	net/minecraft/unmapped/C_3831727	net/minecraft/client/render/TextRenderer
 	f	I	f_6725889	fontHeight
 	f	Ljava/util/Random;	f_1452436	random
 	f	[B	f_2793280	glyphSizes
-	f	[I	f_1932459	f_1932459
+	f	[I	f_1932459	pages
 	f	[I	f_3993462	colors
-	f	I	f_4196686	f_4196686
+	f	I	f_4196686	boundPage
 	f	Lnet/minecraft/unmapped/C_0876962;	f_2411985	textureManager
 	f	F	f_1124179	xPos
 	f	F	f_3650536	zPos
@@ -25399,24 +25399,24 @@ c	net/minecraft/unmapped/C_7203066	net/minecraft/client/render/HeldItemRenderer
 	f	Lnet/minecraft/unmapped/C_2768817;	f_9367331	mapRenderer
 	f	I	f_1922854	selectedSlot
 	m	(Lnet/minecraft/client/Minecraft;)V	<init>	<init>
-		p	1		p_1
+		p	1		client
 	m	(Lnet/minecraft/unmapped/C_6607881;Lnet/minecraft/unmapped/C_2454309;I)V	m_6454881	render
 		p	1		entity
 		p	2		item
 		p	3		stage
 	m	(Lnet/minecraft/unmapped/C_5786166;FFFF)V	m_1425929	draw
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-		p	5		p_5
+		p	1		builder
+		p	2		uMin
+		p	3		vMin
+		p	4		uMax
+		p	5		vMax
 	m	(F)V	m_7521992	renderHand
 		p	1		tickDelta
 	m	(F)V	m_0490272	renderScreenSpaceEffects
 		p	1		tickDelta
 	m	(FI)V	m_6356832	renderSuffocatingEffect
-		p	1		p_1
-		p	2		p_2
+		p	1		tickDelta
+		p	2		sprite
 	m	(F)V	m_0921825	renderInWaterEffect
 		p	1		tickDelta
 	m	(F)V	m_8287822	renderOnFireEffect
@@ -27803,8 +27803,8 @@ c	net/minecraft/unmapped/C_7947657	net/minecraft/client/render/Frustum
 	m	()V	<init>	<init>
 	m	()Lnet/minecraft/unmapped/C_9620653;	m_3188544	getInstance
 	m	([[FI)V	m_4034842	normalize
-		p	1		p_1
-		p	2		p_2
+		p	1		frustum
+		p	2		face
 	m	()V	m_2563934	compute
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/unmapped/C_7948993	net/minecraft/block/BlockWithCulling
@@ -27959,7 +27959,7 @@ c	net/minecraft/unmapped/C_8025543	net/minecraft/server/rcon/RconClient__C_80255
 	m	(Ljava/lang/String;)Z	m_1458967	m_1458967
 		p	1		p_1
 	m	()Ljava/lang/String;	toString	toString
-c	net/minecraft/unmapped/C_8030141	net/minecraft/world/IWorld
+c	net/minecraft/unmapped/C_8030141	net/minecraft/world/WorldView
 	m	(III)I	m_9893076	getBlock
 		p	1		x
 		p	2		y
@@ -28012,7 +28012,7 @@ c	net/minecraft/unmapped/C_8030141	net/minecraft/world/IWorld
 		p	3		y
 		p	4		z
 	m	()I	m_8568350	getHeight
-	m	()Z	m_5923188	isSaved
+	m	()Z	m_5923188	isEmpty
 	m	(III)Z	m_6985202	hasSolidTop
 		p	1		x
 		p	2		y
@@ -28957,7 +28957,7 @@ c	net/minecraft/unmapped/C_8275823	net/minecraft/world/WorldRegion
 	f	I	f_8192154	chunkX
 	f	I	f_4527434	chunkZ
 	f	[[Lnet/minecraft/unmapped/C_6849228;	f_6307464	chunks
-	f	Z	f_3780196	saved
+	f	Z	f_3780196	empty
 	f	Lnet/minecraft/unmapped/C_5553933;	f_8371121	world
 	m	(Lnet/minecraft/unmapped/C_5553933;IIIIII)V	<init>	<init>
 		p	1		world
@@ -28967,7 +28967,7 @@ c	net/minecraft/unmapped/C_8275823	net/minecraft/world/WorldRegion
 		p	5		maxX
 		p	6		maxY
 		p	7		maxZ
-	m	()Z	m_5923188	m_5923188
+	m	()Z	m_5923188	isEmpty
 	m	(III)I	m_9893076	m_9893076
 		p	1		p_1
 		p	2		p_2

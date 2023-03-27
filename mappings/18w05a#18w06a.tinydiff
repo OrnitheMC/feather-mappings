@@ -9040,7 +9040,7 @@ c	net/minecraft/unmapped/C_8020906
 		p	2			p_2
 	m	(Lnet/minecraft/unmapped/C_5818647;)Lnet/minecraft/unmapped/C_2454309;	m_8420863		m_8420863
 		p	1			p_1
-c	net/minecraft/unmapped/C_8030141
+c	net/minecraft/unmapped/C_8030141	net/minecraft/world/WorldView	net/minecraft/world/BlockLightView
 	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_3622326;	m_8048103	getBlockEntity	
 		p	1		pos	
 	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_2441996;	m_4919395	getBlockState	
@@ -9051,7 +9051,7 @@ c	net/minecraft/unmapped/C_8030141
 		c	Returns the emitted strong redstone power from the given position in the given direction.\n\n<p>\nNOTE: directions in redstone power related methods are backwards, so this method\nreturns power emitted in the direction <i>opposite</i> of the one given.	
 		p	1		pos	
 		p	2		dir	
-	m	()I	m_0202919	m_0202919	
+	m	()I	m_0202919	getMaxLight	
 c	net/minecraft/unmapped/C_8099772
 c	net/minecraft/unmapped/C_8099772$C_6967555
 	f	Lnet/minecraft/unmapped/C_8099772$C_6967555;	f_9727007	IN_AIR	
@@ -9261,9 +9261,9 @@ c	net/minecraft/unmapped/C_8275823
 	m	(Lnet/minecraft/unmapped/C_3674802;)Z	m_6918486		m_6918486
 		p	1			p_1
 	m	()Z	m_2254919		m_2254919
-	m	(Lnet/minecraft/unmapped/C_2891045;Lnet/minecraft/unmapped/C_3674802;)I	m_2430683	getLightLevel	m_2430683
+	m	(Lnet/minecraft/unmapped/C_2891045;Lnet/minecraft/unmapped/C_3674802;)I	m_2430683	getLight	m_2430683
 		p	1		type	p_1
-		p	2		x	p_2
+		p	2		pos	p_2
 c	net/minecraft/unmapped/C_8295645
 	m	()Ljava/util/stream/Stream;	m_2093582		m_2093582
 c	net/minecraft/unmapped/C_8322754	net/minecraft/world/gen/feature/VineFeature	
@@ -11684,26 +11684,26 @@ c	net/minecraft/unmapped/C_2137190		net/minecraft/world/WorldView
 		p	1			pos
 	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_6928498;	m_4932347		getBiome
 		p	1			pos
-	m	(Lnet/minecraft/unmapped/C_2891045;Lnet/minecraft/unmapped/C_3674802;)I	m_2430683		getLightLevel
+	m	(Lnet/minecraft/unmapped/C_2891045;Lnet/minecraft/unmapped/C_3674802;)I	m_2430683		getLight
 		p	1			type
 		p	2			pos
 	m	(Lnet/minecraft/unmapped/C_3674802;I)I	m_7900415		getLight
 		p	1			pos
-		p	2			ambientDarkness
+		p	2			blockLight
 	m	(Lnet/minecraft/unmapped/C_3674802;)Z	m_1260767		hasSkyAccess
 		p	1			pos
 	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_3674802;	m_6991921		getHeight
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_3674802;	m_6555286		m_6555286
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_3674802;	m_5219499		m_5219499
-		p	1			p_1
+		p	1			pos
+	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_3674802;	m_6555286		getSurfaceHeight
+		p	1			pos
+	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_3674802;	m_5219499		getPrecipitationHeight
+		p	1			pos
 	m	()Lnet/minecraft/unmapped/C_7549223;	m_3660681		getWorldBorder
-	m	(Lnet/minecraft/unmapped/C_3674802;)Z	m_8161458		m_8161458
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_5577922;)Ljava/util/List;	m_9684691		m_9684691
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/unmapped/C_3674802;)Z	m_8161458		isWater
+		p	1			pos
+	m	(Lnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_5577922;)Ljava/util/List;	m_9684691		getEntities
+		p	1			exclude
+		p	2			box
 	m	(Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;)I	m_6919678		getEmittedStrongPower
 		p	1			pos
 		p	2			dir
@@ -13602,8 +13602,8 @@ c	net/minecraft/unmapped/C_6937124		net/minecraft/world/ModifiableWorld
 		p	3			flags
 	m	(Lnet/minecraft/unmapped/C_0539808;)Z	m_1727586		addEntity
 		p	1			entity
-	m	(Lnet/minecraft/unmapped/C_3674802;)Z	m_5112577		m_5112577
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_3674802;)Z	m_5112577		removeBlock
+		p	1			pos
 	m	(Lnet/minecraft/unmapped/C_2891045;Lnet/minecraft/unmapped/C_3674802;I)V	m_1328714		setLight
 		p	1			type
 		p	2			pos
@@ -14501,40 +14501,40 @@ c	net/minecraft/unmapped/C_9844932		net/minecraft/world/WorldAccess
 	m	(Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1241852;)Z	m_0159225		hasScheduledTick
 		p	1			pos
 		p	2			block
-	m	(Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_2441996;)V	m_4414443		m_4414443
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1241852;I)V	m_4232538		m_4232538
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	()I	m_7756183		m_7756183
+	m	(Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_2441996;)V	m_4414443		tickBlock
+		p	1			pos
+		p	2			state
+	m	(Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1241852;I)V	m_4232538		scheduleTick
+		p	1			pos
+		p	2			block
+		p	3			delay
+	m	()I	m_7756183		getSeaLevel
 	m	()Lnet/minecraft/unmapped/C_5553933;	m_1568044		getWorld
 	m	()Lnet/minecraft/unmapped/C_6152184;	m_6536808		getData
 	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_2716056;	m_1672358		getLocalDifficulty
 		p	1			pos
-	m	(Ljava/util/function/Function;Ljava/lang/String;)Lnet/minecraft/unmapped/C_0573095;	m_7349071		m_7349071
-		p	1			p_1
-		p	2			p_2
-	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_0573095;)V	m_0610197		m_0610197
-		p	1			p_1
-		p	2			p_2
-	m	()Lnet/minecraft/server/MinecraftServer;	m_0183331		m_0183331
+	m	(Ljava/util/function/Function;Ljava/lang/String;)Lnet/minecraft/unmapped/C_0573095;	m_7349071		loadSavedData
+		p	1			supplier
+		p	2			id
+	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_0573095;)V	m_0610197		setSavedData
+		p	1			id
+		p	2			data
+	m	()Lnet/minecraft/server/MinecraftServer;	m_0183331		getServer
 	m	()Lnet/minecraft/unmapped/C_9848147;	m_6488616		getChunkSource
 	m	()Lnet/minecraft/unmapped/C_5528202;	m_9322661		getStorage
-	m	()Lnet/minecraft/unmapped/C_3198459;	m_6377117		m_6377117
+	m	()Lnet/minecraft/unmapped/C_3198459;	m_6377117		getDimension
 	m	()Ljava/util/Random;	m_0107939		getRandom
 	m	(Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1241852;)V	m_5170064		onBlockChanged
 		p	1			pos
 		p	2			block
 	m	()Lnet/minecraft/unmapped/C_3674802;	m_9708082		getSpawnPoint
-	m	(Lnet/minecraft/unmapped/C_5503280$C_6055071;II)I	m_6009292		m_6009292
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(II)I	m_2922797		m_2922797
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/unmapped/C_5503280$C_6055071;II)I	m_6009292		getHeight
+		p	1			type
+		p	2			x
+		p	3			z
+	m	(II)I	m_2922797		getHeight
+		p	1			x
+		p	2			z
 	m	(Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_7721249;Lnet/minecraft/unmapped/C_7541710;FF)V	m_2634923		playSound
 		p	1			source
 		p	2			pos
