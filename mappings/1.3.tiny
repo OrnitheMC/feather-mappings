@@ -4066,8 +4066,8 @@ c	net/minecraft/unmapped/C_0876962	net/minecraft/client/render/texture/TextureMa
 	f	Lnet/minecraft/unmapped/C_0739569;	f_6481494	textures
 	f	Ljava/nio/IntBuffer;	f_3034656	f_3034656
 	f	Ljava/nio/ByteBuffer;	f_7798304	f_7798304
-	f	Ljava/util/List;	f_8007937	f_8007937
-	f	Ljava/util/Map;	f_9776761	f_9776761
+	f	Ljava/util/List;	f_8007937	atlases
+	f	Ljava/util/Map;	f_9776761	httpTextures
 	f	Lnet/minecraft/client/C_1331819;	f_1318293	options
 	f	Z	f_2480802	f_2480802
 	f	Z	f_2011542	f_2011542
@@ -4099,16 +4099,16 @@ c	net/minecraft/unmapped/C_0876962	net/minecraft/client/render/texture/TextureMa
 		p	4		p_4
 	m	(I)V	m_5224003	remove
 		p	1		texture
-	m	(Ljava/lang/String;Ljava/lang/String;)I	m_1185982	m_1185982
-		p	1		p_1
-		p	2		p_2
-	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_0066205;)Lnet/minecraft/unmapped/C_1128759;	m_9573217	m_9573217
-		p	1		p_1
-		p	2		p_2
-	m	(Ljava/lang/String;)V	m_1790717	m_1790717
-		p	1		p_1
-	m	(Lnet/minecraft/unmapped/C_4257480;)V	m_6780623	m_6780623
-		p	1		p_1
+	m	(Ljava/lang/String;Ljava/lang/String;)I	m_1185982	bindHttpTexture
+		p	1		path
+		p	2		defaultPath
+	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_0066205;)Lnet/minecraft/unmapped/C_1128759;	m_9573217	getHttpTexture
+		p	1		path
+		p	2		processor
+	m	(Ljava/lang/String;)V	m_1790717	removeHttpTexture
+		p	1		path
+	m	(Lnet/minecraft/unmapped/C_4257480;)V	m_6780623	addAtlas
+		p	1		atlas
 	m	()V	m_0100952	m_0100952
 	m	()V	m_8394980	reload
 	m	(Ljava/io/InputStream;)Ljava/awt/image/BufferedImage;	m_9639646	readImage
@@ -4920,9 +4920,9 @@ c	net/minecraft/unmapped/C_1119254	net/minecraft/server/entity/EntityTracker
 		p	1		player
 c	net/minecraft/unmapped/C_1128759	net/minecraft/client/render/texture/HttpTexture
 	f	Ljava/awt/image/BufferedImage;	f_5379823	image
-	f	I	f_7533350	f_7533350
-	f	I	f_2541373	f_2541373
-	f	Z	f_3694259	f_3694259
+	f	I	f_7533350	requestCount
+	f	I	f_2541373	removedCount
+	f	Z	f_3694259	bound
 	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_0066205;)V	<init>	<init>
 		p	1		url
 		p	2		processor
@@ -16273,18 +16273,18 @@ c	net/minecraft/unmapped/C_4255360	net/minecraft/inventory/slot/FurnaceResultSlo
 		p	2		p_2
 	m	(Lnet/minecraft/unmapped/C_2454309;)V	m_5730126	m_5730126
 		p	1		p_1
-c	net/minecraft/unmapped/C_4257480	net/minecraft/unmapped/C_4257480
-	f	[B	f_7371108	f_7371108
-	f	I	f_5671334	f_5671334
-	f	Z	f_2035267	f_2035267
+c	net/minecraft/unmapped/C_4257480	net/minecraft/client/render/texture/TextureAtlas
+	f	[B	f_7371108	buffer
+	f	I	f_5671334	sprite
+	f	Z	f_2035267	anaglyph
 	f	I	f_5526904	f_5526904
-	f	I	f_6775517	f_6775517
-	f	I	f_7715468	f_7715468
+	f	I	f_6775517	resolution
+	f	I	f_7715468	type
 	m	(I)V	<init>	<init>
-		p	1		p_1
+		p	1		sprite
 	m	()V	m_5407865	m_5407865
-	m	(Lnet/minecraft/unmapped/C_0876962;)V	m_2706008	m_2706008
-		p	1		p_1
+	m	(Lnet/minecraft/unmapped/C_0876962;)V	m_2706008	bind
+		p	1		textureManager
 c	net/minecraft/unmapped/C_4258913	net/minecraft/world/gen/structure/FortressPieces__BlazeSpawner
 	f	Z	f_7500658	shouldGenerateMobSpawner
 	m	(ILjava/util/Random;Lnet/minecraft/unmapped/C_7492943;I)V	<init>	<init>
@@ -21479,12 +21479,12 @@ c	net/minecraft/unmapped/C_5940087	net/minecraft/entity/thrown/PotionEntity
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_1129840	m_1129840
 		p	1		p_1
 c	net/minecraft/unmapped/C_5944992	net/minecraft/unmapped/C_5944992
-	f	Lnet/minecraft/client/Minecraft;	f_0186630	f_0186630
+	f	Lnet/minecraft/client/Minecraft;	f_0186630	client
 	f	[I	f_1566875	f_1566875
 	f	D	f_5199934	f_5199934
 	f	D	f_2037163	f_2037163
 	m	(Lnet/minecraft/client/Minecraft;)V	<init>	<init>
-		p	1		p_1
+		p	1		client
 	m	()V	m_5407865	m_5407865
 c	net/minecraft/unmapped/C_5945104	net/minecraft/unmapped/C_5945104
 	f	I	f_8078380	f_8078380
@@ -21500,9 +21500,9 @@ c	net/minecraft/unmapped/C_5945104	net/minecraft/unmapped/C_5945104
 		p	3		p_3
 	m	()V	m_8625420	m_8625420
 c	net/minecraft/unmapped/C_5949355	net/minecraft/client/resource/pack/TexturePack
-	m	(Lnet/minecraft/unmapped/C_0876962;)V	m_7090372	unload
+	m	(Lnet/minecraft/unmapped/C_0876962;)V	m_7090372	removeIcon
 		p	1		manager
-	m	(Lnet/minecraft/unmapped/C_0876962;)V	m_0593473	load
+	m	(Lnet/minecraft/unmapped/C_0876962;)V	m_0593473	bindIcon
 		p	1		manager
 	m	(Ljava/lang/String;)Ljava/io/InputStream;	m_2448949	getTextureOrDefault
 		p	1		path
@@ -22988,7 +22988,7 @@ c	net/minecraft/unmapped/C_6482301	net/minecraft/client/render/model/entity/Magm
 	f	[Lnet/minecraft/unmapped/C_6697291;	f_7332597	slices
 	f	Lnet/minecraft/unmapped/C_6697291;	f_3467675	body
 	m	()V	<init>	<init>
-	m	()I	m_1124976	m_1124976
+	m	()I	m_1124976	getType
 	m	(Lnet/minecraft/unmapped/C_6607881;FFF)V	m_3922927	m_3922927
 		p	1		p_1
 		p	2		p_2
@@ -23889,9 +23889,9 @@ c	net/minecraft/unmapped/C_6823239	net/minecraft/client/render/item/ItemRenderer
 		p	8		p_8
 		p	9		p_9
 	m	(II)V	m_5891373	render
-		p	1		p_1
-		p	2		p_2
-	m	(Lnet/minecraft/unmapped/C_3831727;Lnet/minecraft/unmapped/C_0876962;IIIII)V	m_5840420	renderItemInGui
+		p	1		sprite
+		p	2		count
+	m	(Lnet/minecraft/unmapped/C_3831727;Lnet/minecraft/unmapped/C_0876962;IIIII)V	m_5840420	renderGuiItem
 		p	1		p_1
 		p	2		p_2
 		p	3		p_3
@@ -23899,38 +23899,38 @@ c	net/minecraft/unmapped/C_6823239	net/minecraft/client/render/item/ItemRenderer
 		p	5		p_5
 		p	6		p_6
 		p	7		p_7
-	m	(Lnet/minecraft/unmapped/C_3831727;Lnet/minecraft/unmapped/C_0876962;Lnet/minecraft/unmapped/C_2454309;II)V	m_6246546	renderGuiItem
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-		p	5		p_5
+	m	(Lnet/minecraft/unmapped/C_3831727;Lnet/minecraft/unmapped/C_0876962;Lnet/minecraft/unmapped/C_2454309;II)V	m_6246546	renderGuiItemWithEnchantmentGlint
+		p	1		textRenderer
+		p	2		textureManager
+		p	3		stack
+		p	4		x
+		p	5		y
 	m	(IIIII)V	m_1929676	renderEnchantmentGlint
-		p	1		unused
-		p	2		x
-		p	3		z
-		p	4		y
-		p	5		dZ
-	m	(Lnet/minecraft/unmapped/C_3831727;Lnet/minecraft/unmapped/C_0876962;Lnet/minecraft/unmapped/C_2454309;II)V	m_1226858	renderItemInfo
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-		p	5		p_5
-	m	(Lnet/minecraft/unmapped/C_5786166;IIIII)V	m_9490960	renderBufferVerticies
-		p	1		buffer
+		p	1		seed
 		p	2		x
 		p	3		y
-		p	4		dX
-		p	5		z
+		p	4		width
+		p	5		height
+	m	(Lnet/minecraft/unmapped/C_3831727;Lnet/minecraft/unmapped/C_0876962;Lnet/minecraft/unmapped/C_2454309;II)V	m_1226858	renderItemInfo
+		p	1		textRenderer
+		p	2		textureManager
+		p	3		stack
+		p	4		x
+		p	5		y
+	m	(Lnet/minecraft/unmapped/C_5786166;IIIII)V	m_9490960	drawRect
+		p	1		bufferBuilder
+		p	2		x
+		p	3		y
+		p	4		width
+		p	5		height
 		p	6		color
-	m	(IIIIII)V	m_6257074	renderBufferVertexWithSprite
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-		p	5		p_5
-		p	6		p_6
+	m	(IIIIII)V	m_6257074	drawTexture
+		p	1		x
+		p	2		y
+		p	3		u
+		p	4		v
+		p	5		width
+		p	6		height
 	m	(Lnet/minecraft/unmapped/C_0539808;DDDFF)V	m_8727966	m_8727966
 		p	1		p_1
 		p	2		p_2
@@ -32276,7 +32276,7 @@ c	net/minecraft/unmapped/C_9399468	net/minecraft/crafting/recipe/ShapedRecipe
 		p	1		p_1
 	m	()I	m_7285375	m_7285375
 c	net/minecraft/unmapped/C_9406944	net/minecraft/client/render/entity/MagmaCubeRenderer
-	f	I	f_4356959	f_4356959
+	f	I	f_4356959	type
 	m	()V	<init>	<init>
 	m	(Lnet/minecraft/unmapped/C_0137330;DDDFF)V	m_4276607	m_4276607
 		p	1		p_1
