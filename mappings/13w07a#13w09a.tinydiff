@@ -139,10 +139,10 @@ c	net/minecraft/unmapped/C_0123381
 		p	2			p_2
 	m	(Ljava/lang/String;)Z	m_3120376		hasResource
 		p	1			path
-c	net/minecraft/unmapped/C_0141980	net/minecraft/unmapped/C_0141980	
-	f	[I	f_4558388	f_4558388	
-	m	([I)V	m_4199485	m_4199485	
-		p	0		p_0	
+c	net/minecraft/unmapped/C_0141980	net/minecraft/client/world/color/WaterColors	
+	f	[I	f_4558388	colors	
+	m	([I)V	m_4199485	set	
+		p	0		colors	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_0259655
 c	net/minecraft/unmapped/C_0259655$1	net/minecraft/client/render/GameRenderer__1	
@@ -259,21 +259,22 @@ c	net/minecraft/unmapped/C_0632194$5	argo/jdom/JsonNodeSelectors__5
 c	net/minecraft/unmapped/C_0640744
 	f	I	f_8084397	f_8084397	
 	f	I	f_3502800	f_3502800	
-	m	(Ljava/util/Map;)V	m_1280577	m_1280577	
+	m	(Ljava/util/Map;)V	m_1280577	register	
 		p	1		p_1	
 	m	()Lnet/minecraft/unmapped/C_2686552;	m_1973761	m_1973761	
 	m	()I	m_4617735	m_4617735	
-	m	()Lnet/minecraft/unmapped/C_2686552;	m_1280577		m_1280577
+	m	()Lnet/minecraft/unmapped/C_2686552;	m_1280577		register
 	m	()V	m_4617735		stitch
 c	net/minecraft/unmapped/C_0876962
-	f	Ljava/nio/ByteBuffer;	f_7798304	f_7798304	
-	f	Z	f_2480802	f_2480802	
-	f	Z	f_2011542	f_2011542	
-	m	(Ljava/awt/image/BufferedImage;)Ljava/awt/image/BufferedImage;	m_0537550	m_0537550	
-		p	1		p_1	
+	f	Ljava/nio/ByteBuffer;	f_7798304	buffer	
+	f	Z	f_2480802	clamp	
+	f	Z	f_2011542	blur	
+	f	Ljava/nio/IntBuffer;	f_3034656	intBuffer	buffer
+	m	(Ljava/awt/image/BufferedImage;)Ljava/awt/image/BufferedImage;	m_0537550	rescale	
+		p	1		image	
 	m	(Ljava/awt/image/BufferedImage;I)V	m_8772812	bind	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		image	
+		p	2		texture	
 	m	(Ljava/lang/String;)V	m_4291731		bind
 		p	1			path
 	m	(Ljava/awt/image/BufferedImage;I)V	m_7106890		bind
@@ -284,8 +285,8 @@ c	net/minecraft/unmapped/C_0876962
 		p	2			glId
 		p	3			blur
 		p	4			mipmap
-	m	([I)[I	m_3259654		m_3259654
-		p	1			p_1
+	m	([I)[I	m_3259654		applyAnaglyphFilter
+		p	1			pixels
 c	net/minecraft/unmapped/C_0975786
 	f	Lnet/minecraft/unmapped/C_8878495;	f_5762808		entityFilter
 	m	(Lnet/minecraft/unmapped/C_0975786;)Lnet/minecraft/unmapped/C_5622853;	m_8994263		getMob
@@ -355,12 +356,12 @@ c	net/minecraft/unmapped/C_1577640$1	net/minecraft/client/gui/screen/multiplayer
 		p	2		p_2	
 	m	()V	run	run	
 c	net/minecraft/unmapped/C_1580579
-	m	(IIII)Lnet/minecraft/unmapped/C_2686552;	m_6837329	m_6837329	
+	m	(IIII)Lnet/minecraft/unmapped/C_2686552;	m_6837329	register	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
-	m	(IIIIIIIZLjava/awt/image/BufferedImage;)Lnet/minecraft/unmapped/C_2686552;	m_9792104	m_9792104	
+	m	(IIIIIIIZLjava/awt/image/BufferedImage;)Lnet/minecraft/unmapped/C_2686552;	m_9792104	register	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
@@ -370,28 +371,28 @@ c	net/minecraft/unmapped/C_1580579
 		p	7		p_7	
 		p	8		p_8	
 		p	9		p_9	
-	m	(Ljava/lang/String;)Ljava/lang/String;	m_9612797		m_9612797
-		p	1			p_1
-	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_5949355;)Z	m_2031765		m_2031765
-		p	1			p_1
-		p	2			p_2
-	m	(Ljava/lang/String;IIIIIIIZLjava/awt/image/BufferedImage;)Lnet/minecraft/unmapped/C_2686552;	m_9792104		m_9792104
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
+	m	(Ljava/lang/String;)Ljava/lang/String;	m_9612797		stripFileExtension
+		p	1			path
+	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_5949355;)Z	m_2031765		hasTexture
+		p	1			path
+		p	2			pack
+	m	(Ljava/lang/String;IIIIIIIZLjava/awt/image/BufferedImage;)Lnet/minecraft/unmapped/C_2686552;	m_9792104		register
+		p	1			path
+		p	2			type
+		p	3			width
+		p	4			height
+		p	5			glPixelFormat
+		p	6			glTexFormat
+		p	7			glMinFilter
+		p	8			glMagFilter
 		p	9			p_9
-		p	10			p_10
-	m	(Ljava/lang/String;IIII)Lnet/minecraft/unmapped/C_2686552;	m_6837329		m_6837329
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	10			image
+	m	(Ljava/lang/String;IIII)Lnet/minecraft/unmapped/C_2686552;	m_6837329		register
+		p	1			path
+		p	2			type
+		p	3			width
+		p	4			height
+		p	5			glTexFormat
 c	net/minecraft/unmapped/C_1726165
 c	net/minecraft/unmapped/C_1726165$1	net/minecraft/stat/StatsSyncer__1	
 	f	Lnet/minecraft/unmapped/C_1726165;	f_7402497	f_7402497	
@@ -437,36 +438,36 @@ c	net/minecraft/unmapped/C_2686552
 	m	(Ljava/lang/String;)V	m_9359367	m_9359367	
 		p	1		p_1	
 	m	(Ljava/lang/String;IIIIIIII)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
-		p	9			p_9
+		p	1			path
+		p	2			type
+		p	3			width
+		p	4			height
+		p	5			glWrapMode
+		p	6			glPixelFormat
+		p	7			glTexFormat
+		p	8			glMinFilter
+		p	9			glMagFilter
 	m	(Ljava/lang/String;IIIIIIILjava/awt/image/BufferedImage;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
-		p	9			p_9
+		p	1			path
+		p	2			type
+		p	3			width
+		p	4			height
+		p	5			glPixelFormat
+		p	6			glTexFormat
+		p	7			glMinFilter
+		p	8			glMagFilter
+		p	9			image
 	m	(Ljava/lang/String;IIIIIIIILjava/awt/image/BufferedImage;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
-		p	9			p_9
-		p	10			p_10
+		p	1			path
+		p	2			type
+		p	3			width
+		p	4			height
+		p	5			glWrapMode
+		p	6			glPixelFormat
+		p	7			glTexFormat
+		p	8			glMinFilter
+		p	9			glMagFilter
+		p	10			image
 c	net/minecraft/unmapped/C_3831727
 	f	I	f_9065645	f_9065645	
 	f	[I	f_1932459	pages	
@@ -672,7 +673,7 @@ c	net/minecraft/unmapped/C_6187096
 c	net/minecraft/unmapped/C_6962292	net/minecraft/world/gen/structure/TemplePieces	
 c	net/minecraft/unmapped/C_7105334
 	m	()Lnet/minecraft/unmapped/C_5949355;	m_1043993		m_1043993
-c	net/minecraft/unmapped/C_7105334$1	net/minecraft/client/resource/pack/TexturePackLoader__1	
+c	net/minecraft/unmapped/C_7105334$1	net/minecraft/client/resource/pack/TexturePacks__1	
 	f	Lnet/minecraft/unmapped/C_7105334;	f_7852772	f_7852772	
 	m	(Lnet/minecraft/unmapped/C_7105334;)V	<init>	<init>	
 		p	1		p_1	
@@ -786,9 +787,9 @@ c	net/minecraft/unmapped/C_9199292$1	argo/format/CompactJsonFormatter__1
 	f	[I	f_3808805	f_3808805	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_9236886
-	m	(Ljava/nio/IntBuffer;)V	m_7614401	m_7614401	
-		p	0		p_0	
-	m	()I	m_7614401		m_7614401
+	m	(Ljava/nio/IntBuffer;)V	m_7614401	genTextures	
+		p	0		lists	
+	m	()I	m_7614401		genTextures
 	m	()V	m_3478385		m_3478385
 c	net/minecraft/unmapped/C_9504922
 	f	Ljava/util/List;	locations	locations	
@@ -828,15 +829,15 @@ c	net/minecraft/unmapped/C_9590849
 		p	1			p_1
 c	net/minecraft/unmapped/C_9713437
 	f	Ljava/lang/String;	f_5925888	f_5925888	
-	f	Lnet/minecraft/unmapped/C_2686552;	f_8681623		f_8681623
+	f	Lnet/minecraft/unmapped/C_2686552;	f_8681623		texture
 	m	(Ljava/lang/String;II)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 	m	()Ljava/lang/String;	m_5970863	m_5970863	
 	m	(Lnet/minecraft/unmapped/C_2686552;)V	<init>		<init>
-		p	1			p_1
-	m	()Lnet/minecraft/unmapped/C_2686552;	m_0939230		m_0939230
+		p	1			texture
+	m	()Lnet/minecraft/unmapped/C_2686552;	m_0939230		getTexture
 c	net/minecraft/unmapped/C_9992501
 	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_7169022	loadSinglePlayerData	
 		p	1		player	

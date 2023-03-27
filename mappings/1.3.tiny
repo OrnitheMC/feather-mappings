@@ -500,7 +500,7 @@ c	net/minecraft/client/Minecraft	net/minecraft/client/Minecraft
 	f	Z	f_1118421	stopped
 	f	Lnet/minecraft/unmapped/C_0876962;	f_9413506	textureManager
 	f	Lnet/minecraft/unmapped/C_3831727;	f_0426313	textRenderer
-	f	Lnet/minecraft/unmapped/C_3831727;	f_7716697	shadowTextRenderer
+	f	Lnet/minecraft/unmapped/C_3831727;	f_7716697	textShadowRenderer
 	f	Lnet/minecraft/unmapped/C_3020744;	f_0723335	currentScreen
 	f	Lnet/minecraft/client/C_0877775;	f_7424826	loadingScreenRenderer
 	f	Lnet/minecraft/unmapped/C_0259655;	f_4267957	gameRenderer
@@ -526,8 +526,8 @@ c	net/minecraft/client/Minecraft	net/minecraft/client/Minecraft
 	f	Lnet/minecraft/unmapped/C_2854223;	f_8029336	statHandler
 	f	Ljava/lang/String;	f_6808466	serverAddress
 	f	I	f_0532278	serverPort
-	f	Lnet/minecraft/unmapped/C_1703615;	f_2311908	f_2311908
-	f	Lnet/minecraft/unmapped/C_2366878;	f_7652878	f_7652878
+	f	Lnet/minecraft/unmapped/C_1703615;	f_2311908	waterSprite
+	f	Lnet/minecraft/unmapped/C_2366878;	f_7652878	lavaSprite
 	f	Z	f_1224253	hasTakenScreenshot
 	f	Z	f_0520296	focussed
 	f	J	f_7172439	sysTime
@@ -569,7 +569,7 @@ c	net/minecraft/client/Minecraft	net/minecraft/client/Minecraft
 		p	4		v
 		p	5		width
 		p	6		height
-	m	()Ljava/io/File;	m_7340082	m_7340082
+	m	()Ljava/io/File;	m_7340082	getRunDirectory
 	m	(Ljava/lang/String;)Ljava/io/File;	m_0595814	m_0595814
 		p	0		p_0
 	m	()Lnet/minecraft/client/C_3111587;	m_2753470	getOs
@@ -1457,11 +1457,11 @@ c	net/minecraft/unmapped/C_0137721	net/minecraft/client/LanServerList
 	m	(Ljava/lang/String;Ljava/net/InetAddress;)V	m_5854153	add
 		p	1		metadata
 		p	2		address
-c	net/minecraft/unmapped/C_0141980	net/minecraft/unmapped/C_0141980
-	f	[I	f_4558388	f_4558388
+c	net/minecraft/unmapped/C_0141980	net/minecraft/client/world/color/WaterColors
+	f	[I	f_4558388	colors
 	m	()V	<init>	<init>
-	m	([I)V	m_4199485	m_4199485
-		p	0		p_0
+	m	([I)V	m_4199485	set
+		p	0		colors
 	m	(DD)I	m_9870199	m_9870199
 		p	0		p_0
 		p	2		p_2
@@ -3513,12 +3513,12 @@ c	net/minecraft/unmapped/C_0674995	net/minecraft/server/dedicated/gui/DedicatedS
 	m	(Lnet/minecraft/unmapped/C_0674995;)Lnet/minecraft/unmapped/C_1555023;	m_4893589	getServerFrom
 		p	0		dedicatedServerGui
 	m	()V	<clinit>	<clinit>
-c	net/minecraft/unmapped/C_0682843	net/minecraft/unmapped/C_0682843
-	f	[F	f_9064253	f_9064253
-	f	[F	f_0093373	f_0093373
+c	net/minecraft/unmapped/C_0682843	net/minecraft/client/render/texture/WaterSideSprite
+	f	[F	f_9064253	image0
+	f	[F	f_0093373	image1
 	f	[F	f_7085281	f_7085281
 	f	[F	f_4545732	f_4545732
-	f	I	f_2449817	f_2449817
+	f	I	f_2449817	ticks
 	m	()V	<init>	<init>
 	m	()V	m_5407865	m_5407865
 c	net/minecraft/unmapped/C_0693187	net/minecraft/world/biome/SwampBiome
@@ -3812,8 +3812,8 @@ c	net/minecraft/unmapped/C_0774916	net/minecraft/block/FireBlock
 		p	2		p_2
 		p	3		p_3
 		p	4		p_4
-	m	(I)Z	m_7555308	m_7555308
-		p	1		p_1
+	m	(I)Z	m_7555308	canBurn
+		p	1		blockId
 	m	(Lnet/minecraft/unmapped/C_5553933;IIILjava/util/Random;)V	m_9792685	m_9792685
 		p	1		p_1
 		p	2		p_2
@@ -4062,41 +4062,41 @@ c	net/minecraft/unmapped/C_0867338	net/minecraft/stat/achievement/AchievementSta
 		p	1		value
 c	net/minecraft/unmapped/C_0876962	net/minecraft/client/render/texture/TextureManager
 	f	Ljava/util/HashMap;	f_4304202	textures
-	f	Ljava/util/HashMap;	f_7183175	f_7183175
-	f	Lnet/minecraft/unmapped/C_0739569;	f_6481494	f_6481494
-	f	Ljava/nio/IntBuffer;	f_3034656	f_3034656
-	f	Ljava/nio/ByteBuffer;	f_7798304	f_7798304
-	f	Ljava/util/List;	f_8007937	atlases
+	f	Ljava/util/HashMap;	f_7183175	colors
+	f	Lnet/minecraft/unmapped/C_0739569;	f_6481494	boundTextures
+	f	Ljava/nio/IntBuffer;	f_3034656	intBuffer
+	f	Ljava/nio/ByteBuffer;	f_7798304	buffer
+	f	Ljava/util/List;	f_8007937	sprites
 	f	Ljava/util/Map;	f_9776761	httpTextures
 	f	Lnet/minecraft/client/C_1331819;	f_1318293	options
-	f	Z	f_2480802	f_2480802
-	f	Z	f_2011542	f_2011542
+	f	Z	f_2480802	clamp
+	f	Z	f_2011542	blur
 	f	Lnet/minecraft/unmapped/C_7105334;	f_5607366	texturePacks
 	f	Ljava/awt/image/BufferedImage;	f_1830959	image
 	m	(Lnet/minecraft/unmapped/C_7105334;Lnet/minecraft/client/C_1331819;)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
+		p	1		texturePacks
+		p	2		options
 	m	(Ljava/lang/String;)[I	m_7074278	getColors
 		p	1		path
-	m	(Ljava/awt/image/BufferedImage;)[I	m_7687563	m_7687563
-		p	1		p_1
-	m	(Ljava/awt/image/BufferedImage;[I)[I	m_2717571	m_2717571
-		p	1		p_1
-		p	2		p_2
-	m	(Ljava/lang/String;)I	m_9688911	get
+	m	(Ljava/awt/image/BufferedImage;)[I	m_7687563	readColors
+		p	1		image
+	m	(Ljava/awt/image/BufferedImage;[I)[I	m_2717571	readColors
+		p	1		image
+		p	2		is
+	m	(Ljava/lang/String;)I	m_9688911	load
 		p	1		path
-	m	(Ljava/awt/image/BufferedImage;)Ljava/awt/image/BufferedImage;	m_0537550	m_0537550
-		p	1		p_1
+	m	(Ljava/awt/image/BufferedImage;)Ljava/awt/image/BufferedImage;	m_0537550	rescale
+		p	1		image
 	m	(Ljava/awt/image/BufferedImage;)I	m_0440500	bind
 		p	1		image
 	m	(Ljava/awt/image/BufferedImage;I)V	m_8772812	bind
-		p	1		p_1
-		p	2		p_2
-	m	([IIII)V	m_0236438	m_0236438
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
+		p	1		image
+		p	2		texture
+	m	([IIII)V	m_0236438	bind
+		p	1		colors
+		p	2		width
+		p	3		height
+		p	4		texture
 	m	(I)V	m_5224003	remove
 		p	1		texture
 	m	(Ljava/lang/String;Ljava/lang/String;)I	m_1185982	bindHttpTexture
@@ -4107,9 +4107,9 @@ c	net/minecraft/unmapped/C_0876962	net/minecraft/client/render/texture/TextureMa
 		p	2		processor
 	m	(Ljava/lang/String;)V	m_1790717	removeHttpTexture
 		p	1		path
-	m	(Lnet/minecraft/unmapped/C_4257480;)V	m_6780623	addAtlas
-		p	1		atlas
-	m	()V	m_0100952	m_0100952
+	m	(Lnet/minecraft/unmapped/C_4257480;)V	m_6780623	addSprite
+		p	1		sprite
+	m	()V	m_0100952	tick
 	m	()V	m_8394980	reload
 	m	(Ljava/io/InputStream;)Ljava/awt/image/BufferedImage;	m_9639646	readImage
 		p	1		is
@@ -6688,9 +6688,9 @@ c	net/minecraft/unmapped/C_1431328	net/minecraft/util/Long2ObjectHashMap
 		p	5		index
 	m	(J)I	m_3553520	getKey
 		p	0		value
-c	net/minecraft/unmapped/C_1431528	net/minecraft/unmapped/C_1431528
-	f	I	f_8203401	f_8203401
-	f	[[B	f_2373217	f_2373217
+c	net/minecraft/unmapped/C_1431528	net/minecraft/client/render/texture/NetherPortalSprite
+	f	I	f_8203401	ticks
+	f	[[B	f_2373217	images
 	m	()V	<init>	<init>
 	m	()V	m_5407865	m_5407865
 c	net/minecraft/unmapped/C_1441789	net/minecraft/client/gui/screen/ConfirmScreen
@@ -7375,12 +7375,12 @@ c	net/minecraft/unmapped/C_1678345	net/minecraft/world/gen/structure/StrongholdP
 		p	5		offset
 	m	(Lnet/minecraft/unmapped/C_7492943;)Z	m_9578395	isValidStructureBox
 		p	0		box
-c	net/minecraft/unmapped/C_1703615	net/minecraft/unmapped/C_1703615
-	f	[F	f_8073243	f_8073243
-	f	[F	f_4739750	f_4739750
+c	net/minecraft/unmapped/C_1703615	net/minecraft/client/render/texture/WaterSprite
+	f	[F	f_8073243	image0
+	f	[F	f_4739750	image1
 	f	[F	f_3435997	f_3435997
 	f	[F	f_6408760	f_6408760
-	f	I	f_8467511	f_8467511
+	f	I	f_8467511	ticks
 	m	()V	<init>	<init>
 	m	()V	m_5407865	m_5407865
 c	net/minecraft/unmapped/C_1705548	net/minecraft/block/PumpkinBlock
@@ -9479,9 +9479,9 @@ c	net/minecraft/unmapped/C_2363721	net/minecraft/entity/living/mob/hostile/Spide
 	m	()Z	m_6315566	isClimbingWall
 	m	(Z)V	m_4949965	setClimbingWall
 		p	1		climbing
-c	net/minecraft/unmapped/C_2366878	net/minecraft/unmapped/C_2366878
-	f	[F	f_0667759	f_0667759
-	f	[F	f_4803725	f_4803725
+c	net/minecraft/unmapped/C_2366878	net/minecraft/client/render/texture/LavaSprite
+	f	[F	f_0667759	image0
+	f	[F	f_4803725	image1
 	f	[F	f_9424364	f_9424364
 	f	[F	f_4536016	f_4536016
 	m	()V	<init>	<init>
@@ -16273,16 +16273,16 @@ c	net/minecraft/unmapped/C_4255360	net/minecraft/inventory/slot/FurnaceResultSlo
 		p	2		p_2
 	m	(Lnet/minecraft/unmapped/C_2454309;)V	m_5730126	m_5730126
 		p	1		p_1
-c	net/minecraft/unmapped/C_4257480	net/minecraft/client/render/texture/TextureAtlas
+c	net/minecraft/unmapped/C_4257480	net/minecraft/client/render/texture/TextureAtlasSprite
 	f	[B	f_7371108	buffer
 	f	I	f_5671334	sprite
 	f	Z	f_2035267	anaglyph
 	f	I	f_5526904	f_5526904
 	f	I	f_6775517	resolution
-	f	I	f_7715468	type
+	f	I	f_7715468	atlas
 	m	(I)V	<init>	<init>
 		p	1		sprite
-	m	()V	m_5407865	m_5407865
+	m	()V	m_5407865	tick
 	m	(Lnet/minecraft/unmapped/C_0876962;)V	m_2706008	bind
 		p	1		textureManager
 c	net/minecraft/unmapped/C_4258913	net/minecraft/world/gen/structure/FortressPieces__BlazeSpawner
@@ -16626,9 +16626,9 @@ c	net/minecraft/unmapped/C_4352715	net/minecraft/world/gen/structure/StrongholdP
 		p	1		p_1
 		p	2		p_2
 		p	3		p_3
-c	net/minecraft/unmapped/C_4360335	net/minecraft/unmapped/C_4360335
-	f	[F	f_5619169	f_5619169
-	f	[F	f_6364522	f_6364522
+c	net/minecraft/unmapped/C_4360335	net/minecraft/client/render/texture/FireSprite
+	f	[F	f_5619169	image0
+	f	[F	f_6364522	image1
 	m	(I)V	<init>	<init>
 		p	1		p_1
 	m	()V	m_5407865	m_5407865
@@ -21478,11 +21478,11 @@ c	net/minecraft/unmapped/C_5940087	net/minecraft/entity/thrown/PotionEntity
 		p	1		p_1
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_1129840	m_1129840
 		p	1		p_1
-c	net/minecraft/unmapped/C_5944992	net/minecraft/unmapped/C_5944992
+c	net/minecraft/unmapped/C_5944992	net/minecraft/client/render/texture/CompassSprite
 	f	Lnet/minecraft/client/Minecraft;	f_0186630	client
-	f	[I	f_1566875	f_1566875
-	f	D	f_5199934	f_5199934
-	f	D	f_2037163	f_2037163
+	f	[I	f_1566875	image
+	f	D	f_5199934	angle
+	f	D	f_2037163	angleDelta
 	m	(Lnet/minecraft/client/Minecraft;)V	<init>	<init>
 		p	1		client
 	m	()V	m_5407865	m_5407865
@@ -23854,14 +23854,14 @@ c	net/minecraft/unmapped/C_6815022	net/minecraft/entity/living/mob/water/SquidEn
 		p	2		p_2
 	m	()V	m_2135259	m_2135259
 	m	()Z	m_8724935	m_8724935
-c	net/minecraft/unmapped/C_6817202	net/minecraft/unmapped/C_6817202
-	f	Lnet/minecraft/client/Minecraft;	f_9719085	f_9719085
-	f	[I	f_1562251	f_1562251
-	f	[I	f_9917088	f_9917088
-	f	D	f_4465994	f_4465994
-	f	D	f_5733832	f_5733832
+c	net/minecraft/unmapped/C_6817202	net/minecraft/client/render/texture/ClockSprite
+	f	Lnet/minecraft/client/Minecraft;	f_9719085	client
+	f	[I	f_1562251	image0
+	f	[I	f_9917088	image1
+	f	D	f_4465994	angle
+	f	D	f_5733832	angleDelta
 	m	(Lnet/minecraft/client/Minecraft;)V	<init>	<init>
-		p	1		p_1
+		p	1		client
 	m	()V	m_5407865	m_5407865
 c	net/minecraft/unmapped/C_6823216	net/minecraft/world/gen/feature/BushFeature
 	f	I	f_9764720	leavesVariant
@@ -27505,12 +27505,12 @@ c	net/minecraft/unmapped/C_7809327	net/minecraft/world/chunk/storage/RegionFile
 	m	()V	m_9330068	close
 		c	Flushes and closes the region file
 	m	()V	<clinit>	<clinit>
-c	net/minecraft/unmapped/C_7832146	net/minecraft/unmapped/C_7832146
-	f	[F	f_3187760	f_3187760
-	f	[F	f_5462222	f_5462222
+c	net/minecraft/unmapped/C_7832146	net/minecraft/client/render/texture/LavaSideSprite
+	f	[F	f_3187760	image0
+	f	[F	f_5462222	image1
 	f	[F	f_5263327	f_5263327
 	f	[F	f_4725345	f_4725345
-	f	I	f_6952459	f_6952459
+	f	I	f_6952459	ticks
 	m	()V	<init>	<init>
 	m	()V	m_5407865	m_5407865
 c	net/minecraft/unmapped/C_7842113	net/minecraft/block/DoorBlock
@@ -33614,10 +33614,10 @@ c	net/minecraft/unmapped/C_9710501	net/minecraft/world/gen/structure/VillagePiec
 		p	1		direction
 	m	()Z	m_2794392	isLimitReached
 c	net/minecraft/unmapped/C_9726142	net/minecraft/client/world/color/GrassColors
-	f	[I	f_1418329	colorMap
+	f	[I	f_1418329	colors
 	m	()V	<init>	<init>
-	m	([I)V	m_4865335	setColorMap
-		p	0		map
+	m	([I)V	m_4865335	set
+		p	0		colors
 	m	(DD)I	m_3868151	getColor
 		p	0		temperature
 		p	2		humidity
