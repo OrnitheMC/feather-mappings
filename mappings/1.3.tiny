@@ -1386,9 +1386,9 @@ c	net/minecraft/unmapped/C_0124240	net/minecraft/client/render/model/entity/Quad
 		p	4		p_4
 		p	5		p_5
 		p	6		p_6
-	m	(Lnet/minecraft/unmapped/C_0124240;F)V	m_9708376	m_9708376
-		p	1		p_1
-		p	2		p_2
+	m	(Lnet/minecraft/unmapped/C_0124240;F)V	m_9708376	renderAs
+		p	1		other
+		p	2		tickDelta
 c	net/minecraft/unmapped/C_0124899	net/minecraft/world/chunk/storage/io/FileIoThread
 	f	Lnet/minecraft/unmapped/C_0124899;	f_2205711	INSTANCE
 	f	Ljava/util/List;	f_8497098	callbacks
@@ -2723,71 +2723,69 @@ c	net/minecraft/unmapped/C_0488213	net/minecraft/block/material/LiquidMaterial
 	m	()Z	m_8583295	m_8583295
 	m	()Z	m_9427296	m_9427296
 	m	()Z	m_3570151	m_3570151
-c	net/minecraft/unmapped/C_0490004	net/minecraft/entity/ai/pathing/PathHelper
-	f	Lnet/minecraft/unmapped/C_8030141;	f_0344476	chunkCache
-	f	Lnet/minecraft/unmapped/C_6732553;	f_9302955	pathHeap
-	f	Lnet/minecraft/unmapped/C_0739569;	f_1216819	hashMap
-	f	[Lnet/minecraft/unmapped/C_8180393;	f_0533820	pathNodes
-	f	Z	f_8987226	willOpenWoodenDoor
-	f	Z	f_8514462	blockPathAllowed
-	f	Z	f_1414246	inWater
+c	net/minecraft/unmapped/C_0490004	net/minecraft/entity/ai/pathing/PathFinder
+	f	Lnet/minecraft/unmapped/C_8030141;	f_0344476	world
+	f	Lnet/minecraft/unmapped/C_6732553;	f_9302955	heap
+	f	Lnet/minecraft/unmapped/C_0739569;	f_1216819	nodes
+	f	[Lnet/minecraft/unmapped/C_8180393;	f_0533820	neighbors
+	f	Z	f_8987226	canWalkThroughDoors
+	f	Z	f_8514462	canOpenDoors
+	f	Z	f_1414246	canFloat
 	f	Z	f_1800127	canSwim
 	m	(Lnet/minecraft/unmapped/C_8030141;ZZZZ)V	<init>	<init>
 		p	1		world
-		p	2		willOpenWoodenDoor
-		p	3		blockPathAllowed
-		p	4		inWater
+		p	2		canWalkThroughDoors
+		p	3		canOpenDoors
+		p	4		canFloat
 		p	5		canSwim
-	m	(Lnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_0539808;F)Lnet/minecraft/unmapped/C_2306016;	m_3040181	getPathToEntity
+	m	(Lnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_0539808;F)Lnet/minecraft/unmapped/C_2306016;	m_3040181	findPath
 		p	1		entity
 		p	2		target
-		p	3		pathRange
-	m	(Lnet/minecraft/unmapped/C_0539808;IIIF)Lnet/minecraft/unmapped/C_2306016;	m_6721516	getPathToPos
+		p	3		range
+	m	(Lnet/minecraft/unmapped/C_0539808;IIIF)Lnet/minecraft/unmapped/C_2306016;	m_6721516	findPath
 		p	1		entity
 		p	2		x
 		p	3		y
 		p	4		z
-		p	5		pathRange
-	m	(Lnet/minecraft/unmapped/C_0539808;DDDF)Lnet/minecraft/unmapped/C_2306016;	m_2103252	getPath
+		p	5		range
+	m	(Lnet/minecraft/unmapped/C_0539808;DDDF)Lnet/minecraft/unmapped/C_2306016;	m_2103252	findPath
 		p	1		entity
 		p	2		x
 		p	4		y
 		p	6		z
-		p	8		pathRange
+		p	8		range
 	m	(Lnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_8180393;Lnet/minecraft/unmapped/C_8180393;Lnet/minecraft/unmapped/C_8180393;F)Lnet/minecraft/unmapped/C_2306016;	m_2743004	buildPath
 		p	1		entity
-		p	2		entityPathNode
-		p	3		targetPathNode
-		p	4		increasedEntityHitBox
-		p	5		pathRange
-	m	(Lnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_8180393;Lnet/minecraft/unmapped/C_8180393;Lnet/minecraft/unmapped/C_8180393;F)I	m_6121566	getAmountOfSuccessors
-		c	Generate successor nodes from current path node\n@return the amount of valid successors
+		p	2		start
+		p	3		target
+		p	4		bounds
+		p	5		range
+	m	(Lnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_8180393;Lnet/minecraft/unmapped/C_8180393;Lnet/minecraft/unmapped/C_8180393;F)I	m_6121566	getNeighbors
 		p	1		entity
-		p	2		currentPathNode
-		p	3		increasedEntityHitBox
-		p	4		targetPathNode
-		p	5		pathRange
-	m	(Lnet/minecraft/unmapped/C_0539808;IIILnet/minecraft/unmapped/C_8180393;I)Lnet/minecraft/unmapped/C_8180393;	m_2755974	getSafePathNode
-		c	@return path node with coords x and z, searches for a y that is safe and within reach
+		p	2		node
+		p	3		bounds
+		p	4		target
+		p	5		range
+	m	(Lnet/minecraft/unmapped/C_0539808;IIILnet/minecraft/unmapped/C_8180393;I)Lnet/minecraft/unmapped/C_8180393;	m_2755974	getValidNode
 		p	1		entity
 		p	2		x
 		p	3		y
 		p	4		z
-		p	5		increasedEntityHitBox
-		p	6		verticalOffset
-	m	(III)Lnet/minecraft/unmapped/C_8180393;	m_6673582	getPathNode
+		p	5		bounds
+		p	6		neighborBlockingType
+	m	(III)Lnet/minecraft/unmapped/C_8180393;	m_6673582	getOrAddNode
 		p	1		x
 		p	2		y
 		p	3		z
-	m	(Lnet/minecraft/unmapped/C_0539808;IIILnet/minecraft/unmapped/C_8180393;)I	m_6557843	getVerticalOffsetInPath
+	m	(Lnet/minecraft/unmapped/C_0539808;IIILnet/minecraft/unmapped/C_8180393;)I	m_6557843	getBlockingType
 		p	1		entity
 		p	2		x
 		p	3		y
 		p	4		z
-		p	5		increasedEntityHitBox
-	m	(Lnet/minecraft/unmapped/C_8180393;Lnet/minecraft/unmapped/C_8180393;)Lnet/minecraft/unmapped/C_2306016;	m_2148257	createPathFromNodeLinkedList
-		p	1		entityPathNode
-		p	2		targetPathNode
+		p	5		bounds
+	m	(Lnet/minecraft/unmapped/C_8180393;Lnet/minecraft/unmapped/C_8180393;)Lnet/minecraft/unmapped/C_2306016;	m_2148257	buildPath
+		p	1		start
+		p	2		target
 c	net/minecraft/unmapped/C_0511144	net/minecraft/client/entity/particle/LargeExplosionParticle
 	f	I	f_8145568	age
 	f	I	f_6860246	maxAge
@@ -7269,7 +7267,7 @@ c	net/minecraft/unmapped/C_1590125	net/minecraft/unmapped/C_1590125
 	m	(Ljava/lang/String;)V	<init>	<init>
 		p	1		p_1
 c	net/minecraft/unmapped/C_1610187	net/minecraft/network/encryption/EncryptionUtils
-	f	Ljava/nio/charset/Charset;	f_3706465	f_3706465
+	f	Ljava/nio/charset/Charset;	f_3706465	ISO_8859_1
 	m	()V	<init>	<init>
 	m	()Ljavax/crypto/SecretKey;	m_8164952	generateKey
 	m	()Ljava/security/KeyPair;	m_8061218	generateKeyPair
@@ -9157,27 +9155,27 @@ c	net/minecraft/unmapped/C_2306016	net/minecraft/entity/ai/pathing/Path
 	f	I	f_8942667	length
 	m	([Lnet/minecraft/unmapped/C_8180393;)V	<init>	<init>
 		p	1		nodes
-	m	()V	m_4632157	nextNode
-	m	()Z	m_9468867	reachedTarget
+	m	()V	m_4632157	advance
+	m	()Z	m_9468867	isDone
 	m	()Lnet/minecraft/unmapped/C_8180393;	m_5067649	getTarget
-	m	(I)Lnet/minecraft/unmapped/C_8180393;	m_9308471	getPathNode
+	m	(I)Lnet/minecraft/unmapped/C_8180393;	m_9308471	getNode
 		p	1		index
-	m	()I	m_5633128	getPathLength
-	m	(I)V	m_1394103	setPathLength
+	m	()I	m_5633128	length
+	m	(I)V	m_1394103	truncate
 		p	1		length
-	m	()I	m_2314272	getIndexInPath
-	m	(I)V	m_0512367	setIndexInPath
+	m	()I	m_2314272	getCurrentIndex
+	m	(I)V	m_0512367	setCurrentIndex
 		p	1		index
-	m	(Lnet/minecraft/unmapped/C_0539808;I)Lnet/minecraft/unmapped/C_0557736;	m_1629118	getNextPos
+	m	(Lnet/minecraft/unmapped/C_0539808;I)Lnet/minecraft/unmapped/C_0557736;	m_1629118	getPos
 		p	1		entity
 		p	2		index
-	m	(Lnet/minecraft/unmapped/C_0539808;)Lnet/minecraft/unmapped/C_0557736;	m_5663151	getNextPos
+	m	(Lnet/minecraft/unmapped/C_0539808;)Lnet/minecraft/unmapped/C_0557736;	m_5663151	getCurrentPos
 		p	1		entity
 	m	(Lnet/minecraft/unmapped/C_2306016;)Z	m_3326980	equals
-		p	1		path
-	m	(Lnet/minecraft/unmapped/C_0557736;)Z	m_5874470	m_5874470
-		p	1		p_1
-	m	(Lnet/minecraft/unmapped/C_0557736;)Z	m_2492566	isTarget
+		p	1		other
+	m	(Lnet/minecraft/unmapped/C_0557736;)Z	m_5874470	isTarget
+		p	1		pos
+	m	(Lnet/minecraft/unmapped/C_0557736;)Z	m_2492566	isOnTarget
 		p	1		pos
 c	net/minecraft/unmapped/C_2308366	net/minecraft/block/entity/NoteBlockBlockEntity
 	f	B	f_9749743	note
@@ -9211,8 +9209,8 @@ c	net/minecraft/unmapped/C_2313930	net/minecraft/client/render/model/entity/Huma
 	m	(F)V	<init>	<init>
 		p	1		reduction
 	m	(FF)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
+		p	1		reduction
+		p	2		pivotPoint
 	m	(Lnet/minecraft/unmapped/C_0539808;FFFFFF)V	m_7620620	m_7620620
 		p	1		p_1
 		p	2		p_2
@@ -9228,15 +9226,15 @@ c	net/minecraft/unmapped/C_2313930	net/minecraft/client/render/model/entity/Huma
 		p	4		p_4
 		p	5		p_5
 		p	6		p_6
-	m	(F)V	m_8916979	m_8916979
-		p	1		p_1
+	m	(F)V	m_8916979	renderHat
+		p	1		tickDelta
 	m	(F)V	m_1824842	renderDeadmau5Ears
 		p	1		scale
 	m	(F)V	m_5293878	renderCape
 		p	1		scale
-	m	(Lnet/minecraft/unmapped/C_2313930;F)V	m_3090952	m_3090952
-		p	1		p_1
-		p	2		p_2
+	m	(Lnet/minecraft/unmapped/C_2313930;F)V	m_3090952	renderAs
+		p	1		other
+		p	2		tickDelta
 c	net/minecraft/unmapped/C_2320485	net/minecraft/server/dedicated/command/BanIpCommand
 	f	Ljava/util/regex/Pattern;	f_2814815	REGEX_PATTERN
 	m	()V	<init>	<init>
@@ -11818,7 +11816,7 @@ c	net/minecraft/unmapped/C_3015672	net/minecraft/world/chunk/storage/ChunkStorag
 	m	()V	m_1409064	save
 c	net/minecraft/unmapped/C_3020744	net/minecraft/client/gui/screen/Screen
 	f	Lnet/minecraft/client/Minecraft;	f_7153641	client
-	f	I	f_5465691	titleWidth
+	f	I	f_5465691	width
 	f	I	f_3080061	height
 	f	Ljava/util/List;	f_2213969	buttons
 	f	Z	f_5328901	passEvents
@@ -11847,9 +11845,9 @@ c	net/minecraft/unmapped/C_3020744	net/minecraft/client/gui/screen/Screen
 	m	(Lnet/minecraft/unmapped/C_2348249;)V	m_7971793	buttonClicked
 		p	1		buttonWidget
 	m	(Lnet/minecraft/client/Minecraft;II)V	m_0116202	init
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
+		p	1		client
+		p	2		width
+		p	3		height
 	m	(II)V	m_5725429	m_5725429
 		p	1		p_1
 		p	2		p_2
@@ -16346,9 +16344,9 @@ c	net/minecraft/unmapped/C_4273112	net/minecraft/client/render/model/entity/Ocel
 		p	5		p_5
 		p	6		p_6
 		p	7		p_7
-	m	(Lnet/minecraft/unmapped/C_4273112;F)V	m_0209116	m_0209116
-		p	1		p_1
-		p	2		p_2
+	m	(Lnet/minecraft/unmapped/C_4273112;F)V	m_0209116	renderAs
+		p	1		other
+		p	2		tickDelta
 	m	(FFFFFF)V	m_6142526	m_6142526
 		p	1		p_1
 		p	2		p_2
@@ -17595,7 +17593,7 @@ c	net/minecraft/unmapped/C_4837443	net/minecraft/client/render/model/entity/Silv
 	f	[[I	f_9401692	SEGMENT_LOCATIONS
 	f	[[I	f_9757680	SEGMENT_SIZES
 	m	()V	<init>	<init>
-	m	()I	m_0836513	m_0836513
+	m	()I	m_0836513	getVersion
 	m	(Lnet/minecraft/unmapped/C_0539808;FFFFFF)V	m_7620620	m_7620620
 		p	1		p_1
 		p	2		p_2
@@ -20021,23 +20019,23 @@ c	net/minecraft/unmapped/C_5553933	net/minecraft/world/World
 		p	6		face
 		p	7		entity
 	m	()I	m_6138220	m_6138220
-	m	(Lnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_0539808;FZZZZ)Lnet/minecraft/unmapped/C_2306016;	m_0864389	pathFindEntity
+	m	(Lnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_0539808;FZZZZ)Lnet/minecraft/unmapped/C_2306016;	m_0864389	findPath
 		p	1		entity
 		p	2		target
-		p	3		pathRange
-		p	4		willOpenWoodenDoor
-		p	5		blockPathAllowed
-		p	6		inWater
+		p	3		range
+		p	4		canWalkThroughDoors
+		p	5		canOpenDoors
+		p	6		canFloat
 		p	7		canSwim
-	m	(Lnet/minecraft/unmapped/C_0539808;IIIFZZZZ)Lnet/minecraft/unmapped/C_2306016;	m_9700524	pathFindPos
+	m	(Lnet/minecraft/unmapped/C_0539808;IIIFZZZZ)Lnet/minecraft/unmapped/C_2306016;	m_9700524	findPath
 		p	1		entity
 		p	2		x
 		p	3		y
 		p	4		z
-		p	5		pathRange
-		p	6		willOpenWoodenDoor
-		p	7		blockPathAllowed
-		p	8		inWater
+		p	5		range
+		p	6		canWalkThroughDoors
+		p	7		canOpenDoors
+		p	8		canFloat
 		p	9		canSwim
 	m	(IIII)Z	m_6919678	isEmittingStrongPower
 		p	1		x
@@ -22486,8 +22484,8 @@ c	net/minecraft/unmapped/C_6272638	net/minecraft/client/render/model/entity/Vill
 	m	(F)V	<init>	<init>
 		p	1		reduction
 	m	(FF)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
+		p	1		reduction
+		p	2		pivotPoint
 	m	(Lnet/minecraft/unmapped/C_0539808;FFFFFF)V	m_7620620	m_7620620
 		p	1		p_1
 		p	2		p_2
@@ -22988,7 +22986,7 @@ c	net/minecraft/unmapped/C_6482301	net/minecraft/client/render/model/entity/Magm
 	f	[Lnet/minecraft/unmapped/C_6697291;	f_7332597	slices
 	f	Lnet/minecraft/unmapped/C_6697291;	f_3467675	body
 	m	()V	<init>	<init>
-	m	()I	m_1124976	getType
+	m	()I	m_1124976	getVersion
 	m	(Lnet/minecraft/unmapped/C_6607881;FFF)V	m_3922927	m_3922927
 		p	1		p_1
 		p	2		p_2
@@ -23664,7 +23662,7 @@ c	net/minecraft/unmapped/C_6697291	net/minecraft/client/render/model/ModelPart
 		p	3		textureV
 	m	(Lnet/minecraft/unmapped/C_6697291;)V	m_2508642	addChild
 		p	1		part
-	m	()Lnet/minecraft/unmapped/C_6697291;	m_3181702	m_3181702
+	m	()Lnet/minecraft/unmapped/C_6697291;	m_3181702	toggleFlipped
 	m	(II)Lnet/minecraft/unmapped/C_6697291;	m_9658073	setTextureCoords
 		p	1		textureU
 		p	2		textureV
@@ -23691,14 +23689,14 @@ c	net/minecraft/unmapped/C_6697291	net/minecraft/client/render/model/ModelPart
 		p	5		sizeY
 		p	6		sizeZ
 		p	7		increase
-	m	(FFFIIII)V	m_2595713	m_2595713
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-		p	5		p_5
-		p	6		p_6
-		p	7		p_7
+	m	(FFFIIII)V	m_2595713	addBox
+		p	1		x
+		p	2		y
+		p	3		z
+		p	4		sizeX
+		p	5		sizeY
+		p	6		sizeZ
+		p	7		increase
 	m	(FFF)V	m_2705851	setPivot
 		p	1		x
 		p	2		y
@@ -23714,24 +23712,24 @@ c	net/minecraft/unmapped/C_6697291	net/minecraft/client/render/model/ModelPart
 	m	(II)Lnet/minecraft/unmapped/C_6697291;	m_4843602	setTextureSize
 		p	1		width
 		p	2		height
-	m	(Lnet/minecraft/unmapped/C_6697291;)V	m_5130566	m_5130566
-		p	1		p_1
-c	net/minecraft/unmapped/C_6732553	net/minecraft/entity/ai/pathing/PathMinHeap
-	f	[Lnet/minecraft/unmapped/C_8180393;	f_9605601	pathNodes
-	f	I	f_3032984	count
+	m	(Lnet/minecraft/unmapped/C_6697291;)V	m_5130566	setRotation
+		p	1		other
+c	net/minecraft/unmapped/C_6732553	net/minecraft/entity/ai/pathing/BinaryHeap
+	f	[Lnet/minecraft/unmapped/C_8180393;	f_9605601	heap
+	f	I	f_3032984	size
 	m	()V	<init>	<init>
 	m	(Lnet/minecraft/unmapped/C_8180393;)Lnet/minecraft/unmapped/C_8180393;	m_4200305	insert
-		p	1		pathNode
+		p	1		node
 	m	()V	m_8707884	clear
 	m	()Lnet/minecraft/unmapped/C_8180393;	m_1751335	m_1751335
-	m	()Lnet/minecraft/unmapped/C_8180393;	m_0165464	removePathNode
+	m	()Lnet/minecraft/unmapped/C_8180393;	m_0165464	pop
 	m	(Lnet/minecraft/unmapped/C_8180393;)V	m_3580144	m_3580144
 		p	1		p_1
-	m	(Lnet/minecraft/unmapped/C_8180393;F)V	m_2364806	insertWithTotalDistance
-		p	1		pathNode
-		p	2		totalDistance
+	m	(Lnet/minecraft/unmapped/C_8180393;F)V	m_2364806	setWeight
+		p	1		node
+		p	2		weight
 	m	()I	m_7795749	m_7795749
-	m	(I)V	m_7169239	shiftUp
+	m	(I)V	m_7169239	upHeap
 		p	1		index
 	m	(I)V	m_1372040	shiftDown
 		p	1		index
@@ -26595,19 +26593,19 @@ c	net/minecraft/unmapped/C_7503776	net/minecraft/client/render/model/Model
 		p	6		pitch
 		p	7		scale
 	m	(FFFFFF)V	m_6142526	setAngles
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-		p	5		p_5
-		p	6		p_6
+		p	1		handSwing
+		p	2		handSwingAmount
+		p	3		age
+		p	4		yaw
+		p	5		pitch
+		p	6		scale
 	m	(Lnet/minecraft/unmapped/C_6607881;FFF)V	m_3922927	renderMobAnimation
 		p	1		entity
 		p	2		handSwing
 		p	3		handSwingAmount
 		p	4		tickDelta
-	m	(Ljava/util/Random;)Lnet/minecraft/unmapped/C_6697291;	m_0219357	m_0219357
-		p	1		p_1
+	m	(Ljava/util/Random;)Lnet/minecraft/unmapped/C_6697291;	m_0219357	pickPart
+		p	1		random
 	m	(Ljava/lang/String;II)V	m_4523596	setTexturePos
 		p	1		id
 		p	2		u
@@ -28317,7 +28315,7 @@ c	net/minecraft/unmapped/C_8114740	net/minecraft/entity/ai/goal/TemptGoal
 	f	D	f_0307037	targetYaw
 	f	Lnet/minecraft/unmapped/C_9590849;	f_5429592	player
 	f	I	f_1767394	delay
-	f	Z	f_9338188	goalActive
+	f	Z	f_9338188	active
 	f	I	f_5240583	f_5240583
 	f	Z	f_3961822	scaredByMovement
 	f	Z	f_8268727	inWater
@@ -28331,7 +28329,7 @@ c	net/minecraft/unmapped/C_8114740	net/minecraft/entity/ai/goal/TemptGoal
 	m	()V	m_3836415	m_3836415
 	m	()V	m_7242457	m_7242457
 	m	()V	m_3798730	m_3798730
-	m	()Z	m_5320905	isGoalActive
+	m	()Z	m_5320905	isActive
 c	net/minecraft/unmapped/C_8120996	net/minecraft/network/packet/PlayerMovementActionPacket
 	f	I	f_4747103	id
 	f	I	f_7874223	action
@@ -28747,32 +28745,32 @@ c	net/minecraft/unmapped/C_8179293	argo/jdom/JsonNodeSelectors__1
 	m	(Ljava/lang/Object;)Z	m_1114828	m_1114828
 		p	1		p_1
 c	net/minecraft/unmapped/C_8180393	net/minecraft/entity/ai/pathing/PathNode
-	f	I	f_5519020	posX
-	f	I	f_2705913	posY
-	f	I	f_3725755	posZ
+	f	I	f_5519020	x
+	f	I	f_2705913	y
+	f	I	f_3725755	z
 	f	I	f_9044567	hash
 	f	I	f_8006051	heapIndex
 	f	F	f_8367464	distanceFromStart
 	f	F	f_4635991	distanceToTarget
-	f	F	f_2671375	totalPathDistance
-	f	Lnet/minecraft/unmapped/C_8180393;	f_6114517	previousNode
+	f	F	f_2671375	weight
+	f	Lnet/minecraft/unmapped/C_8180393;	f_6114517	prev
 	f	Z	f_6085383	visited
 	m	(III)V	<init>	<init>
-		p	1		posX
-		p	2		posY
-		p	3		posZ
+		p	1		x
+		p	2		y
+		p	3		z
 	m	(III)I	m_9347908	hash
 		p	0		x
 		p	1		y
 		p	2		z
-	m	(Lnet/minecraft/unmapped/C_8180393;)F	m_0831878	getDistanceTo
-		p	1		pathNode
+	m	(Lnet/minecraft/unmapped/C_8180393;)F	m_0831878	distanceTo
+		p	1		other
 	m	(Lnet/minecraft/unmapped/C_8180393;)F	m_5848129	squaredDistanceTo
-		p	1		pathNode
+		p	1		other
 	m	(Ljava/lang/Object;)Z	equals	equals
-		p	1		object
+		p	1		obj
 	m	()I	hashCode	hashCode
-	m	()Z	m_6428927	inHeap
+	m	()Z	m_6428927	isInHeap
 	m	()Ljava/lang/String;	toString	toString
 c	net/minecraft/unmapped/C_8183022	net/minecraft/server/command/handler/CommandHandler
 	m	(Lnet/minecraft/unmapped/C_1730529;Ljava/lang/String;)V	m_9274967	run
@@ -31803,92 +31801,92 @@ c	net/minecraft/unmapped/C_9226316	net/minecraft/client/render/model/entity/Snow
 		p	5		p_5
 		p	6		p_6
 		p	7		p_7
-c	net/minecraft/unmapped/C_9229053	net/minecraft/entity/ai/pathing/EntityNavigation
-	f	Lnet/minecraft/unmapped/C_6607881;	f_4778830	mobEntity
+c	net/minecraft/unmapped/C_9229053	net/minecraft/entity/ai/pathing/PathNavigation
+	f	Lnet/minecraft/unmapped/C_6607881;	f_4778830	mob
 	f	Lnet/minecraft/unmapped/C_5553933;	f_1846957	world
-	f	Lnet/minecraft/unmapped/C_2306016;	f_3978836	currentPath
+	f	Lnet/minecraft/unmapped/C_2306016;	f_3978836	path
 	f	F	f_5875221	speed
-	f	F	f_0137934	f_0137934
+	f	F	f_0137934	followRange
 	f	Z	f_9025682	avoidSunlight
-	f	I	f_3763397	tickCounter
-	f	I	f_7549245	lastUpdate
-	f	Lnet/minecraft/unmapped/C_0557736;	f_8406136	entityPosAboveWater
-	f	Z	f_5513511	willOpenWoodenDoor
-	f	Z	f_6510529	blockPathAllowed
-	f	Z	f_6099099	inWater
+	f	I	f_3763397	ticks
+	f	I	f_7549245	lastStuckCheckTime
+	f	Lnet/minecraft/unmapped/C_0557736;	f_8406136	lastStuckCheckPos
+	f	Z	f_5513511	canWalkThroughDoors
+	f	Z	f_6510529	canOpenDoors
+	f	Z	f_6099099	canFloat
 	f	Z	f_0864820	canSwim
 	m	(Lnet/minecraft/unmapped/C_6607881;Lnet/minecraft/unmapped/C_5553933;F)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-	m	(Z)V	m_5318121	setInWater
-		p	1		value
-	m	()Z	m_9812385	getInWater
-	m	(Z)V	m_2241147	setBlockPathAllowed
-		p	1		value
-	m	()Z	m_0807605	m_0807605
-	m	(Z)V	m_2382252	setWillOpenWoodenDoor
-		p	1		value
-	m	()Z	m_0638703	getBlockPathAllowed
+		p	1		mob
+		p	2		world
+		p	3		followRange
+	m	(Z)V	m_5318121	setCanFloat
+		p	1		canFloat
+	m	()Z	m_9812385	canFloat
+	m	(Z)V	m_2241147	setCanOpenDoors
+		p	1		canOpenDoors
+	m	()Z	m_0807605	canWalkThroughDoors
+	m	(Z)V	m_2382252	setCanWalkThroughDoors
+		p	1		canWalkThroughDoors
+	m	()Z	m_0638703	setOpenDoors
 	m	(Z)V	m_3749333	setAvoidSunlight
 		p	1		avoidSunLight
 	m	(F)V	m_7620805	setSpeed
-		p	1		p_1
+		p	1		speed
 	m	(Z)V	m_9417692	setCanSwim
-		p	1		value
-	m	(DDD)Lnet/minecraft/unmapped/C_2306016;	m_7664760	findPathTo
-		p	1		posX
-		p	3		posY
-		p	5		posZ
-	m	(DDDF)Z	m_6026864	startMovingTo
-		p	1		p_1
-		p	3		p_3
-		p	5		p_5
-		p	7		p_7
-	m	(Lnet/minecraft/unmapped/C_6607881;)Lnet/minecraft/unmapped/C_2306016;	m_5771439	getNavigation
-		p	1		p_1
-	m	(Lnet/minecraft/unmapped/C_6607881;F)Z	m_1612651	startMovingTo
-		p	1		p_1
-		p	2		p_2
-	m	(Lnet/minecraft/unmapped/C_2306016;F)Z	m_7556539	startMovingAlong
-		p	1		p_1
-		p	2		p_2
-	m	()Lnet/minecraft/unmapped/C_2306016;	m_8954160	getCurrentPath
+		p	1		canSwim
+	m	(DDD)Lnet/minecraft/unmapped/C_2306016;	m_7664760	findPath
+		p	1		x
+		p	3		y
+		p	5		z
+	m	(DDDF)Z	m_6026864	moveTo
+		p	1		x
+		p	3		y
+		p	5		z
+		p	7		speed
+	m	(Lnet/minecraft/unmapped/C_6607881;)Lnet/minecraft/unmapped/C_2306016;	m_5771439	findPath
+		p	1		entity
+	m	(Lnet/minecraft/unmapped/C_6607881;F)Z	m_1612651	moveTo
+		p	1		entity
+		p	2		speed
+	m	(Lnet/minecraft/unmapped/C_2306016;F)Z	m_7556539	moveAlong
+		p	1		path
+		p	2		speed
+	m	()Lnet/minecraft/unmapped/C_2306016;	m_8954160	getPath
 	m	()V	m_2563935	tick
 	m	()V	m_7088709	updatePath
-	m	()Z	m_8790397	isIdle
-	m	()V	m_4324727	stopCurrentNavigation
-	m	()Lnet/minecraft/unmapped/C_0557736;	m_9119705	getEntityPosAboveWater
-	m	()I	m_4299089	getYAboveWater
-	m	()Z	m_0071216	canPathFind
-	m	()Z	m_4958019	mobEntityInLiquid
-	m	()V	m_6903096	avoidSunLight
-	m	(Lnet/minecraft/unmapped/C_0557736;Lnet/minecraft/unmapped/C_0557736;III)Z	m_3885880	isCurrentPathNode
-		p	1		posAboveWater
-		p	2		pathNode
-		p	3		mobEntityWidth
-		p	4		mobEntityHeight
-		p	5		mobEntityDepth
-	m	(IIIIIILnet/minecraft/unmapped/C_0557736;DD)Z	m_8078765	pathNotBlocked
-		p	1		posX
-		p	2		posYAboveWater
-		p	3		posZ
-		p	4		mobEntityWidth
-		p	5		mobEntityHeight
-		p	6		mobEntityDepth
-		p	7		posAboveWater
-		p	8		deltaX
-		p	10		deltaZ
-	m	(IIIIIILnet/minecraft/unmapped/C_0557736;DD)Z	m_2223940	canWalkThrough
-		p	1		posX
-		p	2		posYAboveWater
-		p	3		posZ
-		p	4		mobEntityWidth
-		p	5		mobEntityHeight
-		p	6		mobEntityDepth
-		p	7		posAboveWater
-		p	8		deltaX
-		p	10		deltaZ
+	m	()Z	m_8790397	isDone
+	m	()V	m_4324727	stop
+	m	()Lnet/minecraft/unmapped/C_0557736;	m_9119705	getTempPos
+	m	()I	m_4299089	getSurfaceY
+	m	()Z	m_0071216	canUpdatePath
+	m	()Z	m_4958019	isInLiquid
+	m	()V	m_6903096	trimPath
+	m	(Lnet/minecraft/unmapped/C_0557736;Lnet/minecraft/unmapped/C_0557736;III)Z	m_3885880	canMoveDirectly
+		p	1		from
+		p	2		to
+		p	3		width
+		p	4		height
+		p	5		depth
+	m	(IIIIIILnet/minecraft/unmapped/C_0557736;DD)Z	m_8078765	canWalkOn
+		p	1		x
+		p	2		y
+		p	3		z
+		p	4		width
+		p	5		height
+		p	6		depth
+		p	7		pos
+		p	8		distanceX
+		p	10		distanceZ
+	m	(IIIIIILnet/minecraft/unmapped/C_0557736;DD)Z	m_2223940	canWalkAbove
+		p	1		x
+		p	2		y
+		p	3		z
+		p	4		width
+		p	5		height
+		p	6		depth
+		p	7		pos
+		p	8		distanceX
+		p	10		distanceZ
 c	net/minecraft/unmapped/C_9232485	net/minecraft/network/packet/LoginPacket
 	f	I	f_5990877	id
 	f	Lnet/minecraft/unmapped/C_1518925;	f_9455824	generatorType
@@ -33374,16 +33372,16 @@ c	net/minecraft/unmapped/C_9603904	net/minecraft/client/render/model/Quad
 		p	6		textureWidth
 		p	7		textureHeight
 	m	([Lnet/minecraft/unmapped/C_2097694;FFFF)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-		p	5		p_5
+		p	1		vertices
+		p	2		maxX
+		p	3		minY
+		p	4		minX
+		p	5		maxY
 	m	()V	m_8352578	flip
 	m	(Lnet/minecraft/unmapped/C_5786166;F)V	m_7860187	buildQuadBuffer
 		p	1		builder
 		p	2		scale
-	m	()Lnet/minecraft/unmapped/C_9603904;	m_3513290	m_3513290
+	m	()Lnet/minecraft/unmapped/C_9603904;	m_3513290	flipNormal
 c	net/minecraft/unmapped/C_9607809	net/minecraft/crafting/DyeRecipes
 	m	()V	<init>	<init>
 	m	(Lnet/minecraft/unmapped/C_7585705;)V	m_6569018	register
