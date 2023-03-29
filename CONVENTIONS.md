@@ -68,7 +68,9 @@ name patterns you should use.
 
 ### Ids and keys
 
-Use "location" for `Identifier`s that point to resources of the game (textures, sounds, functions, etc.), use "key" for `String`s and `Identifiers` that are used as registry keys or translation keys, and use "id" for `int`s that are used to uniquely identify objects (e.g. block ids, item ids, enchantment ids).
+Use "location" for `Identifier`s that point to resources of the game (textures, sounds, functions, etc.), use "key" for `String`s and
+`Identifiers` that are used as registry keys or translation keys, and use "id" for `int`s that are used to uniquely identify objects
+(e.g. block ids, item ids, enchantment ids).
 
 ### Ticks and updates
 
@@ -134,13 +136,10 @@ Use `dx`, `dy`, and `dz` for distances along an axis.
 Use these if possible.
 
 - Use `random`, not `rand`
-- Use `parentBlockEntity` for block entities owned by screens
-- Use `client` for `MinecraftClient` fields
+- Use `client` for `Minecraft` fields
 - Use `server` for `MinecraftServer` fields
-- Use `connection` for `ClientConnection` fields
+- Use `connection` for `Connection` fields
 - Use `proxy` for `Proxy` fields
-- Use `TEXTURE` for static final `Identifier` fields which store the main/default texture used for a model/screen/similar thing
-- Use `<PREFIX>_TEXTURE` for static final `Identifier` fields which store non-default/-main textures or textures which would not make sense to name with the above convention (for example `INVULNERABLE_TEXTURE` in `WitherEntityRenderer` or `SHADOW_TEXTURE` in `EntityRenderer`)
 - Use `MODEL` for static final `Model` fields which store the main/default model of a class
 - Use `<PREFIX>_MODEL` for static final `Model` fields which store extra/alternative models for a class, or for all models in a class where there is no clear "main" model
 - Do not use the "Abstract" prefix when naming abstract classes if possible
@@ -149,7 +148,7 @@ Use these if possible.
 - Use `facing` for ints representing cardinal directions
 - When a class contains a single instance of itself as a static field, name it `INSTANCE` (all capitalized, even if the field is not final)
 - Use `buffer` for `ByteBuf` and `PacketByteBuf` fields/parameters
-- Use `font` for `TextRenderer` fields/parameters
+- Use `textRenderer` for `TextRenderer` fields/parameters
 - Use `clazz` for class fields/parameters only if using the class' name is not applicable and there is no applicable super class name
 
 ## Javadocs
@@ -166,7 +165,8 @@ Javadoc will take the first sentence, ended by the first `.`, as a brief descrip
 
 ### Anonymous and Inner Classes
 
-Before 1.8.2-pre5 anonymous and inner classes were stripped from their parent class. When mapping these classes, treat them like regular classes for naming and packaging. Add a note in the class' javadocs stating it is an anonymous/inner class and add a link to its parent class.
+Before 1.8.2-pre5 anonymous and inner classes were stripped from their parent class. While we have tools to fix inner class attributes in these versions,
+they are not perfect. Please report any issues related to inner classes [here](https://github.com/OrnitheMC/nests/issues).
 
 ### Packages
 
@@ -272,7 +272,6 @@ way.
 
 There are however three exceptions to this rule:
 - Use "world" for what Mojang calls "level" (see https://github.com/FabricMC/yarn/issues/89)
-- Use "screen handler" or "handler" (depending on context; if the screen part is obvious it can be omitted) for what Mojang calls "menu" (see https://github.com/FabricMC/yarn/pull/1106)
 - Use "inventory" for what Mojang calls "container" (no issue yet)
 
 ## Things to avoid
