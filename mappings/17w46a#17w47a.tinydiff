@@ -1772,21 +1772,21 @@ c	net/minecraft/unmapped/C_1241852
 	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_3125703		isAir
 		p	1			state
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;I)V	m_2943179		updateNeighborShapes
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	1			state
+		p	2			world
+		p	3			pos
+		p	4			flags
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;I)V	m_8736273		updateOrBreak
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	0			oldState
+		p	1			newState
+		p	2			world
+		p	3			pos
+		p	4			flags
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;I)V	m_4362022		updateIndirectNeighborShapes
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	1			state
+		p	2			world
+		p	3			pos
+		p	4			flags
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3544601;Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_2441996;	m_3015465		updateShape
 		p	1			p_1
 		p	2			p_2
@@ -1802,9 +1802,9 @@ c	net/minecraft/unmapped/C_1241852
 		p	1			p_1
 		p	2			p_2
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;)Z	m_1015100		canWalkThrough
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			state
+		p	2			world
+		p	3			pos
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_7300213;)Z	m_5122908		canBeReplaced
 		p	1			state
 		p	2			ctx
@@ -3270,10 +3270,12 @@ c	net/minecraft/unmapped/C_2454309
 	m	()Lnet/minecraft/unmapped/C_2018497;	m_5881037		m_5881037
 c	net/minecraft/unmapped/C_2485969
 	f	Z	f_2215920	lit	
-	f	Lnet/minecraft/unmapped/C_7674520;	f_4638496		f_4638496
+	f	Lnet/minecraft/unmapped/C_7674520;	f_4638496		LIT
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;Z)Z	m_5112281
-		p	3		createEntry	
-		p	0			p_0
+		p	3		logToggle	
+		p	0			world
+		p	1		world	pos
+		p	2		pos	logToggle
 	m	(Z)V	<init>	<init>	
 		p	1		lit	
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_2441996;)V	m_2420716	m_2420716	
@@ -3325,12 +3327,12 @@ c	net/minecraft/unmapped/C_2485969
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;Ljava/util/Random;Z)V	m_7342708		m_7342708
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;Ljava/util/Random;Z)V	m_7342708		doTick
+		p	0			state
+		p	1			world
+		p	2			pos
+		p	3			random
+		p	4			hasNeighborSignal
 	m	(Lnet/minecraft/unmapped/C_2441996;)I	m_5249160		m_5249160
 		p	1			p_1
 	m	()Lnet/minecraft/unmapped/C_9264598;	m_3079613		m_3079613
@@ -7666,7 +7668,7 @@ c	net/minecraft/unmapped/C_5374641
 	f	Lnet/minecraft/unmapped/C_5577922;	f_4018659	SHAPE	
 	f	Z	f_3895726	powered	
 	f	Lnet/minecraft/unmapped/C_7345216;	f_4018659		SHAPE
-	f	Lnet/minecraft/unmapped/C_7674520;	f_3885693		f_3885693
+	f	Lnet/minecraft/unmapped/C_7674520;	f_3885693		POWERED
 	m	(Z)V	<init>	<init>	
 		p	1		powered	
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_5577922;	m_5507773	m_5507773	
@@ -9025,7 +9027,7 @@ c	net/minecraft/unmapped/C_6150373
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;)V	m_2516864	updatePower	
+	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;)V	m_2516864	updateOutputState	
 		p	1		world	
 		p	2		pos	
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_4360192;Lnet/minecraft/unmapped/C_3544601;FFF)Z	m_0760943	m_0760943	
@@ -9061,7 +9063,7 @@ c	net/minecraft/unmapped/C_6150373
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;)V	m_2516864		updatePower
+	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;)V	m_2516864		updateOutputState
 		p	0			p_0
 		p	1			p_1
 		p	2			p_2

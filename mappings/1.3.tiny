@@ -5874,22 +5874,22 @@ c	net/minecraft/unmapped/C_1241852	net/minecraft/block/Block
 		p	2		x
 		p	3		y
 		p	4		z
-	m	(Lnet/minecraft/unmapped/C_8030141;IIII)Z	m_7017977	isEmittingWeakPower
-		c	Returns whether weak redstone power is emitted by this block in the given direction.\n\n<p>\nNOTE: directions in redstone power related methods are backwards, so blocks should\ncheck for power emitted in the direction <i>opposite</i> of the one given.
+	m	(Lnet/minecraft/unmapped/C_8030141;IIII)Z	m_7017977	hasSignal
+		c	Returns whether this block is emitting a redstone signal in the given direction.\nThis roughly equates to what is colloquially known as 'soft' or 'weak' power.\n\n<p>\nNOTE: directions in redstone signal related methods are backwards, so blocks should\ncheck for the signal emitted in the direction <i>opposite</i> of the one given.
 		p	1		world
 		p	2		x
 		p	3		y
 		p	4		z
 		p	5		dir
-	m	()Z	m_3885870	isPowerSource
-		c	Returns whether this block is capable of emitting redstone power.
+	m	()Z	m_3885870	isSignalSource
+		c	Returns whether this block is capable of emitting a redstone signal.
 	m	(Lnet/minecraft/unmapped/C_5553933;IIILnet/minecraft/unmapped/C_0539808;)V	m_2210587	onEntityCollision
 		p	1		world
 		p	2		x
 		p	3		y
 		p	4		z
 		p	5		entity
-	m	(Lnet/minecraft/unmapped/C_5553933;IIII)Z	m_0895470	isEmittingStrongPower
+	m	(Lnet/minecraft/unmapped/C_5553933;IIII)Z	m_0895470	hasDirectSignal
 		p	1		world
 		p	2		x
 		p	3		y
@@ -8723,7 +8723,7 @@ c	net/minecraft/unmapped/C_2134645	net/minecraft/block/TripwireBlock
 		p	3		p_3
 		p	4		p_4
 		p	5		p_5
-	m	(Lnet/minecraft/unmapped/C_5553933;III)V	m_3136927	updatePowered
+	m	(Lnet/minecraft/unmapped/C_5553933;III)V	m_3136927	updateOutputState
 		p	1		world
 		p	2		x
 		p	3		y
@@ -9958,7 +9958,7 @@ c	net/minecraft/unmapped/C_2485529	net/minecraft/world/gen/structure/MineshaftPi
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/unmapped/C_2485969	net/minecraft/block/RedstoneTorchBlock
 	f	Z	f_2215920	lit
-	f	Ljava/util/Map;	f_5763834	BURNOUTS
+	f	Ljava/util/Map;	f_5763834	RECENT_TOGGLES
 	m	(II)I	m_8325719	m_8325719
 		p	1		p_1
 		p	2		p_2
@@ -9967,7 +9967,7 @@ c	net/minecraft/unmapped/C_2485969	net/minecraft/block/RedstoneTorchBlock
 		p	2		x
 		p	3		y
 		p	4		z
-		p	5		createEntry
+		p	5		logToggle
 	m	(IIZ)V	<init>	<init>
 		p	1		id
 		p	2		sprite
@@ -9991,7 +9991,7 @@ c	net/minecraft/unmapped/C_2485969	net/minecraft/block/RedstoneTorchBlock
 		p	3		p_3
 		p	4		p_4
 		p	5		p_5
-	m	(Lnet/minecraft/unmapped/C_5553933;III)Z	m_8974744	shouldUnpower
+	m	(Lnet/minecraft/unmapped/C_5553933;III)Z	m_8974744	hasNeighborSignal
 		p	1		world
 		p	2		x
 		p	3		y
@@ -15947,7 +15947,7 @@ c	net/minecraft/unmapped/C_4114026	net/minecraft/block/PressurePlateBlock
 		p	3		p_3
 		p	4		p_4
 		p	5		p_5
-	m	(Lnet/minecraft/unmapped/C_5553933;III)V	m_6896673	updatePowerLevel
+	m	(Lnet/minecraft/unmapped/C_5553933;III)V	m_6896673	updateOutputState
 		p	1		world
 		p	2		x
 		p	3		y
@@ -20037,24 +20037,25 @@ c	net/minecraft/unmapped/C_5553933	net/minecraft/world/World
 		p	7		canOpenDoors
 		p	8		canFloat
 		p	9		canSwim
-	m	(IIII)Z	m_6919678	isEmittingStrongPower
+	m	(IIII)Z	m_6919678	hasDirectSignal
+		c	Returns whether the block at the given position is emitting a direct redstone signal in the given direction.\nThis roughly equates to what is colloquially known as 'hard' or 'strong' power.\n\n<p>\nNOTE: directions in redstone signal related methods are backwards, so this method\nchecks for the signal emitted in the direction <i>opposite</i> of the one given.
 		p	1		x
 		p	2		y
 		p	3		z
 		p	4		dir
-	m	(III)Z	m_4137207	isReceivingStrongPower
-		c	Returns the strong redstone power the given position is receiving.
+	m	(III)Z	m_4137207	hasDirectNeighborSignal
+		c	Returns whether the given position is receiving a direct redstone signal from neighboring blocks.
 		p	1		x
 		p	2		y
 		p	3		z
-	m	(IIII)Z	m_2706065	isEmittingPower
-		c	Returns whether redstone power is emitted from the given position in the given direction.\n\n<p>\nNOTE: directions in redstone power related methods are backwards, so this method\nchecks for power emitted in the direction <i>opposite</i> of the one given.
+	m	(IIII)Z	m_2706065	hasSignal
+		c	Returns whether the block at the given position is emitting a redstone signal in the given direction.\nThis roughly equates to what is colloquially known as 'soft' or 'weak' power.\n\n<p>\nNOTE: directions in redstone signal related methods are backwards, so this method\nchecks for the signal emitted in the direction <i>opposite</i> of the one given.
 		p	1		x
 		p	2		y
 		p	3		z
 		p	4		dir
-	m	(III)Z	m_6676766	isReceivingPower
-		c	Returns whether the given position is receiving redstone power.
+	m	(III)Z	m_6676766	hasNeighborSignal
+		c	Returns whether the given position is receiving a redstone signal from neighboring blocks.
 		p	1		x
 		p	2		y
 		p	3		z
@@ -25831,7 +25832,7 @@ c	net/minecraft/unmapped/C_7284070	net/minecraft/block/DetectorRailBlock
 		p	3		p_3
 		p	4		p_4
 		p	5		p_5
-	m	(Lnet/minecraft/unmapped/C_5553933;IIII)V	m_2236821	updatePowered
+	m	(Lnet/minecraft/unmapped/C_5553933;IIII)V	m_2236821	updateOutputState
 		p	1		world
 		p	2		x
 		p	3		y
@@ -27993,6 +27994,7 @@ c	net/minecraft/unmapped/C_8030141	net/minecraft/world/WorldView
 		p	2		y
 		p	3		z
 	m	(III)Z	m_9239141	isRedstoneConductor
+		c	Returns whether the block at the given position conducts redstone signals.
 		p	1		x
 		p	2		y
 		p	3		z
@@ -28384,12 +28386,12 @@ c	net/minecraft/unmapped/C_8124234	net/minecraft/block/PistonBaseBlock
 		p	2		p_2
 		p	3		p_3
 		p	4		p_4
-	m	(Lnet/minecraft/unmapped/C_5553933;III)V	m_8031362	updateExtended
+	m	(Lnet/minecraft/unmapped/C_5553933;III)V	m_8031362	checkExtended
 		p	1		world
 		p	2		x
 		p	3		y
 		p	4		z
-	m	(Lnet/minecraft/unmapped/C_5553933;IIII)Z	m_9356302	shouldBeExtended
+	m	(Lnet/minecraft/unmapped/C_5553933;IIII)Z	m_9356302	shouldExtend
 		p	1		world
 		p	2		x
 		p	3		y
@@ -32544,7 +32546,7 @@ c	net/minecraft/unmapped/C_9468736	net/minecraft/client/gui/screen/ConfirmChatLi
 		p	2		p_2
 		p	3		p_3
 c	net/minecraft/unmapped/C_9469238	net/minecraft/block/RedstoneWireBlock
-	f	Z	f_7651717	emitsRedstonePower
+	f	Z	f_7651717	shouldSignal
 	f	Ljava/util/Set;	f_3159569	neighborsToUpdate
 	m	(II)V	<init>	<init>
 		p	1		id
@@ -32575,7 +32577,7 @@ c	net/minecraft/unmapped/C_9469238	net/minecraft/block/RedstoneWireBlock
 		p	2		x
 		p	3		y
 		p	4		z
-	m	(Lnet/minecraft/unmapped/C_5553933;IIIIII)V	m_0265275	updatePowerLevel
+	m	(Lnet/minecraft/unmapped/C_5553933;IIIIII)V	m_0265275	doUpdatePower
 		p	1		world
 		p	2		x
 		p	3		y
@@ -32600,7 +32602,7 @@ c	net/minecraft/unmapped/C_9469238	net/minecraft/block/RedstoneWireBlock
 		p	4		p_4
 		p	5		p_5
 		p	6		p_6
-	m	(Lnet/minecraft/unmapped/C_5553933;IIII)I	m_3336874	increaseWirePower
+	m	(Lnet/minecraft/unmapped/C_5553933;IIII)I	m_3336874	getHighestWirePower
 		p	1		world
 		p	2		x
 		p	3		y
@@ -33036,7 +33038,7 @@ c	net/minecraft/unmapped/C_9568451	net/minecraft/item/HoeItem
 		p	10		p_10
 	m	()Z	m_8135976	m_8135976
 	m	()Ljava/lang/String;	m_3208664	getAsString
-c	net/minecraft/unmapped/C_9590800	net/minecraft/block/RedstoneTorchBlock__BurnoutEntry
+c	net/minecraft/unmapped/C_9590800	net/minecraft/block/RedstoneTorchBlock__ToggleEntry
 	f	I	f_4654459	x
 	f	I	f_7095390	y
 	f	I	f_6782117	z
@@ -33947,7 +33949,7 @@ c	net/minecraft/unmapped/C_9890847	net/minecraft/block/TripwireHookBlock
 		p	3		p_3
 		p	4		p_4
 		p	5		p_5
-	m	(Lnet/minecraft/unmapped/C_5553933;IIIIIZII)V	m_5180141	updatePowered
+	m	(Lnet/minecraft/unmapped/C_5553933;IIIIIZII)V	m_5180141	updateState
 		p	1		world
 		p	2		x
 		p	3		y

@@ -507,16 +507,16 @@ c	net/minecraft/unmapped/C_1241852
 	m	()D	m_3320505	getMaxY	
 	m	()D	m_6369619	getMinZ	
 	m	()D	m_4354693	getMaxZ	
-	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3544601;)I	m_7017977	getEmittedWeakPower	
-		c	Returns the weak redstone power this block is emitting in the given direction.\n\n<p>\nNOTE: directions in redstone power related methods are backwards, so blocks should\ncheck for power emitted in the direction <i>opposite</i> of the one given.	
+	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3544601;)I	m_7017977	getSignal	
+		c	Returns the redstone signal this block is emitting in the given direction.\nThis roughly equates to what is colloquially known as 'soft' or 'weak' power.\n\n<p>\nNOTE: directions in redstone signal related methods are backwards, so blocks should\ncheck for the signal emitted in the direction <i>opposite</i> of the one given.	
 		p	1		world	
 		p	2		pos	
 		p	3		state	
 		p	4		dir	
-	m	()Z	m_3885870	isPowerSource	
-		c	Returns whether this block is capable of emitting redstone power.	
-	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3544601;)I	m_0895470	getEmittedStrongPower	
-		c	Returns the strong redstone power this block is emitting in the given direction.\n\n<p>\nNOTE: directions in redstone power related methods are backwards, so blocks should\ncheck for power emitted in the direction <i>opposite</i> of the one given.	
+	m	()Z	m_3885870	isSignalSource	
+		c	Returns whether this block is capable of emitting a redstone signal.	
+	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3544601;)I	m_0895470	getDirectSignal	
+		c	Returns the direct redstone signal this block is emitting in the given direction.\nThis roughly equates to what is colloquially known as 'hard' or 'strong' power.\n\n<p>\nNOTE: directions in redstone signal related methods are backwards, so blocks should\ncheck for the signal emitted in the direction <i>opposite</i> of the one given.	
 		p	1		world	
 		p	2		pos	
 		p	3		state	
@@ -524,10 +524,10 @@ c	net/minecraft/unmapped/C_1241852
 	m	()I	m_1582100	getPistonMoveBehavior	
 		c	Returns how this block interacts with pistons. The following values are accepted:\n<br>- 0: this block can be pushed and pulled by pistons.\n<br>- 1: this block is broken when pushed.\n<br>- 2: this block cannot be pushed or pulled by pistons.	
 	m	()F	m_4038745	getAmbientOcclusionLight	
-	m	()Z	m_9803079	hasAnalogOutput	
-		c	Returns whether this block has contents that can be read by a comparator.	
-	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;)I	m_9693860	getAnalogOutput	
-		c	Returns the redstone power that a comparator that is reading the contents of this block\nshould output.	
+	m	()Z	m_9803079	isAnalogSignalSource	
+		c	Returns whether this block is capable of emitting an analog signal,\ni.e. whether it has contents that can be read by a comparator.	
+	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;)I	m_9693860	getAnalogSignal	
+		c	Returns the analog signal emitted by this block, i.e. the signal that should be outputted\nby a comparator reading the contents of this block.	
 		p	1		world	
 		p	2		pos	
 	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_4839982		isOpaque
@@ -615,17 +615,17 @@ c	net/minecraft/unmapped/C_1241852
 		p	2			from
 		p	3			to
 		p	4			collisionBox
-	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;)I	m_7017977		getEmittedWeakPower
-		c		Returns the weak redstone power this block is emitting in the given direction.\n\n<p>\nNOTE: directions in redstone power related methods are backwards, so blocks should\ncheck for power emitted in the direction <i>opposite</i> of the one given.
+	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;)I	m_7017977		getSignal
+		c		Returns the redstone signal this block is emitting in the given direction.\nThis roughly equates to what is colloquially known as 'soft' or 'weak' power.\n\n<p>\nNOTE: directions in redstone signal related methods are backwards, so blocks should\ncheck for the signal emitted in the direction <i>opposite</i> of the one given.
 		p	1			state
 		p	2			world
 		p	3			pos
 		p	4			dir
-	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_3885870		isPowerSource
-		c		Returns whether this block is capable of emitting redstone power.
+	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_3885870		isSignalSource
+		c		Returns whether this block is capable of emitting a redstone signal.
 		p	1			state
-	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;)I	m_0895470		getEmittedStrongPower
-		c		Returns the strong redstone power this block is emitting in the given direction.\n\n<p>\nNOTE: directions in redstone power related methods are backwards, so blocks should\ncheck for power emitted in the direction <i>opposite</i> of the one given.
+	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;)I	m_0895470		getDirectSignal
+		c		Returns the direct redstone signal this block is emitting in the given direction.\nThis roughly equates to what is colloquially known as 'hard' or 'strong' power.\n\n<p>\nNOTE: directions in redstone signal related methods are backwards, so blocks should\ncheck for the signal emitted in the direction <i>opposite</i> of the one given.
 		p	1			state
 		p	2			world
 		p	3			pos
@@ -635,11 +635,11 @@ c	net/minecraft/unmapped/C_1241852
 		p	1			state
 	m	(Lnet/minecraft/unmapped/C_2441996;)F	m_4038745		getAmbientOcclusionLightLevel
 		p	1			state
-	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_9803079		hasAnalogOutput
-		c		Returns whether this block has contents that can be read by a comparator.
+	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_9803079		isAnalogSignalSource
+		c		Returns whether this block is capable of emitting an analog signal,\ni.e. whether it has contents that can be read by a comparator.
 		p	1			state
-	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;)I	m_9693860		getAnalogOutput
-		c		Returns the redstone power that a comparator that is reading the contents of this block\nshould output.
+	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;)I	m_9693860		getAnalogSignal
+		c		Returns the analog signal emitted by this block, i.e. the signal that should be outputted\nby a comparator reading the contents of this block.
 		p	1			state
 		p	2			world
 		p	3			pos
@@ -4050,13 +4050,13 @@ c	net/minecraft/unmapped/C_1713479		net/minecraft/block/state/BlockProperties
 	m	()F	m_1964234		getAmbientOcclusionLight
 	m	()Z	m_0810303		blocksAmbientLight
 	m	()Z	m_1581837		isConductor
-	m	()Z	m_4954044		isPowerSource
-	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;)I	m_2469366		getEmittedWeakPower
+	m	()Z	m_4954044		isSignalSource
+	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;)I	m_2469366		getSignal
 		p	1			world
 		p	2			pos
 		p	3			dir
-	m	()Z	m_8470618		hasAnalogOutput
-	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;)I	m_5436262		getAnalogOutput
+	m	()Z	m_8470618		isAnalogSignalSource
+	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;)I	m_5436262		getAnalogSignal
 		p	1			world
 		p	2			pos
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;)F	m_4673944		getMiningSpeed
@@ -4066,7 +4066,7 @@ c	net/minecraft/unmapped/C_1713479		net/minecraft/block/state/BlockProperties
 		p	1			player
 		p	2			world
 		p	3			pos
-	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;)I	m_6563296		getEmittedStrongPower
+	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;)I	m_6563296		getDirectSignal
 		p	1			world
 		p	2			pos
 		p	3			dir
