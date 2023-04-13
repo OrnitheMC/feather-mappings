@@ -3029,7 +3029,7 @@ c	net/minecraft/unmapped/C_0539808	net/minecraft/entity/Entity
 		p	1		pos
 	m	(D)Z	m_4981405	isWithinViewDistance
 		p	1		distance
-	m	()Ljava/lang/String;	m_6274448	m_6274448
+	m	()Ljava/lang/String;	m_6274448	getTexture
 	m	()Z	m_2903302	m_2903302
 	m	(Lnet/minecraft/unmapped/C_2018497;)Z	m_4886802	writeNbtNoRider
 		p	1		nbt
@@ -23140,21 +23140,24 @@ c	net/minecraft/unmapped/C_6607881	net/minecraft/entity/living/LivingEntity
 	f	F	f_5626582	distanceTravelled
 	f	F	f_0164044	prevDistanceTravelled
 	f	Z	f_4576707	f_4576707
-	f	Ljava/lang/String;	f_5116109	f_5116109
+	f	Ljava/lang/String;	f_5116109	texture
+		c	The path to the texture of the LivingEntity
 	f	Z	f_7337022	f_7337022
 	f	F	f_4501866	halfCircleDegrees
-	f	Ljava/lang/String;	f_4095579	f_4095579
+	f	Ljava/lang/String;	f_4095579	livingEntityType
+		c	Is only set not to null if living entity is humanoid
 	f	F	f_9609323	f_9609323
 	f	I	f_0493907	mobValue
 	f	F	f_2162351	damageAmount
-	f	F	f_8464681	f_8464681
+	f	F	f_8464681	movementSpeed
 	f	F	f_8902939	airSpeed
 	f	F	f_8361798	lastHandSwingProgress
 	f	F	f_8345922	handSwingProgress
 	f	I	f_3360418	health
 	f	I	f_3298987	prevHealth
 	f	I	f_1592651	f_1592651
-	f	I	f_0053459	f_0053459
+	f	I	f_0053459	produceSoundProbability
+		c	The number is initially set to -soundInterval, after this interval each tick the probability of making a sound will go up with 1 promille
 	f	I	f_0297948	hurtTimer
 	f	I	f_5341462	hurtAnimationTicks
 	f	F	f_1944619	knockbackVelocity
@@ -23163,7 +23166,8 @@ c	net/minecraft/unmapped/C_6607881	net/minecraft/entity/living/LivingEntity
 	f	F	f_2138793	prevCameraPitch
 	f	F	f_0565533	cameraPitch
 	f	Z	f_0217189	killed
-	f	I	f_8375628	f_8375628
+	f	I	f_8375628	experienceDroppe
+		c	The amount of experience points (XP) the LivingEntity drops
 	f	I	f_4958531	f_4958531
 	f	F	f_7746543	f_7746543
 	f	F	f_5224477	prevHandSwingAmount
@@ -23187,11 +23191,11 @@ c	net/minecraft/unmapped/C_6607881	net/minecraft/entity/living/LivingEntity
 	f	Lnet/minecraft/unmapped/C_9229053;	f_6479057	f_6479057
 	f	Lnet/minecraft/unmapped/C_3120382;	f_7676474	f_7676474
 	f	Lnet/minecraft/unmapped/C_3120382;	f_2775499	f_2775499
-	f	Lnet/minecraft/unmapped/C_6607881;	f_6553682	f_6553682
+	f	Lnet/minecraft/unmapped/C_6607881;	f_6553682	target
 	f	Lnet/minecraft/unmapped/C_1006946;	f_2719103	f_2719103
 	f	F	f_1727901	movementSpeed
-	f	Lnet/minecraft/unmapped/C_3674802;	f_6505844	f_6505844
-	f	F	f_2649220	f_2649220
+	f	Lnet/minecraft/unmapped/C_3674802;	f_6505844	housePosition
+	f	F	f_2649220	maxHouseDistance
 	f	I	f_0862222	bodyTrackingIncrements
 	f	D	f_5094063	serverX
 	f	D	f_7065948	serverY
@@ -23205,11 +23209,13 @@ c	net/minecraft/unmapped/C_6607881	net/minecraft/entity/living/LivingEntity
 	f	F	f_4365952	forwardSpeed
 	f	F	f_6845044	randomYaw
 	f	Z	f_2817200	jumping
-	f	F	f_9175806	f_9175806
-	f	F	f_0832974	f_0832974
+	f	F	f_9175806	initialPitch
+	f	F	f_0832974	movementSpeed
 	f	I	f_2385937	jumpingCooldown
-	f	Lnet/minecraft/unmapped/C_0539808;	f_7658269	f_7658269
-	f	I	f_0595533	f_0595533
+	f	Lnet/minecraft/unmapped/C_0539808;	f_7658269	target
+		c	The entity that is currently being targetted by the LivingEntity
+	f	I	f_0595533	targetTime
+		c	How many ticks should an entity be targetted for
 	m	(Lnet/minecraft/unmapped/C_5553933;)V	<init>	<init>
 		p	1		p_1
 	m	()Lnet/minecraft/unmapped/C_3257017;	m_6634241	m_6634241
@@ -23226,31 +23232,31 @@ c	net/minecraft/unmapped/C_6607881	net/minecraft/entity/living/LivingEntity
 	m	()F	m_4815215	m_4815215
 	m	(F)V	m_5366642	m_5366642
 		p	1		p_1
-	m	()F	m_1512035	m_1512035
+	m	()F	m_1512035	getMovementSpeed
 	m	(F)V	m_8516392	setMovementSpeed
 		p	1		movementSpeed
 	m	(Lnet/minecraft/unmapped/C_0539808;)Z	m_3916798	attack
 		p	1		entity
-	m	()Lnet/minecraft/unmapped/C_6607881;	m_5132113	m_5132113
-	m	(Lnet/minecraft/unmapped/C_6607881;)V	m_6246724	m_6246724
-		p	1		p_1
-	m	(Ljava/lang/Class;)Z	m_6749823	m_6749823
-		p	1		p_1
-	m	()V	m_5253857	m_5253857
-	m	()Z	m_5994524	m_5994524
-	m	(III)Z	m_1457939	m_1457939
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-	m	(IIII)V	m_8868727	m_8868727
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-	m	()Lnet/minecraft/unmapped/C_3674802;	m_3704223	m_3704223
-	m	()F	m_0065245	m_0065245
-	m	()V	m_5275408	m_5275408
-	m	()Z	m_2661950	m_2661950
+	m	()Lnet/minecraft/unmapped/C_6607881;	m_5132113	getTarget
+	m	(Lnet/minecraft/unmapped/C_6607881;)V	m_6246724	setTarget
+		p	1		target
+	m	(Ljava/lang/Class;)Z	m_6749823	canExplode
+		p	1		entity
+	m	()V	m_5253857	eatGrass
+	m	()Z	m_5994524	canReachHouse
+	m	(III)Z	m_1457939	canReachHouse
+		p	1		x
+		p	2		y
+		p	3		z
+	m	(IIII)V	m_8868727	setVillagerHousePos
+		p	1		x
+		p	2		y
+		p	3		z
+		p	4		maxHouseDistance
+	m	()Lnet/minecraft/unmapped/C_3674802;	m_3704223	getHousePosition
+	m	()F	m_0065245	getMaxHouseDistance
+	m	()V	m_5275408	removeHouse
+	m	()Z	m_2661950	hasHouse
 	m	(Lnet/minecraft/unmapped/C_6607881;)V	m_8337329	setAttacker
 		p	1		attacker
 	m	()V	m_1700770	m_1700770
@@ -23260,8 +23266,9 @@ c	net/minecraft/unmapped/C_6607881	net/minecraft/entity/living/LivingEntity
 	m	()Z	m_3104437	m_3104437
 	m	()Z	m_6281908	m_6281908
 	m	()F	m_0866957	m_0866957
-	m	()I	m_2933675	m_2933675
-	m	()V	m_2609286	m_2609286
+	m	()I	m_2933675	getSoundInterval
+		c	How many ticks (at least) will the entity wait between producing sounds
+	m	()V	m_2609286	makeSound
 	m	()V	m_4446411	m_4446411
 	m	()V	m_0865353	tickPostDeath
 		c	This method is called 20 times from {@link net.minecraft.entity.living.LivingEntity#baseTick baseTick}\nafter the entity has died (when health is 0), as the death animation lasts for 20 ticks.\nIn the 20th tick/call it marks the entity as removed.
@@ -23305,7 +23312,7 @@ c	net/minecraft/unmapped/C_6607881	net/minecraft/entity/living/LivingEntity
 		p	1		source
 		p	2		amount
 	m	()F	m_9491259	getSoundVolume
-	m	()Ljava/lang/String;	m_4151868	m_4151868
+	m	()Ljava/lang/String;	m_4151868	getSound
 	m	()Ljava/lang/String;	m_5045007	getHurtSound
 	m	()Ljava/lang/String;	m_1699770	getDeathSound
 	m	(Lnet/minecraft/unmapped/C_0539808;IDD)V	m_3369909	applyKnockback
@@ -23334,8 +23341,8 @@ c	net/minecraft/unmapped/C_6607881	net/minecraft/entity/living/LivingEntity
 		p	1		p_1
 	m	()Z	m_9283333	m_9283333
 	m	()Z	m_6133114	isWaterCreature
-	m	(F)V	m_4974211	m_4974211
-		p	1		p_1
+	m	(F)V	m_4974211	setForwardSpeed
+		p	1		forwardSpeed
 	m	(Z)V	m_6222805	setJumping
 		p	1		jumping
 	m	()V	m_0095412	tickAI
