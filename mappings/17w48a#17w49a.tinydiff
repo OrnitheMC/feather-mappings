@@ -5,8 +5,8 @@ c	net/minecraft/client/main/Main
 		p	0			p_0
 		p	1			p_1
 c	net/minecraft/server/MinecraftServer
-	f	Lnet/minecraft/unmapped/C_5001493;	f_5674947		f_5674947
-	m	()Lnet/minecraft/unmapped/C_5001493;	m_9458206		m_9458206
+	f	Lnet/minecraft/unmapped/C_5001493;	f_5674947		tagManager
+	m	()Lnet/minecraft/unmapped/C_5001493;	m_9458206		getTagManager
 	m	(Ljava/lang/Thread;Ljava/lang/Throwable;)V	m_0667677		m_0667677
 		p	0			p_0
 		p	1			p_1
@@ -1576,19 +1576,19 @@ c	net/minecraft/unmapped/C_4720748$C_5903339		C_5903339
 		p	1			p_1
 	m	(Ljava/lang/Object;)Z	test		test
 		p	1			p_1
-c	net/minecraft/unmapped/C_5001493		net/minecraft/unmapped/C_5001493
-	f	Lnet/minecraft/unmapped/C_8528326;	f_6867576		f_6867576
-	f	Lnet/minecraft/unmapped/C_8528326;	f_4659793		f_4659793
+c	net/minecraft/unmapped/C_5001493		net/minecraft/tag/TagManager
+	f	Lnet/minecraft/unmapped/C_8528326;	f_6867576		blockTags
+	f	Lnet/minecraft/unmapped/C_8528326;	f_4659793		itemTags
 	m	()V	<init>		<init>
-	m	()Lnet/minecraft/unmapped/C_8528326;	m_3566161		m_3566161
-	m	()Lnet/minecraft/unmapped/C_8528326;	m_1492286		m_1492286
-	m	()V	m_4928105		m_4928105
+	m	()Lnet/minecraft/unmapped/C_8528326;	m_3566161		getBlockTags
+	m	()Lnet/minecraft/unmapped/C_8528326;	m_1492286		getItemTags
+	m	()V	m_4928105		clear
 	m	(Lnet/minecraft/unmapped/C_6577431;)V	m_8394980		m_8394980
 		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_7240405;)V	m_9165647		m_9165647
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_7240405;)Lnet/minecraft/unmapped/C_5001493;	m_4523484		m_4523484
-		p	0			p_0
+	m	(Lnet/minecraft/unmapped/C_7240405;)V	m_9165647		serialize
+		p	1			buffer
+	m	(Lnet/minecraft/unmapped/C_7240405;)Lnet/minecraft/unmapped/C_5001493;	m_4523484		deserialize
+		p	0			buffer
 c	net/minecraft/unmapped/C_5503733		net/minecraft/unmapped/C_5503733
 	f	Lnet/minecraft/unmapped/C_5503733;	AND		AND
 	f	Lnet/minecraft/unmapped/C_5503733;	f_3424274		f_3424274
@@ -1599,22 +1599,22 @@ c	net/minecraft/unmapped/C_5503733		net/minecraft/unmapped/C_5503733
 	m	(Ljava/util/Collection;)[[Ljava/lang/String;	lambda$static$0		lambda$static$0
 		p	0			p_0
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_7011459		net/minecraft/unmapped/C_7011459
-	f	Lnet/minecraft/unmapped/C_8528326;	f_2520699		f_2520699
-	f	I	f_2381506		f_2381506
-	f	Lnet/minecraft/unmapped/C_9086953;	f_5229977		f_5229977
-	f	Lnet/minecraft/unmapped/C_9086953;	f_8733533		f_8733533
-	m	(Lnet/minecraft/unmapped/C_8528326;)V	m_9992125		m_9992125
-		p	0			p_0
-	m	()Lnet/minecraft/unmapped/C_8528326;	m_5013182		m_5013182
-	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_9086953;	m_4034232		m_4034232
-		p	0			p_0
+c	net/minecraft/unmapped/C_7011459		net/minecraft/tag/ItemTags
+	f	Lnet/minecraft/unmapped/C_8528326;	f_2520699		all
+	f	I	f_2381506		resetCount
+	f	Lnet/minecraft/unmapped/C_9086953;	f_5229977		WOOL
+	f	Lnet/minecraft/unmapped/C_9086953;	f_8733533		PLANKS
+	m	(Lnet/minecraft/unmapped/C_8528326;)V	m_9992125		reset
+		p	0			tags
+	m	()Lnet/minecraft/unmapped/C_8528326;	m_5013182		getAll
+	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_9086953;	m_4034232		register
+		p	0			name
 	m	()I	m_2273991		m_2273991
 	m	()Lnet/minecraft/unmapped/C_8528326;	m_6129578		m_6129578
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_7011459$C_1665643		C_1665643
-	f	I	f_7026999		f_7026999
-	f	Lnet/minecraft/unmapped/C_9086953;	f_9856852		f_9856852
+c	net/minecraft/unmapped/C_7011459$C_1665643		ItemTag
+	f	I	f_7026999		lastResetCount
+	f	Lnet/minecraft/unmapped/C_9086953;	f_9856852		delegate
 	m	(Lnet/minecraft/unmapped/C_0561170;)V	<init>		<init>
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_3755722;)Z	m_4489482		m_4489482
@@ -1627,7 +1627,7 @@ c	net/minecraft/unmapped/C_8528326		net/minecraft/tag/TagCollection
 	f	Lcom/google/gson/Gson;	f_2738677		GSON
 	f	I	f_7866325		EXTENSION_LENGTH
 	f	Ljava/util/Map;	f_5371955		tags
-	f	Lnet/minecraft/unmapped/C_7135514;	f_4503977		idToValue
+	f	Lnet/minecraft/unmapped/C_7135514;	f_4503977		getter
 	f	Ljava/lang/String;	f_1705155		dir
 	m	(Lnet/minecraft/unmapped/C_7135514;Ljava/lang/String;)V	<init>		<init>
 		p	1			p_1
@@ -1635,10 +1635,10 @@ c	net/minecraft/unmapped/C_8528326		net/minecraft/tag/TagCollection
 	m	(Lnet/minecraft/unmapped/C_9086953;)V	m_9607822		add
 		p	1			tag
 	m	(Lnet/minecraft/unmapped/C_0561170;)Lnet/minecraft/unmapped/C_9086953;	m_0127637		get
-		p	1			id
+		p	1			key
 	m	(Lnet/minecraft/unmapped/C_0561170;)Lnet/minecraft/unmapped/C_9086953;	m_1520401		getOrEmpty
-		p	1			id
-	m	()Ljava/util/Collection;	m_4816902		getIds
+		p	1			key
+	m	()Ljava/util/Collection;	m_4816902		getKeys
 	m	(Ljava/lang/Object;)Ljava/util/Collection;	m_7104061		getMatching
 		p	1			value
 	m	()V	m_5219131		clear
