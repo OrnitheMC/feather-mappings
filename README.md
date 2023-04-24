@@ -63,10 +63,10 @@ Builds a deobfuscated jar with feather mappings and automapped fields (enums, et
 Decompile the mapped source code. **Note:** This is not designed to be recompiled.
 
 ### `download`
-Downloads the client and server Minecraft jars for the current Minecraft version to `.gradle/minecraft`
+Downloads the client and server Minecraft jars for the current Minecraft version to `/feather-build-cache/game-jars/` in your user gradle cache.
 
 ### `mergeJars`
-Merges the client and server jars into one merged jar, located at `VERSION-merged.jar` in the mappings directory where `VERSION` is the current Minecraft version.
+Merges the client and server jars into one merged jar, located at `/feather-build-cache/merged/<minecraft_version>-merged.jar` in your user gradle cache.
 
 ### `setupFeather`
 [`download`](#download) and [`mergeJars`](#mergeJars)
