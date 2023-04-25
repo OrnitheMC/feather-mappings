@@ -1,19 +1,19 @@
 tiny	2	0
 c	net/minecraft/unmapped/C_0256098
-	f	Ljava/util/List;	f_5865294	f_5865294	
+	f	Ljava/util/List;	f_5865294	sounds	
 c	net/minecraft/unmapped/C_1498011
 	m	()Ljava/lang/String;	m_5045007	m_5045007	
 	m	()Ljava/lang/String;	m_1699770	m_1699770	
 c	net/minecraft/unmapped/C_1872000
-	f	Ljava/util/Random;	f_3747829	f_3747829	
-	f	I	f_6265858	f_6265858	
+	f	Ljava/util/Random;	f_3747829	random	
+	f	I	f_6265858	musicCooldown	
 c	net/minecraft/unmapped/C_2144954
 	f	Ljava/util/Set;	f_6065855	f_6065855	
-	m	(Lnet/minecraft/unmapped/C_5553933;ILnet/minecraft/unmapped/C_3893367;)I	m_7552313	m_7552313	
+	m	(Lnet/minecraft/unmapped/C_5553933;ILnet/minecraft/unmapped/C_3893367;)I	m_7552313	spawnEntities	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(Lnet/minecraft/unmapped/C_5553933;ILnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_3893367;)I	m_7552313		m_7552313
+	m	(Lnet/minecraft/unmapped/C_5553933;ILnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_3893367;)I	m_7552313		spawnEntities
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -31,20 +31,20 @@ c	net/minecraft/unmapped/C_4316830
 	m	()Ljava/lang/String;	m_5045007	m_5045007	
 	m	()Ljava/lang/String;	m_1699770	m_1699770	
 c	net/minecraft/unmapped/C_5553933
-	f	Ljava/util/List;	f_5515055	f_5515055	
-	f	Ljava/util/Set;	f_6004148	f_6004148	
-	f	I	f_7824841	f_7824841	
+	f	Ljava/util/List;	f_5515055	players	
+	f	Ljava/util/Set;	f_6004148	tickingChunks	
+	f	I	f_7824841	ambientSoundCooldown	
 	f	Lnet/minecraft/unmapped/C_0539808;	f_6053391		f_6053391
 	m	(Lnet/minecraft/unmapped/C_9590849;)V	m_7348673	m_7348673	
 		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_0539808;D)Lnet/minecraft/unmapped/C_9590849;	m_9305371	m_9305371	
-		p	1		p_1	
-		p	2		p_2	
-	m	(DDDD)Lnet/minecraft/unmapped/C_9590849;	m_2156022	m_2156022	
-		p	1		p_1	
-		p	3		p_3	
-		p	5		p_5	
-		p	7		p_7	
+	m	(Lnet/minecraft/unmapped/C_0539808;D)Lnet/minecraft/unmapped/C_9590849;	m_9305371	getClosestPlayer	
+		p	1		entity	
+		p	2		range	
+	m	(DDDD)Lnet/minecraft/unmapped/C_9590849;	m_2156022	getClosestPlayer	
+		p	1		x	
+		p	3		y	
+		p	5		z	
+		p	7		range	
 	m	()V	m_7348673		m_7348673
 	m	(DDDLjava/lang/String;F)V	m_0876826		m_0876826
 		p	1			p_1
@@ -54,21 +54,24 @@ c	net/minecraft/unmapped/C_5553933
 		p	8			p_8
 	m	()Lnet/minecraft/unmapped/C_0539808;	m_0519267		m_0519267
 c	net/minecraft/unmapped/C_6607881
-	f	Lnet/minecraft/unmapped/C_0539808;	f_7658269	f_7658269	
-	f	I	f_0595533	f_0595533	
-	m	(Lnet/minecraft/unmapped/C_0539808;F)V	m_1010750	m_1010750	
+	f	Lnet/minecraft/unmapped/C_0539808;	f_7658269	target	
+		c	The entity that is currently being targetted by the LivingEntity	
+	f	I	f_0595533	targetTime	
+		c	How many ticks should an entity be targetted for	
+	m	(Lnet/minecraft/unmapped/C_0539808;F)V	m_1010750	turnHeadAtEntity	
 		p	1		p_1	
 		p	2		p_2	
-	m	(FFF)F	m_2936680	m_2936680	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-c	net/minecraft/unmapped/C_7141926	net/minecraft/unmapped/C_7141926	
-	f	I	f_7567534	f_7567534	
-	f	I	f_7647784	f_7647784	
+	m	(FFF)F	m_2936680	getRotation	
+		c	gets the new rotation. This uses current position and next position along with a max rotation to not get any funcky effects.	
+		p	1		currentRotation	
+		p	2		nextRotation	
+		p	3		maxIncrement	
+c	net/minecraft/unmapped/C_7141926	net/minecraft/util/math/ChunkPos	
+	f	I	f_7567534	x	
+	f	I	f_7647784	z	
 	m	(II)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		x	
+		p	2		z	
 	m	()I	hashCode	hashCode	
 	m	(Ljava/lang/Object;)Z	equals	equals	
-		p	1		p_1	
+		p	1		obj	

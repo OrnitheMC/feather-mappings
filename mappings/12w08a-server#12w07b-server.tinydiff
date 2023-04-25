@@ -7,7 +7,8 @@ c	net/minecraft/unmapped/C_1428858
 		p	4		p_4	
 		p	5		p_5	
 c	net/minecraft/unmapped/C_1747981
-	f	Z	f_7065022	f_7065022	
+	f	Z	f_7065022	friendly	
+		c	friendly is true for iron golems and false for zombies.	
 	m	(Lnet/minecraft/unmapped/C_5622853;FZ)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -15,11 +16,11 @@ c	net/minecraft/unmapped/C_1747981
 	m	(Lnet/minecraft/unmapped/C_5622853;F)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_1792356	net/minecraft/unmapped/C_1792356	
-	f	Lnet/minecraft/unmapped/C_7592368;	f_7573381	f_7573381	
-	f	Lnet/minecraft/unmapped/C_6607881;	f_8368703	f_8368703	
+c	net/minecraft/unmapped/C_1792356	net/minecraft/entity/ai/goal/TrackIronGolemTargetGoal	
+	f	Lnet/minecraft/unmapped/C_7592368;	f_7573381	golem	
+	f	Lnet/minecraft/unmapped/C_6607881;	f_8368703	target	
 	m	(Lnet/minecraft/unmapped/C_7592368;)V	<init>	<init>	
-		p	1		p_1	
+		p	1		golem	
 	m	()Z	m_9549250	m_9549250	
 	m	()V	m_3836415	m_3836415	
 c	net/minecraft/unmapped/C_2167183
@@ -38,31 +39,31 @@ c	net/minecraft/unmapped/C_2167183
 		p	6			p_6
 		p	7			p_7
 c	net/minecraft/unmapped/C_2240002
-	f	Lnet/minecraft/unmapped/C_6607881;	f_7064794	f_7064794	
-	f	Lnet/minecraft/unmapped/C_8814877;	f_7064794		f_7064794
+	f	Lnet/minecraft/unmapped/C_6607881;	f_7064794	target	
+	f	Lnet/minecraft/unmapped/C_8814877;	f_7064794		target
 c	net/minecraft/unmapped/C_2986085
 	m	(I)V	m_9680878		m_9680878
 		p	1			p_1
-c	net/minecraft/unmapped/C_3014809	net/minecraft/unmapped/C_3014809	
-	f	Lnet/minecraft/unmapped/C_0539808;	f_0329456	f_0329456	
+c	net/minecraft/unmapped/C_3014809	net/minecraft/entity/ai/goal/ActiveTargetGoal__EntityDistanceComparator	
+	f	Lnet/minecraft/unmapped/C_0539808;	f_0329456	entity	
 	f	Lnet/minecraft/unmapped/C_7985395;	f_1752500	f_1752500	
 	m	(Lnet/minecraft/unmapped/C_7985395;Lnet/minecraft/unmapped/C_0539808;)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_0539808;)I	m_6953752	m_6953752	
+	m	(Lnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_0539808;)I	m_6953752	compare	
 		p	1		p_1	
 		p	2		p_2	
 	m	(Ljava/lang/Object;Ljava/lang/Object;)I	compare	compare	
-		p	1		p_1	
-		p	2		p_2	
-c	net/minecraft/unmapped/C_3551236	net/minecraft/unmapped/C_3551236	
-	f	Lnet/minecraft/unmapped/C_5622853;	f_2122138	f_2122138	
-	f	Lnet/minecraft/unmapped/C_6607881;	f_6506340	f_6506340	
-	f	D	f_8675193	f_8675193	
-	f	D	f_2382830	f_2382830	
-	f	D	f_0883666	f_0883666	
-	f	F	f_9565808	f_9565808	
-	f	F	f_1867902	f_1867902	
+		p	1		entity1	
+		p	2		entity2	
+c	net/minecraft/unmapped/C_3551236	net/minecraft/entity/ai/goal/GoToEntityTargetGoal	
+	f	Lnet/minecraft/unmapped/C_5622853;	f_2122138	entity	
+	f	Lnet/minecraft/unmapped/C_6607881;	f_6506340	targetEntity	
+	f	D	f_8675193	targetX	
+	f	D	f_2382830	targetY	
+	f	D	f_0883666	targetZ	
+	f	F	f_9565808	speed	
+	f	F	f_1867902	maxDistance	
 	m	(Lnet/minecraft/unmapped/C_5622853;FF)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -71,7 +72,7 @@ c	net/minecraft/unmapped/C_3551236	net/minecraft/unmapped/C_3551236
 	m	()Z	m_4540487	m_4540487	
 	m	()V	m_7242457	m_7242457	
 	m	()V	m_3836415	m_3836415	
-c	net/minecraft/unmapped/C_4292131	net/minecraft/unmapped/C_4292131	
+c	net/minecraft/unmapped/C_4292131	net/minecraft/block/HorizontalFacingBlock	
 	m	(IILnet/minecraft/unmapped/C_8048208;)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -79,60 +80,61 @@ c	net/minecraft/unmapped/C_4292131	net/minecraft/unmapped/C_4292131
 	m	(ILnet/minecraft/unmapped/C_8048208;)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
-	m	(I)I	m_8230852	m_8230852	
-		p	0		p_0	
+	m	(I)I	m_8230852	getFacing	
+		c	Returns an int encoding the direction this block is facing, given its state (metadata).\nSee {@link net.minecraft.util.math.Facings Facings}.	
+		p	0		metadata	
 c	net/minecraft/unmapped/C_4594583
 	m	(I)I	m_5814506		m_5814506
 		p	0			p_0
 c	net/minecraft/unmapped/C_5553933
-	m	(III)I	m_5707016	m_5707016	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-	m	(III)V	m_9531511	m_9531511	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+	m	(III)I	m_5707016	getOpacity	
+		p	1		x	
+		p	2		y	
+		p	3		z	
+	m	(III)V	m_9531511	onLightChanged	
+		p	1		x	
+		p	2		y	
+		p	3		z	
 c	net/minecraft/unmapped/C_5660126
 	m	(I)I	m_4628580		m_4628580
 		p	0			p_0
 c	net/minecraft/unmapped/C_5708472
-	f	Ljava/util/List;	f_6052763	f_6052763	
-	f	I	f_6970928	f_6970928	
-	m	(IIIIII)Lnet/minecraft/unmapped/C_0557736;	m_0316571	m_0316571	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
-	m	(IIIIII)Z	m_9702651	m_9702651	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
-	m	()V	m_8020365	m_8020365	
-	m	(Lnet/minecraft/unmapped/C_6607881;)V	m_4166896	m_4166896	
-		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_6607881;)Lnet/minecraft/unmapped/C_6607881;	m_0499774	m_0499774	
-		p	1		p_1	
-	m	()V	m_0477010	m_0477010	
-	m	()V	m_5838302	m_5838302	
-	m	(I)V	m_5838302		m_5838302
+	f	Ljava/util/List;	f_6052763	attackers	
+	f	I	f_6970928	golems	
+	m	(IIIIII)Lnet/minecraft/unmapped/C_0557736;	m_0316571	getSpawnPosForIronGolem	
+		p	1		centerX	
+		p	2		centerY	
+		p	3		centerZ	
+		p	4		rangeX	
+		p	5		rangeY	
+		p	6		rangeZ	
+	m	(IIIIII)Z	m_9702651	canIronGolemSpawn	
+		p	1		x	
+		p	2		y	
+		p	3		z	
+		p	4		rangeX	
+		p	5		rangeY	
+		p	6		rangeZ	
+	m	()V	m_8020365	updateIronGolemCount	
+	m	(Lnet/minecraft/unmapped/C_6607881;)V	m_4166896	addOrUpdateAttacker	
+		p	1		attacker	
+	m	(Lnet/minecraft/unmapped/C_6607881;)Lnet/minecraft/unmapped/C_6607881;	m_0499774	getClosestAttacker	
+		p	1		entity	
+	m	()V	m_0477010	cleanUpAttackers	
+	m	()V	m_5838302	cleanUpDoors	
+	m	(I)V	m_5838302		cleanUpDoors
 		p	1			p_1
 c	net/minecraft/unmapped/C_6607881
-	m	(Lnet/minecraft/unmapped/C_6607881;)V	m_8337329	m_8337329	
-		p	1		p_1	
+	m	(Lnet/minecraft/unmapped/C_6607881;)V	m_8337329	setAttacker	
+		p	1		attacker	
 c	net/minecraft/unmapped/C_6849228
-	f	I	f_7470066	f_7470066	
-	m	(III)I	m_0302229	m_0302229	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-	m	()V	m_5537231	m_5537231	
-	m	()V	m_0463658	m_0463658	
+	f	I	f_7470066	queuedLightChecks	
+	m	(III)I	m_0302229	getOpacityAt	
+		p	1		sectionX	
+		p	2		y	
+		p	3		sectionZ	
+	m	()V	m_5537231	clearLightChecks	
+	m	()V	m_0463658	checkLight	
 c	net/minecraft/unmapped/C_7159708
 	m	(III)I	m_0302229	m_0302229	
 		p	1		p_1	
@@ -141,11 +143,11 @@ c	net/minecraft/unmapped/C_7159708
 	m	(II)Z	m_3541347	m_3541347	
 		p	1		p_1	
 		p	2		p_2	
-c	net/minecraft/unmapped/C_7592368	net/minecraft/unmapped/C_7592368	
-	f	I	f_4450686	f_4450686	
-	f	Lnet/minecraft/unmapped/C_5708472;	f_5087798	f_5087798	
-	f	I	f_1327570	f_1327570	
-	f	I	f_5047639	f_5047639	
+c	net/minecraft/unmapped/C_7592368	net/minecraft/entity/living/mob/IronGolemEntity	
+	f	I	f_4450686	mobTickCooldown	
+	f	Lnet/minecraft/unmapped/C_5708472;	f_5087798	village	
+	f	I	f_1327570	attackTicksLeft	
+	f	I	f_5047639	lookingAtVillagerTicksLeft	
 	m	(Lnet/minecraft/unmapped/C_5553933;)V	<init>	<init>	
 		p	1		p_1	
 	m	()Z	m_6682221	m_6682221	
@@ -158,26 +160,26 @@ c	net/minecraft/unmapped/C_7592368	net/minecraft/unmapped/C_7592368
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_0539808;)Z	m_3916798	m_3916798	
 		p	1		p_1	
-	m	()Lnet/minecraft/unmapped/C_5708472;	m_8842724	m_8842724	
-	m	(Z)V	m_9136085	m_9136085	
-		p	1		p_1	
+	m	()Lnet/minecraft/unmapped/C_5708472;	m_8842724	getVillage	
+	m	(Z)V	m_9136085	setLookingAtVillager	
+		p	1		lookingAtVillager	
 	m	(ZI)V	m_9519027	m_9519027	
 		p	1		p_1	
 		p	2		p_2	
-	m	()I	m_3920914	m_3920914	
-c	net/minecraft/unmapped/C_7968335	net/minecraft/unmapped/C_7968335	
-	f	Lnet/minecraft/unmapped/C_7592368;	f_8413247	f_8413247	
-	f	Lnet/minecraft/unmapped/C_8814877;	f_7718511	f_7718511	
-	f	I	f_3458673	f_3458673	
+	m	()I	m_3920914	getLookingAtVillagerTicks	
+c	net/minecraft/unmapped/C_7968335	net/minecraft/entity/ai/goal/IronGolemLookGoal	
+	f	Lnet/minecraft/unmapped/C_7592368;	f_8413247	golem	
+	f	Lnet/minecraft/unmapped/C_8814877;	f_7718511	villager	
+	f	I	f_3458673	lookCountdown	
 	m	(Lnet/minecraft/unmapped/C_7592368;)V	<init>	<init>	
-		p	1		p_1	
+		p	1		golem	
 	m	()Z	m_9549250	m_9549250	
 	m	()Z	m_4540487	m_4540487	
 	m	()V	m_3836415	m_3836415	
 	m	()V	m_7242457	m_7242457	
 	m	()V	m_3798730	m_3798730	
 c	net/minecraft/unmapped/C_7985395
-	f	Lnet/minecraft/unmapped/C_3014809;	f_6252142	f_6252142	
+	f	Lnet/minecraft/unmapped/C_3014809;	f_6252142	entityDistanceComparator	
 	m	(Lnet/minecraft/unmapped/C_6607881;Ljava/lang/Class;FIZZ)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -186,39 +188,39 @@ c	net/minecraft/unmapped/C_7985395
 		p	5		p_5	
 		p	6		p_6	
 c	net/minecraft/unmapped/C_8159814
-	f	Z	f_1608748	f_1608748	
+	f	Z	f_1608748	checkCanNavigate	
 	m	(Lnet/minecraft/unmapped/C_6607881;FZZ)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
 c	net/minecraft/unmapped/C_8814877
-	f	Lnet/minecraft/unmapped/C_5708472;	f_3141743	f_3141743	
+	f	Lnet/minecraft/unmapped/C_5708472;	f_3141743	village	
 	m	(Lnet/minecraft/unmapped/C_6607881;)V	m_8337329	m_8337329	
 		p	1		p_1	
-c	net/minecraft/unmapped/C_8847310	net/minecraft/unmapped/C_8847310	
-	f	Lnet/minecraft/unmapped/C_6607881;	f_2069351	f_2069351	
-	f	I	f_9884895	f_9884895	
-	f	Lnet/minecraft/unmapped/C_5708472;	f_0729138	f_0729138	
+c	net/minecraft/unmapped/C_8847310	net/minecraft/world/village/Village__Attacker	
+	f	Lnet/minecraft/unmapped/C_6607881;	f_2069351	attacker	
+	f	I	f_9884895	ticks	
+	f	Lnet/minecraft/unmapped/C_5708472;	f_0729138	village	
 	m	(Lnet/minecraft/unmapped/C_5708472;Lnet/minecraft/unmapped/C_6607881;I)V	<init>	<init>	
 		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-c	net/minecraft/unmapped/C_9005195	net/minecraft/unmapped/C_9005195	
-	f	Lnet/minecraft/unmapped/C_8814877;	f_0939950	f_0939950	
-	f	Lnet/minecraft/unmapped/C_7592368;	f_3248635	f_3248635	
-	f	I	f_8343225	f_8343225	
-	f	Z	f_9073473	f_9073473	
+		p	2		attacker	
+		p	3		ticks	
+c	net/minecraft/unmapped/C_9005195	net/minecraft/entity/ai/goal/FollowGolemGoal	
+	f	Lnet/minecraft/unmapped/C_8814877;	f_0939950	villager	
+	f	Lnet/minecraft/unmapped/C_7592368;	f_3248635	golem	
+	f	I	f_8343225	golemLookingTicks	
+	f	Z	f_9073473	isFollowingGolem	
 	m	(Lnet/minecraft/unmapped/C_8814877;)V	<init>	<init>	
-		p	1		p_1	
+		p	1		villager	
 	m	()Z	m_9549250	m_9549250	
 	m	()Z	m_4540487	m_4540487	
 	m	()V	m_3836415	m_3836415	
 	m	()V	m_7242457	m_7242457	
 	m	()V	m_3798730	m_3798730	
 c	net/minecraft/unmapped/C_9229053
-	m	()V	m_6903096	m_6903096	
-	m	(Lnet/minecraft/unmapped/C_2306016;)V	m_6903096		m_6903096
+	m	()V	m_6903096	trimPath	
+	m	(Lnet/minecraft/unmapped/C_2306016;)V	m_6903096		trimPath
 		p	1			p_1
 c	net/minecraft/unmapped/C_9232485
 	f	J	f_5086097		f_5086097
@@ -242,7 +244,7 @@ c	net/minecraft/unmapped/C_9232485
 		p	9			p_9
 		p	10			p_10
 c	net/minecraft/unmapped/C_9358458
-	f	[B	f_2148422	f_2148422	
+	f	[B	f_2148422	buffer	
 	f	[S	f_4049750		f_4049750
 	f	[B	f_9378001		f_9378001
 	m	()V	<clinit>	<clinit>	
