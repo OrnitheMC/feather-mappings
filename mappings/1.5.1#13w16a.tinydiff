@@ -3087,10 +3087,14 @@ c	net/minecraft/unmapped/C_6532238
 c	net/minecraft/unmapped/C_6558469	argo/jdom/JsonRootNode	
 	m	()V	<init>	<init>	
 c	net/minecraft/unmapped/C_6607881
-	f	[F	f_1981909	f_1981909	
-	f	[F	f_4169938	f_4169938	
-	f	[F	f_4283911	f_4283911	
-	f	[F	f_5847296	f_5847296	
+	f	[F	f_1981909	WEAPON_ENCHANTMENT_CHANCE	
+		c	An array containing the probability for the weapon of a mob to be enchanted. These are sorted by increasing probability with item[0] being difficulty easy and item[3] being difficulty hard.	
+	f	[F	f_4169938	ARMOR_ENCHANTMENT_CHANCE	
+		c	An array containing the probability for the armor of a mob to be enchanted. These are sorted by increasing probability with item[0] being difficulty easy and item[3] being difficulty hard.	
+	f	[F	f_4283911	ARMOR_CHANCE	
+		c	An array containing the probability for the mob to have armor. These are sorted by increasing probability with item[0] being difficulty easy and item[3] being difficulty hard.	
+	f	[F	f_5847296	INVENTORY_DROP_CHANCE	
+		c	An array containing the probability of a mob dropping their inventory. These are sorted by increasing probability with item[0] being difficulty easy and item[3] being difficulty hard.	
 	f	Z	f_4576707	f_4576707	
 	f	Z	f_7337022	f_7337022	
 	f	Ljava/lang/String;	f_4095579	livingEntityType	
@@ -3098,7 +3102,8 @@ c	net/minecraft/unmapped/C_6607881
 	f	F	f_9609323	f_9609323	
 	f	I	f_3360418	health	
 	f	I	f_3298987	prevHealth	
-	f	I	f_1592651	f_1592651	
+	f	I	f_1592651	residualDamage	
+		c	The minecraft health bar only displays in chunks of half hearts. The damage calculations often results in values not being exactly this (e.g. 1.25 hears of damge). If this is the case, 1 heart of damge is being dealt and .25 hears of damge is being stored and is then used in the next step or next damage calculation.	
 	f	I	f_0053459	produceSoundProbability	
 		c	The number is initially set to -soundInterval, after this interval each tick the probability of making a sound will go up with 1 promille	
 	f	Z	f_0217189	killed	
@@ -3106,24 +3111,25 @@ c	net/minecraft/unmapped/C_6607881
 		c	The amount of experience points (XP) the LivingEntity drops	
 	f	I	f_4958531	f_4958531	
 	f	F	f_7746543	f_7746543	
-	f	Z	f_2088130	f_2088130	
-	f	I	f_8363481	f_8363481	
-	f	Lnet/minecraft/unmapped/C_3257017;	f_8235147	f_8235147	
-	f	Lnet/minecraft/unmapped/C_3807678;	f_3958044	f_3958044	
-	f	Lnet/minecraft/unmapped/C_6145927;	f_1338095	f_1338095	
-	f	Lnet/minecraft/unmapped/C_2516302;	f_7726987	f_7726987	
-	f	Lnet/minecraft/unmapped/C_9229053;	f_6479057	f_6479057	
-	f	Lnet/minecraft/unmapped/C_3120382;	f_7676474	f_7676474	
-	f	Lnet/minecraft/unmapped/C_3120382;	f_2775499	f_2775499	
+	f	Z	f_2088130	hasStatusEffect	
+	f	I	f_8363481	statusEffect	
+	f	Lnet/minecraft/unmapped/C_3257017;	f_8235147	lookControl	
+	f	Lnet/minecraft/unmapped/C_3807678;	f_3958044	movementControl	
+	f	Lnet/minecraft/unmapped/C_6145927;	f_1338095	jumpControl	
+	f	Lnet/minecraft/unmapped/C_2516302;	f_7726987	bodyControl	
+	f	Lnet/minecraft/unmapped/C_9229053;	f_6479057	pathNavigation	
+	f	Lnet/minecraft/unmapped/C_3120382;	f_7676474	goals	
+	f	Lnet/minecraft/unmapped/C_3120382;	f_2775499	targetGoals	
 	f	Lnet/minecraft/unmapped/C_6607881;	f_6553682	target	
-	f	Lnet/minecraft/unmapped/C_1006946;	f_2719103	f_2719103	
+	f	Lnet/minecraft/unmapped/C_1006946;	f_2719103	visibilityCache	
 	f	Lnet/minecraft/unmapped/C_3674802;	f_6505844	housePosition	
 	f	F	f_2649220	maxHouseDistance	
-	f	[Lnet/minecraft/unmapped/C_2454309;	f_2021350	f_2021350	
-	f	[F	f_8275501	f_8275501	
+	f	[Lnet/minecraft/unmapped/C_2454309;	f_2021350	equipment	
+		c	The inventory of the mob. This has 5 slots:\n <ul>\n  <li>Slot 0: weapon</li>\n  <li>Slot 1: boots</li>\n  <li>Slot 2: leggins</li>\n  <li>Slot 3: chestplate</li>\n  <li>Slot 4: helmet</li>\n</ul>	
+	f	[F	f_8275501	equipmentDropChance	
 	f	[Lnet/minecraft/unmapped/C_2454309;	f_2960352	f_2960352	
-	f	Z	f_9177400	pickUpLoot	
-	f	Z	f_7041576	persistent	
+	f	Z	f_9177400	capPickUpLoot	
+	f	Z	f_7041576	persistenceRequired	
 	f	F	f_1241371	f_1241371	
 	f	I	f_9977162	lastDamage	
 	f	F	f_2335870	sidewaysSpeed	
@@ -3140,11 +3146,11 @@ c	net/minecraft/unmapped/C_6607881
 	f	Z	f_9018807		effectsChanged
 	f	Lnet/minecraft/unmapped/C_6954368;	f_6249670	f_6249670	damageTracker
 	m	()I	m_5549779	m_5549779	
-	m	()Lnet/minecraft/unmapped/C_3257017;	m_6634241	m_6634241	
+	m	()Lnet/minecraft/unmapped/C_3257017;	m_6634241	getLookControl	
 	m	()Lnet/minecraft/unmapped/C_3807678;	m_9762017	getDamageTracker	
-	m	()Lnet/minecraft/unmapped/C_6145927;	m_9649615	m_9649615	
-	m	()Lnet/minecraft/unmapped/C_9229053;	m_2393660	m_2393660	
-	m	()Lnet/minecraft/unmapped/C_1006946;	m_8075528	m_8075528	
+	m	()Lnet/minecraft/unmapped/C_6145927;	m_9649615	getJumpControl	
+	m	()Lnet/minecraft/unmapped/C_9229053;	m_2393660	getPathNavigation	
+	m	()Lnet/minecraft/unmapped/C_1006946;	m_8075528	getVisibilityCache	
 	m	()Ljava/util/Random;	m_6983043	getRandom	
 	m	()Lnet/minecraft/unmapped/C_6607881;	m_9814525	getAttacker	
 	m	()Lnet/minecraft/unmapped/C_6607881;	m_1734555	getAttackTarget	
@@ -3203,42 +3209,47 @@ c	net/minecraft/unmapped/C_6607881
 	m	()I	m_0469364	m_0469364	
 	m	(F)V	m_4974211	setForwardSpeed	
 		p	1		forwardSpeed	
-	m	()Z	m_8702053	m_8702053	
-	m	()V	m_2103278	m_2103278	
-	m	()I	m_9040937	m_9040937	
-	m	(Lnet/minecraft/unmapped/C_0539808;FF)V	m_1010750	m_1010750	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-	m	(FFF)F	m_2936680	m_2936680	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-	m	()Z	m_8724935	m_8724935	
-	m	()F	m_6346660	m_6346660	
+	m	()Z	m_8702053	isHostile	
+	m	()V	m_2103278	tryDespawn	
+		c	Checks if the entity can despawn and should despawn.	
+	m	()I	m_9040937	verticleLookSpeed	
+	m	(Lnet/minecraft/unmapped/C_0539808;FF)V	m_1010750	turnHeadAtEntity	
+		p	1		entity	
+		p	2		maxPitch	
+		p	3		maxYaw	
+	m	(FFF)F	m_2936680	getRotation	
+		c	gets the new rotation. This uses current position and next position along with a max rotation to not get any funcky effects.	
+		p	1		currentRotation	
+		p	2		nextRotation	
+		p	3		maxIncrement	
+	m	()Z	m_8724935	isValidSpawnPosition	
+		c	Checks collision and spawn enviroment to see if a position is a valid spawn point.	
+	m	()F	m_6346660	getShadowSizeModifier	
 	m	(DF)Lnet/minecraft/unmapped/C_7794883;	m_2488843	rayTrace	
 		p	1		distance	
 		p	3		tickDelta	
-	m	()I	m_7979184	m_7979184	
+	m	()I	m_7979184	maxSpawnedPerChunk	
+		c	How many of this type of mob can be spawned at most per chunk.	
 	m	()V	m_3788224	tickStatusEffects	
 	m	(Lnet/minecraft/unmapped/C_3488550;)Z	m_9484001	hasStatusEffect	
 		p	1		effect	
 	m	(Lnet/minecraft/unmapped/C_2454309;)V	m_8177160	renderBrokenItem	
 		p	1		itemStack	
 	m	()I	m_6940054	m_6940054	
-	m	(I)Lnet/minecraft/unmapped/C_2454309;	m_5792818	m_5792818	
-		p	1		p_1	
-	m	(ZI)V	m_3954997	m_3954997	
-		p	1		p_1	
-		p	2		p_2	
-	m	()V	m_5360949	m_5360949	
+	m	(I)Lnet/minecraft/unmapped/C_2454309;	m_5792818	getArmor	
+		p	1		slot	
+	m	(ZI)V	m_3954997	dropEquipment	
+		p	1		hitByPlayer	
+		p	2		lootingLevel	
+	m	()V	m_5360949	setEquipment	
 	m	(Lnet/minecraft/unmapped/C_2454309;)I	m_2966690	getArmorType	
 		p	0		armor	
 	m	(II)Lnet/minecraft/unmapped/C_3755722;	m_9577593	getArmorType	
 		p	0		armorPiece	
 		p	1		armorMaterial	
-	m	()V	m_3681089	m_3681089	
-	m	()V	m_6896447	m_6896447	
+	m	()V	m_3681089	enchantWeaponsAndArmor	
+	m	()V	m_6896447	setEntityVariety	
+		c	This method is used to set which variety of entity is spawned. For zombies this can be a zombie or zombie pigman. It can be a spider spawning with a jockey, the color of the sheep etc.	
 	m	()Z	m_8119946	isLuredByCarrotOnStick	
 		c	Is true if the mob is a pig and is being riden by a player with a carot on the stick in hand	
 	m	()Ljava/lang/String;	m_0699887	m_0699887	
