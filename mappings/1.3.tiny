@@ -1080,7 +1080,7 @@ c	net/minecraft/server/MinecraftServer	net/minecraft/server/MinecraftServer
 	m	(Ljava/lang/String;)V	m_4344118	warn
 		p	1		message
 	m	(I)Lnet/minecraft/unmapped/C_3865296;	m_4667880	getWorld
-		p	1		id
+		p	1		dimension
 	m	()Ljava/lang/String;	m_8050007	getIp
 	m	()I	m_8195438	getPort
 	m	()Ljava/lang/String;	m_5381609	getMotd
@@ -1555,8 +1555,8 @@ c	net/minecraft/unmapped/C_0175717	net/minecraft/server/command/GameModeCommand
 	m	(Lnet/minecraft/unmapped/C_1730529;[Ljava/lang/String;)Ljava/util/List;	m_0376737	m_0376737
 		p	1		p_1
 		p	2		p_2
-	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_9590849;	m_9015779	m_9015779
-		p	1		p_1
+	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_9590849;	m_9015779	getPlayer
+		p	1		name
 	m	()[Ljava/lang/String;	m_3498106	getPlayerNames
 c	net/minecraft/unmapped/C_0181673	net/minecraft/world/chunk/storage/McRegionChunkStorage
 	f	Ljava/util/List;	f_1472866	chunkSaveQueue
@@ -1846,7 +1846,7 @@ c	net/minecraft/unmapped/C_0230498	net/minecraft/enchantment/Enchantment
 		p	1		other
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_0230498;	m_0049558	setKey
 		p	1		key
-	m	()Ljava/lang/String;	m_8870654	m_8870654
+	m	()Ljava/lang/String;	m_8870654	getTranslationKey
 	m	(I)Ljava/lang/String;	m_8171399	getName
 		p	1		level
 	m	(Ljava/lang/String;)Ljava/lang/Object;	m_4288020	m_4288020
@@ -2125,8 +2125,8 @@ c	net/minecraft/unmapped/C_0281639	net/minecraft/world/storage/RegionWorldStorag
 		p	1		p_1
 	m	(Lnet/minecraft/unmapped/C_9590849;)V	m_9301204	m_9301204
 		p	1		p_1
-	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_2018497;	m_4745173	m_4745173
-		p	1		p_1
+	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_2018497;	m_4745173	loadPlayerData
+		p	1		name
 	m	()Lnet/minecraft/unmapped/C_7729027;	m_9771384	m_9771384
 	m	()[Ljava/lang/String;	m_8627592	m_8627592
 	m	()V	m_8795896	m_8795896
@@ -5925,7 +5925,7 @@ c	net/minecraft/unmapped/C_1241852	net/minecraft/block/Block
 		c	Sets this block's translation and registry key.\n\n<p>\nNOTE: this method should only be used during the block's creation before it is registered.
 		p	1		key
 	m	()Ljava/lang/String;	m_6124997	getName
-	m	()Ljava/lang/String;	m_8870654	m_8870654
+	m	()Ljava/lang/String;	m_8870654	getTranslationKey
 	m	(Lnet/minecraft/unmapped/C_5553933;IIIII)V	m_5983609	doEvent
 		c	Performs a block event. Block events are queued on the server, and executed once per\ntick. Successful block events are synced with clients that are within range. Block events\nare most notably used by pistons to handle extension and retraction, but note blocks\nalso use them to play sounds.
 		p	1		world
@@ -8920,8 +8920,8 @@ c	net/minecraft/unmapped/C_2207032	net/minecraft/world/storage/RegionWorldStorag
 	m	()Ljava/lang/String;	m_4374621	m_4374621
 	m	()Ljava/util/List;	m_7840427	m_7840427
 	m	()V	m_9169783	m_9169783
-	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_6152184;	m_7688776	m_7688776
-		p	1		p_1
+	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_6152184;	m_7688776	getData
+		p	1		worldName
 	m	(Ljava/lang/String;Ljava/lang/String;)V	m_8536651	m_8536651
 		p	1		p_1
 		p	2		p_2
@@ -8931,9 +8931,9 @@ c	net/minecraft/unmapped/C_2207032	net/minecraft/world/storage/RegionWorldStorag
 		p	1		p_1
 	m	([Ljava/io/File;)V	m_3461181	deleteFilesAndDirs
 		p	0		files
-	m	(Ljava/lang/String;Z)Lnet/minecraft/unmapped/C_5528202;	m_0190283	m_0190283
-		p	1		p_1
-		p	2		p_2
+	m	(Ljava/lang/String;Z)Lnet/minecraft/unmapped/C_5528202;	m_0190283	get
+		p	1		worldName
+		p	2		createPlayerDataDir
 	m	(Ljava/lang/String;)Z	m_9683189	m_9683189
 		p	1		p_1
 	m	(Ljava/lang/String;)Z	m_8248981	m_8248981
@@ -9870,7 +9870,7 @@ c	net/minecraft/unmapped/C_2454309	net/minecraft/item/ItemStack
 		p	1		other
 	m	(Lnet/minecraft/unmapped/C_2454309;)Z	m_3646312	matchesItem
 		p	1		other
-	m	()Ljava/lang/String;	m_8870654	m_8870654
+	m	()Ljava/lang/String;	m_8870654	getTranslationKey
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_2454309;	m_6117378	getTranslationKey
 		p	1		p_1
 	m	(Lnet/minecraft/unmapped/C_2454309;)Lnet/minecraft/unmapped/C_2454309;	m_7979335	copyOf
@@ -11749,8 +11749,8 @@ c	net/minecraft/unmapped/C_3009546	net/minecraft/server/command/GiveCommand
 	m	(Lnet/minecraft/unmapped/C_1730529;[Ljava/lang/String;)Ljava/util/List;	m_0376737	m_0376737
 		p	1		p_1
 		p	2		p_2
-	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_9590849;	m_1756870	m_1756870
-		p	1		p_1
+	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_9590849;	m_1756870	getPlayer
+		p	1		name
 	m	()[Ljava/lang/String;	m_2763145	getPlayerNames
 c	net/minecraft/unmapped/C_3014809	net/minecraft/entity/ai/goal/ActiveTargetGoal__EntityDistanceComparator
 	f	Lnet/minecraft/unmapped/C_0539808;	f_0329456	entity
@@ -13007,11 +13007,11 @@ c	net/minecraft/unmapped/C_3250247	net/minecraft/server/world/PortalForcer
 	f	Ljava/util/Random;	f_5319457	random
 	m	()V	<init>	<init>
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0539808;)V	m_7101893	onDimensionChanged
-		p	1		p_1
-		p	2		p_2
+		p	1		world
+		p	2		entity
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0539808;)Z	m_1034957	findNetherPortal
-		p	1		p_1
-		p	2		p_2
+		p	1		world
+		p	2		entity
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0539808;)Z	m_5561286	generateNetherPortal
 		p	1		world
 		p	2		entity
@@ -14087,29 +14087,29 @@ c	net/minecraft/unmapped/C_3499589	net/minecraft/network/RemoteConnection
 		p	3		listener
 		p	4		privateKey
 	m	()V	m_9428248	m_9428248
-	m	(Lnet/minecraft/unmapped/C_7250084;)V	m_6858921	m_6858921
-		p	1		p_1
-	m	(Lnet/minecraft/unmapped/C_5385258;)V	m_6098407	m_6098407
-		p	1		p_1
+	m	(Lnet/minecraft/unmapped/C_7250084;)V	m_6858921	setListener
+		p	1		listener
+	m	(Lnet/minecraft/unmapped/C_5385258;)V	m_6098407	send
+		p	1		packet
 	m	()Z	m_2802608	write
 	m	(Z)Lnet/minecraft/unmapped/C_5385258;	m_1452614	pollSendQueue
 		p	1		blockData
 	m	(Lnet/minecraft/unmapped/C_5385258;Z)Z	m_7753660	shouldDiscard
 		p	1		packet
 		p	2		blockData
-	m	()V	m_2896315	m_2896315
+	m	()V	m_2896315	interrupt
 	m	()Z	m_6155642	read
 	m	(Ljava/lang/Exception;)V	m_7695235	onConnectionCrashed
 		p	1		exception
-	m	(Ljava/lang/String;[Ljava/lang/Object;)V	m_9836561	m_9836561
-		p	1		p_1
-		p	2		p_2
-	m	()V	m_5037176	m_5037176
-	m	()Ljava/net/SocketAddress;	m_3053098	m_3053098
-	m	()V	m_4910431	m_4910431
+	m	(Ljava/lang/String;[Ljava/lang/Object;)V	m_9836561	disconnect
+		p	1		reason
+		p	2		args
+	m	()V	m_5037176	tick
+	m	()Ljava/net/SocketAddress;	m_3053098	getAddress
+	m	()V	m_4910431	close
 	m	()V	m_1105585	decryptInput
 	m	()V	m_3986407	encryptOutput
-	m	()I	m_2594507	m_2594507
+	m	()I	m_2594507	getBlockDataSendQueueSize
 	m	()Ljava/net/Socket;	m_8503383	getSocket
 	m	(Lnet/minecraft/unmapped/C_3499589;)Z	m_8667511	m_8667511
 		p	0		p_0
@@ -14859,7 +14859,7 @@ c	net/minecraft/unmapped/C_3755722	net/minecraft/item/Item
 	m	()Ljava/lang/String;	m_1344778	getDescription
 	m	(Lnet/minecraft/unmapped/C_2454309;)Ljava/lang/String;	m_4128647	getDescription
 		p	1		stack
-	m	()Ljava/lang/String;	m_8870654	m_8870654
+	m	()Ljava/lang/String;	m_8870654	getTranslationKey
 	m	(Lnet/minecraft/unmapped/C_2454309;)Ljava/lang/String;	m_4716122	getTranslationKey
 		p	1		stack
 	m	(Lnet/minecraft/unmapped/C_3755722;)Lnet/minecraft/unmapped/C_3755722;	m_6188507	setRecipeRemainder
@@ -14937,7 +14937,7 @@ c	net/minecraft/unmapped/C_3757242	net/minecraft/client/entity/particle/RainSpla
 		p	6		p_6
 	m	()V	m_7274048	m_7274048
 c	net/minecraft/unmapped/C_3767424	net/minecraft/server/ChunkMap
-	f	Lnet/minecraft/unmapped/C_3865296;	f_0238440	world
+	f	Lnet/minecraft/unmapped/C_3865296;	f_0238440	server
 	f	Ljava/util/List;	f_9460440	players
 		c	All players in this world.
 	f	Lnet/minecraft/unmapped/C_1431328;	f_4373717	chunks
@@ -17611,11 +17611,11 @@ c	net/minecraft/unmapped/C_4837443	net/minecraft/client/render/model/entity/Silv
 		p	6		p_6
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/unmapped/C_4863209	net/minecraft/block/Block__Sound
-	f	Ljava/lang/String;	f_5683075	id
+	f	Ljava/lang/String;	f_5683075	key
 	f	F	f_1900770	volume
 	f	F	f_4370281	pitch
 	m	(Ljava/lang/String;FF)V	<init>	<init>
-		p	1		id
+		p	1		key
 		p	2		volume
 		p	3		pitch
 	m	()F	m_2602053	getVolume
@@ -19511,10 +19511,10 @@ c	net/minecraft/unmapped/C_5553933	net/minecraft/world/World
 	f	[I	f_7638189	scheduledLightUpdates
 	f	Ljava/util/List;	f_0019966	entitiesInArea
 	f	Z	f_0122188	isClient
-	m	(II)Lnet/minecraft/unmapped/C_6928498;	m_4932347	m_4932347
-		p	1		p_1
-		p	2		p_2
-	m	()Lnet/minecraft/unmapped/C_7235516;	m_0161628	m_0161628
+	m	(II)Lnet/minecraft/unmapped/C_6928498;	m_4932347	getBiome
+		p	1		x
+		p	2		z
+	m	()Lnet/minecraft/unmapped/C_7235516;	m_0161628	getBiomeSource
 	m	(Lnet/minecraft/unmapped/C_5528202;Ljava/lang/String;Lnet/minecraft/unmapped/C_3198459;Lnet/minecraft/unmapped/C_2670477;Lnet/minecraft/unmapped/C_8525326;)V	<init>	<init>
 		p	1		storage
 		p	2		name
@@ -19552,9 +19552,9 @@ c	net/minecraft/unmapped/C_5553933	net/minecraft/world/World
 		p	2		y
 		p	3		z
 	m	(III)Z	m_6918486	isAir
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
+		p	1		x
+		p	2		y
+		p	3		z
 	m	(III)Z	m_3565889	hasBlockEntity
 		p	1		x
 		p	2		y
@@ -19708,11 +19708,11 @@ c	net/minecraft/unmapped/C_5553933	net/minecraft/world/World
 		p	2		x
 		p	3		y
 		p	4		z
-	m	(Lnet/minecraft/unmapped/C_2891045;III)I	m_0780794	m_0780794
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
+	m	(Lnet/minecraft/unmapped/C_2891045;III)I	m_0780794	getLight
+		p	1		type
+		p	2		x
+		p	3		y
+		p	4		z
 	m	(Lnet/minecraft/unmapped/C_2891045;IIII)V	m_1328714	setLight
 		p	1		type
 		p	2		x
@@ -19733,10 +19733,10 @@ c	net/minecraft/unmapped/C_5553933	net/minecraft/world/World
 		p	2		p_2
 		p	3		p_3
 		p	4		p_4
-	m	(III)F	m_3899705	m_3899705
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
+	m	(III)F	m_3899705	getBrightness
+		p	1		x
+		p	2		y
+		p	3		z
 	m	()Z	m_7253958	isSunny
 	m	(Lnet/minecraft/unmapped/C_0557736;Lnet/minecraft/unmapped/C_0557736;)Lnet/minecraft/unmapped/C_7794883;	m_4935276	rayTrace
 		p	1		from
@@ -19912,10 +19912,10 @@ c	net/minecraft/unmapped/C_5553933	net/minecraft/world/World
 		p	3		z
 	m	(Lnet/minecraft/unmapped/C_3622326;)V	m_8507777	unloadBlockEntity
 		p	1		blockEntity
-	m	(III)Z	m_7761085	m_7761085
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
+	m	(III)Z	m_7761085	isOpaqueCube
+		p	1		x
+		p	2		y
+		p	3		z
 	m	(III)Z	m_9239141	m_9239141
 		p	1		p_1
 		p	2		p_2
@@ -20152,7 +20152,7 @@ c	net/minecraft/unmapped/C_5553933	net/minecraft/world/World
 		p	4		y
 		p	5		z
 		p	6		data
-	m	()I	m_8568350	m_8568350
+	m	()I	m_8568350	getHeight
 	m	()I	m_5265419	getDimensionHeight
 	m	(III)Ljava/util/Random;	m_4258798	setRandomSeed
 		p	1		x
@@ -21389,10 +21389,10 @@ c	net/minecraft/unmapped/C_5917668	net/minecraft/server/command/Command
 		p	2		min
 		p	3		max
 	m	(Lnet/minecraft/unmapped/C_1730529;)Lnet/minecraft/unmapped/C_9590849;	m_0707287	asPlayer
-		p	0		p_0
+		p	0		source
 	m	([Ljava/lang/String;I)Ljava/lang/String;	m_9719801	parseText
-		p	0		p_0
-		p	1		p_1
+		p	0		args
+		p	1		index
 	m	([Ljava/lang/Object;)Ljava/lang/String;	m_7701654	listArgs
 		p	0		args
 	m	(Ljava/lang/String;Ljava/lang/String;)Z	m_3715241	doesStringStartWith
@@ -22307,8 +22307,8 @@ c	net/minecraft/unmapped/C_6255335	net/minecraft/server/command/ExperienceComman
 	m	(Lnet/minecraft/unmapped/C_1730529;[Ljava/lang/String;)Ljava/util/List;	m_0376737	m_0376737
 		p	1		p_1
 		p	2		p_2
-	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_9590849;	m_6503279	m_6503279
-		p	1		p_1
+	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_9590849;	m_6503279	getPlayer
+		p	1		name
 	m	()[Ljava/lang/String;	m_9264003	getPlayerNames
 c	net/minecraft/unmapped/C_6260416	net/minecraft/client/gui/screen/StatsScreen__GeneralStatsListWidget
 	f	Lnet/minecraft/unmapped/C_8166793;	f_0258353	parent
@@ -25725,7 +25725,7 @@ c	net/minecraft/unmapped/C_7250084	net/minecraft/network/PacketHandler
 		p	1		packet
 	m	(Lnet/minecraft/unmapped/C_0399548;)V	m_4582782	handleClientSettings
 		p	1		packet
-	m	(Lnet/minecraft/unmapped/C_9094020;)V	m_5867769	handleSoundEvent
+	m	(Lnet/minecraft/unmapped/C_9094020;)V	m_5867769	handleChunkUpdate
 		p	1		packet
 	m	(Lnet/minecraft/unmapped/C_2731285;)V	m_1224501	handleBlockMiningProgress
 		p	1		packet
@@ -29043,11 +29043,11 @@ c	net/minecraft/unmapped/C_8275823	net/minecraft/world/WorldRegion
 		p	2		x
 		p	3		y
 		p	4		z
-	m	(Lnet/minecraft/unmapped/C_2891045;III)I	m_0780794	m_0780794
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
+	m	(Lnet/minecraft/unmapped/C_2891045;III)I	m_0780794	getLight
+		p	1		type
+		p	2		x
+		p	3		y
+		p	4		z
 	m	()I	m_8568350	m_8568350
 c	net/minecraft/unmapped/C_8280540	net/minecraft/network/packet/AddGlobalEntityPacket
 	f	I	f_6570594	id
@@ -29194,7 +29194,7 @@ c	net/minecraft/unmapped/C_8307016	net/minecraft/world/map/SavedMapData
 	f	B	f_2485469	dimension
 	f	B	f_7622509	scale
 	f	[B	f_8411149	colors
-	f	I	f_4257436	f_4257436
+	f	I	f_4257436	ticks
 	f	Ljava/util/List;	f_3237189	holders
 	f	Ljava/util/Map;	f_2879473	holdersByPlayer
 	f	Ljava/util/List;	f_2528217	decorations

@@ -234,8 +234,8 @@ c	net/minecraft/unmapped/C_2207032	net/minecraft/world/storage/RegionWorldStorag
 	m	()Ljava/lang/String;	m_7075826	m_7075826	
 	m	()Ljava/util/List;	m_7840427	m_7840427	
 	m	()V	m_9169783	m_9169783	
-	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_6152184;	m_7688776	m_7688776	
-		p	1		p_1	
+	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_6152184;	m_7688776	getData	
+		p	1		worldName	
 	m	(Ljava/lang/String;Ljava/lang/String;)V	m_8536651	m_8536651	
 		p	1		p_1	
 		p	2		p_2	
@@ -243,9 +243,9 @@ c	net/minecraft/unmapped/C_2207032	net/minecraft/world/storage/RegionWorldStorag
 		p	1		p_1	
 	m	([Ljava/io/File;)V	m_3461181	deleteFilesAndDirs	
 		p	0		files	
-	m	(Ljava/lang/String;Z)Lnet/minecraft/unmapped/C_5528202;	m_0190283	m_0190283	
-		p	1		p_1	
-		p	2		p_2	
+	m	(Ljava/lang/String;Z)Lnet/minecraft/unmapped/C_5528202;	m_0190283	get	
+		p	1		worldName	
+		p	2		createPlayerDataDir	
 	m	(Ljava/lang/String;)Z	m_8248981	m_8248981	
 		p	1		p_1	
 	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_3893367;)Z	m_1146771	m_1146771	
@@ -658,7 +658,7 @@ c	net/minecraft/unmapped/C_5385258
 	f	Ljava/util/HashMap;	f_7540714	f_7540714	
 	f	I	f_6240326	f_6240326	
 c	net/minecraft/unmapped/C_5478016	net/minecraft/world/storage/WorldStorageSource	
-	m	()Ljava/lang/String;	m_7075826	m_7075826	
+	m	()Ljava/lang/String;	m_7075826	getName	
 	m	(Ljava/lang/String;Z)Lnet/minecraft/unmapped/C_5528202;	m_0190283	get	
 		p	1		worldName	
 		p	2		createPlayerDataDir	
@@ -682,14 +682,14 @@ c	net/minecraft/unmapped/C_5528202	net/minecraft/world/storage/WorldStorage
 	m	(Lnet/minecraft/unmapped/C_3198459;)Lnet/minecraft/unmapped/C_3015672;	m_6737332	getChunkStorage	
 		p	1		dimension	
 	m	(Lnet/minecraft/unmapped/C_6152184;Ljava/util/List;)V	m_1784604	saveData	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		data	
+		p	2		players	
 	m	(Lnet/minecraft/unmapped/C_6152184;)V	m_6356619	saveData	
 		p	1		data	
 c	net/minecraft/unmapped/C_5553933
 	f	Lnet/minecraft/unmapped/C_5528202;	f_2334464	storage	
 	f	Lnet/minecraft/unmapped/C_6152184;	f_0991863	data	
-	f	Z	f_8691223	f_8691223	
+	f	Z	f_8691223	allPlayersSleeping	
 	f	J	f_0724759		f_0724759
 	f	I	f_6398175		f_6398175
 	f	I	f_8556531		f_8556531
@@ -715,21 +715,21 @@ c	net/minecraft/unmapped/C_5553933
 		p	3		p_3	
 		p	5		p_5	
 	m	()Lnet/minecraft/unmapped/C_9848147;	m_7881827	createChunkCache	
-	m	(IIIII)V	m_2640654	m_2640654	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
+	m	(IIIII)V	m_2640654	scheduleTick	
+		p	1		x	
+		p	2		y	
+		p	3		z	
+		p	4		blockId	
+		p	5		delay	
 	m	()J	m_7021533	getSeed	
 	m	()J	m_0604488	getTime	
 	m	()Lnet/minecraft/unmapped/C_3674802;	m_9708082	getSpawnPoint	
 	m	(Lnet/minecraft/unmapped/C_3674802;)V	m_3711633	setSpawnPoint	
-		p	1		p_1	
+		p	1		pos	
 	m	()Lnet/minecraft/unmapped/C_6152184;	m_6536808	getData	
-	m	()V	m_7508483	m_7508483	
+	m	()V	m_7508483	updateSleepingPlayers	
 	m	()V	m_7705847	updateSleepingPlayers	
-	m	()Z	m_5178441	m_5178441	
+	m	()Z	m_5178441	canSkipNight	
 	m	(Ljava/io/File;Ljava/lang/String;)Lnet/minecraft/unmapped/C_2018497;	m_6686984		m_6686984
 		p	0			p_0
 		p	1			p_1
@@ -756,7 +756,7 @@ c	net/minecraft/unmapped/C_5553933
 		p	5			p_5
 	m	(Ljava/io/File;)Lnet/minecraft/unmapped/C_9848147;	m_7881827		createChunkCache
 		p	1			p_1
-	m	(IIII)V	m_2640654		m_2640654
+	m	(IIII)V	m_2640654		scheduleTick
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -921,7 +921,7 @@ c	net/minecraft/unmapped/C_6152184	net/minecraft/world/WorldData
 		p	1		data	
 	m	()Lnet/minecraft/unmapped/C_2018497;	m_7816015	toNbt	
 	m	(Ljava/util/List;)Lnet/minecraft/unmapped/C_2018497;	m_2423881	toNbt	
-		p	1		p_1	
+		p	1		players	
 	m	(Lnet/minecraft/unmapped/C_2018497;Lnet/minecraft/unmapped/C_2018497;)V	m_7555442	writeNbt	
 		p	1		nbt	
 		p	2		playerData	
@@ -944,7 +944,7 @@ c	net/minecraft/unmapped/C_6152184	net/minecraft/world/WorldData
 	m	(J)V	m_0926705	m_0926705	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_7226560	setInitialized	
-		p	1		p_1	
+		p	1		playerData	
 	m	(III)V	m_7590541	setSpawnPoint	
 		p	1		x	
 		p	2		y	

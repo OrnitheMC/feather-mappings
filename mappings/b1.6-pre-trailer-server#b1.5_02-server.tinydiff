@@ -5,7 +5,7 @@ c	net/minecraft/server/MinecraftServer
 	f	Lnet/minecraft/unmapped/C_3865296;	f_0746062		worlds
 	f	Lnet/minecraft/unmapped/C_1119254;	f_0851721		f_0851721
 	m	(I)Lnet/minecraft/unmapped/C_3865296;	m_4667880	getWorld	
-		p	1		id	
+		p	1		dimension	
 	m	(I)Lnet/minecraft/unmapped/C_1119254;	m_5379996	m_5379996	
 		p	1		p_1	
 c	net/minecraft/unmapped/C_0125824	net/minecraft/world/dimension/OverworldDimension	
@@ -341,11 +341,11 @@ c	net/minecraft/unmapped/C_3250247	net/minecraft/world/PortalForcer
 	f	Ljava/util/Random;	f_5319457	random	
 	m	()V	<init>	<init>	
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0539808;)V	m_7101893	onDimensionChanged	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		world	
+		p	2		entity	
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0539808;)Z	m_1034957	findNetherPortal	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		world	
+		p	2		entity	
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0539808;)Z	m_5561286	generateNetherPortal	
 		p	1		world	
 		p	2		entity	
@@ -360,7 +360,7 @@ c	net/minecraft/unmapped/C_3499589
 		c	The total size of all received packets, by packet id.	
 	f	[I	f_9043883	TOTAL_SEND_SIZE	
 		c	The total size of all sent packets, by packet id.	
-	m	()V	m_2896315	m_2896315	
+	m	()V	m_2896315	interrupt	
 	m	(Lnet/minecraft/unmapped/C_3499589;)Z	m_4065497	m_4065497	
 		p	0		p_0	
 	m	(Lnet/minecraft/unmapped/C_3499589;Z)Z	m_6561541	m_6561541	
@@ -396,7 +396,7 @@ c	net/minecraft/unmapped/C_3755722
 		p	3		player	
 	m	()Z	m_6680406	isNetworkSynced	
 c	net/minecraft/unmapped/C_3767424
-	f	I	f_5504485	f_5504485	
+	f	I	f_5504485	dimension	
 	m	(Lnet/minecraft/server/MinecraftServer;I)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -510,10 +510,10 @@ c	net/minecraft/unmapped/C_4722045
 		p	1		p_1	
 	m	()V	<init>		<init>
 c	net/minecraft/unmapped/C_4969846
-	f	Ljava/util/Set;	f_0298037	f_0298037	
-	f	Ljava/util/Map;	f_3401527	f_3401527	
-	f	Ljava/util/List;	f_5757952	f_5757952	
-	f	[Lnet/minecraft/unmapped/C_6849228;	f_0298037		f_0298037
+	f	Ljava/util/Set;	f_0298037	chunksToUnload	
+	f	Ljava/util/Map;	f_3401527	chunkMap	
+	f	Ljava/util/List;	f_5757952	chunks	
+	f	[Lnet/minecraft/unmapped/C_6849228;	f_0298037		chunksToUnload
 	f	I	f_2563350		f_2563350
 	f	I	f_2498441		f_2498441
 	f	Lnet/minecraft/unmapped/C_6849228;	f_4622140		f_4622140
@@ -561,17 +561,17 @@ c	net/minecraft/unmapped/C_5553933
 	m	(II)I	m_6555286	getSurfaceHeight	
 		p	1		x	
 		p	2		z	
-	m	(III)Z	m_7761085	m_7761085	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+	m	(III)Z	m_7761085	isOpaqueCube	
+		p	1		x	
+		p	2		y	
+		p	3		z	
 	m	(IIIIZI)Z	m_6323146	canReplace	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
+		p	1		blockId	
+		p	2		x	
+		p	3		y	
+		p	4		z	
+		p	5		isFalling	
+		p	6		face	
 	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_0573095;)V	m_0610197	setSavedData	
 		p	1		id	
 		p	2		data	
@@ -729,7 +729,7 @@ c	net/minecraft/unmapped/C_8307016	net/minecraft/world/map/SavedMapData
 	f	B	f_2485469	dimension	
 	f	B	f_7622509	scale	
 	f	[B	f_8411149	colors	
-	f	I	f_4257436	f_4257436	
+	f	I	f_4257436	ticks	
 	f	Ljava/util/List;	f_3237189	holders	
 	f	Ljava/util/Map;	f_2879473	holdersByPlayer	
 	f	Ljava/util/List;	f_2528217	decorations	
