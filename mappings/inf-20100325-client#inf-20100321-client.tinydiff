@@ -1,27 +1,27 @@
 tiny	2	0
 c	net/minecraft/a/a/C_5553933
 	f	Ljava/util/List;	f_9133527	f_9133527	
-	f	Ljava/util/List;	f_6204732	f_6204732	
-	f	I	f_5073787	f_5073787	
-	f	I	f_6049590	f_6049590	
+	f	Ljava/util/List;	f_6204732	blockEntities	
+	f	I	f_5073787	randomTickLCG	
+	f	I	f_6049590	randomTickLCGIncrement	
 	f	Lnet/minecraft/a/a/b/C_0490004;	f_3696186	f_3696186	
 	f	Lnet/minecraft/a/a/a/C_0490004;	f_3696186		f_3696186
-	m	(IIII)V	m_3858067	m_3858067	
+	m	(IIII)V	m_3858067	updateNeighbors	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
-	m	(IIII)V	m_7610902	m_7610902	
+	m	(IIII)V	m_7610902	updateBlock	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
-	m	(III)Z	m_1260767	m_1260767	
+	m	(III)Z	m_1260767	hasSkyAccess	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	()Z	m_7253958	m_7253958	
-	m	(IIII)V	m_2640654	m_2640654	
+	m	()Z	m_7253958	isSunny	
+	m	(IIII)V	m_2640654	scheduleTick	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
@@ -30,16 +30,16 @@ c	net/minecraft/a/a/C_5553933
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(IIILnet/minecraft/a/a/c/a/C_3622326;)V	m_8905645	m_8905645	
+	m	(IIILnet/minecraft/a/a/c/a/C_3622326;)V	m_8905645	setBlockEntity	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
-	m	(III)V	m_0568097	m_0568097	
+	m	(III)V	m_0568097	removeBlockEntity	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(III)V	m_8145587	m_8145587	
+	m	(III)V	m_8145587	doRandomDisplayTicks	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
@@ -47,7 +47,7 @@ c	net/minecraft/a/a/C_5553933
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(IIILnet/minecraft/a/a/b/a/C_3622326;)V	m_8905645		m_8905645
+	m	(IIILnet/minecraft/a/a/b/a/C_3622326;)V	m_8905645		setBlockEntity
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -56,11 +56,11 @@ c	net/minecraft/a/a/C_5553933
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/a/a/C_6466836	net/minecraft/a/a/C_6466836	
-	f	I	f_3919118	f_3919118	
-	f	I	f_9302931	f_9302931	
-	f	I	f_1185883	f_1185883	
-	f	I	f_4619589	f_4619589	
+c	net/minecraft/a/a/C_6466836	net/minecraft/world/ScheduledTick	
+	f	I	f_3919118	x	
+	f	I	f_9302931	y	
+	f	I	f_1185883	z	
+	f	I	f_4619589	blockId	
 	f	I	f_4988191	f_4988191	
 	m	(IIII)V	<init>	<init>	
 		p	1		p_1	
@@ -1321,11 +1321,11 @@ c	net/minecraft/a/a/e/C_6849228
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/a/b/C_0674816
-	f	[Lnet/minecraft/a/a/c/C_1241852;	f_3026864	f_3026864	
-	f	[Lnet/minecraft/a/a/b/C_1241852;	f_3026864		f_3026864
+	f	[Lnet/minecraft/a/a/c/C_1241852;	f_3026864	EFFECTIVE_BLOCKS	
+	f	[Lnet/minecraft/a/a/b/C_1241852;	f_3026864		EFFECTIVE_BLOCKS
 c	net/minecraft/a/b/C_0707753
-	f	[Lnet/minecraft/a/a/c/C_1241852;	f_1859613	f_1859613	
-	f	[Lnet/minecraft/a/a/b/C_1241852;	f_1859613		f_1859613
+	f	[Lnet/minecraft/a/a/c/C_1241852;	f_1859613	EFFECTIVE_BLOCKS	
+	f	[Lnet/minecraft/a/a/b/C_1241852;	f_1859613		EFFECTIVE_BLOCKS
 c	net/minecraft/a/b/C_2454309
 	m	(Lnet/minecraft/a/a/c/C_1241852;)V	<init>	<init>	
 		p	1		p_1	
@@ -1338,21 +1338,21 @@ c	net/minecraft/a/b/C_2454309
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/a/b/C_2671832
-	f	[Lnet/minecraft/a/a/c/C_1241852;	f_0027327	f_0027327	
-	f	[Lnet/minecraft/a/a/b/C_1241852;	f_0027327		f_0027327
+	f	[Lnet/minecraft/a/a/c/C_1241852;	f_0027327	EFFECTIVE_BLOCKS	
+	f	[Lnet/minecraft/a/a/b/C_1241852;	f_0027327		EFFECTIVE_BLOCKS
 	m	(Lnet/minecraft/a/a/c/C_1241852;)Z	m_4043156	m_4043156	
 		p	1		p_1	
 	m	(Lnet/minecraft/a/a/b/C_1241852;)Z	m_4043156		m_4043156
 		p	1			p_1
 c	net/minecraft/a/b/C_3755722
-	f	Lnet/minecraft/a/b/C_3755722;	f_2146355	f_2146355	
-	m	(Lnet/minecraft/a/a/c/C_1241852;)F	m_5853631	m_5853631	
+	f	Lnet/minecraft/a/b/C_3755722;	f_2146355	COOKED_PORKCHOP	
+	m	(Lnet/minecraft/a/a/c/C_1241852;)F	m_5853631	getMiningSpeed	
 		p	1		p_1	
-	m	(Lnet/minecraft/a/a/c/C_1241852;)Z	m_4043156	m_4043156	
+	m	(Lnet/minecraft/a/a/c/C_1241852;)Z	m_4043156	canEffectivelyMine	
 		p	1		p_1	
-	m	(Lnet/minecraft/a/a/b/C_1241852;)F	m_5853631		m_5853631
+	m	(Lnet/minecraft/a/a/b/C_1241852;)F	m_5853631		getMiningSpeed
 		p	1			p_1
-	m	(Lnet/minecraft/a/a/b/C_1241852;)Z	m_4043156		m_4043156
+	m	(Lnet/minecraft/a/a/b/C_1241852;)Z	m_4043156		canEffectivelyMine
 		p	1			p_1
 c	net/minecraft/a/b/C_6386154
 	m	(Lnet/minecraft/a/a/c/C_1241852;)F	m_5853631	m_5853631	
@@ -1360,8 +1360,8 @@ c	net/minecraft/a/b/C_6386154
 	m	(Lnet/minecraft/a/a/b/C_1241852;)F	m_5853631		m_5853631
 		p	1			p_1
 c	net/minecraft/a/b/C_8456884
-	f	[Lnet/minecraft/a/a/c/C_1241852;	f_9177785	f_9177785	
-	f	[Lnet/minecraft/a/a/b/C_1241852;	f_9177785		f_9177785
+	f	[Lnet/minecraft/a/a/c/C_1241852;	f_9177785	effectiveBlocks	
+	f	[Lnet/minecraft/a/a/b/C_1241852;	f_9177785		effectiveBlocks
 	m	(III[Lnet/minecraft/a/a/c/C_1241852;)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -1377,16 +1377,16 @@ c	net/minecraft/a/b/C_8456884
 	m	(Lnet/minecraft/a/a/b/C_1241852;)F	m_5853631		m_5853631
 		p	1			p_1
 c	net/minecraft/a/c/C_5622853
-	f	Lnet/minecraft/a/a/b/C_2306016;	f_6186848	f_6186848	
-	f	Lnet/minecraft/a/a/a/C_2306016;	f_6186848		f_6186848
+	f	Lnet/minecraft/a/a/b/C_2306016;	f_6186848	path	
+	f	Lnet/minecraft/a/a/a/C_2306016;	f_6186848		path
 c	net/minecraft/a/c/e/C_9590849
-	m	(Lnet/minecraft/a/a/c/C_1241852;)Z	m_4097013	m_4097013	
+	m	(Lnet/minecraft/a/a/c/C_1241852;)Z	m_4097013	canBreakBlock	
 		p	1		p_1	
-	m	(Lnet/minecraft/a/a/c/a/C_4808571;)V	m_8252645	m_8252645	
+	m	(Lnet/minecraft/a/a/c/a/C_4808571;)V	m_8252645	openFurnaceMenu	
 		p	1		p_1	
-	m	(Lnet/minecraft/a/a/b/C_1241852;)Z	m_4097013		m_4097013
+	m	(Lnet/minecraft/a/a/b/C_1241852;)Z	m_4097013		canBreakBlock
 		p	1			p_1
-	m	(Lnet/minecraft/a/a/b/a/C_4808571;)V	m_8252645		m_8252645
+	m	(Lnet/minecraft/a/a/b/a/C_4808571;)V	m_8252645		openFurnaceMenu
 		p	1			p_1
 c	net/minecraft/client/C_5664496
 	f	J	f_2633413		f_2633413
@@ -1418,67 +1418,67 @@ c	net/minecraft/client/a/C_3216249
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
-	m	(Lnet/minecraft/a/a/c/C_1241852;III)Z	m_4298933	m_4298933	
+	m	(Lnet/minecraft/a/a/c/C_1241852;III)Z	m_4298933	renderLiquid	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
-	m	(Lnet/minecraft/a/a/c/C_1241852;DDDDD)V	m_7752244	m_7752244	
+	m	(Lnet/minecraft/a/a/c/C_1241852;DDDDD)V	m_7752244	renderTorch	
 		p	1		p_1	
 		p	2		p_2	
 		p	4		p_4	
 		p	6		p_6	
 		p	8		p_8	
 		p	10		p_10	
-	m	(Lnet/minecraft/a/a/c/C_1241852;IDDD)V	m_8971930	m_8971930	
+	m	(Lnet/minecraft/a/a/c/C_1241852;IDDD)V	m_8971930	renderCross	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 		p	5		p_5	
 		p	7		p_7	
-	m	(Lnet/minecraft/a/a/c/C_1241852;IDDD)V	m_5041871	m_5041871	
+	m	(Lnet/minecraft/a/a/c/C_1241852;IDDD)V	m_5041871	renderPlant	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 		p	5		p_5	
 		p	7		p_7	
-	m	(Lnet/minecraft/a/a/c/C_1241852;DDDI)V	m_5308705	m_5308705	
+	m	(Lnet/minecraft/a/a/c/C_1241852;DDDI)V	m_5308705	renderBottomFace	
 		p	1		p_1	
 		p	2		p_2	
 		p	4		p_4	
 		p	6		p_6	
 		p	8		p_8	
-	m	(Lnet/minecraft/a/a/c/C_1241852;DDDI)V	m_1833462	m_1833462	
+	m	(Lnet/minecraft/a/a/c/C_1241852;DDDI)V	m_1833462	renderTopFace	
 		p	1		p_1	
 		p	2		p_2	
 		p	4		p_4	
 		p	6		p_6	
 		p	8		p_8	
-	m	(Lnet/minecraft/a/a/c/C_1241852;DDDI)V	m_5011995	m_5011995	
+	m	(Lnet/minecraft/a/a/c/C_1241852;DDDI)V	m_5011995	renderNorthFace	
 		p	1		p_1	
 		p	2		p_2	
 		p	4		p_4	
 		p	6		p_6	
 		p	8		p_8	
-	m	(Lnet/minecraft/a/a/c/C_1241852;DDDI)V	m_0641897	m_0641897	
+	m	(Lnet/minecraft/a/a/c/C_1241852;DDDI)V	m_0641897	renderSouthFace	
 		p	1		p_1	
 		p	2		p_2	
 		p	4		p_4	
 		p	6		p_6	
 		p	8		p_8	
-	m	(Lnet/minecraft/a/a/c/C_1241852;DDDI)V	m_6542944	m_6542944	
+	m	(Lnet/minecraft/a/a/c/C_1241852;DDDI)V	m_6542944	renderWestFace	
 		p	1		p_1	
 		p	2		p_2	
 		p	4		p_4	
 		p	6		p_6	
 		p	8		p_8	
-	m	(Lnet/minecraft/a/a/c/C_1241852;DDDI)V	m_5288691	m_5288691	
+	m	(Lnet/minecraft/a/a/c/C_1241852;DDDI)V	m_5288691	renderEastFace	
 		p	1		p_1	
 		p	2		p_2	
 		p	4		p_4	
 		p	6		p_6	
 		p	8		p_8	
-	m	(Lnet/minecraft/a/a/c/C_1241852;)V	m_7777797	m_7777797	
+	m	(Lnet/minecraft/a/a/c/C_1241852;)V	m_7777797	renderBlockItem	
 		p	1		p_1	
 	m	(Lnet/minecraft/a/a/b/C_1241852;IIII)V	m_3164369		m_3164369
 		p	1			p_1
@@ -1491,71 +1491,71 @@ c	net/minecraft/client/a/C_3216249
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(Lnet/minecraft/a/a/b/C_1241852;III)Z	m_4298933		m_4298933
+	m	(Lnet/minecraft/a/a/b/C_1241852;III)Z	m_4298933		renderLiquid
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(Lnet/minecraft/a/a/b/C_1241852;DDDDD)V	m_7752244		m_7752244
+	m	(Lnet/minecraft/a/a/b/C_1241852;DDDDD)V	m_7752244		renderTorch
 		p	1			p_1
 		p	2			p_2
 		p	4			p_4
 		p	6			p_6
 		p	8			p_8
 		p	10			p_10
-	m	(Lnet/minecraft/a/a/b/C_1241852;IDDD)V	m_8971930		m_8971930
+	m	(Lnet/minecraft/a/a/b/C_1241852;IDDD)V	m_8971930		renderCross
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	5			p_5
 		p	7			p_7
-	m	(Lnet/minecraft/a/a/b/C_1241852;IDDD)V	m_5041871		m_5041871
+	m	(Lnet/minecraft/a/a/b/C_1241852;IDDD)V	m_5041871		renderPlant
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	5			p_5
 		p	7			p_7
-	m	(Lnet/minecraft/a/a/b/C_1241852;DDDI)V	m_5308705		m_5308705
+	m	(Lnet/minecraft/a/a/b/C_1241852;DDDI)V	m_5308705		renderBottomFace
 		p	1			p_1
 		p	2			p_2
 		p	4			p_4
 		p	6			p_6
 		p	8			p_8
-	m	(Lnet/minecraft/a/a/b/C_1241852;DDDI)V	m_1833462		m_1833462
+	m	(Lnet/minecraft/a/a/b/C_1241852;DDDI)V	m_1833462		renderTopFace
 		p	1			p_1
 		p	2			p_2
 		p	4			p_4
 		p	6			p_6
 		p	8			p_8
-	m	(Lnet/minecraft/a/a/b/C_1241852;DDDI)V	m_5011995		m_5011995
+	m	(Lnet/minecraft/a/a/b/C_1241852;DDDI)V	m_5011995		renderNorthFace
 		p	1			p_1
 		p	2			p_2
 		p	4			p_4
 		p	6			p_6
 		p	8			p_8
-	m	(Lnet/minecraft/a/a/b/C_1241852;DDDI)V	m_0641897		m_0641897
+	m	(Lnet/minecraft/a/a/b/C_1241852;DDDI)V	m_0641897		renderSouthFace
 		p	1			p_1
 		p	2			p_2
 		p	4			p_4
 		p	6			p_6
 		p	8			p_8
-	m	(Lnet/minecraft/a/a/b/C_1241852;DDDI)V	m_6542944		m_6542944
+	m	(Lnet/minecraft/a/a/b/C_1241852;DDDI)V	m_6542944		renderWestFace
 		p	1			p_1
 		p	2			p_2
 		p	4			p_4
 		p	6			p_6
 		p	8			p_8
-	m	(Lnet/minecraft/a/a/b/C_1241852;DDDI)V	m_5288691		m_5288691
+	m	(Lnet/minecraft/a/a/b/C_1241852;DDDI)V	m_5288691		renderEastFace
 		p	1			p_1
 		p	2			p_2
 		p	4			p_4
 		p	6			p_6
 		p	8			p_8
-	m	(Lnet/minecraft/a/a/b/C_1241852;)V	m_7777797		m_7777797
+	m	(Lnet/minecraft/a/a/b/C_1241852;)V	m_7777797		renderBlockItem
 		p	1			p_1
 c	net/minecraft/client/c/a/C_5903539
-	f	Lnet/minecraft/a/a/c/a/C_4808571;	f_2900872	f_2900872	
-	f	Lnet/minecraft/a/a/b/a/C_4808571;	f_2900872		f_2900872
+	f	Lnet/minecraft/a/a/c/a/C_4808571;	f_2900872	furnace	
+	f	Lnet/minecraft/a/a/b/a/C_4808571;	f_2900872		furnace
 	m	(Lnet/minecraft/a/c/e/C_7400754;Lnet/minecraft/a/a/c/a/C_4808571;)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
