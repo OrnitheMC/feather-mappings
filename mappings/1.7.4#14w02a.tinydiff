@@ -4095,8 +4095,8 @@ c	net/minecraft/unmapped/C_3045302
 		p	3		z	
 	m	(Lnet/minecraft/unmapped/C_4311389;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;)V	<init>		<init>
 		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	2			world
+		p	3			pos
 	m	(Lnet/minecraft/unmapped/C_3674802;)Z	m_0863530		shouldConnectTo
 		p	1			pos
 	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_3045302;	m_8114023		getNeighborRail
@@ -4983,10 +4983,10 @@ c	net/minecraft/unmapped/C_3250247
 		p	8		yaw	
 	m	(Lnet/minecraft/unmapped/C_0539808;F)V	m_7101893		onDimensionChanged
 		p	1			entity
-		p	2			x
+		p	2			yaw
 	m	(Lnet/minecraft/unmapped/C_0539808;F)Z	m_1034957		findNetherPortal
 		p	1			entity
-		p	2			x
+		p	2			yaw
 c	net/minecraft/unmapped/C_3251471
 	m	(Lnet/minecraft/unmapped/C_2454309;Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_5553933;IIIIFFF)Z	m_3000450	m_3000450	
 		p	1		p_1	
@@ -6158,15 +6158,15 @@ c	net/minecraft/unmapped/C_4311389
 		p	2			p_2
 		p	3			p_3
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;IILnet/minecraft/unmapped/C_1241852;)V	m_5930555		updateState
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	1			world
+		p	2			pos
+		p	3			metadata
+		p	4			shape
+		p	5			neighborBlock
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;Z)V	m_0679692		updateShape
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			world
+		p	2			pos
+		p	3			force
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1241852;I)V	m_4217571		m_4217571
 		p	1			p_1
 		p	2			p_2
@@ -7603,9 +7603,9 @@ c	net/minecraft/unmapped/C_5553933
 	f	Lnet/minecraft/unmapped/C_0413198;	f_7430694	vec3dCache	
 	f	Ljava/util/ArrayList;	f_4294659	collisions	
 	f	Lnet/minecraft/unmapped/C_0739569;	f_6042847		entitiesByNetworkId
-	m	(II)Lnet/minecraft/unmapped/C_6928498;	m_4932347	m_4932347	
-		p	1		p_1	
-		p	2		p_2	
+	m	(II)Lnet/minecraft/unmapped/C_6928498;	m_4932347	getBiome	
+		p	1		x	
+		p	2		z	
 	m	(Lnet/minecraft/unmapped/C_5528202;Ljava/lang/String;Lnet/minecraft/unmapped/C_3198459;Lnet/minecraft/unmapped/C_2670477;Lnet/minecraft/unmapped/C_8525326;)V	<init>	<init>	
 		p	1		storage	
 		p	2		name	
@@ -7627,14 +7627,14 @@ c	net/minecraft/unmapped/C_5553933
 		p	2		p_2	
 		p	3		p_3	
 	m	(III)Z	m_6918486	isAir	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+		p	1		x	
+		p	2		y	
+		p	3		z	
 	m	(III)Z	m_2479214	isChunkLoaded	
 		p	1		x	
 		p	2		y	
 		p	3		z	
-	m	(IIII)Z	m_6494860	isRegionLoaded	
+	m	(IIII)Z	m_6494860	isAreaLoaded	
 		p	1		x	
 		p	2		y	
 		p	3		z	
@@ -7960,7 +7960,7 @@ c	net/minecraft/unmapped/C_5553933
 		p	4		z	
 		p	5		progress	
 	m	()Lnet/minecraft/unmapped/C_0413198;	m_2942424	m_2942424	
-	m	(IIILnet/minecraft/unmapped/C_1241852;)V	m_9724606	updateComparators	
+	m	(IIILnet/minecraft/unmapped/C_1241852;)V	m_9724606	updateNeighborComparators	
 		p	1		x	
 		p	2		y	
 		p	3		z	
@@ -7976,7 +7976,7 @@ c	net/minecraft/unmapped/C_5553933
 		p	4			profiler
 		p	5			isClient
 	m	()Lnet/minecraft/unmapped/C_5553933;	m_8470864		init
-	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_6928498;	m_4932347		m_4932347
+	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_6928498;	m_4932347		getBiome
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_1241852;	m_9064162		getSurfaceBlock
 		c		Returns the top-most block of the ground above sea-level.
@@ -7989,10 +7989,10 @@ c	net/minecraft/unmapped/C_5553933
 		p	1			pos
 	m	(Lnet/minecraft/unmapped/C_3674802;)Z	m_2479214		isChunkLoaded
 		p	1			pos
-	m	(Lnet/minecraft/unmapped/C_3674802;I)Z	m_6494860		isRegionLoaded
+	m	(Lnet/minecraft/unmapped/C_3674802;I)Z	m_6494860		isAreaLoaded
 		p	1			pos
 		p	2			range
-	m	(Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3674802;)Z	m_0527148		isRegionLoaded
+	m	(Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3674802;)Z	m_0527148		isAreaLoaded
 		p	1			min
 		p	2			max
 	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_6849228;	m_4745553		getChunk
@@ -8208,7 +8208,7 @@ c	net/minecraft/unmapped/C_5553933
 		p	1			id
 		p	2			pos
 		p	3			progress
-	m	(Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1241852;)V	m_9724606		updateComparators
+	m	(Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1241852;)V	m_9724606		updateNeighborComparators
 		p	1			pos
 		p	2			block
 	m	(Lnet/minecraft/unmapped/C_3674802;)F	m_1672358		getLocalDifficulty
@@ -14733,14 +14733,14 @@ c	net/minecraft/unmapped/C_9962825
 		p	3		y	
 		p	4		z	
 		p	5		metadata	
-		p	6		towardsNegative	
+		p	6		forward	
 		p	7		depth	
 	m	(Lnet/minecraft/unmapped/C_5553933;IIIZII)Z	m_3354382	isPoweredByRail	
 		p	1		world	
 		p	2		x	
 		p	3		y	
 		p	4		z	
-		p	5		towardsNegative	
+		p	5		forward	
 		p	6		depth	
 		p	7		shape	
 	m	(Lnet/minecraft/unmapped/C_5553933;IIIIILnet/minecraft/unmapped/C_1241852;)V	m_5930555	m_5930555	
@@ -14755,17 +14755,17 @@ c	net/minecraft/unmapped/C_9962825
 		p	1			p_1
 		p	2			p_2
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;IZI)Z	m_2555016		isPoweredByConnectedRails
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	1			world
+		p	2			pos
+		p	3			metadata
+		p	4			forward
+		p	5			depth
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;ZII)Z	m_3354382		isPoweredByRail
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	1			world
+		p	2			pos
+		p	3			forward
+		p	4			depth
+		p	5			shape
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;IILnet/minecraft/unmapped/C_1241852;)V	m_5930555		m_5930555
 		p	1			p_1
 		p	2			p_2
