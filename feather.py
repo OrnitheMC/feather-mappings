@@ -27,7 +27,15 @@ def main():
         elif arg in GRADLE_TASKS:
             tasks.append(arg)
         else:
-            raise Exception('unrecognized arg ' + arg + '!')
+            client_version = arg + '-client'
+            server_version = arg + '-server'
+            if client_version in possible_versions or server_version in possible_versions:
+                if client_version in possible_versions:
+                    versions.append(client_version)
+                if server_version in possible_versions:
+                    versions.append(server_version)
+            else:
+                raise Exception('unrecognized arg ' + arg + '!')
     
     if len(versions) == 0:
         if 'MC_VERSION' in os.environ:

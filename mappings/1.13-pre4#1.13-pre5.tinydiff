@@ -13,14 +13,14 @@ c	net/minecraft/server/MinecraftServer
 		p	8		p_8	
 	m	()Lnet/minecraft/unmapped/C_9571530;	m_9353704	getDataFixerUpper	
 	m	(Ljava/io/File;Ljava/net/Proxy;Lcom/mojang/datafixers/DataFixer;Lnet/minecraft/unmapped/C_5335372;Lcom/mojang/authlib/yggdrasil/YggdrasilAuthenticationService;Lcom/mojang/authlib/minecraft/MinecraftSessionService;Lcom/mojang/authlib/GameProfileRepository;Lnet/minecraft/unmapped/C_7143605;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
+		p	1			gameDirectory
+		p	2			proxy
+		p	3			dfu
+		p	4			commandHandler
+		p	5			authService
+		p	6			sessionService
+		p	7			gameProfileRepository
+		p	8			playerCache
 	m	()Lcom/mojang/datafixers/DataFixer;	m_9353704		getDataFixerUpper
 c	net/minecraft/unmapped/C_0008106
 	m	(Lnet/minecraft/unmapped/C_2367458;Z)V	<init>	<init>	
@@ -105,7 +105,7 @@ c	net/minecraft/unmapped/C_0207054	net/minecraft/unmapped/C_0207054
 c	net/minecraft/unmapped/C_0230498
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_0230498;	m_0049558	setKey	
 		p	1		key	
-	m	()Ljava/lang/String;	m_0829120		getOrRetrieveKey
+	m	()Ljava/lang/String;	m_0829120		makeTranslationKey
 	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_0230498;)V	m_1132751		register
 		p	0			key
 		p	1			enchantment
@@ -367,8 +367,8 @@ c	net/minecraft/unmapped/C_0752236$C_5107018	C_5107018
 		p	1		p_1	
 	m	()I	hashCode	hashCode	
 c	net/minecraft/unmapped/C_0759248
-	m	(Ljava/lang/String;)Z	m_1693649		m_1693649
-		p	1			p_1
+	m	(Ljava/lang/String;)Z	m_1693649		contains
+		p	1			key
 c	net/minecraft/unmapped/C_0841880
 	f	[Lnet/minecraft/unmapped/C_3544601;	f_4590730	f_4590730	
 	f	[[I	f_4590730		f_4590730
@@ -3165,7 +3165,7 @@ c	net/minecraft/unmapped/C_3486144
 c	net/minecraft/unmapped/C_3488550
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_3488550;	m_6035645	setKey	
 		p	1		key	
-	m	()Ljava/lang/String;	m_8115412		getOrRetrieveKey
+	m	()Ljava/lang/String;	m_8115412		makeTranslationKey
 	m	(ILjava/lang/String;Lnet/minecraft/unmapped/C_3488550;)V	m_5043305		register
 		p	0			id
 		p	1			key
@@ -3711,7 +3711,7 @@ c	net/minecraft/unmapped/C_3683466$1
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/unmapped/C_3734170
-	m	()V	m_5608571		m_5608571
+	m	()V	m_5608571		checkGlfwError
 c	net/minecraft/unmapped/C_3838382	net/minecraft/util/datafix/optics/profunctors/AffineP	
 c	net/minecraft/unmapped/C_3838382$C_6621542	Mu	
 	f	Lcom/google/common/reflect/TypeToken;	f_3634673	f_3634673	
@@ -5883,9 +5883,9 @@ c	net/minecraft/unmapped/C_6869644$C_1722726	Instance
 c	net/minecraft/unmapped/C_6869644$C_1722726$C_2900205	Mu	
 	m	()V	<init>	<init>	
 c	net/minecraft/unmapped/C_6928498
-	m	()Lnet/minecraft/unmapped/C_9550253;	m_6347905	getId	
-	m	()Lnet/minecraft/unmapped/C_9550253;	m_9257082		getTranslatableName
-	m	()Ljava/lang/String;	m_6347905		getId
+	m	()Lnet/minecraft/unmapped/C_9550253;	m_6347905	getTranslationKey	
+	m	()Lnet/minecraft/unmapped/C_9550253;	m_9257082		getName
+	m	()Ljava/lang/String;	m_6347905		getTranslationKey
 c	net/minecraft/unmapped/C_6984930
 	m	(Lnet/minecraft/unmapped/C_2367458;Z)V	<init>	<init>	
 		p	1		p_1	
@@ -6752,7 +6752,7 @@ c	net/minecraft/unmapped/C_8215692	net/minecraft/unmapped/C_8215692
 		p	2		p_2	
 c	net/minecraft/unmapped/C_8252988
 	f	Lnet/minecraft/unmapped/C_9475358;	f_5975445	f_5975445	
-	f	Ljava/lang/String;	f_6640801		f_6640801
+	f	Ljava/lang/String;	f_6640801		key
 	f	Lcom/mojang/datafixers/types/Type;	f_5975445		f_5975445
 	m	(Ljava/lang/Class;Ljava/util/function/Function;ZZLnet/minecraft/unmapped/C_9475358;)V	<init>	<init>	
 		p	1		p_1	
@@ -6774,7 +6774,7 @@ c	net/minecraft/unmapped/C_8252988
 		p	5			p_5
 		p	6			p_6
 		p	7			p_7
-	m	()Ljava/lang/String;	m_3989052		m_3989052
+	m	()Ljava/lang/String;	m_3989052		getTranslationKey
 c	net/minecraft/unmapped/C_8261394	net/minecraft/unmapped/C_8261394	
 c	net/minecraft/unmapped/C_8261394$C_2478239	C_2478239	
 c	net/minecraft/unmapped/C_8280138
@@ -8350,16 +8350,16 @@ c	net/minecraft/unmapped/C_9890847
 		p	3		p_3	
 		p	4		p_4	
 c	net/minecraft/unmapped/C_9913447
-	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_7135514;Ljava/util/function/Function;)V	m_9462367		m_9462367
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
+	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_7135514;Ljava/util/function/Function;)V	m_9462367		validate
+		p	0			type
+		p	1			registry
+		p	2			keys
 	m	(Ljava/util/function/Function;Lnet/minecraft/unmapped/C_0759248;Ljava/lang/String;Lnet/minecraft/unmapped/C_7135514;Ljava/lang/Object;)V	m_7933537		m_7933537
 		p	0			p_0
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-		p	4			p_4
+		p	4			o
 c	net/minecraft/unmapped/C_9930848
 	m	(ILnet/minecraft/unmapped/C_2367458;)V	<init>	<init>	
 		p	1		p_1	
