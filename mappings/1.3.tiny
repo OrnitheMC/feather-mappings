@@ -988,7 +988,7 @@ c	net/minecraft/server/MinecraftServer	net/minecraft/server/MinecraftServer
 	f	Lnet/minecraft/server/MinecraftServer;	f_1995187	instance
 	f	Lnet/minecraft/unmapped/C_5478016;	f_5849755	worldStorageSource
 	f	Lnet/minecraft/unmapped/C_7377641;	f_3392446	snooper
-	f	Ljava/io/File;	f_8348211	gameDir
+	f	Ljava/io/File;	f_8348211	gameDirectory
 	f	Ljava/util/List;	f_1939260	tickables
 	f	Lnet/minecraft/unmapped/C_8183022;	f_7081300	commandHandler
 	f	Lnet/minecraft/unmapped/C_8525326;	f_2045655	profiler
@@ -1080,7 +1080,7 @@ c	net/minecraft/server/MinecraftServer	net/minecraft/server/MinecraftServer
 	m	(Ljava/lang/String;)V	m_4344118	warn
 		p	1		message
 	m	(I)Lnet/minecraft/unmapped/C_3865296;	m_4667880	getWorld
-		p	1		id
+		p	1		dimension
 	m	()Ljava/lang/String;	m_8050007	getIp
 	m	()I	m_8195438	getPort
 	m	()Ljava/lang/String;	m_5381609	getMotd
@@ -1846,8 +1846,8 @@ c	net/minecraft/unmapped/C_0230498	net/minecraft/enchantment/Enchantment
 		p	1		other
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_0230498;	m_0049558	setKey
 		p	1		key
-	m	()Ljava/lang/String;	m_8870654	getKey
-	m	(I)Ljava/lang/String;	m_8171399	getDisplayName
+	m	()Ljava/lang/String;	m_8870654	getTranslationKey
+	m	(I)Ljava/lang/String;	m_8171399	getName
 		p	1		level
 	m	(Ljava/lang/String;)Ljava/lang/Object;	m_4288020	m_4288020
 		p	1		p_1
@@ -9471,7 +9471,7 @@ c	net/minecraft/unmapped/C_2363721	net/minecraft/entity/living/mob/hostile/Spide
 	m	()Z	m_8431337	m_8431337
 	m	()V	m_4102861	m_4102861
 	m	()F	m_6094029	spiderScale
-		c	This is used to set the scale of spiders and varients in the {@link net.minecraft.client.render.entity.SpiderRender SpiderRender} class. For spiders this is 1.0f. For cave spiders 0.7f. Cave spiders are for the renderer nothing more than scaled down "normal" spiders.
+		c	This is used to set the scale of spiders and varients in the {@link net.minecraft.client.render.entity.SpiderRenderer SpiderRenderer} class. For spiders this is 1.0f. For cave spiders 0.7f. Cave spiders are for the renderer nothing more than scaled down "normal" spiders.
 	m	()Lnet/minecraft/unmapped/C_3244069;	m_9661271	m_9661271
 	m	(Lnet/minecraft/unmapped/C_0658987;)Z	m_1114946	m_1114946
 		p	1		p_1
@@ -10246,7 +10246,7 @@ c	net/minecraft/unmapped/C_2594473	net/minecraft/client/gui/screen/CreditsScreen
 	m	(CI)V	m_6992336	m_6992336
 		p	1		p_1
 		p	2		p_2
-	m	()V	m_9116988	close
+	m	()V	m_9116988	respawn
 	m	()Z	m_0601517	m_0601517
 	m	()V	m_3593494	m_3593494
 	m	(IIF)V	m_1558547	renderBackground
@@ -17612,11 +17612,11 @@ c	net/minecraft/unmapped/C_4837443	net/minecraft/client/render/model/entity/Silv
 		p	6		p_6
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/unmapped/C_4863209	net/minecraft/block/Block__Sound
-	f	Ljava/lang/String;	f_5683075	id
+	f	Ljava/lang/String;	f_5683075	key
 	f	F	f_1900770	volume
 	f	F	f_4370281	pitch
 	m	(Ljava/lang/String;FF)V	<init>	<init>
-		p	1		id
+		p	1		key
 		p	2		volume
 		p	3		pitch
 	m	()F	m_2602053	getVolume
@@ -19553,9 +19553,9 @@ c	net/minecraft/unmapped/C_5553933	net/minecraft/world/World
 		p	2		y
 		p	3		z
 	m	(III)Z	m_6918486	isAir
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
+		p	1		x
+		p	2		y
+		p	3		z
 	m	(III)Z	m_3565889	hasBlockEntity
 		p	1		x
 		p	2		y
@@ -19564,12 +19564,12 @@ c	net/minecraft/unmapped/C_5553933	net/minecraft/world/World
 		p	1		x
 		p	2		y
 		p	3		z
-	m	(IIII)Z	m_6494860	isRegionLoaded
+	m	(IIII)Z	m_6494860	isAreaLoaded
 		p	1		x
 		p	2		y
 		p	3		z
 		p	4		range
-	m	(IIIIII)Z	m_8926744	isRegionLoaded
+	m	(IIIIII)Z	m_8926744	isAreaLoaded
 		p	1		minX
 		p	2		minY
 		p	3		minZ
@@ -19734,10 +19734,10 @@ c	net/minecraft/unmapped/C_5553933	net/minecraft/world/World
 		p	2		p_2
 		p	3		p_3
 		p	4		p_4
-	m	(III)F	m_3899705	m_3899705
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
+	m	(III)F	m_3899705	getBrightness
+		p	1		x
+		p	2		y
+		p	3		z
 	m	()Z	m_7253958	isSunny
 	m	(Lnet/minecraft/unmapped/C_0557736;Lnet/minecraft/unmapped/C_0557736;)Lnet/minecraft/unmapped/C_7794883;	m_4935276	rayTrace
 		p	1		from
@@ -19913,10 +19913,10 @@ c	net/minecraft/unmapped/C_5553933	net/minecraft/world/World
 		p	3		z
 	m	(Lnet/minecraft/unmapped/C_3622326;)V	m_8507777	unloadBlockEntity
 		p	1		blockEntity
-	m	(III)Z	m_7761085	m_7761085
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
+	m	(III)Z	m_7761085	isOpaqueCube
+		p	1		x
+		p	2		y
+		p	3		z
 	m	(III)Z	m_9239141	m_9239141
 		p	1		p_1
 		p	2		p_2
@@ -20153,7 +20153,7 @@ c	net/minecraft/unmapped/C_5553933	net/minecraft/world/World
 		p	4		y
 		p	5		z
 		p	6		data
-	m	()I	m_8568350	m_8568350
+	m	()I	m_8568350	getHeight
 	m	()I	m_5265419	getDimensionHeight
 	m	(III)Ljava/util/Random;	m_4258798	setRandomSeed
 		p	1		x
@@ -20386,9 +20386,9 @@ c	net/minecraft/unmapped/C_5587144	net/minecraft/entity/living/mob/hostile/Ender
 	m	(I)V	m_0664731	setCarriedBlock
 		p	1		id
 	m	()I	m_7222327	getCarriedBlock
-	m	(I)V	m_6710037	setCarriedBlockMeta
-		p	1		id
-	m	()I	m_2791937	getCarriedBlockMeta
+	m	(I)V	m_6710037	setCarriedBlockMetadata
+		p	1		metadata
+	m	()I	m_2791937	getCarriedBlockMetadata
 	m	(Lnet/minecraft/unmapped/C_1161898;I)Z	m_8726131	m_8726131
 		p	1		p_1
 		p	2		p_2
@@ -21504,7 +21504,7 @@ c	net/minecraft/unmapped/C_5949355	net/minecraft/client/resource/pack/TexturePac
 		p	1		manager
 	m	(Lnet/minecraft/unmapped/C_0876962;)V	m_0593473	bindIcon
 		p	1		manager
-	m	(Ljava/lang/String;)Ljava/io/InputStream;	m_2448949	getTextureOrDefault
+	m	(Ljava/lang/String;)Ljava/io/InputStream;	m_2448949	getResource
 		p	1		path
 	m	()Ljava/lang/String;	m_6262453	getKey
 	m	()Ljava/lang/String;	m_8407475	getName
@@ -22953,7 +22953,7 @@ c	net/minecraft/unmapped/C_6466836	net/minecraft/server/world/ScheduledTick
 	m	(Lnet/minecraft/unmapped/C_6466836;)I	m_0210600	compareTo
 		p	1		p_1
 	m	(Ljava/lang/Object;)I	compareTo	compareTo
-		p	1		scheduledTick
+		p	1		other
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/unmapped/C_6476436	net/minecraft/util/Pair
 	f	Ljava/lang/Object;	f_3024631	left
@@ -31399,12 +31399,12 @@ c	net/minecraft/unmapped/C_9094020	net/minecraft/network/packet/SoundEventPacket
 	f	I	f_3839476	pitch
 	m	()V	<init>	<init>
 	m	(Ljava/lang/String;DDDFF)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	4		p_4
-		p	6		p_6
-		p	8		p_8
-		p	9		p_9
+		p	1		name
+		p	2		x
+		p	4		y
+		p	6		z
+		p	8		volume
+		p	9		pitch
 	m	(Ljava/io/DataInputStream;)V	m_4792371	m_4792371
 		p	1		p_1
 	m	(Ljava/io/DataOutputStream;)V	m_6110406	m_6110406
@@ -31678,9 +31678,9 @@ c	net/minecraft/unmapped/C_9184792	net/minecraft/entity/living/mob/passive/anima
 	m	()Z	m_2787882	isSitting
 	m	(Z)V	m_6498177	setSitting
 		p	1		sitting
-	m	()Ljava/lang/String;	m_0191021	getOwner
-	m	(Ljava/lang/String;)V	m_7388121	setOwner
-		p	1		owner
+	m	()Ljava/lang/String;	m_0191021	getOwnerName
+	m	(Ljava/lang/String;)V	m_7388121	setOwnerName
+		p	1		name
 	m	()Lnet/minecraft/unmapped/C_6607881;	m_2444804	getOwner
 	m	()Lnet/minecraft/unmapped/C_3193702;	m_4712080	getSitGoal
 c	net/minecraft/unmapped/C_9193667	net/minecraft/unmapped/C_9193667
