@@ -1061,8 +1061,8 @@ c	net/minecraft/unmapped/C_0201752
 c	net/minecraft/unmapped/C_0230498
 	m	(I)V	<init>	<init>	
 		p	1		id	
-	m	()Ljava/lang/String;	m_8870654	getTranslationKey	
-	m	(I)Ljava/lang/String;	m_8171399	getName	
+	m	()Ljava/lang/String;	m_8870654	getKey	
+	m	(I)Ljava/lang/String;	m_8171399	getDisplayName	
 		p	1		level	
 	m	(Ljava/lang/String;)Ljava/lang/Object;	m_4288020	m_4288020	
 		p	1		p_1	
@@ -1433,8 +1433,8 @@ c	net/minecraft/unmapped/C_0539010	net/minecraft/client/world/ClientWorld__1
 	m	()Ljava/lang/String;	m_2097106	call	
 	m	()Ljava/lang/Object;	call	call	
 c	net/minecraft/unmapped/C_0539808
-	f	Ljava/lang/String;	f_0929868	f_0929868	
-	f	Ljava/lang/String;	f_0877927	f_0877927	
+	f	Ljava/lang/String;	f_0929868	skin	
+	f	Ljava/lang/String;	f_0877927	cloak	
 	f	I	f_8854517	packetX	
 	f	I	f_1081116	packetY	
 	f	I	f_9207204	packetZ	
@@ -1486,7 +1486,7 @@ c	net/minecraft/unmapped/C_0539808
 	m	(B)V	m_4909384	doEvent	
 		p	1		event	
 	m	()V	m_3133542	animateDamage	
-	m	()V	m_3816455	m_3816455	
+	m	()V	m_3816455	registerCloak	
 	m	(ILnet/minecraft/unmapped/C_2454309;)V	m_0241073	setEquipmentStack	
 		p	1		slot	
 		p	2		stack	
@@ -2356,16 +2356,16 @@ c	net/minecraft/unmapped/C_1212414	net/minecraft/client/render/entity/GiantRende
 		p	1		p_1	
 		p	2		p_2	
 c	net/minecraft/unmapped/C_1214754	net/minecraft/client/entity/living/player/RemoteClientPlayerEntity	
-	f	Z	f_6063784	f_6063784	
-	f	I	f_2574175	f_2574175	
-	f	D	f_3981241	f_3981241	
-	f	D	f_0007073	f_0007073	
-	f	D	f_6587814	f_6587814	
-	f	D	f_4680991	f_4680991	
-	f	D	f_6182969	f_6182969	
+	f	Z	f_6063784	holdingItems	
+	f	I	f_2574175	steps	
+	f	D	f_3981241	x	
+	f	D	f_0007073	z	
+	f	D	f_6587814	z	
+	f	D	f_4680991	yaw	
+	f	D	f_6182969	pitch	
 	m	(Lnet/minecraft/unmapped/C_5553933;Ljava/lang/String;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		world	
+		p	2		name	
 	m	()V	m_0432621	m_0432621	
 	m	(Lnet/minecraft/unmapped/C_1161898;I)Z	m_8726131	m_8726131	
 		p	1		p_1	
@@ -3739,7 +3739,8 @@ c	net/minecraft/unmapped/C_2357457	net/minecraft/stat/StatsSyncer__2
 		p	2		p_2	
 	m	()V	run	run	
 c	net/minecraft/unmapped/C_2363721
-	m	()F	m_6094029	m_6094029	
+	m	()F	m_6094029	spiderScale	
+		c	This is used to set the scale of spiders and varients in the {@link net.minecraft.client.render.entity.SpiderRender SpiderRender} class. For spiders this is 1.0f. For cave spiders 0.7f. Cave spiders are for the renderer nothing more than scaled down "normal" spiders.	
 c	net/minecraft/unmapped/C_2366878	net/minecraft/client/render/texture/LavaSprite	
 	f	[F	f_0667759	image0	
 	f	[F	f_4803725	image1	
@@ -3927,7 +3928,7 @@ c	net/minecraft/unmapped/C_2594473	net/minecraft/client/gui/screen/CreditsScreen
 	m	(CI)V	m_6992336	m_6992336	
 		p	1		p_1	
 		p	2		p_2	
-	m	()V	m_9116988	respawn	
+	m	()V	m_9116988	close	
 	m	()Z	m_0601517	m_0601517	
 	m	()V	m_3593494	m_3593494	
 	m	(IIF)V	m_1558547	renderBackground	
@@ -7914,7 +7915,7 @@ c	net/minecraft/unmapped/C_5949355	net/minecraft/client/resource/pack/TexturePac
 		p	1		manager	
 	m	(Lnet/minecraft/unmapped/C_0876962;)V	m_0593473	bindIcon	
 		p	1		manager	
-	m	(Ljava/lang/String;)Ljava/io/InputStream;	m_2448949	getResource	
+	m	(Ljava/lang/String;)Ljava/io/InputStream;	m_2448949	getTextureOrDefault	
 		p	1		path	
 	m	()Ljava/lang/String;	m_6262453	getKey	
 	m	()Ljava/lang/String;	m_8407475	getName	
@@ -8674,8 +8675,8 @@ c	net/minecraft/unmapped/C_6607881
 	m	(B)V	m_4909384	m_4909384	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_2454309;I)I	m_7366244	getIconSprite	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		stack	
+		p	2		id	
 	m	(I)Z	m_0615113	m_0615113	
 		p	1		p_1	
 	m	(I)V	m_3848394	removeEffect	
@@ -12599,7 +12600,7 @@ c	net/minecraft/unmapped/C_9560633
 c	net/minecraft/unmapped/C_9568451
 	m	()Z	m_8135976	m_8135976	
 c	net/minecraft/unmapped/C_9590849
-	f	Ljava/lang/String;	f_5067293	f_5067293	
+	f	Ljava/lang/String;	f_5067293	cape	
 	f	F	f_8968937	sleepOffsetY	
 	f	F	f_1502286	f_1502286	
 	m	()Lnet/minecraft/unmapped/C_2454309;	m_0276088	getItemInHand	
