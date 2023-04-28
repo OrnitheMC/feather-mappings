@@ -539,7 +539,7 @@ c	net/minecraft/unmapped/C_1241852
 	f	Lnet/minecraft/unmapped/C_1241852;	f_0725937	BRICK_STAIRS	
 	f	Lnet/minecraft/unmapped/C_1241852;	f_9070509	STONE_BRICK_STAIRS	
 c	net/minecraft/unmapped/C_1250058
-	m	()V	m_2717864		m_2717864
+	m	()V	m_2717864		tick
 c	net/minecraft/unmapped/C_1264786
 	m	()I	m_0102119	getBlockId	
 	m	(Lnet/minecraft/unmapped/C_2454309;)Ljava/lang/String;	m_4716122	m_4716122	
@@ -1248,9 +1248,9 @@ c	net/minecraft/unmapped/C_2986085
 		p	1		data	
 		p	2		zBitOffset	
 	m	(I)V	<init>		<init>
-		p	1			p_1
+		p	1			size
 	m	([B)V	<init>		<init>
-		p	1			p_1
+		p	1			data
 c	net/minecraft/unmapped/C_3060676	net/minecraft/block/StemBlock	
 	f	Lnet/minecraft/unmapped/C_1241852;	f_6133215	plant	
 	m	(ILnet/minecraft/unmapped/C_1241852;)V	<init>	<init>	
@@ -2025,8 +2025,9 @@ c	net/minecraft/unmapped/C_5553933
 	f	D	f_3679136	f_3679136	
 	f	D	f_0425362	f_0425362	
 	f	D	f_2069367	f_2069367	
-	f	I	f_4063279		f_4063279
-	f	I	f_9696537		f_9696537
+	f	I	f_4063279		lightUpdateDepth
+	f	I	f_9696537		checkLightDepth
+	f	Ljava/util/List;	f_5181704	removedBlockEntities	lightUpdates
 	m	()Lnet/minecraft/unmapped/C_7235516;	m_0161628	getBiomeSource	
 	m	(Lnet/minecraft/unmapped/C_5528202;Ljava/lang/String;Lnet/minecraft/unmapped/C_2670477;Lnet/minecraft/unmapped/C_3198459;)V	<init>	<init>	
 		p	1		storage	
@@ -2073,10 +2074,10 @@ c	net/minecraft/unmapped/C_5553933
 		p	7		p_7	
 	m	()Lnet/minecraft/unmapped/C_9918773;	m_0161628		getBiomeSource
 	m	(Lnet/minecraft/unmapped/C_5528202;Ljava/lang/String;JLnet/minecraft/unmapped/C_3198459;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	5			p_5
+		p	1			storage
+		p	2			name
+		p	3			seed
+		p	5			dimension
 	m	(III)Z	m_4582666		m_4582666
 		p	1			p_1
 		p	2			p_2
@@ -2087,23 +2088,23 @@ c	net/minecraft/unmapped/C_5553933
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	()Z	m_7626090		m_7626090
-	m	(Lnet/minecraft/unmapped/C_2891045;IIIIII)V	m_9675961		m_9675961
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-	m	(Lnet/minecraft/unmapped/C_2891045;IIIIIIZ)V	m_6277726		m_6277726
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
+	m	()Z	m_7626090		doLightUpdates
+	m	(Lnet/minecraft/unmapped/C_2891045;IIIIII)V	m_9675961		checkLight
+		p	1			type
+		p	2			minX
+		p	3			minY
+		p	4			minZ
+		p	5			maxX
+		p	6			maxY
+		p	7			maxZ
+	m	(Lnet/minecraft/unmapped/C_2891045;IIIIIIZ)V	m_6277726		checkLight
+		p	1			type
+		p	2			minX
+		p	3			minY
+		p	4			minZ
+		p	5			maxX
+		p	6			maxY
+		p	7			maxZ
 		p	8			p_8
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_5587144	net/minecraft/entity/living/mob/hostile/EndermanEntity	
@@ -2268,8 +2269,8 @@ c	net/minecraft/unmapped/C_6152184
 	m	(I)V	m_8334198	setDefaultGamemode	
 		p	1		gameMode	
 	m	(JLjava/lang/String;)V	<init>		<init>
-		p	1			p_1
-		p	3			p_3
+		p	1			seed
+		p	3			worldName
 c	net/minecraft/unmapped/C_6207273	net/minecraft/world/gen/structure/StrongholdPieces__StrongholdPieceWeight	
 	f	Ljava/lang/Class;	f_9444495	type	
 	f	I	f_6390881	weight	
@@ -3348,24 +3349,24 @@ c	net/minecraft/unmapped/C_2502928		net/minecraft/unmapped/C_2502928
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-c	net/minecraft/unmapped/C_4857885		net/minecraft/unmapped/C_4857885
-	f	Lnet/minecraft/unmapped/C_2891045;	f_1878904		f_1878904
-	f	I	f_1489969		f_1489969
-	f	I	f_7056229		f_7056229
-	f	I	f_4084191		f_4084191
-	f	I	f_0312135		f_0312135
-	f	I	f_8228625		f_8228625
-	f	I	f_5087062		f_5087062
+c	net/minecraft/unmapped/C_4857885		net/minecraft/world/LightUpdate
+	f	Lnet/minecraft/unmapped/C_2891045;	f_1878904		type
+	f	I	f_1489969		minX
+	f	I	f_7056229		minY
+	f	I	f_4084191		minZ
+	f	I	f_0312135		maxX
+	f	I	f_8228625		maxY
+	f	I	f_5087062		maxZ
 	m	(Lnet/minecraft/unmapped/C_2891045;IIIIII)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-	m	(Lnet/minecraft/unmapped/C_5553933;)V	m_2099508		m_2099508
-		p	1			p_1
+		p	1			type
+		p	2			minX
+		p	3			minY
+		p	4			minZ
+		p	5			maxX
+		p	6			maxY
+		p	7			maxZ
+	m	(Lnet/minecraft/unmapped/C_5553933;)V	m_2099508		run
+		p	1			world
 	m	(IIIIII)Z	m_7528039		m_7528039
 		p	1			p_1
 		p	2			p_2
@@ -3398,7 +3399,7 @@ c	net/minecraft/unmapped/C_5298132		net/minecraft/unmapped/C_5298132
 		p	10			p_10
 		p	12			p_12
 		p	14			p_14
-c	net/minecraft/unmapped/C_9918773		net/minecraft/unmapped/C_9918773
+c	net/minecraft/unmapped/C_9918773		net/minecraft/world/biome/BiomeSource
 	f	Lnet/minecraft/unmapped/C_5298132;	f_5594039		f_5594039
 	f	Lnet/minecraft/unmapped/C_5298132;	f_3992246		f_3992246
 	f	Lnet/minecraft/unmapped/C_5298132;	f_5900567		f_5900567
