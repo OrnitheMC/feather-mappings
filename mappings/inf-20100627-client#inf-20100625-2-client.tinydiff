@@ -6,18 +6,18 @@ c	net/minecraft/client/MinecraftApplet
 c	net/minecraft/isom/IsomPreviewApplet
 	f	Lnet/minecraft/unmapped/C_0951692;	f_0209079	f_0209079	
 	f	Lnet/minecraft/isom/C_0951692;	f_0209079		f_0209079
-c	net/minecraft/unmapped/C_0113445	net/minecraft/unmapped/C_0113445	
-	f	Ljava/awt/Component;	f_9475132	f_9475132	
+c	net/minecraft/unmapped/C_0113445	net/minecraft/client/Mouse	
+	f	Ljava/awt/Component;	f_9475132	component	
 	f	Ljava/awt/Robot;	f_3706533	f_3706533	
 	f	I	f_5271319	f_5271319	
 	f	I	f_7920075	f_7920075	
-	f	Lorg/lwjgl/input/Cursor;	f_4416362	f_4416362	
-	f	I	f_7863556	f_7863556	
-	f	I	f_9507829	f_9507829	
+	f	Lorg/lwjgl/input/Cursor;	f_4416362	cursor	
+	f	I	f_7863556	x	
+	f	I	f_9507829	y	
 	f	I	f_7883831	f_7883831	
 	m	(Ljava/awt/Component;)V	<init>	<init>	
-		p	1		p_1	
-	m	()V	m_2934395	m_2934395	
+		p	1		component	
+	m	()V	m_2934395	tick	
 c	net/minecraft/unmapped/C_0124240	net/minecraft/client/render/model/entity/QuadrupedModel	
 	f	Lnet/minecraft/unmapped/C_6697291;	f_3332231	head	
 	f	Lnet/minecraft/unmapped/C_6697291;	f_8955391	body	
@@ -1606,7 +1606,7 @@ c	net/minecraft/unmapped/C_2454309	net/minecraft/item/ItemStack
 		p	2		size	
 		p	3		metadata	
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	<init>	<init>	
-		p	1		p_1	
+		p	1		nbt	
 	m	(I)Lnet/minecraft/unmapped/C_2454309;	m_1980273	split	
 		p	1		amount	
 	m	()Lnet/minecraft/unmapped/C_3755722;	m_2410511	getItem	
@@ -2085,7 +2085,7 @@ c	net/minecraft/unmapped/C_3225627	net/minecraft/nbt/NbtElement
 		p	0		nbt	
 		p	1		output	
 	m	(B)Lnet/minecraft/unmapped/C_3225627;	m_1352899	create	
-		p	0		p_0	
+		p	0		type	
 c	net/minecraft/unmapped/C_3242141	net/minecraft/entity/living/mob/passive/animal/SheepEntity	
 	f	Z	f_4976759	f_4976759	
 	m	(Lnet/minecraft/unmapped/C_5553933;)V	<init>	<init>	
@@ -2568,15 +2568,15 @@ c	net/minecraft/unmapped/C_3987516	net/minecraft/unmapped/C_3987516
 		p	1		p_1	
 		p	2		p_2	
 	m	()V	run	run	
-c	net/minecraft/unmapped/C_3988806	net/minecraft/unmapped/C_3988806	
-	f	Ljava/io/File;	f_7047710	f_7047710	
-	f	Z	f_0408201	f_0408201	
+c	net/minecraft/unmapped/C_3988806	net/minecraft/world/chunk/storage/RegionChunkStorage	
+	f	Ljava/io/File;	f_7047710	file	
+	f	Z	f_0408201	make	
 	m	(Ljava/io/File;Z)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-	m	(II)Ljava/io/File;	m_5023254	m_5023254	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		file	
+		p	2		make	
+	m	(II)Ljava/io/File;	m_5023254	getRegionFile	
+		p	1		chunkX	
+		p	2		chunkZ	
 	m	(Lnet/minecraft/unmapped/C_5553933;II)Lnet/minecraft/unmapped/C_6849228;	m_0835514	m_0835514	
 		p	1		p_1	
 		p	2		p_2	
@@ -2584,13 +2584,13 @@ c	net/minecraft/unmapped/C_3988806	net/minecraft/unmapped/C_3988806
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_6849228;)V	m_6783567	m_6783567	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/unmapped/C_6849228;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_2018497;)V	m_5709057	m_5709057	
+	m	(Lnet/minecraft/unmapped/C_6849228;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_2018497;)V	m_5709057	saveChunkToNbt	
 		p	0		p_0	
-		p	1		p_1	
-		p	2		p_2	
-	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_2018497;)Lnet/minecraft/unmapped/C_6849228;	m_6992087	m_6992087	
-		p	0		p_0	
-		p	1		p_1	
+		p	1		world	
+		p	2		nbt	
+	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_2018497;)Lnet/minecraft/unmapped/C_6849228;	m_6992087	loadChunkFromNbt	
+		p	0		world	
+		p	1		nbt	
 c	net/minecraft/unmapped/C_4007811	net/minecraft/unmapped/C_4007811	
 	m	(Lnet/minecraft/unmapped/C_5353187;ILjava/lang/Class;[Ljava/lang/Class;)V	<init>	<init>	
 		p	1		p_1	
@@ -2879,7 +2879,7 @@ c	net/minecraft/unmapped/C_5058702	net/minecraft/nbt/NbtDouble
 	f	D	f_1560513	value	
 	m	()V	<init>	<init>	
 	m	(D)V	<init>	<init>	
-		p	1		p_1	
+		p	1		value	
 	m	(Ljava/io/DataOutput;)V	m_6394086	m_6394086	
 		p	1		p_1	
 	m	(Ljava/io/DataInput;)V	m_9918199	m_9918199	
@@ -2958,7 +2958,7 @@ c	net/minecraft/unmapped/C_5318159	net/minecraft/nbt/NbtByte
 	f	B	f_2497310	value	
 	m	()V	<init>	<init>	
 	m	(B)V	<init>	<init>	
-		p	1		p_1	
+		p	1		value	
 	m	(Ljava/io/DataOutput;)V	m_6394086	m_6394086	
 		p	1		p_1	
 	m	(Ljava/io/DataInput;)V	m_9918199	m_9918199	
@@ -3120,16 +3120,16 @@ c	net/minecraft/unmapped/C_5445172	net/minecraft/block/PlantBlock
 c	net/minecraft/unmapped/C_5487116	net/minecraft/client/render/model/entity/CowModel	
 	m	()V	<init>	<init>	
 c	net/minecraft/unmapped/C_5502075	net/minecraft/item/ArmorItem	
-	f	[I	f_0950764	f_0950764	
+	f	[I	f_0950764	BASE_PROTECTION	
 	f	[I	f_8744331	BASE_DURABILITY	
 	f	I	f_3944942	slot	
 	f	I	f_7010937	protection	
 	f	I	f_6133844	materialId	
 	m	(IIII)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
+		p	1		id	
+		p	2		durability	
+		p	3		materialId	
+		p	4		slot	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_5533224	net/minecraft/block/TntBlock	
 	m	(II)V	<init>	<init>	
@@ -3544,7 +3544,7 @@ c	net/minecraft/unmapped/C_5578771	net/minecraft/nbt/NbtShort
 	f	S	f_1180706	value	
 	m	()V	<init>	<init>	
 	m	(S)V	<init>	<init>	
-		p	1		p_1	
+		p	1		value	
 	m	(Ljava/io/DataOutput;)V	m_6394086	m_6394086	
 		p	1		p_1	
 	m	(Ljava/io/DataInput;)V	m_9918199	m_9918199	
@@ -3607,7 +3607,7 @@ c	net/minecraft/unmapped/C_5636518	net/minecraft/nbt/NbtFloat
 	f	F	f_6852736	value	
 	m	()V	<init>	<init>	
 	m	(F)V	<init>	<init>	
-		p	1		p_1	
+		p	1		value	
 	m	(Ljava/io/DataOutput;)V	m_6394086	m_6394086	
 		p	1		p_1	
 	m	(Ljava/io/DataInput;)V	m_9918199	m_9918199	
@@ -4163,7 +4163,7 @@ c	net/minecraft/unmapped/C_6684392	net/minecraft/nbt/NbtByteArray
 	f	[B	f_4332811	value	
 	m	()V	<init>	<init>	
 	m	([B)V	<init>	<init>	
-		p	1		p_1	
+		p	1		value	
 	m	(Ljava/io/DataOutput;)V	m_6394086	m_6394086	
 		p	1		p_1	
 	m	(Ljava/io/DataInput;)V	m_9918199	m_9918199	
@@ -5085,7 +5085,7 @@ c	net/minecraft/unmapped/C_8052742	net/minecraft/nbt/NbtInt
 	f	I	f_0021113	value	
 	m	()V	<init>	<init>	
 	m	(I)V	<init>	<init>	
-		p	1		p_1	
+		p	1		value	
 	m	(Ljava/io/DataOutput;)V	m_6394086	m_6394086	
 		p	1		p_1	
 	m	(Ljava/io/DataInput;)V	m_9918199	m_9918199	
@@ -5443,12 +5443,12 @@ c	net/minecraft/unmapped/C_8680630	net/minecraft/block/ObsidianBlock
 	m	(ILjava/util/Random;)I	m_7534654	m_7534654	
 		p	1		p_1	
 		p	2		p_2	
-c	net/minecraft/unmapped/C_8730536	net/minecraft/unmapped/C_8730536	
+c	net/minecraft/unmapped/C_8730536	net/minecraft/client/Session	
 	f	Ljava/util/List;	f_1364632	f_1364632	
-	f	Ljava/lang/String;	f_0507139	f_0507139	
+	f	Ljava/lang/String;	f_0507139	username	
 	m	(Ljava/lang/String;Ljava/lang/String;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		username	
+		p	2		sessionId	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_8739928	net/minecraft/unmapped/C_8739928	
 	f	F	f_8967025	f_8967025	
@@ -5916,7 +5916,7 @@ c	net/minecraft/unmapped/C_9785392	net/minecraft/nbt/NbtLong
 	f	J	f_4174882	value	
 	m	()V	<init>	<init>	
 	m	(J)V	<init>	<init>	
-		p	1		p_1	
+		p	1		value	
 	m	(Ljava/io/DataOutput;)V	m_6394086	m_6394086	
 		p	1		p_1	
 	m	(Ljava/io/DataInput;)V	m_9918199	m_9918199	

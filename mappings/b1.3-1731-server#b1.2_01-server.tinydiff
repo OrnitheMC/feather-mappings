@@ -52,13 +52,13 @@ c	net/minecraft/unmapped/C_0281639	net/minecraft/world/storage/RegionWorldStorag
 	m	()Lnet/minecraft/unmapped/C_7729027;	m_9771384	m_9771384	
 	m	()V	m_8795896	m_8795896	
 	m	()V	<clinit>	<clinit>	
-c	net/minecraft/unmapped/C_0433100	net/minecraft/unmapped/C_0433100	
-	f	F	f_3669628	f_3669628	
-	f	F	f_3135217	f_3135217	
-	f	Z	f_0066576	f_0066576	
-	f	Z	f_3101892	f_3101892	
-	f	F	f_6765780	f_6765780	
-	f	F	f_7657566	f_7657566	
+c	net/minecraft/unmapped/C_0433100	net/minecraft/network/packet/PlayerInputPacket	
+	f	F	f_3669628	sidewaysSpeed	
+	f	F	f_3135217	forwardSpeed	
+	f	Z	f_0066576	jumping	
+	f	Z	f_3101892	sneaking	
+	f	F	f_6765780	pitch	
+	f	F	f_7657566	yaw	
 	m	()V	<init>	<init>	
 	m	(Ljava/io/DataInputStream;)V	m_4792371	m_4792371	
 		p	1		p_1	
@@ -67,12 +67,12 @@ c	net/minecraft/unmapped/C_0433100	net/minecraft/unmapped/C_0433100
 	m	(Lnet/minecraft/unmapped/C_7250084;)V	m_7216666	m_7216666	
 		p	1		p_1	
 	m	()I	m_4040470	m_4040470	
-	m	()F	m_4905737	m_4905737	
-	m	()F	m_3162298	m_3162298	
-	m	()F	m_1170141	m_1170141	
-	m	()F	m_3176608	m_3176608	
-	m	()Z	m_7239049	m_7239049	
-	m	()Z	m_7038298	m_7038298	
+	m	()F	m_4905737	getSidewaysSpeed	
+	m	()F	m_3162298	getPitch	
+	m	()F	m_1170141	getForwardSpeed	
+	m	()F	m_3176608	getYaw	
+	m	()Z	m_7239049	getJumping	
+	m	()Z	m_7038298	getSneaking	
 c	net/minecraft/unmapped/C_0810534	net/minecraft/item/StoneSlabItem	
 	m	(I)V	<init>	<init>	
 		p	1		p_1	
@@ -94,25 +94,25 @@ c	net/minecraft/unmapped/C_0826810
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-c	net/minecraft/unmapped/C_0908689	net/minecraft/unmapped/C_0908689	
-	f	Ljava/util/logging/Logger;	f_6661570	f_6661570	
-	f	Lnet/minecraft/server/MinecraftServer;	f_7473034	f_7473034	
+c	net/minecraft/unmapped/C_0908689	net/minecraft/command/handler/CommandHandler	
+	f	Ljava/util/logging/Logger;	f_6661570	LOGGER	
+	f	Lnet/minecraft/server/MinecraftServer;	f_7473034	server	
 	m	(Lnet/minecraft/server/MinecraftServer;)V	<init>	<init>	
-		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_6348669;)V	m_7012119	m_7012119	
-		p	1		p_1	
-	m	(Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/unmapped/C_1730529;)V	m_1219010	m_1219010	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-	m	(Lnet/minecraft/unmapped/C_1730529;)V	m_3215736	m_3215736	
-		p	1		p_1	
-	m	(Ljava/lang/String;Ljava/lang/String;)V	m_7224224	m_7224224	
-		p	1		p_1	
-		p	2		p_2	
-	m	(Ljava/lang/String;I)I	m_5129127	m_5129127	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		server	
+	m	(Lnet/minecraft/unmapped/C_6348669;)V	m_7012119	run	
+		p	1		command	
+	m	(Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/unmapped/C_1730529;)V	m_1219010	runWhitelist	
+		p	1		player	
+		p	2		command	
+		p	3		source	
+	m	(Lnet/minecraft/unmapped/C_1730529;)V	m_3215736	sendHelp	
+		p	1		source	
+	m	(Ljava/lang/String;Ljava/lang/String;)V	m_7224224	sendSuccess	
+		p	1		player	
+		p	2		message	
+	m	(Ljava/lang/String;I)I	m_5129127	parseInt	
+		p	1		s	
+		p	2		defaultValue	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_1184371
 	m	(II)I	m_8325719	m_8325719	
@@ -133,7 +133,7 @@ c	net/minecraft/unmapped/C_1430573
 	m	(Ljava/io/File;)Lnet/minecraft/unmapped/C_3015672;	m_5789482		m_5789482
 		p	1			p_1
 c	net/minecraft/unmapped/C_1567607
-	f	I	f_6547356	f_6547356	
+	f	I	f_6547356	lastKeepAliveTime	
 	f	Z	f_0005680	moved	
 	m	(Lnet/minecraft/unmapped/C_0433100;)V	m_5970610	m_5970610	
 		p	1		p_1	
@@ -287,13 +287,13 @@ c	net/minecraft/unmapped/C_3292284
 	m	(ZZ)V	m_4175826	m_4175826	
 		p	1		p_1	
 		p	2		p_2	
-	m	(FFZZFF)V	m_5383091	m_5383091	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
+	m	(FFZZFF)V	m_5383091	setInput	
+		p	1		sidewaysSpeed	
+		p	2		forwardSpeed	
+		p	3		jumping	
+		p	4		sneaking	
+		p	5		pitch	
+		p	6		yaw	
 	m	()V	m_6143011		tickPlayer
 c	net/minecraft/unmapped/C_3294178	net/minecraft/network/packet/PlayerSleepPacket	
 	f	I	f_6721929	id	
@@ -389,7 +389,7 @@ c	net/minecraft/unmapped/C_3865296
 		p	1			p_1
 c	net/minecraft/unmapped/C_3881094
 	m	(Lnet/minecraft/unmapped/C_6849228;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_2018497;)V	m_7415544
-		p	0		p_0	
+		p	0		chunk	
 		p	3			p_3
 c	net/minecraft/unmapped/C_4068012	net/minecraft/unmapped/C_4068012	
 c	net/minecraft/unmapped/C_4311389
@@ -598,8 +598,8 @@ c	net/minecraft/unmapped/C_7141926
 c	net/minecraft/unmapped/C_7250084
 	m	(Lnet/minecraft/unmapped/C_3294178;)V	m_1069615	handlePlayerSleep	
 		p	1		packet	
-	m	(Lnet/minecraft/unmapped/C_0433100;)V	m_5970610	m_5970610	
-		p	1		p_1	
+	m	(Lnet/minecraft/unmapped/C_0433100;)V	m_5970610	handlerPlayerInput	
+		p	1		packet	
 c	net/minecraft/unmapped/C_7282397	net/minecraft/world/storage/AnvilWorldStorage	
 	m	(Ljava/io/File;Ljava/lang/String;Z)V	<init>	<init>	
 		p	1		p_1	
@@ -859,9 +859,9 @@ c	net/minecraft/unmapped/C_8922447	net/minecraft/block/RepeaterBlock
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_9128658	net/minecraft/unmapped/C_9128658	
 c	net/minecraft/unmapped/C_9375659
-	m	(Ljava/lang/String;Z)V	m_1755080	m_1755080	
-		p	1		p_1	
-		p	2		p_2	
+	m	(Ljava/lang/String;Z)V	m_1755080	setBoolean	
+		p	1		key	
+		p	2		value	
 c	net/minecraft/unmapped/C_9436529
 	m	(Lnet/minecraft/unmapped/C_5553933;III)I	m_0507732	getPlacementDirection	
 		p	1		world	
@@ -908,19 +908,19 @@ c	net/minecraft/unmapped/C_9739154
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/unmapped/C_9992501
-	f	Ljava/util/Set;	f_2471539	f_2471539	
-	f	Ljava/io/File;	f_4198947	f_4198947	
-	f	Z	f_6419850	f_6419850	
-	m	()V	m_7627328	m_7627328	
-	m	()V	m_2774752	m_2774752	
-	m	(Ljava/lang/String;)Z	m_7221601	m_7221601	
-		p	1		p_1	
-	m	(Ljava/lang/String;)V	m_2766431	m_2766431	
-		p	1		p_1	
-	m	(Ljava/lang/String;)V	m_6550773	m_6550773	
-		p	1		p_1	
-	m	()Ljava/util/Set;	m_0995631	m_0995631	
-	m	()V	m_4338609	m_4338609	
+	f	Ljava/util/Set;	f_2471539	whitelist	
+	f	Ljava/io/File;	f_4198947	whitelistFile	
+	f	Z	f_6419850	enforceWhitelist	
+	m	()V	m_7627328	loadWhitelist	
+	m	()V	m_2774752	saveWhitelist	
+	m	(Ljava/lang/String;)Z	m_7221601	isWhitelisted	
+		p	1		player	
+	m	(Ljava/lang/String;)V	m_2766431	addToWhitelist	
+		p	1		player	
+	m	(Ljava/lang/String;)V	m_6550773	removeFromWhitelist	
+		p	1		player	
+	m	()Ljava/util/Set;	m_0995631	getWhitelist	
+	m	()V	m_4338609	reloadWhitelist	
 c	net/minecraft/unmapped/C_5857061		net/minecraft/unmapped/C_5857061
 	f	I	f_2937066		f_2937066
 	f	I	f_1899269		f_1899269
