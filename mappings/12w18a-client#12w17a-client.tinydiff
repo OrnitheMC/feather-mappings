@@ -758,7 +758,7 @@ c	net/minecraft/unmapped/C_3292284	net/minecraft/server/entity/living/player/Ser
 		p	1		p_1	
 	m	(I)V	m_5745576	m_5745576	
 		p	1		p_1	
-	m	()V	m_8409580	listenToScreenHandler	
+	m	()V	m_8409580	initMenu	
 	m	()[Lnet/minecraft/unmapped/C_2454309;	m_7350002	m_7350002	
 	m	()V	m_0432621	m_0432621	
 	m	()F	m_0866957	m_0866957	
@@ -2601,7 +2601,7 @@ c	net/minecraft/unmapped/C_9992501	net/minecraft/server/PlayerManager
 	f	Ljava/util/List;	f_9738318	players	
 	f	I	f_1995098	maxPlayerCount	
 	f	I	f_1519083	viewDistance	
-	f	Ljava/util/Set;	f_3549956	playerBans	
+	f	Ljava/util/Set;	f_3549956	bans	
 	f	Ljava/util/Set;	f_3286089	ipBans	
 	f	Ljava/util/Set;	f_9374939	ops	
 	f	Ljava/util/Set;	f_2471539	whitelist	
@@ -2610,19 +2610,19 @@ c	net/minecraft/unmapped/C_9992501	net/minecraft/server/PlayerManager
 	f	Ljava/io/File;	f_0617273	opsFile	
 	f	Ljava/io/File;	f_8577968	whitelistFile	
 	f	Lnet/minecraft/unmapped/C_7729027;	f_9085408	dataStorage	
-	f	Z	f_6419850	whitelistEnabled	
+	f	Z	f_6419850	enforceWhitelist	
 	f	I	f_7794113	pingUpdateTime	
 	m	(Lnet/minecraft/unmapped/C_7773862;)V	<init>	<init>	
 		p	1		server	
-	m	([Lnet/minecraft/unmapped/C_3865296;)V	m_3157836	onWorldsLoaded	
+	m	([Lnet/minecraft/unmapped/C_3865296;)V	m_3157836	setWorld	
 		p	1		worlds	
 	m	(Lnet/minecraft/unmapped/C_3292284;Lnet/minecraft/unmapped/C_3865296;)V	m_2196327	onChangedDimension	
 		p	1		player	
 		p	2		prevWorld	
 	m	()I	m_8388212	getViewDistance	
-	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_7169022	loadSinglePlayerData	
+	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_7169022	load	
 		p	1		player	
-	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_8134419	saveData	
+	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_8134419	save	
 		p	1		player	
 	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_8571484	add	
 		p	1		player	
@@ -2630,7 +2630,7 @@ c	net/minecraft/unmapped/C_9992501	net/minecraft/server/PlayerManager
 		p	1		player	
 	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_1048368	remove	
 		p	1		player	
-	m	(Lnet/minecraft/unmapped/C_8983523;Ljava/lang/String;)Lnet/minecraft/unmapped/C_3292284;	m_4536024	onLogin	
+	m	(Lnet/minecraft/unmapped/C_8983523;Ljava/lang/String;)Lnet/minecraft/unmapped/C_3292284;	m_4536024	createForLogin	
 		p	1		networkHandler	
 		p	2		name	
 	m	(Lnet/minecraft/unmapped/C_3292284;IZ)Lnet/minecraft/unmapped/C_3292284;	m_5030107	respawn	
@@ -2646,15 +2646,15 @@ c	net/minecraft/unmapped/C_9992501	net/minecraft/server/PlayerManager
 	m	(Lnet/minecraft/unmapped/C_5385258;I)V	m_0305861	sendToDimension	
 		p	1		packet	
 		p	2		dimension	
-	m	()Ljava/lang/String;	m_4251196	getNamesAsString	
+	m	()Ljava/lang/String;	m_4251196	listNames	
 	m	()[Ljava/lang/String;	m_3036462	getNames	
 	m	(Ljava/lang/String;)V	m_5311516	ban	
-		p	1		playerName	
+		p	1		name	
 	m	(Ljava/lang/String;)V	m_0108649	unban	
-		p	1		playerName	
+		p	1		name	
 	m	()V	m_9597199	loadBans	
 	m	()V	m_7476429	saveBans	
-	m	()Ljava/util/Set;	m_4888675	getPlayerBans	
+	m	()Ljava/util/Set;	m_4888675	getBans	
 	m	()Ljava/util/Set;	m_4394591	getIpBans	
 	m	(Ljava/lang/String;)V	m_2142978	banIp	
 		p	1		ip	
@@ -2663,19 +2663,19 @@ c	net/minecraft/unmapped/C_9992501	net/minecraft/server/PlayerManager
 	m	()V	m_5591472	loadIpBans	
 	m	()V	m_7957420	saveIpBans	
 	m	(Ljava/lang/String;)V	m_0248612	addOp	
-		p	1		playerName	
+		p	1		name	
 	m	(Ljava/lang/String;)V	m_9659726	removeOp	
-		p	1		playerName	
+		p	1		name	
 	m	()V	m_2336264	loadOps	
 	m	()V	m_1550874	saveOps	
 	m	()V	m_2579874	loadWhitelist	
 	m	()V	m_4464793	saveWhitelist	
 	m	(Ljava/lang/String;)Z	m_7221601	isWhitelisted	
-		p	1		playerName	
+		p	1		name	
 	m	(Ljava/lang/String;)Z	m_6078293	isOp	
-		p	1		playerName	
+		p	1		name	
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_3292284;	m_4343635	get	
-		p	1		playerName	
+		p	1		name	
 	m	(DDDDILnet/minecraft/unmapped/C_5385258;)V	m_8373724	sendToAround	
 		p	1		x	
 		p	3		y	
@@ -2691,11 +2691,11 @@ c	net/minecraft/unmapped/C_9992501	net/minecraft/server/PlayerManager
 		p	8		range	
 		p	10		dimension	
 		p	11		packet	
-	m	()V	m_9408530	saveData	
+	m	()V	m_9408530	saveAll	
 	m	(Ljava/lang/String;)V	m_4501853	addToWhitelist	
-		p	1		playerName	
+		p	1		name	
 	m	(Ljava/lang/String;)V	m_7180068	removeFromWhitelist	
-		p	1		playerName	
+		p	1		name	
 	m	()Ljava/util/Set;	m_0995631	getWhitelist	
 	m	()Ljava/util/Set;	m_4611177	getOps	
 	m	()V	m_2131553	reloadWhitelist	
@@ -2707,9 +2707,9 @@ c	net/minecraft/unmapped/C_9992501	net/minecraft/server/PlayerManager
 	m	()I	m_8169892	getCount	
 	m	()I	m_9945457	getMaxCount	
 	m	()[Ljava/lang/String;	m_3364431	getSavedIds	
-	m	()Z	m_7826732	isWhitelistEnabled	
-	m	(Z)V	m_1967217	setWhitelistEnabled	
-		p	1		enabled	
+	m	()Z	m_7826732	isWhitelistEnforced	
+	m	(Z)V	m_1967217	setEnforceWhitelist	
+		p	1		enforce	
 	m	(Ljava/lang/String;)Ljava/util/List;	m_1272395	getAtIp	
 		p	1		ip	
 	m	()I	m_5066194	getChunkViewDistance	
