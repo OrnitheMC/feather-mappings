@@ -519,14 +519,14 @@ c	net/minecraft/server/C_1323041	net/minecraft/server/MinecraftServer__3
 c	net/minecraft/server/C_1789828	net/minecraft/server/BanEntry	
 	f	Ljava/text/SimpleDateFormat;	f_0818085	DATE_FORMAT	
 	f	Ljava/util/logging/Logger;	f_9917689	LOGGER	
-	f	Ljava/lang/String;	f_1527394	playerName	
+	f	Ljava/lang/String;	f_1527394	user	
 	f	Ljava/util/Date;	f_4738092	startDate	
 	f	Ljava/lang/String;	f_7636884	operator	
 	f	Ljava/util/Date;	f_1669885	expirationDate	
 	f	Ljava/lang/String;	f_8585484	reason	
 	m	(Ljava/lang/String;)V	<init>	<init>	
-		p	1		playerName	
-	m	()Ljava/lang/String;	m_8076411	getPlayerName	
+		p	1		user	
+	m	()Ljava/lang/String;	m_8076411	getUser	
 	m	()Ljava/util/Date;	m_7067268	getStartDate	
 	m	(Ljava/util/Date;)V	m_2421038	setStartDate	
 		p	1		date	
@@ -540,9 +540,9 @@ c	net/minecraft/server/C_1789828	net/minecraft/server/BanEntry
 	m	()Ljava/lang/String;	m_5167500	getReason	
 	m	(Ljava/lang/String;)V	m_8832819	setReason	
 		p	1		reason	
-	m	()Ljava/lang/String;	m_6324401	asString	
-	m	(Ljava/lang/String;)Lnet/minecraft/server/C_1789828;	m_5131926	fromString	
-		p	0		string	
+	m	()Ljava/lang/String;	m_6324401	serialize	
+	m	(Ljava/lang/String;)Lnet/minecraft/server/C_1789828;	m_5131926	deserialize	
+		p	0		s	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/server/C_1859937	net/minecraft/server/C_3236374__C_1859937	
 	f	Ljava/text/SimpleDateFormat;	f_1608897	f_1608897	
@@ -589,7 +589,7 @@ c	net/minecraft/server/C_4556759	net/minecraft/server/dedicated/IDedicatedServer
 	m	()[Ljava/lang/String;	m_6773955	getPlayerNames	
 	m	()Ljava/lang/String;	m_0808780	getWorldDirName	
 	m	()Ljava/lang/String;	m_1839213	getPlugins	
-	m	(Ljava/lang/String;)Ljava/lang/String;	m_0933444	executeRconCommand	
+	m	(Ljava/lang/String;)Ljava/lang/String;	m_0933444	runRconCommand	
 		p	1		command	
 	m	()Z	m_2512353	isDebuggingEnabled	
 	m	(Ljava/lang/String;)V	m_5239762	info	
@@ -626,18 +626,18 @@ c	net/minecraft/server/C_6509480	net/minecraft/server/BanList
 		p	1		enabled	
 	m	()Ljava/util/Map;	m_6993305	getBans	
 	m	(Ljava/lang/String;)Z	m_3580578	isBanned	
-		p	1		playerName	
+		p	1		user	
 	m	(Lnet/minecraft/server/C_1789828;)V	m_9531135	add	
 		p	1		ban	
 	m	(Ljava/lang/String;)V	m_8523270	unban	
-		p	1		playerName	
+		p	1		user	
 	m	(Lnet/minecraft/server/C_1789828;)V	m_3407254	remove	
 		p	1		ban	
 	m	()V	m_6999739	removeExpiredBans	
 	m	()V	m_6793159	load	
 	m	()V	m_6357234	save	
 	m	(Z)V	m_3083004	save	
-		p	1		addLog	
+		p	1		header	
 c	net/minecraft/server/C_7287926	net/minecraft/server/C_7287926	
 	m	(Ljava/lang/String;)V	m_1049067	m_1049067	
 		p	1		p_1	
@@ -659,11 +659,11 @@ c	net/minecraft/server/C_8448859	net/minecraft/server/MinecraftServer__1
 	m	(Ljava/lang/String;)V	m_9292931	m_9292931	
 		p	1		p_1	
 c	net/minecraft/server/C_9375659	net/minecraft/server/dedicated/ServerProperties	
-	f	Ljava/util/logging/Logger;	f_2661376	f_2661376	
+	f	Ljava/util/logging/Logger;	f_2661376	LOGGER	
 	f	Ljava/util/Properties;	f_5771158	properties	
 	f	Ljava/io/File;	f_4472494	file	
 	m	(Ljava/io/File;)V	<init>	<init>	
-		p	1		p_1	
+		p	1		file	
 	m	()V	m_6919762	generate	
 	m	()V	m_9922224	save	
 	m	()Ljava/io/File;	m_7188826	getFile	
@@ -692,7 +692,7 @@ c	net/minecraft/server/C_9992501	net/minecraft/server/PlayerManager
 	f	Lnet/minecraft/server/C_6509480;	f_3286089	ipBans	
 	f	Ljava/util/Set;	f_9374939	ops	
 	f	Ljava/util/Set;	f_2471539	whitelist	
-	f	Lnet/minecraft/unmapped/C_7729027;	f_9085408	dataHandler	
+	f	Lnet/minecraft/unmapped/C_7729027;	f_9085408	dataStorage	
 	f	Z	f_6419850	whitelistEnabled	
 	f	I	f_1995098	maxPlayerCount	
 	f	I	f_1519083	viewDistance	
@@ -807,7 +807,7 @@ c	net/minecraft/server/C_9992501	net/minecraft/server/PlayerManager
 		p	3		world	
 	m	(Z)V	m_7070307	setAllowCommands	
 		p	1		allowCommands	
-	m	()V	m_9197741	disconnectAll	
+	m	()V	m_9197741	onServerClosed	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/server/MinecraftServer
 	f	Lnet/minecraft/server/C_9992501;	f_0447091	playerManager	
@@ -1329,9 +1329,8 @@ c	net/minecraft/unmapped/C_1555023
 	f	Lnet/minecraft/unmapped/C_9375659;	f_4008432		properties
 	m	()Lnet/minecraft/server/C_9992501;	m_8526012	m_8526012	
 	m	()Lnet/minecraft/unmapped/C_9992501;	m_8526012		m_8526012
-	m	(Ljava/lang/String;Z)Z	m_3543532	m_3543532	getPropertyOrDefault
-		p	1		p_1	name
-		p	2		p_2	defaultValue
+	m	(Ljava/lang/String;Z)Z	m_3543532
+		p	1		key	name
 c	net/minecraft/unmapped/C_1567607
 	m	(Lnet/minecraft/unmapped/C_9294382;)V	m_4933632	m_4933632	
 		p	1		p_1	

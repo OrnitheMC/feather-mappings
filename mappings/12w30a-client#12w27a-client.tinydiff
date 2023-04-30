@@ -471,14 +471,14 @@ c	net/minecraft/server/C_1323041	net/minecraft/server/MinecraftServer__2
 c	net/minecraft/server/C_1789828	net/minecraft/server/BanEntry	
 	f	Ljava/text/SimpleDateFormat;	f_0818085	DATE_FORMAT	
 	f	Ljava/util/logging/Logger;	f_9917689	LOGGER	
-	f	Ljava/lang/String;	f_1527394	playerName	
+	f	Ljava/lang/String;	f_1527394	user	
 	f	Ljava/util/Date;	f_4738092	startDate	
 	f	Ljava/lang/String;	f_7636884	operator	
 	f	Ljava/util/Date;	f_1669885	expirationDate	
 	f	Ljava/lang/String;	f_8585484	reason	
 	m	(Ljava/lang/String;)V	<init>	<init>	
-		p	1		playerName	
-	m	()Ljava/lang/String;	m_8076411	getPlayerName	
+		p	1		user	
+	m	()Ljava/lang/String;	m_8076411	getUser	
 	m	()Ljava/util/Date;	m_7067268	getStartDate	
 	m	(Ljava/util/Date;)V	m_2421038	setStartDate	
 		p	1		date	
@@ -492,9 +492,9 @@ c	net/minecraft/server/C_1789828	net/minecraft/server/BanEntry
 	m	()Ljava/lang/String;	m_5167500	getReason	
 	m	(Ljava/lang/String;)V	m_8832819	setReason	
 		p	1		reason	
-	m	()Ljava/lang/String;	m_6324401	asString	
-	m	(Ljava/lang/String;)Lnet/minecraft/server/C_1789828;	m_5131926	fromString	
-		p	0		string	
+	m	()Ljava/lang/String;	m_6324401	serialize	
+	m	(Ljava/lang/String;)Lnet/minecraft/server/C_1789828;	m_5131926	deserialize	
+		p	0		s	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/server/C_1859937	net/minecraft/server/C_3236374__C_1859937	
 	f	Ljava/text/SimpleDateFormat;	f_1608897	f_1608897	
@@ -532,7 +532,7 @@ c	net/minecraft/server/C_4556759	net/minecraft/server/dedicated/IDedicatedServer
 	m	()[Ljava/lang/String;	m_6773955	getPlayerNames	
 	m	()Ljava/lang/String;	m_0808780	getWorldDirName	
 	m	()Ljava/lang/String;	m_1839213	getPlugins	
-	m	(Ljava/lang/String;)Ljava/lang/String;	m_0933444	executeRconCommand	
+	m	(Ljava/lang/String;)Ljava/lang/String;	m_0933444	runRconCommand	
 		p	1		command	
 	m	()Z	m_2512353	isDebuggingEnabled	
 	m	(Ljava/lang/String;)V	m_5239762	info	
@@ -568,16 +568,16 @@ c	net/minecraft/server/C_6509480	net/minecraft/server/BanList
 		p	1		enabled	
 	m	()Ljava/util/Map;	m_6993305	getBans	
 	m	(Ljava/lang/String;)Z	m_3580578	isBanned	
-		p	1		playerName	
+		p	1		user	
 	m	(Lnet/minecraft/server/C_1789828;)V	m_9531135	add	
 		p	1		ban	
 	m	(Ljava/lang/String;)V	m_8523270	unban	
-		p	1		playerName	
+		p	1		user	
 	m	()V	m_6999739	removeExpiredBans	
 	m	()V	m_6793159	load	
 	m	()V	m_6357234	save	
 	m	(Z)V	m_3083004	save	
-		p	1		addLog	
+		p	1		header	
 c	net/minecraft/server/C_8448859	net/minecraft/server/MinecraftServer__1	
 	f	J	f_4113554	f_4113554	
 	f	Lnet/minecraft/server/MinecraftServer;	f_6096116	f_6096116	
@@ -593,11 +593,11 @@ c	net/minecraft/server/C_8448859	net/minecraft/server/MinecraftServer__1
 	m	(Ljava/lang/String;)V	m_9292931	m_9292931	
 		p	1		p_1	
 c	net/minecraft/server/C_9375659	net/minecraft/server/dedicated/ServerProperties	
-	f	Ljava/util/logging/Logger;	f_2661376	f_2661376	
+	f	Ljava/util/logging/Logger;	f_2661376	LOGGER	
 	f	Ljava/util/Properties;	f_5771158	properties	
 	f	Ljava/io/File;	f_4472494	file	
 	m	(Ljava/io/File;)V	<init>	<init>	
-		p	1		p_1	
+		p	1		file	
 	m	()V	m_6919762	generate	
 	m	()V	m_9922224	save	
 	m	()Ljava/io/File;	m_7188826	getFile	
@@ -623,7 +623,7 @@ c	net/minecraft/server/C_9992501	net/minecraft/server/PlayerManager
 	f	Lnet/minecraft/server/C_6509480;	f_3286089	ipBans	
 	f	Ljava/util/Set;	f_9374939	ops	
 	f	Ljava/util/Set;	f_2471539	whitelist	
-	f	Lnet/minecraft/unmapped/C_7729027;	f_9085408	dataHandler	
+	f	Lnet/minecraft/unmapped/C_7729027;	f_9085408	dataStorage	
 	f	Z	f_6419850	whitelistEnabled	
 	f	I	f_1995098	maxPlayerCount	
 	f	I	f_1519083	viewDistance	
@@ -730,7 +730,7 @@ c	net/minecraft/server/C_9992501	net/minecraft/server/PlayerManager
 		p	3		world	
 	m	(Z)V	m_7070307	setAllowCommands	
 		p	1		allowCommands	
-	m	()V	m_9197741	disconnectAll	
+	m	()V	m_9197741	onServerClosed	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/server/MinecraftServer	net/minecraft/server/MinecraftServer	
 	f	Ljava/util/logging/Logger;	f_6379402	LOGGER	
@@ -768,7 +768,7 @@ c	net/minecraft/server/MinecraftServer	net/minecraft/server/MinecraftServer
 	f	[J	f_0627775	averageTickTimes	
 	f	[[J	f_4376165	worldTickTimes	
 	f	Ljava/security/KeyPair;	f_2701404	keyPair	
-	f	Ljava/lang/String;	f_4328603	userName	
+	f	Ljava/lang/String;	f_4328603	username	
 	f	Ljava/lang/String;	f_4228549	worldDirName	
 	f	Ljava/lang/String;	f_7030837	worldName	
 	f	Z	f_7620322	demo	
@@ -808,7 +808,7 @@ c	net/minecraft/server/MinecraftServer	net/minecraft/server/MinecraftServer
 	m	(Ljava/lang/String;)V	m_6955872	setServerIp	
 		p	1		serverIp	
 	m	()Z	m_8602760	isRunning	
-	m	()V	m_9638348	stopRunning	
+	m	()V	m_9638348	scheduleStop	
 	m	()V	run	run	
 	m	()Ljava/io/File;	m_4287150	getRunDir	
 	m	(Lnet/minecraft/unmapped/C_2975244;)V	m_7208530	onServerCrashed	
@@ -834,7 +834,7 @@ c	net/minecraft/server/MinecraftServer	net/minecraft/server/MinecraftServer
 	m	()I	m_6663921	getMaxPlayerCount	
 	m	()[Ljava/lang/String;	m_6773955	getPlayerNames	
 	m	()Ljava/lang/String;	m_1839213	getPlugins	
-	m	(Ljava/lang/String;)Ljava/lang/String;	m_0933444	executeRconCommand	
+	m	(Ljava/lang/String;)Ljava/lang/String;	m_0933444	runRconCommand	
 		p	1		command	
 	m	()Z	m_2512353	isDebuggingEnabled	
 	m	(Ljava/lang/String;)V	m_0004591	error	
@@ -861,9 +861,9 @@ c	net/minecraft/server/MinecraftServer	net/minecraft/server/MinecraftServer
 	m	()I	m_6151415	getServerPort	
 	m	(I)V	m_1142901	setServerPort	
 		p	1		serverPort	
-	m	()Ljava/lang/String;	m_2487592	getUserName	
-	m	(Ljava/lang/String;)V	m_2559318	setUserName	
-		p	1		userName	
+	m	()Ljava/lang/String;	m_2487592	getUsername	
+	m	(Ljava/lang/String;)V	m_2559318	setUsername	
+		p	1		username	
 	m	()Z	m_1410687	isSinglePlayer	
 	m	()Ljava/lang/String;	m_0808780	getWorldDirName	
 	m	(Ljava/lang/String;)V	m_3868453	setWorldDirName	
@@ -1587,7 +1587,7 @@ c	net/minecraft/unmapped/C_0113445		net/minecraft/client/Mouse
 c	net/minecraft/unmapped/C_0115339		net/minecraft/client/Minecraft__6
 	m	()V	<init>		<init>
 	m	()V	run		run
-c	net/minecraft/unmapped/C_0780899		net/minecraft/unmapped/C_7773862__2
+c	net/minecraft/unmapped/C_0780899		net/minecraft/server/MinecraftServer__2
 	f	Lnet/minecraft/unmapped/C_7773862;	f_7377800		f_7377800
 	m	(Lnet/minecraft/unmapped/C_7773862;)V	<init>		<init>
 		p	1			p_1
@@ -1671,7 +1671,7 @@ c	net/minecraft/unmapped/C_0915802		net/minecraft/unmapped/C_1331819__C_0915802
 	m	()I	m_3235049		m_3235049
 	m	()Ljava/lang/String;	m_4963599		m_4963599
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_1323041		net/minecraft/unmapped/C_7773862__4
+c	net/minecraft/unmapped/C_1323041		net/minecraft/server/MinecraftServer__4
 	f	Lnet/minecraft/unmapped/C_7773862;	f_6276576		f_6276576
 	m	(Lnet/minecraft/unmapped/C_7773862;Ljava/lang/String;)V	<init>		<init>
 		p	1			p_1
@@ -1801,33 +1801,33 @@ c	net/minecraft/unmapped/C_1693666		net/minecraft/client/Minecraft__3
 		p	1			p_1
 	m	()Ljava/lang/String;	m_2029182		m_2029182
 	m	()Ljava/lang/Object;	call		call
-c	net/minecraft/unmapped/C_1789828		net/minecraft/unmapped/C_1789828
-	f	Ljava/text/SimpleDateFormat;	f_0818085		f_0818085
-	f	Ljava/util/logging/Logger;	f_9917689		f_9917689
-	f	Ljava/lang/String;	f_1527394		f_1527394
-	f	Ljava/util/Date;	f_4738092		f_4738092
-	f	Ljava/lang/String;	f_7636884		f_7636884
-	f	Ljava/util/Date;	f_1669885		f_1669885
-	f	Ljava/lang/String;	f_8585484		f_8585484
+c	net/minecraft/unmapped/C_1789828		net/minecraft/server/BanEntry
+	f	Ljava/text/SimpleDateFormat;	f_0818085		DATE_FORMAT
+	f	Ljava/util/logging/Logger;	f_9917689		LOGGER
+	f	Ljava/lang/String;	f_1527394		user
+	f	Ljava/util/Date;	f_4738092		startDate
+	f	Ljava/lang/String;	f_7636884		operator
+	f	Ljava/util/Date;	f_1669885		expirationDate
+	f	Ljava/lang/String;	f_8585484		reason
 	m	(Ljava/lang/String;)V	<init>		<init>
-		p	1			p_1
-	m	()Ljava/lang/String;	m_8076411		m_8076411
-	m	()Ljava/util/Date;	m_7067268		m_7067268
-	m	(Ljava/util/Date;)V	m_2421038		m_2421038
-		p	1			p_1
-	m	()Ljava/lang/String;	m_5202735		m_5202735
-	m	(Ljava/lang/String;)V	m_1592671		m_1592671
-		p	1			p_1
-	m	()Ljava/util/Date;	m_8456810		m_8456810
-	m	(Ljava/util/Date;)V	m_8645792		m_8645792
-		p	1			p_1
-	m	()Z	m_0228100		m_0228100
-	m	()Ljava/lang/String;	m_5167500		m_5167500
-	m	(Ljava/lang/String;)V	m_8832819		m_8832819
-		p	1			p_1
-	m	()Ljava/lang/String;	m_6324401		m_6324401
-	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_1789828;	m_5131926		m_5131926
-		p	0			p_0
+		p	1			playerName
+	m	()Ljava/lang/String;	m_8076411		getUser
+	m	()Ljava/util/Date;	m_7067268		getStartDate
+	m	(Ljava/util/Date;)V	m_2421038		setStartDate
+		p	1			date
+	m	()Ljava/lang/String;	m_5202735		getOperator
+	m	(Ljava/lang/String;)V	m_1592671		setOperator
+		p	1			name
+	m	()Ljava/util/Date;	m_8456810		getExpirationDate
+	m	(Ljava/util/Date;)V	m_8645792		setExpirationDate
+		p	1			date
+	m	()Z	m_0228100		isExpired
+	m	()Ljava/lang/String;	m_5167500		getReason
+	m	(Ljava/lang/String;)V	m_8832819		setReason
+		p	1			reason
+	m	()Ljava/lang/String;	m_6324401		serialize
+	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_1789828;	m_5131926		deserialize
+		p	0			s
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_1810478		net/minecraft/client/Minecraft__1C_1810478
 	f	Ljava/util/Map;	f_6047810		f_6047810
@@ -1905,44 +1905,44 @@ c	net/minecraft/unmapped/C_4024061		net/minecraft/client/Minecraft__7
 	m	()Ljava/lang/Object;	call		call
 c	net/minecraft/unmapped/C_4434943		net/minecraft/unmapped/C_4434943
 	m	()V	<init>		<init>
-c	net/minecraft/unmapped/C_4445819		net/minecraft/unmapped/C_7773862__3
+c	net/minecraft/unmapped/C_4445819		net/minecraft/server/MinecraftServer__3
 	f	Lnet/minecraft/unmapped/C_7773862;	f_8603226		f_8603226
 	m	(Lnet/minecraft/unmapped/C_7773862;)V	<init>		<init>
 		p	1			p_1
 	m	()Ljava/lang/String;	m_7015666		m_7015666
 	m	()Ljava/lang/Object;	call		call
-c	net/minecraft/unmapped/C_4556759		net/minecraft/unmapped/C_4556759
-	m	(Ljava/lang/String;I)I	m_6049985		m_6049985
-		p	1			p_1
-		p	2			p_2
-	m	(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;	m_5177765		m_5177765
-		p	1			p_1
-		p	2			p_2
-	m	(Ljava/lang/String;Ljava/lang/Object;)V	m_8311122		m_8311122
-		p	1			p_1
-		p	2			p_2
-	m	()V	m_5953910		m_5953910
-	m	()Ljava/lang/String;	m_6148382		m_6148382
-	m	()Ljava/lang/String;	m_8050007		m_8050007
-	m	()I	m_8195438		m_8195438
-	m	()Ljava/lang/String;	m_5381609		m_5381609
-	m	()Ljava/lang/String;	m_2525324		m_2525324
-	m	()I	m_5892094		m_5892094
-	m	()I	m_6663921		m_6663921
-	m	()[Ljava/lang/String;	m_6773955		m_6773955
-	m	()Ljava/lang/String;	m_0808780		m_0808780
-	m	()Ljava/lang/String;	m_1839213		m_1839213
-	m	(Ljava/lang/String;)Ljava/lang/String;	m_0933444		m_0933444
-		p	1			p_1
-	m	()Z	m_2512353		m_2512353
-	m	(Ljava/lang/String;)V	m_5239762		m_5239762
-		p	1			p_1
-	m	(Ljava/lang/String;)V	m_4344118		m_4344118
-		p	1			p_1
-	m	(Ljava/lang/String;)V	m_0004591		m_0004591
-		p	1			p_1
-	m	(Ljava/lang/String;)V	m_9236434		m_9236434
-		p	1			p_1
+c	net/minecraft/unmapped/C_4556759		net/minecraft/server/dedicated/IDedicatedServer
+	m	(Ljava/lang/String;I)I	m_6049985		getPropertyOrDefault
+		p	1			key
+		p	2			defaultValue
+	m	(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;	m_5177765		getPropertyOrDefault
+		p	1			key
+		p	2			defaultValue
+	m	(Ljava/lang/String;Ljava/lang/Object;)V	m_8311122		setProperty
+		p	1			key
+		p	2			value
+	m	()V	m_5953910		saveProperties
+	m	()Ljava/lang/String;	m_6148382		getPropertiesFilePath
+	m	()Ljava/lang/String;	m_8050007		getIp
+	m	()I	m_8195438		getPort
+	m	()Ljava/lang/String;	m_5381609		getMotd
+	m	()Ljava/lang/String;	m_2525324		getGameVersion
+	m	()I	m_5892094		getPlayerCount
+	m	()I	m_6663921		getMaxPlayerCount
+	m	()[Ljava/lang/String;	m_6773955		getPlayerNames
+	m	()Ljava/lang/String;	m_0808780		getWorldDirName
+	m	()Ljava/lang/String;	m_1839213		getPlugins
+	m	(Ljava/lang/String;)Ljava/lang/String;	m_0933444		runRconCommand
+		p	1			command
+	m	()Z	m_2512353		isDebuggingEnabled
+	m	(Ljava/lang/String;)V	m_5239762		info
+		p	1			message
+	m	(Ljava/lang/String;)V	m_4344118		warn
+		p	1			message
+	m	(Ljava/lang/String;)V	m_0004591		error
+		p	1			message
+	m	(Ljava/lang/String;)V	m_9236434		log
+		p	1			message
 c	net/minecraft/unmapped/C_5270789		net/minecraft/unmapped/C_5270789
 	m	()V	m_1976244		m_1976244
 c	net/minecraft/unmapped/C_5969519		net/minecraft/client/Minecraft__8
@@ -1951,7 +1951,7 @@ c	net/minecraft/unmapped/C_5969519		net/minecraft/client/Minecraft__8
 		p	1			p_1
 	m	()Ljava/lang/String;	m_3026083		m_3026083
 	m	()Ljava/lang/Object;	call		call
-c	net/minecraft/unmapped/C_6199829		net/minecraft/unmapped/C_7773862__1
+c	net/minecraft/unmapped/C_6199829		net/minecraft/server/MinecraftServer__1
 	f	Lnet/minecraft/unmapped/C_7773862;	f_0657502		f_0657502
 	m	(Lnet/minecraft/unmapped/C_7773862;)V	<init>		<init>
 		p	1			p_1
@@ -1962,36 +1962,36 @@ c	net/minecraft/unmapped/C_6255491		net/minecraft/unmapped/C_6255491
 	f	Ljava/lang/Process;	f_7625225		f_7625225
 	m	()Z	m_5588488		m_5588488
 	m	()Ljava/lang/String;	toString		toString
-c	net/minecraft/unmapped/C_6348669		net/minecraft/unmapped/C_6348669
-	f	Ljava/lang/String;	f_5832174		f_5832174
-	f	Lnet/minecraft/unmapped/C_1730529;	f_7197385		f_7197385
+c	net/minecraft/unmapped/C_6348669		net/minecraft/server/dedicated/PendingCommand
+	f	Ljava/lang/String;	f_5832174		command
+	f	Lnet/minecraft/unmapped/C_1730529;	f_7197385		source
 	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_1730529;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			command
+		p	2			source
 c	net/minecraft/unmapped/C_6406257		net/minecraft/unmapped/C_6406257
 	m	(Lnet/minecraft/unmapped/C_2975244;)V	<init>		<init>
 		p	1			p_1
-c	net/minecraft/unmapped/C_6509480		net/minecraft/unmapped/C_6509480
-	f	Lnet/minecraft/unmapped/C_4085272;	f_4852258		f_4852258
-	f	Ljava/io/File;	f_4715358		f_4715358
-	f	Z	f_7889151		f_7889151
+c	net/minecraft/unmapped/C_6509480		net/minecraft/server/BanList
+	f	Lnet/minecraft/unmapped/C_4085272;	f_4852258		bans
+	f	Ljava/io/File;	f_4715358		file
+	f	Z	f_7889151		enabled
 	m	(Ljava/io/File;)V	<init>		<init>
-		p	1			p_1
-	m	()Z	m_8286849		m_8286849
-	m	(Z)V	m_4245654		m_4245654
-		p	1			p_1
-	m	()Ljava/util/Map;	m_6993305		m_6993305
-	m	(Ljava/lang/String;)Z	m_3580578		m_3580578
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_1789828;)V	m_9531135		m_9531135
-		p	1			p_1
-	m	(Ljava/lang/String;)V	m_8523270		m_8523270
-		p	1			p_1
-	m	()V	m_6999739		m_6999739
-	m	()V	m_6793159		m_6793159
-	m	()V	m_6357234		m_6357234
-	m	(Z)V	m_3083004		m_3083004
-		p	1			p_1
+		p	1			file
+	m	()Z	m_8286849		isEnabled
+	m	(Z)V	m_4245654		setEnabled
+		p	1			enabled
+	m	()Ljava/util/Map;	m_6993305		getBans
+	m	(Ljava/lang/String;)Z	m_3580578		isBanned
+		p	1			user
+	m	(Lnet/minecraft/unmapped/C_1789828;)V	m_9531135		add
+		p	1			ban
+	m	(Ljava/lang/String;)V	m_8523270		unban
+		p	1			user
+	m	()V	m_6999739		removeExpiredBans
+	m	()V	m_6793159		load
+	m	()V	m_6357234		save
+	m	(Z)V	m_3083004		save
+		p	1			header
 c	net/minecraft/unmapped/C_6617078		net/minecraft/client/Minecraft__9
 	f	Lnet/minecraft/client/Minecraft;	f_7165591		f_7165591
 	m	(Lnet/minecraft/client/Minecraft;)V	<init>		<init>
@@ -2054,122 +2054,122 @@ c	net/minecraft/unmapped/C_7225666		net/minecraft/unmapped/C_7225666
 	m	()Ljava/lang/String;	m_7102466		m_7102466
 	m	()I	m_1145422		m_1145422
 	m	()I	m_6640871		m_6640871
-c	net/minecraft/unmapped/C_7773862		net/minecraft/unmapped/C_7773862
-	f	Ljava/util/logging/Logger;	f_6379402		f_6379402
-	f	Lnet/minecraft/unmapped/C_7773862;	f_1995187		f_1995187
-	f	Lnet/minecraft/unmapped/C_5478016;	f_5849755		f_5849755
-	f	Lnet/minecraft/unmapped/C_7377641;	f_3392446		f_3392446
-	f	Ljava/io/File;	f_8348211		f_8348211
-	f	Ljava/util/List;	f_1939260		f_1939260
-	f	Lnet/minecraft/unmapped/C_8183022;	f_7081300		f_7081300
-	f	Lnet/minecraft/unmapped/C_8525326;	f_2045655		f_2045655
-	f	Ljava/lang/String;	f_2250761		f_2250761
-	f	I	f_4814625		f_4814625
-	f	[Lnet/minecraft/unmapped/C_3865296;	f_0746062		f_0746062
-	f	Lnet/minecraft/unmapped/C_9992501;	f_0447091		f_0447091
-	f	Z	f_1582594		f_1582594
-	f	Z	f_1106987		f_1106987
-	f	I	f_5926116		f_5926116
-	f	Ljava/lang/String;	f_3528504		f_3528504
-	f	I	f_2342936		f_2342936
-	f	Z	f_2267173		f_2267173
-	f	Z	f_1475681		f_1475681
-	f	Z	f_0611824		f_0611824
-	f	Z	f_6218337		f_6218337
-	f	Z	f_3587092		f_3587092
-	f	Ljava/lang/String;	f_3508593		f_3508593
-	f	I	f_5187621		f_5187621
-	f	J	f_7035922		f_7035922
-	f	J	f_3563182		f_3563182
-	f	J	f_5168470		f_5168470
-	f	J	f_3162371		f_3162371
-	f	[J	f_7797697		f_7797697
-	f	[J	f_5607049		f_5607049
-	f	[J	f_9117836		f_9117836
-	f	[J	f_1135252		f_1135252
-	f	[J	f_0627775		f_0627775
-	f	[[J	f_4376165		f_4376165
-	f	Ljava/security/KeyPair;	f_2701404		f_2701404
-	f	Ljava/lang/String;	f_4328603		f_4328603
-	f	Ljava/lang/String;	f_4228549		f_4228549
-	f	Ljava/lang/String;	f_7030837		f_7030837
-	f	Z	f_7620322		f_7620322
-	f	Z	f_5129622		f_5129622
-	f	Z	f_1730014		f_1730014
-	f	Ljava/lang/String;	f_0591270		f_0591270
-	f	Z	f_9264104		f_9264104
-	f	J	f_2268715		f_2268715
-	f	Ljava/lang/String;	f_1837961		f_1837961
-	f	Z	f_3600067		f_3600067
+c	net/minecraft/unmapped/C_7773862		net/minecraft/server/MinecraftServer
+	f	Ljava/util/logging/Logger;	f_6379402		LOGGER
+	f	Lnet/minecraft/unmapped/C_7773862;	f_1995187		instance
+	f	Lnet/minecraft/unmapped/C_5478016;	f_5849755		worldStorageSource
+	f	Lnet/minecraft/unmapped/C_7377641;	f_3392446		snooper
+	f	Ljava/io/File;	f_8348211		gameDirectory
+	f	Ljava/util/List;	f_1939260		tickables
+	f	Lnet/minecraft/unmapped/C_8183022;	f_7081300		commandHandler
+	f	Lnet/minecraft/unmapped/C_8525326;	f_2045655		profiler
+	f	Ljava/lang/String;	f_2250761		serverIp
+	f	I	f_4814625		serverPort
+	f	[Lnet/minecraft/unmapped/C_3865296;	f_0746062		worlds
+	f	Lnet/minecraft/unmapped/C_9992501;	f_0447091		playerManager
+	f	Z	f_1582594		running
+	f	Z	f_1106987		stopped
+	f	I	f_5926116		ticks
+	f	Ljava/lang/String;	f_3528504		progressType
+	f	I	f_2342936		progress
+	f	Z	f_2267173		onlineMode
+	f	Z	f_1475681		spawnAnimals
+	f	Z	f_0611824		spawnNpcs
+	f	Z	f_6218337		pvpEnabled
+	f	Z	f_3587092		flightEnabled
+	f	Ljava/lang/String;	f_3508593		motd
+	f	I	f_5187621		worldHeight
+	f	J	f_7035922		lastSentPacketCount
+	f	J	f_3563182		lastSentPacketSize
+	f	J	f_5168470		lastReceivedPacketCount
+	f	J	f_3162371		lastReceivedPacketSize
+	f	[J	f_7797697		averageSentPacketCount
+	f	[J	f_5607049		averageSentPacketSize
+	f	[J	f_9117836		averageReceivedPacketCount
+	f	[J	f_1135252		averageReceviedPacketSize
+	f	[J	f_0627775		averageTickTimes
+	f	[[J	f_4376165		worldTickTimes
+	f	Ljava/security/KeyPair;	f_2701404		keyPair
+	f	Ljava/lang/String;	f_4328603		username
+	f	Ljava/lang/String;	f_4228549		worldDirName
+	f	Ljava/lang/String;	f_7030837		worldName
+	f	Z	f_7620322		demo
+	f	Z	f_5129622		bonusChestEnabled
+	f	Z	f_1730014		stopping
+	f	Ljava/lang/String;	f_0591270		resourcePackUrl
+	f	Z	f_9264104		loading
+	f	J	f_2268715		lastWarnTime
+	f	Ljava/lang/String;	f_1837961		serverOperation
+	f	Z	f_3600067		profiling
 	m	(Ljava/io/File;)V	<init>		<init>
-		p	1			p_1
-	m	()Z	m_1472227		m_1472227
-	m	(Ljava/lang/String;)V	m_3768692		m_3768692
-		p	1			p_1
-	m	(Ljava/lang/String;)V	m_0270021		m_0270021
-		p	1			p_1
-	m	()Ljava/lang/String;	m_7001369		m_7001369
-	m	(Ljava/lang/String;Ljava/lang/String;JLnet/minecraft/unmapped/C_1518925;)V	m_8050829		m_8050829
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	5			p_5
-	m	()V	m_4020281		m_4020281
-	m	()Z	m_5830644		m_5830644
-	m	()Lnet/minecraft/unmapped/C_4223822;	m_0831557		m_0831557
-	m	()I	m_1447652		m_1447652
-	m	()Z	m_1386061		m_1386061
-	m	(Ljava/lang/String;I)V	m_1895932		m_1895932
-		p	1			p_1
-		p	2			p_2
-	m	()V	m_6520488		m_6520488
-	m	(Z)V	m_7640190		m_7640190
-		p	1			p_1
-	m	()V	m_3094993		m_3094993
-	m	()Ljava/lang/String;	m_4673754		m_4673754
-	m	(Ljava/lang/String;)V	m_6955872		m_6955872
-		p	1			p_1
-	m	()Z	m_8602760		m_8602760
-	m	()V	m_9638348		m_9638348
+		p	1			gameDir
+	m	()Z	m_1472227		init
+	m	(Ljava/lang/String;)V	m_3768692		convertWorld
+		p	1			name
+	m	(Ljava/lang/String;)V	m_0270021		setServerOperation
+		p	1			operation
+	m	()Ljava/lang/String;	m_7001369		getServerOperation
+	m	(Ljava/lang/String;Ljava/lang/String;JLnet/minecraft/unmapped/C_1518925;)V	m_8050829		loadWorld
+		p	1			worldDirName
+		p	2			worldName
+		p	3			seed
+		p	5			generatorType
+	m	()V	m_4020281		prepareWorlds
+	m	()Z	m_5830644		shouldGenerateStructures
+	m	()Lnet/minecraft/unmapped/C_4223822;	m_0831557		getDefaultGameMode
+	m	()I	m_1447652		getDefaultDifficulty
+	m	()Z	m_1386061		isHardcore
+	m	(Ljava/lang/String;I)V	m_1895932		logProgress
+		p	1			progressType
+		p	2			progress
+	m	()V	m_6520488		clearProgress
+	m	(Z)V	m_7640190		saveWorlds
+		p	1			silent
+	m	()V	m_3094993		stop
+	m	()Ljava/lang/String;	m_4673754		getServerIp
+	m	(Ljava/lang/String;)V	m_6955872		setServerIp
+		p	1			serverIp
+	m	()Z	m_8602760		isRunning
+	m	()V	m_9638348		scheduleStop
 	m	()V	run		run
-	m	()Ljava/io/File;	m_4287150		m_4287150
-	m	(Lnet/minecraft/unmapped/C_2975244;)V	m_7208530		m_7208530
-		p	1			p_1
-	m	()V	m_3796980		m_3796980
-	m	()V	m_3472163		m_3472163
-	m	()V	m_9155537		m_9155537
-	m	()Z	m_5052699		m_5052699
-	m	()V	m_8494986		m_8494986
-	m	(Ljava/lang/String;)Ljava/io/File;	m_8498077		m_8498077
-		p	1			p_1
-	m	(Ljava/lang/String;)V	m_5239762		m_5239762
-		p	1			p_1
-	m	(Ljava/lang/String;)V	m_4344118		m_4344118
-		p	1			p_1
-	m	(I)Lnet/minecraft/unmapped/C_3865296;	m_4667880		m_4667880
-		p	1			p_1
-	m	()Ljava/lang/String;	m_8050007		m_8050007
-	m	()I	m_8195438		m_8195438
-	m	()Ljava/lang/String;	m_5381609		m_5381609
-	m	()Ljava/lang/String;	m_2525324		m_2525324
-	m	()I	m_5892094		m_5892094
-	m	()I	m_6663921		m_6663921
-	m	()[Ljava/lang/String;	m_6773955		m_6773955
-	m	()Ljava/lang/String;	m_1839213		m_1839213
-	m	(Ljava/lang/String;)Ljava/lang/String;	m_0933444		m_0933444
-		p	1			p_1
-	m	()Z	m_2512353		m_2512353
-	m	(Ljava/lang/String;)V	m_0004591		m_0004591
-		p	1			p_1
-	m	(Ljava/lang/String;)V	m_9236434		m_9236434
-		p	1			p_1
-	m	()Ljava/lang/String;	m_2456525		m_2456525
-	m	(Lnet/minecraft/unmapped/C_2975244;)Lnet/minecraft/unmapped/C_2975244;	m_5690354		m_5690354
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_1730529;Ljava/lang/String;)Ljava/util/List;	m_5128471		m_5128471
-		p	1			p_1
-		p	2			p_2
-	m	()Lnet/minecraft/unmapped/C_7773862;	m_5439353		m_5439353
+	m	()Ljava/io/File;	m_4287150		getRunDir
+	m	(Lnet/minecraft/unmapped/C_2975244;)V	m_7208530		onServerCrashed
+		p	1			report
+	m	()V	m_3796980		exit
+	m	()V	m_3472163		tick
+	m	()V	m_9155537		tickWorlds
+	m	()Z	m_5052699		isNetherAllowed
+	m	()V	m_8494986		start
+	m	(Ljava/lang/String;)Ljava/io/File;	m_8498077		getFile
+		p	1			path
+	m	(Ljava/lang/String;)V	m_5239762		info
+		p	1			message
+	m	(Ljava/lang/String;)V	m_4344118		warn
+		p	1			message
+	m	(I)Lnet/minecraft/unmapped/C_3865296;	m_4667880		getWorld
+		p	1			dimension
+	m	()Ljava/lang/String;	m_8050007		getIp
+	m	()I	m_8195438		getPort
+	m	()Ljava/lang/String;	m_5381609		getMotd
+	m	()Ljava/lang/String;	m_2525324		getGameVersion
+	m	()I	m_5892094		getPlayerCount
+	m	()I	m_6663921		getMaxPlayerCount
+	m	()[Ljava/lang/String;	m_6773955		getPlayerNames
+	m	()Ljava/lang/String;	m_1839213		getPlugins
+	m	(Ljava/lang/String;)Ljava/lang/String;	m_0933444		runRconCommand
+		p	1			command
+	m	()Z	m_2512353		isDebuggingEnabled
+	m	(Ljava/lang/String;)V	m_0004591		error
+		p	1			message
+	m	(Ljava/lang/String;)V	m_9236434		log
+		p	1			message
+	m	()Ljava/lang/String;	m_2456525		getServerModName
+	m	(Lnet/minecraft/unmapped/C_2975244;)Lnet/minecraft/unmapped/C_2975244;	m_5690354		populateCrashReport
+		p	1			report
+	m	(Lnet/minecraft/unmapped/C_1730529;Ljava/lang/String;)Ljava/util/List;	m_5128471		getCommandSuggestions
+		p	1			source
+		p	2			command
+	m	()Lnet/minecraft/unmapped/C_7773862;	m_5439353		getInstance
 	m	()Ljava/lang/String;	m_2446786		m_2446786
 	m	(Ljava/lang/String;)V	m_3031403		m_3031403
 		p	1			p_1
@@ -2178,77 +2178,77 @@ c	net/minecraft/unmapped/C_7773862		net/minecraft/unmapped/C_7773862
 	m	(Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;	m_1318661		m_1318661
 		p	1			p_1
 		p	2			p_2
-	m	()Lnet/minecraft/unmapped/C_8183022;	m_8243358		m_8243358
-	m	()Ljava/security/KeyPair;	m_9193032		m_9193032
-	m	()I	m_6151415		m_6151415
-	m	(I)V	m_1142901		m_1142901
-		p	1			p_1
-	m	()Ljava/lang/String;	m_2487592		m_2487592
-	m	(Ljava/lang/String;)V	m_2559318		m_2559318
-		p	1			p_1
-	m	()Z	m_1410687		m_1410687
-	m	()Ljava/lang/String;	m_0808780		m_0808780
-	m	(Ljava/lang/String;)V	m_3868453		m_3868453
-		p	1			p_1
-	m	(Ljava/lang/String;)V	m_7410131		m_7410131
-		p	1			p_1
-	m	()Ljava/lang/String;	m_0524218		m_0524218
-	m	(Ljava/security/KeyPair;)V	m_2665833		m_2665833
-		p	1			p_1
-	m	(I)V	m_6180401		m_6180401
-		p	1			p_1
-	m	()Z	m_5133166		m_5133166
-	m	()Z	m_5459144		m_5459144
-	m	(Z)V	m_2824917		m_2824917
-		p	1			p_1
-	m	(Z)V	m_9691059		m_9691059
-		p	1			p_1
-	m	()Lnet/minecraft/unmapped/C_5478016;	m_8443540		m_8443540
-	m	()V	m_7997783		m_7997783
-	m	()Ljava/lang/String;	m_7379797		m_7379797
-	m	(Ljava/lang/String;)V	m_1428971		m_1428971
-		p	1			p_1
+	m	()Lnet/minecraft/unmapped/C_8183022;	m_8243358		getCommandHandler
+	m	()Ljava/security/KeyPair;	m_9193032		getKeyPair
+	m	()I	m_6151415		getServerPort
+	m	(I)V	m_1142901		setServerPort
+		p	1			serverPort
+	m	()Ljava/lang/String;	m_2487592		getUsername
+	m	(Ljava/lang/String;)V	m_2559318		setUsername
+		p	1			username
+	m	()Z	m_1410687		isSinglePlayer
+	m	()Ljava/lang/String;	m_0808780		getWorldDirName
+	m	(Ljava/lang/String;)V	m_3868453		setWorldDirName
+		p	1			worldDirName
+	m	(Ljava/lang/String;)V	m_7410131		setWorldName
+		p	1			worldName
+	m	()Ljava/lang/String;	m_0524218		getWorldName
+	m	(Ljava/security/KeyPair;)V	m_2665833		setKeyPair
+		p	1			keyPair
+	m	(I)V	m_6180401		setDifficulty
+		p	1			difficulty
+	m	()Z	m_5133166		isMonsterSpawningEnabled
+	m	()Z	m_5459144		isDemo
+	m	(Z)V	m_2824917		setDemo
+		p	1			demo
+	m	(Z)V	m_9691059		enableBonusChest
+		p	1			bonusChestEnabled
+	m	()Lnet/minecraft/unmapped/C_5478016;	m_8443540		getWorldStorageSource
+	m	()V	m_7997783		deleteWorldAndStop
+	m	()Ljava/lang/String;	m_7379797		getResourcePackUrl
+	m	(Ljava/lang/String;)V	m_1428971		setResourcePackUrl
+		p	1			url
 	m	(Lnet/minecraft/unmapped/C_7377641;)V	m_7142032		m_7142032
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_7377641;)V	m_7339992		m_7339992
 		p	1			p_1
-	m	()I	m_6270343		m_6270343
-	m	()Z	m_9852120		m_9852120
-	m	()Z	m_7314394		m_7314394
-	m	(Z)V	m_1657944		m_1657944
-		p	1			p_1
-	m	()Z	m_9144829		m_9144829
-	m	(Z)V	m_5798198		m_5798198
-		p	1			p_1
-	m	()Z	m_9620269		m_9620269
-	m	(Z)V	m_0019132		m_0019132
-		p	1			p_1
-	m	()Z	m_1406817		m_1406817
-	m	(Z)V	m_5490230		m_5490230
-		p	1			p_1
-	m	()Z	m_2403273		m_2403273
-	m	(Z)V	m_1391969		m_1391969
-		p	1			p_1
-	m	()Ljava/lang/String;	m_4768887		m_4768887
-	m	(Ljava/lang/String;)V	m_6685905		m_6685905
-		p	1			p_1
-	m	()I	m_9675726		m_9675726
-	m	(I)V	m_7683047		m_7683047
-		p	1			p_1
-	m	()Z	m_0144943		m_0144943
-	m	()Lnet/minecraft/unmapped/C_9992501;	m_8526012		m_8526012
-	m	(Lnet/minecraft/unmapped/C_9992501;)V	m_3978626		m_3978626
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_4223822;)V	m_7575169		m_7575169
-		p	1			p_1
-	m	()Lnet/minecraft/unmapped/C_1228817;	m_0846664		m_0846664
-	m	()Z	m_6649268		m_6649268
-	m	()Z	m_8325482		m_8325482
-	m	(Lnet/minecraft/unmapped/C_4223822;Z)Ljava/lang/String;	m_3739797		m_3739797
-		p	1			p_1
-		p	2			p_2
-	m	()I	m_2752854		m_2752854
-	m	()V	m_0061226		m_0061226
+	m	()I	m_6270343		getResourcePackResolution
+	m	()Z	m_9852120		isDedicated
+	m	()Z	m_7314394		isOnlineMode
+	m	(Z)V	m_1657944		setOnlineMode
+		p	1			onlineMode
+	m	()Z	m_9144829		shouldSpawnAnimals
+	m	(Z)V	m_5798198		setSpawnAnimals
+		p	1			spawnAnimals
+	m	()Z	m_9620269		shouldSpawnNpcs
+	m	(Z)V	m_0019132		setSpawnNpcs
+		p	1			spawnNpcs
+	m	()Z	m_1406817		isPvpEnabled
+	m	(Z)V	m_5490230		setPvpEnabled
+		p	1			pvpEnabled
+	m	()Z	m_2403273		isFlightEnabled
+	m	(Z)V	m_1391969		setFlightEnabled
+		p	1			flightEnabled
+	m	()Ljava/lang/String;	m_4768887		getServerMotd
+	m	(Ljava/lang/String;)V	m_6685905		setMotd
+		p	1			motd
+	m	()I	m_9675726		getWorldHeight
+	m	(I)V	m_7683047		setWorldHeight
+		p	1			worldHeight
+	m	()Z	m_0144943		hasStopped
+	m	()Lnet/minecraft/unmapped/C_9992501;	m_8526012		getPlayerManager
+	m	(Lnet/minecraft/unmapped/C_9992501;)V	m_3978626		setPlayerManager
+		p	1			playerManager
+	m	(Lnet/minecraft/unmapped/C_4223822;)V	m_7575169		setDefaultGameMode
+		p	1			gameMode
+	m	()Lnet/minecraft/unmapped/C_1228817;	m_0846664		getConnection
+	m	()Z	m_6649268		isLoading
+	m	()Z	m_8325482		hasGui
+	m	(Lnet/minecraft/unmapped/C_4223822;Z)Ljava/lang/String;	m_3739797		publish
+		p	1			defaultGameMode
+		p	2			allowCommands
+	m	()I	m_2752854		getTicks
+	m	()V	m_0061226		enableProfiling
 	m	(Lnet/minecraft/unmapped/C_7773862;)Lnet/minecraft/unmapped/C_9992501;	m_0911164		m_0911164
 		p	0			p_0
 	m	()V	<clinit>		<clinit>
@@ -2272,7 +2272,7 @@ c	net/minecraft/unmapped/C_7778778		net/minecraft/unmapped/C_7778778
 	m	()Z	m_4823804		m_4823804
 	m	()V	m_5558099		m_5558099
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_8448859		net/minecraft/unmapped/C_7773862__5
+c	net/minecraft/unmapped/C_8448859		net/minecraft/server/MinecraftServer__5
 	f	J	f_4113554		f_4113554
 	f	Lnet/minecraft/unmapped/C_7773862;	f_6096116		f_6096116
 	m	(Lnet/minecraft/unmapped/C_7773862;)V	<init>		<init>
@@ -2357,27 +2357,27 @@ c	net/minecraft/unmapped/C_9236886		net/minecraft/unmapped/C_9236886
 	m	(I)Ljava/nio/FloatBuffer;	m_5171659		m_5171659
 		p	0			p_0
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_9375659		net/minecraft/unmapped/C_9375659
-	f	Ljava/util/logging/Logger;	f_2661376		f_2661376
-	f	Ljava/util/Properties;	f_5771158		f_5771158
-	f	Ljava/io/File;	f_4472494		f_4472494
+c	net/minecraft/unmapped/C_9375659		net/minecraft/server/dedicated/ServerProperties
+	f	Ljava/util/logging/Logger;	f_2661376		LOGGER
+	f	Ljava/util/Properties;	f_5771158		properties
+	f	Ljava/io/File;	f_4472494		file
 	m	(Ljava/io/File;)V	<init>		<init>
-		p	1			p_1
-	m	()V	m_6919762		m_6919762
-	m	()V	m_9922224		m_9922224
-	m	()Ljava/io/File;	m_7188826		m_7188826
-	m	(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;	m_5882585		m_5882585
-		p	1			p_1
-		p	2			p_2
-	m	(Ljava/lang/String;I)I	m_4871036		m_4871036
-		p	1			p_1
-		p	2			p_2
-	m	(Ljava/lang/String;Z)Z	m_8339560		m_8339560
-		p	1			p_1
-		p	2			p_2
-	m	(Ljava/lang/String;Ljava/lang/Object;)V	m_3047817		m_3047817
-		p	1			p_1
-		p	2			p_2
+		p	1			file
+	m	()V	m_6919762		generate
+	m	()V	m_9922224		save
+	m	()Ljava/io/File;	m_7188826		getFile
+	m	(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;	m_5882585		getOrDefault
+		p	1			key
+		p	2			defaultValue
+	m	(Ljava/lang/String;I)I	m_4871036		getOrDefault
+		p	1			key
+		p	2			defaultValue
+	m	(Ljava/lang/String;Z)Z	m_8339560		getOrDefault
+		p	1			key
+		p	2			defaultValue
+	m	(Ljava/lang/String;Ljava/lang/Object;)V	m_3047817		set
+		p	1			key
+		p	2			value
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_9693816		net/minecraft/unmapped/C_9693816
 	m	()V	<init>		<init>
@@ -2385,123 +2385,123 @@ c	net/minecraft/unmapped/C_9693816		net/minecraft/unmapped/C_9693816
 c	net/minecraft/unmapped/C_9826170		net/minecraft/unmapped/C_9826170
 	m	(I)V	<init>		<init>
 		p	1			p_1
-c	net/minecraft/unmapped/C_9992501		net/minecraft/unmapped/C_9992501
-	f	Ljava/text/SimpleDateFormat;	f_0390286		f_0390286
-	f	Ljava/util/logging/Logger;	f_1581917		f_1581917
-	f	Lnet/minecraft/unmapped/C_7773862;	f_7216101		f_7216101
-	f	Ljava/util/List;	f_9738318		f_9738318
-	f	Lnet/minecraft/unmapped/C_6509480;	f_3549956		f_3549956
-	f	Lnet/minecraft/unmapped/C_6509480;	f_3286089		f_3286089
-	f	Ljava/util/Set;	f_9374939		f_9374939
-	f	Ljava/util/Set;	f_2471539		f_2471539
-	f	Lnet/minecraft/unmapped/C_7729027;	f_9085408		f_9085408
-	f	Z	f_6419850		f_6419850
-	f	I	f_1995098		f_1995098
-	f	I	f_1519083		f_1519083
-	f	Lnet/minecraft/unmapped/C_4223822;	f_0477263		f_0477263
-	f	Z	f_6118910		f_6118910
-	f	I	f_7794113		f_7794113
+c	net/minecraft/unmapped/C_9992501		net/minecraft/server/PlayerManager
+	f	Ljava/text/SimpleDateFormat;	f_0390286		DATE_FORMAT
+	f	Ljava/util/logging/Logger;	f_1581917		LOGGER
+	f	Lnet/minecraft/unmapped/C_7773862;	f_7216101		server
+	f	Ljava/util/List;	f_9738318		players
+	f	Lnet/minecraft/unmapped/C_6509480;	f_3549956		playerBans
+	f	Lnet/minecraft/unmapped/C_6509480;	f_3286089		ipBans
+	f	Ljava/util/Set;	f_9374939		ops
+	f	Ljava/util/Set;	f_2471539		whitelist
+	f	Lnet/minecraft/unmapped/C_7729027;	f_9085408		dataStorage
+	f	Z	f_6419850		whitelistEnabled
+	f	I	f_1995098		maxPlayerCount
+	f	I	f_1519083		viewDistance
+	f	Lnet/minecraft/unmapped/C_4223822;	f_0477263		defaultGameMode
+	f	Z	f_6118910		allowCommands
+	f	I	f_7794113		pingUpdateTime
 	m	(Lnet/minecraft/unmapped/C_7773862;)V	<init>		<init>
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_5123829;Lnet/minecraft/unmapped/C_3292284;)V	m_5606815		m_5606815
-		p	1			p_1
-		p	2			p_2
-	m	([Lnet/minecraft/unmapped/C_3865296;)V	m_3157836		m_3157836
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_3292284;Lnet/minecraft/unmapped/C_3865296;)V	m_2196327		m_2196327
-		p	1			p_1
-		p	2			p_2
-	m	()I	m_8388212		m_8388212
-	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_7169022		m_7169022
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_8134419		m_8134419
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_8571484		m_8571484
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_4168801		m_4168801
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_1048368		m_1048368
-		p	1			p_1
-	m	(Ljava/net/SocketAddress;Ljava/lang/String;)Ljava/lang/String;	m_1891571		m_1891571
-		p	1			p_1
-		p	2			p_2
-	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_3292284;	m_4536024		m_4536024
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_3292284;IZ)Lnet/minecraft/unmapped/C_3292284;	m_5030107		m_5030107
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_3292284;I)V	m_4701203		m_4701203
-		p	1			p_1
-		p	2			p_2
-	m	()V	m_7864230		m_7864230
-	m	(Lnet/minecraft/unmapped/C_5385258;)V	m_2771421		m_2771421
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_5385258;I)V	m_0305861		m_0305861
-		p	1			p_1
-		p	2			p_2
-	m	()Ljava/lang/String;	m_4251196		m_4251196
-	m	()[Ljava/lang/String;	m_3036462		m_3036462
-	m	()Lnet/minecraft/unmapped/C_6509480;	m_4888675		m_4888675
-	m	()Lnet/minecraft/unmapped/C_6509480;	m_4394591		m_4394591
-	m	(Ljava/lang/String;)V	m_0248612		m_0248612
-		p	1			p_1
-	m	(Ljava/lang/String;)V	m_9659726		m_9659726
-		p	1			p_1
-	m	(Ljava/lang/String;)Z	m_7221601		m_7221601
-		p	1			p_1
-	m	(Ljava/lang/String;)Z	m_6078293		m_6078293
-		p	1			p_1
-	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_3292284;	m_4343635		m_4343635
-		p	1			p_1
-	m	(DDDDILnet/minecraft/unmapped/C_5385258;)V	m_8373724		m_8373724
-		p	1			p_1
-		p	3			p_3
-		p	5			p_5
-		p	7			p_7
-		p	9			p_9
-		p	10			p_10
-	m	(Lnet/minecraft/unmapped/C_9590849;DDDDILnet/minecraft/unmapped/C_5385258;)V	m_0300341		m_0300341
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
-		p	6			p_6
-		p	8			p_8
-		p	10			p_10
-		p	11			p_11
-	m	()V	m_9408530		m_9408530
-	m	(Ljava/lang/String;)V	m_5311516		m_5311516
-		p	1			p_1
-	m	(Ljava/lang/String;)V	m_0108649		m_0108649
-		p	1			p_1
-	m	()Ljava/util/Set;	m_0995631		m_0995631
-	m	()Ljava/util/Set;	m_4611177		m_4611177
-	m	()V	m_4338609		m_4338609
-	m	(Lnet/minecraft/unmapped/C_3292284;Lnet/minecraft/unmapped/C_3865296;)V	m_8189114		m_8189114
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_5749050		m_5749050
-		p	1			p_1
-	m	()I	m_8169892		m_8169892
-	m	()I	m_9945457		m_9945457
-	m	()[Ljava/lang/String;	m_3364431		m_3364431
-	m	()Z	m_7826732		m_7826732
-	m	(Z)V	m_1967217		m_1967217
-		p	1			p_1
-	m	(Ljava/lang/String;)Ljava/util/List;	m_1272395		m_1272395
-		p	1			p_1
-	m	()I	m_5066194		m_5066194
-	m	()Lnet/minecraft/unmapped/C_7773862;	m_2355606		m_2355606
-	m	()Lnet/minecraft/unmapped/C_2018497;	m_6553438		m_6553438
-	m	(Lnet/minecraft/unmapped/C_4223822;)V	m_2606881		m_2606881
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_3292284;Lnet/minecraft/unmapped/C_3292284;Lnet/minecraft/unmapped/C_5553933;)V	m_8430460		m_8430460
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Z)V	m_7070307		m_7070307
-		p	1			p_1
-	m	()V	m_9197741		m_9197741
+		p	1			server
+	m	(Lnet/minecraft/unmapped/C_5123829;Lnet/minecraft/unmapped/C_3292284;)V	m_5606815		onLogin
+		p	1			connection
+		p	2			player
+	m	([Lnet/minecraft/unmapped/C_3865296;)V	m_3157836		onWorldsLoaded
+		p	1			worlds
+	m	(Lnet/minecraft/unmapped/C_3292284;Lnet/minecraft/unmapped/C_3865296;)V	m_2196327		onChangedDimension
+		p	1			player
+		p	2			prevWorld
+	m	()I	m_8388212		getViewDistance
+	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_7169022		loadSinglePlayerData
+		p	1			player
+	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_8134419		saveData
+		p	1			player
+	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_8571484		add
+		p	1			player
+	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_4168801		move
+		p	1			player
+	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_1048368		remove
+		p	1			player
+	m	(Ljava/net/SocketAddress;Ljava/lang/String;)Ljava/lang/String;	m_1891571		canLogin
+		p	1			address
+		p	2			name
+	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_3292284;	m_4536024		create
+		p	1			name
+	m	(Lnet/minecraft/unmapped/C_3292284;IZ)Lnet/minecraft/unmapped/C_3292284;	m_5030107		respawn
+		p	1			player
+		p	2			dimension
+		p	3			alive
+	m	(Lnet/minecraft/unmapped/C_3292284;I)V	m_4701203		teleportToDimension
+		p	1			player
+		p	2			dimension
+	m	()V	m_7864230		tick
+	m	(Lnet/minecraft/unmapped/C_5385258;)V	m_2771421		sendToAll
+		p	1			packet
+	m	(Lnet/minecraft/unmapped/C_5385258;I)V	m_0305861		sendToDimension
+		p	1			packet
+		p	2			dimension
+	m	()Ljava/lang/String;	m_4251196		getNamesAsString
+	m	()[Ljava/lang/String;	m_3036462		getNames
+	m	()Lnet/minecraft/unmapped/C_6509480;	m_4888675		getPlayerBans
+	m	()Lnet/minecraft/unmapped/C_6509480;	m_4394591		getIpBans
+	m	(Ljava/lang/String;)V	m_0248612		addOp
+		p	1			playerName
+	m	(Ljava/lang/String;)V	m_9659726		removeOp
+		p	1			playerName
+	m	(Ljava/lang/String;)Z	m_7221601		isWhitelisted
+		p	1			playerName
+	m	(Ljava/lang/String;)Z	m_6078293		isOp
+		p	1			playerName
+	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_3292284;	m_4343635		get
+		p	1			playerName
+	m	(DDDDILnet/minecraft/unmapped/C_5385258;)V	m_8373724		sendToAround
+		p	1			x
+		p	3			y
+		p	5			z
+		p	7			range
+		p	9			dimension
+		p	10			packet
+	m	(Lnet/minecraft/unmapped/C_9590849;DDDDILnet/minecraft/unmapped/C_5385258;)V	m_0300341		sendToAround
+		p	1			source
+		p	2			x
+		p	4			y
+		p	6			z
+		p	8			range
+		p	10			dimension
+		p	11			packet
+	m	()V	m_9408530		saveData
+	m	(Ljava/lang/String;)V	m_5311516		addToWhitelist
+		p	1			playerName
+	m	(Ljava/lang/String;)V	m_0108649		removeFromWhitelist
+		p	1			playerName
+	m	()Ljava/util/Set;	m_0995631		getWhitelist
+	m	()Ljava/util/Set;	m_4611177		getOps
+	m	()V	m_4338609		reloadWhitelist
+	m	(Lnet/minecraft/unmapped/C_3292284;Lnet/minecraft/unmapped/C_3865296;)V	m_8189114		sendWorldInfo
+		p	1			player
+		p	2			world
+	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_5749050		sendPlayerInfo
+		p	1			player
+	m	()I	m_8169892		getCount
+	m	()I	m_9945457		getMaxCount
+	m	()[Ljava/lang/String;	m_3364431		getSavedIds
+	m	()Z	m_7826732		isWhitelistEnabled
+	m	(Z)V	m_1967217		setWhitelistEnabled
+		p	1			enabled
+	m	(Ljava/lang/String;)Ljava/util/List;	m_1272395		getAtIp
+		p	1			ip
+	m	()I	m_5066194		getChunkViewDistance
+	m	()Lnet/minecraft/unmapped/C_7773862;	m_2355606		getServer
+	m	()Lnet/minecraft/unmapped/C_2018497;	m_6553438		getSinglePlayerData
+	m	(Lnet/minecraft/unmapped/C_4223822;)V	m_2606881		setDefaultGameMode
+		p	1			gameMode
+	m	(Lnet/minecraft/unmapped/C_3292284;Lnet/minecraft/unmapped/C_3292284;Lnet/minecraft/unmapped/C_5553933;)V	m_8430460		copeGameMode
+		p	1			player
+		p	2			fromPlayer
+		p	3			world
+	m	(Z)V	m_7070307		setAllowCommands
+		p	1			allowCommands
+	m	()V	m_9197741		onServerClosed
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_0107612	argo/jdom/JsonListenerToJdomAdapter__2	argo/jdom/JsonListenerToJdomAdapter__1
 c	net/minecraft/unmapped/C_0160606	net/minecraft/inventory/menu/EnchantingTableMenu__1	net/minecraft/inventory/menu/EnchantingTableMenu__2
