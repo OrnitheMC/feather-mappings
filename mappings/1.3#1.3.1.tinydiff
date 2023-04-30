@@ -3878,7 +3878,7 @@ c	net/minecraft/unmapped/C_1693666		net/minecraft/client/Minecraft__7
 c	net/minecraft/unmapped/C_1789828		net/minecraft/server/BanEntry
 	f	Ljava/text/SimpleDateFormat;	f_0818085		DATE_FORMAT
 	f	Ljava/util/logging/Logger;	f_9917689		LOGGER
-	f	Ljava/lang/String;	f_1527394		playerName
+	f	Ljava/lang/String;	f_1527394		user
 	f	Ljava/util/Date;	f_4738092		startDate
 	f	Ljava/lang/String;	f_7636884		operator
 	f	Ljava/util/Date;	f_1669885		expirationDate
@@ -3899,9 +3899,9 @@ c	net/minecraft/unmapped/C_1789828		net/minecraft/server/BanEntry
 	m	()Ljava/lang/String;	m_5167500		getReason
 	m	(Ljava/lang/String;)V	m_8832819		setReason
 		p	1			reason
-	m	()Ljava/lang/String;	m_6324401		asString
-	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_1789828;	m_5131926		fromString
-		p	0			string
+	m	()Ljava/lang/String;	m_6324401		serialize
+	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_1789828;	m_5131926		deserialize
+		p	0			s
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_1810478		net/minecraft/client/Minecraft__1MinecraftAppletStub
 	f	Ljava/util/Map;	f_6047810		f_6047810
@@ -4054,16 +4054,16 @@ c	net/minecraft/unmapped/C_6509480		net/minecraft/server/BanList
 		p	1			enabled
 	m	()Ljava/util/Map;	m_6993305		getBans
 	m	(Ljava/lang/String;)Z	m_3580578		isBanned
-		p	1			playerName
+		p	1			user
 	m	(Lnet/minecraft/unmapped/C_1789828;)V	m_9531135		add
 		p	1			ban
 	m	(Ljava/lang/String;)V	m_8523270		unban
-		p	1			playerName
+		p	1			user
 	m	()V	m_6999739		removeExpiredBans
 	m	()V	m_6793159		load
 	m	()V	m_6357234		save
 	m	(Z)V	m_3083004		save
-		p	1			addLog
+		p	1			header
 c	net/minecraft/unmapped/C_6607485		net/minecraft/client/Minecraft__11
 	f	Lnet/minecraft/client/Minecraft;	f_6229147		f_6229147
 	m	(Lnet/minecraft/client/Minecraft;)V	<init>		<init>
@@ -4281,11 +4281,11 @@ c	net/minecraft/unmapped/C_9992501		net/minecraft/server/PlayerManager
 	f	Lnet/minecraft/unmapped/C_6509480;	f_3286089		ipBans
 	f	Ljava/util/Set;	f_9374939		ops
 	f	Ljava/util/Set;	f_2471539		whitelist
-	f	Lnet/minecraft/unmapped/C_7729027;	f_9085408		dataHandler
+	f	Lnet/minecraft/unmapped/C_7729027;	f_9085408		dataStorage
 	f	Z	f_6419850		whitelistEnabled
 	f	I	f_1995098		maxPlayerCount
 	f	I	f_1519083		viewDistance
-	f	Lnet/minecraft/unmapped/C_4223822;	f_0477263		defaultGamemode
+	f	Lnet/minecraft/unmapped/C_4223822;	f_0477263		defaultGameMode
 	f	Z	f_6118910		allowCommands
 	f	I	f_7794113		pingUpdateTime
 	m	(Lnet/minecraft/server/MinecraftServer;)V	<init>		<init>
@@ -4388,5 +4388,5 @@ c	net/minecraft/unmapped/C_9992501		net/minecraft/server/PlayerManager
 		p	3			world
 	m	(Z)V	m_7070307		setAllowCommands
 		p	1			allowCommands
-	m	()V	m_9197741		disconnectAll
+	m	()V	m_9197741		onServerClosed
 	m	()V	<clinit>		<clinit>

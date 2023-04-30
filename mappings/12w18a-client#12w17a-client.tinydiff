@@ -379,7 +379,7 @@ c	net/minecraft/unmapped/C_1324297
 	m	()Ljava/util/List;	m_9470343	collectModifiedEntries	
 c	net/minecraft/unmapped/C_1331819
 	f	Z	f_9719945	f_9719945	
-c	net/minecraft/unmapped/C_1484193	net/minecraft/unmapped/C_7773862__3	
+c	net/minecraft/unmapped/C_1484193	net/minecraft/server/MinecraftServer__3	
 	f	Lnet/minecraft/unmapped/C_7773862;	f_4002838	server	
 	m	(Lnet/minecraft/unmapped/C_7773862;)V	<init>	<init>	
 		p	1		p_1	
@@ -503,7 +503,7 @@ c	net/minecraft/unmapped/C_1657254	net/minecraft/server/dedicated/command/ListCo
 		p	2		p_2	
 c	net/minecraft/unmapped/C_1730529	net/minecraft/server/command/source/CommandSource	net/minecraft/command/source/CommandSource
 	m	()Ljava/lang/String;	m_2446786	getSourceName	
-c	net/minecraft/unmapped/C_1739936	net/minecraft/unmapped/C_7773862__4	
+c	net/minecraft/unmapped/C_1739936	net/minecraft/server/MinecraftServer__4	
 	f	Lnet/minecraft/unmapped/C_7773862;	f_4250466	server	
 	m	(Lnet/minecraft/unmapped/C_7773862;)V	<init>	<init>	
 		p	1		p_1	
@@ -2004,7 +2004,7 @@ c	net/minecraft/unmapped/C_7773862	net/minecraft/server/MinecraftServer
 	f	Ljava/lang/String;	f_2250761	serverIp	
 	f	I	f_4814625	serverPort	
 	f	Lnet/minecraft/unmapped/C_8217617;	f_4987971	f_4987971	
-	f	Lnet/minecraft/unmapped/C_9375659;	f_8580484	f_8580484	
+	f	Lnet/minecraft/unmapped/C_9375659;	f_8580484	properties	
 	f	[Lnet/minecraft/unmapped/C_3865296;	f_0746062	worlds	
 	f	[J	f_0627775	averageTickTimes	
 	f	[[J	f_4376165	worldTickTimes	
@@ -2294,7 +2294,7 @@ c	net/minecraft/unmapped/C_8385625
 c	net/minecraft/unmapped/C_8442234
 	m	(J)V	<init>	<init>	
 		p	1		p_1	
-c	net/minecraft/unmapped/C_8448859	net/minecraft/unmapped/C_7773862__2	
+c	net/minecraft/unmapped/C_8448859	net/minecraft/server/MinecraftServer__2	
 	f	J	f_4113554	f_4113554	
 	f	Lnet/minecraft/unmapped/C_7773862;	f_6096116	f_6096116	
 	m	(Lnet/minecraft/unmapped/C_7773862;)V	<init>	<init>	
@@ -2493,16 +2493,16 @@ c	net/minecraft/unmapped/C_9375659	net/minecraft/server/dedicated/ServerProperti
 	m	(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;	m_5882585	getOrDefault	
 		p	1		key	
 		p	2		defaultValue	
-	m	(Ljava/lang/String;I)I	m_4871036	getOrDefault	
+	m	(Ljava/lang/String;I)I	m_4871036	getInt	
 		p	1		key	
 		p	2		defaultValue	
-	m	(Ljava/lang/String;Z)Z	m_8339560	getOrDefault	
+	m	(Ljava/lang/String;Z)Z	m_8339560	getBoolean	
 		p	1		key	
 		p	2		defaultValue	
 	m	(Ljava/lang/String;Ljava/lang/Object;)V	m_3047817	set	
 		p	1		key	
 		p	2		value	
-	m	(Ljava/lang/String;Z)V	m_4571062	m_4571062	
+	m	(Ljava/lang/String;Z)V	m_4571062	setBoolean	
 		p	1		p_1	
 		p	2		p_2	
 	m	()V	<clinit>	<clinit>	
@@ -2605,10 +2605,10 @@ c	net/minecraft/unmapped/C_9992501	net/minecraft/server/PlayerManager
 	f	Ljava/util/Set;	f_3286089	ipBans	
 	f	Ljava/util/Set;	f_9374939	ops	
 	f	Ljava/util/Set;	f_2471539	whitelist	
-	f	Ljava/io/File;	f_2447394	f_2447394	
-	f	Ljava/io/File;	f_7665137	f_7665137	
-	f	Ljava/io/File;	f_0617273	f_0617273	
-	f	Ljava/io/File;	f_8577968	f_8577968	
+	f	Ljava/io/File;	f_2447394	bansFile	
+	f	Ljava/io/File;	f_7665137	ipBansFile	
+	f	Ljava/io/File;	f_0617273	opsFile	
+	f	Ljava/io/File;	f_8577968	whitelistFile	
 	f	Lnet/minecraft/unmapped/C_7729027;	f_9085408	dataStorage	
 	f	Z	f_6419850	whitelistEnabled	
 	f	I	f_7794113	pingUpdateTime	
@@ -2630,9 +2630,9 @@ c	net/minecraft/unmapped/C_9992501	net/minecraft/server/PlayerManager
 		p	1		player	
 	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_1048368	remove	
 		p	1		player	
-	m	(Lnet/minecraft/unmapped/C_8983523;Ljava/lang/String;)Lnet/minecraft/unmapped/C_3292284;	m_4536024	create	
-		p	1		p_1	
-		p	2		p_2	
+	m	(Lnet/minecraft/unmapped/C_8983523;Ljava/lang/String;)Lnet/minecraft/unmapped/C_3292284;	m_4536024	onLogin	
+		p	1		networkHandler	
+		p	2		name	
 	m	(Lnet/minecraft/unmapped/C_3292284;IZ)Lnet/minecraft/unmapped/C_3292284;	m_5030107	respawn	
 		p	1		player	
 		p	2		dimension	
@@ -2648,28 +2648,28 @@ c	net/minecraft/unmapped/C_9992501	net/minecraft/server/PlayerManager
 		p	2		dimension	
 	m	()Ljava/lang/String;	m_4251196	getNamesAsString	
 	m	()[Ljava/lang/String;	m_3036462	getNames	
-	m	(Ljava/lang/String;)V	m_5311516	addToWhitelist	
+	m	(Ljava/lang/String;)V	m_5311516	ban	
 		p	1		playerName	
-	m	(Ljava/lang/String;)V	m_0108649	removeFromWhitelist	
+	m	(Ljava/lang/String;)V	m_0108649	unban	
 		p	1		playerName	
-	m	()V	m_9597199	m_9597199	
-	m	()V	m_7476429	m_7476429	
+	m	()V	m_9597199	loadBans	
+	m	()V	m_7476429	saveBans	
 	m	()Ljava/util/Set;	m_4888675	getPlayerBans	
 	m	()Ljava/util/Set;	m_4394591	getIpBans	
-	m	(Ljava/lang/String;)V	m_2142978	m_2142978	
-		p	1		p_1	
-	m	(Ljava/lang/String;)V	m_8405537	m_8405537	
-		p	1		p_1	
-	m	()V	m_5591472	m_5591472	
-	m	()V	m_7957420	m_7957420	
+	m	(Ljava/lang/String;)V	m_2142978	banIp	
+		p	1		ip	
+	m	(Ljava/lang/String;)V	m_8405537	unbanIp	
+		p	1		ip	
+	m	()V	m_5591472	loadIpBans	
+	m	()V	m_7957420	saveIpBans	
 	m	(Ljava/lang/String;)V	m_0248612	addOp	
 		p	1		playerName	
 	m	(Ljava/lang/String;)V	m_9659726	removeOp	
 		p	1		playerName	
-	m	()V	m_2336264	m_2336264	
-	m	()V	m_1550874	m_1550874	
-	m	()V	m_2579874	m_2579874	
-	m	()V	m_4464793	m_4464793	
+	m	()V	m_2336264	loadOps	
+	m	()V	m_1550874	saveOps	
+	m	()V	m_2579874	loadWhitelist	
+	m	()V	m_4464793	saveWhitelist	
 	m	(Ljava/lang/String;)Z	m_7221601	isWhitelisted	
 		p	1		playerName	
 	m	(Ljava/lang/String;)Z	m_6078293	isOp	
@@ -2692,13 +2692,13 @@ c	net/minecraft/unmapped/C_9992501	net/minecraft/server/PlayerManager
 		p	10		dimension	
 		p	11		packet	
 	m	()V	m_9408530	saveData	
-	m	(Ljava/lang/String;)V	m_4501853	m_4501853	
-		p	1		p_1	
-	m	(Ljava/lang/String;)V	m_7180068	m_7180068	
-		p	1		p_1	
+	m	(Ljava/lang/String;)V	m_4501853	addToWhitelist	
+		p	1		playerName	
+	m	(Ljava/lang/String;)V	m_7180068	removeFromWhitelist	
+		p	1		playerName	
 	m	()Ljava/util/Set;	m_0995631	getWhitelist	
 	m	()Ljava/util/Set;	m_4611177	getOps	
-	m	()V	m_2131553	m_2131553	
+	m	()V	m_2131553	reloadWhitelist	
 	m	(Lnet/minecraft/unmapped/C_3292284;Lnet/minecraft/unmapped/C_3865296;)V	m_8189114	sendWorldInfo	
 		p	1		player	
 		p	2		world	
