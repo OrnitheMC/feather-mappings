@@ -13,7 +13,7 @@ c	net/minecraft/client/Minecraft
 	f	I	f_0727858	currentFps	
 	f	Z	f_0616432	reloadTextures	
 	f	Lnet/minecraft/unmapped/C_8183022;	f_0679549		f_0679549
-	f	Lnet/minecraft/unmapped/C_7952195;	f_1273243		f_1273243
+	f	Lnet/minecraft/unmapped/C_7952195;	f_1273243		interactionManager
 	f	Lnet/minecraft/unmapped/C_5553933;	f_5854988		world
 	f	Lnet/minecraft/unmapped/C_1023567;	f_6058446		player
 	m	()Lnet/minecraft/unmapped/C_3111587;	m_2753470	getOs	
@@ -567,7 +567,7 @@ c	net/minecraft/unmapped/C_2128050	net/minecraft/server/ServerPlayerInteractionM
 		p	1		player	
 		p	2		world	
 		p	3		stack	
-	m	(Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_2454309;IIII)Z	m_8566428	interactBlock	
+	m	(Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_2454309;IIII)Z	m_8566428	useBlock	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
@@ -1541,7 +1541,7 @@ c	net/minecraft/unmapped/C_5942562	net/minecraft/unmapped/C_0671443__1
 		p	1		p_1	
 c	net/minecraft/unmapped/C_5949355
 	m	()I	m_1748056	getResolution	
-c	net/minecraft/unmapped/C_5956487	net/minecraft/client/ClientPlayerInteractionManager	net/minecraft/world/PlayerInteractionManager
+c	net/minecraft/unmapped/C_5956487	net/minecraft/client/ClientPlayerInteractionManager	net/minecraft/client/MultiplayerInteractionManager
 	f	Lnet/minecraft/client/Minecraft;	f_1173078	client	
 	m	(Lnet/minecraft/unmapped/C_9590849;)V	m_2058905	m_2058905	
 		p	0		p_0	
@@ -1572,7 +1572,7 @@ c	net/minecraft/unmapped/C_5956487	net/minecraft/client/ClientPlayerInteractionM
 		p	2		y	
 		p	3		z	
 		p	4		face	
-	m	(Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_2454309;IIII)Z	m_1601703	interactBlock	
+	m	(Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_2454309;IIII)Z	m_1601703	useBlock	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
@@ -1584,7 +1584,7 @@ c	net/minecraft/unmapped/C_5956487	net/minecraft/client/ClientPlayerInteractionM
 		p	1		player	
 		p	2		world	
 		p	3		stack	
-	m	(Lnet/minecraft/unmapped/C_5553933;)Lnet/minecraft/unmapped/C_6013256;	m_2055645	createPlayerEntity	
+	m	(Lnet/minecraft/unmapped/C_5553933;)Lnet/minecraft/unmapped/C_6013256;	m_2055645	createPlayer	
 		p	1		world	
 	m	(Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_0539808;)V	m_6734486	attackEntity	
 		p	1		player	
@@ -2827,14 +2827,14 @@ c	net/minecraft/unmapped/C_4853392		net/minecraft/unmapped/C_1834285__1
 	m	(Lnet/minecraft/unmapped/C_1834285;)V	<init>		<init>
 		p	1			p_1
 	m	()V	run		run
-c	net/minecraft/unmapped/C_5353187		net/minecraft/unmapped/C_5353187
-	f	I	f_3659911		f_3659911
-	f	I	f_1916086		f_1916086
-	f	I	f_9553599		f_9553599
-	f	F	f_0597323		f_0597323
-	f	F	f_1102202		f_1102202
-	f	F	f_3727882		f_3727882
-	f	I	f_0599739		f_0599739
+c	net/minecraft/unmapped/C_5353187		net/minecraft/client/SingleplayerInteractionManager
+	f	I	f_3659911		targetBlockX
+	f	I	f_1916086		targetBlockY
+	f	I	f_9553599		targetBlockZ
+	f	F	f_0597323		miningProgress
+	f	F	f_1102202		lastMiningProgress
+	f	F	f_3727882		miningSoundTimer
+	f	I	f_0599739		miningCooldown
 	m	(Lnet/minecraft/client/Minecraft;)V	<init>		<init>
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_9590849;)V	m_7810696		m_7810696
@@ -2927,65 +2927,65 @@ c	net/minecraft/unmapped/C_6643108		net/minecraft/unmapped/C_6643108
 c	net/minecraft/unmapped/C_7187442		net/minecraft/client/command/ToggleDownfallCommand
 	m	()V	<init>		<init>
 	m	()V	m_7621275		m_7621275
-c	net/minecraft/unmapped/C_7952195		net/minecraft/unmapped/C_7952195
-	f	Lnet/minecraft/client/Minecraft;	f_4962692		f_4962692
+c	net/minecraft/unmapped/C_7952195		net/minecraft/client/ClientPlayerInteractionManager
+	f	Lnet/minecraft/client/Minecraft;	f_4962692		client
 	f	Z	f_0229829		f_0229829
 	m	(Lnet/minecraft/client/Minecraft;)V	<init>		<init>
-		p	1			p_1
-	m	(IIII)V	m_2543394		m_2543394
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(IIII)Z	m_3937629		m_3937629
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(IIII)V	m_6129910		m_6129910
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	()V	m_0651714		m_0651714
+		p	1			client
+	m	(IIII)V	m_2543394		mineBlockInCreative
+		p	1			x
+		p	2			y
+		p	3			z
+		p	4			face
+	m	(IIII)Z	m_3937629		finishMiningBlock
+		p	1			x
+		p	2			y
+		p	3			z
+		p	4			face
+	m	(IIII)V	m_6129910		startMiningBlock
+		p	1			x
+		p	2			y
+		p	3			z
+		p	4			face
+	m	()V	m_0651714		stopMiningBlock
 	m	(F)V	m_8681363		m_8681363
 		p	1			p_1
-	m	()F	m_2462997		m_2462997
-	m	(Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_2454309;)Z	m_1220212		m_1220212
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_9590849;)V	m_7810696		m_7810696
-		p	1			p_1
-	m	()V	m_0901051		m_0901051
+	m	()F	m_2462997		getReach
+	m	(Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_2454309;)Z	m_1220212		useItem
+		p	1			player
+		p	2			world
+		p	3			stack
+	m	(Lnet/minecraft/unmapped/C_9590849;)V	m_7810696		setFacingSouth
+		p	1			player
+	m	()V	m_0901051		tick
 	m	()Z	m_0291543		m_0291543
-	m	(Lnet/minecraft/unmapped/C_9590849;)V	m_0354827		m_0354827
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_2454309;IIII)Z	m_8566428		m_8566428
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-	m	(Lnet/minecraft/unmapped/C_5553933;)Lnet/minecraft/unmapped/C_9590849;	m_1773240		m_1773240
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_0539808;)V	m_3025334		m_3025334
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_0539808;)V	m_5458381		m_5458381
-		p	1			p_1
-		p	2			p_2
-	m	(IIIZLnet/minecraft/unmapped/C_9590849;)Lnet/minecraft/unmapped/C_2454309;	m_5962613		m_5962613
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	(ILnet/minecraft/unmapped/C_9590849;)V	m_3697196		m_3697196
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/unmapped/C_9590849;)V	m_0354827		spawn
+		p	1			player
+	m	(Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_2454309;IIII)Z	m_8566428		useBlock
+		p	1			player
+		p	2			world
+		p	3			stack
+		p	4			x
+		p	5			y
+		p	6			z
+		p	7			face
+	m	(Lnet/minecraft/unmapped/C_5553933;)Lnet/minecraft/unmapped/C_9590849;	m_1773240		createPlayer
+		p	1			world
+	m	(Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_0539808;)V	m_3025334		interactEntity
+		p	1			player
+		p	2			target
+	m	(Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_0539808;)V	m_5458381		attackEntity
+		p	1			player
+		p	2			target
+	m	(IIIZLnet/minecraft/unmapped/C_9590849;)Lnet/minecraft/unmapped/C_2454309;	m_5962613		clickSlot
+		p	1			menuId
+		p	2			slot
+		p	3			button
+		p	4			quickMove
+		p	5			player
+	m	(ILnet/minecraft/unmapped/C_9590849;)V	m_3697196		closeMenu
+		p	1			menuId
+		p	2			player
 	m	(II)V	m_4279106		m_4279106
 		p	1			p_1
 		p	2			p_2
