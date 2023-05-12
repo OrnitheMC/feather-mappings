@@ -1788,7 +1788,7 @@ c	net/minecraft/unmapped/C_7028449
 	f	I	f_1811950	centerZ	
 	f	I	f_7839409	chunkReloadOrder	
 	f	Z	f_5817086	setColorOcclusion	
-	f	Lnet/minecraft/unmapped/C_3674802;	f_4863579		f_4863579
+	f	Lnet/minecraft/unmapped/C_3674802;	f_4863579		origin
 	f	Lnet/minecraft/unmapped/C_3674802;	f_5654898		f_5654898
 	f	Lnet/minecraft/unmapped/C_3674802;	f_5645267		f_5645267
 	f	Lnet/minecraft/unmapped/C_3674802;	f_8218082		f_8218082
@@ -1796,7 +1796,7 @@ c	net/minecraft/unmapped/C_7028449
 	f	[Z	f_8171855		f_8171855
 	f	Ljava/util/concurrent/locks/ReentrantLock;	f_0176851		f_0176851
 	f	Lnet/minecraft/unmapped/C_9450178;	f_6280856		f_6280856
-	f	Z	f_3085426	blocksUnstaged	f_3085426
+	f	Z	f_3085426	blocksUnstaged	dirty
 	f	Z	f_5353207	notculled	f_5353207
 	f	I	f_7712432	hasColorOcclusion	f_7712432
 	m	(Lnet/minecraft/unmapped/C_5553933;Ljava/util/List;IIII)V	<init>	<init>	
@@ -1818,7 +1818,7 @@ c	net/minecraft/unmapped/C_7028449
 	m	(Lnet/minecraft/unmapped/C_3333682;Lnet/minecraft/unmapped/C_0539808;)V	m_8781874	m_8781874	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/unmapped/C_0539808;)V	m_8519042	m_8519042	
+	m	(Lnet/minecraft/unmapped/C_0539808;)V	m_8519042	rebuildTranslucent	
 		p	1		p_1	
 	m	()V	m_4954370	renderGlListPlus2	
 	m	()V	m_3698923	stageBlockRenderer	
@@ -1829,22 +1829,22 @@ c	net/minecraft/unmapped/C_7028449
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	(Lnet/minecraft/unmapped/C_3674802;)V	m_5351306		m_5351306
-		p	1			p_1
-	m	(FFFLnet/minecraft/unmapped/C_8093177;)V	m_6673972		m_6673972
+	m	(Lnet/minecraft/unmapped/C_3674802;)V	m_5351306		setOrigin
+		p	1			origin
+	m	(FFFLnet/minecraft/unmapped/C_8093177;)V	m_6673972		compile
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_8373595;)V	m_3148018		m_3148018
+	m	(Lnet/minecraft/unmapped/C_8373595;)V	m_3148018		beginLayer
 		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_3333682;FFFLnet/minecraft/unmapped/C_8373595;)V	m_5353001		m_5353001
+	m	(Lnet/minecraft/unmapped/C_3333682;FFFLnet/minecraft/unmapped/C_8373595;)V	m_5353001		endLayer
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	(FFFLnet/minecraft/unmapped/C_8373595;)V	m_8519042		m_8519042
+	m	(FFFLnet/minecraft/unmapped/C_8373595;)V	m_8519042		rebuildTranslucent
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -1857,11 +1857,11 @@ c	net/minecraft/unmapped/C_7028449
 	m	()Lnet/minecraft/unmapped/C_3674802;	m_4170504		m_4170504
 	m	()I	m_8076264		m_8076264
 	m	()I	m_8752306		m_8752306
-	m	()Lnet/minecraft/unmapped/C_3674802;	m_2710453		m_2710453
+	m	()Lnet/minecraft/unmapped/C_3674802;	m_2710453		getOrigin
 	m	()Lnet/minecraft/unmapped/C_3674802;	m_6277521		m_6277521
-	m	()Z	m_0973961		m_0973961
-	m	(Z)V	m_7206582		m_7206582
-		p	1			p_1
+	m	()Z	m_0973961		isDirty
+	m	(Z)V	m_7206582		setDirty
+		p	1			dirty
 	m	()Z	m_0347270		m_0347270
 	m	(Z)V	m_6951557		m_6951557
 		p	1			p_1
@@ -2664,13 +2664,13 @@ c	net/minecraft/unmapped/C_7618081		net/minecraft/entity/living/mob/Monster__2
 		p	1			p_1
 	m	(Ljava/lang/Object;)Z	apply		apply
 		p	1			entity
-c	net/minecraft/unmapped/C_8093177		net/minecraft/unmapped/C_8093177
-	f	[Lnet/minecraft/unmapped/C_8373595;	f_3537520		f_3537520
+c	net/minecraft/unmapped/C_8093177		net/minecraft/client/render/world/ChunkBufferBuilders
+	f	[Lnet/minecraft/unmapped/C_8373595;	f_3537520		builders
 	m	()V	<init>		<init>
-	m	(Lnet/minecraft/unmapped/C_3333682;)Lnet/minecraft/unmapped/C_8373595;	m_1330287		m_1330287
-		p	1			p_1
-	m	(I)Lnet/minecraft/unmapped/C_8373595;	m_6372663		m_6372663
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_3333682;)Lnet/minecraft/unmapped/C_8373595;	m_1330287		get
+		p	1			layer
+	m	(I)Lnet/minecraft/unmapped/C_8373595;	m_6372663		get
+		p	1			layer
 c	net/minecraft/unmapped/C_8203323		com/mojang/blaze3d/platform/GlStateManager__Stencil
 	f	Lnet/minecraft/unmapped/C_4491114;	f_2448841		func
 	f	I	f_7569078		mask
