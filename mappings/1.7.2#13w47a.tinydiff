@@ -13,8 +13,8 @@ c	net/minecraft/unmapped/C_0160350
 	m	(Lnet/minecraft/unmapped/C_1677199;)V	<init>		<init>
 		p	1			p_1
 c	net/minecraft/unmapped/C_0259655
-	m	(F)V	m_6204586		m_6204586
-		p	1			p_1
+	m	(F)V	m_6204586		renderStreamOverlay
+		p	1			tickDelta
 c	net/minecraft/unmapped/C_0915802
 	f	Lnet/minecraft/unmapped/C_0915802;	f_4999836		STREAM_BYTES_PER_PIXEL
 	f	Lnet/minecraft/unmapped/C_0915802;	f_4713509		STREAM_VOLUME_MIC
@@ -394,12 +394,12 @@ c	net/minecraft/unmapped/C_0867341		net/minecraft/unmapped/C_0867341
 	m	(Lnet/minecraft/unmapped/C_0969327;Lnet/minecraft/unmapped/C_7352375;)V	m_6945775		m_6945775
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_0969327		net/minecraft/unmapped/C_0969327
+c	net/minecraft/unmapped/C_0969327		net/minecraft/client/twitch/IngestTester
 	f	Z	f_6940329		f_6940329
-	f	Lnet/minecraft/unmapped/C_0867341;	f_9511273		f_9511273
+	f	Lnet/minecraft/unmapped/C_0867341;	f_9511273		listener
 	f	Ltv/twitch/broadcast/Stream;	f_6865996		f_6865996
 	f	Ltv/twitch/broadcast/IngestList;	f_5533844		f_5533844
-	f	Lnet/minecraft/unmapped/C_7352375;	f_7939275		f_7939275
+	f	Lnet/minecraft/unmapped/C_7352375;	f_7939275		status
 	f	J	f_1253051		f_1253051
 	f	J	f_8059168		f_8059168
 	f	J	f_3206753		f_3206753
@@ -420,7 +420,7 @@ c	net/minecraft/unmapped/C_0969327		net/minecraft/unmapped/C_0969327
 	f	F	f_6099674		f_6099674
 	f	F	f_0637829		f_0637829
 	f	Z	f_8624031		f_8624031
-	m	(Lnet/minecraft/unmapped/C_0867341;)V	m_1153236		m_1153236
+	m	(Lnet/minecraft/unmapped/C_0867341;)V	m_1153236		setListener
 		p	1			p_1
 	m	()Ltv/twitch/broadcast/IngestServer;	m_4296079		m_4296079
 	m	()Z	m_3456887		m_3456887
@@ -469,7 +469,7 @@ c	net/minecraft/unmapped/C_0969327		net/minecraft/unmapped/C_0969327
 		p	1			p_1
 		p	2			p_2
 	m	()V	finalize		finalize
-	m	()V	m_1045077		m_1045077
+	m	()V	m_1045077		init
 	m	()V	m_5281801		m_5281801
 	m	()V	m_3952819		m_3952819
 	m	(Ltv/twitch/broadcast/IngestServer;)Z	m_4767730		m_4767730
@@ -546,22 +546,22 @@ c	net/minecraft/unmapped/C_2054191		net/minecraft/unmapped/C_3728608__1
 c	net/minecraft/unmapped/C_2107606		net/minecraft/C_36opmwcdr__1
 c	net/minecraft/unmapped/C_2496252		net/minecraft/client/twitch/StreamMetadata
 	f	Lcom/google/gson/Gson;	f_3095243		GSON
-	f	Ljava/lang/String;	f_2688091		id
-	f	Ljava/lang/String;	f_2943411		message
+	f	Ljava/lang/String;	f_2688091		name
+	f	Ljava/lang/String;	f_2943411		description
 	f	Ljava/util/Map;	f_5959153		payload
 	m	(Ljava/lang/String;Ljava/lang/String;)V	<init>		<init>
-		p	1			id
-		p	2			message
+		p	1			name
+		p	2			description
 	m	(Ljava/lang/String;)V	<init>		<init>
-		p	1			id
-	m	(Ljava/lang/String;)V	m_6767197		setMessage
-		p	1			message
-	m	()Ljava/lang/String;	m_9717782		getMessage
+		p	1			name
+	m	(Ljava/lang/String;)V	m_6767197		setDescription
+		p	1			description
+	m	()Ljava/lang/String;	m_9717782		getDescription
 	m	(Ljava/lang/String;Ljava/lang/String;)V	m_4349039		put
 		p	1			key
 		p	2			value
 	m	()Ljava/lang/String;	m_6639845		serialize
-	m	()Ljava/lang/String;	m_4825916		getId
+	m	()Ljava/lang/String;	m_4825916		getName
 	m	()Ljava/lang/String;	toString		toString
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_2804200		net/minecraft/C_36opmwcdr
@@ -617,36 +617,36 @@ c	net/minecraft/unmapped/C_3537028		net/minecraft/unmapped/C_3537028
 		p	6			p_6
 		p	7			p_7
 	m	()I	m_3021017		m_3021017
-c	net/minecraft/unmapped/C_3723758		net/minecraft/unmapped/C_3723758
-	f	Lorg/apache/logging/log4j/Logger;	f_6338784		f_6338784
+c	net/minecraft/unmapped/C_3723758		net/minecraft/client/twitch/BroadcastController
+	f	Lorg/apache/logging/log4j/Logger;	f_6338784		LOGGER
 	f	I	f_5109033		f_5109033
 	f	I	f_0359243		f_0359243
-	f	Lnet/minecraft/unmapped/C_1223319;	f_0993290		f_0993290
+	f	Lnet/minecraft/unmapped/C_1223319;	f_0993290		listener
 	f	Ljava/lang/String;	f_5892149		f_5892149
 	f	Ljava/lang/String;	f_3175205		f_3175205
 	f	Ljava/lang/String;	f_9541622		f_9541622
 	f	Z	f_0473721		f_0473721
-	f	Ltv/twitch/Core;	f_4276675		f_4276675
-	f	Ltv/twitch/broadcast/Stream;	f_9691611		f_9691611
-	f	Ljava/util/List;	f_8921115		f_8921115
-	f	Ljava/util/List;	f_7171936		f_7171936
-	f	Z	f_7605320		f_7605320
-	f	Z	f_0877778		f_0877778
+	f	Ltv/twitch/Core;	f_4276675		core
+	f	Ltv/twitch/broadcast/Stream;	f_9691611		stream
+	f	Ljava/util/List;	f_8921115		captureBuffers
+	f	Ljava/util/List;	f_7171936		freeBuffers
+	f	Z	f_7605320		authenticated
+	f	Z	f_0877778		loggedIn
 	f	Z	f_1883860		f_1883860
-	f	Lnet/minecraft/unmapped/C_1104058;	f_7587596		f_7587596
-	f	Ljava/lang/String;	f_0671638		f_0671638
-	f	Ltv/twitch/broadcast/VideoParams;	f_2310256		f_2310256
-	f	Ltv/twitch/broadcast/AudioParams;	f_4639404		f_4639404
-	f	Ltv/twitch/broadcast/IngestList;	f_6131518		f_6131518
-	f	Ltv/twitch/broadcast/IngestServer;	f_9277709		f_9277709
-	f	Ltv/twitch/AuthToken;	f_5900356		f_5900356
-	f	Ltv/twitch/broadcast/ChannelInfo;	f_4448029		f_4448029
-	f	Ltv/twitch/broadcast/UserInfo;	f_0080070		f_0080070
-	f	Ltv/twitch/broadcast/StreamInfo;	f_2675513		f_2675513
-	f	Ltv/twitch/broadcast/ArchivingState;	f_9569115		f_9569115
+	f	Lnet/minecraft/unmapped/C_1104058;	f_7587596		status
+	f	Ljava/lang/String;	f_0671638		username
+	f	Ltv/twitch/broadcast/VideoParams;	f_2310256		videoParams
+	f	Ltv/twitch/broadcast/AudioParams;	f_4639404		audioParams
+	f	Ltv/twitch/broadcast/IngestList;	f_6131518		servers
+	f	Ltv/twitch/broadcast/IngestServer;	f_9277709		defaultServer
+	f	Ltv/twitch/AuthToken;	f_5900356		token
+	f	Ltv/twitch/broadcast/ChannelInfo;	f_4448029		channelInfo
+	f	Ltv/twitch/broadcast/UserInfo;	f_0080070		userInfo
+	f	Ltv/twitch/broadcast/StreamInfo;	f_2675513		streamInfo
+	f	Ltv/twitch/broadcast/ArchivingState;	f_9569115		archivingState
 	f	J	f_5305953		f_5305953
-	f	Lnet/minecraft/unmapped/C_0969327;	f_2474838		f_2474838
-	f	Ltv/twitch/ErrorCode;	f_7372036		f_7372036
+	f	Lnet/minecraft/unmapped/C_0969327;	f_2474838		ingestTester
+	f	Ltv/twitch/ErrorCode;	f_7372036		initializationError
 	m	(Ltv/twitch/ErrorCode;Ltv/twitch/AuthToken;)V	requestAuthTokenCallback		requestAuthTokenCallback
 		p	1			p_1
 		p	2			p_2
@@ -687,85 +687,85 @@ c	net/minecraft/unmapped/C_3723758		net/minecraft/unmapped/C_3723758
 	m	(Ltv/twitch/broadcast/StatType;J)V	statCallback		statCallback
 		p	1			p_1
 		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_1223319;)V	m_0251433		m_0251433
+	m	(Lnet/minecraft/unmapped/C_1223319;)V	m_0251433		setListener
 		p	1			p_1
-	m	()Z	m_0367373		m_0367373
+	m	()Z	m_0367373		isAuthenticated
 	m	(Ljava/lang/String;)V	m_2881112		m_2881112
 		p	1			p_1
-	m	()Ltv/twitch/broadcast/StreamInfo;	m_1718374		m_1718374
-	m	()Ltv/twitch/broadcast/ChannelInfo;	m_0864560		m_0864560
-	m	()Z	m_9869727		m_9869727
-	m	()Z	m_4079563		m_4079563
-	m	()Z	m_1889752		m_1889752
-	m	()Z	m_9476586		m_9476586
-	m	()Z	m_6774350		m_6774350
-	m	()Ltv/twitch/broadcast/IngestServer;	m_5840693		m_5840693
-	m	(Ltv/twitch/broadcast/IngestServer;)V	m_8929070		m_8929070
-		p	1			p_1
-	m	()Ltv/twitch/broadcast/IngestList;	m_4472257		m_4472257
-	m	(F)V	m_4315336		m_4315336
-		p	1			p_1
-	m	(F)V	m_5157952		m_5157952
-		p	1			p_1
-	m	()Lnet/minecraft/unmapped/C_0969327;	m_8813431		m_8813431
-	m	()J	m_8706310		m_8706310
+	m	()Ltv/twitch/broadcast/StreamInfo;	m_1718374		getStreamInfo
+	m	()Ltv/twitch/broadcast/ChannelInfo;	m_0864560		getChannelInfo
+	m	()Z	m_9869727		isBroadcasting
+	m	()Z	m_4079563		isReadyToBroadcast
+	m	()Z	m_1889752		isIngestTesting
+	m	()Z	m_9476586		isPaused
+	m	()Z	m_6774350		isLoggedIn
+	m	()Ltv/twitch/broadcast/IngestServer;	m_5840693		getDefaultServer
+	m	(Ltv/twitch/broadcast/IngestServer;)V	m_8929070		setDefaultServer
+		p	1			server
+	m	()Ltv/twitch/broadcast/IngestList;	m_4472257		getServers
+	m	(F)V	m_4315336		setRecorderVolume
+		p	1			volume
+	m	(F)V	m_5157952		setPlaybackVolume
+		p	1			volume
+	m	()Lnet/minecraft/unmapped/C_0969327;	m_8813431		getIngestTester
+	m	()J	m_8706310		getStreamTime
 	m	()Z	m_5814109		m_5814109
 	m	()V	<init>		<init>
-	m	()Ltv/twitch/broadcast/PixelFormat;	m_1146616		m_1146616
+	m	()Ltv/twitch/broadcast/PixelFormat;	m_1146616		getPixelFormat
 	m	()Z	m_1098794		m_1098794
 	m	()Z	m_2775427		m_2775427
-	m	(Ljava/lang/String;Ltv/twitch/AuthToken;)Z	m_8115569		m_8115569
-		p	1			p_1
-		p	2			p_2
-	m	()Z	m_7077665		m_7077665
-	m	(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Z	m_4274584		m_4274584
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	()Z	m_4161815		m_4161815
-	m	(IIFF)Ltv/twitch/broadcast/VideoParams;	m_3077098		m_3077098
+	m	(Ljava/lang/String;Ltv/twitch/AuthToken;)Z	m_8115569		authenticate
+		p	1			username
+		p	2			token
+	m	()Z	m_7077665		init
+	m	(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Z	m_4274584		setStreamInfo
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-		p	4			p_4
-	m	(Ltv/twitch/broadcast/VideoParams;)Z	m_4230217		m_4230217
-		p	1			p_1
-	m	()Z	m_1804025		m_1804025
-	m	()Z	m_9584877		m_9584877
-	m	()Z	m_3942052		m_3942052
-	m	(Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;)Z	m_5253197		m_5253197
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
-		p	5			p_5
-	m	(Lnet/minecraft/unmapped/C_1104058;)V	m_9999585		m_9999585
+	m	()Z	m_4161815		runCommercial
+	m	(IIFF)Ltv/twitch/broadcast/VideoParams;	m_3077098		getVideoParams
+		p	1			maxKbps
+		p	2			targetFps
+		p	3			bytesPerPixel
+		p	4			aspectRatio
+	m	(Ltv/twitch/broadcast/VideoParams;)Z	m_4230217		start
+		p	1			videoParams
+	m	()Z	m_1804025		stop
+	m	()Z	m_9584877		pause
+	m	()Z	m_3942052		resume
+	m	(Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;)Z	m_5253197		sendActionMetadata
+		p	1			name
+		p	2			time
+		p	4			description
+		p	5			metadata
+	m	(Lnet/minecraft/unmapped/C_1104058;)V	m_9999585		setStatus
 		p	1			p_1
 	m	()V	m_9722021		m_9722021
-	m	()V	m_6657530		m_6657530
-	m	()Lnet/minecraft/unmapped/C_0969327;	m_3340122		m_3340122
-	m	()Z	m_3120971		m_3120971
+	m	()V	m_6657530		getStreamInfo
+	m	()Lnet/minecraft/unmapped/C_0969327;	m_3340122		startIngestTesting
+	m	()Z	m_3120971		allocateFrameBuffer
 	m	()V	m_5595691		m_5595691
-	m	()Ltv/twitch/broadcast/FrameBuffer;	m_3769110		m_3769110
-	m	(Ltv/twitch/broadcast/FrameBuffer;)V	m_3329936		m_3329936
-		p	1			p_1
-	m	(Ltv/twitch/broadcast/FrameBuffer;)Ltv/twitch/ErrorCode;	m_9402807		m_9402807
-		p	1			p_1
-	m	(Ltv/twitch/ErrorCode;)Z	m_0261409		m_0261409
-		p	1			p_1
-	m	(Ljava/lang/String;)V	m_7278594		m_7278594
-		p	1			p_1
-	m	(Ljava/lang/String;)V	m_2698073		m_2698073
-		p	1			p_1
-	m	()Ltv/twitch/ErrorCode;	m_2315348		m_2315348
+	m	()Ltv/twitch/broadcast/FrameBuffer;	m_3769110		pollFreeBuffer
+	m	(Ltv/twitch/broadcast/FrameBuffer;)V	m_3329936		readPixels
+		p	1			buffer
+	m	(Ltv/twitch/broadcast/FrameBuffer;)Ltv/twitch/ErrorCode;	m_9402807		submitTexturePointer
+		p	1			ptr
+	m	(Ltv/twitch/ErrorCode;)Z	m_0261409		error
+		p	1			error
+	m	(Ljava/lang/String;)V	m_7278594		error
+		p	1			message
+	m	(Ljava/lang/String;)V	m_2698073		warn
+		p	1			message
+	m	()Ltv/twitch/ErrorCode;	m_2315348		getInitializationError
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_3728608		net/minecraft/unmapped/C_3728608
 	m	()V	<init>		<init>
 	m	()[Ljava/lang/reflect/Type;	getActualTypeArguments		getActualTypeArguments
 	m	()Ljava/lang/reflect/Type;	getRawType		getRawType
 	m	()Ljava/lang/reflect/Type;	getOwnerType		getOwnerType
-c	net/minecraft/unmapped/C_3840438		net/minecraft/unmapped/C_3840438
-	f	Lorg/apache/logging/log4j/Logger;	f_8753370		f_8753370
-	f	Lnet/minecraft/unmapped/C_5569288;	f_3938885		f_3938885
+c	net/minecraft/unmapped/C_3840438		net/minecraft/client/twitch/TwitchChat
+	f	Lorg/apache/logging/log4j/Logger;	f_8753370		LOGGER
+	f	Lnet/minecraft/unmapped/C_5569288;	f_3938885		listener
 	f	Ljava/lang/String;	f_1546196		f_1546196
 	f	Ljava/lang/String;	f_1390588		f_1390588
 	f	Ljava/lang/String;	f_1978774		f_1978774
@@ -799,7 +799,7 @@ c	net/minecraft/unmapped/C_3840438		net/minecraft/unmapped/C_3840438
 		p	1			p_1
 	m	([Ltv/twitch/chat/ChatTokenizedMessage;)V	chatChannelTokenizedMessageCallback		chatChannelTokenizedMessageCallback
 		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_5569288;)V	m_6291728		m_6291728
+	m	(Lnet/minecraft/unmapped/C_5569288;)V	m_6291728		setListener
 		p	1			p_1
 	m	()Z	m_6205318		m_6205318
 	m	(Ltv/twitch/AuthToken;)V	m_9437634		m_9437634
@@ -995,15 +995,15 @@ c	net/minecraft/unmapped/C_8759485		net/minecraft/C_33dxxszuy
 		p	1			p_1
 		p	2			p_2
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_8785182		net/minecraft/unmapped/C_8785182
-	f	Lorg/apache/logging/log4j/Logger;	f_0926669		f_0926669
-	f	Lorg/apache/logging/log4j/Marker;	f_8516030		f_8516030
-	f	Lnet/minecraft/unmapped/C_3723758;	f_7375778		f_7375778
-	f	Lnet/minecraft/unmapped/C_3840438;	f_5147118		f_5147118
+c	net/minecraft/unmapped/C_8785182		net/minecraft/client/twitch/Twitch
+	f	Lorg/apache/logging/log4j/Logger;	f_0926669		LOGGER
+	f	Lorg/apache/logging/log4j/Marker;	f_8516030		MARKER
+	f	Lnet/minecraft/unmapped/C_3723758;	f_7375778		broadcastController
+	f	Lnet/minecraft/unmapped/C_3840438;	f_5147118		chat
 	f	Lnet/minecraft/unmapped/C_8105098;	f_1251576		client
-	f	Lnet/minecraft/unmapped/C_9550253;	f_9397545		f_9397545
-	f	Ljava/util/Map;	f_4274041		f_4274041
-	f	Lnet/minecraft/unmapped/C_5837633;	f_8450556		f_8450556
+	f	Lnet/minecraft/unmapped/C_9550253;	f_9397545		title
+	f	Ljava/util/Map;	f_4274041		chatUserInfo
+	f	Lnet/minecraft/unmapped/C_5837633;	f_8450556		renderTarget
 	f	Z	f_3287372		f_3287372
 	f	I	f_6509247		f_6509247
 	f	J	f_2181952		f_2181952
@@ -1013,7 +1013,7 @@ c	net/minecraft/unmapped/C_8785182		net/minecraft/unmapped/C_8785182
 	f	Z	f_5956431		f_5956431
 	f	Z	f_7228856		f_7228856
 	f	Z	f_0268222		f_0268222
-	f	Z	f_4679672		f_4679672
+	f	Z	f_4679672		paused
 	m	(Lnet/minecraft/unmapped/C_8105098;Ljava/lang/String;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
