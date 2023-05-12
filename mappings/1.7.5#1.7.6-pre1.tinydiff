@@ -1,12 +1,12 @@
 tiny	2	0
 c	net/minecraft/server/MinecraftServer
-	f	Ljava/io/File;	f_1219190		USER_CACHE
+	f	Ljava/io/File;	f_1219190		USER_CACHE_FILE
 	f	Lcom/mojang/authlib/yggdrasil/YggdrasilAuthenticationService;	f_3183314		authService
 	f	Lcom/mojang/authlib/GameProfileRepository;	f_7740762		gameProfileRepository
-	f	Lnet/minecraft/unmapped/C_5148056;	f_1164230		playerCache
+	f	Lnet/minecraft/unmapped/C_5148056;	f_1164230		gameProfileCache
 	m	()[Lcom/mojang/authlib/GameProfile;	m_8450428		getGameProfiles
 	m	()Lcom/mojang/authlib/GameProfileRepository;	m_1289492		getGameProfileRepository
-	m	()Lnet/minecraft/unmapped/C_5148056;	m_2017591		getPlayerCache
+	m	()Lnet/minecraft/unmapped/C_5148056;	m_2017591		getGameProfileCache
 c	net/minecraft/unmapped/C_0066205
 	m	()V	m_7365521		m_7365521
 c	net/minecraft/unmapped/C_0281639
@@ -509,7 +509,7 @@ c	net/minecraft/unmapped/C_0741680		net/minecraft/server/StoredUserList__Seriali
 c	net/minecraft/unmapped/C_0759855		net/minecraft/client/entity/living/player/ClientPlayerEntity__1
 	f	[I	f_9248171		f_9248171
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_0887160		net/minecraft/server/PlayerCache__2
+c	net/minecraft/unmapped/C_0887160		net/minecraft/server/GameProfileCache__2
 	m	()V	<init>		<init>
 	m	()[Ljava/lang/reflect/Type;	getActualTypeArguments		getActualTypeArguments
 	m	()Ljava/lang/reflect/Type;	getRawType		getRawType
@@ -539,7 +539,7 @@ c	net/minecraft/unmapped/C_1807830		net/minecraft/server/Whitelist
 		p	1			name
 	m	(Ljava/lang/Object;)Ljava/lang/String;	m_7784880		m_7784880
 		p	1			p_1
-c	net/minecraft/unmapped/C_3631137		net/minecraft/server/PlayerCache__Serializer
+c	net/minecraft/unmapped/C_3631137		net/minecraft/server/GameProfileCache__Serializer
 	f	Lnet/minecraft/unmapped/C_5148056;	f_5104784		f_5104784
 	m	(Lnet/minecraft/unmapped/C_5148056;)V	<init>		<init>
 		p	1			p_1
@@ -611,10 +611,10 @@ c	net/minecraft/unmapped/C_5120280		net/minecraft/server/dedicated/UserConverter
 		p	1			p_1
 	m	(Ljava/lang/Object;)Z	apply		apply
 		p	1			s
-c	net/minecraft/unmapped/C_5148056		net/minecraft/server/PlayerCache
+c	net/minecraft/unmapped/C_5148056		net/minecraft/server/GameProfileCache
 	f	Ljava/text/SimpleDateFormat;	f_9916906		DATE_FORMAT
-	f	Ljava/util/Map;	f_3760092		playersByName
-	f	Ljava/util/Map;	f_2915069		playersByUuid
+	f	Ljava/util/Map;	f_3760092		profilesByName
+	f	Ljava/util/Map;	f_2915069		profilesByUuid
 	f	Ljava/util/LinkedList;	f_6718075		saveQueue
 	f	Lnet/minecraft/server/MinecraftServer;	f_3244933		server
 	f	Lcom/google/gson/Gson;	f_1938088		gson
@@ -623,7 +623,7 @@ c	net/minecraft/unmapped/C_5148056		net/minecraft/server/PlayerCache
 	m	(Lnet/minecraft/server/MinecraftServer;Ljava/io/File;)V	<init>		<init>
 		p	1			server
 		p	2			file
-	m	(Lnet/minecraft/server/MinecraftServer;Ljava/lang/String;)Lcom/mojang/authlib/GameProfile;	m_1573291		findProfile
+	m	(Lnet/minecraft/server/MinecraftServer;Ljava/lang/String;)Lcom/mojang/authlib/GameProfile;	m_1573291		find
 		p	0			server
 		p	1			name
 	m	(Lcom/mojang/authlib/GameProfile;)V	m_4056638		add
@@ -631,14 +631,14 @@ c	net/minecraft/unmapped/C_5148056		net/minecraft/server/PlayerCache
 	m	(Lcom/mojang/authlib/GameProfile;Ljava/util/Date;)V	m_3640413		add
 		p	1			profile
 		p	2			expirationDate
-	m	(Ljava/lang/String;)Lcom/mojang/authlib/GameProfile;	m_6677413		remove
+	m	(Ljava/lang/String;)Lcom/mojang/authlib/GameProfile;	m_6677413		get
 		p	1			name
 	m	()[Ljava/lang/String;	m_7014386		getNames
-	m	(Ljava/util/UUID;)Lnet/minecraft/unmapped/C_8461612;	m_2416144		get
+	m	(Ljava/util/UUID;)Lnet/minecraft/unmapped/C_8461612;	m_2416144		getEntry
 		p	1			uuid
 	m	()V	m_5241017		load
 	m	()V	m_9733732		save
-	m	(I)Ljava/util/List;	m_6648170		getEntries
+	m	(I)Ljava/util/List;	m_6648170		getSaveQueue
 		p	1			amount
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_5300961		net/minecraft/server/IpBanEntry
@@ -705,9 +705,9 @@ c	net/minecraft/unmapped/C_6475379		net/minecraft/server/dedicated/UserConverter
 	m	(Ljava/io/File;Ljava/util/Map;)Ljava/util/List;	m_1759332		parsePlayerList
 		p	0			file
 		p	1			data
-	m	(Lnet/minecraft/server/MinecraftServer;Ljava/util/Collection;Lcom/mojang/authlib/ProfileLookupCallback;)V	m_0785565		lookupProfiles
+	m	(Lnet/minecraft/server/MinecraftServer;Ljava/util/Collection;Lcom/mojang/authlib/ProfileLookupCallback;)V	m_0785565		findProfiles
 		p	0			server
-		p	1			players
+		p	1			names
 		p	2			callback
 	m	(Lnet/minecraft/server/MinecraftServer;)Z	m_6876432		convertPlayerBans
 		p	0			server
@@ -834,7 +834,7 @@ c	net/minecraft/unmapped/C_8361170		net/minecraft/unmapped/C_8361170
 	m	(Lnet/minecraft/unmapped/C_2018497;Lcom/mojang/authlib/GameProfile;)V	m_9287812		m_9287812
 		p	0			p_0
 		p	1			p_1
-c	net/minecraft/unmapped/C_8461612		net/minecraft/server/PlayerCache__Entry
+c	net/minecraft/unmapped/C_8461612		net/minecraft/server/GameProfileCache__Entry
 	f	Lcom/mojang/authlib/GameProfile;	f_8325141		profile
 	f	Ljava/util/Date;	f_4357389		expirationDate
 	f	Lnet/minecraft/unmapped/C_5148056;	f_6594994		f_6594994
@@ -929,7 +929,7 @@ c	net/minecraft/unmapped/C_9268674		net/minecraft/server/IpBans
 		p	1			address
 	m	(Ljava/net/SocketAddress;)Ljava/lang/String;	m_2858733		getIp
 		p	1			address
-c	net/minecraft/unmapped/C_9283065		net/minecraft/server/PlayerCache__1
+c	net/minecraft/unmapped/C_9283065		net/minecraft/server/GameProfileCache__1
 	f	[Lcom/mojang/authlib/GameProfile;	f_6518588		f_6518588
 	m	([Lcom/mojang/authlib/GameProfile;)V	<init>		<init>
 		p	1			p_1
