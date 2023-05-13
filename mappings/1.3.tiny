@@ -1985,15 +1985,15 @@ c	net/minecraft/unmapped/C_0259655	net/minecraft/client/render/GameRenderer
 	f	I	f_2242117	f_2242117
 	f	[I	f_0411041	lightmapTexturePixels
 	f	F	f_3816640	movementFovMultiplier
-	f	F	f_5690358	lastMovementFovMultiplier
-	f	F	f_7466039	playerMovmentSpeed
+	f	F	f_5690358	lastFov
+	f	F	f_7466039	fov
 	f	Z	f_9310582	thiccFog
 	f	D	f_9470218	zoom
 	f	D	f_0321766	zoomX
 	f	D	f_1474787	zoomY
 	f	J	f_8516179	lastWindowFocusedTime
 	f	J	f_1850426	lastWorldRenderTime
-	f	Z	f_5401300	lightmapDirty
+	f	Z	f_5401300	lightMapDirty
 	f	F	f_8522225	lightmapFlicker
 	f	F	f_4170296	lightMapRandoms
 	f	F	f_7788706	lightMapFlicker2
@@ -2014,9 +2014,9 @@ c	net/minecraft/unmapped/C_0259655	net/minecraft/client/render/GameRenderer
 	m	(Lnet/minecraft/client/Minecraft;)V	<init>	<init>
 		p	1		p_1
 	m	()V	m_5893920	tick
-	m	(F)V	m_4970663	updateTargetEntity
+	m	(F)V	m_4970663	pick
 		p	1		tickDelta
-	m	()V	m_5234905	updateMovementFovMultiplier
+	m	()V	m_5234905	tickFov
 	m	(FZ)F	m_2652101	getFov
 		p	1		tickDelta
 		p	2		fovChanged
@@ -2031,18 +2031,18 @@ c	net/minecraft/unmapped/C_0259655	net/minecraft/client/render/GameRenderer
 		p	3		p_3
 		p	5		p_5
 	m	()V	m_1982623	m_1982623
-	m	(FI)V	m_2333748	updateCamera
+	m	(FI)V	m_2333748	setupCamera
 		p	1		tickDelta
 		p	2		anaglyphRenderPass
-	m	(FI)V	m_1785765	renderHand
+	m	(FI)V	m_1785765	renderItemInHand
 		p	1		tickDelta
 		p	2		anaglyphFilter
-	m	(D)V	m_4789710	disableTexture2D
+	m	(D)V	m_4789710	disableLightMap
 		p	1		tickDelta
-	m	(D)V	m_6615793	drawLightmap
+	m	(D)V	m_6615793	enableLightMap
 		p	1		tickDelta
-	m	()V	m_8925150	updateLightmap
-	m	()V	m_8456757	cleanLightmap
+	m	()V	m_8925150	tickLightMap
+	m	()V	m_8456757	updateLightMap
 	m	(F)V	m_2053256	render
 		p	1		tickDelta
 	m	(F)V	m_6974968	m_6974968
@@ -2050,11 +2050,11 @@ c	net/minecraft/unmapped/C_0259655	net/minecraft/client/render/GameRenderer
 	m	(FJ)V	m_7036211	renderWorld
 		p	1		tickDelta
 		p	2		renderTimeLimit
-	m	()V	m_1648138	tickWaterSplashing
-	m	(F)V	m_5256595	renderWeather
+	m	()V	m_1648138	tickRain
+	m	(F)V	m_5256595	renderSnowAndRain
 		p	1		tickDelta
-	m	()V	m_1027745	setupHudMatrixMode
-	m	(F)V	m_0437985	renderBackground
+	m	()V	m_1027745	setupGuiState
+	m	(F)V	m_0437985	setupFog
 		p	1		tickDelta
 	m	(IF)V	m_6211536	renderFog
 		p	1		mode
@@ -24664,7 +24664,7 @@ c	net/minecraft/unmapped/C_7024377	net/minecraft/network/packet/EntityMovePacket
 		p	1		p_1
 	m	()I	m_4040470	m_4040470
 	m	()Ljava/lang/String;	m_8387532	m_8387532
-c	net/minecraft/unmapped/C_7028449	net/minecraft/client/render/world/ChunkRenderer
+c	net/minecraft/unmapped/C_7028449	net/minecraft/client/render/world/RenderChunk
 	f	Lnet/minecraft/unmapped/C_5553933;	f_9425072	world
 	f	I	f_5750350	glList
 	f	Lnet/minecraft/unmapped/C_5786166;	f_3580586	bufferBuilder
@@ -29364,7 +29364,7 @@ c	net/minecraft/unmapped/C_8398976	net/minecraft/client/render/world/WorldRender
 	f	I	f_6958150	entityRenderCooldown
 	f	I	f_2380148	entityCount
 	f	I	f_3355471	globalEntityCount
-	f	I	f_3862515	f_3862515
+	f	I	f_3862515	culledEntityCount
 	f	[I	f_3081372	f_3081372
 	f	Ljava/nio/IntBuffer;	f_9055179	glIntBuffer
 	f	I	f_2057730	chunkCount
@@ -29383,7 +29383,7 @@ c	net/minecraft/unmapped/C_8398976	net/minecraft/client/render/world/WorldRender
 	m	(Lnet/minecraft/client/Minecraft;Lnet/minecraft/unmapped/C_0876962;)V	<init>	<init>
 		p	1		p_1
 		p	2		p_2
-	m	()V	m_4672684	drawNoise
+	m	()V	m_4672684	renderStars
 	m	(Lnet/minecraft/unmapped/C_7873567;)V	m_2989568	setWorld
 		p	1		world
 	m	()V	m_6748042	m_6748042
@@ -29409,7 +29409,7 @@ c	net/minecraft/unmapped/C_8398976	net/minecraft/client/render/world/WorldRender
 		p	2		chunksToRender
 		p	3		renderStage
 		p	4		tickDelta
-	m	(ID)V	m_6023214	renderStages
+	m	(ID)V	m_6023214	render
 		p	1		renderStage
 		p	2		tickDelta
 	m	()V	m_1315270	tick
@@ -29420,8 +29420,8 @@ c	net/minecraft/unmapped/C_8398976	net/minecraft/client/render/world/WorldRender
 	m	(DDDF)Z	m_0917323	hasThiccFog
 		p	1		x
 		p	3		y
-		p	5		p_5
-		p	7		p_7
+		p	5		z
+		p	7		tickDelta
 	m	(F)V	m_3206451	renderFancyClouds
 		p	1		tickDelta
 	m	(Lnet/minecraft/unmapped/C_6607881;Z)Z	m_8473502	prepareChunks
@@ -29445,7 +29445,7 @@ c	net/minecraft/unmapped/C_8398976	net/minecraft/client/render/world/WorldRender
 		p	5		p_5
 	m	(Lnet/minecraft/unmapped/C_5577922;)V	m_1897773	renderHitbox
 		p	1		p_1
-	m	(IIIIII)V	m_5495882	stageChunkSectionRerender
+	m	(IIIIII)V	m_5495882	markDirty
 		p	1		minX
 		p	2		minY
 		p	3		minZ

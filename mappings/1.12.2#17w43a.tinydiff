@@ -416,20 +416,20 @@ c	net/minecraft/unmapped/C_0259655
 	m	(FZ)F	m_2652101	getFov	
 		p	1		tickDelta	
 		p	2		fovChanged	
-	m	(FI)V	m_2333748	updateCamera	
+	m	(FI)V	m_2333748	setupCamera	
 		p	1		tickDelta	
 		p	2		anaglyphRenderPass	
-	m	(FI)V	m_1785765	renderHand	
+	m	(FI)V	m_1785765	renderItemInHand	
 		p	1		tickDelta	
 		p	2		anaglyphFilter	
-	m	(FJ)V	m_2053256	updateRotation	
+	m	(FJ)V	m_2053256	render	
 		p	1		tickDelta	
-		p	2		tickStartNanoTime	
-	m	(IFJ)V	m_0906956	m_0906956	
+		p	2		startTime	
+	m	(IFJ)V	m_0906956	render	
 		p	1		anaglyphRenderPass	
 		p	2		tickDelta	
 		p	3		renderTimeLimit	
-	m	(Lnet/minecraft/unmapped/C_8398976;FIDDD)V	m_8394918	renderAboveClouds	
+	m	(Lnet/minecraft/unmapped/C_8398976;FIDDD)V	m_8394918	renderClouds	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
@@ -440,18 +440,18 @@ c	net/minecraft/unmapped/C_0259655
 	m	(FZ)D	m_2652101		getFov
 		p	1			p_1
 		p	2			p_2
-	m	(F)V	m_2333748		updateCamera
+	m	(F)V	m_2333748		setupCamera
 		p	1			p_1
-	m	(F)V	m_1785765		renderHand
+	m	(F)V	m_1785765		renderItemInHand
 		p	1			p_1
-	m	(FJZ)V	m_2053256		updateRotation
+	m	(FJZ)V	m_2053256		render
 		p	1			p_1
 		p	2			p_2
 		p	4			p_4
-	m	(FJ)V	m_0906956		m_0906956
+	m	(FJ)V	m_0906956		render
 		p	1			p_1
 		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_8398976;FDDD)V	m_8394918		renderAboveClouds
+	m	(Lnet/minecraft/unmapped/C_8398976;FDDD)V	m_8394918		renderClouds
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -6174,19 +6174,19 @@ c	net/minecraft/unmapped/C_8254035$C_4227223
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/unmapped/C_8398976
-	f	[Lorg/lwjgl/util/vector/Vector4f;	f_8040398	f_8040398	
-	f	[Lnet/minecraft/unmapped/C_2900924;	f_8040398		f_8040398
-	m	(Lnet/minecraft/unmapped/C_0539808;D)Lorg/lwjgl/util/vector/Vector3f;	m_1662587	m_1662587	
-		p	1		p_1	
-		p	2		p_2	
-	m	(Lnet/minecraft/unmapped/C_3333682;DILnet/minecraft/unmapped/C_0539808;)I	m_4364373	m_4364373	
-		p	1		p_1	
-		p	2		p_2	
-		p	4		p_4	
-		p	5		p_5	
+	f	[Lorg/lwjgl/util/vector/Vector4f;	f_8040398	frustumPoints	
+	f	[Lnet/minecraft/unmapped/C_2900924;	f_8040398		frustumPoints
+	m	(Lnet/minecraft/unmapped/C_0539808;D)Lorg/lwjgl/util/vector/Vector3f;	m_1662587	getLookVector	
+		p	1		camera	
+		p	2		tickDelta	
+	m	(Lnet/minecraft/unmapped/C_3333682;DILnet/minecraft/unmapped/C_0539808;)I	m_4364373	render	
+		p	1		layer	
+		p	2		tickDelta	
+		p	4		anaglyphRenderPass	
+		p	5		camera	
 	m	(FI)V	m_5055077	renderSky	
 		p	1		tickDelta	
-		p	2		p_2	
+		p	2		anaglyphRenderPass	
 	m	(FIDDD)V	m_3787690	renderClouds	
 		p	1		p_1	
 		p	2		p_2	
@@ -6200,10 +6200,10 @@ c	net/minecraft/unmapped/C_8398976
 		p	5		p_5	
 		p	7		p_7	
 	m	()V	close		close
-	m	(Lnet/minecraft/unmapped/C_0539808;D)Lnet/minecraft/unmapped/C_3748478;	m_1662587		m_1662587
+	m	(Lnet/minecraft/unmapped/C_0539808;D)Lnet/minecraft/unmapped/C_3748478;	m_1662587		getLookVector
 		p	1			p_1
 		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_3333682;DLnet/minecraft/unmapped/C_0539808;)I	m_4364373		m_4364373
+	m	(Lnet/minecraft/unmapped/C_3333682;DLnet/minecraft/unmapped/C_0539808;)I	m_4364373		render
 		p	1			p_1
 		p	2			p_2
 		p	4			p_4
@@ -7067,9 +7067,9 @@ c	net/minecraft/unmapped/C_9639106
 	m	(II)Z	m_4198250		moveHoveredSlotToHotbar
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_9904591	net/minecraft/unmapped/C_9904591	
+c	net/minecraft/unmapped/C_9904591	net/minecraft/client/render/FrustumMatrix	
 	m	([F)V	<init>	<init>	
-		p	1		p_1	
+		p	1		matrix	
 	m	()V	<init>	<init>	
 c	net/minecraft/unmapped/C_9954218
 	m	(Lnet/minecraft/unmapped/C_8105098;II)Z	m_9491400	m_9491400	
