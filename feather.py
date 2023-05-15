@@ -49,7 +49,7 @@ def main():
             else:
                 raise Exception('no minecraft version given!')
         else:
-            versions = [version for version in possible_versions if version not in UNAVAILABLE_VERSIONS]
+            versions = [version for version in possible_versions if version not in UNAVAILABLE_VERSIONS and not version.endswith('-client') and not version.endswith('-server')]
     if len(tasks) == 0:
         raise Exception('no gradle tasks given!')
     
