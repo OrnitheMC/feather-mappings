@@ -114,9 +114,9 @@ c	net/minecraft/unmapped/C_8398976
 		p	2		p_2	
 	m	(Lnet/minecraft/unmapped/C_0539808;)Z	m_8473502	compileChunks	
 		p	1		camera	
-	m	(Ljava/util/Collection;Ljava/util/Collection;)V	m_3516984		m_3516984
-		p	1			p_1
-		p	2			p_2
+	m	(Ljava/util/Collection;Ljava/util/Collection;)V	m_3516984		updateGlobalBlockEntities
+		p	1			remove
+		p	2			add
 c	net/minecraft/unmapped/C_8779800	net/minecraft/client/render/world/WorldRenderer__1	
 	f	Lnet/minecraft/unmapped/C_3674802;	f_1949958	f_1949958	
 	f	Lnet/minecraft/unmapped/C_8398976;	f_9946706	f_9946706	
@@ -152,7 +152,7 @@ c	net/minecraft/unmapped/C_0245906		net/minecraft/client/render/world/ChunkCompi
 		p	1			listener
 	m	()Ljava/util/concurrent/locks/ReentrantLock;	m_4815560		getLock
 	m	()Lnet/minecraft/unmapped/C_3219071;	m_1281930		getType
-c	net/minecraft/unmapped/C_2028207		net/minecraft/unmapped/C_6916756__2
+c	net/minecraft/unmapped/C_2028207		net/minecraft/client/render/world/ChunkRenderWorker__2
 	f	Lnet/minecraft/unmapped/C_0245906;	f_1403720		f_1403720
 	f	Lnet/minecraft/unmapped/C_6916756;	f_9944227		f_9944227
 	m	(Lnet/minecraft/unmapped/C_6916756;Lnet/minecraft/unmapped/C_0245906;)V	<init>		<init>
@@ -184,21 +184,21 @@ c	net/minecraft/unmapped/C_2326439		net/minecraft/client/render/world/CompiledCh
 	m	(Lnet/minecraft/unmapped/C_3622326;)V	m_5156586		addBlockEntity
 		p	1			blockEntity
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_3110056		net/minecraft/unmapped/C_6916756__1
+c	net/minecraft/unmapped/C_3110056		net/minecraft/client/render/world/ChunkRenderWorker__1
 	f	Lcom/google/common/util/concurrent/ListenableFuture;	f_2451907		f_2451907
 	f	Lnet/minecraft/unmapped/C_6916756;	f_8148486		f_8148486
 	m	(Lnet/minecraft/unmapped/C_6916756;Lcom/google/common/util/concurrent/ListenableFuture;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
 	m	()V	run		run
-c	net/minecraft/unmapped/C_3150924		net/minecraft/unmapped/C_3500307__2
+c	net/minecraft/unmapped/C_3150924		net/minecraft/client/render/world/ChunkRenderDispatcher__2
 	f	Lnet/minecraft/unmapped/C_0245906;	f_7708015		f_7708015
 	f	Lnet/minecraft/unmapped/C_3500307;	f_2474374		f_2474374
 	m	(Lnet/minecraft/unmapped/C_3500307;Lnet/minecraft/unmapped/C_0245906;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
 	m	()V	run		run
-c	net/minecraft/unmapped/C_3219071		net/minecraft/unmapped/C_0245906__C_3219071
+c	net/minecraft/unmapped/C_3219071		net/minecraft/client/render/world/ChunkCompileTask__C_3219071
 	f	Lnet/minecraft/unmapped/C_3219071;	f_6355662		f_6355662
 	f	Lnet/minecraft/unmapped/C_3219071;	f_9545075		f_9545075
 	f	[Lnet/minecraft/unmapped/C_3219071;	f_6415089		f_6415089
@@ -209,7 +209,7 @@ c	net/minecraft/unmapped/C_3219071		net/minecraft/unmapped/C_0245906__C_3219071
 		p	1			p_1
 		p	2			p_2
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_3361848		net/minecraft/unmapped/C_3500307__3
+c	net/minecraft/unmapped/C_3361848		net/minecraft/client/render/world/ChunkRenderDispatcher__3
 	f	Lnet/minecraft/unmapped/C_3333682;	f_7568934		f_7568934
 	f	Lnet/minecraft/unmapped/C_8373595;	f_7035728		f_7035728
 	f	Lnet/minecraft/unmapped/C_7028449;	f_4946340		f_4946340
@@ -263,7 +263,7 @@ c	net/minecraft/unmapped/C_6380374		net/minecraft/client/Minecraft__16
 		p	1			p_1
 	m	()Ljava/lang/String;	m_5374894		m_5374894
 	m	()Ljava/lang/Object;	call		call
-c	net/minecraft/unmapped/C_6407363		net/minecraft/unmapped/C_3500307__1
+c	net/minecraft/unmapped/C_6407363		net/minecraft/client/render/world/ChunkRenderDispatcher__1
 	f	Lnet/minecraft/unmapped/C_0245906;	f_8813633		f_8813633
 	f	Lnet/minecraft/unmapped/C_3500307;	f_9690629		f_9690629
 	m	(Lnet/minecraft/unmapped/C_3500307;Lnet/minecraft/unmapped/C_0245906;)V	<init>		<init>
@@ -288,13 +288,13 @@ c	net/minecraft/unmapped/C_6916756		net/minecraft/client/render/world/ChunkRende
 		p	1			p_1
 	m	()Lorg/apache/logging/log4j/Logger;	m_2905079		m_2905079
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_8328177		net/minecraft/unmapped/C_2326439__1
+c	net/minecraft/unmapped/C_8328177		net/minecraft/client/render/world/CompiledChunk__1
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_3333682;)V	m_7453299		m_7453299
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_3333682;)V	m_0921068		m_0921068
 		p	1			p_1
-c	net/minecraft/unmapped/C_9329310		net/minecraft/unmapped/C_0245906__C_9329310
+c	net/minecraft/unmapped/C_9329310		net/minecraft/client/render/world/ChunkCompileTask__C_9329310
 	f	Lnet/minecraft/unmapped/C_9329310;	f_2546583		f_2546583
 	f	Lnet/minecraft/unmapped/C_9329310;	f_0958346		f_0958346
 	f	Lnet/minecraft/unmapped/C_9329310;	f_1309073		f_1309073
