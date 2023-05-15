@@ -1307,13 +1307,13 @@ c	net/minecraft/unmapped/C_1895985	net/minecraft/client/render/world/RenderStage
 	f	Z	f_8780809	doNotFlipGlList	
 	m	()V	<init>	<init>	
 	m	()V	m_9844188	render	
-c	net/minecraft/unmapped/C_1955653	net/minecraft/client/render/EntityRenderComparator	
+c	net/minecraft/unmapped/C_1955653	net/minecraft/client/render/RenderChunkComparator	
 	f	Lnet/minecraft/unmapped/C_0539808;	f_8218061	f_8218061	
 	m	(Lnet/minecraft/unmapped/C_0539808;)V	<init>	<init>	
-		p	1		entity	
+		p	1		camera	
 	m	(Ljava/lang/Object;Ljava/lang/Object;)I	compare	compare	
-		p	1		point1	
-		p	2		point2	
+		p	1		chunk1	
+		p	2		chunk2	
 c	net/minecraft/unmapped/C_1998703	net/minecraft/client/render/entity/FallingBlockRenderer	
 	f	Lnet/minecraft/unmapped/C_3216249;	f_3028028	blockRenderer	
 	m	()V	<init>	<init>	
@@ -2139,9 +2139,9 @@ c	net/minecraft/unmapped/C_3342272	net/minecraft/client/gui/screen/inventory/men
 c	net/minecraft/unmapped/C_3362006	net/minecraft/client/render/entity/EntityRenderDispatcher	
 	f	Ljava/util/Map;	f_3002260	renderers	
 	f	Lnet/minecraft/unmapped/C_3362006;	f_9792930	INSTANCE	
-	f	D	f_8583479	_cameraX	
-	f	D	f_6306499	_cameraY	
-	f	D	f_9874851	_cameraZ	
+	f	D	f_8583479	offsetX	
+	f	D	f_6306499	offsetY	
+	f	D	f_9874851	offsetZ	
 	f	Lnet/minecraft/unmapped/C_0876962;	f_6059704	textureManager	
 	f	Lnet/minecraft/unmapped/C_5553933;	f_7087482	world	
 	f	F	f_5107786	cameraYaw	
@@ -4399,31 +4399,31 @@ c	net/minecraft/unmapped/C_7028449	net/minecraft/client/render/world/RenderChunk
 	f	I	f_5750350	glList	
 	f	Lnet/minecraft/unmapped/C_5786166;	f_3580586	bufferBuilder	
 	f	I	f_9221603	updateCounter	
-	f	I	f_9148018	x	
-	f	I	f_8057675	y	
-	f	I	f_1468741	z	
+	f	I	f_9148018	originX	
+	f	I	f_8057675	originY	
+	f	I	f_1468741	originZ	
 	f	I	f_6592251	f_6592251	
 	f	I	f_8249186	f_8249186	
 	f	I	f_4676706	f_4676706	
-	f	I	f_4283526	regionCoordinateX	
-	f	I	f_7075818	regionCoordinateY	
-	f	I	f_5111861	regionCoordinateZ	
+	f	I	f_4283526	regionOriginX	
+	f	I	f_7075818	regionOriginY	
+	f	I	f_5111861	regionOriginZ	
 	f	I	f_8963250	regionX	
 	f	I	f_8232629	regionY	
 	f	I	f_5181695	regionZ	
-	f	Z	f_1508189	isBoxInFrustum	
-	f	[Z	f_7874650	renderStages	
+	f	Z	f_1508189	visible	
+	f	[Z	f_7874650	blocks	
 	f	I	f_1795260	centerX	
 	f	I	f_9365868	centerY	
 	f	I	f_1811950	centerZ	
-	f	Z	f_3085426	blocksUnstaged	
+	f	Z	f_3085426	dirty	
 	f	Lnet/minecraft/unmapped/C_5577922;	f_2666377	box	
-	f	Z	f_5353207	notculled	
-	f	Z	f_5817086	setColorOcclusion	
-	f	I	f_7712432	hasColorOcclusion	
+	f	Z	f_5353207	glArbOcclusion	
+	f	Z	f_5817086	glArbOcclusionPending	
+	f	I	f_7712432	glArbOcclusionQuery	
 	f	Z	f_2481638	chunkHasSkyLight	
 	f	Z	f_0550951	blocksRendered	
-	f	Ljava/util/List;	f_4904106	blockEntitiesToRender	
+	f	Ljava/util/List;	f_4904106	blockEntities	
 	f	Ljava/util/List;	f_5559830	blockEntities	
 	m	(Lnet/minecraft/unmapped/C_5553933;Ljava/util/List;IIIII)V	<init>	<init>	
 		p	1		p_1	
@@ -4433,7 +4433,7 @@ c	net/minecraft/unmapped/C_7028449	net/minecraft/client/render/world/RenderChunk
 		p	5		p_5	
 		p	6		p_6	
 		p	7		p_7	
-	m	(III)V	m_6710001	updatePosition	
+	m	(III)V	m_6710001	setOrigin	
 		p	1		x	
 		p	2		y	
 		p	3		z	
@@ -4442,13 +4442,13 @@ c	net/minecraft/unmapped/C_7028449	net/minecraft/client/render/world/RenderChunk
 		p	1		camera	
 	m	()V	m_0274851	reset	
 	m	()V	m_4375328	releaseBuffers	
-	m	(I)I	m_5095556	getRenderStageGlId	
-		p	1		glID	
-	m	(Lnet/minecraft/unmapped/C_3716663;)V	m_0357066	updateIsBoxInFrustum	
+	m	(I)I	m_5095556	getGlList	
+		p	1		layer	
+	m	(Lnet/minecraft/unmapped/C_3716663;)V	m_0357066	updateVisibility	
 		p	1		p_1	
-	m	()V	m_4954370	renderGlListPlus2	
+	m	()V	m_4954370	glCallList	
 	m	()Z	m_0601031	getChunkRenderReloaderStatus	
-	m	()V	m_3698923	stageBlockRenderer	
+	m	()V	m_3698923	markDirty	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_7051878	net/minecraft/block/FlowingLiquidBlock	
 	f	I	f_3076630	adjacentSources	
@@ -5234,40 +5234,40 @@ c	net/minecraft/unmapped/C_8322294	net/minecraft/client/render/entity/SheepRende
 		p	1		p_1	
 		p	2		p_2	
 c	net/minecraft/unmapped/C_8398976	net/minecraft/client/render/world/WorldRenderer	
-	f	Ljava/util/List;	f_5253078	blockEntities	
+	f	Ljava/util/List;	f_5253078	globalBlockEntities	
 	f	Lnet/minecraft/unmapped/C_5553933;	f_5815929	world	
 	f	Lnet/minecraft/unmapped/C_0876962;	f_5265450	textureManager	
-	f	Ljava/util/List;	f_2775791	renderdChunkBlockRenderers	
-	f	[Lnet/minecraft/unmapped/C_7028449;	f_6849064	chunkBlockRendererList2	
-	f	[Lnet/minecraft/unmapped/C_7028449;	f_2222405	chunkBlockRendererList1	
-	f	I	f_3719740	chunkCountX	
-	f	I	f_5788315	chunkSectionCount	
-	f	I	f_8962769	chunkCountZ	
-	f	I	f_6542687	glLists	
+	f	Ljava/util/List;	f_2775791	pendingChunks	
+	f	[Lnet/minecraft/unmapped/C_7028449;	f_6849064	compiledChunks	
+	f	[Lnet/minecraft/unmapped/C_7028449;	f_2222405	chunkStorage	
+	f	I	f_3719740	chunkGridSizeX	
+	f	I	f_5788315	chunkGridSizeY	
+	f	I	f_8962769	chunkGridSizeZ	
+	f	I	f_6542687	translucentGlList	
 	f	Lnet/minecraft/unmapped/C_5664496;	f_7980673	client	
 	f	Lnet/minecraft/unmapped/C_3216249;	f_5517996	blockRenderer	
-	f	Ljava/nio/IntBuffer;	f_5815579	glIntBufferWithColorOcclusion	
-	f	Z	f_9940188	hasColorOcclusion	
+	f	Ljava/nio/IntBuffer;	f_5815579	arbOcclusionBuffer	
+	f	Z	f_9940188	glArbOcclusion	
 	f	I	f_3294694	ticks	
-	f	I	f_0367927	gLListID	
-	f	I	f_3694268	overworldSkyBox	
-	f	I	f_3113621	overworldSkyBoxUnderHorizon	
-	f	I	f_3591859	minX	
-	f	I	f_7899367	minY	
-	f	I	f_2929446	minZ	
-	f	I	f_0136546	maxX	
-	f	I	f_5895585	maxY	
-	f	I	f_4078785	maxZ	
-	f	I	f_4129178	renderDistance	
+	f	I	f_0367927	starsGlList	
+	f	I	f_3694268	lightSkyGlList	
+	f	I	f_3113621	darkSkyGlList	
+	f	I	f_3591859	chunkGridMinX	
+	f	I	f_7899367	chunkGridMinY	
+	f	I	f_2929446	chunkGridMinZ	
+	f	I	f_0136546	chunkGridMaxX	
+	f	I	f_5895585	chunkGridMaxY	
+	f	I	f_4078785	chunkGridMaxZ	
+	f	I	f_4129178	viewDistance	
 	f	I	f_2380148	entityCount	
 	f	I	f_3355471	globalEntityCount	
 	f	I	f_3862515	culledEntityCount	
-	f	Ljava/nio/IntBuffer;	f_9055179	glIntBuffer	
+	f	Ljava/nio/IntBuffer;	f_9055179	occlusionBuffer	
 	f	I	f_2057730	chunkCount	
-	f	I	f_7816152	chunkSectionsOutOfView	
-	f	I	f_3311390	chunkSectionsRemovedThroughOcclusionCulling	
-	f	I	f_5476568	chunkSectionRenderPasses	
-	f	I	f_2819846	emptyChunkSections	
+	f	I	f_7816152	invisibleChunkCount	
+	f	I	f_3311390	glArbOccludedChunkCount	
+	f	I	f_5476568	compiledChunkCount	
+	f	I	f_2819846	solidChunkCount	
 	f	Ljava/util/List;	f_4777570	renderList	
 	f	[Lnet/minecraft/unmapped/C_1895985;	f_2276984	renderStages	
 	f	D	f_7700050	cameraX	
@@ -5323,13 +5323,13 @@ c	net/minecraft/unmapped/C_8398976	net/minecraft/client/render/world/WorldRender
 		p	1		cameraX	
 		p	2		cameraY	
 		p	3		cameraZ	
-	m	(Lnet/minecraft/unmapped/C_9590849;ID)I	m_4843024	renderTerrain	
+	m	(Lnet/minecraft/unmapped/C_9590849;ID)I	m_4843024	render	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(II)V	m_8204524	checkColorOcclusion	
-		p	1		start	
-		p	2		end	
+	m	(II)V	m_8204524	queryGlArbOcclusion	
+		p	1		from	
+		p	2		to	
 	m	(IIID)I	m_5966782	render	
 		p	1		renderStartIndex	
 		p	2		chunksToRender	
@@ -5548,13 +5548,13 @@ c	net/minecraft/unmapped/C_9029783	net/minecraft/unmapped/C_9029783
 	m	(Ljava/net/URL;Ljava/io/File;)V	m_3833599	m_3833599	
 		p	1		p_1	
 		p	2		p_2	
-c	net/minecraft/unmapped/C_9079092	net/minecraft/client/render/world/ChunkRenderReloaderComparator	
+c	net/minecraft/unmapped/C_9079092	net/minecraft/client/render/world/RenderChunkReloadComparator	
 	f	Lnet/minecraft/unmapped/C_9590849;	f_4585186	camera	
 	m	(Lnet/minecraft/unmapped/C_9590849;)V	<init>	<init>	
 		p	1		p_1	
 	m	(Ljava/lang/Object;Ljava/lang/Object;)I	compare	compare	
-		p	1		firstChunkRenderReloader	
-		p	2		secondChunkRenderReloader	
+		p	1		chunk1	
+		p	2		chunk2	
 c	net/minecraft/unmapped/C_9113835	net/minecraft/client/player/input/PlayerInput	
 	f	F	f_8861920	movementSideways	
 	f	F	f_8397235	movementForward	

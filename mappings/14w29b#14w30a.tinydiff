@@ -114,18 +114,18 @@ c	net/minecraft/unmapped/C_1895985	net/minecraft/client/render/world/RenderStage
 		p	1		p_1	
 	m	()V	m_9137168	m_9137168	
 	m	()V	m_4954327	reset	
-c	net/minecraft/unmapped/C_1955653	net/minecraft/client/render/EntityRenderComparator	
-	f	D	f_9651376	posX	
-	f	D	f_1264212	posY	
-	f	D	f_5395774	posZ	
+c	net/minecraft/unmapped/C_1955653	net/minecraft/client/render/RenderChunkComparator	
+	f	D	f_9651376	cameraX	
+	f	D	f_1264212	cameraY	
+	f	D	f_5395774	cameraZ	
 	m	(Lnet/minecraft/unmapped/C_0539808;)V	<init>	<init>	
-		p	1		entity	
+		p	1		camera	
 	m	(Lnet/minecraft/unmapped/C_7028449;Lnet/minecraft/unmapped/C_7028449;)I	m_9068931	compare	
 		p	1		p_1	
 		p	2		p_2	
 	m	(Ljava/lang/Object;Ljava/lang/Object;)I	compare	compare	
-		p	1		point1	
-		p	2		point2	
+		p	1		chunk1	
+		p	2		chunk2	
 c	net/minecraft/unmapped/C_2018497
 	m	()Z	m_8686998	isEmpty	
 	m	()Z	m_6319368		m_6319368
@@ -374,7 +374,7 @@ c	net/minecraft/unmapped/C_6967011
 		p	4			p_4
 		p	5			p_5
 c	net/minecraft/unmapped/C_7028449
-	f	Lnet/minecraft/unmapped/C_1103360;	f_0420702	bufferBuilderState	
+	f	Lnet/minecraft/unmapped/C_1103360;	f_0420702	transparencyState	
 	f	I	f_5750350	glList	
 	f	Lnet/minecraft/unmapped/C_3674802;	f_5654898	f_5654898	
 	f	Lnet/minecraft/unmapped/C_3674802;	f_5645267	f_5645267	
@@ -392,15 +392,15 @@ c	net/minecraft/unmapped/C_7028449
 		p	3		p_3	
 		p	4		p_4	
 		p	5		p_5	
-	m	(Lnet/minecraft/unmapped/C_0539808;)F	m_1736130	getCameraMoveDistnce	
+	m	(Lnet/minecraft/unmapped/C_0539808;)F	m_1736130	squaredDistanceToCenter	
 		p	1		camera	
 	m	(Lnet/minecraft/unmapped/C_0539808;)F	m_2953364	m_2953364	
-		p	1		p_1	
+		p	1		camera	
 	m	(Lnet/minecraft/unmapped/C_3333682;Lnet/minecraft/unmapped/C_2326439;)I	m_5095556	m_5095556	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/unmapped/C_8847418;)V	m_0357066	updateIsBoxInFrustum	
-		p	1		cameraView	
+	m	(Lnet/minecraft/unmapped/C_8847418;)V	m_0357066	updateVisibility	
+		p	1		culler	
 	m	()Z	m_8263433	m_8263433	
 	m	()Lnet/minecraft/unmapped/C_3674802;	m_4170504	m_4170504	
 	m	()I	m_8752306	m_8752306	
@@ -447,33 +447,33 @@ c	net/minecraft/unmapped/C_8328177
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/unmapped/C_8398976
-	f	Ljava/util/List;	f_5253078	blockEntities	
-	f	Ljava/util/List;	f_2775791	renderdChunkBlockRenderers	
-	f	[Lnet/minecraft/unmapped/C_7028449;	f_6849064	chunkBlockRendererList2	
-	f	[Lnet/minecraft/unmapped/C_7028449;	f_2222405	chunkBlockRendererList1	
-	f	I	f_6542687	glLists	
+	f	Ljava/util/List;	f_5253078	globalBlockEntities	
+	f	Ljava/util/List;	f_2775791	pendingChunks	
+	f	[Lnet/minecraft/unmapped/C_7028449;	f_6849064	compiledChunks	
+	f	[Lnet/minecraft/unmapped/C_7028449;	f_2222405	chunkStorage	
+	f	I	f_6542687	translucentGlList	
 	f	I	f_9589198	f_9589198	
-	f	Ljava/nio/IntBuffer;	f_5815579	glIntBufferWithColorOcclusion	
-	f	Z	f_9940188	hasColorOcclusion	
-	f	I	f_0367927	gLListID	
-	f	I	f_3694268	overworldSkyBox	
-	f	I	f_3113621	overworldSkyBoxUnderHorizon	
-	f	I	f_3591859	minX	
-	f	I	f_7899367	minY	
-	f	I	f_2929446	minZ	
-	f	I	f_0136546	maxX	
-	f	I	f_5895585	maxY	
-	f	I	f_4078785	maxZ	
+	f	Ljava/nio/IntBuffer;	f_5815579	arbOcclusionBuffer	
+	f	Z	f_9940188	glArbOcclusion	
+	f	I	f_0367927	starsGlList	
+	f	I	f_3694268	lightSkyGlList	
+	f	I	f_3113621	darkSkyGlList	
+	f	I	f_3591859	chunkGridMinX	
+	f	I	f_7899367	chunkGridMinY	
+	f	I	f_2929446	chunkGridMinZ	
+	f	I	f_0136546	chunkGridMaxX	
+	f	I	f_5895585	chunkGridMaxY	
+	f	I	f_4078785	chunkGridMaxZ	
 	f	Z	f_7868031	shouldRebuildStaticEntities	
 	f	D	f_3776429	prevCameraX	
 	f	D	f_2308249	prevCameraY	
 	f	D	f_9240713	prevCameraZ	
-	f	Ljava/nio/IntBuffer;	f_9055179	glIntBuffer	
+	f	Ljava/nio/IntBuffer;	f_9055179	occlusionBuffer	
 	f	I	f_2057730	chunkCount	
-	f	I	f_7816152	chunkSectionsOutOfView	
-	f	I	f_3311390	chunkSectionsRemovedThroughOcclusionCulling	
-	f	I	f_5476568	chunkSectionRenderPasses	
-	f	I	f_3761417	f_3761417	
+	f	I	f_7816152	invisibleChunkCount	
+	f	I	f_3311390	glArbOccludedChunkCount	
+	f	I	f_5476568	compiledChunkCount	
+	f	I	f_3761417	chunkSortIndex	
 	f	Ljava/util/List;	f_4777570	renderList	
 	f	[Lnet/minecraft/unmapped/C_1895985;	f_2276984	renderStages	
 	f	I	f_0853478	f_0853478	
@@ -504,9 +504,9 @@ c	net/minecraft/unmapped/C_8398976
 	f	D	f_7700050	cameraX	chunkSectionCameraX
 	f	D	f_7276458	cameraY	chunkSectionCameraY
 	f	D	f_3568764	cameraZ	chunkSectionCameraZ
-	f	I	f_3719740	chunkCountX	starsGlList
-	f	I	f_5788315	chunkSectionCount	lightSkyGlList
-	f	I	f_8962769	chunkCountZ	darkSkyGlList
+	f	I	f_3719740	chunkGridSizeX	starsGlList
+	f	I	f_5788315	chunkGridSizeY	lightSkyGlList
+	f	I	f_8962769	chunkGridSizeZ	darkSkyGlList
 	m	(Z)V	m_2729219	m_2729219	
 		p	1		p_1	
 	m	()V	m_4672684	renderStars	
@@ -515,24 +515,24 @@ c	net/minecraft/unmapped/C_8398976
 		p	1		cameraX	
 		p	2		cameraY	
 		p	3		cameraZ	
-	m	(Lnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_3333682;DI)I	m_4843024	renderTerrain	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	5		p_5	
-	m	(II)V	m_8204524	checkColorOcclusion	
-		p	1		start	
-		p	2		end	
-	m	(IILnet/minecraft/unmapped/C_3333682;D)I	m_5966782	render	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-	m	(JLnet/minecraft/unmapped/C_0539808;)V	m_4101174	compileChunksUntil	
-		p	1		p_1	
-		p	3		p_3	
-	m	(Lnet/minecraft/unmapped/C_8847418;F)V	m_3595684	updateFrustums	
+	m	(Lnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_3333682;DI)I	m_4843024	render	
 		p	1		camera	
+		p	2		layer	
+		p	3		tickDelta	
+		p	5		anaglyphRenderPass	
+	m	(II)V	m_8204524	queryGlArbOcclusion	
+		p	1		from	
+		p	2		to	
+	m	(IILnet/minecraft/unmapped/C_3333682;D)I	m_5966782	render	
+		p	1		from	
+		p	2		to	
+		p	3		layer	
+		p	4		tickDelta	
+	m	(JLnet/minecraft/unmapped/C_0539808;)V	m_4101174	compileChunksUntil	
+		p	1		time	
+		p	3		camera	
+	m	(Lnet/minecraft/unmapped/C_8847418;F)V	m_3595684	updateFrustums	
+		p	1		culler	
 		p	2		tickDelta	
 	m	()V	m_9342876		renderDarkSky
 	m	()V	m_1953836		renderLightSky
@@ -572,16 +572,16 @@ c	net/minecraft/unmapped/C_8398976
 c	net/minecraft/unmapped/C_8980628
 	m	(Lnet/minecraft/unmapped/C_5577922;)V	m_8310938	drawBox	
 		p	0		box	
-c	net/minecraft/unmapped/C_9079092	net/minecraft/client/render/world/ChunkRenderReloaderComparator	
+c	net/minecraft/unmapped/C_9079092	net/minecraft/client/render/world/RenderChunkReloadComparator	
 	f	Lnet/minecraft/unmapped/C_0539808;	f_4585186	camera	
 	m	(Lnet/minecraft/unmapped/C_0539808;)V	<init>	<init>	
-		p	1		p_1	
+		p	1		camera	
 	m	(Lnet/minecraft/unmapped/C_7028449;Lnet/minecraft/unmapped/C_7028449;)I	m_4966801	compare	
 		p	1		p_1	
 		p	2		p_2	
 	m	(Ljava/lang/Object;Ljava/lang/Object;)I	compare	compare	
-		p	1		firstChunkRenderReloader	
-		p	2		secondChunkRenderReloader	
+		p	1		chunk1	
+		p	2		chunk2	
 c	net/minecraft/unmapped/C_9139005
 	f	Z	f_4396069		thinArms
 	m	(Lnet/minecraft/unmapped/C_3362006;Z)V	<init>		<init>
@@ -609,8 +609,8 @@ c	net/minecraft/unmapped/C_9450178	net/minecraft/C_68jpdjizs
 		p	1		p_1	
 c	net/minecraft/unmapped/C_9685768
 	f	Lnet/minecraft/unmapped/C_7077852;	f_8734219		LEGACY_DATA
-c	net/minecraft/unmapped/C_9693816	net/minecraft/client/render/ArbOcclustionCapabilities	
-	m	()Z	m_3986591	getArbOcclusionCapabilities	
+c	net/minecraft/unmapped/C_9693816	net/minecraft/client/render/GlCapabilities	
+	m	()Z	m_3986591	glArbOcclusionQuery	
 c	net/minecraft/unmapped/C_0534376		net/minecraft/server/integrated/IntegratedCommandManager
 	m	()V	<init>		<init>
 c	net/minecraft/unmapped/C_2317223		net/minecraft/client/render/world/RenderChunkList
@@ -645,16 +645,16 @@ c	net/minecraft/unmapped/C_2366695		net/minecraft/client/resource/model/BuiltInM
 	m	()Lnet/minecraft/unmapped/C_4257480;	m_6471339		m_6471339
 	m	()Lnet/minecraft/unmapped/C_2232601;	m_7204418		m_7204418
 c	net/minecraft/unmapped/C_2528546		net/minecraft/client/render/world/RenderChunkStorage
-	f	Lnet/minecraft/unmapped/C_8398976;	f_9272983		worldRenderer
+	f	Lnet/minecraft/unmapped/C_8398976;	f_9272983		renderer
 	f	Lnet/minecraft/unmapped/C_5553933;	f_3263713		world
-	f	I	f_4150944		sizeX
-	f	I	f_5543713		sizeY
+	f	I	f_4150944		sizeY
+	f	I	f_5543713		sizeX
 	f	I	f_5829886		sizeZ
 	f	[Lnet/minecraft/unmapped/C_7028449;	f_8808010		chunks
 	m	(Lnet/minecraft/unmapped/C_5553933;ILnet/minecraft/unmapped/C_8398976;Lnet/minecraft/unmapped/C_7296650;)V	<init>		<init>
 		p	1			world
 		p	2			viewDistance
-		p	3			worldRenderer
+		p	3			renderer
 		p	4			factory
 	m	(Lnet/minecraft/unmapped/C_7296650;)V	m_7509422		setFactory
 		p	1			factory
