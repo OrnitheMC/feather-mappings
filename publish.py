@@ -36,9 +36,7 @@ def find_minecraft_versions():
             pair = raw_pair.split('#')
             
             if len(pair) == 2:
-                version = pair[-1]
-                if not version.endswith('-client') and not version.endswith('-server'):
-                    versions.append(version)
+                versions.append(pair[-1])
     
     return versions
 
