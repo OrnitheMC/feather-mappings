@@ -387,7 +387,7 @@ task downloadVersionsManifest {
 static def getManifestVersion(File manifestFile, String minecraft_version) {
 	def manifest = manifestFile.exists() ? new JsonSlurper().parseText(FileUtils.readFileToString(manifestFile, Charset.defaultCharset())) : null
 	return manifest != null ? manifest.versions.stream().filter({
-		(it.id == minecraft_version || it.omniId == minecraft_version)
+		(it.id == minecraft_version)
 	}).findFirst() : java.util.Optional.empty()
 }
 
