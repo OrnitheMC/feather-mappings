@@ -10,7 +10,6 @@ GRADLEW = 'gradlew' if os.name == 'nt' else './gradlew'
 UNAVAILABLE_VERSIONS = []
 # shortcuts for versions with ugly ids
 VERSION_SHORTCUTS = {
-    'inf-20100630': 'inf-20100630-1835-client',
     'a1.0.5': 'a1.0.5-2149-client',
     'a1.0.13_01': 'a1.0.13_01-1444-client',
     'a1.0.14': 'a1.0.14-1659-client',
