@@ -2466,10 +2466,10 @@ c	net/minecraft/unmapped/C_0986787	net/minecraft/item/FishItem__Type
 	f	Ljava/util/Map;	f_4106347	BY_ID	
 	f	I	f_4654434	id	
 	f	Ljava/lang/String;	f_8360592	key	
-	f	I	f_2012297	uncookedHungerPoints	
-	f	F	f_7987082	uncookedSaturation	
-	f	I	f_8035034	cookedHungerPoints	
-	f	F	f_0482185	cookedSaturation	
+	f	I	f_2012297	hungerPointsForRaw	
+	f	F	f_7987082	saturationForRaw	
+	f	I	f_8035034	hungerPointsForCooked	
+	f	F	f_0482185	saturationForCooked	
 	f	Z	f_4423635	canBeCooked	
 	f	[Lnet/minecraft/unmapped/C_0986787;	f_4594283	f_4594283	
 	m	()[Lnet/minecraft/unmapped/C_0986787;	values	values	
@@ -2480,23 +2480,23 @@ c	net/minecraft/unmapped/C_0986787	net/minecraft/item/FishItem__Type
 		p	2		p_2	
 		p	3		id	
 		p	4		key	
-		p	5		uncookedHungerPoints	
-		p	6		uncookedSaturation	
-		p	7		cookedHungerPoints	
-		p	8		cookedSaturation	
+		p	5		hungerPointsForRaw	
+		p	6		saturationForRaw	
+		p	7		hungerPointsForCooked	
+		p	8		saturationForCooked	
 	m	(Ljava/lang/String;IILjava/lang/String;IF)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		id	
-		p	4		name	
-		p	5		uncookedHungerPoints	
-		p	6		uncookedSaturation	
+		p	4		key	
+		p	5		hungerPoints	
+		p	6		saturation	
 	m	()I	m_9237277	getId	
 	m	()Ljava/lang/String;	m_7620872	getKey	
-	m	()I	m_7732788	getUncookedHungerPoints	
-	m	()F	m_7106127	getUncookedSaturation	
-	m	()I	m_1975553	getCookedHungerPoints	
-	m	()F	m_5139733	getCookedSaturation	
+	m	()I	m_7732788	getHungerPointsForRaw	
+	m	()F	m_7106127	getSaturationForRaw	
+	m	()I	m_1975553	getHungerPointsForCooked	
+	m	()F	m_5139733	getSaturationForCooked	
 	m	()Z	m_4491135	canBeCooked	
 	m	(I)Lnet/minecraft/unmapped/C_0986787;	m_5946682	byId	
 		p	0		id	
@@ -7649,23 +7649,23 @@ c	net/minecraft/unmapped/C_3192569	net/minecraft/entity/Entity__2
 		p	1		p_1	
 	m	()Ljava/lang/String;	m_7266419	call	
 	m	()Ljava/lang/Object;	call	call	
-c	net/minecraft/unmapped/C_3193933	net/minecraft/client/gui/screen/CustomizeFlatLevelScreen__CustomizeFlatLevelListWidget	
+c	net/minecraft/unmapped/C_3193933	net/minecraft/client/gui/screen/CustomizeFlatWorldScreen__LayerListWidget	
 	f	I	f_8460294	focusedEntry	
 	f	Lnet/minecraft/unmapped/C_8941301;	f_1010303	parent	
 	m	(Lnet/minecraft/unmapped/C_8941301;)V	<init>	<init>	
 		p	1		p_1	
-	m	(IILnet/minecraft/unmapped/C_2454309;)V	m_9395007	m_9395007	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-	m	(II)V	m_0683243	m_0683243	
-		p	1		p_1	
-		p	2		p_2	
-	m	(IIII)V	m_9335282	m_9335282	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
+	m	(IILnet/minecraft/unmapped/C_2454309;)V	m_9395007	renderIcon	
+		p	1		x	
+		p	2		y	
+		p	3		stack	
+	m	(II)V	m_0683243	renderIcon	
+		p	1		x	
+		p	2		y	
+	m	(IIII)V	m_9335282	renderIcon	
+		p	1		x	
+		p	2		y	
+		p	3		u	
+		p	4		v	
 	m	()I	m_3791031	m_3791031	
 	m	(IZII)V	m_0479322	m_0479322	
 		p	1		p_1	
@@ -21981,8 +21981,8 @@ c	net/minecraft/unmapped/C_8930592	net/minecraft/client/render/MapRenderer__Text
 	m	(Lnet/minecraft/unmapped/C_8930592;)Lnet/minecraft/unmapped/C_0561170;	m_0383301	getTexture	
 		p	0		mapTexture	
 c	net/minecraft/unmapped/C_8941301
-	f	Lnet/minecraft/unmapped/C_3193933;	f_0579669	customizeFlatLevelListWidget	
-	f	Lnet/minecraft/unmapped/C_8941301$C_9687496;	f_0579669		customizeFlatLevelListWidget
+	f	Lnet/minecraft/unmapped/C_3193933;	f_0579669	layers	
+	f	Lnet/minecraft/unmapped/C_8941301$C_9687496;	f_0579669		layers
 c	net/minecraft/unmapped/C_8941301$C_9687496		CustomizeFlatLevelListWidget
 	f	I	f_8460294		focusedEntry
 	f	Lnet/minecraft/unmapped/C_8941301;	f_1010303		parent
@@ -22677,7 +22677,7 @@ c	net/minecraft/unmapped/C_9296493	net/minecraft/client/gui/screen/options/Contr
 	f	Lnet/minecraft/unmapped/C_2822342;	f_1941320	controlListWidget	
 	m	(Lnet/minecraft/unmapped/C_2822342;Ljava/lang/String;)V	<init>	<init>	
 		p	1		p_1	
-		p	2		p_2	
+		p	2		name	
 	m	(IIIIIIIZ)V	m_2013749	m_2013749	
 		p	1		p_1	
 		p	2		p_2	
