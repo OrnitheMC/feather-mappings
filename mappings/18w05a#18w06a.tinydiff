@@ -346,11 +346,11 @@ c	net/minecraft/unmapped/C_0371393$C_8357453
 	m	(Lnet/minecraft/unmapped/C_7141926;)Z	m_0427395	m_0427395	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0163201;IILnet/minecraft/unmapped/C_6928498;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	1			world
+		p	2			random
+		p	3			chunkX
+		p	4			chunkZ
+		p	5			biome
 	m	(Lnet/minecraft/unmapped/C_9844932;Ljava/util/Random;II)V	m_8235533		init
 		p	1			p_1
 		p	2			p_2
@@ -851,22 +851,22 @@ c	net/minecraft/unmapped/C_0705111
 		p	2		name	
 		p	3		pos	
 	m	(Lnet/minecraft/unmapped/C_0636026;)V	m_8872366		getChunk
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_3820473;)V	m_1530121		m_1530121
+		p	1			chunk
+	m	(Lnet/minecraft/unmapped/C_3820473;)V	m_1530121		applyCarvers
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_3820473;)V	m_4129669		populate
-		p	1			p_1
+		p	1			region
 	m	(Lnet/minecraft/unmapped/C_3820473;)V	m_1060834		m_1060834
 		p	1			p_1
-	m	()Lnet/minecraft/unmapped/C_3287998;	m_0080754		m_0080754
-	m	(Lnet/minecraft/unmapped/C_6928498;Lnet/minecraft/unmapped/C_9470286;)Z	m_6816261		m_6816261
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_6928498;Lnet/minecraft/unmapped/C_9470286;)Lnet/minecraft/unmapped/C_1858262;	m_0567507		m_0567507
-		p	1			p_1
-		p	2			p_2
+	m	()Lnet/minecraft/unmapped/C_3287998;	m_0080754		getSettings
+	m	(Lnet/minecraft/unmapped/C_6928498;Lnet/minecraft/unmapped/C_9470286;)Z	m_6816261		canGenerateStructure
+		p	1			biome
+		p	2			feature
+	m	(Lnet/minecraft/unmapped/C_6928498;Lnet/minecraft/unmapped/C_9470286;)Lnet/minecraft/unmapped/C_1858262;	m_0567507		getStructureConfiguration
+		p	1			biome
+		p	2			feature
 	m	()Lnet/minecraft/unmapped/C_7235516;	m_7498183		getBiomeSource
-	m	()J	m_1625566		m_1625566
+	m	()J	m_1625566		getSeed
 c	net/minecraft/unmapped/C_0739399
 	m	()I	m_9092932		getSize
 c	net/minecraft/unmapped/C_0750020
@@ -2586,16 +2586,16 @@ c	net/minecraft/unmapped/C_2264933$C_9218843
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-c	net/minecraft/unmapped/C_2273815
+c	net/minecraft/unmapped/C_2273815	net/minecraft/world/gen/feature/TallPlantFeature	net/minecraft/world/gen/feature/JungleGrassFeature
 	m	(Lnet/minecraft/unmapped/C_2441996;)V	<init>	<init>	
-		p	1		p_1	
+		p	1		state	
 	m	(Lnet/minecraft/unmapped/C_5553933;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;)Z	m_5378046	m_5378046	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 	m	()V	<init>		<init>
-	m	(Ljava/util/Random;)Lnet/minecraft/unmapped/C_2441996;	m_5492188		m_5492188
-		p	1			p_1
+	m	(Ljava/util/Random;)Lnet/minecraft/unmapped/C_2441996;	m_5492188		pickPlant
+		p	1			random
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1607741;)Z	m_1722301		m_1722301
 		p	1			p_1
 		p	2			p_2
@@ -2670,7 +2670,7 @@ c	net/minecraft/unmapped/C_2361607
 	m	(Lnet/minecraft/unmapped/C_5818647;)Lnet/minecraft/unmapped/C_0160011;	m_6319443		getRemainder
 		p	1			inventory
 c	net/minecraft/unmapped/C_2381425
-	f	Lnet/minecraft/unmapped/C_2441996;	f_4733179		f_4733179
+	f	Lnet/minecraft/unmapped/C_2441996;	f_4733179		CAVE_AIR
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_2018497;)V	m_8501447	readNbt	
 		p	1		world	
 		p	2		nbt	
@@ -2748,7 +2748,7 @@ c	net/minecraft/unmapped/C_2381425
 		p	12		filler	
 		p	13		avoidAir	
 		p	14		maxLight	
-	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_7492943;Ljava/util/Random;FIIILnet/minecraft/unmapped/C_2441996;)V	m_0281839	setBlockWithThreshold	
+	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_7492943;Ljava/util/Random;FIIILnet/minecraft/unmapped/C_2441996;)V	m_0281839	setBlockStateWithThreshold	
 		p	1		world	
 		p	2		box	
 		p	3		random	
@@ -2789,7 +2789,7 @@ c	net/minecraft/unmapped/C_2381425
 		p	5		y	
 		p	6		z	
 		p	7		lootTable	
-	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_2441996;)Lnet/minecraft/unmapped/C_2441996;	m_5528349	m_5528349	
+	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_2441996;)Lnet/minecraft/unmapped/C_2441996;	m_5528349	orientBonusChest	
 		p	0		p_0	
 		p	1		p_1	
 		p	2		p_2	
@@ -2819,8 +2819,8 @@ c	net/minecraft/unmapped/C_2381425
 		p	7		facing	
 		p	8		door	
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_2018497;)V	m_8501447		readNbt
-		p	1			p_1
-		p	2			p_2
+		p	1			world
+		p	2			nbt
 	m	(Lnet/minecraft/unmapped/C_9844932;Ljava/util/Random;Lnet/minecraft/unmapped/C_7492943;)Z	m_6529608		postProcess
 		p	1			p_1
 		p	2			p_2
@@ -2829,12 +2829,12 @@ c	net/minecraft/unmapped/C_2381425
 		p	1			p_1
 		p	2			p_2
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_2441996;IIILnet/minecraft/unmapped/C_7492943;)V	m_9377481		setBlockState
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
+		p	1			world
+		p	2			state
+		p	3			x
+		p	4			y
+		p	5			z
+		p	6			bounds
 	m	(Lnet/minecraft/unmapped/C_9844932;IIILnet/minecraft/unmapped/C_7492943;)Lnet/minecraft/unmapped/C_2441996;	m_8758771		getBlockState
 		p	1			p_1
 		p	2			p_2
@@ -2848,123 +2848,123 @@ c	net/minecraft/unmapped/C_2381425
 		p	4			p_4
 		p	5			p_5
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_7492943;IIIIII)V	m_7187854		fillAir
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
+		p	1			world
+		p	2			bounds
+		p	3			minX
+		p	4			minY
+		p	5			minZ
+		p	6			maxX
+		p	7			maxY
+		p	8			maxZ
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_7492943;IIIIIILnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_2441996;Z)V	m_9616512		fillWithOutline
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
-		p	9			p_9
-		p	10			p_10
-		p	11			p_11
+		p	1			world
+		p	2			bounds
+		p	3			minX
+		p	4			minY
+		p	5			minZ
+		p	6			maxX
+		p	7			maxY
+		p	8			maxZ
+		p	9			edge
+		p	10			filler
+		p	11			avoidAir
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_7492943;IIIIIIZLjava/util/Random;Lnet/minecraft/unmapped/C_2381425$C_6287317;)V	m_2431201		fill
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
-		p	9			p_9
-		p	10			p_10
-		p	11			p_11
+		p	1			world
+		p	2			bounds
+		p	3			minX
+		p	4			minY
+		p	5			minZ
+		p	6			maxX
+		p	7			maxY
+		p	8			maxZ
+		p	9			avoidAir
+		p	10			random
+		p	11			blocks
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_7492943;Ljava/util/Random;FIIIIIILnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_2441996;ZZ)V	m_2824147		fillRandomlyWithOutline
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
-		p	9			p_9
-		p	10			p_10
-		p	11			p_11
-		p	12			p_12
-		p	13			p_13
-		p	14			p_14
-	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_7492943;Ljava/util/Random;FIIILnet/minecraft/unmapped/C_2441996;)V	m_0281839		setBlockWithThreshold
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
+		p	1			world
+		p	2			bounds
+		p	3			random
+		p	4			threshold
+		p	5			minX
+		p	6			minY
+		p	7			minZ
+		p	8			maxX
+		p	9			maxY
+		p	10			maxZ
+		p	11			edge
+		p	12			filler
+		p	13			avoidAir
+		p	14			maxLight
+	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_7492943;Ljava/util/Random;FIIILnet/minecraft/unmapped/C_2441996;)V	m_0281839		setBlockStateWithThreshold
+		p	1			world
+		p	2			bounds
+		p	3			random
+		p	4			threshold
+		p	5			x
+		p	6			y
+		p	7			z
+		p	8			state
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_7492943;IIIIIILnet/minecraft/unmapped/C_2441996;Z)V	m_8517517		placeUpperHemisphere
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
-		p	9			p_9
-		p	10			p_10
+		p	1			world
+		p	2			bounds
+		p	3			minX
+		p	4			minY
+		p	5			minZ
+		p	6			maxX
+		p	7			maxY
+		p	8			maxZ
+		p	9			state
+		p	10			avoidAir
 	m	(Lnet/minecraft/unmapped/C_9844932;IIILnet/minecraft/unmapped/C_7492943;)V	m_6485493		fillAirColumnUp
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	1			world
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			bounds
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_2441996;IIILnet/minecraft/unmapped/C_7492943;)V	m_9069147		fillColumnDown
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
+		p	1			world
+		p	2			state
+		p	3			x
+		p	4			y
+		p	5			z
+		p	6			bounds
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_7492943;Ljava/util/Random;IIILnet/minecraft/unmapped/C_0561170;)Z	m_7490416		placeChestWithLoot
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_2441996;)Lnet/minecraft/unmapped/C_2441996;	m_5528349		m_5528349
+		p	1			world
+		p	2			bounds
+		p	3			random
+		p	4			x
+		p	5			y
+		p	6			z
+		p	7			lootTable
+	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_2441996;)Lnet/minecraft/unmapped/C_2441996;	m_5528349		orientBonusChest
 		p	0			p_0
 		p	1			p_1
 		p	2			p_2
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_7492943;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_0561170;Lnet/minecraft/unmapped/C_2441996;)Z	m_5256250		placeChestWithLoot
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
+		p	1			world
+		p	2			bounds
+		p	3			random
+		p	4			pos
+		p	5			lootTable
+		p	6			state
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_7492943;Ljava/util/Random;IIILnet/minecraft/unmapped/C_3544601;Lnet/minecraft/unmapped/C_0561170;)Z	m_0225095		placeDispenserWithLoot
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
+		p	1			world
+		p	2			bounds
+		p	3			random
+		p	4			x
+		p	5			y
+		p	6			z
+		p	7			facing
+		p	8			lootTable
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_7492943;Ljava/util/Random;IIILnet/minecraft/unmapped/C_3544601;Lnet/minecraft/unmapped/C_7842113;)V	m_8153606		placeDoor
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
+		p	1			world
+		p	2			bounds
+		p	3			random
+		p	4			x
+		p	5			y
+		p	6			z
+		p	7			facing
+		p	8			door
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_2386008
 	f	Lnet/minecraft/unmapped/C_2386008;	f_6188601		f_6188601
@@ -3314,7 +3314,7 @@ c	net/minecraft/unmapped/C_2669673
 	m	(Lnet/minecraft/unmapped/C_9844932;)I	m_0006289		m_0006289
 		p	1			p_1
 c	net/minecraft/unmapped/C_2706017
-	f	Lnet/minecraft/unmapped/C_6928498;	f_6444681		f_6444681
+	f	Lnet/minecraft/unmapped/C_6928498;	f_6444681		biome
 	m	(II)V	<init>	<init>	
 		p	1		chunkX	
 		p	2		chunkZ	
@@ -3338,11 +3338,11 @@ c	net/minecraft/unmapped/C_2706017
 	m	(Lnet/minecraft/unmapped/C_7141926;)Z	m_0427395	isValid	
 		p	1		pos	
 	m	(IILnet/minecraft/unmapped/C_6928498;Lnet/minecraft/unmapped/C_0163201;J)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	1			chunkX
+		p	2			chunkZ
+		p	3			biome
+		p	4			random
+		p	5			seed
 	m	(Lnet/minecraft/unmapped/C_9844932;Ljava/util/Random;Lnet/minecraft/unmapped/C_7492943;)V	m_3148146		postProcess
 		p	1			p_1
 		p	2			p_2
@@ -3350,8 +3350,8 @@ c	net/minecraft/unmapped/C_2706017
 	m	(Lnet/minecraft/unmapped/C_9844932;)V	m_2599364		findBounds
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_2018497;)V	m_2061760		readNbt
-		p	1			p_1
-		p	2			p_2
+		p	1			world
+		p	2			nbt
 	m	(Lnet/minecraft/unmapped/C_9844932;Ljava/util/Random;I)V	m_9685183		moveBelowSeaLevel
 		p	1			p_1
 		p	2			p_2
@@ -3495,23 +3495,23 @@ c	net/minecraft/unmapped/C_2802671
 		p	5			p_5
 		p	6			p_6
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_2805044
-	f	Ljava/util/function/Predicate;	f_0299268		f_0299268
+c	net/minecraft/unmapped/C_2805044	net/minecraft/world/gen/feature/VeinFeature	net/minecraft/world/gen/feature/VeinConfiguration
+	f	Ljava/util/function/Predicate;	f_0299268		DEFAULT_REPLACE_PREDICATE
 	m	(Lnet/minecraft/unmapped/C_2441996;I)V	<init>	<init>	
 		p	1		ore	
 		p	2		size	
 	m	(Lnet/minecraft/unmapped/C_2441996;ILjava/util/function/Predicate;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+		p	1		state	
+		p	2		size	
+		p	3		replacePredicate	
 	m	(Lnet/minecraft/unmapped/C_5553933;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;)Z	m_5378046	m_5378046	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 	m	(Ljava/util/function/Predicate;Lnet/minecraft/unmapped/C_2441996;I)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			replacePredicate
+		p	2			state
+		p	3			size
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_2805044$1
 	m	()V	<init>		<init>
@@ -3524,7 +3524,7 @@ c	net/minecraft/unmapped/C_2805044$C_6140295	Replacable
 	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_3386599	m_3386599	
 		p	1		p_1	
 	m	(Ljava/lang/Object;)Z	test	test	
-		p	1		p_1	
+		p	1		state	
 	m	(Lnet/minecraft/unmapped/C_2805044$1;)V	<init>	<init>	
 		p	1		p_1	
 c	net/minecraft/unmapped/C_2810918
@@ -4113,12 +4113,12 @@ c	net/minecraft/unmapped/C_3424041$C_6799577
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/unmapped/C_3424041$C_6225608		C_6225608
-	f	Lnet/minecraft/unmapped/C_3424041$C_6225608;	f_3495391		f_3495391
-	f	Lnet/minecraft/unmapped/C_3424041$C_6225608;	f_4274993		f_4274993
-	f	Lnet/minecraft/unmapped/C_3424041$C_6225608;	f_5866770		f_5866770
-	f	Lnet/minecraft/unmapped/C_3424041$C_6225608;	f_3920999		f_3920999
-	f	I	f_9504875		f_9504875
+c	net/minecraft/unmapped/C_3424041$C_6225608		Variant
+	f	Lnet/minecraft/unmapped/C_3424041$C_6225608;	f_3495391		OAK
+	f	Lnet/minecraft/unmapped/C_3424041$C_6225608;	f_4274993		SANDSTONE
+	f	Lnet/minecraft/unmapped/C_3424041$C_6225608;	f_5866770		ACACIA
+	f	Lnet/minecraft/unmapped/C_3424041$C_6225608;	f_3920999		SPRUCE
+	f	I	f_9504875		id
 	f	[Lnet/minecraft/unmapped/C_3424041$C_6225608;	f_2513275		f_2513275
 	m	()[Lnet/minecraft/unmapped/C_3424041$C_6225608;	values		values
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_3424041$C_6225608;	valueOf		valueOf
@@ -4126,10 +4126,10 @@ c	net/minecraft/unmapped/C_3424041$C_6225608		C_6225608
 	m	(Ljava/lang/String;II)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
-		p	3			p_3
-	m	()I	m_0860137		m_0860137
-	m	(I)Lnet/minecraft/unmapped/C_3424041$C_6225608;	m_5907688		m_5907688
-		p	0			p_0
+		p	3			id
+	m	()I	m_0860137		getId
+	m	(I)Lnet/minecraft/unmapped/C_3424041$C_6225608;	m_5907688		byId
+		p	0			id
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_3431714	net/minecraft/world/gen/feature/GlowstoneClusterFeature	
 	m	()V	<init>	<init>	
@@ -4153,11 +4153,11 @@ c	net/minecraft/unmapped/C_3463639
 		p	2			p_2
 		p	3			p_3
 	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_9844932;Ljava/util/Random;Lnet/minecraft/unmapped/C_7492943;)V	m_4324210		handleDataMarker
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	1			data
+		p	2			pos
+		p	3			world
+		p	4			random
+		p	5			bounds
 c	net/minecraft/unmapped/C_3481595
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_7345216;	m_5507773	m_5507773	
 		p	1		p_1	
@@ -4191,9 +4191,9 @@ c	net/minecraft/unmapped/C_3484082
 		p	4			p_4
 		p	5			p_5
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_7674520;)V	m_8338509		placeVines
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			world
+		p	2			pos
+		p	3			connectionProperty
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1858262;)Z	m_4278200		m_4278200
 		p	1			p_1
 		p	2			p_2
@@ -4576,18 +4576,18 @@ c	net/minecraft/unmapped/C_4156170
 		p	4			p_4
 		p	5			p_5
 	m	(Lnet/minecraft/unmapped/C_9844932;ILnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;)V	m_7209904		placeCocoa
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	1			world
+		p	2			age
+		p	3			pos
+		p	4			face
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_7674520;)V	m_6898518		placeVine
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			world
+		p	2			pos
+		p	3			connectionProperty
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_7674520;)V	m_4743859		placeVines
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			world
+		p	2			pos
+		p	3			connectionProperty
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1858262;)Z	m_4278200		m_4278200
 		p	1			p_1
 		p	2			p_2
@@ -4911,11 +4911,11 @@ c	net/minecraft/unmapped/C_4387363$C_7984529
 		p	3		chunkX	
 		p	4		chunkZ	
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0163201;IILnet/minecraft/unmapped/C_6928498;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	1			world
+		p	2			random
+		p	3			chunkX
+		p	4			chunkZ
+		p	5			biome
 c	net/minecraft/unmapped/C_4400155
 	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;)Lnet/minecraft/unmapped/C_0784495;	m_4005170	m_4005170	
 		p	1		p_1	
@@ -6727,7 +6727,7 @@ c	net/minecraft/unmapped/C_6307417
 	m	(Lnet/minecraft/unmapped/C_6928498$C_3036414;)V	<init>	<init>	
 		p	1		p_1	
 	m	()V	<init>		<init>
-c	net/minecraft/unmapped/C_6324082
+c	net/minecraft/unmapped/C_6324082	net/minecraft/world/gen/chunk/OverworldGeneratorSettings	net/minecraft/world/gen/chunk/settings/OverworldGeneratorSettings
 	f	F	f_9485603	upperLimitScale	
 	f	F	f_2015778	lowerLimitScale	
 	f	F	f_4185785	depthNoiseScaleX	
@@ -7776,9 +7776,9 @@ c	net/minecraft/unmapped/C_6928498
 	f	Ljava/util/List;	f_2071020	passiveEntries	
 	f	Ljava/util/List;	f_4280813	waterEntries	
 	f	Ljava/util/List;	f_0062296	ambientEntries	
-	f	Lnet/minecraft/unmapped/C_5532430;	f_3598634		f_3598634
-	f	Lnet/minecraft/unmapped/C_5532430;	f_4723063		f_4723063
-	f	Lnet/minecraft/unmapped/C_5532430;	f_2974081		f_2974081
+	f	Lnet/minecraft/unmapped/C_5532430;	f_3598634		CAVE
+	f	Lnet/minecraft/unmapped/C_5532430;	f_4723063		NETHER_CAVE
+	f	Lnet/minecraft/unmapped/C_5532430;	f_2974081		RAVINE
 	f	Lnet/minecraft/unmapped/C_0851687;	f_3784600		f_3784600
 	f	Lnet/minecraft/unmapped/C_0851687;	f_5332713		f_5332713
 	f	Lnet/minecraft/unmapped/C_0851687;	f_8722191		f_8722191
@@ -7832,11 +7832,11 @@ c	net/minecraft/unmapped/C_6928498
 	f	Ljava/util/List;	f_7167952		f_7167952
 	f	Ljava/util/Map;	f_5445863		f_5445863
 	f	Ljava/util/List;	f_8218777		f_8218777
-	f	Ljava/util/Map;	f_8135311		f_8135311
+	f	Ljava/util/Map;	f_8135311		structureConfigurations
 	f	Lnet/minecraft/unmapped/C_7338640;	f_9303631		f_9303631
 	f	Lnet/minecraft/unmapped/C_6928498$C_8671782;	f_3747061		biomeCategory
 	f	Lnet/minecraft/unmapped/C_6928498$C_1726796;	f_9589789		precipitation
-	f	Ljava/util/Map;	f_1659914		f_1659914
+	f	Ljava/util/Map;	f_1659914		spawnEntries
 	m	(Lnet/minecraft/unmapped/C_6928498$C_3036414;)V	<init>	<init>	
 		p	1		settings	
 	m	()Lnet/minecraft/unmapped/C_0286265;	m_3716221	createDecorator	
@@ -8370,10 +8370,10 @@ c	net/minecraft/unmapped/C_7235516	net/minecraft/world/biome/BiomeSource	net/min
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	(III)Ljava/util/Set;	m_9868734		m_9868734
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(III)Ljava/util/Set;	m_9868734		getBiomes
+		p	1			x
+		p	2			z
+		p	3			range
 	m	(IIII)F	m_7650292		m_7650292
 		p	1			p_1
 		p	2			p_2
@@ -8556,7 +8556,7 @@ c	net/minecraft/unmapped/C_7431851
 c	net/minecraft/unmapped/C_7450921
 	m	(Lnet/minecraft/unmapped/C_7450921;)Lnet/minecraft/unmapped/C_8105098;	m_1956071	m_1956071	
 		p	0		p_0	
-c	net/minecraft/unmapped/C_7574603
+c	net/minecraft/unmapped/C_7574603	net/minecraft/world/gen/chunk/FlatWorldGeneratorSettings	net/minecraft/world/gen/chunk/settings/FlatChunkGeneratorSettings
 	f	Ljava/util/Map;	f_7928089		f_7928089
 	f	Ljava/util/Map;	f_1243532		f_1243532
 	f	Ljava/util/Map;	f_6360307		f_6360307
@@ -8948,8 +8948,8 @@ c	net/minecraft/unmapped/C_7955273
 		p	2			p_2
 		p	3			p_3
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_3674802;)V	m_2290911		placeDirt
-		p	1			p_1
-		p	2			p_2
+		p	1			world
+		p	2			pos
 c	net/minecraft/unmapped/C_7975444
 	f	I	f_4837670	f_4837670	
 	f	Lnet/minecraft/unmapped/C_0330124;	f_0502731	generator	
@@ -8989,9 +8989,9 @@ c	net/minecraft/unmapped/C_7975444
 		p	5			p_5
 	m	()I	m_5594599		m_5594599
 	m	(IILnet/minecraft/unmapped/C_0705111;)I	m_7006589		getY
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
+		p	0			chunkX
+		p	1			chunkZ
+		p	2			generator
 	m	(IILnet/minecraft/unmapped/C_0705111;)I	m_2774143		m_2774143
 		p	0			p_0
 		p	1			p_1
@@ -9010,13 +9010,13 @@ c	net/minecraft/unmapped/C_7975444$C_2294610
 		p	4		chunkX	
 		p	5		chunkZ	
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Lnet/minecraft/unmapped/C_0163201;IILnet/minecraft/unmapped/C_6928498;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-c	net/minecraft/unmapped/C_8018164
+		p	1			world
+		p	2			generator
+		p	3			random
+		p	4			chunkX
+		p	5			chunkZ
+		p	6			biome
+c	net/minecraft/unmapped/C_8018164	net/minecraft/world/gen/feature/UpsideDownGlowstoneClusterFeature	net/minecraft/world/gen/feature/GlowstoneClusterFeature
 	m	(Lnet/minecraft/unmapped/C_5553933;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;)Z	m_5378046	m_5378046	
 		p	1		p_1	
 		p	2		p_2	
@@ -9289,7 +9289,7 @@ c	net/minecraft/unmapped/C_8633065
 	f	Ljava/util/List;	f_0798715	validBiomes	
 	f	D	f_8422723	distance	
 	f	I	f_9196100	spread	
-	f	J	f_3310019		f_3310019
+	f	J	f_3310019		currentSeed
 	m	(Ljava/util/Map;)V	<init>	<init>	
 		p	1		options	
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;Z)Lnet/minecraft/unmapped/C_3674802;	m_1618395	m_1618395	
@@ -9299,7 +9299,7 @@ c	net/minecraft/unmapped/C_8633065
 	m	(II)Z	m_3595212	m_3595212	
 		p	1		p_1	
 		p	2		p_2	
-	m	()V	m_4318804	m_4318804	
+	m	()V	m_4318804	generatePositions	
 	m	(II)Lnet/minecraft/unmapped/C_2706017;	m_4630890	m_4630890	
 		p	1		p_1	
 		p	2		p_2	
@@ -9308,7 +9308,7 @@ c	net/minecraft/unmapped/C_8633065
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	()V	m_7085983		m_7085983
+	m	()V	m_7085983		reset
 	m	(Lnet/minecraft/unmapped/C_9844932;)Z	m_0779412		m_0779412
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Lnet/minecraft/unmapped/C_0163201;II)Lnet/minecraft/unmapped/C_2706017;	m_4630890		m_4630890
@@ -9323,8 +9323,8 @@ c	net/minecraft/unmapped/C_8633065
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_0705111;)V	m_4318804		m_4318804
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_0705111;)V	m_4318804		generatePositions
+		p	1			generator
 c	net/minecraft/unmapped/C_8633065$C_2790073
 	m	(Lnet/minecraft/unmapped/C_5553933;Ljava/util/Random;II)V	<init>	<init>	
 		p	1		world	
@@ -9332,12 +9332,12 @@ c	net/minecraft/unmapped/C_8633065$C_2790073
 		p	3		chunkX	
 		p	4		chunkZ	
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0163201;IILnet/minecraft/unmapped/C_6928498;I)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
+		p	1			world
+		p	2			random
+		p	3			chunkX
+		p	4			chunkZ
+		p	5			biome
+		p	6			salt
 c	net/minecraft/unmapped/C_8643842
 	m	(Ljava/lang/Thread;Ljava/lang/Throwable;)V	m_7670664	m_7670664	
 		p	0		p_0	
@@ -10036,7 +10036,7 @@ c	net/minecraft/unmapped/C_9470286
 	f	Lit/unimi/dsi/fastutil/longs/Long2ObjectMap;	f_0669922		f_0669922
 	f	Ljava/util/concurrent/atomic/AtomicBoolean;	f_7261289		f_7261289
 	f	Lnet/minecraft/unmapped/C_6952080;	f_8408493		f_8408493
-	f	Lnet/minecraft/unmapped/C_2706017;	f_4475287		f_4475287
+	f	Lnet/minecraft/unmapped/C_2706017;	f_4475287		INVALID
 	m	(Lnet/minecraft/unmapped/C_5553933;IIIILnet/minecraft/unmapped/C_7212317;)V	m_8454429	m_8454429	
 		p	1		p_1	
 		p	2		p_2	
@@ -10085,9 +10085,9 @@ c	net/minecraft/unmapped/C_9470286
 		p	4			p_4
 		p	5			p_5
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_2706017;	m_8474516		getStructure
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;)Z	m_7068396		m_7068396
+		p	1			world
+		p	2			pos
+	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;)Z	m_7068396		isValid
 		p	1			p_1
 		p	2			p_2
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0705111;Lnet/minecraft/unmapped/C_3674802;Z)Lnet/minecraft/unmapped/C_3674802;	m_1227682		findNearest
@@ -10099,29 +10099,29 @@ c	net/minecraft/unmapped/C_9470286
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Lnet/minecraft/unmapped/C_0163201;J)Lnet/minecraft/unmapped/C_2706017;	m_0000758		m_0000758
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Lnet/minecraft/unmapped/C_0163201;J)Lnet/minecraft/unmapped/C_2706017;	m_0000758		getStructureFromReference
+		p	1			world
+		p	2			generator
+		p	3			random
+		p	4			reference
 	m	(Lnet/minecraft/unmapped/C_9844932;J)Lnet/minecraft/unmapped/C_2706017;	m_3075150		m_3075150
 		p	1			p_1
 		p	2			p_2
 	m	()Ljava/lang/String;	m_9759413		m_9759413
 	m	(Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;II)Z	m_3595212		isFeatureChunk
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_9844932;)Z	m_0779412		m_0779412
-		p	1			p_1
+		p	1			generator
+		p	2			world
+		p	3			chunkX
+		p	4			chunkZ
+	m	(Lnet/minecraft/unmapped/C_9844932;)Z	m_0779412		canGenerateStructures
+		p	1			world
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Lnet/minecraft/unmapped/C_0163201;II)Lnet/minecraft/unmapped/C_2706017;	m_4630890		createStructure
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	()I	m_5594599		m_5594599
+		p	1			world
+		p	2			generator
+		p	3			random
+		p	4			chunkX
+		p	5			chunkZ
+	m	()I	m_5594599		getLookupRange
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_9470286$1
 	f	I	f_7690556	x	
@@ -11078,55 +11078,55 @@ c	net/minecraft/unmapped/C_0114090$C_8296248		C_8296248
 		p	0			p_0
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_0129976		net/minecraft/unmapped/C_0129976
+c	net/minecraft/unmapped/C_0129976		net/minecraft/world/gen/structure/MansionConfiguration
 	m	()V	<init>		<init>
-c	net/minecraft/unmapped/C_0163201		net/minecraft/unmapped/C_0163201
-	f	I	f_4053906		f_4053906
+c	net/minecraft/unmapped/C_0163201		net/minecraft/world/gen/WorldGenRandom
+	f	I	f_4053906		count
 	m	()V	<init>		<init>
 	m	(J)V	<init>		<init>
-		p	1			p_1
-	m	(I)V	m_0245005		m_0245005
-		p	1			p_1
+		p	1			seed
+	m	(I)V	m_0245005		consumeCount
+		p	1			count
 	m	(I)I	next		next
-		p	1			p_1
-	m	(II)J	m_2174644		m_2174644
-		p	1			p_1
-		p	2			p_2
-	m	(JII)J	m_6437034		m_6437034
-		p	1			p_1
-		p	3			p_3
-		p	4			p_4
-	m	(JII)J	m_0494894		m_0494894
-		p	1			p_1
-		p	3			p_3
-		p	4			p_4
-	m	(JII)J	m_1137141		m_1137141
-		p	1			p_1
-		p	3			p_3
-		p	4			p_4
-	m	(JIII)J	m_4467005		m_4467005
-		p	1			p_1
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-c	net/minecraft/unmapped/C_0249989		net/minecraft/unmapped/C_0249989
+		p	1			bits
+	m	(II)J	m_2174644		setBaseChunkSeed
+		p	1			chunkX
+		p	2			chunkZ
+	m	(JII)J	m_6437034		setDecorationSeed
+		p	1			seed
+		p	3			chunkX
+		p	4			chunkZ
+	m	(JII)J	m_0494894		setFeatureSeed
+		p	1			seed
+		p	3			chunkX
+		p	4			chunkZ
+	m	(JII)J	m_1137141		setLargeFeatureSeed
+		p	1			seed
+		p	3			chunkX
+		p	4			chunkZ
+	m	(JIII)J	m_4467005		setLargeFeatureWithSalt
+		p	1			seed
+		p	3			chunkX
+		p	4			chunkZ
+		p	5			salt
+c	net/minecraft/unmapped/C_0249989		net/minecraft/world/gen/structure/WitchHutConfiguration
 	m	()V	<init>		<init>
 c	net/minecraft/unmapped/C_0265299		net/minecraft/world/biome/EndHighlandsBiome
 	m	()V	<init>		<init>
 	m	(F)I	m_5728944		m_5728944
 		p	1			p_1
-c	net/minecraft/unmapped/C_0304132		net/minecraft/unmapped/C_0304132
-	f	[Lnet/minecraft/unmapped/C_7489997;	f_5346236		f_5346236
-	f	[Lnet/minecraft/unmapped/C_1858262;	f_4490945		f_4490945
-	f	[F	f_0618602		f_0618602
-	f	Lnet/minecraft/unmapped/C_7489997;	f_4172906		f_4172906
-	f	Lnet/minecraft/unmapped/C_1858262;	f_8278457		f_8278457
+c	net/minecraft/unmapped/C_0304132		net/minecraft/world/gen/feature/RandomSelectorConfiguration
+	f	[Lnet/minecraft/unmapped/C_7489997;	f_5346236		features
+	f	[Lnet/minecraft/unmapped/C_1858262;	f_4490945		configs
+	f	[F	f_0618602		weights
+	f	Lnet/minecraft/unmapped/C_7489997;	f_4172906		defaultFeature
+	f	Lnet/minecraft/unmapped/C_1858262;	f_8278457		defaultConfig
 	m	([Lnet/minecraft/unmapped/C_7489997;[Lnet/minecraft/unmapped/C_1858262;[FLnet/minecraft/unmapped/C_7489997;Lnet/minecraft/unmapped/C_1858262;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	1			features
+		p	2			configs
+		p	3			weights
+		p	4			defaultFeature
+		p	5			defaultConfig
 c	net/minecraft/unmapped/C_0386511		net/minecraft/unmapped/C_0386511
 	f	Lnet/minecraft/unmapped/C_8105098;	f_0868293		f_0868293
 	m	(Lnet/minecraft/unmapped/C_8105098;)V	<init>		<init>
@@ -11158,10 +11158,10 @@ c	net/minecraft/unmapped/C_0538074		net/minecraft/unmapped/C_0538074
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-c	net/minecraft/unmapped/C_0622118		net/minecraft/unmapped/C_0622118
+c	net/minecraft/unmapped/C_0622118		net/minecraft/world/gen/feature/TaigaGrassFeature
 	m	()V	<init>		<init>
-	m	(Ljava/util/Random;)Lnet/minecraft/unmapped/C_2441996;	m_2697517		m_2697517
-		p	1			p_1
+	m	(Ljava/util/Random;)Lnet/minecraft/unmapped/C_2441996;	m_2697517		pickPlant
+		p	1			random
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1607741;)Z	m_2429982		m_2429982
 		p	1			p_1
 		p	2			p_2
@@ -11174,10 +11174,10 @@ c	net/minecraft/unmapped/C_0622118		net/minecraft/unmapped/C_0622118
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-c	net/minecraft/unmapped/C_0635266		net/minecraft/unmapped/C_0635266
-	f	Lnet/minecraft/unmapped/C_2441996;	f_7832125		f_7832125
+c	net/minecraft/unmapped/C_0635266		net/minecraft/world/gen/feature/GrassConfiguration
+	f	Lnet/minecraft/unmapped/C_2441996;	f_7832125		state
 	m	(Lnet/minecraft/unmapped/C_2441996;)V	<init>		<init>
-		p	1			p_1
+		p	1			state
 c	net/minecraft/unmapped/C_0636026		net/minecraft/world/chunk/ChunkAccess
 	m	(Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_2441996;)Lnet/minecraft/unmapped/C_2441996;	m_0222822		setBlockState
 		p	1			p_1
@@ -11273,7 +11273,7 @@ c	net/minecraft/unmapped/C_0851687		net/minecraft/unmapped/C_0851687
 	m	()Ljava/lang/String;	toString		toString
 c	net/minecraft/unmapped/C_0856683		net/minecraft/world/biome/TaigaHillsBiome
 	m	()V	<init>		<init>
-c	net/minecraft/unmapped/C_0883138		net/minecraft/unmapped/C_0883138
+c	net/minecraft/unmapped/C_0883138		net/minecraft/world/gen/carver/NetherCaveWorldCarver
 	m	()V	<init>		<init>
 	m	()F	m_2738541		m_2738541
 	m	(Lnet/minecraft/unmapped/C_9844932;Ljava/util/Random;IIIILjava/util/BitSet;)Z	m_8454429		m_8454429
@@ -11294,14 +11294,14 @@ c	net/minecraft/unmapped/C_0883138		net/minecraft/unmapped/C_0883138
 		p	10			p_10
 		p	12			p_12
 		p	14			p_14
-c	net/minecraft/unmapped/C_0921391		net/minecraft/unmapped/C_0921391
-	f	[Z	f_7736610		f_7736610
-	m	()V	m_6081238		m_6081238
+c	net/minecraft/unmapped/C_0921391		net/minecraft/world/gen/structure/DesertTemplePiece
+	f	[Z	f_7736610		hasChest
+	m	()V	m_6081238		register
 	m	()V	<init>		<init>
 	m	(Ljava/util/Random;II)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			random
+		p	2			x
+		p	3			z
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_5373622		m_5373622
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_2018497;Lnet/minecraft/unmapped/C_0899004;)V	m_1922521		m_1922521
@@ -11311,7 +11311,7 @@ c	net/minecraft/unmapped/C_0921391		net/minecraft/unmapped/C_0921391
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/unmapped/C_0927873		net/minecraft/unmapped/C_0927873
+c	net/minecraft/unmapped/C_0927873		net/minecraft/world/gen/structure/JungleTempleStructure
 	m	()V	<init>		<init>
 	m	()Ljava/lang/String;	m_2990867		m_2990867
 	m	()I	m_5594599		m_5594599
@@ -11323,22 +11323,22 @@ c	net/minecraft/unmapped/C_0927873		net/minecraft/unmapped/C_0927873
 		p	5			p_5
 	m	()I	m_2403020		m_2403020
 	m	()Ljava/lang/String;	m_9759413		m_9759413
-c	net/minecraft/unmapped/C_0927873$C_6546314		C_6546314
+c	net/minecraft/unmapped/C_0927873$C_6546314		Start
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0163201;IILnet/minecraft/unmapped/C_6928498;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-c	net/minecraft/unmapped/C_0937684		net/minecraft/unmapped/C_0937684
-	f	[Lnet/minecraft/unmapped/C_7489997;	f_5845190		f_5845190
-	f	[Lnet/minecraft/unmapped/C_1858262;	f_3913622		f_3913622
-	f	I	f_3260715		f_3260715
+		p	1			world
+		p	2			random
+		p	3			chunkX
+		p	4			chunkZ
+		p	5			biome
+c	net/minecraft/unmapped/C_0937684		net/minecraft/world/gen/feature/RandomRandomSelectorConfiguration
+	f	[Lnet/minecraft/unmapped/C_7489997;	f_5845190		features
+	f	[Lnet/minecraft/unmapped/C_1858262;	f_3913622		configs
+	f	I	f_3260715		count
 	m	([Lnet/minecraft/unmapped/C_7489997;[Lnet/minecraft/unmapped/C_1858262;I)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			features
+		p	2			configs
+		p	3			count
 c	net/minecraft/unmapped/C_0960638		net/minecraft/world/chunk/ProtoChunk
 	f	Lorg/apache/logging/log4j/Logger;	f_5582595		LOGGER
 	f	Lnet/minecraft/unmapped/C_7141926;	f_3206248		pos
@@ -11488,16 +11488,16 @@ c	net/minecraft/unmapped/C_0960638		net/minecraft/world/chunk/ProtoChunk
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_0973342		net/minecraft/world/biome/JungleEdgeBiome
 	m	()V	<init>		<init>
-c	net/minecraft/unmapped/C_0977261		net/minecraft/unmapped/C_0977261
-	f	Lnet/minecraft/unmapped/C_1241852;	f_6924644		f_6924644
+c	net/minecraft/unmapped/C_0977261		net/minecraft/world/gen/feature/BushConfiguration
+	f	Lnet/minecraft/unmapped/C_1241852;	f_6924644		bush
 	m	(Lnet/minecraft/unmapped/C_1241852;)V	<init>		<init>
-		p	1			p_1
-c	net/minecraft/unmapped/C_0995927		net/minecraft/unmapped/C_0995927
+		p	1			bush
+c	net/minecraft/unmapped/C_0995927		net/minecraft/world/gen/structure/DesertTempleConfiguration
 	m	()V	<init>		<init>
-c	net/minecraft/unmapped/C_1043492		net/minecraft/unmapped/C_1043492
-	f	Lnet/minecraft/unmapped/C_2441996;	f_0735664		f_0735664
+c	net/minecraft/unmapped/C_1043492		net/minecraft/world/gen/feature/DoublePlantConfiguration
+	f	Lnet/minecraft/unmapped/C_2441996;	f_0735664		plant
 	m	(Lnet/minecraft/unmapped/C_2441996;)V	<init>		<init>
-		p	1			p_1
+		p	1			plant
 c	net/minecraft/unmapped/C_1104915		net/minecraft/unmapped/C_1104915
 	m	()V	<init>		<init>
 	m	(Ljava/util/Random;Lnet/minecraft/unmapped/C_0636026;Lnet/minecraft/unmapped/C_6928498;IIIDIJ)V	m_9482658		m_9482658
@@ -11555,28 +11555,28 @@ c	net/minecraft/unmapped/C_1169315		net/minecraft/unmapped/C_1169315
 	m	(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;	put		put
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_1302693		net/minecraft/unmapped/C_1302693
-	f	I	f_4274294		f_4274294
-	f	I	f_2727668		f_2727668
-	f	I	f_5313003		f_5313003
-	f	I	f_0488785		f_0488785
+c	net/minecraft/unmapped/C_1302693		net/minecraft/world/gen/structure/TemplePiece
+	f	I	f_4274294		width
+	f	I	f_2727668		height
+	f	I	f_5313003		depth
+	f	I	f_0488785		hPos
 	m	()V	<init>		<init>
 	m	(Ljava/util/Random;IIIIII)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
+		p	1			random
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			width
+		p	6			height
+		p	7			depth
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_5373622		m_5373622
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_2018497;Lnet/minecraft/unmapped/C_0899004;)V	m_1922521		m_1922521
 		p	1			p_1
 		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_7492943;I)Z	m_9603569		m_9603569
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_7492943;I)Z	m_9603569		updateHPos
+		p	1			world
+		p	2			bounds
 		p	3			p_3
 c	net/minecraft/unmapped/C_1420903		net/minecraft/unmapped/C_1420903
 	m	(Lnet/minecraft/unmapped/C_4683117;IIIII)I	m_8523780		m_8523780
@@ -11617,9 +11617,9 @@ c	net/minecraft/unmapped/C_1590974		net/minecraft/unmapped/C_1590974
 		p	5			p_5
 		p	6			p_6
 		p	7			p_7
-c	net/minecraft/unmapped/C_1607741		net/minecraft/unmapped/C_1607741
+c	net/minecraft/unmapped/C_1607741		net/minecraft/world/gen/NoneConfiguration
 	m	()V	<init>		<init>
-c	net/minecraft/unmapped/C_1610007		net/minecraft/unmapped/C_1610007
+c	net/minecraft/unmapped/C_1610007		net/minecraft/world/gen/feature/SwampFlowerFeature
 	m	()V	<init>		<init>
 	m	(Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_2441996;	m_5436903		m_5436903
 		p	1			p_1
@@ -11638,8 +11638,8 @@ c	net/minecraft/unmapped/C_1765696		net/minecraft/unmapped/C_1765696
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-c	net/minecraft/unmapped/C_1858262		net/minecraft/unmapped/C_1858262
-	f	Lnet/minecraft/unmapped/C_1607741;	f_7612632		f_7612632
+c	net/minecraft/unmapped/C_1858262		net/minecraft/world/gen/Configuration
+	f	Lnet/minecraft/unmapped/C_1607741;	f_7612632		NONE
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_2086473		net/minecraft/unmapped/C_2086473
 	m	()V	<init>		<init>
@@ -11754,7 +11754,7 @@ c	net/minecraft/unmapped/C_2285588		net/minecraft/unmapped/C_2285588
 		p	9			p_9
 		p	10			p_10
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_2397450		net/minecraft/unmapped/C_2397450
+c	net/minecraft/unmapped/C_2397450		net/minecraft/world/gen/chunk/settings/NetherGeneratorSettings
 	m	()V	<init>		<init>
 c	net/minecraft/unmapped/C_2417628		net/minecraft/world/biome/SnowyMountainsBiome
 	m	()V	<init>		<init>
@@ -11830,7 +11830,7 @@ c	net/minecraft/unmapped/C_2615280		net/minecraft/unmapped/C_2615280
 		p	5			p_5
 		p	6			p_6
 		p	7			p_7
-c	net/minecraft/unmapped/C_2691910		net/minecraft/unmapped/C_2691910
+c	net/minecraft/unmapped/C_2691910		net/minecraft/world/gen/chunk/settings/DebugGeneratorSettings
 	m	()V	<init>		<init>
 c	net/minecraft/unmapped/C_2753595		net/minecraft/unmapped/C_2753595
 	m	()V	<init>		<init>
@@ -11865,7 +11865,7 @@ c	net/minecraft/unmapped/C_2817960		net/minecraft/unmapped/C_2817960
 		p	5			p_5
 		p	6			p_6
 		p	7			p_7
-c	net/minecraft/unmapped/C_2845191		net/minecraft/unmapped/C_2845191
+c	net/minecraft/unmapped/C_2845191		net/minecraft/world/gen/feature/LiquidFallFeature
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_9466264;)Z	m_3414601		m_3414601
 		p	1			p_1
@@ -11891,7 +11891,7 @@ c	net/minecraft/unmapped/C_2879908		net/minecraft/unmapped/C_2879908
 		p	7			p_7
 		p	9			p_9
 		p	10			p_10
-c	net/minecraft/unmapped/C_2901120		net/minecraft/unmapped/C_2901120
+c	net/minecraft/unmapped/C_2901120		net/minecraft/world/gen/feature/VinesFeature
 	f	[Lnet/minecraft/unmapped/C_3544601;	f_1286774		f_1286774
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1607741;)Z	m_9664576		m_9664576
@@ -11916,11 +11916,11 @@ c	net/minecraft/unmapped/C_2934522		net/minecraft/unmapped/C_2934522
 		p	2			p_2
 c	net/minecraft/unmapped/C_3000819		net/minecraft/unmapped/C_3000819
 	m	()V	<init>		<init>
-c	net/minecraft/unmapped/C_3020031		net/minecraft/unmapped/C_3020031
+c	net/minecraft/unmapped/C_3020031		net/minecraft/world/gen/structure/IglooConfiguration
 	m	()V	<init>		<init>
 c	net/minecraft/unmapped/C_3091078		net/minecraft/unmapped/C_3091078
 	m	()Lnet/minecraft/unmapped/C_2891045;	m_9998287		m_9998287
-c	net/minecraft/unmapped/C_3119602		net/minecraft/unmapped/C_3119602
+c	net/minecraft/unmapped/C_3119602		net/minecraft/world/gen/structure/IglooStructure
 	m	()V	<init>		<init>
 	m	()Ljava/lang/String;	m_2990867		m_2990867
 	m	()I	m_5594599		m_5594599
@@ -11932,7 +11932,7 @@ c	net/minecraft/unmapped/C_3119602		net/minecraft/unmapped/C_3119602
 		p	5			p_5
 	m	()I	m_2403020		m_2403020
 	m	()Ljava/lang/String;	m_9759413		m_9759413
-c	net/minecraft/unmapped/C_3119602$C_0210093		C_0210093
+c	net/minecraft/unmapped/C_3119602$C_0210093		Start
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0163201;IILnet/minecraft/unmapped/C_6928498;)V	<init>		<init>
 		p	1			p_1
@@ -11949,7 +11949,7 @@ c	net/minecraft/unmapped/C_3167070		net/minecraft/unmapped/C_3167070
 		p	4			p_4
 		p	5			p_5
 		p	6			p_6
-c	net/minecraft/unmapped/C_3224928		net/minecraft/unmapped/C_3224928
+c	net/minecraft/unmapped/C_3224928		net/minecraft/world/gen/feature/GrassFeature
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_0635266;)Z	m_8604966		m_8604966
 		p	1			p_1
@@ -11963,22 +11963,22 @@ c	net/minecraft/unmapped/C_3224928		net/minecraft/unmapped/C_3224928
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-c	net/minecraft/unmapped/C_3250246		net/minecraft/unmapped/C_3250246
-	f	D	f_4487009		f_4487009
-	f	Lnet/minecraft/unmapped/C_6878131$C_4013422;	f_0505044		f_0505044
+c	net/minecraft/unmapped/C_3250246		net/minecraft/world/gen/structure/MineshaftConfiguration
+	f	D	f_4487009		probability
+	f	Lnet/minecraft/unmapped/C_6878131$C_4013422;	f_0505044		variant
 	m	(DLnet/minecraft/unmapped/C_6878131$C_4013422;)V	<init>		<init>
-		p	1			p_1
-		p	3			p_3
+		p	1			probability
+		p	3			variant
 c	net/minecraft/unmapped/C_3287998		net/minecraft/world/gen/chunk/settings/ChunkGeneratorSettings
-	m	()I	m_9388083		m_9388083
-	m	()I	m_9519581		m_9519581
-	m	()I	m_1405291		m_1405291
-	m	()I	m_9063838		m_9063838
-	m	()I	m_6207858		m_6207858
-	m	()I	m_2306449		m_2306449
-	m	()I	m_9321058		m_9321058
-	m	()I	m_1322143		m_1322143
-	m	()I	m_5644682		m_5644682
+	m	()I	m_9388083		getVillagesSpacing
+	m	()I	m_9519581		getMonumentsSpacing
+	m	()I	m_1405291		getMonumentsSeparation
+	m	()I	m_9063838		getStrongholdsDistance
+	m	()I	m_6207858		getStrongholdsCount
+	m	()I	m_2306449		getStrongholdsSpread
+	m	()I	m_9321058		getTemplesSpacing
+	m	()I	m_1322143		getEndCitySpacing
+	m	()I	m_5644682		getWoodlandMansionSpacing
 c	net/minecraft/unmapped/C_3294752		net/minecraft/world/biome/SmallEndIslandsBiome
 	m	()V	<init>		<init>
 	m	(F)I	m_5728944		m_5728944
@@ -12074,7 +12074,7 @@ c	net/minecraft/unmapped/C_3390067		net/minecraft/unmapped/C_3390067
 	m	(Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_2441996;	m_5650670		m_5650670
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_3431957		net/minecraft/unmapped/C_3431957
+c	net/minecraft/unmapped/C_3431957		net/minecraft/world/gen/feature/VoidStartPlatformFeature
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1607741;)Z	m_6233233		m_6233233
 		p	1			p_1
@@ -12153,7 +12153,7 @@ c	net/minecraft/unmapped/C_3495558		net/minecraft/unmapped/C_3495558
 		p	9			p_9
 		p	10			p_10
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_3560264		net/minecraft/unmapped/C_3560264
+c	net/minecraft/unmapped/C_3560264		net/minecraft/world/gen/feature/FlowerFeature
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1607741;)Z	m_9483142		m_9483142
 		p	1			p_1
@@ -12161,9 +12161,9 @@ c	net/minecraft/unmapped/C_3560264		net/minecraft/unmapped/C_3560264
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	(Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_2441996;	m_5436903		m_5436903
-		p	1			p_1
-		p	2			p_2
+	m	(Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_2441996;	m_5436903		pickFlower
+		p	1			random
+		p	2			pos
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1858262;)Z	m_4278200		m_4278200
 		p	1			p_1
 		p	2			p_2
@@ -12213,7 +12213,7 @@ c	net/minecraft/unmapped/C_3711273		net/minecraft/unmapped/C_3711273
 		p	4			p_4
 		p	5			p_5
 		p	6			p_6
-c	net/minecraft/unmapped/C_3712379		net/minecraft/unmapped/C_3712379
+c	net/minecraft/unmapped/C_3712379		net/minecraft/world/gen/feature/SnowAndFreezeFeature
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1607741;)Z	m_2578412		m_2578412
 		p	1			p_1
@@ -12227,25 +12227,25 @@ c	net/minecraft/unmapped/C_3712379		net/minecraft/unmapped/C_3712379
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-c	net/minecraft/unmapped/C_3776798		net/minecraft/unmapped/C_3776798
-	f	I	f_0284990		f_0284990
-	f	Lnet/minecraft/unmapped/C_3424041$C_6225608;	f_4661221		f_4661221
+c	net/minecraft/unmapped/C_3776798		net/minecraft/world/gen/structure/VillageConfiguration
+	f	I	f_0284990		size
+	f	Lnet/minecraft/unmapped/C_3424041$C_6225608;	f_4661221		variant
 	m	(ILnet/minecraft/unmapped/C_3424041$C_6225608;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-c	net/minecraft/unmapped/C_3820473		net/minecraft/unmapped/C_3820473
-	f	[Lnet/minecraft/unmapped/C_0636026;	f_9402997		f_9402997
-	f	I	f_3164515		f_3164515
-	f	I	f_8345602		f_8345602
-	f	I	f_4021874		f_4021874
-	f	I	f_7701755		f_7701755
+		p	1			size
+		p	2			variant
+c	net/minecraft/unmapped/C_3820473		net/minecraft/world/gen/WorldGenRegion
+	f	[Lnet/minecraft/unmapped/C_0636026;	f_9402997		cache
+	f	I	f_3164515		chunkX
+	f	I	f_8345602		chunkZ
+	f	I	f_4021874		sizeX
+	f	I	f_7701755		sizeZ
 	f	Lnet/minecraft/unmapped/C_5553933;	f_6432765		world
 	f	J	f_2931284		seed
-	f	I	f_1123969		f_1123969
+	f	I	f_1123969		seaLevel
 	f	Lnet/minecraft/unmapped/C_6152184;	f_7886876		data
 	f	Ljava/util/Random;	f_0745222		random
 	f	Lnet/minecraft/unmapped/C_3198459;	f_5549566		dimension
-	f	Lnet/minecraft/unmapped/C_3287998;	f_9883660		f_9883660
+	f	Lnet/minecraft/unmapped/C_3287998;	f_9883660		generatorSettings
 	m	([Lnet/minecraft/unmapped/C_0636026;IIIILnet/minecraft/unmapped/C_5553933;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -12253,11 +12253,11 @@ c	net/minecraft/unmapped/C_3820473		net/minecraft/unmapped/C_3820473
 		p	4			p_4
 		p	5			p_5
 		p	6			p_6
-	m	()I	m_7525702		m_7525702
-	m	()I	m_4195296		m_4195296
-	m	(II)Z	m_7760003		m_7760003
-		p	1			p_1
-		p	2			p_2
+	m	()I	m_7525702		getChunkX
+	m	()I	m_4195296		getChunkZ
+	m	(II)Z	m_7760003		hasChunkAt
+		p	1			chunkX
+		p	2			chunkZ
 	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_0636026;	m_7664270		m_7664270
 		p	1			p_1
 	m	(II)Lnet/minecraft/unmapped/C_0636026;	m_0668165		m_0668165
@@ -12421,7 +12421,7 @@ c	net/minecraft/unmapped/C_3989703		net/minecraft/unmapped/C_3989703
 	m	(Ljava/lang/Thread;Ljava/lang/Throwable;)V	uncaughtException		uncaughtException
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_4006613		net/minecraft/unmapped/C_4006613
+c	net/minecraft/unmapped/C_4006613		net/minecraft/world/gen/feature/JungleTreeFeature
 	f	I	f_2569927		f_2569927
 	m	(ZILnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_2441996;Z)V	<init>		<init>
 		p	1			p_1
@@ -12515,10 +12515,10 @@ c	net/minecraft/unmapped/C_4188744		net/minecraft/unmapped/C_4188744
 		p	5			p_5
 		p	6			p_6
 		p	7			p_7
-c	net/minecraft/unmapped/C_4225480		net/minecraft/unmapped/C_4225480
-	f	Lnet/minecraft/unmapped/C_1241852;	f_9450246		f_9450246
+c	net/minecraft/unmapped/C_4225480		net/minecraft/world/gen/feature/LakeConfiguration
+	f	Lnet/minecraft/unmapped/C_1241852;	f_9450246		liquid
 	m	(Lnet/minecraft/unmapped/C_1241852;)V	<init>		<init>
-		p	1			p_1
+		p	1			liquid
 c	net/minecraft/unmapped/C_4243069		net/minecraft/unmapped/C_4243069
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3000819;Lnet/minecraft/unmapped/C_7489997;Lnet/minecraft/unmapped/C_1858262;)Z	m_5934407		m_5934407
@@ -12539,7 +12539,7 @@ c	net/minecraft/unmapped/C_4243069		net/minecraft/unmapped/C_4243069
 		p	7			p_7
 c	net/minecraft/unmapped/C_4252677		net/minecraft/world/biome/TaigaMountainsBiome
 	m	()V	<init>		<init>
-c	net/minecraft/unmapped/C_4302533		net/minecraft/unmapped/C_4302533
+c	net/minecraft/unmapped/C_4302533		net/minecraft/world/gen/feature/IcePatchConfiguration
 	f	I	f_9765502		f_9765502
 	m	(I)V	<init>		<init>
 		p	1			p_1
@@ -12561,7 +12561,7 @@ c	net/minecraft/unmapped/C_4306002		net/minecraft/unmapped/C_4306002
 		p	5			p_5
 		p	6			p_6
 		p	7			p_7
-c	net/minecraft/unmapped/C_4370115		net/minecraft/unmapped/C_4370115
+c	net/minecraft/unmapped/C_4370115		net/minecraft/world/gen/structure/StrongholdConfiguration
 	m	()V	<init>		<init>
 c	net/minecraft/unmapped/C_4371572		net/minecraft/unmapped/C_4371572
 	m	()V	<init>		<init>
@@ -12600,16 +12600,16 @@ c	net/minecraft/unmapped/C_4415644		net/minecraft/unmapped/C_4415644
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_4429106		net/minecraft/world/biome/GravellyMountainsBiome
 	m	()V	<init>		<init>
-c	net/minecraft/unmapped/C_4442965		net/minecraft/unmapped/C_4442965
+c	net/minecraft/unmapped/C_4442965		net/minecraft/world/gen/feature/DefaultFlowerFeature
 	m	()V	<init>		<init>
 	m	(Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_2441996;	m_5436903		m_5436903
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_4479368		net/minecraft/unmapped/C_4479368
-	f	Lnet/minecraft/unmapped/C_0561170;	f_8671208		f_8671208
-	f	Lnet/minecraft/unmapped/C_0561170;	f_6240692		f_6240692
-	f	Lnet/minecraft/unmapped/C_0561170;	f_4608958		f_4608958
-	m	()V	m_2378962		m_2378962
+c	net/minecraft/unmapped/C_4479368		net/minecraft/world/gen/structure/IglooPieces
+	f	Lnet/minecraft/unmapped/C_0561170;	f_8671208		IGLOO_STRUCTURE_LOCATION
+	f	Lnet/minecraft/unmapped/C_0561170;	f_6240692		LADDER_STRUCTURE_LOCATION
+	f	Lnet/minecraft/unmapped/C_0561170;	f_4608958		LABORATORY_STRUCTURE_LOCATION
+	m	()V	m_2378962		register
 	m	()V	<init>		<init>
 	m	(Ljava/util/Random;II)V	<init>		<init>
 		p	1			p_1
@@ -12689,7 +12689,7 @@ c	net/minecraft/unmapped/C_4683110		net/minecraft/unmapped/C_4683110
 c	net/minecraft/unmapped/C_4683117		net/minecraft/unmapped/C_4683117
 	m	(I)I	m_3459103		m_3459103
 		p	1			p_1
-c	net/minecraft/unmapped/C_4710403		net/minecraft/unmapped/C_4710403
+c	net/minecraft/unmapped/C_4710403		net/minecraft/world/gen/structure/JungleTempleConfiguration
 	m	()V	<init>		<init>
 c	net/minecraft/unmapped/C_4782828		net/minecraft/unmapped/C_4782828
 	m	()V	<init>		<init>
@@ -12709,12 +12709,12 @@ c	net/minecraft/unmapped/C_4782828		net/minecraft/unmapped/C_4782828
 		p	5			p_5
 		p	6			p_6
 		p	7			p_7
-c	net/minecraft/unmapped/C_4787395		net/minecraft/unmapped/C_4787395
-	f	Ljava/util/function/Predicate;	f_3259043		f_3259043
-	f	Lnet/minecraft/unmapped/C_2441996;	f_0094748		f_0094748
+c	net/minecraft/unmapped/C_4787395		net/minecraft/world/gen/feature/ReplaceBlockConfiguration
+	f	Ljava/util/function/Predicate;	f_3259043		replacePredicate
+	f	Lnet/minecraft/unmapped/C_2441996;	f_0094748		state
 	m	(Ljava/util/function/Predicate;Lnet/minecraft/unmapped/C_2441996;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			replacePredicate
+		p	2			state
 c	net/minecraft/unmapped/C_4801203		net/minecraft/unmapped/C_4801203
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_7956732;Lnet/minecraft/unmapped/C_7489997;Lnet/minecraft/unmapped/C_1858262;)Z	m_3751066		m_3751066
@@ -12763,7 +12763,7 @@ c	net/minecraft/unmapped/C_4948265		net/minecraft/world/biome/EndBarrensBiome
 	m	()V	<init>		<init>
 	m	(F)I	m_5728944		m_5728944
 		p	1			p_1
-c	net/minecraft/unmapped/C_4954840		net/minecraft/unmapped/C_4954840
+c	net/minecraft/unmapped/C_4954840		net/minecraft/world/gen/feature/BushFeature
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_0977261;)Z	m_4752871		m_4752871
 		p	1			p_1
@@ -12834,7 +12834,7 @@ c	net/minecraft/unmapped/C_5103515		net/minecraft/unmapped/C_5103515
 		p	5			p_5
 		p	6			p_6
 		p	7			p_7
-c	net/minecraft/unmapped/C_5157492		net/minecraft/unmapped/C_5157492
+c	net/minecraft/unmapped/C_5157492		net/minecraft/world/gen/feature/RandomRandomSelectorFeature
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_0937684;)Z	m_7427112		m_7427112
 		p	1			p_1
@@ -12842,13 +12842,13 @@ c	net/minecraft/unmapped/C_5157492		net/minecraft/unmapped/C_5157492
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	(Lnet/minecraft/unmapped/C_7489997;Lnet/minecraft/unmapped/C_1858262;Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;)Z	m_7603739		m_7603739
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
+	m	(Lnet/minecraft/unmapped/C_7489997;Lnet/minecraft/unmapped/C_1858262;Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;)Z	m_7603739		place
+		p	1			feature
+		p	2			config
+		p	3			world
+		p	4			generator
+		p	5			random
+		p	6			pos
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1858262;)Z	m_4278200		m_4278200
 		p	1			p_1
 		p	2			p_2
@@ -12970,8 +12970,8 @@ c	net/minecraft/unmapped/C_5250955		net/minecraft/world/BlockView
 	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_2441996;	m_6686868		getBlockState
 		p	1			pos
 	m	()I	m_7760842		getMaxLight
-c	net/minecraft/unmapped/C_5306262		net/minecraft/unmapped/C_5306262
-	f	Ljava/util/List;	f_9567092		f_9567092
+c	net/minecraft/unmapped/C_5306262		net/minecraft/world/gen/structure/WithHutStructure
+	f	Ljava/util/List;	f_9567092		SPAWN_ENTRIES
 	m	()V	<init>		<init>
 	m	()Ljava/lang/String;	m_2990867		m_2990867
 	m	()I	m_5594599		m_5594599
@@ -12983,19 +12983,19 @@ c	net/minecraft/unmapped/C_5306262		net/minecraft/unmapped/C_5306262
 		p	5			p_5
 	m	()I	m_2403020		m_2403020
 	m	()Ljava/util/List;	m_7477355		m_7477355
-	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_3674802;)Z	m_3793200		m_3793200
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_3674802;)Z	m_3793200		isWitchHut
+		p	1			world
+		p	2			pos
 	m	()Ljava/lang/String;	m_9759413		m_9759413
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_5306262$C_7969920		C_7969920
+c	net/minecraft/unmapped/C_5306262$C_7969920		Start
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0163201;IILnet/minecraft/unmapped/C_6928498;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	1			world
+		p	2			random
+		p	3			chunkX
+		p	4			chunkZ
+		p	5			biome
 c	net/minecraft/unmapped/C_5416132		net/minecraft/world/Predicates
 	m	(Lnet/minecraft/unmapped/C_7122918;)Lnet/minecraft/unmapped/C_7122918;	m_7729429		not
 		p	0			predicate
@@ -13043,12 +13043,12 @@ c	net/minecraft/unmapped/C_5458286		net/minecraft/unmapped/C_5458286
 		p	5			p_5
 		p	6			p_6
 		p	7			p_7
-c	net/minecraft/unmapped/C_5490231		net/minecraft/unmapped/C_5490231
-	f	Lnet/minecraft/unmapped/C_1241852;	f_9116806		f_9116806
-	f	I	f_6644598		f_6644598
+c	net/minecraft/unmapped/C_5490231		net/minecraft/world/gen/feature/BlockVeinConfiguration
+	f	Lnet/minecraft/unmapped/C_1241852;	f_9116806		block
+	f	I	f_6644598		size
 	m	(Lnet/minecraft/unmapped/C_1241852;I)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			block
+		p	2			size
 c	net/minecraft/unmapped/C_5503280		net/minecraft/world/chunk/HeightMap
 	f	Lnet/minecraft/unmapped/C_2428652;	f_7594290		data
 	f	Lnet/minecraft/unmapped/C_7122918;	f_9097421		isOpaque
@@ -13099,24 +13099,24 @@ c	net/minecraft/unmapped/C_5503280$C_6055071		Type
 		p	3			p_3
 	m	()[Lnet/minecraft/unmapped/C_7122918;	m_9705034		isOpaque
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_5532430		net/minecraft/unmapped/C_5532430
-	f	Lnet/minecraft/unmapped/C_2441996;	f_6380128		f_6380128
-	f	Lnet/minecraft/unmapped/C_2441996;	f_1457659		f_1457659
-	f	Lnet/minecraft/unmapped/C_2441996;	f_2928028		f_2928028
+c	net/minecraft/unmapped/C_5532430		net/minecraft/world/gen/carver/AbstractWorldCarver
+	f	Lnet/minecraft/unmapped/C_2441996;	f_6380128		AIR
+	f	Lnet/minecraft/unmapped/C_2441996;	f_1457659		CAVE_AIR
+	f	Lnet/minecraft/unmapped/C_2441996;	f_2928028		WATER
 	f	Lnet/minecraft/unmapped/C_2441996;	f_6094595		f_6094595
-	f	Lnet/minecraft/unmapped/C_2441996;	f_5284425		f_5284425
+	f	Lnet/minecraft/unmapped/C_2441996;	f_5284425		LAVA
 	f	Lnet/minecraft/unmapped/C_2441996;	f_5338080		f_5338080
-	f	Ljava/util/Set;	f_9672227		f_9672227
-	f	Ljava/util/Set;	f_5604538		f_5604538
+	f	Ljava/util/Set;	f_9672227		replaceable
+	f	Ljava/util/Set;	f_5604538		liquids
 	m	()V	<init>		<init>
-	m	()I	m_3495337		m_3495337
+	m	()I	m_3495337		getRange
 	m	(Lnet/minecraft/unmapped/C_9844932;Ljava/util/Random;II)Z	m_6083678		m_6083678
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
 	m	()F	m_2738541		m_2738541
-	m	(Lnet/minecraft/unmapped/C_9844932;IIDDDDDLjava/util/BitSet;)Z	m_6600179		m_6600179
+	m	(Lnet/minecraft/unmapped/C_9844932;IIDDDDDLjava/util/BitSet;)Z	m_6600179		carve
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -13136,12 +13136,12 @@ c	net/minecraft/unmapped/C_5532430		net/minecraft/unmapped/C_5532430
 		p	7			p_7
 	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_9732169		m_9732169
 		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_0062888		m_0062888
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_2441996;)Z	m_6623224		m_6623224
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_9844932;IIIIIIII)Z	m_5564018		m_5564018
+	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_0062888		canReplace
+		p	1			state
+	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_2441996;)Z	m_6623224		canReplace
+		p	1			state
+		p	2			with
+	m	(Lnet/minecraft/unmapped/C_9844932;IIIIIIII)Z	m_5564018		hasLiquid
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -13151,14 +13151,14 @@ c	net/minecraft/unmapped/C_5532430		net/minecraft/unmapped/C_5532430
 		p	7			p_7
 		p	8			p_8
 		p	9			p_9
-	m	(IIIIII)Z	m_2933793		m_2933793
+	m	(IIIIII)Z	m_2933793		isEdge
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
 		p	6			p_6
-	m	(IIDDIIF)Z	m_8045714		m_8045714
+	m	(IIDDIIF)Z	m_8045714		canReach
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -13177,7 +13177,7 @@ c	net/minecraft/unmapped/C_5544009		net/minecraft/unmapped/C_5544009
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-c	net/minecraft/unmapped/C_5591124		net/minecraft/unmapped/C_5591124
+c	net/minecraft/unmapped/C_5591124		net/minecraft/world/gen/feature/DoublePlantFeature
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1043492;)Z	m_0410581		m_0410581
 		p	1			p_1
@@ -13329,7 +13329,7 @@ c	net/minecraft/unmapped/C_5865989		net/minecraft/unmapped/C_5865989
 	m	(Lnet/minecraft/unmapped/C_0037941;Lnet/minecraft/unmapped/C_8196199;)Lnet/minecraft/unmapped/C_9789416;	m_0315755		m_0315755
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_5906916		net/minecraft/unmapped/C_5906916
+c	net/minecraft/unmapped/C_5906916		net/minecraft/world/gen/structure/EndCityConfiguration
 	m	()V	<init>		<init>
 c	net/minecraft/unmapped/C_5935878		net/minecraft/world/biome/FrozenOceanBiome
 	m	()V	<init>		<init>
@@ -13367,9 +13367,9 @@ c	net/minecraft/unmapped/C_6081359		net/minecraft/unmapped/C_6081359
 		p	5			p_5
 		p	6			p_6
 		p	7			p_7
-c	net/minecraft/unmapped/C_6122684		net/minecraft/unmapped/C_6122684
+c	net/minecraft/unmapped/C_6122684		net/minecraft/world/gen/structure/FortressConfiguration
 	m	()V	<init>		<init>
-c	net/minecraft/unmapped/C_6189873		net/minecraft/unmapped/C_6189873
+c	net/minecraft/unmapped/C_6189873		net/minecraft/world/gen/feature/RandomBooleanSelectorFeature
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_7107067;)Z	m_0284825		m_0284825
 		p	1			p_1
@@ -13377,13 +13377,13 @@ c	net/minecraft/unmapped/C_6189873		net/minecraft/unmapped/C_6189873
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	(Lnet/minecraft/unmapped/C_7489997;Lnet/minecraft/unmapped/C_1858262;Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;)Z	m_5291247		m_5291247
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
+	m	(Lnet/minecraft/unmapped/C_7489997;Lnet/minecraft/unmapped/C_1858262;Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;)Z	m_5291247		place
+		p	1			feature
+		p	2			config
+		p	3			world
+		p	4			generator
+		p	5			random
+		p	6			pos
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1858262;)Z	m_4278200		m_4278200
 		p	1			p_1
 		p	2			p_2
@@ -13414,12 +13414,12 @@ c	net/minecraft/unmapped/C_6289416		net/minecraft/unmapped/C_6289416
 		p	1			p_1
 c	net/minecraft/unmapped/C_6346577		net/minecraft/world/biome/SunflowerPlainsBiome
 	m	()V	<init>		<init>
-c	net/minecraft/unmapped/C_6350611		net/minecraft/unmapped/C_6350611
-	f	Lnet/minecraft/unmapped/C_2441996;	f_2897284		f_2897284
-	f	Lnet/minecraft/unmapped/C_2441996;	f_3758014		f_3758014
+c	net/minecraft/unmapped/C_6350611		net/minecraft/world/gen/feature/GroundBushFeature
+	f	Lnet/minecraft/unmapped/C_2441996;	f_2897284		leaves
+	f	Lnet/minecraft/unmapped/C_2441996;	f_3758014		log
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_2441996;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			log
+		p	2			leaves
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1607741;)Z	m_5727495		m_5727495
 		p	1			p_1
 		p	2			p_2
@@ -13477,7 +13477,7 @@ c	net/minecraft/unmapped/C_6558046		net/minecraft/world/biome/MountainEdgeBiome
 c	net/minecraft/unmapped/C_6566559		net/minecraft/unmapped/C_6566559
 	m	(Lnet/minecraft/unmapped/C_0037941;)Lnet/minecraft/unmapped/C_9789416;	make		make
 		p	1			p_1
-c	net/minecraft/unmapped/C_6606157		net/minecraft/unmapped/C_6606157
+c	net/minecraft/unmapped/C_6606157		net/minecraft/world/gen/feature/ChorusPlantFeature
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1607741;)Z	m_9363162		m_9363162
 		p	1			p_1
@@ -13491,14 +13491,14 @@ c	net/minecraft/unmapped/C_6606157		net/minecraft/unmapped/C_6606157
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-c	net/minecraft/unmapped/C_6647280		net/minecraft/unmapped/C_6647280
-	f	Z	f_5436783		f_5436783
-	m	()V	m_9949151		m_9949151
+c	net/minecraft/unmapped/C_6647280		net/minecraft/world/gen/structure/SwapHutPiece
+	f	Z	f_5436783		hasWitch
+	m	()V	m_9949151		register
 	m	()V	<init>		<init>
 	m	(Ljava/util/Random;II)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			random
+		p	2			x
+		p	3			z
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_5373622		m_5373622
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_2018497;Lnet/minecraft/unmapped/C_0899004;)V	m_1922521		m_1922521
@@ -13508,7 +13508,7 @@ c	net/minecraft/unmapped/C_6647280		net/minecraft/unmapped/C_6647280
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/unmapped/C_6664696		net/minecraft/unmapped/C_6664696
+c	net/minecraft/unmapped/C_6664696		net/minecraft/world/gen/feature/ReplaceBlockFeature
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_4787395;)Z	m_1783665		m_1783665
 		p	1			p_1
@@ -13522,7 +13522,7 @@ c	net/minecraft/unmapped/C_6664696		net/minecraft/unmapped/C_6664696
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-c	net/minecraft/unmapped/C_6729817		net/minecraft/unmapped/C_6729817
+c	net/minecraft/unmapped/C_6729817		net/minecraft/world/gen/structure/TempleFeature
 	f	I	f_0105393		f_0105393
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;II)Z	m_3595212		m_3595212
@@ -13538,7 +13538,7 @@ c	net/minecraft/unmapped/C_6729817		net/minecraft/unmapped/C_6729817
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	()I	m_2403020		m_2403020
+	m	()I	m_2403020		getRandomSalt
 c	net/minecraft/unmapped/C_6764413		net/minecraft/unmapped/C_6764413
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_7956732;Lnet/minecraft/unmapped/C_7489997;Lnet/minecraft/unmapped/C_1858262;)Z	m_1628308		m_1628308
@@ -13557,16 +13557,16 @@ c	net/minecraft/unmapped/C_6764413		net/minecraft/unmapped/C_6764413
 		p	5			p_5
 		p	6			p_6
 		p	7			p_7
-c	net/minecraft/unmapped/C_6848079		net/minecraft/unmapped/C_6848079
-	f	I	f_7280760		f_7280760
-	f	I	f_9622864		f_9622864
-	f	I	f_7617559		f_7617559
-	f	I	f_0863395		f_0863395
-	f	I	f_4528897		f_4528897
-	f	I	f_4721297		f_4721297
-	f	I	f_3196934		f_3196934
-	f	I	f_9363556		f_9363556
-	f	I	f_1948530		f_1948530
+c	net/minecraft/unmapped/C_6848079		net/minecraft/world/gen/chunk/settings/BaseChunkGeneratorSettings
+	f	I	f_7280760		villagesSpacing
+	f	I	f_9622864		monumentsSpacing
+	f	I	f_7617559		monumentsSeparation
+	f	I	f_0863395		strongholdsDistance
+	f	I	f_4528897		strongholdsCount
+	f	I	f_4721297		strongholdsSpread
+	f	I	f_3196934		templesSpacing
+	f	I	f_9363556		endCitySpacing
+	f	I	f_1948530		woodlandMansionSpacing
 	m	()V	<init>		<init>
 	m	()I	m_9388083		m_9388083
 	m	()I	m_9519581		m_9519581
@@ -13627,7 +13627,7 @@ c	net/minecraft/unmapped/C_6952080		net/minecraft/unmapped/C_6952080
 		p	1			p_1
 	m	(J)V	m_8374213		m_8374213
 		p	1			p_1
-c	net/minecraft/unmapped/C_6967438		net/minecraft/unmapped/C_6967438
+c	net/minecraft/unmapped/C_6967438		net/minecraft/world/gen/feature/DiskReplaceFeature
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_8889518;)Z	m_3695444		m_3695444
 		p	1			p_1
@@ -13641,8 +13641,8 @@ c	net/minecraft/unmapped/C_6967438		net/minecraft/unmapped/C_6967438
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-c	net/minecraft/unmapped/C_6971715		net/minecraft/unmapped/C_6971715
-	f	[Lnet/minecraft/unmapped/C_1241852;	f_8333558		f_8333558
+c	net/minecraft/unmapped/C_6971715		net/minecraft/world/gen/feature/ForestFlowerFeature
+	f	[Lnet/minecraft/unmapped/C_1241852;	f_8333558		FLOWERS
 	m	()V	<init>		<init>
 	m	(Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_2441996;	m_5436903		m_5436903
 		p	1			p_1
@@ -13691,16 +13691,16 @@ c	net/minecraft/unmapped/C_7095320		net/minecraft/unmapped/C_7095320
 		p	3			p_3
 		p	4			p_4
 	m	()Lnet/minecraft/unmapped/C_3755722;	m_3033183		m_3033183
-c	net/minecraft/unmapped/C_7107067		net/minecraft/unmapped/C_7107067
-	f	Lnet/minecraft/unmapped/C_7489997;	f_7738267		f_7738267
-	f	Lnet/minecraft/unmapped/C_1858262;	f_8555344		f_8555344
-	f	Lnet/minecraft/unmapped/C_7489997;	f_4715309		f_4715309
-	f	Lnet/minecraft/unmapped/C_1858262;	f_8040967		f_8040967
+c	net/minecraft/unmapped/C_7107067		net/minecraft/world/gen/feature/RandomBooleanSelectorConfiguration
+	f	Lnet/minecraft/unmapped/C_7489997;	f_7738267		featureTrue
+	f	Lnet/minecraft/unmapped/C_1858262;	f_8555344		configTrue
+	f	Lnet/minecraft/unmapped/C_7489997;	f_4715309		featureFalse
+	f	Lnet/minecraft/unmapped/C_1858262;	f_8040967		configFalse
 	m	(Lnet/minecraft/unmapped/C_7489997;Lnet/minecraft/unmapped/C_1858262;Lnet/minecraft/unmapped/C_7489997;Lnet/minecraft/unmapped/C_1858262;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	1			featureTrue
+		p	2			configTrue
+		p	3			featureFalse
+		p	4			configFalse
 c	net/minecraft/unmapped/C_7122918		net/minecraft/world/Predicate
 	m	(Ljava/lang/Object;Lnet/minecraft/unmapped/C_5250955;Lnet/minecraft/unmapped/C_3674802;)Z	test		test
 		p	1			o
@@ -13726,7 +13726,7 @@ c	net/minecraft/unmapped/C_7154165		net/minecraft/unmapped/C_7154165
 	m	(FJ)V	m_6398159		m_6398159
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_7180680		net/minecraft/unmapped/C_7180680
+c	net/minecraft/unmapped/C_7180680		net/minecraft/world/gen/feature/PlainFlowerFeature
 	m	()V	<init>		<init>
 	m	(Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_2441996;	m_5436903		m_5436903
 		p	1			p_1
@@ -13805,92 +13805,92 @@ c	net/minecraft/unmapped/C_7338640		net/minecraft/unmapped/C_7338640
 		p	7			p_7
 		p	9			p_9
 		p	10			p_10
-c	net/minecraft/unmapped/C_7489997		net/minecraft/unmapped/C_7489997
-	f	Ljava/util/ArrayList;	f_4642465		f_4642465
-	f	Lnet/minecraft/unmapped/C_9470286;	f_2015439		f_2015439
-	f	Lnet/minecraft/unmapped/C_9470286;	f_5657111		f_5657111
-	f	Lnet/minecraft/unmapped/C_9470286;	f_8632632		f_8632632
-	f	Lnet/minecraft/unmapped/C_9470286;	f_8024380		f_8024380
-	f	Lnet/minecraft/unmapped/C_9470286;	f_7399417		f_7399417
-	f	Lnet/minecraft/unmapped/C_9470286;	f_8643295		f_8643295
-	f	Lnet/minecraft/unmapped/C_9470286;	f_3610486		f_3610486
-	f	Lnet/minecraft/unmapped/C_9470286;	f_6078905		f_6078905
-	f	Lnet/minecraft/unmapped/C_9470286;	f_2424517		f_2424517
-	f	Lnet/minecraft/unmapped/C_9470286;	f_7230438		f_7230438
-	f	Lnet/minecraft/unmapped/C_9470286;	f_9884389		f_9884389
-	f	Lnet/minecraft/unmapped/C_7955273;	f_4029195		f_4029195
-	f	Lnet/minecraft/unmapped/C_7955273;	f_3367164		f_3367164
-	f	Lnet/minecraft/unmapped/C_7955273;	f_6062756		f_6062756
-	f	Lnet/minecraft/unmapped/C_7955273;	f_2711357		f_2711357
-	f	Lnet/minecraft/unmapped/C_7955273;	f_4935222		f_4935222
-	f	Lnet/minecraft/unmapped/C_7955273;	f_4833138		f_4833138
-	f	Lnet/minecraft/unmapped/C_7955273;	f_3303603		f_3303603
-	f	Lnet/minecraft/unmapped/C_7955273;	f_6061276		f_6061276
-	f	Lnet/minecraft/unmapped/C_7955273;	f_2027112		f_2027112
-	f	Lnet/minecraft/unmapped/C_7955273;	f_8054391		f_8054391
-	f	Lnet/minecraft/unmapped/C_7955273;	f_4197941		f_4197941
-	f	Lnet/minecraft/unmapped/C_2750238;	f_2546898		f_2546898
-	f	Lnet/minecraft/unmapped/C_2750238;	f_1352102		f_1352102
-	f	Lnet/minecraft/unmapped/C_2750238;	f_7848513		f_7848513
-	f	Lnet/minecraft/unmapped/C_3560264;	f_0187107		f_0187107
-	f	Lnet/minecraft/unmapped/C_3560264;	f_9127375		f_9127375
-	f	Lnet/minecraft/unmapped/C_3560264;	f_4863845		f_4863845
-	f	Lnet/minecraft/unmapped/C_3560264;	f_0919731		f_0919731
-	f	Lnet/minecraft/unmapped/C_7489997;	f_1310358		f_1310358
-	f	Lnet/minecraft/unmapped/C_7489997;	f_4912987		f_4912987
-	f	Lnet/minecraft/unmapped/C_7489997;	f_1461473		f_1461473
-	f	Lnet/minecraft/unmapped/C_7489997;	f_2842814		f_2842814
-	f	Lnet/minecraft/unmapped/C_7489997;	f_6432726		f_6432726
-	f	Lnet/minecraft/unmapped/C_7489997;	f_9185639		f_9185639
-	f	Lnet/minecraft/unmapped/C_7489997;	f_4704211		f_4704211
-	f	Lnet/minecraft/unmapped/C_7489997;	f_9097176		f_9097176
-	f	Lnet/minecraft/unmapped/C_7489997;	f_6616918		f_6616918
-	f	Lnet/minecraft/unmapped/C_7489997;	f_0590051		f_0590051
-	f	Lnet/minecraft/unmapped/C_7489997;	f_4297393		f_4297393
-	f	Lnet/minecraft/unmapped/C_7489997;	f_0010251		f_0010251
-	f	Lnet/minecraft/unmapped/C_7489997;	f_5106644		f_5106644
-	f	Lnet/minecraft/unmapped/C_7489997;	f_4020246		f_4020246
-	f	Lnet/minecraft/unmapped/C_7489997;	f_5569905		f_5569905
-	f	Lnet/minecraft/unmapped/C_7489997;	f_4568851		f_4568851
-	f	Lnet/minecraft/unmapped/C_7489997;	f_5335411		f_5335411
-	f	Lnet/minecraft/unmapped/C_7489997;	f_6065957		f_6065957
-	f	Lnet/minecraft/unmapped/C_7489997;	f_0666002		f_0666002
-	f	Lnet/minecraft/unmapped/C_7489997;	f_5441523		f_5441523
-	f	Lnet/minecraft/unmapped/C_7489997;	f_3881718		f_3881718
-	f	Lnet/minecraft/unmapped/C_7489997;	f_9282971		f_9282971
-	f	Lnet/minecraft/unmapped/C_7489997;	f_7413402		f_7413402
-	f	Lnet/minecraft/unmapped/C_7489997;	f_7654727		f_7654727
-	f	Lnet/minecraft/unmapped/C_7489997;	f_8173577		f_8173577
-	f	Lnet/minecraft/unmapped/C_7489997;	f_3396111		f_3396111
-	f	Lnet/minecraft/unmapped/C_7489997;	f_7239832		f_7239832
-	f	Lnet/minecraft/unmapped/C_7489997;	f_8803209		f_8803209
-	f	Lnet/minecraft/unmapped/C_7489997;	f_6852256		f_6852256
-	f	Lnet/minecraft/unmapped/C_7489997;	f_8178431		f_8178431
-	f	Lnet/minecraft/unmapped/C_7489997;	f_0283503		f_0283503
-	f	Lnet/minecraft/unmapped/C_7489997;	f_7251130		f_7251130
-	f	Lnet/minecraft/unmapped/C_7489997;	f_7072624		f_7072624
-	f	Lnet/minecraft/unmapped/C_7489997;	f_6929883		f_6929883
-	f	Lnet/minecraft/unmapped/C_7489997;	f_1446769		f_1446769
-	f	Lnet/minecraft/unmapped/C_7489997;	f_1141050		f_1141050
-	f	Lnet/minecraft/unmapped/C_7489997;	f_3689762		f_3689762
-	f	Ljava/util/Map;	f_6729072		f_6729072
-	f	Z	f_3853786		f_3853786
+c	net/minecraft/unmapped/C_7489997		net/minecraft/world/gen/feature/Feature
+	f	Ljava/util/ArrayList;	f_4642465		DEFAULT_SPAWN_ENTRIES
+	f	Lnet/minecraft/unmapped/C_9470286;	f_2015439		VILLAGE
+	f	Lnet/minecraft/unmapped/C_9470286;	f_5657111		MINESHAFT
+	f	Lnet/minecraft/unmapped/C_9470286;	f_8632632		MANSION
+	f	Lnet/minecraft/unmapped/C_9470286;	f_8024380		JUNGLE_TEMPLE
+	f	Lnet/minecraft/unmapped/C_9470286;	f_7399417		DESERT_TEMPLE
+	f	Lnet/minecraft/unmapped/C_9470286;	f_8643295		IGLOO
+	f	Lnet/minecraft/unmapped/C_9470286;	f_3610486		WITCH_HUT
+	f	Lnet/minecraft/unmapped/C_9470286;	f_6078905		STRONGHOLD
+	f	Lnet/minecraft/unmapped/C_9470286;	f_2424517		OCEAN_MONUMENT
+	f	Lnet/minecraft/unmapped/C_9470286;	f_7230438		FORTRESS
+	f	Lnet/minecraft/unmapped/C_9470286;	f_9884389		END_CITY
+	f	Lnet/minecraft/unmapped/C_7955273;	f_4029195		LARGE_OAK_TREE
+	f	Lnet/minecraft/unmapped/C_7955273;	f_3367164		BIRCH_TREE
+	f	Lnet/minecraft/unmapped/C_7955273;	f_6062756		SUPER_BIRCH_TREE
+	f	Lnet/minecraft/unmapped/C_7955273;	f_2711357		JUNGLE_GROUND_BUSH
+	f	Lnet/minecraft/unmapped/C_7955273;	f_4935222		JUNGLE_TREE
+	f	Lnet/minecraft/unmapped/C_7955273;	f_4833138		PINE_TREE
+	f	Lnet/minecraft/unmapped/C_7955273;	f_3303603		DARK_OAK_TREE
+	f	Lnet/minecraft/unmapped/C_7955273;	f_6061276		ACACIA_TREE
+	f	Lnet/minecraft/unmapped/C_7955273;	f_2027112		SPRUCE_TREE
+	f	Lnet/minecraft/unmapped/C_7955273;	f_8054391		SWAMP_TREE
+	f	Lnet/minecraft/unmapped/C_7955273;	f_4197941		OAK_TREE
+	f	Lnet/minecraft/unmapped/C_2750238;	f_2546898		GIANT_JUNGLE_TREE
+	f	Lnet/minecraft/unmapped/C_2750238;	f_1352102		GIANT_PINE_TREE
+	f	Lnet/minecraft/unmapped/C_2750238;	f_7848513		GIANT_SPRUCE_TREE
+	f	Lnet/minecraft/unmapped/C_3560264;	f_0187107		DEFAULT_FLOWER
+	f	Lnet/minecraft/unmapped/C_3560264;	f_9127375		FOREST_FLOWER
+	f	Lnet/minecraft/unmapped/C_3560264;	f_4863845		PLAIN_FLOWER
+	f	Lnet/minecraft/unmapped/C_3560264;	f_0919731		SWAMP_FLOWER
+	f	Lnet/minecraft/unmapped/C_7489997;	f_1310358		JUNGLE_GRASS
+	f	Lnet/minecraft/unmapped/C_7489997;	f_4912987		TAIGA_GRASS
+	f	Lnet/minecraft/unmapped/C_7489997;	f_1461473		GRASS
+	f	Lnet/minecraft/unmapped/C_7489997;	f_2842814		VOID_START_PLATFORM
+	f	Lnet/minecraft/unmapped/C_7489997;	f_6432726		CACTUS
+	f	Lnet/minecraft/unmapped/C_7489997;	f_9185639		DEAD_BUSH
+	f	Lnet/minecraft/unmapped/C_7489997;	f_4704211		DESERT_WELL
+	f	Lnet/minecraft/unmapped/C_7489997;	f_9097176		FOSSIL
+	f	Lnet/minecraft/unmapped/C_7489997;	f_6616918		FIRE_PATCH
+	f	Lnet/minecraft/unmapped/C_7489997;	f_0590051		HUGE_RED_MUSHROOM
+	f	Lnet/minecraft/unmapped/C_7489997;	f_4297393		HUGE_BROWN_MUSHROOM
+	f	Lnet/minecraft/unmapped/C_7489997;	f_0010251		ICE_SPIKE
+	f	Lnet/minecraft/unmapped/C_7489997;	f_5106644		GLOWSTONE_CLUSTER
+	f	Lnet/minecraft/unmapped/C_7489997;	f_4020246		MELON_PATCH
+	f	Lnet/minecraft/unmapped/C_7489997;	f_5569905		PUMPKIN_PATCH
+	f	Lnet/minecraft/unmapped/C_7489997;	f_4568851		SUGAR_CANE
+	f	Lnet/minecraft/unmapped/C_7489997;	f_5335411		FREEZE_TOP_LAYER
+	f	Lnet/minecraft/unmapped/C_7489997;	f_6065957		VINES
+	f	Lnet/minecraft/unmapped/C_7489997;	f_0666002		LILY_PAD
+	f	Lnet/minecraft/unmapped/C_7489997;	f_5441523		DUNGEON
+	f	Lnet/minecraft/unmapped/C_7489997;	f_3881718		FOREST_ROCK
+	f	Lnet/minecraft/unmapped/C_7489997;	f_9282971		BUSH
+	f	Lnet/minecraft/unmapped/C_7489997;	f_7413402		DISK
+	f	Lnet/minecraft/unmapped/C_7489997;	f_7654727		DOUBLE_PLANT
+	f	Lnet/minecraft/unmapped/C_7489997;	f_8173577		LIQUID_POCKET
+	f	Lnet/minecraft/unmapped/C_7489997;	f_3396111		ICE_PATCH
+	f	Lnet/minecraft/unmapped/C_7489997;	f_7239832		LAKE
+	f	Lnet/minecraft/unmapped/C_7489997;	f_8803209		ORE_VEIN
+	f	Lnet/minecraft/unmapped/C_7489997;	f_6852256		RANDOM_RANDOM_SELECTOR
+	f	Lnet/minecraft/unmapped/C_7489997;	f_8178431		RANDOM_SELECTOR
+	f	Lnet/minecraft/unmapped/C_7489997;	f_0283503		RANDOM_BOOLEAN_SELECTOR
+	f	Lnet/minecraft/unmapped/C_7489997;	f_7251130		EMERALD_ORE
+	f	Lnet/minecraft/unmapped/C_7489997;	f_7072624		LIQUID_FALL
+	f	Lnet/minecraft/unmapped/C_7489997;	f_6929883		END_PILLAR
+	f	Lnet/minecraft/unmapped/C_7489997;	f_1446769		END_ISLAND
+	f	Lnet/minecraft/unmapped/C_7489997;	f_1141050		CHORUS_PLANT
+	f	Lnet/minecraft/unmapped/C_7489997;	f_3689762		END_GATEWAY
+	f	Ljava/util/Map;	f_6729072		STRUCTURES
+	f	Z	f_3853786		updateNeighbors
 	m	()V	<init>		<init>
 	m	(Z)V	<init>		<init>
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1858262;)Z	m_4278200		m_4278200
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_2441996;)V	m_8024917		m_8024917
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	()Ljava/util/List;	m_7477355		m_7477355
+		p	1			updateNeighbors
+	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1858262;)Z	m_4278200		place
+		p	1			world
+		p	2			generator
+		p	3			random
+		p	4			pos
+		p	5			config
+	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_2441996;)V	m_8024917		setBlockState
+		p	1			world
+		p	2			pos
+		p	3			state
+	m	()Ljava/util/List;	m_7477355		getSpawnEntries
 	m	()Ljava/lang/String;	toString		toString
-	m	(Lnet/minecraft/unmapped/C_5553933;Ljava/lang/String;Lnet/minecraft/unmapped/C_3674802;)Z	m_1216196		m_1216196
+	m	(Lnet/minecraft/unmapped/C_5553933;Ljava/lang/String;Lnet/minecraft/unmapped/C_3674802;)Z	m_1216196		isStructureValid
 		p	0			p_0
 		p	1			p_1
 		p	2			p_2
@@ -13983,10 +13983,10 @@ c	net/minecraft/unmapped/C_7626890		net/minecraft/unmapped/C_7626890
 		p	7			p_7
 		p	9			p_9
 		p	10			p_10
-c	net/minecraft/unmapped/C_7648464		net/minecraft/unmapped/C_7648464
-	f	Z	f_5315288		f_5315288
+c	net/minecraft/unmapped/C_7648464		net/minecraft/world/gen/feature/LiquidPocketConfiguration
+	f	Z	f_5315288		avoidAir
 	m	(Z)V	<init>		<init>
-		p	1			p_1
+		p	1			avoidAir
 c	net/minecraft/unmapped/C_7771791		net/minecraft/world/NotLiquidPredicate
 	f	Lnet/minecraft/unmapped/C_7771791;	f_6623292		INSTANCE
 	m	()V	<init>		<init>
@@ -14009,18 +14009,18 @@ c	net/minecraft/unmapped/C_7812123		net/minecraft/unmapped/C_7812123
 		p	4			p_4
 		p	5			p_5
 		p	6			p_6
-c	net/minecraft/unmapped/C_7825862		net/minecraft/unmapped/C_7825862
-	f	Z	f_8266462		f_8266462
-	f	Z	f_5780619		f_5780619
-	f	Z	f_0776358		f_0776358
-	f	Z	f_4647334		f_4647334
-	f	Lnet/minecraft/unmapped/C_7825862$C_9979744;	f_6308801		f_6308801
-	m	()V	m_7194804		m_7194804
+c	net/minecraft/unmapped/C_7825862		net/minecraft/world/gen/structure/JungleTemplePiece
+	f	Z	f_8266462		hasMainChest
+	f	Z	f_5780619		hasHiddenChest
+	f	Z	f_0776358		hasTrap1
+	f	Z	f_4647334		hasTrap2
+	f	Lnet/minecraft/unmapped/C_7825862$C_9979744;	f_6308801		COBBLESTONE_PICKER
+	m	()V	m_7194804		register
 	m	()V	<init>		<init>
 	m	(Ljava/util/Random;II)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			random
+		p	2			x
+		p	3			z
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_5373622		m_5373622
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_2018497;Lnet/minecraft/unmapped/C_0899004;)V	m_1922521		m_1922521
@@ -14032,7 +14032,7 @@ c	net/minecraft/unmapped/C_7825862		net/minecraft/unmapped/C_7825862
 		p	3			p_3
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_7825862$1		1
-c	net/minecraft/unmapped/C_7825862$C_9979744		C_9979744
+c	net/minecraft/unmapped/C_7825862$C_9979744		CobblestonePicker
 	m	()V	<init>		<init>
 	m	(Ljava/util/Random;IIIZ)V	m_1389637		m_1389637
 		p	1			p_1
@@ -14094,7 +14094,7 @@ c	net/minecraft/unmapped/C_8294543		net/minecraft/unmapped/C_8294543
 		p	5			p_5
 		p	6			p_6
 		p	7			p_7
-c	net/minecraft/unmapped/C_8299644		net/minecraft/unmapped/C_8299644
+c	net/minecraft/unmapped/C_8299644		net/minecraft/world/gen/feature/VeinFeature
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_2805044;)Z	m_7940660		m_7940660
 		p	1			p_1
@@ -14146,7 +14146,7 @@ c	net/minecraft/unmapped/C_8567987		net/minecraft/world/NotOpaquePredicate
 c	net/minecraft/unmapped/C_8571445		net/minecraft/unmapped/C_8571445
 	m	(Lnet/minecraft/unmapped/C_0037941;)Lnet/minecraft/unmapped/C_0037941;	m_2594123		m_2594123
 		p	1			p_1
-c	net/minecraft/unmapped/C_8609675		net/minecraft/unmapped/C_8609675
+c	net/minecraft/unmapped/C_8609675		net/minecraft/world/gen/chunk/settings/TheEndGeneratorSettings
 	m	()V	<init>		<init>
 c	net/minecraft/unmapped/C_8621517		net/minecraft/unmapped/C_8621517
 	f	I	f_4922972		f_4922972
@@ -14190,7 +14190,7 @@ c	net/minecraft/unmapped/C_8661923		net/minecraft/unmapped/C_8661923
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-c	net/minecraft/unmapped/C_8665413		net/minecraft/unmapped/C_8665413
+c	net/minecraft/unmapped/C_8665413		net/minecraft/world/gen/structure/DesertTempleStructure
 	m	()V	<init>		<init>
 	m	()Ljava/lang/String;	m_2990867		m_2990867
 	m	()I	m_5594599		m_5594599
@@ -14202,18 +14202,18 @@ c	net/minecraft/unmapped/C_8665413		net/minecraft/unmapped/C_8665413
 		p	5			p_5
 	m	()I	m_2403020		m_2403020
 	m	()Ljava/lang/String;	m_9759413		m_9759413
-c	net/minecraft/unmapped/C_8665413$C_5355062		C_5355062
+c	net/minecraft/unmapped/C_8665413$C_5355062		Start
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0163201;IILnet/minecraft/unmapped/C_6928498;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-c	net/minecraft/unmapped/C_8679709		net/minecraft/unmapped/C_8679709
-	f	Lnet/minecraft/unmapped/C_5553933;	f_9743319		f_9743319
-	f	J	f_0188568		f_0188568
-	f	Lnet/minecraft/unmapped/C_7235516;	f_5463365		f_5463365
+		p	1			world
+		p	2			random
+		p	3			chunkX
+		p	4			chunkZ
+		p	5			biome
+c	net/minecraft/unmapped/C_8679709		net/minecraft/world/chunk/AbstractChunkGenerator
+	f	Lnet/minecraft/unmapped/C_5553933;	f_9743319		world
+	f	J	f_0188568		seed
+	f	Lnet/minecraft/unmapped/C_7235516;	f_5463365		biomeSource
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_7235516;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -14270,18 +14270,18 @@ c	net/minecraft/unmapped/C_8836979		net/minecraft/unmapped/C_8836979
 		p	5			p_5
 		p	6			p_6
 		p	7			p_7
-c	net/minecraft/unmapped/C_8886125		net/minecraft/unmapped/C_8886125
+c	net/minecraft/unmapped/C_8886125		net/minecraft/world/gen/structure/OceanMonumentConfiguration
 	m	()V	<init>		<init>
-c	net/minecraft/unmapped/C_8889518		net/minecraft/unmapped/C_8889518
-	f	Lnet/minecraft/unmapped/C_1241852;	f_5878871		f_5878871
-	f	I	f_2535518		f_2535518
-	f	I	f_9581941		f_9581941
-	f	Ljava/util/List;	f_5002357		f_5002357
+c	net/minecraft/unmapped/C_8889518		net/minecraft/world/gen/feature/DiskConfiguration
+	f	Lnet/minecraft/unmapped/C_1241852;	f_5878871		block
+	f	I	f_2535518		radius
+	f	I	f_9581941		height
+	f	Ljava/util/List;	f_5002357		targets
 	m	(Lnet/minecraft/unmapped/C_1241852;IILjava/util/List;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	1			block
+		p	2			radius
+		p	3			height
+		p	4			targets
 c	net/minecraft/unmapped/C_9034910		net/minecraft/unmapped/C_9034910
 	m	(I)V	<init>		<init>
 		p	1			p_1
@@ -14345,7 +14345,7 @@ c	net/minecraft/unmapped/C_9219442		net/minecraft/unmapped/C_9219442
 		p	5			p_5
 		p	6			p_6
 		p	7			p_7
-c	net/minecraft/unmapped/C_9259791		net/minecraft/unmapped/C_9259791
+c	net/minecraft/unmapped/C_9259791		net/minecraft/world/gen/feature/RandomSelectorFeature
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_0304132;)Z	m_9429751		m_9429751
 		p	1			p_1
@@ -14353,13 +14353,13 @@ c	net/minecraft/unmapped/C_9259791		net/minecraft/unmapped/C_9259791
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	(Lnet/minecraft/unmapped/C_7489997;Lnet/minecraft/unmapped/C_1858262;Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;)Z	m_8580715		m_8580715
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
+	m	(Lnet/minecraft/unmapped/C_7489997;Lnet/minecraft/unmapped/C_1858262;Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;)Z	m_8580715		place
+		p	1			feature
+		p	2			config
+		p	3			world
+		p	4			generator
+		p	5			random
+		p	6			pos
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1858262;)Z	m_4278200		m_4278200
 		p	1			p_1
 		p	2			p_2
@@ -14384,8 +14384,8 @@ c	net/minecraft/unmapped/C_9457129		net/minecraft/unmapped/C_9457129
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-c	net/minecraft/unmapped/C_9466264		net/minecraft/unmapped/C_9466264
-	f	Lnet/minecraft/unmapped/C_1241852;	f_0938952		f_0938952
+c	net/minecraft/unmapped/C_9466264		net/minecraft/world/gen/feature/LiquidFallConfiguration
+	f	Lnet/minecraft/unmapped/C_1241852;	f_0938952		liquid
 	m	(Lnet/minecraft/unmapped/C_1241852;)V	<init>		<init>
 		p	1			p_1
 c	net/minecraft/unmapped/C_9511145		net/minecraft/unmapped/C_9511145
@@ -14593,3 +14593,4 @@ c	net/minecraft/unmapped/C_9963661		net/minecraft/unmapped/C_9963661
 		p	5			p_5
 		p	6			p_6
 		p	7			p_7
+c	net/minecraft/unmapped/C_6574817	net/minecraft/world/gen/chunk/FlatWorldLayer	net/minecraft/world/gen/FlatWorldLayer
