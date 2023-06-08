@@ -8,7 +8,7 @@ c	net/minecraft/server/MinecraftServer
 		p	1			source
 		p	2			command
 		p	3			pos
-		p	4			p_4
+		p	4			requireLeadingSlash
 c	net/minecraft/unmapped/C_1350658
 	m	(I)V	m_5488055		m_5488055
 		p	1			p_1
@@ -33,7 +33,7 @@ c	net/minecraft/unmapped/C_4895885
 	m	(I)V	m_0033061		setSuccessCount
 		p	1			successCount
 c	net/minecraft/unmapped/C_4972050
-	f	Lnet/minecraft/unmapped/C_9564318;	f_7662310		f_7662310
+	f	Lnet/minecraft/unmapped/C_9564318;	f_7662310		suggestions
 	m	([Ljava/lang/String;)V	m_7333324		m_7333324
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_4972050;)Lnet/minecraft/unmapped/C_4895885;	m_6079164		m_6079164
@@ -48,10 +48,10 @@ c	net/minecraft/unmapped/C_4972050$1		1
 c	net/minecraft/unmapped/C_5774785
 	f	Lnet/minecraft/unmapped/C_3661275;	f_3539534		f_3539534
 c	net/minecraft/unmapped/C_6319393
-	f	Lnet/minecraft/unmapped/C_2348249;	f_8829635		f_8829635
-	f	Lnet/minecraft/unmapped/C_9564318;	f_3269922		f_3269922
-	f	Z	f_4308309		f_4308309
-	m	()V	m_7386111		m_7386111
+	f	Lnet/minecraft/unmapped/C_2348249;	f_8829635		toggleConditionalButton
+	f	Lnet/minecraft/unmapped/C_9564318;	f_3269922		suggestions
+	f	Z	f_4308309		conditional
+	m	()V	m_7386111		updateConditional
 	m	([Ljava/lang/String;)V	m_7333324		m_7333324
 		p	1			p_1
 c	net/minecraft/unmapped/C_6319393$1
@@ -80,31 +80,31 @@ c	net/minecraft/unmapped/C_7669754
 	f	Z	f_6937900	completed	
 	f	I	f_5767708	currentMessageId	
 	f	Ljava/util/List;	f_2529534	messageHistory	
-	f	Lnet/minecraft/unmapped/C_9564318;	f_6083695		f_6083695
+	f	Lnet/minecraft/unmapped/C_9564318;	f_6083695		commandSuggestions
 	m	()V	m_8255702	reset	
 	m	(Ljava/lang/String;Ljava/lang/String;)V	m_5681596	goThroughHistory	
 		p	1		text	
 		p	2		cursor	
 	m	([Ljava/lang/String;)V	m_7333324	setMessageHistory	m_7333324
 		p	1		messages	p_1
-c	net/minecraft/unmapped/C_7669754$C_0785227		C_0785227
-	f	Lnet/minecraft/unmapped/C_8105098;	f_8414769		f_8414769
+c	net/minecraft/unmapped/C_7669754$C_0785227		CommandSuggestions
+	f	Lnet/minecraft/unmapped/C_8105098;	f_8414769		minecraft
 	m	(Lnet/minecraft/unmapped/C_2925725;)V	<init>		<init>
-		p	1			p_1
+		p	1			chatField
 	m	()V	m_1711392		m_1711392
 	m	()Lnet/minecraft/unmapped/C_3674802;	m_4031515		m_4031515
 c	net/minecraft/unmapped/C_8248479
-	f	Z	f_5702163		f_5702163
+	f	Z	f_5702163		requireLeadingSlash
 	m	(Ljava/lang/String;)V	<init>	<init>	
 		p	1		command	
 	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_3674802;)V	<init>	<init>	
 		p	1		command	
 		p	2		pos	
 	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_3674802;Z)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	()Z	m_6811027		m_6811027
+		p	1			command
+		p	2			pos
+		p	3			requireLeadingSlash
+	m	()Z	m_6811027		requireLeadingSlash
 c	net/minecraft/unmapped/C_8456884
 	f	F	f_6907444		f_6907444
 	m	(FLnet/minecraft/unmapped/C_3755722$C_3737136;Ljava/util/Set;)V	<init>	<init>	
@@ -128,24 +128,24 @@ c	net/minecraft/unmapped/C_9590849
 	m	(F)F	m_3361672		m_3361672
 		p	1			p_1
 	m	()V	m_4087953		m_4087953
-c	net/minecraft/unmapped/C_0284979		net/minecraft/unmapped/C_0284979
-	m	([Ljava/lang/String;)V	m_7333324		m_7333324
-		p	1			p_1
-c	net/minecraft/unmapped/C_9564318		net/minecraft/unmapped/C_9564318
-	f	Lnet/minecraft/unmapped/C_2925725;	f_5937300		f_5937300
-	f	Z	f_7024707		f_7024707
-	f	Z	f_4041980		f_4041980
-	f	Z	f_0398945		f_0398945
-	f	I	f_8623208		f_8623208
-	f	Ljava/util/List;	f_5997213		f_5997213
+c	net/minecraft/unmapped/C_0284979		net/minecraft/client/command/CommandSuggestionsConsumer
+	m	([Ljava/lang/String;)V	m_7333324		accept
+		p	1			suggestions
+c	net/minecraft/unmapped/C_9564318		net/minecraft/client/command/CommandSuggestions
+	f	Lnet/minecraft/unmapped/C_2925725;	f_5937300		chatField
+	f	Z	f_7024707		requireLeadingSlash
+	f	Z	f_4041980		replace
+	f	Z	f_0398945		pending
+	f	I	f_8623208		current
+	f	Ljava/util/List;	f_5997213		suggestions
 	m	(Lnet/minecraft/unmapped/C_2925725;Z)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-	m	()V	m_1711392		m_1711392
-	m	(Ljava/lang/String;)V	m_6552093		m_6552093
-		p	1			p_1
-	m	()Lnet/minecraft/unmapped/C_3674802;	m_4031515		m_4031515
-	m	([Ljava/lang/String;)V	m_9867239		m_9867239
-		p	1			p_1
-	m	()V	m_9216204		m_9216204
-	m	()V	m_8347410		m_8347410
+		p	1			chatField
+		p	2			requireLeadingSlash
+	m	()V	m_1711392		useSuggestion
+	m	(Ljava/lang/String;)V	m_6552093		requestSuggestions
+		p	1			command
+	m	()Lnet/minecraft/unmapped/C_3674802;	m_4031515		getTargetPos
+	m	([Ljava/lang/String;)V	m_9867239		acceptSuggestions
+		p	1			suggestions
+	m	()V	m_9216204		invalidate
+	m	()V	m_8347410		keyPressed
