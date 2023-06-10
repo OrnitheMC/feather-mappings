@@ -1016,8 +1016,8 @@ c	net/minecraft/unmapped/C_3754158
 c	net/minecraft/unmapped/C_3809662
 	m	(Lnet/minecraft/unmapped/C_6187210;)V	m_7606163		handlePlaceRecipe
 		p	1			packet
-	m	(Lnet/minecraft/unmapped/C_0381885;)V	m_8209862		m_8209862
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_0381885;)V	m_8209862		handleRecipeBookUpdate
+		p	1			packet
 c	net/minecraft/unmapped/C_3832296
 	m	(FF)V	m_7257934	m_7257934	
 		p	1		p_1	
@@ -1562,10 +1562,10 @@ c	net/minecraft/unmapped/C_7240405
 	m	(Ljava/util/Date;)Lnet/minecraft/unmapped/C_7240405;	m_3125727		writeDate
 		p	1			date
 c	net/minecraft/unmapped/C_7250084
-	m	(Lnet/minecraft/unmapped/C_0224916;)V	m_3487354		m_3487354
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_7293682;)V	m_7827824		m_7827824
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_0224916;)V	m_3487354		handleRecipe
+		p	1			packet
+	m	(Lnet/minecraft/unmapped/C_7293682;)V	m_7827824		handleUpdateAdvancements
+		p	1			packet
 c	net/minecraft/unmapped/C_7400754
 	m	(Lnet/minecraft/unmapped/C_2454309;)Z	m_4327429	insertStack	
 		p	1		stack	
@@ -2360,7 +2360,7 @@ c	net/minecraft/unmapped/C_0008241$1		1
 		p	1			p_1
 	m	(Ljava/lang/Object;)Z	apply		apply
 		p	1			entity
-c	net/minecraft/unmapped/C_0224916		net/minecraft/unmapped/C_0224916
+c	net/minecraft/unmapped/C_0224916		net/minecraft/network/packet/s2c/play/RecipeS2CPacket
 	f	Ljava/util/Map;	f_2430181		f_2430181
 	m	()V	<init>		<init>
 	m	(Ljava/util/Map;)V	<init>		<init>
@@ -2378,10 +2378,10 @@ c	net/minecraft/unmapped/C_0284819		net/minecraft/unmapped/C_0284819
 	m	(Lnet/minecraft/unmapped/C_8073728;Lnet/minecraft/unmapped/C_9550253;)V	m_7404599		m_7404599
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_0381885		net/minecraft/unmapped/C_0381885
+c	net/minecraft/unmapped/C_0381885		net/minecraft/network/packet/c2s/play/RecipeBookUpdateC2SPacket
 	f	I	f_9098059		f_9098059
 	f	I	f_6087173		f_6087173
-	f	Lnet/minecraft/unmapped/C_0561170;	f_0789610		f_0789610
+	f	Lnet/minecraft/unmapped/C_0561170;	f_0789610		recipe
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_0561170;I)V	<init>		<init>
 		p	1			p_1
@@ -2392,8 +2392,8 @@ c	net/minecraft/unmapped/C_0381885		net/minecraft/unmapped/C_0381885
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_3809662;)V	m_3385485		m_3385485
 		p	1			p_1
-	m	()I	m_5870391		m_5870391
-	m	()Lnet/minecraft/unmapped/C_0561170;	m_1269059		m_1269059
+	m	()I	m_5870391		getPurpose
+	m	()Lnet/minecraft/unmapped/C_0561170;	m_1269059		getRecipe
 	m	(Lnet/minecraft/unmapped/C_5444260;)V	m_7216666		m_7216666
 		p	1			p_1
 	m	()V	<clinit>		<clinit>
@@ -3851,7 +3851,7 @@ c	net/minecraft/unmapped/C_6038599		net/minecraft/advancement/AdvancementNode
 	m	()V	m_8953224		setPosition
 	m	(Lnet/minecraft/unmapped/C_1322485;)V	m_9944901		run
 		p	0			advancement
-c	net/minecraft/unmapped/C_6187210		net/minecraft/network/packet/s2c/play/PlaceRecipeS2CPacket
+c	net/minecraft/unmapped/C_6187210		net/minecraft/network/packet/c2s/play/PlaceRecipeC2SPacket
 	f	Z	f_0252478		f_0252478
 	f	I	f_6999644		inventoryId
 	f	S	f_9464042		f_9464042
@@ -4156,27 +4156,27 @@ c	net/minecraft/unmapped/C_7234741$C_7642303		PlayerListeners
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/unmapped/C_7293682		net/minecraft/unmapped/C_7293682
-	f	Z	f_6559179		f_6559179
-	f	Ljava/util/Map;	f_0905372		f_0905372
-	f	Ljava/util/Set;	f_5698226		f_5698226
-	f	Ljava/util/Map;	f_0551036		f_0551036
+c	net/minecraft/unmapped/C_7293682		net/minecraft/network/packet/s2c/play/UpdateAdvancementsS2CPacket
+	f	Z	f_6559179		reset
+	f	Ljava/util/Map;	f_0905372		added
+	f	Ljava/util/Set;	f_5698226		removed
+	f	Ljava/util/Map;	f_0551036		progress
 	m	()V	<init>		<init>
 	m	(ZLjava/util/Collection;Ljava/util/Set;Ljava/util/Map;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	1			reset
+		p	2			added
+		p	3			removed
+		p	4			progress
 	m	(Lnet/minecraft/unmapped/C_7250084;)V	m_9980236		m_9980236
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_7240405;)V	m_4792371		m_4792371
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_7240405;)V	m_6110406		m_6110406
 		p	1			p_1
-	m	()Ljava/util/Map;	m_9294164		m_9294164
-	m	()Ljava/util/Set;	m_0086007		m_0086007
-	m	()Ljava/util/Map;	m_7115485		m_7115485
-	m	()Z	m_5174508		m_5174508
+	m	()Ljava/util/Map;	m_9294164		getAdded
+	m	()Ljava/util/Set;	m_0086007		getRemoved
+	m	()Ljava/util/Map;	m_7115485		getProgress
+	m	()Z	m_5174508		shouldReset
 	m	(Lnet/minecraft/unmapped/C_5444260;)V	m_7216666		m_7216666
 		p	1			p_1
 c	net/minecraft/unmapped/C_7460620		net/minecraft/C_93yfekgmf
