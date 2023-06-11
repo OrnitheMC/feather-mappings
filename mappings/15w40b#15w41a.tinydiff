@@ -230,7 +230,7 @@ c	net/minecraft/unmapped/C_1567607
 	f	I	f_7574573		vehicleFloatingTicks
 	m	(Lnet/minecraft/unmapped/C_9615057;)Z	m_7510200
 		p	1		packet	
-		p	0			p_0
+		p	0			packet
 	m	(Lnet/minecraft/unmapped/C_6630516;)Z	m_5540468		m_5540468
 		p	0			p_0
 	m	(Lnet/minecraft/unmapped/C_6630516;)V	m_3336576		m_3336576
@@ -446,14 +446,17 @@ c	net/minecraft/unmapped/C_6607881$2	2
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_7197771
 	f	I	f_3417677	id	
+	f	I	f_0576132	type	id
+		c	The type of attachment. The possible values are:\n<br>0: mounting on e.g. a minecart or a boat\n<br>1: attaching a leash on an entity	
 	m	(ILnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_0539808;)V	<init>	<init>	
 		p	1		type	
 		p	2		entity	
 		p	3		holder	
 	m	()I	m_2552946	getId	
 	m	(Lnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_0539808;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			entity
+		p	2			holder
+	m	()I	m_8037492	getType	getId
 c	net/minecraft/unmapped/C_7240405
 	m	([I)Lnet/minecraft/unmapped/C_7240405;	m_9180669		writeIntArray
 		p	1			data
@@ -461,10 +464,10 @@ c	net/minecraft/unmapped/C_7240405
 c	net/minecraft/unmapped/C_7250084
 	m	(Lnet/minecraft/unmapped/C_7197771;)V	m_3926084	handleEntityAttach	
 		p	1		packet	
-	m	(Lnet/minecraft/unmapped/C_7197771;)V	m_7636321		m_7636321
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_8154101;)V	m_3926084		handleEntityAttach
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_7197771;)V	m_7636321		handleEntityAttach
+		p	1			packet
+	m	(Lnet/minecraft/unmapped/C_8154101;)V	m_3926084		handleVehiclePassengers
+		p	1			packet
 	m	(Lnet/minecraft/unmapped/C_3564214;)V	m_2387007		handleVehicleMove
 		p	1			packet
 c	net/minecraft/unmapped/C_7873567
@@ -662,20 +665,20 @@ c	net/minecraft/unmapped/C_7171701		net/minecraft/unmapped/C_7171701
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_1676943;)Lnet/minecraft/unmapped/C_7171701;	m_8384517		m_8384517
 		p	0			p_0
-c	net/minecraft/unmapped/C_8154101		net/minecraft/unmapped/C_8154101
-	f	I	f_8384888		f_8384888
-	f	[I	f_0468179		f_0468179
+c	net/minecraft/unmapped/C_8154101		net/minecraft/network/packet/s2c/play/VehiclePassengersS2CPacket
+	f	I	f_8384888		vehicleId
+	f	[I	f_0468179		passengerIds
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_0539808;)V	<init>		<init>
-		p	1			p_1
+		p	1			vehicle
 	m	(Lnet/minecraft/unmapped/C_7240405;)V	m_4792371		m_4792371
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_7240405;)V	m_6110406		m_6110406
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_7250084;)V	m_4676178		m_4676178
 		p	1			p_1
-	m	()[I	m_3040551		m_3040551
-	m	()I	m_5004994		m_5004994
+	m	()[I	m_3040551		getPassengerIds
+	m	()I	m_5004994		getVehicleId
 	m	(Lnet/minecraft/unmapped/C_5444260;)V	m_7216666		m_7216666
 		p	1			p_1
 c	net/minecraft/unmapped/C_8341989		net/minecraft/client/render/entity/layer/ElytraLayer
