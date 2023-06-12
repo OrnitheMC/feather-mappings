@@ -299,7 +299,7 @@ c	net/minecraft/unmapped/C_0986407	net/minecraft/client/gui/screen/menu/Achievem
 	m	()Z	m_0601517	m_0601517	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_1023567
-	f	Lnet/minecraft/unmapped/C_6188183;	f_3651781		f_3651781
+	f	Lnet/minecraft/unmapped/C_6188183;	f_3651781		recipeBook
 	m	(Lnet/minecraft/unmapped/C_8105098;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_5722573;Lnet/minecraft/unmapped/C_2854223;)V	<init>	<init>	
 		p	1		minecraft	
 		p	2		world	
@@ -311,7 +311,7 @@ c	net/minecraft/unmapped/C_1023567
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	()Lnet/minecraft/unmapped/C_6188183;	m_8508173		m_8508173
+	m	()Lnet/minecraft/unmapped/C_6188183;	m_8508173		getRecipeBook
 	m	(Lnet/minecraft/unmapped/C_0561170;)V	m_3524374		m_3524374
 		p	1			p_1
 c	net/minecraft/unmapped/C_1036307
@@ -724,10 +724,10 @@ c	net/minecraft/unmapped/C_2348249
 		p	2		mouseX	
 		p	3		mouseY	
 	m	(Lnet/minecraft/unmapped/C_8105098;IIF)V	m_5350167		render
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	1			minecraft
+		p	2			x
+		p	3			y
+		p	4			tickDelta
 c	net/minecraft/unmapped/C_2361607
 	f	Lnet/minecraft/unmapped/C_0561170;	f_3798479		f_3798479
 	m	(Lnet/minecraft/unmapped/C_0561170;)V	<init>		<init>
@@ -1331,7 +1331,7 @@ c	net/minecraft/unmapped/C_6100478
 	m	(F)F	m_7641668	getRenderOffsetZ	
 		p	1		tickDelta	
 c	net/minecraft/unmapped/C_6176478
-	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_0486542;	m_7864260		m_7864260
+	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_0486542;	m_7864260		getLanguage
 		p	1			p_1
 c	net/minecraft/unmapped/C_6260518
 c	net/minecraft/unmapped/C_6260518$C_7196435
@@ -1986,10 +1986,10 @@ c	net/minecraft/unmapped/C_8452767
 c	net/minecraft/unmapped/C_8456884
 	m	()Lnet/minecraft/unmapped/C_3755722$C_3737136;	m_6773095	getMaterial	
 c	net/minecraft/unmapped/C_8651652
-	f	Ljava/util/Map;	f_9829959		f_9829959
-	m	(Lnet/minecraft/unmapped/C_8073728;Lnet/minecraft/unmapped/C_9550253;)V	m_0980776		m_0980776
-		p	1			p_1
-		p	2			p_2
+	f	Ljava/util/Map;	f_9829959		chatListeners
+	m	(Lnet/minecraft/unmapped/C_8073728;Lnet/minecraft/unmapped/C_9550253;)V	m_0980776		handleChat
+		p	1			type
+		p	2			message
 c	net/minecraft/unmapped/C_8669758	net/minecraft/util/ForwardingJsonSet	
 	f	Ljava/util/Set;	f_4069568	delegate	
 	m	()V	<init>	<init>	
@@ -2374,7 +2374,7 @@ c	net/minecraft/unmapped/C_0224916		net/minecraft/network/packet/s2c/play/Recipe
 	m	()Ljava/util/Map;	m_9754383		m_9754383
 	m	(Lnet/minecraft/unmapped/C_5444260;)V	m_7216666		m_7216666
 		p	1			p_1
-c	net/minecraft/unmapped/C_0284819		net/minecraft/client/gui/ChatListener
+c	net/minecraft/unmapped/C_0284819		net/minecraft/client/gui/chat/ChatListener
 	m	(Lnet/minecraft/unmapped/C_8073728;Lnet/minecraft/unmapped/C_9550253;)V	m_7404599		handle
 		p	1			type
 		p	2			message
@@ -2397,7 +2397,7 @@ c	net/minecraft/unmapped/C_0381885		net/minecraft/network/packet/c2s/play/Recipe
 	m	(Lnet/minecraft/unmapped/C_5444260;)V	m_7216666		m_7216666
 		p	1			p_1
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_0512768		net/minecraft/unmapped/C_0512768
+c	net/minecraft/unmapped/C_0512768		net/minecraft/client/RecipeCollection
 	f	Ljava/util/List;	f_9522726		f_9522726
 	f	Ljava/util/Map;	f_2715407		f_2715407
 	f	Z	f_4836173		f_4836173
@@ -2842,7 +2842,7 @@ c	net/minecraft/unmapped/C_2447160		net/minecraft/advancement/criterion/Criterio
 		p	0			id
 	m	()Ljava/lang/Iterable;	m_9222942		getAll
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_2579197		net/minecraft/client/gui/OverlayChatListener
+c	net/minecraft/unmapped/C_2579197		net/minecraft/client/gui/chat/OverlayChatListener
 	f	Lnet/minecraft/unmapped/C_8105098;	f_7811862		minecraft
 	m	(Lnet/minecraft/unmapped/C_8105098;)V	<init>		<init>
 		p	1			minecraft
@@ -3035,16 +3035,16 @@ c	net/minecraft/unmapped/C_3794110$C_0595068		Deserializer
 		p	1			json
 		p	2			type
 		p	3			context
-c	net/minecraft/unmapped/C_3866728		net/minecraft/client/gui/RecipeTabButton
-	f	Lnet/minecraft/unmapped/C_0191817;	f_5175609		creativeTab
-	f	F	f_1087675		f_1087675
+c	net/minecraft/unmapped/C_3866728		net/minecraft/client/gui/widget/RecipeBookTabButton
+	f	Lnet/minecraft/unmapped/C_0191817;	f_5175609		tab
+	f	F	f_1087675		animationTime
 	m	(IIILnet/minecraft/unmapped/C_0191817;Lnet/minecraft/unmapped/C_0561170;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	()V	m_8373248		m_8373248
+	m	()V	m_8373248		startAnimation
 	m	(Lnet/minecraft/unmapped/C_8105098;IIF)V	m_5350167		m_5350167
 		p	1			p_1
 		p	2			p_2
@@ -3053,7 +3053,7 @@ c	net/minecraft/unmapped/C_3866728		net/minecraft/client/gui/RecipeTabButton
 	m	(F)V	m_3066956		m_3066956
 		p	1			p_1
 	m	()V	m_1036297		m_1036297
-	m	()Lnet/minecraft/unmapped/C_0191817;	m_2203689		m_2203689
+	m	()Lnet/minecraft/unmapped/C_0191817;	m_2203689		getTab
 c	net/minecraft/unmapped/C_3966932		net/minecraft/server/command/AdvancementCommand
 	m	()V	<init>		<init>
 	m	()Ljava/lang/String;	m_2274818		m_2274818
@@ -3348,7 +3348,7 @@ c	net/minecraft/unmapped/C_4703972		net/minecraft/unmapped/C_4703972
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_1322485;)Lnet/minecraft/unmapped/C_8249166;	m_5705313		m_5705313
 		p	1			p_1
-c	net/minecraft/unmapped/C_4816422		net/minecraft/client/gui/NarratorChatListener
+c	net/minecraft/unmapped/C_4816422		net/minecraft/client/gui/chat/NarratorChatListener
 	f	Lcom/mojang/text2speech/Narrator;	f_3591977		narrator
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_8073728;Lnet/minecraft/unmapped/C_9550253;)V	m_7404599		m_7404599
@@ -3882,7 +3882,7 @@ c	net/minecraft/unmapped/C_6187210$C_2959218		C_2959218
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/unmapped/C_6188183		net/minecraft/unmapped/C_6188183
+c	net/minecraft/unmapped/C_6188183		net/minecraft/client/ClientRecipeBook
 	f	Lorg/apache/logging/log4j/Logger;	f_6231532		f_6231532
 	f	Ljava/util/Map;	f_9026668		f_9026668
 	m	()V	<init>		<init>
@@ -3978,16 +3978,16 @@ c	net/minecraft/unmapped/C_6307767		net/minecraft/unmapped/C_6307767
 		p	5			p_5
 		p	6			p_6
 		p	7			p_7
-c	net/minecraft/unmapped/C_6333845		net/minecraft/unmapped/C_6333845
-	f	Lnet/minecraft/unmapped/C_0561170;	f_5964210		f_5964210
-	f	Ljava/util/List;	f_5646974		f_5646974
+c	net/minecraft/unmapped/C_6333845		net/minecraft/client/gui/overlay/RecipeOverlay
+	f	Lnet/minecraft/unmapped/C_0561170;	f_5964210		RECIPE_BOOK_LOCATION
+	f	Ljava/util/List;	f_5646974		buttons
 	f	Ljava/util/List;	f_4678580		f_4678580
-	f	Z	f_2518072		f_2518072
-	f	I	f_9786038		f_9786038
-	f	I	f_0240975		f_0240975
-	f	Lnet/minecraft/unmapped/C_8105098;	f_1625587		f_1625587
+	f	Z	f_2518072		visible
+	f	I	f_9786038		x
+	f	I	f_0240975		y
+	f	Lnet/minecraft/unmapped/C_8105098;	f_1625587		minecraft
 	m	()V	<init>		<init>
-	m	(Lnet/minecraft/unmapped/C_8105098;Lnet/minecraft/unmapped/C_0512768;IIII)V	m_1326566		m_1326566
+	m	(Lnet/minecraft/unmapped/C_8105098;Lnet/minecraft/unmapped/C_0512768;IIII)V	m_1326566		init
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -3998,7 +3998,7 @@ c	net/minecraft/unmapped/C_6333845		net/minecraft/unmapped/C_6333845
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_2731603;)V	m_2127482		m_2127482
 		p	1			p_1
-	m	(II)V	m_9661580		m_9661580
+	m	(II)V	m_9661580		render
 		p	1			p_1
 		p	2			p_2
 	m	(IIIIII)V	m_6996208		m_6996208
@@ -4014,12 +4014,12 @@ c	net/minecraft/unmapped/C_6333845		net/minecraft/unmapped/C_6333845
 		p	3			p_3
 	m	(Lnet/minecraft/unmapped/C_6333845$C_4650743;)V	m_7403824		m_7403824
 		p	1			p_1
-	m	()Z	m_6416176		m_6416176
+	m	()Z	m_6416176		isVisible
 	m	()Lnet/minecraft/unmapped/C_0561170;	m_8363119		m_8363119
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_6333845$C_4650743		C_4650743
-	f	Lnet/minecraft/unmapped/C_2361607;	f_3631372		f_3631372
-	f	Z	f_7806154		f_7806154
+c	net/minecraft/unmapped/C_6333845$C_4650743		RecipeButton
+	f	Lnet/minecraft/unmapped/C_2361607;	f_3631372		recipe
+	f	Z	f_7806154		craftable
 	f	I	f_4015177		f_4015177
 	f	I	f_7082903		f_7082903
 	f	I	f_3969656		f_3969656
@@ -4029,10 +4029,10 @@ c	net/minecraft/unmapped/C_6333845$C_4650743		C_4650743
 	f	Lnet/minecraft/unmapped/C_6333845;	f_3804917		f_3804917
 	m	(Lnet/minecraft/unmapped/C_6333845;IILnet/minecraft/unmapped/C_2361607;Z)V	<init>		<init>
 		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	2			x
+		p	3			y
+		p	4			recipe
+		p	5			craftable
 	m	(Lnet/minecraft/unmapped/C_8105098;II)V	m_8193356		m_8193356
 		p	1			p_1
 		p	2			p_2
@@ -4043,8 +4043,8 @@ c	net/minecraft/unmapped/C_6333845$C_4650743		C_4650743
 		p	0			p_0
 	m	(Lnet/minecraft/unmapped/C_6333845$C_4650743;)Lnet/minecraft/unmapped/C_2361607;	m_9295011		m_9295011
 		p	0			p_0
-c	net/minecraft/unmapped/C_6680878		net/minecraft/unmapped/C_6680878
-	m	(Lnet/minecraft/unmapped/C_0561170;)V	m_1127756		m_1127756
+c	net/minecraft/unmapped/C_6680878		net/minecraft/client/gui/recipebook/RecipeShownListener
+	m	(Lnet/minecraft/unmapped/C_0561170;)V	m_1127756		recipesShown
 		p	1			p_1
 c	net/minecraft/unmapped/C_6797444		net/minecraft/advancement/criterion/RecipeUnlockedTrigger
 	f	Lnet/minecraft/unmapped/C_0561170;	f_1586730		ID
@@ -4220,20 +4220,20 @@ c	net/minecraft/unmapped/C_7562764		net/minecraft/entity/living/mob/passive/anim
 	m	(Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_4360192;)Z	m_5581222		m_5581222
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_7775860		net/minecraft/client/gui/StandardChatListener
+c	net/minecraft/unmapped/C_7775860		net/minecraft/client/gui/chat/StandardChatListener
 	f	Lnet/minecraft/unmapped/C_8105098;	f_2411576		minecraft
 	m	(Lnet/minecraft/unmapped/C_8105098;)V	<init>		<init>
 		p	1			minecraft
 	m	(Lnet/minecraft/unmapped/C_8073728;Lnet/minecraft/unmapped/C_9550253;)V	m_7404599		m_7404599
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_7848093		net/minecraft/unmapped/C_7848093
-	f	Lnet/minecraft/unmapped/C_0561170;	f_0267500		f_0267500
-	f	Lnet/minecraft/unmapped/C_0512768;	f_6148502		f_6148502
+c	net/minecraft/unmapped/C_7848093		net/minecraft/client/gui/widget/RecipeButton
+	f	Lnet/minecraft/unmapped/C_0561170;	f_0267500		RECIPE_BOOK_LOCATION
+	f	Lnet/minecraft/unmapped/C_0512768;	f_6148502		recipes
 	f	Z	f_3105795		f_3105795
 	f	Lnet/minecraft/unmapped/C_2454309;	f_0850832		f_0850832
-	f	F	f_4100963		f_4100963
-	f	F	f_7210686		f_7210686
+	f	F	f_4100963		animationTime
+	f	F	f_7210686		time
 	f	Ljava/util/List;	f_6397176		f_6397176
 	m	(ILnet/minecraft/unmapped/C_0512768;Z)V	<init>		<init>
 		p	1			p_1
@@ -4241,11 +4241,11 @@ c	net/minecraft/unmapped/C_7848093		net/minecraft/unmapped/C_7848093
 		p	3			p_3
 	m	(Lnet/minecraft/unmapped/C_6680878;)V	m_6547463		m_6547463
 		p	1			p_1
-	m	()Lnet/minecraft/unmapped/C_0512768;	m_0804821		m_0804821
-	m	()Lnet/minecraft/unmapped/C_2361607;	m_5324106		m_5324106
-	m	(II)V	m_2725590		m_2725590
-		p	1			p_1
-		p	2			p_2
+	m	()Lnet/minecraft/unmapped/C_0512768;	m_0804821		getRecipes
+	m	()Lnet/minecraft/unmapped/C_2361607;	m_5324106		getRecipe
+	m	(II)V	m_2725590		setPosition
+		p	1			x
+		p	2			y
 	m	(Lnet/minecraft/unmapped/C_8105098;IIF)V	m_5350167		m_5350167
 		p	1			p_1
 		p	2			p_2
@@ -4370,32 +4370,32 @@ c	net/minecraft/unmapped/C_8249166		net/minecraft/unmapped/C_8249166
 	m	()I	m_6809817		m_6809817
 	m	()I	m_0709416		m_0709416
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_8545792		net/minecraft/unmapped/C_8545792
-	f	Lnet/minecraft/unmapped/C_0561170;	f_7488890		f_7488890
-	f	Z	f_6614147		f_6614147
-	f	I	f_5258378		f_5258378
-	f	I	f_4002580		f_4002580
-	f	I	f_2100516		f_2100516
-	f	I	f_2587186		f_2587186
+c	net/minecraft/unmapped/C_8545792		net/minecraft/client/gui/widget/ToggleButton
+	f	Lnet/minecraft/unmapped/C_0561170;	f_7488890		textureLocation
+	f	Z	f_6614147		on
+	f	I	f_5258378		x
+	f	I	f_4002580		y
+	f	I	f_2100516		width
+	f	I	f_2587186		height
 	m	(IIIIIZ)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-	m	(IIIILnet/minecraft/unmapped/C_0561170;)V	m_0197029		m_0197029
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	(Z)V	m_6445476		m_6445476
-		p	1			p_1
-	m	()Z	m_6456213		m_6456213
-	m	(II)V	m_0140206		m_0140206
-		p	1			p_1
-		p	2			p_2
+		p	1			id
+		p	2			x
+		p	3			y
+		p	4			width
+		p	5			height
+		p	6			on
+	m	(IIIILnet/minecraft/unmapped/C_0561170;)V	m_0197029		setTexture
+		p	1			x
+		p	2			y
+		p	3			width
+		p	4			height
+		p	5			textureLocation
+	m	(Z)V	m_6445476		setToggled
+		p	1			on
+	m	()Z	m_6456213		isToggled
+	m	(II)V	m_0140206		setPosition
+		p	1			x
+		p	2			y
 	m	(Lnet/minecraft/unmapped/C_8105098;IIF)V	m_5350167		m_5350167
 		p	1			p_1
 		p	2			p_2
