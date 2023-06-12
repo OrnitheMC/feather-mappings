@@ -35,10 +35,10 @@ c	net/minecraft/unmapped/C_1846829
 		p	8			p_8
 		p	9			p_9
 		p	10			p_10
-	m	(D)I	m_1978643		m_1978643
-		p	1			p_1
-	m	()F	m_7225096		m_7225096
-	m	(FFFF)Ljava/nio/FloatBuffer;	m_3154224		m_3154224
+	m	(D)I	m_1978643		getPasses
+		p	1			squaredDistance
+	m	()F	m_7225096		getOffset
+	m	(FFFF)Ljava/nio/FloatBuffer;	m_3154224		getBuffer
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -60,36 +60,36 @@ c	net/minecraft/unmapped/C_3514359
 		p	8			p_8
 		p	9			p_9
 		p	10			p_10
-	m	(DDDDDLjava/util/List;D)V	m_9001578		m_9001578
-		p	1			p_1
-		p	3			p_3
-		p	5			p_5
-		p	7			p_7
-		p	9			p_9
-		p	11			p_11
-		p	12			p_12
-	m	(DDDDDDII[F)V	m_2859084		m_2859084
-		p	0			p_0
-		p	2			p_2
-		p	4			p_4
-		p	6			p_6
-		p	8			p_8
-		p	10			p_10
-		p	12			p_12
-		p	13			p_13
-		p	14			p_14
-	m	(DDDDDDII[FDD)V	m_3696145		m_3696145
-		p	0			p_0
-		p	2			p_2
-		p	4			p_4
-		p	6			p_6
-		p	8			p_8
-		p	10			p_10
-		p	12			p_12
-		p	13			p_13
-		p	14			p_14
-		p	15			p_15
-		p	17			p_17
+	m	(DDDDDLjava/util/List;D)V	m_9001578		render
+		p	1			x
+		p	3			y
+		p	5			z
+		p	7			tickDelta
+		p	9			beamAngle
+		p	11			sections
+		p	12			time
+	m	(DDDDDDII[F)V	m_2859084		renderSection
+		p	0			x
+		p	2			y
+		p	4			z
+		p	6			tickDelta
+		p	8			angle
+		p	10			time
+		p	12			height
+		p	13			index
+		p	14			color
+	m	(DDDDDDII[FDD)V	m_3696145		renderSection
+		p	0			x
+		p	2			y
+		p	4			z
+		p	6			tickDelta
+		p	8			angle
+		p	10			time
+		p	12			height
+		p	13			index
+		p	14			color
+		p	15			innerRadius
+		p	17			outerRadius
 	m	(Lnet/minecraft/unmapped/C_3622326;DDDFIF)V	m_2494919		m_2494919
 		p	1			p_1
 		p	2			p_2
@@ -110,12 +110,12 @@ c	net/minecraft/unmapped/C_3948776
 		p	8			p_8
 		p	9			p_9
 		p	10			p_10
-	m	(Lnet/minecraft/unmapped/C_9418545;DDDF)V	m_0046702		m_0046702
-		p	0			p_0
-		p	1			p_1
-		p	3			p_3
-		p	5			p_5
-		p	7			p_7
+	m	(Lnet/minecraft/unmapped/C_9418545;DDDF)V	m_0046702		render
+		p	0			spawner
+		p	1			x
+		p	3			y
+		p	5			z
+		p	7			tickDelta
 	m	(Lnet/minecraft/unmapped/C_3622326;DDDFIF)V	m_2494919		m_2494919
 		p	1			p_1
 		p	2			p_2
@@ -236,27 +236,27 @@ c	net/minecraft/unmapped/C_9480643
 		p	8			p_8
 		p	9			p_9
 		p	10			p_10
-	m	(Lnet/minecraft/unmapped/C_3565515;DDDLnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_5786166;Lnet/minecraft/unmapped/C_8373595;Z)V	m_5684240		m_5684240
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
-		p	6			p_6
-		p	8			p_8
-		p	9			p_9
-		p	10			p_10
-		p	11			p_11
-	m	(Lnet/minecraft/unmapped/C_5786166;Lnet/minecraft/unmapped/C_8373595;DDDDDDIII)V	m_0683104		m_0683104
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	5			p_5
-		p	7			p_7
-		p	9			p_9
-		p	11			p_11
-		p	13			p_13
-		p	15			p_15
-		p	16			p_16
-		p	17			p_17
+	m	(Lnet/minecraft/unmapped/C_3565515;DDDLnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_5786166;Lnet/minecraft/unmapped/C_8373595;Z)V	m_5684240		renderInvisibleBlocks
+		p	1			structureBlock
+		p	2			x
+		p	4			y
+		p	6			z
+		p	8			pos
+		p	9			tessellator
+		p	10			bufferBuilder
+		p	11			thicc
+	m	(Lnet/minecraft/unmapped/C_5786166;Lnet/minecraft/unmapped/C_8373595;DDDDDDIII)V	m_0683104		renderBounds
+		p	1			tessellator
+		p	2			bufferBuilder
+		p	3			x1
+		p	5			y2
+		p	7			z1
+		p	9			x2
+		p	11			y2
+		p	13			z2
+		p	15			r
+		p	16			g
+		p	17			b
 	m	(Lnet/minecraft/unmapped/C_3622326;DDDFIF)V	m_2494919		m_2494919
 		p	1			p_1
 		p	2			p_2
