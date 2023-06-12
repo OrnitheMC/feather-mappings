@@ -15692,10 +15692,10 @@ c	net/minecraft/unmapped/C_3955113	net/minecraft/world/biome/layer/SmoothLayer
 c	net/minecraft/unmapped/C_3957092	net/minecraft/entity/weather/GlobalEntity
 	m	(Lnet/minecraft/unmapped/C_5553933;)V	<init>	<init>
 		p	1		p_1
-c	net/minecraft/unmapped/C_3978417	net/minecraft/util/snooper/Snoopable
-	m	(Lnet/minecraft/unmapped/C_7377641;)V	m_7142032	addSnooperInfo
+c	net/minecraft/unmapped/C_3978417	net/minecraft/snooper/SnooperPopulator
+	m	(Lnet/minecraft/unmapped/C_7377641;)V	m_7142032	populateSnooper
 		p	1		snooper
-	m	(Lnet/minecraft/unmapped/C_7377641;)V	m_7339992	addSnooper
+	m	(Lnet/minecraft/unmapped/C_7377641;)V	m_7339992	initSnooper
 		p	1		snooper
 	m	()Z	m_5733001	isSnooperEnabled
 c	net/minecraft/unmapped/C_3980755	net/minecraft/entity/ai/goal/Goal
@@ -21938,8 +21938,8 @@ c	net/minecraft/unmapped/C_6063722	net/minecraft/entity/living/mob/hostile/Giant
 c	net/minecraft/unmapped/C_6065941	argo/jdom/JsonNodeBuilders__3
 	m	()V	<init>	<init>
 	m	()Lnet/minecraft/unmapped/C_0304196;	m_4169507	m_4169507
-c	net/minecraft/unmapped/C_6066025	net/minecraft/util/snooper/Snooper__1
-	f	Lnet/minecraft/unmapped/C_7377641;	f_3203363	snooper
+c	net/minecraft/unmapped/C_6066025	net/minecraft/snooper/Snooper__1
+	f	Lnet/minecraft/unmapped/C_7377641;	f_3203363	f_3203363
 	m	(Lnet/minecraft/unmapped/C_7377641;)V	<init>	<init>
 		p	1		p_1
 	m	()V	run	run
@@ -25995,38 +25995,38 @@ c	net/minecraft/unmapped/C_7372020	net/minecraft/unmapped/C_7372020
 	m	(DD)D	m_8070885	m_8070885
 		p	1		p_1
 		p	3		p_3
-c	net/minecraft/unmapped/C_7377641	net/minecraft/util/snooper/Snooper
-	f	Ljava/util/Map;	f_4079146	snoopedDataMap
-	f	Ljava/lang/String;	f_7482840	snooperToken
-	f	Ljava/net/URL;	f_7540984	snoopUrl
-	f	Lnet/minecraft/unmapped/C_3978417;	f_5250677	snooped
-	f	Ljava/util/Timer;	f_3665962	snooperTimer
-	f	Ljava/lang/Object;	f_0850593	syncObject
-	f	Z	f_3309553	active
-	f	I	f_7165170	snooperCount
+c	net/minecraft/unmapped/C_7377641	net/minecraft/snooper/Snooper
+	f	Ljava/util/Map;	f_4079146	data
+	f	Ljava/lang/String;	f_7482840	token
+	f	Ljava/net/URL;	f_7540984	url
+	f	Lnet/minecraft/unmapped/C_3978417;	f_5250677	populator
+	f	Ljava/util/Timer;	f_3665962	timer
+	f	Ljava/lang/Object;	f_0850593	lock
+	f	Z	f_3309553	initialized
+	f	I	f_7165170	count
 	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_3978417;)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-	m	()V	m_6695927	startSnooping
-	m	()V	m_9759937	addJavaInfo
-	m	()V	m_9386057	addJvmArgs
-	m	()V	m_3351148	addCpuInfo
-	m	(Ljava/lang/String;Ljava/lang/Object;)V	m_4244849	addToSnoopedData
-		p	1		name
-		p	2		data
-	m	()Ljava/util/Map;	m_2125410	getSnooperDataAsLinkedHashmap
-	m	()Z	m_0612416	isActive
-	m	()V	m_3208151	stopSnooping
-	m	(Lnet/minecraft/unmapped/C_7377641;)Lnet/minecraft/unmapped/C_3978417;	m_9178283	getSnooped
-		p	0		snooper
-	m	(Lnet/minecraft/unmapped/C_7377641;)Ljava/lang/Object;	m_0535717	getSyncObject
-		p	0		snooper
-	m	(Lnet/minecraft/unmapped/C_7377641;)Ljava/util/Map;	m_5978955	getSnoopedDataMap
-		p	0		snooper
-	m	(Lnet/minecraft/unmapped/C_7377641;)I	m_7077062	getSnooperCount
-		p	0		snooper
-	m	(Lnet/minecraft/unmapped/C_7377641;)Ljava/net/URL;	m_8393031	getSnoopUrl
-		p	0		snooper
+		p	1		side
+		p	2		populator
+	m	()V	m_6695927	init
+	m	()V	m_9759937	doInit
+	m	()V	m_9386057	putJvmArgs
+	m	()V	m_3351148	populate
+	m	(Ljava/lang/String;Ljava/lang/Object;)V	m_4244849	put
+		p	1		key
+		p	2		value
+	m	()Ljava/util/Map;	m_2125410	getAll
+	m	()Z	m_0612416	isInitialized
+	m	()V	m_3208151	interrupt
+	m	(Lnet/minecraft/unmapped/C_7377641;)Lnet/minecraft/unmapped/C_3978417;	m_9178283	m_9178283
+		p	0		p_0
+	m	(Lnet/minecraft/unmapped/C_7377641;)Ljava/lang/Object;	m_0535717	m_0535717
+		p	0		p_0
+	m	(Lnet/minecraft/unmapped/C_7377641;)Ljava/util/Map;	m_5978955	m_5978955
+		p	0		p_0
+	m	(Lnet/minecraft/unmapped/C_7377641;)I	m_7077062	m_7077062
+		p	0		p_0
+	m	(Lnet/minecraft/unmapped/C_7377641;)Ljava/net/URL;	m_8393031	m_8393031
+		p	0		p_0
 c	net/minecraft/unmapped/C_7388676	net/minecraft/enchantment/FireAspectEnchantment
 	m	(II)V	<init>	<init>
 		p	1		id
