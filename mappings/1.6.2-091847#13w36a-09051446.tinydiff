@@ -1516,10 +1516,10 @@ c	net/minecraft/unmapped/C_2131741
 	f	I	f_5813785	cooldown	
 	f	Lnet/minecraft/unmapped/C_0183907;	f_7057284	resourcePacks	
 	f	Lnet/minecraft/unmapped/C_1331819;	f_6504619	options	
-	f	Ljava/util/List;	f_2125982		unnamedResourcePackEntryList
-	f	Ljava/util/List;	f_9950131		namedResourcePackEntryList
-	f	Lnet/minecraft/unmapped/C_6409556;	f_6095289		availableList
-	f	Lnet/minecraft/unmapped/C_8711636;	f_3780543		selectedList
+	f	Ljava/util/List;	f_2125982		availablePacks
+	f	Ljava/util/List;	f_9950131		appliedPacks
+	f	Lnet/minecraft/unmapped/C_6409556;	f_6095289		availablePacksWidget
+	f	Lnet/minecraft/unmapped/C_8711636;	f_3780543		appliedPacksWidget
 	m	(Lnet/minecraft/unmapped/C_3020744;Lnet/minecraft/unmapped/C_1331819;)V	<init>	<init>	
 		p	1		parent	
 		p	2		options	
@@ -1548,12 +1548,12 @@ c	net/minecraft/unmapped/C_2131741
 		p	0		p_0	
 	m	(Lnet/minecraft/unmapped/C_3020744;)V	<init>		<init>
 		p	1			parent
-	m	(Lnet/minecraft/unmapped/C_3945422;)Z	m_1621599		isResourcePackEntryNamed
-		p	1			abstractResourcePackEntryWidget
-	m	(Lnet/minecraft/unmapped/C_3945422;)Ljava/util/List;	m_8790551		getListContainingResourcePackEntry
-		p	1			abstractResourcePackEntryList
-	m	()Ljava/util/List;	m_0457903		getUnnamedResourcePackEntryList
-	m	()Ljava/util/List;	m_2070392		getNamedResourcePackEntryList
+	m	(Lnet/minecraft/unmapped/C_3945422;)Z	m_1621599		isApplied
+		p	1			pack
+	m	(Lnet/minecraft/unmapped/C_3945422;)Ljava/util/List;	m_8790551		getSiblingPacks
+		p	1			pack
+	m	()Ljava/util/List;	m_0457903		getAvailablePacks
+	m	()Ljava/util/List;	m_2070392		getAppliedPacks
 c	net/minecraft/unmapped/C_2134645
 	m	(I)V	<init>	<init>	
 		p	1		id	
@@ -7563,15 +7563,15 @@ c	net/minecraft/unmapped/C_1101271		net/minecraft/crafting/recipe/CloneMapRecipe
 		p	1			p_1
 	m	()I	m_7285375		m_7285375
 	m	()Lnet/minecraft/unmapped/C_2454309;	m_6900912		m_6900912
-c	net/minecraft/unmapped/C_1150342		net/minecraft/client/gui/screen/resourcepack/ResourcePackEntryWidget
-	f	Lnet/minecraft/unmapped/C_6945562;	f_1034893		entry
+c	net/minecraft/unmapped/C_1150342		net/minecraft/client/gui/screen/resourcepack/CustomResourcePackEntry
+	f	Lnet/minecraft/unmapped/C_6945562;	f_1034893		pack
 	m	(Lnet/minecraft/unmapped/C_2131741;Lnet/minecraft/unmapped/C_6945562;)V	<init>		<init>
 		p	1			parent
 		p	2			entry
 	m	()V	m_0137185		m_0137185
 	m	()Ljava/lang/String;	m_5888640		m_5888640
 	m	()Ljava/lang/String;	m_1754854		m_1754854
-	m	()Lnet/minecraft/unmapped/C_6945562;	m_9080436		getEntry
+	m	()Lnet/minecraft/unmapped/C_6945562;	m_9080436		getPack
 c	net/minecraft/unmapped/C_1160932		net/minecraft/text/TranslatableText
 	f	Ljava/lang/String;	f_9656825		key
 	f	[Ljava/lang/Object;	f_2457925		args
@@ -8105,9 +8105,9 @@ c	net/minecraft/unmapped/C_3037945		net/minecraft/block/DoublePlantBlock
 		p	4			p_4
 		p	5			p_5
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_3118916		net/minecraft/client/gui/screen/resourcepack/BuiltInResourcePackEntryWidget
+c	net/minecraft/unmapped/C_3118916		net/minecraft/client/gui/screen/resourcepack/BuiltInResourcePackEntry
 	f	Lnet/minecraft/unmapped/C_7532262;	f_7074000		pack
-	f	Lnet/minecraft/unmapped/C_0561170;	f_2966833		identifier
+	f	Lnet/minecraft/unmapped/C_0561170;	f_2966833		iconLocation
 	m	(Lnet/minecraft/unmapped/C_2131741;)V	<init>		<init>
 		p	1			p_1
 	m	()Ljava/lang/String;	m_5888640		m_5888640
@@ -8546,8 +8546,8 @@ c	net/minecraft/unmapped/C_3784880		net/minecraft/client/gui/widget/EntryListWid
 		p	4			p_4
 		p	5			p_5
 		p	6			p_6
-c	net/minecraft/unmapped/C_3945422		net/minecraft/client/gui/screen/resourcepack/AbstractResourcePackEntryWidget
-	f	Lnet/minecraft/unmapped/C_0561170;	f_3486005		TEXTURE
+c	net/minecraft/unmapped/C_3945422		net/minecraft/client/gui/screen/resourcepack/ResourcePackEntry
+	f	Lnet/minecraft/unmapped/C_0561170;	f_3486005		RESOURCE_PACKS_LOCATION
 	f	Lnet/minecraft/unmapped/C_8105098;	f_0228003		minecraft
 	f	Lnet/minecraft/unmapped/C_2131741;	f_4480155		parent
 	m	(Lnet/minecraft/unmapped/C_2131741;)V	<init>		<init>
@@ -8564,11 +8564,11 @@ c	net/minecraft/unmapped/C_3945422		net/minecraft/client/gui/screen/resourcepack
 	m	()Ljava/lang/String;	m_5888640		getDescription
 	m	()Ljava/lang/String;	m_1754854		getName
 	m	()V	m_0137185		bindIcon
-	m	()Z	m_8519781		hasResourcePack
-	m	()Z	m_1365776		isNotNamed
-	m	()Z	m_7607961		isNamed
-	m	()Z	m_7395485		moveDown
-	m	()Z	m_9663466		moveUp
+	m	()Z	m_8519781		canMove
+	m	()Z	m_1365776		canMoveRight
+	m	()Z	m_7607961		canMoveLeft
+	m	()Z	m_7395485		canMoveUp
+	m	()Z	m_9663466		canMoveDown
 	m	(IIIIII)V	m_3739705		m_3739705
 		p	1			p_1
 		p	2			p_2
@@ -9321,7 +9321,7 @@ c	net/minecraft/unmapped/C_8710720		net/minecraft/world/biome/layer/AddEdgeLayer
 		p	2			z
 		p	3			width
 		p	4			length
-c	net/minecraft/unmapped/C_8711636		net/minecraft/client/gui/screen/resourcepack/SelectedResourcePackListWidget
+c	net/minecraft/unmapped/C_8711636		net/minecraft/client/gui/screen/resourcepack/AppliedResourcePackListWidget
 	m	(Lnet/minecraft/unmapped/C_8105098;IILjava/util/List;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
