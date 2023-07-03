@@ -2073,7 +2073,7 @@ c	net/minecraft/unmapped/C_2609740
 	f	Ljava/lang/String;	f_7194248	uuid	
 	f	Lnet/minecraft/unmapped/C_9550253;	f_9825946		name
 	f	Lnet/minecraft/unmapped/C_1028001;	f_2754218		criterion
-	f	Ljava/lang/Class;	f_8839157		dataType
+	f	Ljava/lang/Class;	f_8839157		progressType
 	f	Ljava/lang/String;	f_7394267	name	key
 	m	(ILjava/lang/String;Lnet/minecraft/unmapped/C_8847991;)V	<init>	<init>	
 		p	1		id	
@@ -2095,9 +2095,9 @@ c	net/minecraft/unmapped/C_2609740
 		p	1			object
 	m	()I	hashCode		hashCode
 	m	()Lnet/minecraft/unmapped/C_1028001;	m_5867460		getCriterion
-	m	()Ljava/lang/Class;	m_7845250		getDataType
-	m	(Ljava/lang/Class;)Lnet/minecraft/unmapped/C_2609740;	m_5808118		setDataType
-		p	1			dataType
+	m	()Ljava/lang/Class;	m_7845250		getProgressType
+	m	(Ljava/lang/Class;)Lnet/minecraft/unmapped/C_2609740;	m_5808118		setProgressType
+		p	1			progressType
 c	net/minecraft/unmapped/C_2643505
 	m	(IIFZ)V	<init>	<init>	
 		p	1		p_1	
@@ -2257,43 +2257,42 @@ c	net/minecraft/unmapped/C_2854223
 	f	Ljava/util/Map;	f_2044879	unsentStats	
 	f	Z	f_2267311	dirty	
 	f	Lnet/minecraft/unmapped/C_1726165;	f_9401563	syncer	
-	f	Ljava/util/Map;	f_8336675		stats
+	f	Ljava/util/Map;	f_8336675		counters
 	m	(Lnet/minecraft/unmapped/C_8730536;Ljava/io/File;)V	<init>	<init>	
 		p	1		session	
 		p	2		gameDir	
-	m	(Ljava/util/Map;Lnet/minecraft/unmapped/C_2609740;I)V	m_0923738	incrementStat	
-		p	1		stats	
+	m	(Ljava/util/Map;Lnet/minecraft/unmapped/C_2609740;I)V	m_0923738	doIncrement	
+		p	1		values	
 		p	2		stat	
 		p	3		amount	
-	m	()Ljava/util/Map;	m_8424650	getUnsentStats	
-	m	(Ljava/util/Map;)V	m_9611950	setStats	
+	m	()Ljava/util/Map;	m_8424650	getUnsent	
+	m	(Ljava/util/Map;)V	m_9611950	increment	
+		p	1		amounts	
+	m	(Ljava/util/Map;)V	m_8364415	tick	
 		p	1		stats	
-	m	(Ljava/util/Map;)V	m_8364415	incrementStats	
+	m	(Ljava/util/Map;)V	m_0222147	tickUnsent	
 		p	1		stats	
-	m	(Ljava/util/Map;)V	m_0222147	incrementUnsentStats	
-		p	1		stats	
-	m	(Ljava/lang/String;)Ljava/util/Map;	m_6364094	deserializeStats	
-		p	0		s	
-	m	(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)Ljava/lang/String;	m_4743232	serializeStats	
+	m	(Ljava/lang/String;)Ljava/util/Map;	m_6364094	deserialize	
+		p	0		data	
+	m	(Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;)Ljava/lang/String;	m_4743232	serialize	
 		p	0		playerName	
 		p	1		sessionId	
 		p	2		stats	
-	m	()V	m_8239127	reset	
+	m	()V	m_8239127	save	
 	m	()V	m_4958211	tick	
 	m	()V	<init>		<init>
-	m	(Lnet/minecraft/unmapped/C_2270380;)I	m_1766952		getValue
+	m	(Lnet/minecraft/unmapped/C_2270380;)I	m_1766952		get
 		p	1			achievement
-	m	(Lnet/minecraft/unmapped/C_2609740;I)V	m_2629471		trySetValue
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_2609740;)Lnet/minecraft/unmapped/C_2920619;	m_9574991		getJsonSet
+	m	(Lnet/minecraft/unmapped/C_2609740;I)V	m_2629471		increment
 		p	1			stat
-	m	(Lnet/minecraft/unmapped/C_2609740;Lnet/minecraft/unmapped/C_2920619;)Lnet/minecraft/unmapped/C_2920619;	m_6258893		setJsonSet
+		p	2			amount
+	m	(Lnet/minecraft/unmapped/C_2609740;)Lnet/minecraft/unmapped/C_2920619;	m_9574991		getProgress
 		p	1			stat
-		p	2			set
-	m	(Lnet/minecraft/unmapped/C_2609740;I)V	m_5854284	incrementStat	setValue
-		p	1		stat	p_1
-		p	2		amount	p_2
+	m	(Lnet/minecraft/unmapped/C_2609740;Lnet/minecraft/unmapped/C_2920619;)Lnet/minecraft/unmapped/C_2920619;	m_6258893		setProgress
+		p	1			stat
+		p	2			progress
+	m	(Lnet/minecraft/unmapped/C_2609740;I)V	m_5854284	increment	set
+		p	2		amount	value
 c	net/minecraft/unmapped/C_2910311
 	m	(I)V	<init>	<init>	
 		p	1		id	
@@ -2645,7 +2644,7 @@ c	net/minecraft/unmapped/C_3251471
 		p	1		p_1	
 	m	()V	<init>		<init>
 c	net/minecraft/unmapped/C_3292284
-	f	Lnet/minecraft/unmapped/C_8949651;	f_6694194		statHandler
+	f	Lnet/minecraft/unmapped/C_8949651;	f_6694194		stats
 	m	(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/unmapped/C_5553933;Ljava/lang/String;Lnet/minecraft/unmapped/C_2128050;)V	<init>	<init>	
 		p	1		server	
 		p	2		world	
@@ -2655,14 +2654,14 @@ c	net/minecraft/unmapped/C_3292284
 		p	1		url	
 		p	2		resolution	
 	m	(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/unmapped/C_3865296;Ljava/lang/String;Lnet/minecraft/unmapped/C_2128050;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	1			server
+		p	2			world
+		p	3			name
+		p	4			interactionManager
 	m	()V	m_6979579		updateExploreredBiomes
 	m	(Ljava/lang/String;)V	m_1496454		sendResourcePack
 		p	1			url
-	m	()Lnet/minecraft/unmapped/C_8949651;	m_2662771		getStatHandler
+	m	()Lnet/minecraft/unmapped/C_8949651;	m_2662771		getStats
 c	net/minecraft/unmapped/C_3310814
 	m	()Lnet/minecraft/unmapped/C_7541710;	m_5594379		m_5594379
 c	net/minecraft/unmapped/C_3325732
@@ -4594,7 +4593,7 @@ c	net/minecraft/unmapped/C_5999076
 		p	1			x
 	m	()I	m_6703043		getEntryHeight
 c	net/minecraft/unmapped/C_6013256
-	f	Lnet/minecraft/unmapped/C_2854223;	f_7970087		statHandler
+	f	Lnet/minecraft/unmapped/C_2854223;	f_7970087		stats
 	m	(Lnet/minecraft/unmapped/C_8105098;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_8730536;Lnet/minecraft/unmapped/C_5722573;)V	<init>	<init>	
 		p	1		minecraft	
 		p	2		world	
@@ -4609,7 +4608,7 @@ c	net/minecraft/unmapped/C_6013256
 		p	3			session
 		p	4			networkHandler
 		p	5			statHandler
-	m	()Lnet/minecraft/unmapped/C_2854223;	m_0681959		getStatHandler
+	m	()Lnet/minecraft/unmapped/C_2854223;	m_0681959		getStats
 c	net/minecraft/unmapped/C_6028829
 	m	(ILjava/lang/String;Lnet/minecraft/unmapped/C_8048208;)V	<init>	<init>	
 		p	1		id	
@@ -6039,7 +6038,7 @@ c	net/minecraft/unmapped/C_8099772
 	m	()Ljava/lang/String;	m_6689989		m_6689989
 c	net/minecraft/unmapped/C_8105098
 	f	Lnet/minecraft/unmapped/C_6607881;	f_9451027	targetEntity	
-	f	Lnet/minecraft/unmapped/C_2854223;	f_8029336	statHandler	
+	f	Lnet/minecraft/unmapped/C_2854223;	f_8029336	stats	
 	f	Lnet/minecraft/unmapped/C_0539808;	f_9451027		targetEntity
 	f	Lnet/minecraft/unmapped/C_5837633;	f_2847572		renderTarget
 	m	()Lnet/minecraft/unmapped/C_5837633;	m_4441537		getRenderTarget
@@ -6140,7 +6139,7 @@ c	net/minecraft/unmapped/C_8166793
 		p	0			statsScreen
 	m	(Lnet/minecraft/unmapped/C_3020744;Lnet/minecraft/unmapped/C_2854223;)V	<init>
 		p	1		p_1	parent
-		p	2		p_2	statHandler
+		p	2		p_2	stats
 	m	(Lnet/minecraft/unmapped/C_8166793;)Lnet/minecraft/unmapped/C_2854223;	m_1540510
 		p	0		p_0	statsScreen
 c	net/minecraft/unmapped/C_8177352
@@ -7398,8 +7397,8 @@ c	net/minecraft/unmapped/C_9986135
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/unmapped/C_9992501
-	f	Ljava/util/Map;	f_2373121		statHandlers
-	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_8949651;	m_6605329		getStatHandler
+	f	Ljava/util/Map;	f_2373121		stats
+	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_8949651;	m_6605329		getStats
 		p	1			playerName
 c	net/minecraft/unmapped/C_0070587		net/minecraft/server/command/SummonCommand
 	m	()V	<init>		<init>
@@ -7985,7 +7984,7 @@ c	net/minecraft/unmapped/C_2822342		net/minecraft/client/gui/screen/options/Cont
 		p	0			controlsListWidget
 	m	(Lnet/minecraft/unmapped/C_2822342;)I	m_9271779		getMaxKeyNameLength
 		p	0			controlsListWidget
-c	net/minecraft/unmapped/C_2920619		net/minecraft/util/JsonSet
+c	net/minecraft/unmapped/C_2920619		net/minecraft/stat/StatProgress
 	m	()Lcom/google/gson/JsonElement;	m_4824346		toJson
 c	net/minecraft/unmapped/C_3037945		net/minecraft/block/DoublePlantBlock
 	f	[Ljava/lang/String;	f_7446506		TEXTURES
@@ -9034,16 +9033,16 @@ c	net/minecraft/unmapped/C_6637733		net/minecraft/world/gen/noise/SimplexNoiseSa
 		p	10			scaleZ
 		p	12			scaleExponent
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_6734380		net/minecraft/util/JsonIntSerializable
+c	net/minecraft/unmapped/C_6734380		net/minecraft/stat/StatCounter
 	f	I	f_6556650		value
-	f	Lnet/minecraft/unmapped/C_2920619;	f_0986967		jsonSet
+	f	Lnet/minecraft/unmapped/C_2920619;	f_0986967		progress
 	m	()V	<init>		<init>
 	m	()I	m_7754648		getValue
 	m	(I)V	m_4573472		setValue
 		p	1			value
-	m	()Lnet/minecraft/unmapped/C_2920619;	m_7431019		getJsonSet
-	m	(Lnet/minecraft/unmapped/C_2920619;)V	m_4877339		setJsonSet
-		p	1			jsonSet
+	m	()Lnet/minecraft/unmapped/C_2920619;	m_7431019		getProgress
+	m	(Lnet/minecraft/unmapped/C_2920619;)V	m_4877339		setProgress
+		p	1			progress
 c	net/minecraft/unmapped/C_6761141		net/minecraft/world/biome/layer/BiomeTransitionLayer
 	m	(JLnet/minecraft/unmapped/C_5540234;)V	<init>		<init>
 		p	1			seed
@@ -9346,12 +9345,12 @@ c	net/minecraft/unmapped/C_8934448		net/minecraft/block/PackedIceBlock
 	m	()V	<init>		<init>
 	m	(Ljava/util/Random;)I	m_2862578		m_2862578
 		p	1			p_1
-c	net/minecraft/unmapped/C_8949651		net/minecraft/stat/ServerStatHandler
+c	net/minecraft/unmapped/C_8949651		net/minecraft/server/stat/ServerPlayerStats
 	f	Lnet/minecraft/server/MinecraftServer;	f_2602820		server
 	f	Ljava/io/File;	f_7956063		file
-	f	Ljava/util/Set;	f_6283997		pendingStats
-	f	I	f_7922668		lastStatsUpdate
-	f	Z	f_9814962		update
+	f	Ljava/util/Set;	f_6283997		dirty
+	f	I	f_7922668		lastUpdate
+	f	Z	f_9814962		dirty
 	m	(Lnet/minecraft/server/MinecraftServer;Ljava/io/File;)V	<init>		<init>
 		p	1			server
 		p	2			file
@@ -9360,17 +9359,17 @@ c	net/minecraft/unmapped/C_8949651		net/minecraft/stat/ServerStatHandler
 	m	(Lnet/minecraft/unmapped/C_2609740;I)V	m_5854284		m_5854284
 		p	1			p_1
 		p	2			p_2
-	m	()Ljava/util/Set;	m_9197037		takePendingStats
+	m	()Ljava/util/Set;	m_9197037		takeDirty
 	m	(Ljava/lang/String;)Ljava/util/Map;	m_6158340		deserialize
-		p	1			name
+		p	1			data
 	m	(Ljava/util/Map;)Ljava/lang/String;	m_4433946		serialize
 		p	0			stats
-	m	()V	m_1851648		updateStatSet
+	m	()V	m_1851648		markAllDirty
 	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_8365202		sendStats
 		p	1			player
 	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_4788275		sendAchievements
 		p	1			player
-	m	()Z	m_1148604		shouldUpdate
+	m	()Z	m_1148604		isDirty
 c	net/minecraft/unmapped/C_9098256		net/minecraft/world/gen/feature/BirchTreeFeature
 	f	Z	f_1681649		tall
 	m	(ZZ)V	<init>		<init>
