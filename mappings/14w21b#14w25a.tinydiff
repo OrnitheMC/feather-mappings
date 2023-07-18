@@ -3500,9 +3500,9 @@ c	net/minecraft/unmapped/C_3362006
 		p	6			options
 	m	(F)V	m_3106281		m_3106281
 		p	1			p_1
-	m	()Z	m_9147791		m_9147791
-	m	(Z)V	m_2324704		m_2324704
-		p	1			p_1
+	m	()Z	m_9147791		shouldRenderShadow
+	m	(Z)V	m_2324704		setRenderShadow
+		p	1			shadow
 	m	(Z)V	m_3863180		setRenderHitboxes
 		p	1			renderHitboxes
 	m	()Z	m_1998249		shouldRenderHitboxes
@@ -4135,7 +4135,7 @@ c	net/minecraft/unmapped/C_4241305
 		p	3			p_3
 c	net/minecraft/unmapped/C_4257480
 	f	Z	f_9655373	anisotropicFiltering	
-	f	[[I	f_3155785		f_3155785
+	f	[[I	f_3155785		textureImage
 	f	Ljava/lang/String;	f_7668704		clockPath
 	f	Ljava/lang/String;	f_3952691		compassPath
 	m	()I	m_4375594	m_4375594	
@@ -4174,7 +4174,7 @@ c	net/minecraft/unmapped/C_4257480
 	m	(D)F	m_6248566		getV
 		p	1			delta
 	m	()Ljava/lang/String;	m_5074155		getName
-	m	()V	m_3254889		m_3254889
+	m	()V	m_3254889		animatePrismarine
 	m	([Ljava/awt/image/BufferedImage;Lnet/minecraft/unmapped/C_6347954;)V	m_7876655		load
 		p	1			textures
 		p	2			animationMetadata
@@ -7245,13 +7245,13 @@ c	net/minecraft/unmapped/C_7203066
 	m	(FF)V	m_5575460		rotate
 		p	1			x
 		p	2			y
-	m	(Lnet/minecraft/unmapped/C_7106153;)V	m_5491343		m_5491343
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_1023567;F)V	m_4116681		m_4116681
-		p	1			p_1
-		p	2			p_2
-	m	(F)F	m_6384140		m_6384140
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_7106153;)V	m_5491343		setHandLightColor
+		p	1			player
+	m	(Lnet/minecraft/unmapped/C_1023567;F)V	m_4116681		applyHandSway
+		p	1			player
+		p	2			tickDelta
+	m	(F)F	m_6384140		getMapPitch
+		p	1			pitch
 	m	(Lnet/minecraft/unmapped/C_9139005;)V	m_2729649		renderRightArm
 		p	1			player
 	m	(Lnet/minecraft/unmapped/C_9139005;)V	m_7031625		renderLeftArm
@@ -7259,25 +7259,25 @@ c	net/minecraft/unmapped/C_7203066
 	m	(Lnet/minecraft/unmapped/C_7106153;)V	m_4520281		renderArms
 		p	1			player
 	m	(Lnet/minecraft/unmapped/C_7106153;FFF)V	m_6721147		renderMap
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	1			player
+		p	2			pitch
+		p	3			swapProgress
+		p	4			swingProgress
 	m	(Lnet/minecraft/unmapped/C_7106153;FF)V	m_8296674		renderHand
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			player
+		p	2			swapProgress
+		p	3			swingProgress
 	m	(F)V	m_6540229		applyHandSwing
-		p	1			p_1
+		p	1			swingProgress
 	m	(Lnet/minecraft/unmapped/C_7106153;F)V	m_6895155		applyConsuming
-		p	1			p_1
-		p	2			p_2
+		p	1			player
+		p	2			tickDelta
 	m	(FF)V	m_3272086		appyFirstPersonTransform
 		p	1			xU
 		p	2			yU
 	m	(FLnet/minecraft/unmapped/C_7106153;)V	m_7053309		applyBowNocking
-		p	1			p_1
-		p	2			p_2
+		p	1			tickDelta
+		p	2			player
 	m	()V	m_0155847		applySwordBlocking
 	m	(F)V	m_1522188		renderInFirstPerson
 		p	1			tickDelta
@@ -8502,9 +8502,9 @@ c	net/minecraft/unmapped/C_8357359
 		p	1			dir
 c	net/minecraft/unmapped/C_8388188
 	f	Lnet/minecraft/unmapped/C_5307437;	f_0043494	backgroundSprite	
-	f	Lnet/minecraft/unmapped/C_6390485;	f_1665332		f_1665332
-	f	Lnet/minecraft/unmapped/C_6390485;	f_6112229		f_6112229
-	f	Lnet/minecraft/unmapped/C_6823239;	f_1082859		f_1082859
+	f	Lnet/minecraft/unmapped/C_6390485;	f_1665332		NORMAL_ITEM_FRAME_LOCATION
+	f	Lnet/minecraft/unmapped/C_6390485;	f_6112229		MAP_ITEM_FRAME_LOCATION
+	f	Lnet/minecraft/unmapped/C_6823239;	f_1082859		itemRenderer
 	m	(Lnet/minecraft/unmapped/C_3362006;)V	<init>	<init>	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_9549188;)V	m_3048225	m_3048225	
@@ -8521,8 +8521,8 @@ c	net/minecraft/unmapped/C_8388188
 		p	2		p_2	
 		p	3		p_3	
 	m	(Lnet/minecraft/unmapped/C_3362006;Lnet/minecraft/unmapped/C_6823239;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			dispatcher
+		p	2			itemRenderer
 	m	(Lnet/minecraft/unmapped/C_9368128;DDDFF)V	m_4750643		render
 		p	1			p_1
 		p	2			p_2
@@ -11601,14 +11601,14 @@ c	net/minecraft/unmapped/C_6955767		net/minecraft/client/render/entity/ItemEntit
 	m	(Lnet/minecraft/unmapped/C_3362006;Lnet/minecraft/unmapped/C_6823239;)V	<init>		<init>
 		p	1			dispatcher
 		p	2			itemRenderer
-	m	(Lnet/minecraft/unmapped/C_8300121;DDDFLnet/minecraft/unmapped/C_3887904;)I	m_4754857		m_4754857
+	m	(Lnet/minecraft/unmapped/C_8300121;DDDFLnet/minecraft/unmapped/C_3887904;)I	m_4754857		applyItemBobbing
 		p	1			p_1
 		p	2			p_2
 		p	4			p_4
 		p	6			p_6
 		p	8			p_8
 		p	9			p_9
-	m	(Lnet/minecraft/unmapped/C_2454309;)I	m_3475704		m_3475704
+	m	(Lnet/minecraft/unmapped/C_2454309;)I	m_3475704		scaledStackCount
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_8300121;DDDFF)V	m_8676152		render
 		p	1			p_1
@@ -11670,10 +11670,10 @@ c	net/minecraft/unmapped/C_6992467		net/minecraft/client/render/entity/GuardianR
 		p	3			p_3
 		p	5			p_5
 		p	7			p_7
-	m	(Lnet/minecraft/unmapped/C_6607881;DF)Lnet/minecraft/unmapped/C_0557736;	m_3612451		m_3612451
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
+	m	(Lnet/minecraft/unmapped/C_6607881;DF)Lnet/minecraft/unmapped/C_0557736;	m_3612451		getLerpedPos
+		p	1			entity
+		p	2			heightOffset
+		p	4			tickDelta
 	m	(Lnet/minecraft/unmapped/C_8365102;DDDFF)V	m_6143665		render
 		p	1			p_1
 		p	2			p_2
@@ -12010,8 +12010,8 @@ c	net/minecraft/unmapped/C_8365102		net/minecraft/entity/living/mob/hostile/Guar
 	m	()V	m_8724241		m_8724241
 	m	(I)V	m_9799115		m_9799115
 		p	1			p_1
-	m	()Z	m_4837054		m_4837054
-	m	()Lnet/minecraft/unmapped/C_6607881;	m_4066449		m_4066449
+	m	()Z	m_4837054		hasLaserTarget
+	m	()Lnet/minecraft/unmapped/C_6607881;	m_4066449		getLasterTarget
 	m	(I)V	m_8901560		m_8901560
 		p	1			p_1
 	m	()I	m_5921209		m_5921209
