@@ -95,7 +95,7 @@ def main():
             else:
                 raise Exception('no minecraft version given!')
         else:
-            versions = [version for version in possible_versions if version not in UNAVAILABLE_VERSIONS]
+            raise Exception('no minecraft version given!')
     if len(tasks) == 0:
         raise Exception('no gradle tasks given!')
     
