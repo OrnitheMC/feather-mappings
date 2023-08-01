@@ -827,21 +827,21 @@ c	net/minecraft/unmapped/C_0814381
 	m	()Ljava/util/Collection;	m_3010817	getScores	
 	m	(Lnet/minecraft/unmapped/C_3945557;)V	m_3972445	onObjectiveUpdated	
 		p	1		objective	
-	m	(Ljava/lang/String;)Z	m_2980356		m_2980356
-		p	1			p_1
-	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_3945557;	m_9221038		m_9221038
-		p	1			p_1
+	m	(Ljava/lang/String;)Z	m_2980356		containsObjective
+		p	1			name
+	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_3945557;	m_9221038		getObjectiveByName
+		p	1			name
 	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_1028001;Ljava/lang/String;)V	m_8272217		createObjective
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_1028001;Ljava/lang/String;Ljava/util/function/Consumer;)V	m_6824156		m_6824156
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	()Lnet/minecraft/unmapped/C_5693434;	m_9245625		m_9245625
-	m	(Lnet/minecraft/unmapped/C_5693434;)V	m_0940111		m_0940111
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_1028001;Ljava/lang/String;Ljava/util/function/Consumer;)V	m_6824156		forEachObjective
+		p	1			criterion
+		p	2			owner
+		p	3			action
+	m	()Lnet/minecraft/unmapped/C_5693434;	m_9245625		scoresToNbt
+	m	(Lnet/minecraft/unmapped/C_5693434;)V	m_0940111		scoresFromNbt
+		p	1			nbt
 	m	(Lnet/minecraft/unmapped/C_5693434;Ljava/util/Collection;)V	m_9848444		m_9848444
 		p	0			p_0
 		p	1			p_1
@@ -850,15 +850,15 @@ c	net/minecraft/unmapped/C_0814381
 		p	1			p_1
 	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_3945557;)Lnet/minecraft/unmapped/C_3526030;	m_5817021		m_5817021
 		p	1			p_1
-		p	2			p_2
+		p	2			key
 	m	(Ljava/lang/String;)Ljava/util/Map;	m_6316553		m_6316553
-		p	0			p_0
+		p	0			key
 	m	(Ljava/util/function/Consumer;Ljava/lang/String;Lnet/minecraft/unmapped/C_3945557;)V	m_1056553		m_1056553
 		p	1			p_1
 		p	2			p_2
-		p	3			p_3
+		p	3			score
 	m	(Lnet/minecraft/unmapped/C_1028001;)Ljava/util/List;	m_7125735		m_7125735
-		p	0			p_0
+		p	0			key
 c	net/minecraft/unmapped/C_0826810	net/minecraft/block/StoneSlabBlock	
 	f	Lnet/minecraft/unmapped/C_7674520;	f_9774437	SEAMLESS	
 	f	Lnet/minecraft/unmapped/C_2925148;	f_3875311	VARIANT	
@@ -1368,18 +1368,18 @@ c	net/minecraft/unmapped/C_1077561
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/unmapped/C_1090314
-	m	(Lnet/minecraft/unmapped/C_1630803;Ljava/lang/String;)Ljava/util/concurrent/CompletableFuture;	m_6616230	m_6616230	
+	m	(Lnet/minecraft/unmapped/C_1630803;Ljava/lang/String;)Ljava/util/concurrent/CompletableFuture;	m_6616230	suggestObjectives	
 		p	0		p_0	
 		p	1		p_1	
 	m	(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Ljava/util/concurrent/CompletableFuture;	m_5429253	m_5429253	
 		p	0		p_0	
 		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_1630803;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	m_6616230		m_6616230
-		p	0			p_0
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_1630803;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	m_6616230		suggestObjectives
+		p	0			source
+		p	1			builder
 	m	(Lcom/mojang/brigadier/context/CommandContext;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	m_5429253		m_5429253
-		p	0			p_0
-		p	1			p_1
+		p	0			ctx
+		p	1			builder
 c	net/minecraft/unmapped/C_1096482
 	m	(Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_4360192;Lnet/minecraft/unmapped/C_3544601;FFF)Lnet/minecraft/unmapped/C_6544668;	m_3000450	m_3000450	
 		p	1		p_1	
@@ -1959,11 +1959,11 @@ c	net/minecraft/unmapped/C_1264786
 		p	2			p_2
 c	net/minecraft/unmapped/C_1267695
 c	net/minecraft/unmapped/C_1267695$C_5187787
-	m	(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/unmapped/C_1267695$C_5187787;	m_8529098	m_8529098	
+	m	(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/unmapped/C_1267695$C_5187787;	m_8529098	parseText	
 		p	0		p_0	
-	m	(Lcom/mojang/brigadier/StringReader;Z)Lnet/minecraft/unmapped/C_1267695$C_5187787;	m_8529098		m_8529098
-		p	0			p_0
-		p	1			p_1
+	m	(Lcom/mojang/brigadier/StringReader;Z)Lnet/minecraft/unmapped/C_1267695$C_5187787;	m_8529098		parseText
+		p	0			reader
+		p	1			op
 c	net/minecraft/unmapped/C_1317396
 	f	Lnet/minecraft/unmapped/C_3037945$C_2506399;	f_5123104	variant	
 	f	Lnet/minecraft/unmapped/C_8730867;	f_5123104		variant
@@ -2311,8 +2311,8 @@ c	net/minecraft/unmapped/C_1443974
 		p	1		p_1	
 		p	2		p_2	
 	m	(Lcom/mojang/brigadier/context/CommandContext;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	listSuggestions		listSuggestions
-		p	1			p_1
-		p	2			p_2
+		p	1			ctx
+		p	2			builder
 c	net/minecraft/unmapped/C_1444588
 	m	(Lnet/minecraft/unmapped/C_5553933;I)Lnet/minecraft/unmapped/C_3622326;	m_9359758	m_9359758	
 		p	1		p_1	
@@ -2551,22 +2551,22 @@ c	net/minecraft/unmapped/C_1739414
 	m	(I)V	<init>		<init>
 		p	1			p_1
 c	net/minecraft/unmapped/C_1760074
-	m	(Lnet/minecraft/unmapped/C_1630803;Ljava/lang/String;Lnet/minecraft/unmapped/C_6404817$C_2538008;Lcom/mojang/brigadier/context/CommandContext;)I	m_7604195	m_7604195	
+	m	(Lnet/minecraft/unmapped/C_1630803;Ljava/lang/String;Lnet/minecraft/unmapped/C_6404817$C_2538008;Lcom/mojang/brigadier/context/CommandContext;)I	m_7604195	set	
 		p	0		p_0	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(Lnet/minecraft/unmapped/C_1630803;Ljava/lang/String;Lnet/minecraft/unmapped/C_6404817$C_2538008;)I	m_5574533	m_5574533	
+	m	(Lnet/minecraft/unmapped/C_1630803;Ljava/lang/String;Lnet/minecraft/unmapped/C_6404817$C_2538008;)I	m_5574533	query	
 		p	0		p_0	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/unmapped/C_1630803;Ljava/lang/String;Lcom/mojang/brigadier/context/CommandContext;)I	m_7604195		m_7604195
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_1630803;Ljava/lang/String;)I	m_5574533		m_5574533
-		p	0			p_0
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_1630803;Ljava/lang/String;Lcom/mojang/brigadier/context/CommandContext;)I	m_7604195		set
+		p	0			source
+		p	1			name
+		p	2			ctx
+	m	(Lnet/minecraft/unmapped/C_1630803;Ljava/lang/String;)I	m_5574533		query
+		p	0			source
+		p	1			name
 c	net/minecraft/unmapped/C_1797947
 	f	[I	f_5710294	COLORS	
 	f	Ljava/util/Map;	f_5710294		COLORS
@@ -3858,15 +3858,15 @@ c	net/minecraft/unmapped/C_2796127
 		p	0		p_0	
 		p	1		p_1	
 	m	(Lcom/mojang/brigadier/context/CommandContext;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	m_2411994		m_2411994
-		p	0			p_0
-		p	1			p_1
+		p	0			ctx
+		p	1			builder
 c	net/minecraft/unmapped/C_2808109
 	m	(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Ljava/util/concurrent/CompletableFuture;	m_3373369	m_3373369	
 		p	0		p_0	
 		p	1		p_1	
 	m	(Lcom/mojang/brigadier/context/CommandContext;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	m_3373369		m_3373369
-		p	0			p_0
-		p	1			p_1
+		p	0			ctx
+		p	1			builder
 c	net/minecraft/unmapped/C_2842713
 	m	(ILjava/util/Random;)I	m_9281164	m_9281164	
 		p	1		p_1	
@@ -6064,7 +6064,7 @@ c	net/minecraft/unmapped/C_3887904$C_2709424
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/unmapped/C_3905192
-	m	(Lnet/minecraft/unmapped/C_1630803;Lnet/minecraft/unmapped/C_1821693;Lnet/minecraft/unmapped/C_0557736;Lnet/minecraft/unmapped/C_0557736;IIZLjava/util/Collection;)I	m_4227097	m_4227097	
+	m	(Lnet/minecraft/unmapped/C_1630803;Lnet/minecraft/unmapped/C_1821693;Lnet/minecraft/unmapped/C_0557736;Lnet/minecraft/unmapped/C_0557736;IIZLjava/util/Collection;)I	m_4227097	addParticles	
 		p	0		p_0	
 		p	1		p_1	
 		p	2		p_2	
@@ -6073,15 +6073,15 @@ c	net/minecraft/unmapped/C_3905192
 		p	5		p_5	
 		p	6		p_6	
 		p	7		p_7	
-	m	(Lnet/minecraft/unmapped/C_1630803;Lnet/minecraft/unmapped/C_1821693;Lnet/minecraft/unmapped/C_0557736;Lnet/minecraft/unmapped/C_0557736;FIZLjava/util/Collection;)I	m_4227097		m_4227097
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
+	m	(Lnet/minecraft/unmapped/C_1630803;Lnet/minecraft/unmapped/C_1821693;Lnet/minecraft/unmapped/C_0557736;Lnet/minecraft/unmapped/C_0557736;FIZLjava/util/Collection;)I	m_4227097		addParticles
+		p	0			source
+		p	1			options
+		p	2			pos
+		p	3			velocity
+		p	4			velocityScale
+		p	5			count
+		p	6			ignoreDistance
+		p	7			targets
 c	net/minecraft/unmapped/C_3934632
 	m	(Lnet/minecraft/unmapped/C_2973342;Lnet/minecraft/unmapped/C_3755722;Lnet/minecraft/unmapped/C_2973342;)V	m_4052326	registerCraftingRecipe	
 		p	0		potion	
@@ -6471,21 +6471,21 @@ c	net/minecraft/unmapped/C_4155912
 	m	(I)V	<init>		<init>
 		p	1			p_1
 c	net/minecraft/unmapped/C_4192341
-	f	Lcom/mojang/brigadier/exceptions/ParameterizedCommandExceptionType;	f_4089357		f_4089357
-	m	(Lnet/minecraft/unmapped/C_1630803;Ljava/util/Collection;Ljava/lang/String;)Ljava/util/concurrent/CompletableFuture;	m_3023505	m_3023505	
+	f	Lcom/mojang/brigadier/exceptions/ParameterizedCommandExceptionType;	f_4089357		NO_SUCH_SCORE_EXCEPTION
+	m	(Lnet/minecraft/unmapped/C_1630803;Ljava/util/Collection;Ljava/lang/String;)Ljava/util/concurrent/CompletableFuture;	m_3023505	suggestTriggers	
 		p	0		p_0	
 		p	1		p_1	
 		p	2		p_2	
 	m	(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Ljava/util/concurrent/CompletableFuture;	m_5940781	m_5940781	
 		p	0		p_0	
 		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_1630803;Ljava/util/Collection;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	m_3023505		m_3023505
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/unmapped/C_1630803;Ljava/util/Collection;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	m_3023505		suggestTriggers
+		p	0			source
+		p	1			owners
+		p	2			builder
 	m	(Lcom/mojang/brigadier/context/CommandContext;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	m_5940781		m_5940781
-		p	0			p_0
-		p	1			p_1
+		p	0			ctx
+		p	1			builder
 c	net/minecraft/unmapped/C_4246226
 	f	Ljava/lang/Integer;	f_9356130	metadata	
 	m	(Lnet/minecraft/unmapped/C_3755722;Ljava/lang/Integer;Lnet/minecraft/unmapped/C_9548941;Lnet/minecraft/unmapped/C_9548941;[Lnet/minecraft/unmapped/C_1335017;Lnet/minecraft/unmapped/C_8703287;Lnet/minecraft/unmapped/C_4414296;)V	<init>	<init>	
@@ -7664,8 +7664,8 @@ c	net/minecraft/unmapped/C_5371419
 		p	1		p_1	
 		p	2		p_2	
 	m	(Lcom/mojang/brigadier/context/CommandContext;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	listSuggestions		listSuggestions
-		p	1			p_1
-		p	2			p_2
+		p	1			ctx
+		p	2			builder
 c	net/minecraft/unmapped/C_5374641
 	f	Lnet/minecraft/unmapped/C_5577922;	f_4018659	SHAPE	
 	f	Z	f_3895726	powered	
@@ -7836,8 +7836,8 @@ c	net/minecraft/unmapped/C_5436093
 		p	1		p_1	
 		p	2		p_2	
 	m	(Lcom/mojang/brigadier/context/CommandContext;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	listSuggestions		listSuggestions
-		p	1			p_1
-		p	2			p_2
+		p	1			ctx
+		p	2			builder
 c	net/minecraft/unmapped/C_5440864
 	m	(Ljava/util/Random;)I	m_2862578	m_2862578	
 		p	1		p_1	
@@ -8487,8 +8487,8 @@ c	net/minecraft/unmapped/C_5615470
 		p	0		p_0	
 		p	1		p_1	
 	m	(Lcom/mojang/brigadier/context/CommandContext;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	m_1843167		m_1843167
-		p	0			p_0
-		p	1			p_1
+		p	0			ctx
+		p	1			builder
 c	net/minecraft/unmapped/C_5658871
 	f	Ljava/util/List;	f_0353040	INSTRUMENTS	
 	f	Lnet/minecraft/unmapped/C_2925148;	f_2410917		INSTRUMENT
@@ -8683,8 +8683,8 @@ c	net/minecraft/unmapped/C_5717106
 		p	1		p_1	
 		p	2		p_2	
 	m	(Lcom/mojang/brigadier/context/CommandContext;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	listSuggestions		listSuggestions
-		p	1			p_1
-		p	2			p_2
+		p	1			ctx
+		p	2			builder
 c	net/minecraft/unmapped/C_5722573
 c	net/minecraft/unmapped/C_5722573$1
 c	net/minecraft/unmapped/C_5722573$1$1
@@ -9016,8 +9016,8 @@ c	net/minecraft/unmapped/C_6140756
 		p	1		p_1	
 		p	2		p_2	
 	m	(Lcom/mojang/brigadier/context/CommandContext;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	listSuggestions		listSuggestions
-		p	1			p_1
-		p	2			p_2
+		p	1			ctx
+		p	2			builder
 c	net/minecraft/unmapped/C_6150373
 	f	Lnet/minecraft/unmapped/C_5577922;	f_7320658	SHAPE	
 	f	Z	f_5319850	inverted	
@@ -9267,11 +9267,11 @@ c	net/minecraft/unmapped/C_6371508
 		p	0		p_0	
 		p	1		p_1	
 	m	(Lcom/mojang/brigadier/context/CommandContext;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	m_1629997		m_1629997
-		p	0			p_0
-		p	1			p_1
+		p	0			ctx
+		p	1			builder
 	m	(Lcom/mojang/brigadier/context/CommandContext;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	m_6243755		m_6243755
-		p	0			p_0
-		p	1			p_1
+		p	0			ctx
+		p	1			builder
 c	net/minecraft/unmapped/C_6386154
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_9590849;)Z	m_4426568		m_4426568
 		p	1			p_1
@@ -9285,22 +9285,22 @@ c	net/minecraft/unmapped/C_6390485
 	m	([Ljava/lang/String;)V	<init>		<init>
 		p	1			p_1
 c	net/minecraft/unmapped/C_6391214
-	f	Lcom/mojang/brigadier/CommandSuggestions$Provider;	f_3598141	f_3598141	
-	f	Lcom/mojang/brigadier/CommandSuggestions$Provider;	f_4895710	f_4895710	
-	f	Lcom/mojang/brigadier/CommandSuggestions$Provider;	f_9095784	f_9095784	
-	f	Lcom/mojang/brigadier/CommandSuggestions$Provider;	f_5533985	f_5533985	
-	f	Lcom/mojang/brigadier/suggestion/SuggestionProvider;	f_3598141		f_3598141
-	f	Lcom/mojang/brigadier/suggestion/SuggestionProvider;	f_4895710		f_4895710
-	f	Lcom/mojang/brigadier/suggestion/SuggestionProvider;	f_9095784		f_9095784
-	f	Lcom/mojang/brigadier/suggestion/SuggestionProvider;	f_5533985		f_5533985
-	m	(Lnet/minecraft/unmapped/C_0561170;Lcom/mojang/brigadier/CommandSuggestions$Provider;)Lcom/mojang/brigadier/CommandSuggestions$Provider;	m_6796816	m_6796816	
+	f	Lcom/mojang/brigadier/CommandSuggestions$Provider;	f_3598141	ASK_SERVER	
+	f	Lcom/mojang/brigadier/CommandSuggestions$Provider;	f_4895710	ALL_RECIPES	
+	f	Lcom/mojang/brigadier/CommandSuggestions$Provider;	f_9095784	AVAILABLE_SOUNDS	
+	f	Lcom/mojang/brigadier/CommandSuggestions$Provider;	f_5533985	SUMMONABLE_ENTITIES	
+	f	Lcom/mojang/brigadier/suggestion/SuggestionProvider;	f_3598141		ASK_SERVER
+	f	Lcom/mojang/brigadier/suggestion/SuggestionProvider;	f_4895710		ALL_RECIPES
+	f	Lcom/mojang/brigadier/suggestion/SuggestionProvider;	f_9095784		AVAILABLE_SOUNDS
+	f	Lcom/mojang/brigadier/suggestion/SuggestionProvider;	f_5533985		SUMMONABLE_ENTITIES
+	m	(Lnet/minecraft/unmapped/C_0561170;Lcom/mojang/brigadier/CommandSuggestions$Provider;)Lcom/mojang/brigadier/CommandSuggestions$Provider;	m_6796816	register	
 		p	0		p_0	
 		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_0561170;)Lcom/mojang/brigadier/CommandSuggestions$Provider;	m_8572689	m_8572689	
+	m	(Lnet/minecraft/unmapped/C_0561170;)Lcom/mojang/brigadier/CommandSuggestions$Provider;	m_8572689	get	
 		p	0		p_0	
-	m	(Lcom/mojang/brigadier/CommandSuggestions$Provider;)Lnet/minecraft/unmapped/C_0561170;	m_6591354	m_6591354	
+	m	(Lcom/mojang/brigadier/CommandSuggestions$Provider;)Lnet/minecraft/unmapped/C_0561170;	m_6591354	getName	
 		p	0		p_0	
-	m	(Lcom/mojang/brigadier/CommandSuggestions$Provider;)Lcom/mojang/brigadier/CommandSuggestions$Provider;	m_2429542	m_2429542	
+	m	(Lcom/mojang/brigadier/CommandSuggestions$Provider;)Lcom/mojang/brigadier/CommandSuggestions$Provider;	m_2429542	orDefault	
 		p	0		p_0	
 	m	(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Ljava/util/concurrent/CompletableFuture;	m_5771656	m_5771656	
 		p	0		p_0	
@@ -9314,30 +9314,30 @@ c	net/minecraft/unmapped/C_6391214
 	m	(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Ljava/util/concurrent/CompletableFuture;	m_9740079	m_9740079	
 		p	0		p_0	
 		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_0561170;Lcom/mojang/brigadier/suggestion/SuggestionProvider;)Lcom/mojang/brigadier/suggestion/SuggestionProvider;	m_6796816		m_6796816
-		p	0			p_0
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_0561170;)Lcom/mojang/brigadier/suggestion/SuggestionProvider;	m_8572689		m_8572689
-		p	0			p_0
-	m	(Lcom/mojang/brigadier/suggestion/SuggestionProvider;)Lnet/minecraft/unmapped/C_0561170;	m_6591354		m_6591354
-		p	0			p_0
-	m	(Lcom/mojang/brigadier/suggestion/SuggestionProvider;)Lcom/mojang/brigadier/suggestion/SuggestionProvider;	m_2429542		m_2429542
-		p	0			p_0
+	m	(Lnet/minecraft/unmapped/C_0561170;Lcom/mojang/brigadier/suggestion/SuggestionProvider;)Lcom/mojang/brigadier/suggestion/SuggestionProvider;	m_6796816		register
+		p	0			name
+		p	1			provider
+	m	(Lnet/minecraft/unmapped/C_0561170;)Lcom/mojang/brigadier/suggestion/SuggestionProvider;	m_8572689		get
+		p	0			name
+	m	(Lcom/mojang/brigadier/suggestion/SuggestionProvider;)Lnet/minecraft/unmapped/C_0561170;	m_6591354		getName
+		p	0			provider
+	m	(Lcom/mojang/brigadier/suggestion/SuggestionProvider;)Lcom/mojang/brigadier/suggestion/SuggestionProvider;	m_2429542		orDefault
+		p	0			provider
 	m	(Lcom/mojang/brigadier/context/CommandContext;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	m_5771656		m_5771656
-		p	0			p_0
-		p	1			p_1
+		p	0			ctx
+		p	1			builder
 	m	(Lcom/mojang/brigadier/context/CommandContext;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	m_4753665		m_4753665
-		p	0			p_0
-		p	1			p_1
+		p	0			ctx
+		p	1			builder
 	m	(Lcom/mojang/brigadier/context/CommandContext;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	m_8121418		m_8121418
-		p	0			p_0
-		p	1			p_1
+		p	0			ctx
+		p	1			builder
 	m	(Lcom/mojang/brigadier/context/CommandContext;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	m_9740079		m_9740079
-		p	0			p_0
-		p	1			p_1
+		p	0			ctx
+		p	1			builder
 c	net/minecraft/unmapped/C_6391214$C_5745045
-	f	Lcom/mojang/brigadier/CommandSuggestions$Provider;	f_0222906	f_0222906	
-	f	Lcom/mojang/brigadier/suggestion/SuggestionProvider;	f_0222906		f_0222906
+	f	Lcom/mojang/brigadier/CommandSuggestions$Provider;	f_0222906	provider	
+	f	Lcom/mojang/brigadier/suggestion/SuggestionProvider;	f_0222906		provider
 	m	(Lnet/minecraft/unmapped/C_0561170;Lcom/mojang/brigadier/CommandSuggestions$Provider;)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -9345,14 +9345,14 @@ c	net/minecraft/unmapped/C_6391214$C_5745045
 		p	1		p_1	
 		p	2		p_2	
 	m	(Lnet/minecraft/unmapped/C_0561170;Lcom/mojang/brigadier/suggestion/SuggestionProvider;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			name
+		p	2			provider
 	m	(Lcom/mojang/brigadier/context/CommandContext;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	getSuggestions		getSuggestions
-		p	1			p_1
-		p	2			p_2
+		p	1			ctx
+		p	2			builder
 c	net/minecraft/unmapped/C_6404817
-	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_6404817$C_2538008;	m_1474801		m_1474801
-		p	1			p_1
+	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_6404817$C_2538008;	m_1474801		getValue
+		p	1			value
 c	net/minecraft/unmapped/C_6422359	net/minecraft/block/YellowFlowerBlock	
 	m	()V	<init>	<init>	
 	m	()Lnet/minecraft/unmapped/C_7030350$C_6852455;	m_1913154	m_1913154	
@@ -9388,8 +9388,8 @@ c	net/minecraft/unmapped/C_6457523
 		p	0		p_0	
 		p	1		p_1	
 	m	(Lcom/mojang/brigadier/context/CommandContext;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	m_6764897		m_6764897
-		p	0			p_0
-		p	1			p_1
+		p	0			ctx
+		p	1			builder
 c	net/minecraft/unmapped/C_6464522	net/minecraft/world/gen/feature/HugeMushroomFeature	
 	f	Lnet/minecraft/unmapped/C_1241852;	f_3328929	mushroom	
 	m	(Lnet/minecraft/unmapped/C_1241852;)V	<init>	<init>	
@@ -9597,8 +9597,8 @@ c	net/minecraft/unmapped/C_6618444
 		p	1		p_1	
 		p	2		p_2	
 	m	(Lcom/mojang/brigadier/context/CommandContext;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	listSuggestions		listSuggestions
-		p	1			p_1
-		p	2			p_2
+		p	1			ctx
+		p	2			builder
 c	net/minecraft/unmapped/C_6623301
 	m	(Lnet/minecraft/unmapped/C_2454309;Ljava/lang/String;)Lnet/minecraft/unmapped/C_3225627;	m_4021101	getExplosionNbt	
 		p	0		stack	
@@ -10951,8 +10951,8 @@ c	net/minecraft/unmapped/C_7566373
 		p	1		p_1	
 		p	2		p_2	
 	m	(Lcom/mojang/brigadier/context/CommandContext;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	listSuggestions		listSuggestions
-		p	1			p_1
-		p	2			p_2
+		p	1			ctx
+		p	2			builder
 c	net/minecraft/unmapped/C_7574603
 	m	(ILjava/lang/String;I)Lnet/minecraft/unmapped/C_6574817;	m_2620975	parseLayer	
 		p	0		biomeId	
@@ -11520,8 +11520,8 @@ c	net/minecraft/unmapped/C_7809460
 		p	1		p_1	
 		p	2		p_2	
 	m	(Lcom/mojang/brigadier/context/CommandContext;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	listSuggestions		listSuggestions
-		p	1			p_1
-		p	2			p_2
+		p	1			ctx
+		p	2			builder
 c	net/minecraft/unmapped/C_7842113
 	f	Lnet/minecraft/unmapped/C_5577922;	f_5877469	SOUTH_SHAPE	
 	f	Lnet/minecraft/unmapped/C_5577922;	f_7151858	NORTH_SHAPE	
@@ -13783,15 +13783,15 @@ c	net/minecraft/unmapped/C_9445209
 		p	1		p_1	
 		p	2		p_2	
 	m	(Lcom/mojang/brigadier/context/CommandContext;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	listSuggestions		listSuggestions
-		p	1			p_1
-		p	2			p_2
+		p	1			ctx
+		p	2			builder
 c	net/minecraft/unmapped/C_9456817
 	m	(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Ljava/util/concurrent/CompletableFuture;	m_4996595	m_4996595	
 		p	0		p_0	
 		p	1		p_1	
 	m	(Lcom/mojang/brigadier/context/CommandContext;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	m_4996595		m_4996595
-		p	0			p_0
-		p	1			p_1
+		p	0			ctx
+		p	1			builder
 c	net/minecraft/unmapped/C_9469238
 	f	[Lnet/minecraft/unmapped/C_5577922;	f_4443424	SHAPES	
 	f	Ljava/util/Map;	f_6032336		CONNECTION_PROPERTIES
@@ -14397,14 +14397,14 @@ c	net/minecraft/unmapped/C_9761743$2	2
 	f	[I	f_3650194	f_3650194	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_9782452
-	f	Lcom/mojang/brigadier/CommandSuggestions$Provider;	f_1107163	f_1107163	
-	f	Lcom/mojang/brigadier/suggestion/SuggestionProvider;	f_1107163		f_1107163
+	f	Lcom/mojang/brigadier/CommandSuggestions$Provider;	f_1107163	SUGGESTIONS	
+	f	Lcom/mojang/brigadier/suggestion/SuggestionProvider;	f_1107163		SUGGESTIONS
 	m	(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Ljava/util/concurrent/CompletableFuture;	m_4473968	m_4473968	
 		p	0		p_0	
 		p	1		p_1	
 	m	(Lcom/mojang/brigadier/context/CommandContext;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	m_4473968		m_4473968
-		p	0			p_0
-		p	1			p_1
+		p	0			ctx
+		p	1			builder
 c	net/minecraft/unmapped/C_9808107	net/minecraft/client/entity/particle/BlockDustParticle	
 	m	(Lnet/minecraft/unmapped/C_5553933;DDDDDDLnet/minecraft/unmapped/C_2441996;)V	<init>	<init>	
 		p	1		p_1	
@@ -15853,7 +15853,7 @@ c	net/minecraft/unmapped/C_3248067		net/minecraft/unmapped/C_3248067
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-c	net/minecraft/unmapped/C_3396198		net/minecraft/unmapped/C_3396198
+c	net/minecraft/unmapped/C_3396198		net/minecraft/command/serdes/DoubleArgumentSerializer
 	m	()V	<init>		<init>
 	m	(Lcom/mojang/brigadier/arguments/DoubleArgumentType;Lnet/minecraft/unmapped/C_7240405;)V	m_4288385		m_4288385
 		p	1			p_1
