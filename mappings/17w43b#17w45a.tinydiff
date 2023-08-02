@@ -2617,7 +2617,7 @@ c	net/minecraft/unmapped/C_2925725
 		p	1		p_1	
 		p	3		p_3	
 		p	5		p_5	
-	m	(Ljava/util/function/BiFunction;)V	m_2306062		m_2306062
+	m	(Ljava/util/function/BiFunction;)V	m_2306062		setFormatter
 		p	1			p_1
 	m	(III)Z	keyPressed		keyPressed
 		p	1			p_1
@@ -5333,17 +5333,17 @@ c	net/minecraft/unmapped/C_5705147
 	m	()Lnet/minecraft/unmapped/C_7283471;	m_6273448	m_6273448	
 	m	()Lnet/minecraft/unmapped/C_7283471;	getFocused		getFocused
 c	net/minecraft/unmapped/C_5722573
-	f	Lnet/minecraft/unmapped/C_3935684;	f_3408093		f_3408093
-	f	Lcom/mojang/brigadier/CommandDispatcher;	f_0485623		f_0485623
+	f	Lnet/minecraft/unmapped/C_3935684;	f_3408093		suggestionProvider
+	f	Lcom/mojang/brigadier/CommandDispatcher;	f_0485623		commands
 	m	(Lnet/minecraft/unmapped/C_6350627;)V	m_1990920	m_1990920	
 		p	1		p_1	
-	m	()Lnet/minecraft/unmapped/C_3935684;	m_1107971		m_1107971
+	m	()Lnet/minecraft/unmapped/C_3935684;	m_1107971		getSuggestionProvider
 	m	(Lnet/minecraft/unmapped/C_0221137;)V	m_1360420		m_1360420
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_5128820;)V	m_8052778		m_8052778
 		p	1			p_1
-	m	()Lcom/mojang/brigadier/CommandDispatcher;	m_5151156		m_5151156
-	m	()Lnet/minecraft/unmapped/C_7873567;	m_3333361		m_3333361
+	m	()Lcom/mojang/brigadier/CommandDispatcher;	m_5151156		getCommands
+	m	()Lnet/minecraft/unmapped/C_7873567;	m_3333361		getWorld
 c	net/minecraft/unmapped/C_5771525	net/minecraft/server/command/TestForCommand	
 	m	()V	<init>	<init>	
 	m	()Ljava/lang/String;	m_2274818	m_2274818	
@@ -6782,9 +6782,9 @@ c	net/minecraft/unmapped/C_7664459
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_7669754
 	f	Lnet/minecraft/unmapped/C_9564318;	f_6083695	commandSuggestions	
-	f	Ljava/util/List;	f_3075623		f_3075623
-	f	Lcom/mojang/brigadier/ParseResults;	f_7241291		f_7241291
-	f	Ljava/util/concurrent/CompletableFuture;	f_8088155		f_8088155
+	f	Ljava/util/List;	f_3075623		commandUsage
+	f	Lcom/mojang/brigadier/ParseResults;	f_7241291		currentParse
+	f	Ljava/util/concurrent/CompletableFuture;	f_8088155		pendingSuggestions
 	m	()Lnet/minecraft/unmapped/C_7283471;	m_6273448	m_6273448	
 	m	(CI)Z	m_6313415	m_6313415	
 		p	1		p_1	
@@ -6802,15 +6802,15 @@ c	net/minecraft/unmapped/C_7669754
 	m	([Ljava/lang/String;)V	m_7333324	m_7333324	
 		p	1		p_1	
 	m	()Lnet/minecraft/unmapped/C_7283471;	getFocused		getFocused
-	m	(ILjava/lang/String;)V	m_7778953		m_7778953
-		p	1			p_1
-		p	2			p_2
+	m	(ILjava/lang/String;)V	m_7778953		onEdited
+		p	1			pos
+		p	2			text
 	m	(III)Z	keyPressed		keyPressed
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	()V	m_3367128		m_3367128
-	m	(Ljava/lang/String;I)Ljava/lang/String;	m_7191098		m_7191098
+	m	()V	m_3367128		updateCommandInfo
+	m	(Ljava/lang/String;I)Ljava/lang/String;	m_7191098		formatChat
 		p	1			p_1
 		p	2			p_2
 	m	(D)Z	mouseScrolled		mouseScrolled
@@ -7985,17 +7985,17 @@ c	net/minecraft/unmapped/C_0197802		net/minecraft/command/argument/IdentifierArg
 		p	2			p_2
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_0221137		net/minecraft/network/packet/s2c/play/CommandsS2CPacket
-	f	Lcom/mojang/brigadier/tree/RootCommandNode;	f_5824156		tree
+	f	Lcom/mojang/brigadier/tree/RootCommandNode;	f_5824156		root
 	m	()V	<init>		<init>
 	m	(Lcom/mojang/brigadier/tree/RootCommandNode;)V	<init>		<init>
-		p	1			tree
+		p	1			root
 	m	(Lnet/minecraft/unmapped/C_7240405;)V	m_4792371		m_4792371
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_7240405;)V	m_6110406		m_6110406
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_7250084;)V	m_3385484		m_3385484
 		p	1			p_1
-	m	()Lcom/mojang/brigadier/tree/RootCommandNode;	m_9602711		m_9602711
+	m	()Lcom/mojang/brigadier/tree/RootCommandNode;	m_9602711		getRoot
 	m	(Lnet/minecraft/unmapped/C_5444260;)V	m_7216666		m_7216666
 		p	1			p_1
 c	net/minecraft/unmapped/C_0344425		net/minecraft/command/argument/BlockPosArgument
@@ -8578,7 +8578,7 @@ c	net/minecraft/unmapped/C_3931403		net/minecraft/server/command/TeamCommand
 	m	(Lcom/mojang/brigadier/context/CommandContext;)I	m_1838811		m_1838811
 		p	0			ctx
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_3935684		net/minecraft/unmapped/C_3935684
+c	net/minecraft/unmapped/C_3935684		net/minecraft/client/command/ClientSuggestionProvider
 	f	Lnet/minecraft/unmapped/C_5722573;	f_7179670		networkHandler
 	m	(Lnet/minecraft/unmapped/C_5722573;)V	<init>		<init>
 		p	1			p_1

@@ -241,10 +241,10 @@ c	net/minecraft/unmapped/C_3747079
 		p	5			p_5
 		p	6			p_6
 c	net/minecraft/unmapped/C_3809662
-	m	(Lnet/minecraft/unmapped/C_7115077;)V	m_9079786		m_9079786
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_0329830;)V	m_1020315		m_1020315
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_7115077;)V	m_9079786		handleQueryEntityNbt
+		p	1			packet
+	m	(Lnet/minecraft/unmapped/C_0329830;)V	m_1020315		handleQueryBlockEntityNbt
+		p	1			packet
 c	net/minecraft/unmapped/C_3865296
 	m	(Lnet/minecraft/unmapped/C_0539808;DDDFZZ)Lnet/minecraft/unmapped/C_8813417;	m_5241373	m_5241373	
 		p	1		p_1	
@@ -386,10 +386,10 @@ c	net/minecraft/unmapped/C_5577922
 		p	3			p_3
 		p	5			p_5
 c	net/minecraft/unmapped/C_5722573
-	f	Lnet/minecraft/unmapped/C_3327695;	f_6186994		f_6186994
+	f	Lnet/minecraft/unmapped/C_3327695;	f_6186994		debugQueryHandler
 	m	(Lnet/minecraft/unmapped/C_8112831;)V	m_8503437		m_8503437
 		p	1			p_1
-	m	()Lnet/minecraft/unmapped/C_3327695;	m_5823455		m_5823455
+	m	()Lnet/minecraft/unmapped/C_3327695;	m_5823455		getDebugQueryHandler
 c	net/minecraft/unmapped/C_5989181
 	m	(Lorg/lwjgl/system/Pointer;)V	m_4084000		untrack
 		p	0			ptr
@@ -911,21 +911,21 @@ c	net/minecraft/unmapped/C_9733634
 	m	(Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_6237110;)V	m_2080048		m_2080048
 		p	0			p_0
 		p	1			style
-c	net/minecraft/unmapped/C_0329830		net/minecraft/unmapped/C_0329830
-	f	I	f_1262746		f_1262746
-	f	Lnet/minecraft/unmapped/C_3674802;	f_2009450		f_2009450
+c	net/minecraft/unmapped/C_0329830		net/minecraft/network/packet/c2s/play/QueryBlockEntityNbtC2SPacket
+	f	I	f_1262746		transactionId
+	f	Lnet/minecraft/unmapped/C_3674802;	f_2009450		pos
 	m	()V	<init>		<init>
 	m	(ILnet/minecraft/unmapped/C_3674802;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			transactionId
+		p	2			pos
 	m	(Lnet/minecraft/unmapped/C_7240405;)V	m_4792371		m_4792371
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_7240405;)V	m_6110406		m_6110406
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_3809662;)V	m_1957412		m_1957412
 		p	1			p_1
-	m	()I	m_7830109		m_7830109
-	m	()Lnet/minecraft/unmapped/C_3674802;	m_7285319		m_7285319
+	m	()I	m_7830109		getTransactionId
+	m	()Lnet/minecraft/unmapped/C_3674802;	m_7285319		getPos
 	m	(Lnet/minecraft/unmapped/C_5444260;)V	m_7216666		m_7216666
 		p	1			p_1
 c	net/minecraft/unmapped/C_3133390		net/minecraft/unmapped/C_3133390
@@ -1023,23 +1023,23 @@ c	net/minecraft/unmapped/C_3133390$C_6697334		C_6697334
 		p	0			p_0
 	m	(Lnet/minecraft/unmapped/C_6577431;)Lnet/minecraft/unmapped/C_8299724;	m_9673130		m_9673130
 		p	1			p_1
-c	net/minecraft/unmapped/C_3327695		net/minecraft/unmapped/C_3327695
-	f	Lnet/minecraft/unmapped/C_5722573;	f_7727257		f_7727257
-	f	I	f_7307923		f_7307923
-	f	Ljava/util/function/Consumer;	f_2758451		f_2758451
+c	net/minecraft/unmapped/C_3327695		net/minecraft/client/DebugQueryHandler
+	f	Lnet/minecraft/unmapped/C_5722573;	f_7727257		networkHandler
+	f	I	f_7307923		transactionId
+	f	Ljava/util/function/Consumer;	f_2758451		callback
 	m	(Lnet/minecraft/unmapped/C_5722573;)V	<init>		<init>
-		p	1			p_1
-	m	(ILnet/minecraft/unmapped/C_2018497;)Z	m_0638288		m_0638288
-		p	1			p_1
-		p	2			p_2
-	m	(Ljava/util/function/Consumer;)I	m_2114137		m_2114137
-		p	1			p_1
-	m	(ILjava/util/function/Consumer;)V	m_2280439		m_2280439
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_3674802;Ljava/util/function/Consumer;)V	m_6254937		m_6254937
-		p	1			p_1
-		p	2			p_2
+		p	1			networkHandler
+	m	(ILnet/minecraft/unmapped/C_2018497;)Z	m_0638288		handleResponse
+		p	1			id
+		p	2			data
+	m	(Ljava/util/function/Consumer;)I	m_2114137		startTransaction
+		p	1			callback
+	m	(ILjava/util/function/Consumer;)V	m_2280439		queryEntityNbt
+		p	1			id
+		p	2			callback
+	m	(Lnet/minecraft/unmapped/C_3674802;Ljava/util/function/Consumer;)V	m_6254937		queryBlockEntityNbt
+		p	1			pos
+		p	2			callback
 c	net/minecraft/unmapped/C_6948337		net/minecraft/client/FontManager
 	f	Lorg/apache/logging/log4j/Logger;	f_4417286		LOGGER
 	f	Ljava/util/Map;	f_5101838		fonts
@@ -1060,21 +1060,21 @@ c	net/minecraft/unmapped/C_6948337		net/minecraft/client/FontManager
 	m	(Ljava/lang/String;)Z	m_0873052		m_0873052
 		p	0			s
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_7115077		net/minecraft/unmapped/C_7115077
-	f	I	f_8614925		f_8614925
-	f	I	f_4601427		f_4601427
+c	net/minecraft/unmapped/C_7115077		net/minecraft/network/packet/c2s/play/QueryEntityNbtC2SPacket
+	f	I	f_8614925		transactionId
+	f	I	f_4601427		entityId
 	m	()V	<init>		<init>
 	m	(II)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			transactionId
+		p	2			entityId
 	m	(Lnet/minecraft/unmapped/C_7240405;)V	m_4792371		m_4792371
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_7240405;)V	m_6110406		m_6110406
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_3809662;)V	m_5943248		m_5943248
 		p	1			p_1
-	m	()I	m_0424687		m_0424687
-	m	()I	m_3811987		m_3811987
+	m	()I	m_0424687		getTransactionId
+	m	()I	m_3811987		getEntityId
 	m	(Lnet/minecraft/unmapped/C_5444260;)V	m_7216666		m_7216666
 		p	1			p_1
 c	net/minecraft/unmapped/C_8112831		net/minecraft/unmapped/C_8112831
