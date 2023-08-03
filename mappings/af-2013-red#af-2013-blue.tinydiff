@@ -21,7 +21,7 @@ c	net/minecraft/unmapped/C_0024265
 		p	2		slot	
 		p	3		side	
 c	net/minecraft/unmapped/C_0539808
-	f	Z	f_3378215	f_3378215	
+	f	Z	f_3378215	writeToNbt	
 c	net/minecraft/unmapped/C_0563666
 	m	(Ljava/net/InetAddress;)Z	m_2934211		isLocal
 		p	0			address
@@ -37,9 +37,9 @@ c	net/minecraft/unmapped/C_1331819
 	f	Z	f_7527923		f_7527923
 c	net/minecraft/unmapped/C_1753171
 	m	()V	m_1700770		m_1700770
-	m	()I	m_6070424		m_6070424
-	m	(I)V	m_3226879		m_3226879
-		p	1			p_1
+	m	()I	m_6070424		getColor
+	m	(I)V	m_3226879		setColor
+		p	1			color
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_7694759		m_7694759
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_1129840		m_1129840
@@ -114,10 +114,10 @@ c	net/minecraft/unmapped/C_3242141
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/unmapped/C_3865296
-	f	[Ljava/lang/Class;	f_0432434	f_0432434	
-	f	J	f_0027378	f_0027378	
-	f	J	f_7131332	f_7131332	
-	f	Ljava/util/Set;	f_6522307	f_6522307	
+	f	[Ljava/lang/Class;	f_0432434	SUPER_HOSTILE_MODE_MOBS	
+	f	J	f_0027378	superHostileModeCooldown	
+	f	J	f_7131332	superHostileModeTimer	
+	f	Ljava/util/Set;	f_6522307	activeSuperHostileMobs	
 	m	(Ljava/lang/String;DDDI)V	m_3310209		m_3310209
 		p	1			p_1
 		p	2			p_2
@@ -157,10 +157,10 @@ c	net/minecraft/unmapped/C_4808571
 	m	(I)I	m_5337338		m_5337338
 		p	1			p_1
 c	net/minecraft/unmapped/C_4976084
-	m	(Ljava/util/Random;FF)F	m_0583946		m_0583946
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
+	m	(Ljava/util/Random;FF)F	m_0583946		nextFloat
+		p	0			random
+		p	1			min
+		p	2			max
 c	net/minecraft/unmapped/C_5416361
 	f	Lnet/minecraft/unmapped/C_4707822;	f_5694641	configureWorldScreen	
 	f	Lnet/minecraft/unmapped/C_3020744;	f_5694641		configureWorldScreen
@@ -206,7 +206,7 @@ c	net/minecraft/unmapped/C_5542904
 	m	(I)I	m_5337338		m_5337338
 		p	1			p_1
 c	net/minecraft/unmapped/C_5553933
-	f	Z	f_1604271	f_1604271	
+	f	Z	f_1604271	isSuperHostileMode	
 c	net/minecraft/unmapped/C_5584504	net/minecraft/entity/living/LivingEntity__5	
 	f	Lnet/minecraft/unmapped/C_0658987;	f_9366970	f_9366970	
 	f	Lnet/minecraft/unmapped/C_6607881;	f_6462105	f_6462105	
@@ -216,7 +216,7 @@ c	net/minecraft/unmapped/C_5584504	net/minecraft/entity/living/LivingEntity__5
 	m	()Ljava/lang/String;	m_0912407	m_0912407	
 	m	()Ljava/lang/Object;	call	call	
 c	net/minecraft/unmapped/C_5828592
-	f	I	f_9411315		f_9411315
+	f	I	f_9411315		angryStareCooldown
 	m	()V	m_1700770		m_1700770
 	m	()Z	m_0362974		isDiamondChicken
 	m	(Z)V	m_5987300		setDiamondChicken
@@ -227,7 +227,7 @@ c	net/minecraft/unmapped/C_5828592
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_0539808;)Z	m_3916798		m_3916798
 		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_9590849;)Z	m_4021322		m_4021322
+	m	(Lnet/minecraft/unmapped/C_9590849;)Z	m_4021322		canGetAngryAt
 		p	1			target
 	m	(Lnet/minecraft/unmapped/C_1161898;I)Z	m_8726131		m_8726131
 		p	1			p_1
@@ -254,9 +254,9 @@ c	net/minecraft/unmapped/C_6047130	net/minecraft/entity/living/LivingEntity__1
 c	net/minecraft/unmapped/C_6057159
 	m	()V	m_6896447		m_6896447
 	m	()Ljava/lang/String;	m_6274448		m_6274448
-	m	(I)V	m_4872726		m_4872726
-		p	1			p_1
-	m	()I	m_6975526		m_6975526
+	m	(I)V	m_4872726		setType
+		p	1			type
+	m	()I	m_6975526		getType
 c	net/minecraft/unmapped/C_7042060
 	m	(Lnet/minecraft/unmapped/C_5691462;Ljava/lang/String;)V	<init>
 		p	2		username	p_2
@@ -270,9 +270,9 @@ c	net/minecraft/unmapped/C_7955140	net/minecraft/entity/living/LivingEntity__3
 	m	()Ljava/lang/Object;	call	call	
 c	net/minecraft/unmapped/C_8253973
 	m	()V	m_1700770		m_1700770
-	m	()B	m_7783141		m_7783141
-	m	(I)V	m_5047973		m_5047973
-		p	1			p_1
+	m	()B	m_7783141		getFatness
+	m	(I)V	m_5047973		setFatness
+		p	1			level
 	m	()F	m_1053803		m_1053803
 	m	()Lnet/minecraft/unmapped/C_2454309;	m_4252181		getDropStack
 c	net/minecraft/unmapped/C_8275823
@@ -305,9 +305,9 @@ c	net/minecraft/unmapped/C_8492283
 	m	()V	m_6896447		m_6896447
 	m	()Ljava/lang/String;	m_6274448		m_6274448
 	m	()V	m_1700770		m_1700770
-	m	(I)V	m_7775199		m_7775199
-		p	1			p_1
-	m	()I	m_1447293		m_1447293
+	m	(I)V	m_7775199		setType
+		p	1			type
+	m	()I	m_1447293		getType
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_1129840		m_1129840
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_7694759		m_7694759
@@ -341,7 +341,7 @@ c	net/minecraft/unmapped/C_9761743
 	m	(IZ)V	<init>		<init>
 		p	1			id
 		p	2			p_2
-c	net/minecraft/unmapped/C_0485581		net/minecraft/unmapped/C_0485581
+c	net/minecraft/unmapped/C_0485581		net/minecraft/client/render/entity/SpeechBubbleRenderer
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_6939721;DDDFF)V	m_3615615		m_3615615
 		p	1			p_1
@@ -365,13 +365,14 @@ c	net/minecraft/unmapped/C_0812327		net/minecraft/block/DropperBlock__1
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/unmapped/C_1995960		net/minecraft/entity/living/mob/hostile/boss/PinkWitherEntity
-	f	[F	f_1016435		f_1016435
-	f	[F	f_4954848		f_4954848
-	f	[F	f_0346171		f_0346171
-	f	[F	f_3777068		f_3777068
-	f	I	f_9017333		f_9017333
-	f	I	f_7977589		f_7977589
-	f	Lnet/minecraft/unmapped/C_8878495;	f_9208408		f_9208408
+	f	[F	f_1016435		sideHeadPitches
+	f	[F	f_4954848		sideHeadYaws
+	f	[F	f_0346171		prevSideHeadPitches
+	f	[F	f_3777068		prevSideHeadYaws
+	f	I	f_9017333		blockBreakingCooldown
+		c		This field was copied from {@link WitherEntity} but goes unused here
+	f	I	f_7977589		skullCooldown
+	f	Lnet/minecraft/unmapped/C_8878495;	f_9208408		UNDEAD_FILTER
 	m	(Lnet/minecraft/unmapped/C_5553933;)V	<init>		<init>
 		p	1			p_1
 	m	()V	m_1700770		m_1700770
@@ -385,8 +386,8 @@ c	net/minecraft/unmapped/C_1995960		net/minecraft/entity/living/mob/hostile/boss
 	m	()Ljava/lang/String;	m_1699770		m_1699770
 	m	()Ljava/lang/String;	m_6274448		m_6274448
 	m	()V	m_0095412		m_0095412
-	m	(I)Z	m_9408130		m_9408130
-		p	1			p_1
+	m	(I)Z	m_9408130		headExists
+		p	1			headIndex
 	m	()V	m_6026338		m_6026338
 	m	()V	m_4102861		m_4102861
 	m	()I	m_2352236		m_2352236
@@ -425,22 +426,22 @@ c	net/minecraft/unmapped/C_1995960		net/minecraft/entity/living/mob/hostile/boss
 		p	1			p_1
 	m	()Z	m_6682221		m_6682221
 	m	()I	m_2548208		m_2548208
-	m	(I)F	m_2192154		m_2192154
-		p	1			p_1
-	m	(I)F	m_0064154		m_0064154
-		p	1			p_1
-	m	()I	m_9406203		m_9406203
-	m	(I)V	m_2034728		m_2034728
-		p	1			p_1
-	m	()I	m_1425765		m_1425765
-	m	(I)V	m_3895016		m_3895016
-		p	1			p_1
-	m	(I)I	m_3764049		m_3764049
-		p	1			p_1
-	m	(II)V	m_8302201		m_8302201
-		p	1			p_1
-		p	2			p_2
-	m	()Z	m_9147246		m_9147246
+	m	(I)F	m_2192154		getHeadYaw
+		p	1			id
+	m	(I)F	m_0064154		getHeadPitch
+		p	1			id
+	m	()I	m_9406203		getInvulnerabilityTimer
+	m	(I)V	m_2034728		setInvulnerabilityTimer
+		p	1			ticks
+	m	()I	m_1425765		getHeadAmount
+	m	(I)V	m_3895016		setHeadAmount
+		p	1			amount
+	m	(I)I	m_3764049		getTrackedEntityId
+		p	1			headIndex
+	m	(II)V	m_8302201		setTrackedEntityId
+		p	1			headIndex
+		p	2			id
+	m	()Z	m_9147246		isAtHalfHealth
 	m	(Lnet/minecraft/unmapped/C_9590849;)Z	m_4185556		m_4185556
 		p	1			p_1
 	m	()F	m_1053803		m_1053803
@@ -519,12 +520,12 @@ c	net/minecraft/unmapped/C_4916569		net/minecraft/entity/living/mob/hostile/boss
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_0539808;)Z	m_1473293		m_1473293
 		p	1			p_1
-c	net/minecraft/unmapped/C_5491703		net/minecraft/unmapped/C_5491703
-	f	Lnet/minecraft/unmapped/C_5622853;	f_8798950		f_8798950
-	f	D	f_4007477		f_4007477
-	f	D	f_2272305		f_2272305
-	f	D	f_5152873		f_5152873
-	f	F	f_3441704		f_3441704
+c	net/minecraft/unmapped/C_5491703		net/minecraft/entity/ai/goal/PinkWitherWanderGoal
+	f	Lnet/minecraft/unmapped/C_5622853;	f_8798950		entity
+	f	D	f_4007477		targetX
+	f	D	f_2272305		targetY
+	f	D	f_5152873		targetZ
+	f	F	f_3441704		speed
 	m	(Lnet/minecraft/unmapped/C_5622853;F)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -535,16 +536,16 @@ c	net/minecraft/unmapped/C_6824961		net/minecraft/crafting/TintedGlassRecipes
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_7585705;)V	m_6877921		register
 		p	1			manager
-c	net/minecraft/unmapped/C_6939721		net/minecraft/unmapped/C_6939721
-	f	I	f_9473675		f_9473675
-	f	I	f_6890066		f_6890066
-	f	Ljava/util/List;	f_2142727		f_2142727
-	f	Ljava/util/Random;	f_2910665		f_2910665
+c	net/minecraft/unmapped/C_6939721		net/minecraft/entity/SpeechBubbleEntity
+	f	I	f_9473675		age
+	f	I	f_6890066		maxAge
+	f	Ljava/util/List;	f_2142727		QUOTES
+	f	Ljava/util/Random;	f_2910665		RANDOM
 	m	(Lnet/minecraft/unmapped/C_5553933;III)V	<init>		<init>
 		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	2			x
+		p	3			y
+		p	4			z
 	m	(Lnet/minecraft/unmapped/C_5553933;DDD)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -552,16 +553,16 @@ c	net/minecraft/unmapped/C_6939721		net/minecraft/unmapped/C_6939721
 		p	6			p_6
 	m	()Z	m_7750295		m_7750295
 	m	()V	m_1700770		m_1700770
-	m	(Ljava/lang/String;)V	m_8854088		m_8854088
-		p	1			p_1
-	m	()Ljava/lang/String;	m_3220863		m_3220863
+	m	(Ljava/lang/String;)V	m_8854088		setCurrentQuote
+		p	1			quote
+	m	()Ljava/lang/String;	m_3220863		getCurrentQuote
 	m	()V	m_7274048		m_7274048
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_1129840		m_1129840
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_7694759		m_7694759
 		p	1			p_1
 	m	()Z	m_3298301		m_3298301
-	m	()Ljava/lang/String;	m_5787374		m_5787374
+	m	()Ljava/lang/String;	m_5787374		getNextQuote
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_7634436		net/minecraft/entity/ai/goal/TemptPinkWitherGoal
 	f	Lnet/minecraft/unmapped/C_5622853;	f_6293180		f_6293180
@@ -607,7 +608,7 @@ c	net/minecraft/unmapped/C_8578377		net/minecraft/block/TintedGlassBlock
 	m	()Z	m_2469260		m_2469260
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_8896515		net/minecraft/client/render/entity/PinkWitherRenderer
-	f	I	f_9317667		f_9317667
+	f	I	f_9317667		handModel
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_1995960;DDDFF)V	m_5695587		m_5695587
 		p	1			p_1
@@ -665,8 +666,8 @@ c	net/minecraft/unmapped/C_9326208		net/minecraft/client/render/model/entity/Pin
 		p	5			p_5
 		p	6			p_6
 		p	7			p_7
-	m	(Lnet/minecraft/unmapped/C_1995960;)V	m_7075539		m_7075539
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_1995960;)V	m_7075539		checkHeadVisibility
+		p	1			entity
 	m	(FFFFFFLnet/minecraft/unmapped/C_0539808;)V	m_6142526		m_6142526
 		p	1			p_1
 		p	2			p_2
@@ -680,7 +681,7 @@ c	net/minecraft/unmapped/C_9326208		net/minecraft/client/render/model/entity/Pin
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-c	net/minecraft/unmapped/C_9434723		net/minecraft/unmapped/C_9434723
+c	net/minecraft/unmapped/C_9434723		net/minecraft/entity/projectile/PinkWitherSkullEntity
 	m	(Lnet/minecraft/unmapped/C_5553933;)V	<init>		<init>
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_6607881;DDD)V	<init>		<init>
@@ -704,13 +705,13 @@ c	net/minecraft/unmapped/C_9434723		net/minecraft/unmapped/C_9434723
 	m	(Lnet/minecraft/unmapped/C_1161898;I)Z	m_8726131		m_8726131
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_9643412		net/minecraft/unmapped/C_9643412
-	f	Lnet/minecraft/unmapped/C_1546356;	f_3813369		f_3813369
+c	net/minecraft/unmapped/C_9643412		net/minecraft/client/render/entity/PinkWitherSkullRenderer
+	f	Lnet/minecraft/unmapped/C_1546356;	f_3813369		model
 	m	()V	<init>		<init>
-	m	(FFF)F	m_9291799		m_9291799
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(FFF)F	m_9291799		getYaw
+		p	1			prevYaw
+		p	2			yaw
+		p	3			tickDelta
 	m	(Lnet/minecraft/unmapped/C_9434723;DDDFF)V	m_2451038		m_2451038
 		p	1			p_1
 		p	2			p_2
