@@ -7752,15 +7752,15 @@ c	net/minecraft/unmapped/C_9519056
 	m	(Lnet/minecraft/unmapped/C_1630803;)Z	m_2765065		m_2765065
 		p	0			p_0
 c	net/minecraft/unmapped/C_9548941
-	f	Lcom/mojang/brigadier/exceptions/SimpleCommandExceptionType;	f_7143652		f_7143652
-	f	Lcom/mojang/brigadier/exceptions/SimpleCommandExceptionType;	f_1143251		f_1143251
+	f	Lcom/mojang/brigadier/exceptions/SimpleCommandExceptionType;	f_7143652		EMPTY_EXCEPTION
+	f	Lcom/mojang/brigadier/exceptions/SimpleCommandExceptionType;	f_1143251		SWAPPED_EXCEPTION
 	f	Lcom/mojang/brigadier/exceptions/SimpleCommandExceptionType;	f_2265261		f_2265261
-	m	()Ljava/lang/Float;	m_9296895		m_9296895
-	m	()Ljava/lang/Float;	m_1128573		m_1128573
+	m	()Ljava/lang/Float;	m_9296895		getMin
+	m	()Ljava/lang/Float;	m_1128573		getMax
 	m	(Lcom/mojang/brigadier/StringReader;Z)Lnet/minecraft/unmapped/C_9548941;	m_4593776		m_4593776
 		p	0			p_0
 		p	1			p_1
-	m	(Lcom/mojang/brigadier/StringReader;ZLjava/util/function/Function;)Lnet/minecraft/unmapped/C_9548941;	m_7374297		m_7374297
+	m	(Lcom/mojang/brigadier/StringReader;ZLjava/util/function/Function;)Lnet/minecraft/unmapped/C_9548941;	m_7374297		fromString
 		p	0			p_0
 		p	1			p_1
 		p	2			p_2
@@ -8085,17 +8085,17 @@ c	net/minecraft/unmapped/C_0572196		net/minecraft/entity/particle/ParticleTypes
 		p	0			key
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_1262019		net/minecraft/command/argument/EntitySelector
-	f	I	f_1197093		f_1197093
-	f	Z	f_3729548		f_3729548
-	f	Z	f_4653631		f_4653631
-	f	Ljava/util/function/Predicate;	f_5590903		f_5590903
-	f	Lnet/minecraft/unmapped/C_9548941;	f_5369751		f_5369751
-	f	Ljava/util/function/Function;	f_6091407		f_6091407
-	f	Lnet/minecraft/unmapped/C_5577922;	f_5648055		f_5648055
-	f	Ljava/util/function/BiConsumer;	f_2152481		f_2152481
-	f	Z	f_9710572		f_9710572
-	f	Ljava/lang/String;	f_2285339		f_2285339
-	f	Ljava/util/UUID;	f_2743236		f_2743236
+	f	I	f_1197093		max
+	f	Z	f_3729548		allowNonPlayers
+	f	Z	f_4653631		allowFromOtherWorlds
+	f	Ljava/util/function/Predicate;	f_5590903		predicate
+	f	Lnet/minecraft/unmapped/C_9548941;	f_5369751		range
+	f	Ljava/util/function/Function;	f_6091407		position
+	f	Lnet/minecraft/unmapped/C_5577922;	f_5648055		bounds
+	f	Ljava/util/function/BiConsumer;	f_2152481		order
+	f	Z	f_9710572		allowSelf
+	f	Ljava/lang/String;	f_2285339		name
+	f	Ljava/util/UUID;	f_2743236		uuid
 	m	(IZZLjava/util/function/Predicate;Lnet/minecraft/unmapped/C_9548941;Ljava/util/function/Function;Lnet/minecraft/unmapped/C_5577922;Ljava/util/function/BiConsumer;ZLjava/lang/String;Ljava/util/UUID;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -8110,25 +8110,25 @@ c	net/minecraft/unmapped/C_1262019		net/minecraft/command/argument/EntitySelecto
 		p	11			p_11
 	m	()I	m_0111961		getMax
 	m	()Z	m_3535019		hasNonPlayers
-	m	()Z	m_9800929		m_9800929
-	m	(Lnet/minecraft/unmapped/C_1630803;)Lnet/minecraft/unmapped/C_0539808;	m_5535170		m_5535170
-		p	1			p_1
+	m	()Z	m_9800929		hasFromOtherWorlds
+	m	(Lnet/minecraft/unmapped/C_1630803;)Lnet/minecraft/unmapped/C_0539808;	m_5535170		findSingleEntity
+		p	1			source
 	m	(Lnet/minecraft/unmapped/C_1630803;)Ljava/util/List;	m_3033695		findEntities
-		p	1			p_1
-	m	(Ljava/util/List;Lnet/minecraft/unmapped/C_3865296;Lnet/minecraft/unmapped/C_0557736;Ljava/util/function/Predicate;)V	m_6455254		m_6455254
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_1630803;)Lnet/minecraft/unmapped/C_3292284;	m_9455982		m_9455982
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_1630803;)Ljava/util/List;	m_6604951		m_6604951
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_0557736;)Ljava/util/function/Predicate;	m_9104283		m_9104283
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_0557736;Ljava/util/List;)Ljava/util/List;	m_6413348		m_6413348
-		p	1			p_1
-		p	2			p_2
+		p	1			source
+	m	(Ljava/util/List;Lnet/minecraft/unmapped/C_3865296;Lnet/minecraft/unmapped/C_0557736;Ljava/util/function/Predicate;)V	m_6455254		collectEntities
+		p	1			entities
+		p	2			world
+		p	3			pos
+		p	4			filter
+	m	(Lnet/minecraft/unmapped/C_1630803;)Lnet/minecraft/unmapped/C_3292284;	m_9455982		findSinglePlayer
+		p	1			source
+	m	(Lnet/minecraft/unmapped/C_1630803;)Ljava/util/List;	m_6604951		findPlayers
+		p	1			source
+	m	(Lnet/minecraft/unmapped/C_0557736;)Ljava/util/function/Predicate;	m_9104283		getPredicate
+		p	1			pos
+	m	(Lnet/minecraft/unmapped/C_0557736;Ljava/util/List;)Ljava/util/List;	m_6413348		sortAndLimit
+		p	1			pos
+		p	2			entities
 	m	(Ljava/util/List;)Lnet/minecraft/unmapped/C_9550253;	m_3065307		joinNames
 		p	0			entities
 	m	(Lnet/minecraft/unmapped/C_0557736;DDLnet/minecraft/unmapped/C_0539808;)Z	m_3909825		m_3909825
@@ -8138,7 +8138,7 @@ c	net/minecraft/unmapped/C_1262019		net/minecraft/command/argument/EntitySelecto
 		p	6			p_6
 	m	(Lnet/minecraft/unmapped/C_5577922;Lnet/minecraft/unmapped/C_0539808;)Z	m_3896284		m_3896284
 		p	0			p_0
-		p	1			p_1
+		p	1			entity
 c	net/minecraft/unmapped/C_1267695		net/minecraft/command/argument/MessageArgument
 	m	()V	<init>		<init>
 	m	()Lnet/minecraft/unmapped/C_1267695;	m_9129855		message
@@ -8774,119 +8774,119 @@ c	net/minecraft/unmapped/C_5717106		net/minecraft/command/argument/ParticleArgum
 		p	2			p_2
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_5938267		net/minecraft/command/argument/EntitySelectorParser
-	f	Lcom/mojang/brigadier/exceptions/SimpleCommandExceptionType;	f_4073863		f_4073863
-	f	Lcom/mojang/brigadier/exceptions/ParameterizedCommandExceptionType;	f_1922134		f_1922134
-	f	Lcom/mojang/brigadier/exceptions/SimpleCommandExceptionType;	f_2466326		f_2466326
-	f	Lcom/mojang/brigadier/exceptions/SimpleCommandExceptionType;	f_0429701		f_0429701
-	f	Lcom/mojang/brigadier/exceptions/ParameterizedCommandExceptionType;	f_0428741		f_0428741
-	f	Ljava/util/function/BiConsumer;	f_9215806		f_9215806
-	f	Ljava/util/function/BiConsumer;	f_2180787		f_2180787
-	f	Ljava/util/function/BiConsumer;	f_5062831		f_5062831
-	f	Ljava/util/function/BiConsumer;	f_0637673		f_0637673
-	f	Lcom/mojang/brigadier/StringReader;	f_4367727		f_4367727
-	f	I	f_5444083		f_5444083
-	f	Z	f_5805416		f_5805416
-	f	Z	f_1381022		f_1381022
-	f	Lnet/minecraft/unmapped/C_9548941;	f_7525187		f_7525187
-	f	Lnet/minecraft/unmapped/C_9548941;	f_6410235		f_6410235
-	f	Ljava/lang/Double;	f_5145886		f_5145886
-	f	Ljava/lang/Double;	f_3889998		f_3889998
-	f	Ljava/lang/Double;	f_2594711		f_2594711
-	f	Ljava/lang/Double;	f_3051910		f_3051910
-	f	Ljava/lang/Double;	f_6932384		f_6932384
-	f	Ljava/lang/Double;	f_0685236		f_0685236
-	f	Lnet/minecraft/unmapped/C_9548941;	f_6551106		f_6551106
-	f	Lnet/minecraft/unmapped/C_9548941;	f_5892447		f_5892447
-	f	Ljava/util/function/Predicate;	f_0476434		f_0476434
-	f	Ljava/util/function/BiConsumer;	f_7140112		f_7140112
-	f	Z	f_4532647		f_4532647
-	f	Ljava/lang/String;	f_0589727		f_0589727
-	f	Ljava/util/UUID;	f_6191460		f_6191460
+	f	Lcom/mojang/brigadier/exceptions/SimpleCommandExceptionType;	f_4073863		INVALID_EXCEPTION
+	f	Lcom/mojang/brigadier/exceptions/ParameterizedCommandExceptionType;	f_1922134		UNKNOWN_SELECTOR_EXCEPTION
+	f	Lcom/mojang/brigadier/exceptions/SimpleCommandExceptionType;	f_2466326		SELECTOR_MISSING_EXCEPTION
+	f	Lcom/mojang/brigadier/exceptions/SimpleCommandExceptionType;	f_0429701		UNTERMINATED_OPTIONS_EXCEPTION
+	f	Lcom/mojang/brigadier/exceptions/ParameterizedCommandExceptionType;	f_0428741		OPTION_WITHOUT_VALUE_EXCEPTION
+	f	Ljava/util/function/BiConsumer;	f_9215806		ORDER_ARBITRARY
+	f	Ljava/util/function/BiConsumer;	f_2180787		ORDER_NEAREST
+	f	Ljava/util/function/BiConsumer;	f_5062831		ORDER_FURTHEST
+	f	Ljava/util/function/BiConsumer;	f_0637673		ORDER_RANDOM
+	f	Lcom/mojang/brigadier/StringReader;	f_4367727		reader
+	f	I	f_5444083		max
+	f	Z	f_5805416		allowNonPlayers
+	f	Z	f_1381022		allowFromOtherWorlds
+	f	Lnet/minecraft/unmapped/C_9548941;	f_7525187		distance
+	f	Lnet/minecraft/unmapped/C_9548941;	f_6410235		pitch
+	f	Ljava/lang/Double;	f_5145886		x
+	f	Ljava/lang/Double;	f_3889998		z
+	f	Ljava/lang/Double;	f_2594711		dx
+	f	Ljava/lang/Double;	f_3051910		dy
+	f	Ljava/lang/Double;	f_6932384		dz
+	f	Ljava/lang/Double;	f_0685236		y
+	f	Lnet/minecraft/unmapped/C_9548941;	f_6551106		yaw
+	f	Lnet/minecraft/unmapped/C_9548941;	f_5892447		xp
+	f	Ljava/util/function/Predicate;	f_0476434		predicate
+	f	Ljava/util/function/BiConsumer;	f_7140112		order
+	f	Z	f_4532647		allowSelf
+	f	Ljava/lang/String;	f_0589727		name
+	f	Ljava/util/UUID;	f_6191460		uuid
 	m	(Lcom/mojang/brigadier/StringReader;)V	<init>		<init>
-		p	1			p_1
-	m	()Lnet/minecraft/unmapped/C_1262019;	m_7085024		m_7085024
-	m	(DDD)Lnet/minecraft/unmapped/C_5577922;	m_5489700		m_5489700
-		p	1			p_1
-		p	3			p_3
-		p	5			p_5
-	m	()V	m_4346970		m_4346970
-	m	(Lnet/minecraft/unmapped/C_9548941;Ljava/util/function/ToDoubleFunction;)Ljava/util/function/Predicate;	m_0102036		m_0102036
+		p	1			reader
+	m	()Lnet/minecraft/unmapped/C_1262019;	m_7085024		getSelector
+	m	(DDD)Lnet/minecraft/unmapped/C_5577922;	m_5489700		getBounds
+		p	1			dx
+		p	3			dy
+		p	5			dz
+	m	()V	m_4346970		buildPredicate
+	m	(Lnet/minecraft/unmapped/C_9548941;Ljava/util/function/ToDoubleFunction;)Ljava/util/function/Predicate;	m_0102036		buildRotationPredicate
 		p	1			p_1
 		p	2			p_2
-	m	()V	m_5066118		m_5066118
+	m	()V	m_5066118		parseSelector
 	m	()V	m_8069080		m_8069080
-	m	()V	m_1524518		m_1524518
-	m	()Z	m_2907490		m_2907490
-	m	()Lcom/mojang/brigadier/StringReader;	m_5615104		m_5615104
-	m	(Ljava/util/function/Predicate;)V	m_5965653		m_5965653
+	m	()V	m_1524518		parseOptions
+	m	()Z	m_2907490		isTag
+	m	()Lcom/mojang/brigadier/StringReader;	m_5615104		getReader
+	m	(Ljava/util/function/Predicate;)V	m_5965653		addPredicate
+		p	1			predicate
+	m	()V	m_4449215		setAllowFromOtherWorlds
+	m	()Lnet/minecraft/unmapped/C_9548941;	m_7742771		getDistance
+	m	(Lnet/minecraft/unmapped/C_9548941;)V	m_3348829		setDistance
 		p	1			p_1
-	m	()V	m_4449215		m_4449215
-	m	()Lnet/minecraft/unmapped/C_9548941;	m_7742771		m_7742771
-	m	(Lnet/minecraft/unmapped/C_9548941;)V	m_3348829		m_3348829
+	m	()Lnet/minecraft/unmapped/C_9548941;	m_4014523		getPitch
+	m	(Lnet/minecraft/unmapped/C_9548941;)V	m_0753014		setPitch
 		p	1			p_1
-	m	()Lnet/minecraft/unmapped/C_9548941;	m_4014523		m_4014523
-	m	(Lnet/minecraft/unmapped/C_9548941;)V	m_0753014		m_0753014
+	m	(Lnet/minecraft/unmapped/C_9548941;)V	m_9535666		setYaw
 		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_9548941;)V	m_9535666		m_9535666
+	m	(Lnet/minecraft/unmapped/C_9548941;)V	m_0579143		setXp
 		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_9548941;)V	m_0579143		m_0579143
-		p	1			p_1
-	m	(D)V	m_8368310		m_8368310
-		p	1			p_1
-	m	(D)V	m_2337741		m_2337741
-		p	1			p_1
-	m	(D)V	m_9958649		m_9958649
-		p	1			p_1
-	m	(D)V	m_2307035		m_2307035
-		p	1			p_1
-	m	(D)V	m_7570772		m_7570772
-		p	1			p_1
-	m	(D)V	m_8839676		m_8839676
-		p	1			p_1
-	m	(I)V	m_6002438		m_6002438
-		p	1			p_1
-	m	(Z)V	m_0282551		m_0282551
-		p	1			p_1
-	m	(Ljava/util/function/BiConsumer;)V	m_7760614		m_7760614
-		p	1			p_1
+	m	(D)V	m_8368310		setX
+		p	1			x
+	m	(D)V	m_2337741		setZ
+		p	1			z
+	m	(D)V	m_9958649		setDx
+		p	1			dx
+	m	(D)V	m_2307035		setDy
+		p	1			dy
+	m	(D)V	m_7570772		setDz
+		p	1			dz
+	m	(D)V	m_8839676		setY
+		p	1			y
+	m	(I)V	m_6002438		setMax
+		p	1			max
+	m	(Z)V	m_0282551		setAllowNonPlayers
+		p	1			allowNonPlayers
+	m	(Ljava/util/function/BiConsumer;)V	m_7760614		setOrder
+		p	1			order
 	m	(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/unmapped/C_1262019;	m_1010223		parse
 		p	0			p_0
-	m	()Z	m_8588649		m_8588649
+	m	()Z	m_8588649		hasSelf
 	m	(Ljava/util/function/ToDoubleFunction;DDLnet/minecraft/unmapped/C_0539808;)Z	m_9123646		m_9123646
 		p	0			p_0
 		p	1			p_1
 		p	3			p_3
-		p	5			p_5
+		p	5			entity
 	m	(Lnet/minecraft/unmapped/C_0539808;)Z	m_4369413		m_4369413
-		p	1			p_1
+		p	1			entity
 	m	(Lnet/minecraft/unmapped/C_0539808;)D	m_0606146		m_0606146
-		p	0			p_0
+		p	0			entity
 	m	(Lnet/minecraft/unmapped/C_0539808;)D	m_6816696		m_6816696
-		p	0			p_0
+		p	0			entity
 	m	(Lnet/minecraft/unmapped/C_0557736;)Lnet/minecraft/unmapped/C_0557736;	m_0666768		m_0666768
-		p	1			p_1
+		p	1			pos
 	m	(Lnet/minecraft/unmapped/C_0557736;)Lnet/minecraft/unmapped/C_0557736;	m_9385434		m_9385434
-		p	0			p_0
+		p	0			pos
 	m	(Lnet/minecraft/unmapped/C_0557736;Ljava/util/List;)V	m_0862611		m_0862611
-		p	0			p_0
-		p	1			p_1
+		p	0			pos
+		p	1			entities
 	m	(Lnet/minecraft/unmapped/C_0557736;Ljava/util/List;)V	m_8851416		m_8851416
-		p	0			p_0
-		p	1			p_1
+		p	0			pos
+		p	1			entities
 	m	(Lnet/minecraft/unmapped/C_0557736;Lnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_0539808;)I	m_6417802		m_6417802
 		p	0			p_0
-		p	1			p_1
-		p	2			p_2
+		p	1			entity1
+		p	2			entity2
 	m	(Lnet/minecraft/unmapped/C_0557736;Ljava/util/List;)V	m_5524398		m_5524398
-		p	0			p_0
-		p	1			p_1
+		p	0			pos
+		p	1			entities
 	m	(Lnet/minecraft/unmapped/C_0557736;Lnet/minecraft/unmapped/C_0539808;Lnet/minecraft/unmapped/C_0539808;)I	m_7548004		m_7548004
 		p	0			p_0
-		p	1			p_1
-		p	2			p_2
+		p	1			entity1
+		p	2			entity2
 	m	(Lnet/minecraft/unmapped/C_0557736;Ljava/util/List;)V	m_0485572		m_0485572
-		p	0			p_0
-		p	1			p_1
+		p	0			pos
+		p	1			entities
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_6140756		net/minecraft/command/argument/ColorArgument
 	f	Lcom/mojang/brigadier/exceptions/ParameterizedCommandExceptionType;	f_2150439		INVALID_COLOR_EXCEPTION
@@ -9209,56 +9209,56 @@ c	net/minecraft/unmapped/C_9445209		net/minecraft/command/argument/SlotArgument
 		p	1			p_1
 		p	2			p_2
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_9470902		net/minecraft/unmapped/C_9470902
-	f	Ljava/util/Map;	f_6611498		f_6611498
-	f	Lcom/mojang/brigadier/exceptions/ParameterizedCommandExceptionType;	f_6212098		f_6212098
-	f	Lcom/mojang/brigadier/exceptions/SimpleCommandExceptionType;	f_9311501		f_9311501
-	f	Lcom/mojang/brigadier/exceptions/ParameterizedCommandExceptionType;	f_5041770		f_5041770
-	f	Lcom/mojang/brigadier/exceptions/SimpleCommandExceptionType;	f_6515438		f_6515438
-	f	Lcom/mojang/brigadier/exceptions/SimpleCommandExceptionType;	f_2401237		f_2401237
+c	net/minecraft/unmapped/C_9470902		net/minecraft/command/argument/EntitySelectorOptions
+	f	Ljava/util/Map;	f_6611498		OPTIONS
+	f	Lcom/mojang/brigadier/exceptions/ParameterizedCommandExceptionType;	f_6212098		UNKNOWN_EXCEPTION
+	f	Lcom/mojang/brigadier/exceptions/SimpleCommandExceptionType;	f_9311501		NEGATIVE_DISTANCE_EXCEPTION
+	f	Lcom/mojang/brigadier/exceptions/ParameterizedCommandExceptionType;	f_5041770		NOT_APPLICABLE_EXCEPTION
+	f	Lcom/mojang/brigadier/exceptions/SimpleCommandExceptionType;	f_6515438		NEGATIVE_XP_EXCEPTION
+	f	Lcom/mojang/brigadier/exceptions/SimpleCommandExceptionType;	f_2401237		LIMIT_TOO_SMALL_EXCEPTION
 	f	Lcom/mojang/brigadier/exceptions/SimpleCommandExceptionType;	f_8646610		f_8646610
 	f	Lcom/mojang/brigadier/exceptions/SimpleCommandExceptionType;	f_4960268		f_4960268
-	f	Lcom/mojang/brigadier/exceptions/ParameterizedCommandExceptionType;	f_3078952		f_3078952
-	f	Lcom/mojang/brigadier/exceptions/ParameterizedCommandExceptionType;	f_0141524		f_0141524
-	f	Lcom/mojang/brigadier/exceptions/ParameterizedCommandExceptionType;	f_1761549		f_1761549
-	m	()V	m_6629558		m_6629558
-	m	(Lnet/minecraft/unmapped/C_5938267;Ljava/lang/String;I)V	m_7221305		m_7221305
+	f	Lcom/mojang/brigadier/exceptions/ParameterizedCommandExceptionType;	f_3078952		UNKNOWN_ORDER_EXCEPTION
+	f	Lcom/mojang/brigadier/exceptions/ParameterizedCommandExceptionType;	f_0141524		INVALID_GAME_MODE_EXCEPTION
+	f	Lcom/mojang/brigadier/exceptions/ParameterizedCommandExceptionType;	f_1761549		INVALID_ENTITY_TYPE_EXCEPTION
+	m	()V	m_6629558		init
+	m	(Lnet/minecraft/unmapped/C_5938267;Ljava/lang/String;I)V	m_7221305		get
 		p	0			p_0
 		p	1			p_1
 		p	2			p_2
 	m	(Lnet/minecraft/unmapped/C_5938267;)V	m_8688055		m_8688055
-		p	0			p_0
+		p	0			parser
 	m	(Ljava/util/Map;Lnet/minecraft/unmapped/C_0539808;)Z	m_8235794		m_8235794
 		p	0			p_0
-		p	1			p_1
+		p	1			entity
 	m	(ZLnet/minecraft/unmapped/C_6206008;)Z	m_4186100		m_4186100
 		p	0			p_0
-		p	1			p_1
+		p	1			progress
 	m	(Ljava/util/Map;Lnet/minecraft/unmapped/C_6206008;)Z	m_6462623		m_6462623
 		p	0			p_0
-		p	1			p_1
+		p	1			progress
 	m	(ZLnet/minecraft/unmapped/C_4307746;)Z	m_8376757		m_8376757
 		p	0			p_0
-		p	1			p_1
+		p	1			progress
 	m	(Lnet/minecraft/unmapped/C_5938267;)V	m_7469630		m_7469630
-		p	0			p_0
+		p	0			parser
 	m	(Ljava/util/Map;Lnet/minecraft/unmapped/C_0539808;)Z	m_5185394		m_5185394
 		p	0			p_0
-		p	1			p_1
+		p	1			entity
 	m	(Lnet/minecraft/unmapped/C_5938267;)V	m_6112367		m_6112367
-		p	0			p_0
+		p	0			parser
 	m	(Lnet/minecraft/unmapped/C_2018497;ZLnet/minecraft/unmapped/C_0539808;)Z	m_1696496		m_1696496
 		p	0			p_0
 		p	1			p_1
-		p	2			p_2
+		p	2			entity
 	m	(Lnet/minecraft/unmapped/C_5938267;)V	m_7368298		m_7368298
 		p	0			p_0
 	m	(Ljava/lang/String;ZLnet/minecraft/unmapped/C_0539808;)Z	m_4134429		m_4134429
 		p	0			p_0
 		p	1			p_1
-		p	2			p_2
+		p	2			entity
 	m	(Lnet/minecraft/unmapped/C_5938267;)V	m_1506098		m_1506098
-		p	0			p_0
+		p	0			parser
 	m	(Lnet/minecraft/unmapped/C_0561170;ZLnet/minecraft/unmapped/C_0539808;)Z	m_4273518		m_4273518
 		p	0			p_0
 		p	1			p_1
@@ -9268,43 +9268,43 @@ c	net/minecraft/unmapped/C_9470902		net/minecraft/unmapped/C_9470902
 	m	(Ljava/lang/String;ZLnet/minecraft/unmapped/C_0539808;)Z	m_1197308		m_1197308
 		p	0			p_0
 		p	1			p_1
-		p	2			p_2
+		p	2			entity
 	m	(Lnet/minecraft/unmapped/C_5938267;)V	m_4075330		m_4075330
 		p	0			p_0
 	m	(ZLnet/minecraft/unmapped/C_0666081;Lnet/minecraft/unmapped/C_0539808;)Z	m_5088775		m_5088775
 		p	0			p_0
 		p	1			p_1
-		p	2			p_2
+		p	2			entity
 	m	(Lnet/minecraft/unmapped/C_5938267;)V	m_3432811		m_3432811
-		p	0			p_0
+		p	0			parser
 	m	(Lnet/minecraft/unmapped/C_5938267;)V	m_4699422		m_4699422
-		p	0			p_0
+		p	0			parser
 	m	(Lnet/minecraft/unmapped/C_5938267;)V	m_7786908		m_7786908
 		p	0			p_0
 	m	(Lnet/minecraft/unmapped/C_5938267;)V	m_0837669		m_0837669
 		p	0			p_0
 	m	(Lnet/minecraft/unmapped/C_5938267;)V	m_0186617		m_0186617
-		p	0			p_0
+		p	0			parser
 	m	(Lnet/minecraft/unmapped/C_5938267;)V	m_6188830		m_6188830
-		p	0			p_0
+		p	0			parser
 	m	(Lnet/minecraft/unmapped/C_5938267;)V	m_6787754		m_6787754
-		p	0			p_0
+		p	0			parser
 	m	(Lnet/minecraft/unmapped/C_5938267;)V	m_8912606		m_8912606
-		p	0			p_0
+		p	0			parser
 	m	(Lnet/minecraft/unmapped/C_5938267;)V	m_2835709		m_2835709
-		p	0			p_0
+		p	0			parser
 	m	(Lnet/minecraft/unmapped/C_5938267;)V	m_2753326		m_2753326
-		p	0			p_0
+		p	0			parser
 	m	(Lnet/minecraft/unmapped/C_5938267;)V	m_8186140		m_8186140
-		p	0			p_0
+		p	0			parser
 	m	(Lnet/minecraft/unmapped/C_5938267;)V	m_3728426		m_3728426
-		p	0			p_0
+		p	0			parser
 	m	(Lnet/minecraft/unmapped/C_5938267;)V	m_0100474		m_0100474
 		p	0			p_0
 	m	(Ljava/lang/String;ZLnet/minecraft/unmapped/C_0539808;)Z	m_6279339		m_6279339
 		p	0			p_0
 		p	1			p_1
-		p	2			p_2
+		p	2			entity
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_9693979		net/minecraft/unmapped/C_9693979
 	f	Lorg/apache/logging/log4j/Logger;	f_4010950		f_4010950
