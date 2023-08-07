@@ -26,10 +26,10 @@ c	net/minecraft/unmapped/C_0224916
 		p	4			p_4
 		p	5			p_5
 c	net/minecraft/unmapped/C_0241772
-	m	(Lnet/minecraft/unmapped/C_7240405;)V	m_9169667		m_9169667
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_7240405;)Lnet/minecraft/unmapped/C_0241772;	m_0634808		m_0634808
-		p	0			p_0
+	m	(Lnet/minecraft/unmapped/C_7240405;)V	m_9169667		serialize
+		p	1			buffer
+	m	(Lnet/minecraft/unmapped/C_7240405;)Lnet/minecraft/unmapped/C_0241772;	m_0634808		deserialize
+		p	0			buffer
 c	net/minecraft/unmapped/C_0344425
 	m	(Lcom/mojang/brigadier/context/CommandContext;Lcom/mojang/brigadier/suggestion/SuggestionsBuilder;)Ljava/util/concurrent/CompletableFuture;	listSuggestions		listSuggestions
 		p	1			ctx
@@ -329,7 +329,7 @@ c	net/minecraft/unmapped/C_2211410$2		2
 		p	2			p_2
 c	net/minecraft/unmapped/C_2361607
 	m	()Lnet/minecraft/unmapped/C_0561170;	m_7798854		getLocation
-	m	()Lnet/minecraft/unmapped/C_8113396;	m_5933558		getType
+	m	()Lnet/minecraft/unmapped/C_8113396;	m_5933558		getSerializer
 c	net/minecraft/unmapped/C_2366695
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3544601;Ljava/util/Random;)Ljava/util/List;	m_2421021	m_2421021	
 		p	1		p_1	
@@ -360,9 +360,9 @@ c	net/minecraft/unmapped/C_2986321
 c	net/minecraft/unmapped/C_3422238
 	m	()Z	m_1851938		m_1851938
 c	net/minecraft/unmapped/C_3455004
-	f	Lnet/minecraft/unmapped/C_0561170;	f_2986873		f_2986873
+	f	Lnet/minecraft/unmapped/C_0561170;	f_2986873		location
 	m	(Lnet/minecraft/unmapped/C_0561170;)V	<init>		<init>
-		p	1			p_1
+		p	1			location
 	m	()Lnet/minecraft/unmapped/C_0561170;	m_7798854		m_7798854
 c	net/minecraft/unmapped/C_3496919
 	m	()V	<init>	<init>	
@@ -701,7 +701,7 @@ c	net/minecraft/unmapped/C_7900598
 		p	1			p_1
 	m	()Lnet/minecraft/unmapped/C_8113396;	m_5933558		m_5933558
 c	net/minecraft/unmapped/C_8020906
-	f	Lnet/minecraft/unmapped/C_0561170;	f_7246252		f_7246252
+	f	Lnet/minecraft/unmapped/C_0561170;	f_7246252		location
 	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_2454309;Lnet/minecraft/unmapped/C_0160011;)V	<init>	<init>	
 		p	1		group	
 		p	2		result	
@@ -711,10 +711,10 @@ c	net/minecraft/unmapped/C_8020906
 	m	(Lcom/google/gson/JsonArray;)Lnet/minecraft/unmapped/C_0160011;	m_5886562	ingredientsFromJson	
 		p	0		json	
 	m	(Lnet/minecraft/unmapped/C_0561170;Ljava/lang/String;Lnet/minecraft/unmapped/C_2454309;Lnet/minecraft/unmapped/C_0160011;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	1			location
+		p	2			group
+		p	3			result
+		p	4			ingredients
 	m	()Lnet/minecraft/unmapped/C_0561170;	m_7798854		m_7798854
 	m	()Lnet/minecraft/unmapped/C_8113396;	m_5933558		m_5933558
 	m	(Lnet/minecraft/unmapped/C_8020906;)Ljava/lang/String;	m_6372384		m_6372384
@@ -723,13 +723,13 @@ c	net/minecraft/unmapped/C_8020906
 		p	0			p_0
 	m	(Lnet/minecraft/unmapped/C_8020906;)Lnet/minecraft/unmapped/C_2454309;	m_0628208		m_0628208
 		p	0			p_0
-c	net/minecraft/unmapped/C_8020906$C_0408807		C_0408807
+c	net/minecraft/unmapped/C_8020906$C_0408807		Serializer
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_0561170;Lcom/google/gson/JsonObject;)Lnet/minecraft/unmapped/C_8020906;	m_7557960		m_7557960
 		p	1			p_1
 		p	2			p_2
-	m	(Lcom/google/gson/JsonArray;)Lnet/minecraft/unmapped/C_0160011;	m_8745747		m_8745747
-		p	0			p_0
+	m	(Lcom/google/gson/JsonArray;)Lnet/minecraft/unmapped/C_0160011;	m_8745747		ingredientsFromJson
+		p	0			json
 	m	()Ljava/lang/String;	m_0360484		m_0360484
 	m	(Lnet/minecraft/unmapped/C_0561170;Lnet/minecraft/unmapped/C_7240405;)Lnet/minecraft/unmapped/C_8020906;	m_7787080		m_7787080
 		p	1			p_1
@@ -815,7 +815,7 @@ c	net/minecraft/unmapped/C_9399468
 		p	0			p_0
 	m	(Lnet/minecraft/unmapped/C_9399468;)Lnet/minecraft/unmapped/C_2454309;	m_9081912		m_9081912
 		p	0			p_0
-c	net/minecraft/unmapped/C_9399468$C_0027128		C_0027128
+c	net/minecraft/unmapped/C_9399468$C_0027128		Serializer
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_0561170;Lcom/google/gson/JsonObject;)Lnet/minecraft/unmapped/C_9399468;	m_8426504		m_8426504
 		p	1			p_1
@@ -870,40 +870,40 @@ c	net/minecraft/unmapped/C_9932820
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/unmapped/C_1951451		net/minecraft/unmapped/C_1951451
-	f	Ljava/util/Map;	f_1169675		f_1169675
-	f	Lnet/minecraft/unmapped/C_8113396;	f_1714722		f_1714722
-	f	Lnet/minecraft/unmapped/C_8113396;	f_0868049		f_0868049
-	f	Lnet/minecraft/unmapped/C_8113396;	f_1316015		f_1316015
-	f	Lnet/minecraft/unmapped/C_8113396;	f_0484159		f_0484159
-	f	Lnet/minecraft/unmapped/C_8113396;	f_5667565		f_5667565
-	f	Lnet/minecraft/unmapped/C_8113396;	f_4544093		f_4544093
-	f	Lnet/minecraft/unmapped/C_8113396;	f_6772639		f_6772639
-	f	Lnet/minecraft/unmapped/C_8113396;	f_5099084		f_5099084
-	f	Lnet/minecraft/unmapped/C_8113396;	f_4257461		f_4257461
-	f	Lnet/minecraft/unmapped/C_8113396;	f_9430860		f_9430860
-	f	Lnet/minecraft/unmapped/C_8113396;	f_4939087		f_4939087
+c	net/minecraft/unmapped/C_1951451		net/minecraft/crafting/recipe/RecipeSerializers
+	f	Ljava/util/Map;	f_1169675		BY_NAME
+	f	Lnet/minecraft/unmapped/C_8113396;	f_1714722		SHAPED_RECIPE
+	f	Lnet/minecraft/unmapped/C_8113396;	f_0868049		SHAPELESS_RECIPE
+	f	Lnet/minecraft/unmapped/C_8113396;	f_1316015		DYE_ARMOR
+	f	Lnet/minecraft/unmapped/C_8113396;	f_0484159		CLONE_BOOK
+	f	Lnet/minecraft/unmapped/C_8113396;	f_5667565		CLONE_MAP
+	f	Lnet/minecraft/unmapped/C_8113396;	f_4544093		UPSCALE_MAP
+	f	Lnet/minecraft/unmapped/C_8113396;	f_6772639		FIREWORKS
+	f	Lnet/minecraft/unmapped/C_8113396;	f_5099084		FIREWORKS_STAR
+	f	Lnet/minecraft/unmapped/C_8113396;	f_4257461		FIREWORKS_STAR_FADE
+	f	Lnet/minecraft/unmapped/C_8113396;	f_9430860		REPAIR
+	f	Lnet/minecraft/unmapped/C_8113396;	f_4939087		TIPPED_ARROW
 	f	Lnet/minecraft/unmapped/C_8113396;	f_0202866		f_0202866
 	f	Lnet/minecraft/unmapped/C_8113396;	f_7939878		f_7939878
 	f	Lnet/minecraft/unmapped/C_8113396;	f_8447275		f_8447275
 	f	Lnet/minecraft/unmapped/C_8113396;	f_4454047		f_4454047
-	m	(Lnet/minecraft/unmapped/C_8113396;)Lnet/minecraft/unmapped/C_8113396;	m_3521808		m_3521808
-		p	0			p_0
-	m	(Lnet/minecraft/unmapped/C_0561170;Lcom/google/gson/JsonObject;)Lnet/minecraft/unmapped/C_2361607;	m_1759400		m_1759400
-		p	0			p_0
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_7240405;)Lnet/minecraft/unmapped/C_2361607;	m_2269022		m_2269022
-		p	0			p_0
-	m	(Lnet/minecraft/unmapped/C_2361607;Lnet/minecraft/unmapped/C_7240405;)V	m_9573026		m_9573026
-		p	0			p_0
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_8113396;)Lnet/minecraft/unmapped/C_8113396;	m_3521808		register
+		p	0			serializer
+	m	(Lnet/minecraft/unmapped/C_0561170;Lcom/google/gson/JsonObject;)Lnet/minecraft/unmapped/C_2361607;	m_1759400		fromJson
+		p	0			location
+		p	1			json
+	m	(Lnet/minecraft/unmapped/C_7240405;)Lnet/minecraft/unmapped/C_2361607;	m_2269022		deserialize
+		p	0			buffer
+	m	(Lnet/minecraft/unmapped/C_2361607;Lnet/minecraft/unmapped/C_7240405;)V	m_9573026		serialize
+		p	0			recipe
+		p	1			buffer
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_1951451$C_7487928		C_7487928
-	f	Ljava/lang/String;	f_8507459		f_8507459
-	f	Ljava/util/function/Function;	f_7971704		f_7971704
+c	net/minecraft/unmapped/C_1951451$C_7487928		SimpleSerializer
+	f	Ljava/lang/String;	f_8507459		name
+	f	Ljava/util/function/Function;	f_7971704		factory
 	m	(Ljava/lang/String;Ljava/util/function/Function;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			name
+		p	2			factory
 	m	(Lnet/minecraft/unmapped/C_0561170;Lcom/google/gson/JsonObject;)Lnet/minecraft/unmapped/C_2361607;	m_8812232		m_8812232
 		p	1			p_1
 		p	2			p_2
@@ -948,17 +948,17 @@ c	net/minecraft/unmapped/C_7204865		net/minecraft/unmapped/C_7204865
 	m	()Ljava/util/List;	m_6922304		m_6922304
 	m	(Lnet/minecraft/unmapped/C_5444260;)V	m_7216666		m_7216666
 		p	1			p_1
-c	net/minecraft/unmapped/C_8113396		net/minecraft/unmapped/C_8113396
-	m	(Lnet/minecraft/unmapped/C_0561170;Lcom/google/gson/JsonObject;)Lnet/minecraft/unmapped/C_2361607;	m_8812232		m_8812232
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_0561170;Lnet/minecraft/unmapped/C_7240405;)Lnet/minecraft/unmapped/C_2361607;	m_6124812		m_6124812
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_7240405;Lnet/minecraft/unmapped/C_2361607;)V	m_5623471		m_5623471
-		p	1			p_1
-		p	2			p_2
-	m	()Ljava/lang/String;	m_0360484		m_0360484
+c	net/minecraft/unmapped/C_8113396		net/minecraft/crafting/recipe/RecipeSerializer
+	m	(Lnet/minecraft/unmapped/C_0561170;Lcom/google/gson/JsonObject;)Lnet/minecraft/unmapped/C_2361607;	m_8812232		fromJson
+		p	1			location
+		p	2			json
+	m	(Lnet/minecraft/unmapped/C_0561170;Lnet/minecraft/unmapped/C_7240405;)Lnet/minecraft/unmapped/C_2361607;	m_6124812		deserialize
+		p	1			location
+		p	2			buffer
+	m	(Lnet/minecraft/unmapped/C_7240405;Lnet/minecraft/unmapped/C_2361607;)V	m_5623471		serialize
+		p	1			buffer
+		p	2			recipe
+	m	()Ljava/lang/String;	m_0360484		getName
 c	net/minecraft/unmapped/C_9698407		net/minecraft/unmapped/C_9698407
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_6607881;)Lnet/minecraft/unmapped/C_9550253;	m_0775408		m_0775408
