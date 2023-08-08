@@ -1897,7 +1897,7 @@ c	net/minecraft/unmapped/C_1314941
 c	net/minecraft/unmapped/C_1316134
 	f	Ljava/util/Set;	f_3272393	chunksToUnload	
 	f	Lit/unimi/dsi/fastutil/longs/LongSet;	f_3272393		chunksToUnload
-	f	Lnet/minecraft/unmapped/C_3492960;	f_4549504		distanceManager
+	f	Lnet/minecraft/unmapped/C_3492960;	f_4549504		scheduler
 	f	Lnet/minecraft/unmapped/C_7197374;	f_2105655		taskManager
 	m	(Lnet/minecraft/unmapped/C_3865296;Lnet/minecraft/unmapped/C_3015672;Lnet/minecraft/unmapped/C_0705111;)V	<init>	<init>	
 		p	1		world	
@@ -1920,9 +1920,9 @@ c	net/minecraft/unmapped/C_1316134
 	m	(II)Lnet/minecraft/unmapped/C_0636026;	m_6525570		m_6525570
 		p	1			p_1
 		p	2			p_2
-	m	(Ljava/lang/Iterable;Ljava/util/function/Consumer;)Ljava/util/concurrent/CompletableFuture;	m_1724382		m_1724382
-		p	1			p_1
-		p	2			p_2
+	m	(Ljava/lang/Iterable;Ljava/util/function/Consumer;)Ljava/util/concurrent/CompletableFuture;	m_1724382		loadChunks
+		p	1			positions
+		p	2			action
 	m	(II)Ljava/util/concurrent/CompletableFuture;	m_9598700		m_9598700
 		p	1			p_1
 		p	2			p_2
@@ -5813,19 +5813,19 @@ c	net/minecraft/unmapped/C_5537602	net/minecraft/world/gen/feature/Feature	net/m
 		p	1		world	
 		p	2		pos	
 		p	3		state	
-	m	(Lnet/minecraft/unmapped/C_3331146;IILjava/util/Map;)[Lnet/minecraft/unmapped/C_0636026;	m_5496361		m_5496361
+	m	(Lnet/minecraft/unmapped/C_3331146;IILjava/util/Map;)[Lnet/minecraft/unmapped/C_0636026;	m_5496361		collectChunks
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_3331146;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Map;II)Lnet/minecraft/unmapped/C_0636026;	m_3902267		generate
+	m	(Lnet/minecraft/unmapped/C_3331146;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Map;II)Lnet/minecraft/unmapped/C_0636026;	m_3902267		run
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
 		p	6			p_6
-	m	(Lnet/minecraft/unmapped/C_3331146;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0705111;[Lnet/minecraft/unmapped/C_0636026;II)Lnet/minecraft/unmapped/C_0636026;	m_5487812		generate
+	m	(Lnet/minecraft/unmapped/C_3331146;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0705111;[Lnet/minecraft/unmapped/C_0636026;II)Lnet/minecraft/unmapped/C_0636026;	m_5487812		run
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -10983,52 +10983,52 @@ c	net/minecraft/unmapped/C_0037941		net/minecraft/unmapped/C_0037941
 	m	()I	m_5443552		m_5443552
 	m	()I	m_9073110		m_9073110
 	m	()I	m_3409190		m_3409190
-c	net/minecraft/unmapped/C_0114090		net/minecraft/unmapped/C_0114090
-	f	Lorg/apache/logging/log4j/Logger;	f_2089630		f_2089630
-	f	Ljava/util/concurrent/ExecutorService;	f_8012921		f_8012921
-	f	Ljava/util/concurrent/ExecutorService;	f_9562814		f_9562814
-	f	Ljava/util/concurrent/atomic/AtomicInteger;	f_1581492		f_1581492
-	f	Ljava/util/List;	f_9596509		f_9596509
-	f	Ljava/util/concurrent/CompletableFuture;	f_2072531		f_2072531
-	f	Ljava/util/concurrent/CompletableFuture;	f_9399172		f_9399172
-	f	Ljava/util/function/Supplier;	f_9915590		f_9915590
+c	net/minecraft/unmapped/C_0114090		net/minecraft/util/Scheduler
+	f	Lorg/apache/logging/log4j/Logger;	f_2089630		LOGGER
+	f	Ljava/util/concurrent/ExecutorService;	f_8012921		scheduler
+	f	Ljava/util/concurrent/ExecutorService;	f_9562814		worker
+	f	Ljava/util/concurrent/atomic/AtomicInteger;	f_1581492		workdId
+	f	Ljava/util/List;	f_9596509		scheduled
+	f	Ljava/util/concurrent/CompletableFuture;	f_2072531		next
+	f	Ljava/util/concurrent/CompletableFuture;	f_9399172		last
+	f	Ljava/util/function/Supplier;	f_9915590		results
 	f	Ljava/util/function/Supplier;	f_9325623		f_9325623
-	f	Lnet/minecraft/unmapped/C_7274288;	f_1628253		f_1628253
+	f	Lnet/minecraft/unmapped/C_7274288;	f_1628253		target
 	m	(Ljava/lang/String;ILnet/minecraft/unmapped/C_7274288;Ljava/util/function/Supplier;Ljava/util/function/Supplier;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	1			name
+		p	2			parallelism
+		p	3			target
+		p	4			results
 		p	5			p_5
-	m	(Ljava/lang/Object;)Ljava/util/concurrent/CompletableFuture;	m_6823114		m_6823114
+	m	(Ljava/lang/Object;)Ljava/util/concurrent/CompletableFuture;	m_6823114		schedule
+		p	1			key
+	m	()Ljava/util/concurrent/CompletableFuture;	m_9633099		poll
+	m	(Ljava/lang/Object;)Lnet/minecraft/unmapped/C_0114090$C_8296248;	m_6270166		getResult
 		p	1			p_1
-	m	()Ljava/util/concurrent/CompletableFuture;	m_9633099		m_9633099
-	m	(Ljava/lang/Object;)Lnet/minecraft/unmapped/C_0114090$C_8296248;	m_6270166		m_6270166
+	m	()V	m_0949301		close
+	m	(Ljava/lang/Object;Lnet/minecraft/unmapped/C_7274288;Ljava/util/Map;)Ljava/lang/Object;	m_7212920		runTask
+		p	1			key
+		p	2			task
+		p	3			results
+	m	(Ljava/lang/Object;)Ljava/lang/Object;	m_1729875		getTaskResult
 		p	1			p_1
-	m	()V	m_0949301		m_0949301
-	m	(Ljava/lang/Object;Lnet/minecraft/unmapped/C_7274288;Ljava/util/Map;)Ljava/lang/Object;	m_7212920		m_7212920
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Ljava/lang/Object;)Ljava/lang/Object;	m_1729875		m_1729875
-		p	1			p_1
-	m	()Ljava/util/concurrent/CompletableFuture;	m_6173646		m_6173646
+	m	()Ljava/util/concurrent/CompletableFuture;	m_6173646		peek
 	m	(Ljava/lang/Object;)Ljava/lang/Object;	m_3206050		m_3206050
-		p	0			p_0
+		p	0			result
 	m	(Ljava/util/concurrent/CompletableFuture;Ljava/lang/Void;)Ljava/util/concurrent/CompletionStage;	m_7531409		m_7531409
 		p	0			p_0
-		p	1			p_1
+		p	1			v
 	m	(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletionStage;	m_0128320		m_0128320
 		p	0			p_0
 	m	(Ljava/lang/Object;Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;	m_2144065		m_2144065
 		p	1			p_1
 		p	2			p_2
 	m	(Ljava/lang/Thread;Ljava/lang/Throwable;)V	m_5593216		m_5593216
-		p	0			p_0
-		p	1			p_1
+		p	0			thread
+		p	1			t
 	m	(Ljava/lang/String;Ljava/util/concurrent/ForkJoinPool;)Ljava/util/concurrent/ForkJoinWorkerThread;	m_7474993		m_7474993
 		p	1			p_1
-		p	2			p_2
+		p	2			pool
 	m	(Lnet/minecraft/unmapped/C_0114090;)Ljava/util/function/Supplier;	m_6416323		m_6416323
 		p	0			p_0
 	m	(Lnet/minecraft/unmapped/C_0114090;)Ljava/util/concurrent/ExecutorService;	m_0333457		m_0333457
@@ -11043,38 +11043,38 @@ c	net/minecraft/unmapped/C_0114090$1		1
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/unmapped/C_0114090$C_8296248		C_8296248
-	f	Ljava/util/Map;	f_9347649		f_9347649
-	f	Ljava/lang/Object;	f_1731148		f_1731148
-	f	Ljava/lang/Object;	f_2740866		f_2740866
+c	net/minecraft/unmapped/C_0114090$C_8296248		TaskResult
+	f	Ljava/util/Map;	f_9347649		futures
+	f	Ljava/lang/Object;	f_1731148		key
+	f	Ljava/lang/Object;	f_2740866		result
 	f	Lnet/minecraft/unmapped/C_0114090;	f_3661567		f_3661567
 	m	(Lnet/minecraft/unmapped/C_0114090;Ljava/lang/Object;Ljava/lang/Object;Lnet/minecraft/unmapped/C_7274288;)V	<init>		<init>
 		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	()Ljava/lang/Object;	m_2550137		m_2550137
-	m	(Ljava/util/concurrent/CompletableFuture;Lnet/minecraft/unmapped/C_7274288;)Ljava/util/concurrent/CompletableFuture;	m_7254456		m_7254456
-		p	1			p_1
-		p	2			p_2
+		p	2			key
+		p	3			result
+		p	4			task
+	m	()Ljava/lang/Object;	m_2550137		get
+	m	(Ljava/util/concurrent/CompletableFuture;Lnet/minecraft/unmapped/C_7274288;)Ljava/util/concurrent/CompletableFuture;	m_7254456		getFuture
+		p	1			prev
+		p	2			target
 	m	(Lnet/minecraft/unmapped/C_7274288;Ljava/util/Map;Ljava/util/concurrent/CompletableFuture;Lnet/minecraft/unmapped/C_7274288;)Ljava/util/concurrent/CompletableFuture;	m_7234207		m_7234207
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-		p	4			p_4
+		p	4			key
 	m	(Lnet/minecraft/unmapped/C_7274288;Ljava/util/Map;Ljava/lang/Void;)Ljava/lang/Object;	m_7006349		m_7006349
 		p	1			p_1
 		p	2			p_2
-		p	3			p_3
+		p	3			v
 	m	(Ljava/util/concurrent/CompletableFuture;)Ljava/lang/Object;	m_9643018		m_9643018
-		p	0			p_0
+		p	0			future
 	m	(I)[Ljava/util/concurrent/CompletableFuture;	m_9890291		m_9890291
 		p	0			p_0
 	m	(Ljava/util/Map;Ljava/util/concurrent/CompletableFuture;Ljava/lang/Object;Lnet/minecraft/unmapped/C_7274288;)V	m_7409645		m_7409645
 		p	1			p_1
 		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	3			k
+		p	4			action
 	m	(Lnet/minecraft/unmapped/C_0114090$C_8296248;Ljava/util/concurrent/CompletableFuture;Lnet/minecraft/unmapped/C_7274288;)Ljava/util/concurrent/CompletableFuture;	m_6759740		m_6759740
 		p	0			p_0
 		p	1			p_1
@@ -11343,7 +11343,7 @@ c	net/minecraft/unmapped/C_0937684		net/minecraft/world/gen/feature/RandomRandom
 c	net/minecraft/unmapped/C_0960638		net/minecraft/world/chunk/ProtoChunk
 	f	Lorg/apache/logging/log4j/Logger;	f_5582595		LOGGER
 	f	Lnet/minecraft/unmapped/C_7141926;	f_3206248		pos
-	f	Z	f_9398140		f_9398140
+	f	Z	f_9398140		dirty
 	f	[Lnet/minecraft/unmapped/C_6928498;	f_0561976		biomes
 	f	Ljava/util/Map;	f_1481138		heightMaps
 	f	Lnet/minecraft/unmapped/C_3331146;	f_8608123		status
@@ -11367,12 +11367,12 @@ c	net/minecraft/unmapped/C_0960638		net/minecraft/world/chunk/ProtoChunk
 	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_2441996;	m_6686868		m_6686868
 		p	1			p_1
 	m	()Ljava/util/List;	m_2188938		m_2188938
-	m	()[Lit/unimi/dsi/fastutil/shorts/ShortList;	m_0525843		m_0525843
-	m	(SI)V	m_6213303		m_6213303
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_3674802;)V	m_0922372		m_0922372
-		p	1			p_1
+	m	()[Lit/unimi/dsi/fastutil/shorts/ShortList;	m_0525843		getPackedLights
+	m	(SI)V	m_6213303		addLight
+		p	1			pos
+		p	2			height
+	m	(Lnet/minecraft/unmapped/C_3674802;)V	m_0922372		addLight
+		p	1			pos
 	m	(Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_2441996;)Lnet/minecraft/unmapped/C_2441996;	m_0222822		m_0222822
 		p	1			p_1
 		p	2			p_2
@@ -11436,40 +11436,40 @@ c	net/minecraft/unmapped/C_0960638		net/minecraft/world/chunk/ProtoChunk
 		p	1			p_1
 		p	2			p_2
 	m	()Ljava/util/Map;	m_1093662		m_1093662
-	m	(Ljava/util/Map;)V	m_3590719		m_3590719
-		p	1			p_1
+	m	(Ljava/util/Map;)V	m_3590719		setStructures
+		p	1			structures
 	m	(Ljava/lang/String;)Lit/unimi/dsi/fastutil/longs/LongSet;	m_5234960		m_5234960
 		p	1			p_1
 	m	(Ljava/lang/String;J)V	m_8546445		m_8546445
 		p	1			p_1
 		p	2			p_2
 	m	()Ljava/util/Map;	m_6164720		m_6164720
-	m	(Ljava/util/Map;)V	m_8908268		m_8908268
-		p	1			p_1
+	m	(Ljava/util/Map;)V	m_8908268		setStructureReferences
+		p	1			references
 	m	(Lnet/minecraft/unmapped/C_2891045;ZLnet/minecraft/unmapped/C_3674802;I)V	m_2148279		m_2148279
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_3674802;)S	m_4465368		m_4465368
-		p	0			p_0
-	m	(SILnet/minecraft/unmapped/C_7141926;)Lnet/minecraft/unmapped/C_3674802;	m_3496276		m_3496276
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/unmapped/C_3674802;)S	m_4465368		packBlockPos
+		p	0			pos
+	m	(SILnet/minecraft/unmapped/C_7141926;)Lnet/minecraft/unmapped/C_3674802;	m_3496276		unpackBlockPos
+		p	0			pos
+		p	1			height
+		p	2			chunk
 	m	(Lnet/minecraft/unmapped/C_3674802;)V	m_3512185		m_3512185
 		p	1			p_1
 	m	()[Lit/unimi/dsi/fastutil/shorts/ShortList;	m_1853948		getPostProcessing
-	m	(SI)V	m_8761506		m_8761506
-		p	1			p_1
-		p	2			p_2
+	m	(SI)V	m_8761506		markForPostProcessing
+		p	1			pos
+		p	2			height
 	m	(Lnet/minecraft/unmapped/C_3674802;)V	m_3049974		m_3049974
 		p	1			p_1
 	m	(SI)V	m_6078756		m_6078756
 		p	1			p_1
 		p	2			p_2
 	m	()[Lit/unimi/dsi/fastutil/shorts/ShortList;	m_9670422		m_9670422
-	m	()Z	m_9128377		m_9128377
+	m	()Z	m_9128377		hasSkyLight
 	m	()Lnet/minecraft/unmapped/C_0992231;	m_1828948		m_1828948
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_0306414		m_0306414
 		p	1			p_1
@@ -11479,7 +11479,7 @@ c	net/minecraft/unmapped/C_0960638		net/minecraft/world/chunk/ProtoChunk
 	m	(Lnet/minecraft/unmapped/C_3674802;)V	m_9656101		m_9656101
 		p	1			p_1
 	m	(Ljava/lang/String;)Lit/unimi/dsi/fastutil/longs/LongSet;	m_9450034		m_9450034
-		p	0			p_0
+		p	0			key
 	m	(Ljava/lang/String;)Lit/unimi/dsi/fastutil/longs/LongSet;	m_1556286		m_1556286
 		p	0			p_0
 	m	(Lnet/minecraft/unmapped/C_5503280$C_6055071;)Lnet/minecraft/unmapped/C_5503280;	m_3267705		m_3267705
@@ -11529,33 +11529,33 @@ c	net/minecraft/unmapped/C_1149034		net/minecraft/world/gen/feature/decorator/Co
 		p	5			p_5
 		p	6			p_6
 		p	7			p_7
-c	net/minecraft/unmapped/C_1169315		net/minecraft/unmapped/C_1169315
-	f	I	f_9295162		f_9295162
-	f	Lit/unimi/dsi/fastutil/longs/Long2LongMap;	f_2593245		f_2593245
+c	net/minecraft/unmapped/C_1169315		net/minecraft/util/Long2ObjectCache
+	f	I	f_9295162		lifespan
+	f	Lit/unimi/dsi/fastutil/longs/Long2LongMap;	f_2593245		expiration
 	m	(II)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-	m	(J)V	m_1278540		m_1278540
-		p	1			p_1
+		p	1			expected
+		p	2			lifespan
+	m	(J)V	m_1278540		refresh
+		p	1			key
 	m	(JLjava/lang/Object;)Ljava/lang/Object;	put		put
-		p	1			p_1
-		p	3			p_3
+		p	1			key
+		p	3			value
 	m	(Ljava/lang/Long;Ljava/lang/Object;)Ljava/lang/Object;	put		put
 		p	1			p_1
 		p	2			p_2
 	m	(J)Ljava/lang/Object;	get		get
-		p	1			p_1
+		p	1			key
 	m	(Ljava/lang/Long;)Ljava/lang/Object;	get		get
 		p	1			p_1
 	m	(Ljava/util/Map;)V	putAll		putAll
-		p	1			p_1
+		p	1			values
 	m	(J)Ljava/lang/Object;	remove		remove
-		p	1			p_1
+		p	1			key
 	m	(Ljava/lang/Object;)Ljava/lang/Object;	remove		remove
-		p	1			p_1
+		p	1			value
 	m	(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;	put		put
-		p	1			p_1
-		p	2			p_2
+		p	1			key
+		p	2			value
 c	net/minecraft/unmapped/C_1302693		net/minecraft/world/gen/structure/TemplePiece
 	f	I	f_4274294		width
 	f	I	f_2727668		height
@@ -11726,7 +11726,7 @@ c	net/minecraft/unmapped/C_2198007		net/minecraft/world/gen/feature/decorator/Co
 		p	1			count
 		p	2			extraChance
 		p	3			extraCount
-c	net/minecraft/unmapped/C_2240951		net/minecraft/unmapped/C_2240951
+c	net/minecraft/unmapped/C_2240951		net/minecraft/world/chunk/FinalizeChunkTask
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_3331146;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0705111;[Lnet/minecraft/unmapped/C_0636026;II)Lnet/minecraft/unmapped/C_0636026;	m_5487812		m_5487812
 		p	1			p_1
@@ -11839,7 +11839,7 @@ c	net/minecraft/unmapped/C_2753595		net/minecraft/unmapped/C_2753595
 	m	(Lnet/minecraft/unmapped/C_3820473;Lnet/minecraft/unmapped/C_0636026;)V	m_8130422		m_8130422
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_2778636		net/minecraft/unmapped/C_2778636
+c	net/minecraft/unmapped/C_2778636		net/minecraft/world/chunk/SpawnMobsChunkTask
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_3331146;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0705111;[Lnet/minecraft/unmapped/C_0636026;II)Lnet/minecraft/unmapped/C_0636026;	m_5487812		m_5487812
 		p	1			p_1
@@ -11941,7 +11941,7 @@ c	net/minecraft/unmapped/C_3119602$C_0210093		Start
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-c	net/minecraft/unmapped/C_3167070		net/minecraft/unmapped/C_3167070
+c	net/minecraft/unmapped/C_3167070		net/minecraft/world/chunk/EmptyChunkTask
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_3331146;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0705111;[Lnet/minecraft/unmapped/C_0636026;II)Lnet/minecraft/unmapped/C_0636026;	m_5487812		m_5487812
 		p	1			p_1
@@ -12091,19 +12091,19 @@ c	net/minecraft/unmapped/C_3431957		net/minecraft/world/gen/feature/VoidStartPla
 		p	5			p_5
 c	net/minecraft/unmapped/C_3443771		net/minecraft/world/biome/FrozenRiverBiome
 	m	()V	<init>		<init>
-c	net/minecraft/unmapped/C_3492960		net/minecraft/unmapped/C_3492960
-	f	Lorg/apache/logging/log4j/Logger;	f_8503458		f_8503458
-	f	Lnet/minecraft/unmapped/C_5553933;	f_0238948		f_0238948
-	f	Lnet/minecraft/unmapped/C_0705111;	f_4437064		f_4437064
-	f	Lnet/minecraft/unmapped/C_3015672;	f_0563111		f_0563111
-	f	Lnet/minecraft/unmapped/C_2528621;	f_7517380		f_7517380
-	f	Lit/unimi/dsi/fastutil/longs/Long2ObjectMap;	f_0500628		f_0500628
+c	net/minecraft/unmapped/C_3492960		net/minecraft/server/world/chunk/ChunkScheduler
+	f	Lorg/apache/logging/log4j/Logger;	f_8503458		LOGGER
+	f	Lnet/minecraft/unmapped/C_5553933;	f_0238948		world
+	f	Lnet/minecraft/unmapped/C_0705111;	f_4437064		generator
+	f	Lnet/minecraft/unmapped/C_3015672;	f_0563111		storage
+	f	Lnet/minecraft/unmapped/C_2528621;	f_7517380		eventLoop
+	f	Lit/unimi/dsi/fastutil/longs/Long2ObjectMap;	f_0500628		chunks
 	m	(ILnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0705111;Lnet/minecraft/unmapped/C_3015672;Lnet/minecraft/unmapped/C_2528621;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	1			parallelism
+		p	2			world
+		p	3			generator
+		p	4			storage
+		p	5			eventLoop
 	m	(Lnet/minecraft/unmapped/C_7141926;)Lnet/minecraft/unmapped/C_0114090$C_8296248;	m_1166028		m_1166028
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_7141926;Lnet/minecraft/unmapped/C_3331146;Ljava/util/Map;)Lnet/minecraft/unmapped/C_0636026;	m_0377514		m_0377514
@@ -12122,7 +12122,7 @@ c	net/minecraft/unmapped/C_3492960		net/minecraft/unmapped/C_3492960
 	m	(Ljava/lang/Object;)Lnet/minecraft/unmapped/C_0114090$C_8296248;	m_6270166		m_6270166
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_0636026;)V	m_3214674		m_3214674
-		p	0			p_0
+		p	0			chunk
 	m	(Ljava/util/function/Consumer;)V	m_8361909		m_8361909
 		p	1			p_1
 	m	(Ljava/util/function/Consumer;Lnet/minecraft/unmapped/C_0114090$C_8296248;)V	m_9059221		m_9059221
@@ -12205,7 +12205,7 @@ c	net/minecraft/unmapped/C_3671575		net/minecraft/world/biome/BirchForestBiome
 	m	()V	<init>		<init>
 c	net/minecraft/unmapped/C_3709915		net/minecraft/world/biome/DesertHillsBiome
 	m	()V	<init>		<init>
-c	net/minecraft/unmapped/C_3711273		net/minecraft/unmapped/C_3711273
+c	net/minecraft/unmapped/C_3711273		net/minecraft/world/chunk/CarveChunkTask
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_3331146;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0705111;[Lnet/minecraft/unmapped/C_0636026;II)Lnet/minecraft/unmapped/C_0636026;	m_5487812		m_5487812
 		p	1			p_1
@@ -12790,25 +12790,25 @@ c	net/minecraft/unmapped/C_4972159		net/minecraft/world/gen/surface/GiantTreeTai
 		p	7			p_7
 		p	9			p_9
 		p	10			p_10
-c	net/minecraft/unmapped/C_5048691		net/minecraft/unmapped/C_5048691
-	f	Lorg/apache/logging/log4j/Logger;	f_8962058		f_8962058
-	f	Ljava/lang/ThreadGroup;	f_9750451		f_9750451
-	f	Ljava/util/concurrent/atomic/AtomicInteger;	f_5797814		f_5797814
-	f	Ljava/lang/String;	f_3078760		f_3078760
+c	net/minecraft/unmapped/C_5048691		net/minecraft/util/SchedulerThreadFactory
+	f	Lorg/apache/logging/log4j/Logger;	f_8962058		LOGGER
+	f	Ljava/lang/ThreadGroup;	f_9750451		group
+	f	Ljava/util/concurrent/atomic/AtomicInteger;	f_5797814		id
+	f	Ljava/lang/String;	f_3078760		name
 	m	(Ljava/lang/String;)V	<init>		<init>
-		p	1			p_1
+		p	1			name
 	m	(Ljava/lang/Runnable;)Ljava/lang/Thread;	newThread		newThread
-		p	1			p_1
+		p	1			r
 	m	(Ljava/lang/Runnable;Ljava/lang/Thread;Ljava/lang/Throwable;)V	m_3671554		m_3671554
 		p	0			p_0
-		p	1			p_1
-		p	2			p_2
+		p	1			thread
+		p	2			t
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_5083534		net/minecraft/world/biome/ModifiedJungleEdgeBiome
 	m	()V	<init>		<init>
 c	net/minecraft/unmapped/C_5090006		net/minecraft/world/biome/TallBirchHillsBiome
 	m	()V	<init>		<init>
-c	net/minecraft/unmapped/C_5096251		net/minecraft/unmapped/C_5096251
+c	net/minecraft/unmapped/C_5096251		net/minecraft/world/chunk/DecorateChunkTask
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_3331146;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0705111;[Lnet/minecraft/unmapped/C_0636026;II)Lnet/minecraft/unmapped/C_0636026;	m_5487812		m_5487812
 		p	1			p_1
@@ -13433,7 +13433,7 @@ c	net/minecraft/unmapped/C_6350611		net/minecraft/world/gen/feature/GroundBushFe
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-c	net/minecraft/unmapped/C_6391506		net/minecraft/unmapped/C_6391506
+c	net/minecraft/unmapped/C_6391506		net/minecraft/world/chunk/BaseChunkTask
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_3331146;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0705111;[Lnet/minecraft/unmapped/C_0636026;II)Lnet/minecraft/unmapped/C_0636026;	m_5487812		m_5487812
 		p	1			p_1
@@ -13732,18 +13732,18 @@ c	net/minecraft/unmapped/C_7180680		net/minecraft/world/gen/feature/PlainFlowerF
 	m	(Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_2441996;	m_5436903		m_5436903
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_7197374		net/minecraft/unmapped/C_7197374
-	f	Lorg/apache/logging/log4j/Logger;	f_1772947		f_1772947
-	f	Lnet/minecraft/unmapped/C_0114090;	f_1694342		f_1694342
-	f	Z	f_0137910		f_0137910
-	f	I	f_3574738		f_3574738
+c	net/minecraft/unmapped/C_7197374		net/minecraft/util/TaskManager
+	f	Lorg/apache/logging/log4j/Logger;	f_1772947		LOGGER
+	f	Lnet/minecraft/unmapped/C_0114090;	f_1694342		scheduler
+	f	Z	f_0137910		started
+	f	I	f_3574738		remaining
 	m	(Lnet/minecraft/unmapped/C_0114090;)V	<init>		<init>
-		p	1			p_1
-	m	()V	m_2756522		stop
-	m	()V	m_7344564		m_7344564
-	m	(Ljava/lang/Object;)Ljava/util/concurrent/CompletableFuture;	m_9195414		m_9195414
-		p	1			p_1
-	m	()Ljava/util/concurrent/CompletableFuture;	m_7943422		m_7943422
+		p	1			scheduler
+	m	()V	m_2756522		close
+	m	()V	m_7344564		startBatch
+	m	(Ljava/lang/Object;)Ljava/util/concurrent/CompletableFuture;	m_9195414		addToBatch
+		p	1			key
+	m	()Ljava/util/concurrent/CompletableFuture;	m_7943422		endBatch
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_7236936		net/minecraft/unmapped/C_7236936
 	m	(Lnet/minecraft/unmapped/C_4683117;I)I	m_0257833		m_0257833
@@ -13773,11 +13773,11 @@ c	net/minecraft/unmapped/C_7238841		net/minecraft/world/gen/feature/decorator/Fo
 		p	5			p_5
 		p	6			p_6
 		p	7			p_7
-c	net/minecraft/unmapped/C_7274288		net/minecraft/unmapped/C_7274288
+c	net/minecraft/unmapped/C_7274288		net/minecraft/util/Task
 	m	()Lnet/minecraft/unmapped/C_7274288;	m_6781910		previous
-	m	(Ljava/lang/Object;Ljava/util/function/BiConsumer;)V	m_9995865		m_9995865
-		p	1			pos
-		p	2			p_2
+	m	(Ljava/lang/Object;Ljava/util/function/BiConsumer;)V	m_9995865		accept
+		p	1			key
+		p	2			action
 c	net/minecraft/unmapped/C_7279893		net/minecraft/world/biome/SnowyBeachBiome
 	m	()V	<init>		<init>
 c	net/minecraft/unmapped/C_7332071		net/minecraft/unmapped/C_7332071
@@ -13922,10 +13922,10 @@ c	net/minecraft/unmapped/C_7517683		net/minecraft/unmapped/C_7517683
 		p	1			p_1
 		p	2			p_2
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_7567707		net/minecraft/unmapped/C_7567707
-	f	Lorg/apache/logging/log4j/Logger;	f_8891542		f_8891542
+c	net/minecraft/unmapped/C_7567707		net/minecraft/server/world/chunk/ChunkMap
+	f	Lorg/apache/logging/log4j/Logger;	f_8891542		LOGGER
 	m	(I)V	<init>		<init>
-		p	1			p_1
+		p	1			expected
 	m	(JLnet/minecraft/unmapped/C_6849228;)Lnet/minecraft/unmapped/C_6849228;	m_0547593		m_0547593
 		p	1			p_1
 		p	3			p_3
@@ -13937,20 +13937,20 @@ c	net/minecraft/unmapped/C_7567707		net/minecraft/unmapped/C_7567707
 	m	(Ljava/lang/Object;)Lnet/minecraft/unmapped/C_6849228;	m_8218473		m_8218473
 		p	1			p_1
 	m	(Ljava/util/Map;)V	putAll		putAll
-		p	1			p_1
+		p	1			chunks
 	m	(Ljava/lang/Object;Ljava/lang/Object;)Z	remove		remove
-		p	1			p_1
-		p	2			p_2
+		p	1			pos
+		p	2			chunk
 	m	(Ljava/lang/Object;)Ljava/lang/Object;	remove		remove
-		p	1			p_1
+		p	1			pos
 	m	(J)Ljava/lang/Object;	remove		remove
-		p	1			p_1
+		p	1			pos
 	m	(Ljava/lang/Long;Ljava/lang/Object;)Ljava/lang/Object;	put		put
-		p	1			p_1
-		p	2			p_2
+		p	1			pos
+		p	2			chunk
 	m	(JLjava/lang/Object;)Ljava/lang/Object;	put		put
-		p	1			p_1
-		p	3			p_3
+		p	1			pos
+		p	3			chunk
 	m	(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;	put		put
 		p	1			p_1
 		p	2			p_2
@@ -14001,7 +14001,7 @@ c	net/minecraft/unmapped/C_7771791		net/minecraft/world/NotLiquidPredicate
 		p	2			p_2
 		p	3			p_3
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_7812123		net/minecraft/unmapped/C_7812123
+c	net/minecraft/unmapped/C_7812123		net/minecraft/world/chunk/LightChunkTask
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_3331146;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0705111;[Lnet/minecraft/unmapped/C_0636026;II)Lnet/minecraft/unmapped/C_0636026;	m_5487812		m_5487812
 		p	1			p_1
