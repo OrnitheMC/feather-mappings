@@ -971,7 +971,7 @@ c	net/minecraft/unmapped/C_1514880
 	f	Ljava/util/UUID;	f_7642110		uuid
 	m	()Ljava/util/UUID;	m_4833305		getUuid
 c	net/minecraft/unmapped/C_1519982
-	f	Ljava/util/List;	f_8802250		f_8802250
+	f	Ljava/util/List;	f_8802250		overrides
 	m	(Ljava/util/List;Ljava/util/Map;ZZLnet/minecraft/unmapped/C_2232601;)V	<init>	<init>	
 		p	1		elements	
 		p	2		textures	
@@ -992,20 +992,20 @@ c	net/minecraft/unmapped/C_1519982
 		p	5		gui3d	
 		p	6		transformations	
 	m	(Lnet/minecraft/unmapped/C_0561170;Ljava/util/List;Ljava/util/Map;ZZLnet/minecraft/unmapped/C_2232601;Ljava/util/List;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-	m	()Ljava/util/Collection;	m_0786937		m_0786937
-	m	()Ljava/util/List;	m_9471764		m_9471764
-	m	()Lnet/minecraft/unmapped/C_0523589;	m_3354134		m_3354134
+		p	1			parentLocation
+		p	2			elements
+		p	3			textures
+		p	4			ambientOcclusion
+		p	5			gui3d
+		p	6			transformations
+		p	7			overrides
+	m	()Ljava/util/Collection;	m_0786937		getOverrideModels
+	m	()Ljava/util/List;	m_9471764		getOverrides
+	m	()Lnet/minecraft/unmapped/C_0523589;	m_3354134		getItemOverrides
 c	net/minecraft/unmapped/C_1519982$C_2205748
-	m	(Lcom/google/gson/JsonDeserializationContext;Lcom/google/gson/JsonObject;)Ljava/util/List;	m_1034006		m_1034006
-		p	1			p_1
-		p	2			p_2
+	m	(Lcom/google/gson/JsonDeserializationContext;Lcom/google/gson/JsonObject;)Ljava/util/List;	m_1034006		deserializeOverrides
+		p	1			context
+		p	2			json
 c	net/minecraft/unmapped/C_1545069
 	m	(Lnet/minecraft/unmapped/C_0013174;Lnet/minecraft/unmapped/C_2018497;)V	m_4330286		m_4330286
 		p	1			p_1
@@ -1084,21 +1084,21 @@ c	net/minecraft/unmapped/C_1705548
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/unmapped/C_1719086
-	f	Lnet/minecraft/unmapped/C_2974946;	f_8101712		f_8101712
+	f	Lnet/minecraft/unmapped/C_2974946;	f_8101712		multiPart
 	m	(Ljava/util/Collection;)V	<init>	<init>	
 		p	1		variants	
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_1719086$C_0008668;	m_9274522	getVariant	
 		p	1		name	
 	m	(Ljava/util/Map;Lnet/minecraft/unmapped/C_2974946;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-	m	(Ljava/lang/String;)Z	m_5195483		m_5195483
-		p	1			p_1
+		p	1			variants
+		p	2			multiPart
+	m	(Ljava/lang/String;)Z	m_5195483		hasVariant
+		p	1			name
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_4625995;	m_9274522		getVariant
-		p	1			p_1
-	m	()Ljava/util/Set;	m_7473504		m_7473504
-	m	()Z	m_3252252		m_3252252
-	m	()Lnet/minecraft/unmapped/C_2974946;	m_7032482		m_7032482
+		p	1			name
+	m	()Ljava/util/Set;	m_7473504		getMultiVariants
+	m	()Z	m_3252252		hasMultiPart
+	m	()Lnet/minecraft/unmapped/C_2974946;	m_7032482		getMultiPart
 c	net/minecraft/unmapped/C_1719086$C_0008668	MultiVariant	
 	f	Ljava/lang/String;	f_9097552	name	
 	f	Ljava/util/List;	f_9867224	variants	
@@ -1112,16 +1112,16 @@ c	net/minecraft/unmapped/C_1719086$C_0008668	MultiVariant
 	m	(Lnet/minecraft/unmapped/C_1719086$C_0008668;)Ljava/lang/String;	m_7142756	m_7142756	
 		p	0		p_0	
 c	net/minecraft/unmapped/C_1719086$C_1533088	Variant	
-	f	Lnet/minecraft/unmapped/C_0561170;	f_4247342	id	
+	f	Lnet/minecraft/unmapped/C_0561170;	f_4247342	location	
 	f	Lnet/minecraft/unmapped/C_2334768;	f_1233525	rotation	
 	f	Z	f_7511851	uvLock	
 	f	I	f_2448571	weight	
 	m	(Lnet/minecraft/unmapped/C_0561170;Lnet/minecraft/unmapped/C_2334768;ZI)V	<init>	<init>	
-		p	1		id	
+		p	1		location	
 		p	2		rotation	
 		p	3		uvLock	
 		p	4		weight	
-	m	()Lnet/minecraft/unmapped/C_0561170;	m_2862227	getId	
+	m	()Lnet/minecraft/unmapped/C_0561170;	m_2862227	getLocation	
 	m	()Lnet/minecraft/unmapped/C_2334768;	m_2352047	gerRotation	
 	m	()Z	m_1936191	isUvLocked	
 	m	()I	m_5794619	getWeight	
@@ -1134,7 +1134,7 @@ c	net/minecraft/unmapped/C_1719086$C_1533088$C_6744282	Serializer
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_0561170;	m_0997344	getId	
+	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_0561170;	m_0997344	getLocation	
 		p	1		path	
 	m	(Lcom/google/gson/JsonObject;)Z	m_1588916	deserializeUvLock	
 		p	1		json	
@@ -1156,11 +1156,11 @@ c	net/minecraft/unmapped/C_1719086$C_5989018
 		p	1		context	
 		p	2		entry	
 	m	(Lcom/google/gson/JsonDeserializationContext;Lcom/google/gson/JsonObject;)Ljava/util/Map;	m_1550358		deserializeVariants
-		p	1			p_1
-		p	2			p_2
-	m	(Lcom/google/gson/JsonDeserializationContext;Lcom/google/gson/JsonObject;)Lnet/minecraft/unmapped/C_2974946;	m_3882475		m_3882475
-		p	1			p_1
-		p	2			p_2
+		p	1			context
+		p	2			json
+	m	(Lcom/google/gson/JsonDeserializationContext;Lcom/google/gson/JsonObject;)Lnet/minecraft/unmapped/C_2974946;	m_3882475		deserializeMultiPart
+		p	1			context
+		p	2			json
 c	net/minecraft/unmapped/C_1752175
 	m	(Lnet/minecraft/unmapped/C_2454309;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_9590849;)Lnet/minecraft/unmapped/C_2454309;	m_2771990	m_2771990	
 		p	1		p_1	
@@ -3309,10 +3309,10 @@ c	net/minecraft/unmapped/C_4316830
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/unmapped/C_4372108
-	m	(Lnet/minecraft/unmapped/C_1241852;)Ljava/util/Set;	m_8537563		m_8537563
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_1241852;)Ljava/util/Map;	m_7691684		m_7691684
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_1241852;)Ljava/util/Set;	m_8537563		getLocations
+		p	1			block
+	m	(Lnet/minecraft/unmapped/C_1241852;)Ljava/util/Map;	m_7691684		provide
+		p	1			block
 c	net/minecraft/unmapped/C_4420379
 	m	(Lnet/minecraft/unmapped/C_2454309;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_9590849;)Lnet/minecraft/unmapped/C_2454309;	m_3205185	m_3205185	
 		p	1		p_1	
@@ -4429,7 +4429,7 @@ c	net/minecraft/unmapped/C_6705649
 c	net/minecraft/unmapped/C_6781194
 	f	Lnet/minecraft/unmapped/C_1519982;	f_7081590	COMPASS_GENERATION_MARKER	
 	f	Lnet/minecraft/unmapped/C_1519982;	f_5217188	CLASS_GENERATION_MARKER	
-	f	Ljava/lang/String;	f_7919523		f_7919523
+	f	Ljava/lang/String;	f_7919523		MISSING_MODEL_MESH
 	f	Ljava/util/Map;	f_5550162		f_5550162
 	f	Ljava/lang/String;	f_8064295		f_8064295
 	m	(Ljava/util/Collection;)V	m_9213616	registerVariants	
@@ -4447,10 +4447,10 @@ c	net/minecraft/unmapped/C_6781194
 	m	(Lnet/minecraft/unmapped/C_6390485;Lnet/minecraft/unmapped/C_4625995;)V	m_1677214		loadBlockModels
 		p	1			p_1
 		p	2			p_2
-	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_0561170;Lnet/minecraft/unmapped/C_0561170;)V	m_9679684		m_9679684
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_0561170;Lnet/minecraft/unmapped/C_0561170;)V	m_9679684		loadItemModel
+		p	1			variant
+		p	2			location
+		p	3			item
 	m	()V	m_8881047		m_8881047
 	m	(Lnet/minecraft/unmapped/C_4625995;Ljava/lang/String;)Lnet/minecraft/unmapped/C_3504190;	m_3741953		m_3741953
 		p	1			p_1
@@ -6863,16 +6863,16 @@ c	net/minecraft/unmapped/C_0210494		net/minecraft/world/gen/feature/EndIslandFea
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/unmapped/C_0523589		net/minecraft/unmapped/C_0523589
-	f	Lnet/minecraft/unmapped/C_0523589;	f_1900842		f_1900842
-	f	Ljava/util/List;	f_9853265		f_9853265
+c	net/minecraft/unmapped/C_0523589		net/minecraft/client/render/model/block/ItemOverrides
+	f	Lnet/minecraft/unmapped/C_0523589;	f_1900842		EMPTY
+	f	Ljava/util/List;	f_9853265		overrides
 	m	()V	<init>		<init>
 	m	(Ljava/util/List;)V	<init>		<init>
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_2454309;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_6607881;)Lnet/minecraft/unmapped/C_0561170;	m_5136216		m_5136216
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			overrides
+	m	(Lnet/minecraft/unmapped/C_2454309;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_6607881;)Lnet/minecraft/unmapped/C_0561170;	m_5136216		resolve
+		p	1			stack
+		p	2			world
+		p	3			entity
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_0600325		net/minecraft/item/SplashPotionItem
 	m	()V	<init>		<init>
@@ -6898,29 +6898,29 @@ c	net/minecraft/unmapped/C_0697703		net/minecraft/item/TippedArrowItem
 		p	3			p_3
 	m	(Lnet/minecraft/unmapped/C_2454309;)Ljava/lang/String;	m_4048340		m_4048340
 		p	1			p_1
-c	net/minecraft/unmapped/C_0715798		net/minecraft/unmapped/C_0715798
-	f	Lnet/minecraft/unmapped/C_0561170;	f_7654983		f_7654983
-	f	Ljava/util/Map;	f_4297409		f_4297409
+c	net/minecraft/unmapped/C_0715798		net/minecraft/client/render/model/block/ItemOverride
+	f	Lnet/minecraft/unmapped/C_0561170;	f_7654983		model
+	f	Ljava/util/Map;	f_4297409		predicates
 	m	(Lnet/minecraft/unmapped/C_0561170;Ljava/util/Map;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-	m	()Lnet/minecraft/unmapped/C_0561170;	m_2633981		m_2633981
-	m	(Lnet/minecraft/unmapped/C_2454309;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_6607881;)Z	m_7553176		m_7553176
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-c	net/minecraft/unmapped/C_0715798$C_6559228		C_6559228
+		p	1			model
+		p	2			predicates
+	m	()Lnet/minecraft/unmapped/C_0561170;	m_2633981		getModel
+	m	(Lnet/minecraft/unmapped/C_2454309;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_6607881;)Z	m_7553176		test
+		p	1			stack
+		p	2			world
+		p	3			entity
+c	net/minecraft/unmapped/C_0715798$C_6559228		Serializer
 	m	()V	<init>		<init>
 	m	(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/unmapped/C_0715798;	m_7248369		m_7248369
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lcom/google/gson/JsonObject;)Ljava/util/Map;	m_9973490		m_9973490
-		p	1			p_1
+	m	(Lcom/google/gson/JsonObject;)Ljava/util/Map;	m_9973490		deserializePredicates
+		p	1			json
 	m	(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Ljava/lang/Object;	deserialize		deserialize
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			json
+		p	2			type
+		p	3			context
 c	net/minecraft/unmapped/C_0884802		net/minecraft/entity/projectile/ShulkerBulletEntity
 	f	Lnet/minecraft/unmapped/C_6607881;	f_4659006		owner
 	f	Lnet/minecraft/unmapped/C_0539808;	f_6729648		target
@@ -7245,32 +7245,32 @@ c	net/minecraft/unmapped/C_2768526$C_6680669		BossBarColor
 		p	1			p_1
 		p	2			p_2
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_2974946		net/minecraft/unmapped/C_2974946
-	f	Ljava/util/List;	f_4416475		f_4416475
-	f	Lnet/minecraft/unmapped/C_9264598;	f_8361846		f_8361846
+c	net/minecraft/unmapped/C_2974946		net/minecraft/client/render/model/block/MultiPart
+	f	Ljava/util/List;	f_4416475		selectors
+	f	Lnet/minecraft/unmapped/C_9264598;	f_8361846		definition
 	m	(Ljava/util/List;)V	<init>		<init>
-		p	1			p_1
-	m	()Ljava/util/List;	m_6477896		m_6477896
-	m	()Ljava/util/Set;	m_3220677		m_3220677
-	m	(Lnet/minecraft/unmapped/C_9264598;)V	m_7439152		m_7439152
-		p	1			p_1
-	m	()Lnet/minecraft/unmapped/C_9264598;	m_9169055		m_9169055
+		p	1			selectors
+	m	()Ljava/util/List;	m_6477896		getSelectors
+	m	()Ljava/util/Set;	m_3220677		getMultiVariants
+	m	(Lnet/minecraft/unmapped/C_9264598;)V	m_7439152		setDefinition
+		p	1			definition
+	m	()Lnet/minecraft/unmapped/C_9264598;	m_9169055		getDefinition
 	m	(Ljava/lang/Object;)Z	equals		equals
-		p	1			p_1
+		p	1			o
 	m	()I	hashCode		hashCode
-c	net/minecraft/unmapped/C_2974946$C_2603156		C_2603156
+c	net/minecraft/unmapped/C_2974946$C_2603156		Serializer
 	m	()V	<init>		<init>
 	m	(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/unmapped/C_2974946;	m_2224121		m_2224121
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lcom/google/gson/JsonDeserializationContext;Lcom/google/gson/JsonArray;)Ljava/util/List;	m_6223285		m_6223285
-		p	1			p_1
-		p	2			p_2
+	m	(Lcom/google/gson/JsonDeserializationContext;Lcom/google/gson/JsonArray;)Ljava/util/List;	m_6223285		deserializeSelectors
+		p	1			context
+		p	2			json
 	m	(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Ljava/lang/Object;	deserialize		deserialize
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			json
+		p	2			type
+		p	3			context
 c	net/minecraft/unmapped/C_3006973		net/minecraft/entity/projectile/ProjectileUtils
 	m	(Lnet/minecraft/unmapped/C_0539808;ZZLnet/minecraft/unmapped/C_0539808;)Lnet/minecraft/unmapped/C_7794883;	m_8710690		getHitResult
 		p	0			projectile
@@ -7301,44 +7301,44 @@ c	net/minecraft/unmapped/C_3125244$C_7584287		Factory
 		p	11			p_11
 		p	13			p_13
 		p	15			p_15
-c	net/minecraft/unmapped/C_3151738		net/minecraft/unmapped/C_3151738
-	f	Lnet/minecraft/unmapped/C_0561170;	f_4247342		f_4247342
-	f	Lnet/minecraft/unmapped/C_2334768;	f_1233525		f_1233525
-	f	Z	f_7511851		f_7511851
-	f	I	f_2448571		f_2448571
+c	net/minecraft/unmapped/C_3151738		net/minecraft/client/render/model/block/Variant
+	f	Lnet/minecraft/unmapped/C_0561170;	f_4247342		location
+	f	Lnet/minecraft/unmapped/C_2334768;	f_1233525		rotation
+	f	Z	f_7511851		uvLock
+	f	I	f_2448571		weight
 	m	(Lnet/minecraft/unmapped/C_0561170;Lnet/minecraft/unmapped/C_2334768;ZI)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	()Lnet/minecraft/unmapped/C_0561170;	m_2862227		m_2862227
-	m	()Lnet/minecraft/unmapped/C_2334768;	m_2352047		m_2352047
-	m	()Z	m_1936191		m_1936191
-	m	()I	m_5794619		m_5794619
+		p	1			location
+		p	2			rotation
+		p	3			uvLock
+		p	4			weight
+	m	()Lnet/minecraft/unmapped/C_0561170;	m_2862227		getLocation
+	m	()Lnet/minecraft/unmapped/C_2334768;	m_2352047		getRotation
+	m	()Z	m_1936191		isUvLocked
+	m	()I	m_5794619		getWeight
 	m	()Ljava/lang/String;	toString		toString
 	m	(Ljava/lang/Object;)Z	equals		equals
-		p	1			p_1
+		p	1			o
 	m	()I	hashCode		hashCode
-c	net/minecraft/unmapped/C_3151738$C_2084500		C_2084500
+c	net/minecraft/unmapped/C_3151738$C_2084500		Serializer
 	m	()V	<init>		<init>
 	m	(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/unmapped/C_3151738;	m_0898649		m_0898649
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_0561170;	m_0997344		m_0997344
-		p	1			p_1
-	m	(Lcom/google/gson/JsonObject;)Z	m_1588916		m_1588916
-		p	1			p_1
-	m	(Lcom/google/gson/JsonObject;)Lnet/minecraft/unmapped/C_2334768;	m_8829290		m_8829290
-		p	1			p_1
-	m	(Lcom/google/gson/JsonObject;)Ljava/lang/String;	m_3043666		m_3043666
-		p	1			p_1
-	m	(Lcom/google/gson/JsonObject;)I	m_9328505		m_9328505
-		p	1			p_1
+	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_0561170;	m_0997344		getLocation
+		p	1			path
+	m	(Lcom/google/gson/JsonObject;)Z	m_1588916		deserializeUvLock
+		p	1			json
+	m	(Lcom/google/gson/JsonObject;)Lnet/minecraft/unmapped/C_2334768;	m_8829290		deserializeRotation
+		p	1			json
+	m	(Lcom/google/gson/JsonObject;)Ljava/lang/String;	m_3043666		deserializePath
+		p	1			json
+	m	(Lcom/google/gson/JsonObject;)I	m_9328505		deserializeWeight
+		p	1			json
 	m	(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Ljava/lang/Object;	deserialize		deserialize
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			json
+		p	2			type
+		p	3			context
 c	net/minecraft/unmapped/C_3463639		net/minecraft/world/gen/structure/template/TemplateStructurePiece
 	f	Lnet/minecraft/unmapped/C_5517808;	f_2759210		DEFAULT_SETTINGS
 	f	Lnet/minecraft/unmapped/C_4879372;	f_3969887		template
@@ -7451,36 +7451,36 @@ c	net/minecraft/unmapped/C_3565515$C_3758967		Mode
 	m	(I)Lnet/minecraft/unmapped/C_3565515$C_3758967;	m_2829238		byId
 		p	0			id
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_3825014		net/minecraft/unmapped/C_3825014
-	f	Lnet/minecraft/unmapped/C_8889465;	f_3056084		f_3056084
-	f	Lnet/minecraft/unmapped/C_4625995;	f_3789424		f_3789424
+c	net/minecraft/unmapped/C_3825014		net/minecraft/client/render/model/block/Selector
+	f	Lnet/minecraft/unmapped/C_8889465;	f_3056084		condition
+	f	Lnet/minecraft/unmapped/C_4625995;	f_3789424		variant
 	m	(Lnet/minecraft/unmapped/C_8889465;Lnet/minecraft/unmapped/C_4625995;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-	m	()Lnet/minecraft/unmapped/C_4625995;	m_8559390		m_8559390
-	m	(Lnet/minecraft/unmapped/C_9264598;)Lcom/google/common/base/Predicate;	m_0838405		m_0838405
-		p	1			p_1
+		p	1			condition
+		p	2			variant
+	m	()Lnet/minecraft/unmapped/C_4625995;	m_8559390		getVariant
+	m	(Lnet/minecraft/unmapped/C_9264598;)Lcom/google/common/base/Predicate;	m_0838405		getPredicate
+		p	1			definition
 	m	(Ljava/lang/Object;)Z	equals		equals
-		p	1			p_1
+		p	1			o
 	m	()I	hashCode		hashCode
-c	net/minecraft/unmapped/C_3825014$C_0048054		C_0048054
-	f	Lcom/google/common/base/Function;	f_9642391		f_9642391
-	f	Lcom/google/common/base/Function;	f_4286288		f_4286288
+c	net/minecraft/unmapped/C_3825014$C_0048054		Serializer
+	f	Lcom/google/common/base/Function;	f_9642391		OR_CONDITION_SERIALIZER
+	f	Lcom/google/common/base/Function;	f_4286288		AND_CONDITION_SERIALIZER
 	m	()V	<init>		<init>
 	m	(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/unmapped/C_3825014;	m_9906695		m_9906695
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lcom/google/gson/JsonObject;)Lnet/minecraft/unmapped/C_8889465;	m_1516639		m_1516639
-		p	1			p_1
-	m	(Lcom/google/gson/JsonObject;)Lnet/minecraft/unmapped/C_8889465;	m_8828981		m_8828981
-		p	0			p_0
-	m	(Ljava/util/Map$Entry;)Lnet/minecraft/unmapped/C_8695691;	m_9241221		m_9241221
-		p	0			p_0
+	m	(Lcom/google/gson/JsonObject;)Lnet/minecraft/unmapped/C_8889465;	m_1516639		deserializeCondition
+		p	1			json
+	m	(Lcom/google/gson/JsonObject;)Lnet/minecraft/unmapped/C_8889465;	m_8828981		deserializeConditionOrThrow
+		p	0			json
+	m	(Ljava/util/Map$Entry;)Lnet/minecraft/unmapped/C_8695691;	m_9241221		createCondition
+		p	0			condition
 	m	(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Ljava/lang/Object;	deserialize		deserialize
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			json
+		p	2			type
+		p	3			context
 	m	(Ljava/util/Map$Entry;)Lnet/minecraft/unmapped/C_8695691;	m_9251752		m_9251752
 		p	0			p_0
 	m	()V	<clinit>		<clinit>
@@ -7489,13 +7489,13 @@ c	net/minecraft/unmapped/C_3825014$C_0048054$1		1
 	m	(Lcom/google/gson/JsonElement;)Lnet/minecraft/unmapped/C_8889465;	m_7462999		m_7462999
 		p	1			p_1
 	m	(Ljava/lang/Object;)Ljava/lang/Object;	apply		apply
-		p	1			p_1
+		p	1			json
 c	net/minecraft/unmapped/C_3825014$C_0048054$2		2
 	m	()V	<init>		<init>
 	m	(Ljava/util/Map$Entry;)Lnet/minecraft/unmapped/C_8889465;	m_1727305		m_1727305
 		p	1			p_1
 	m	(Ljava/lang/Object;)Ljava/lang/Object;	apply		apply
-		p	1			p_1
+		p	1			json
 c	net/minecraft/unmapped/C_3871130		net/minecraft/item/ChorusFruitItem
 	m	(IF)V	<init>		<init>
 		p	1			hungerPoints
@@ -7798,24 +7798,24 @@ c	net/minecraft/unmapped/C_4618849		net/minecraft/unmapped/C_4618849
 	m	()V	m_3836415		m_3836415
 	m	()V	m_7242457		m_7242457
 	m	()V	m_3798730		m_3798730
-c	net/minecraft/unmapped/C_4625995		net/minecraft/unmapped/C_4625995
-	f	Ljava/util/List;	f_9867224		f_9867224
+c	net/minecraft/unmapped/C_4625995		net/minecraft/client/render/model/block/MultiVariant
+	f	Ljava/util/List;	f_9867224		variants
 	m	(Ljava/util/List;)V	<init>		<init>
-		p	1			p_1
-	m	()Ljava/util/List;	m_2788389		m_2788389
+		p	1			variants
+	m	()Ljava/util/List;	m_2788389		getVariants
 	m	(Ljava/lang/Object;)Z	equals		equals
-		p	1			p_1
+		p	1			o
 	m	()I	hashCode		hashCode
-c	net/minecraft/unmapped/C_4625995$C_6102443		C_6102443
+c	net/minecraft/unmapped/C_4625995$C_6102443		Serializer
 	m	()V	<init>		<init>
 	m	(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/unmapped/C_4625995;	m_9680992		m_9680992
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 	m	(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Ljava/lang/Object;	deserialize		deserialize
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			json
+		p	2			type
+		p	3			context
 c	net/minecraft/unmapped/C_4647073		net/minecraft/unmapped/C_4647073
 	f	Ljava/util/Map;	f_1242704		f_1242704
 	f	Z	f_9632028		f_9632028
