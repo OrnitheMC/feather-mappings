@@ -211,16 +211,16 @@ c	net/minecraft/unmapped/C_0526041$C_2006057
 		p	6			p_6
 		p	7			p_7
 c	net/minecraft/unmapped/C_0539808
-	f	F	f_3962670		f_3962670
+	f	F	f_3962670		distanceBeforeNextFlap
 	m	(FFF)V	m_2076799	updateVelocity	
 		p	1		sideways	
 		p	2		forward	
 		p	3		factor	
-	m	(Lnet/minecraft/unmapped/C_2441996;)V	m_9027450		m_9027450
-		p	1			p_1
-	m	(F)F	m_9042923		m_9042923
-		p	1			p_1
-	m	()Z	m_4383920		m_4383920
+	m	(Lnet/minecraft/unmapped/C_2441996;)V	m_9027450		onBlockCollision
+		p	1			state
+	m	(F)F	m_9042923		playFlapSound
+		p	1			distanceMoved
+	m	()Z	m_4383920		makesFlapSounds
 	m	()Z	m_6180165		m_6180165
 	m	(FFFF)V	m_2076799		updateVelocity
 		p	1			p_1
@@ -1572,7 +1572,7 @@ c	net/minecraft/unmapped/C_7400754
 	m	(ILnet/minecraft/unmapped/C_2454309;)I	m_6343646		m_6343646
 		p	1			p_1
 		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_2454309;)Z	m_4381741		m_4381741
+	m	(Lnet/minecraft/unmapped/C_2454309;)Z	m_4381741		add
 		p	1			p_1
 	m	(ILnet/minecraft/unmapped/C_2454309;)Z	m_4327429		insertStack
 		p	1			p_1
@@ -2228,8 +2228,8 @@ c	net/minecraft/unmapped/C_9590849
 		p	2		p_2	
 	m	(I)V	m_1738655	m_1738655	
 		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_2464728		m_2464728
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_2464728		playShoulderAmbientSound
+		p	1			shoulderData
 	m	(Ljava/util/List;)V	m_5701134		m_5701134
 		p	1			p_1
 	m	(Ljava/util/List;)V	m_4663737		m_4663737
@@ -2243,8 +2243,8 @@ c	net/minecraft/unmapped/C_9590849
 		p	2			p_2
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_3699477		m_3699477
 		p	1			p_1
-	m	()V	m_2820371		m_2820371
-	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_9978028		m_9978028
+	m	()V	m_2820371		dropShoulderEntities
+	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_9978028		dropShoulderEntity
 		p	1			p_1
 	m	()Lnet/minecraft/unmapped/C_2018497;	m_0748691		getLeftShoulderData
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_5993660		setLeftShoulderData
@@ -2279,16 +2279,16 @@ c	net/minecraft/unmapped/C_9992501
 	m	(Lnet/minecraft/unmapped/C_3292284;)Lnet/minecraft/unmapped/C_3180769;	m_2615293		getAdvancements
 		p	1			player
 c	net/minecraft/unmapped/C_0008241		net/minecraft/entity/living/mob/passive/animal/tamable/ParrotEntity
-	f	Lnet/minecraft/unmapped/C_6101761;	f_6272576		f_6272576
+	f	Lnet/minecraft/unmapped/C_6101761;	f_6272576		VARIANT
 	f	Lcom/google/common/base/Predicate;	f_8366956		CAN_IMITATE
 	f	Lnet/minecraft/unmapped/C_3755722;	f_3318642		TAMING_ITEM
 	f	Ljava/util/Set;	f_3707826		EDIBLE_ITEMS
 	f	Lit/unimi/dsi/fastutil/ints/Int2ObjectMap;	f_1309618		SOUND_EVENTS
-	f	F	f_8475200		f_8475200
-	f	F	f_4851722		f_4851722
-	f	F	f_0851628		f_0851628
-	f	F	f_1837221		f_1837221
-	f	F	f_5046349		f_5046349
+	f	F	f_8475200		flap
+	f	F	f_4851722		flapSpeed
+	f	F	f_0851628		lastFlapSpeed
+	f	F	f_1837221		lastFlap
+	f	F	f_5046349		flapping
 	m	(Lnet/minecraft/unmapped/C_5553933;)V	<init>		<init>
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_2716056;Lnet/minecraft/unmapped/C_2928020;)Lnet/minecraft/unmapped/C_2928020;	m_7592700		m_7592700
@@ -2299,10 +2299,10 @@ c	net/minecraft/unmapped/C_0008241		net/minecraft/entity/living/mob/passive/anim
 	m	(Lnet/minecraft/unmapped/C_5553933;)Lnet/minecraft/unmapped/C_9229053;	m_2806808		m_2806808
 		p	1			p_1
 	m	()V	m_0095412		m_0095412
-	m	()V	m_4626950		m_4626950
-	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0539808;)Z	m_2405473		m_2405473
-		p	0			p_0
-		p	1			p_1
+	m	()V	m_4626950		tickFlapping
+	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0539808;)Z	m_2405473		shouldImitateNearbyMob
+		p	0			world
+		p	1			mob
 	m	(Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_4360192;)Z	m_5581222		m_5581222
 		p	1			p_1
 		p	2			p_2
@@ -2318,15 +2318,15 @@ c	net/minecraft/unmapped/C_0008241		net/minecraft/entity/living/mob/passive/anim
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_5565812;)Lnet/minecraft/unmapped/C_5565812;	m_1345870		m_1345870
 		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0539808;)V	m_8619519		m_8619519
-		p	0			p_0
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0539808;)V	m_8619519		playAmbientSound
+		p	0			world
+		p	1			entity
 	m	(Lnet/minecraft/unmapped/C_0539808;)Z	m_3916798		m_3916798
 		p	1			p_1
 	m	()Lnet/minecraft/unmapped/C_7721249;	m_7792981		m_7792981
-	m	(Ljava/util/Random;)Lnet/minecraft/unmapped/C_7721249;	m_6546424		m_6546424
+	m	(Ljava/util/Random;)Lnet/minecraft/unmapped/C_7721249;	m_6546424		pickAmbientSound
 		p	0			p_0
-	m	(I)Lnet/minecraft/unmapped/C_7721249;	m_5797589		m_5797589
+	m	(I)Lnet/minecraft/unmapped/C_7721249;	m_5797589		getImitationSound
 		p	0			p_0
 	m	()Lnet/minecraft/unmapped/C_7721249;	m_5045007		m_5045007
 	m	()Lnet/minecraft/unmapped/C_7721249;	m_1699770		m_1699770
@@ -2337,15 +2337,15 @@ c	net/minecraft/unmapped/C_0008241		net/minecraft/entity/living/mob/passive/anim
 		p	1			p_1
 	m	()Z	m_4383920		m_4383920
 	m	()F	m_1053803		m_1053803
-	m	(Ljava/util/Random;)F	m_6395124		m_6395124
-		p	0			p_0
+	m	(Ljava/util/Random;)F	m_6395124		getPitch
+		p	0			random
 	m	()Lnet/minecraft/unmapped/C_7541710;	m_8372771		m_8372771
 	m	()Z	m_6281908		m_6281908
 	m	(Lnet/minecraft/unmapped/C_0539808;)V	m_1202560		m_1202560
 		p	1			p_1
 	m	()I	m_1293688		getVariant
-	m	(I)V	m_9461537		m_9461537
-		p	1			p_1
+	m	(I)V	m_9461537		setVariant
+		p	1			variant
 	m	()V	m_1700770		m_1700770
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_1129840		m_1129840
 		p	1			p_1
@@ -3293,12 +3293,12 @@ c	net/minecraft/unmapped/C_4567131		net/minecraft/advancement/AdvancementStatus
 		p	3			id
 	m	()I	m_8903845		getId
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_4664622		net/minecraft/unmapped/C_4664622
+c	net/minecraft/unmapped/C_4664622		net/minecraft/entity/ai/goal/FlyingWaterAvoidingWanderAroundGoal
 	m	(Lnet/minecraft/unmapped/C_5622853;D)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
 	m	()Lnet/minecraft/unmapped/C_0557736;	m_2448672		m_2448672
-	m	()Lnet/minecraft/unmapped/C_0557736;	m_0383918		m_0383918
+	m	()Lnet/minecraft/unmapped/C_0557736;	m_0383918		getTreeTarget
 c	net/minecraft/unmapped/C_4703972		net/minecraft/unmapped/C_4703972
 	f	Lnet/minecraft/unmapped/C_8105098;	f_0983238		f_0983238
 	f	Lnet/minecraft/unmapped/C_1025264;	f_0030500		f_0030500
@@ -3469,21 +3469,21 @@ c	net/minecraft/unmapped/C_5373950$C_8961172		PlayerListeners
 		p	1			listener
 	m	(Lnet/minecraft/unmapped/C_7400754;)V	m_6867664		run
 		p	1			inventory
-c	net/minecraft/unmapped/C_5389817		net/minecraft/unmapped/C_5389817
-	f	Lnet/minecraft/unmapped/C_8099772;	f_3107091		f_3107091
-	f	Lcom/google/common/base/Predicate;	f_3672059		f_3672059
-	f	Lnet/minecraft/unmapped/C_8099772;	f_1116510		f_1116510
-	f	D	f_8159505		f_8159505
-	f	Lnet/minecraft/unmapped/C_9229053;	f_9846764		f_9846764
-	f	I	f_5099814		f_5099814
-	f	F	f_7577783		f_7577783
-	f	F	f_1148055		f_1148055
-	f	F	f_8163757		f_8163757
+c	net/minecraft/unmapped/C_5389817		net/minecraft/entity/ai/goal/FollowMobGoal
+	f	Lnet/minecraft/unmapped/C_8099772;	f_3107091		entity
+	f	Lcom/google/common/base/Predicate;	f_3672059		targetPredicate
+	f	Lnet/minecraft/unmapped/C_8099772;	f_1116510		target
+	f	D	f_8159505		speed
+	f	Lnet/minecraft/unmapped/C_9229053;	f_9846764		navigation
+	f	I	f_5099814		updateTimer
+	f	F	f_7577783		stopDistance
+	f	F	f_1148055		oldWaterWeight
+	f	F	f_8163757		area
 	m	(Lnet/minecraft/unmapped/C_8099772;DFF)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
-		p	5			p_5
+		p	1			entity
+		p	2			speed
+		p	4			stopDistance
+		p	5			area
 	m	()Z	m_9549250		m_9549250
 	m	()Z	m_4540487		m_4540487
 	m	()V	m_3836415		m_3836415
@@ -3498,7 +3498,7 @@ c	net/minecraft/unmapped/C_5389817$1		1
 	m	(Lnet/minecraft/unmapped/C_8099772;)Z	m_4890024		m_4890024
 		p	1			p_1
 	m	(Ljava/lang/Object;)Z	apply		apply
-		p	1			p_1
+		p	1			mob
 c	net/minecraft/unmapped/C_5405916		net/minecraft/crafting/recipe/ServerRecipeBook
 	f	Lorg/apache/logging/log4j/Logger;	f_1421690		f_1421690
 	f	Ljava/util/Set;	f_9750572		f_9750572
@@ -4505,7 +4505,7 @@ c	net/minecraft/unmapped/C_9548941		net/minecraft/advancement/criterion/NumberPr
 	m	(Lcom/google/gson/JsonElement;)Lnet/minecraft/unmapped/C_9548941;	m_1323528		fromJson
 		p	0			json
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_9640193		net/minecraft/unmapped/C_9640193
+c	net/minecraft/unmapped/C_9640193		net/minecraft/entity/ai/control/FlyingMovementControl
 	m	(Lnet/minecraft/unmapped/C_8099772;)V	<init>		<init>
 		p	1			p_1
 	m	()V	m_0741527		m_0741527
