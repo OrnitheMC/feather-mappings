@@ -125,7 +125,7 @@ Coordinates can be named `x`, `y`, and `z` when it's clear what they represent. 
 front of the coordinate (`velocityX`, not `xVelocity`). Common cases for this are:
 
 - `chunkX`, `chunkY`, and `chunkZ` for chunk coordinates (a chunk's coordinates on the chunk grid)
-- `sectionX`, `sectionY`, and `sectionZ` for block coordinates within a chunk section
+- `localX`, `localY`, and `localZ` for block coordinates within a chunk section
 
 Name screen coordinates `x` and `y`, rather than `left` and `top`.
 
