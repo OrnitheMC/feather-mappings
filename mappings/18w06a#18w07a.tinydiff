@@ -22,9 +22,9 @@ c	net/minecraft/unmapped/C_0487112
 c	net/minecraft/unmapped/C_0539808
 	f	I	f_1760964	distanceOnNextBlock	
 	f	F	f_1760964		distanceOnNextBlock
-	m	()F	m_9260273		m_9260273
-	m	(F)V	m_8498956		m_8498956
-		p	1			p_1
+	m	()F	m_9260273		calculateNextStepSoundDistance
+	m	(F)V	m_8498956		playSwimSound
+		p	1			volume
 	m	()Z	m_7492874		isWet
 	m	()Z	m_8004166		isInsideWaterOrBubbleColumn
 	m	()Z	m_0225871		isLiving
@@ -341,7 +341,7 @@ c	net/minecraft/unmapped/C_7160989
 		p	4			p_4
 c	net/minecraft/unmapped/C_7465479
 	f	I	f_0269634		f_0269634
-	f	I	f_7651989		f_7651989
+	f	I	f_7651989		lowestY
 	m	(Lnet/minecraft/unmapped/C_5622853;DII)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -350,7 +350,7 @@ c	net/minecraft/unmapped/C_7465479
 	m	(Lnet/minecraft/unmapped/C_5622853;)I	m_6793978		m_6793978
 		p	1			p_1
 	m	()D	m_7794795		m_7794795
-	m	()Z	m_4368325		m_4368325
+	m	()Z	m_4368325		shouldResetPath
 	m	()I	m_3364102		m_3364102
 c	net/minecraft/unmapped/C_7489997
 	f	Ljava/util/ArrayList;	f_4642465	DEFAULT_SPAWN_ENTRIES	
@@ -1418,35 +1418,35 @@ c	net/minecraft/unmapped/C_9261208		net/minecraft/world/gen/feature/SeaGrassConf
 	m	(ID)V	<init>		<init>
 		p	1			count
 		p	2			tallProbability
-c	net/minecraft/unmapped/C_9378896		net/minecraft/unmapped/C_9378896
-	f	Lnet/minecraft/unmapped/C_6101761;	f_6619129		f_6619129
-	f	Lnet/minecraft/unmapped/C_6101761;	f_9140451		f_9140451
-	f	Lnet/minecraft/unmapped/C_6101761;	f_9870193		f_9870193
-	f	Lnet/minecraft/unmapped/C_6101761;	f_3326978		f_3326978
-	f	Lnet/minecraft/unmapped/C_6101761;	f_9454150		f_9454150
-	f	Lnet/minecraft/unmapped/C_6101761;	f_1329944		f_1329944
-	f	I	f_7602975		f_7602975
+c	net/minecraft/unmapped/C_9378896		net/minecraft/entity/living/mob/passive/animal/TurtleEntity
+	f	Lnet/minecraft/unmapped/C_6101761;	f_6619129		HOME_POS
+	f	Lnet/minecraft/unmapped/C_6101761;	f_9140451		HAS_EGG
+	f	Lnet/minecraft/unmapped/C_6101761;	f_9870193		DIGGING_SAND
+	f	Lnet/minecraft/unmapped/C_6101761;	f_3326978		TRAVEL_POS
+	f	Lnet/minecraft/unmapped/C_6101761;	f_9454150		LAND_BOUND
+	f	Lnet/minecraft/unmapped/C_6101761;	f_1329944		ACTIVELY_TRAVELING
+	f	I	f_7602975		sandDiggingCounter
 	f	Lcom/google/common/base/Predicate;	f_9779997		f_9779997
 	m	(Lnet/minecraft/unmapped/C_5553933;)V	<init>		<init>
 		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_3674802;)V	m_1976860		m_1976860
+	m	(Lnet/minecraft/unmapped/C_3674802;)V	m_1976860		setHomePos
 		p	1			p_1
-	m	()Lnet/minecraft/unmapped/C_3674802;	m_6249481		m_6249481
-	m	(Lnet/minecraft/unmapped/C_3674802;)V	m_2728928		m_2728928
+	m	()Lnet/minecraft/unmapped/C_3674802;	m_6249481		getHomePos
+	m	(Lnet/minecraft/unmapped/C_3674802;)V	m_2728928		setTravelPos
 		p	1			p_1
-	m	()Lnet/minecraft/unmapped/C_3674802;	m_7168185		m_7168185
-	m	()Z	m_0449114		m_0449114
-	m	(Z)V	m_8332611		m_8332611
-		p	1			p_1
-	m	()Z	m_6943558		m_6943558
-	m	(Z)V	m_4385701		m_4385701
-		p	1			p_1
-	m	()Z	m_4192228		m_4192228
-	m	(Z)V	m_6969822		m_6969822
-		p	1			p_1
-	m	()Z	m_9485932		m_9485932
-	m	(Z)V	m_1879661		m_1879661
-		p	1			p_1
+	m	()Lnet/minecraft/unmapped/C_3674802;	m_7168185		getTravelPos
+	m	()Z	m_0449114		hasEgg
+	m	(Z)V	m_8332611		setHasEgg
+		p	1			hasEgg
+	m	()Z	m_6943558		isDiggingSand
+	m	(Z)V	m_4385701		setDiggingSand
+		p	1			diggingSand
+	m	()Z	m_4192228		isLandBound
+	m	(Z)V	m_6969822		setLandBound
+		p	1			landBound
+	m	()Z	m_9485932		isActivelyTraveling
+	m	(Z)V	m_1879661		setActivelyTraveling
+		p	1			traveling
 	m	()V	m_1700770		m_1700770
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_1129840		m_1129840
 		p	1			p_1
@@ -1534,18 +1534,18 @@ c	net/minecraft/unmapped/C_9378896$1		1
 		p	1			p_1
 	m	(Ljava/lang/Object;)Z	apply		apply
 		p	1			p_1
-c	net/minecraft/unmapped/C_9378896$C_0114503		C_0114503
+c	net/minecraft/unmapped/C_9378896$C_0114503		TurtleSwimNavigation
 	m	(Lnet/minecraft/unmapped/C_9378896;Lnet/minecraft/unmapped/C_5553933;)V	<init>		<init>
-		p	1			p_1
+		p	1			owner
 		p	2			p_2
 	m	()Z	m_0738877		m_0738877
 	m	()Lnet/minecraft/unmapped/C_0490004;	m_5006874		m_5006874
 	m	(Lnet/minecraft/unmapped/C_3674802;)Z	m_0933464		m_0933464
 		p	1			p_1
-c	net/minecraft/unmapped/C_9378896$C_0390486		C_0390486
-	f	Lnet/minecraft/unmapped/C_9378896;	f_6670783		f_6670783
-	f	D	f_3573403		f_3573403
-	f	Z	f_0519039		f_0519039
+c	net/minecraft/unmapped/C_9378896$C_0390486		TravelGoal
+	f	Lnet/minecraft/unmapped/C_9378896;	f_6670783		turtle
+	f	D	f_3573403		speed
+	f	Z	f_0519039		noPath
 	m	(Lnet/minecraft/unmapped/C_9378896;D)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -1554,43 +1554,43 @@ c	net/minecraft/unmapped/C_9378896$C_0390486		C_0390486
 	m	()V	m_3798730		m_3798730
 	m	()Z	m_4540487		m_4540487
 	m	()V	m_7242457		m_7242457
-c	net/minecraft/unmapped/C_9378896$C_3819201		C_3819201
+c	net/minecraft/unmapped/C_9378896$C_3819201		TurtleEscapeDangerGoal
 	m	(Lnet/minecraft/unmapped/C_9378896;D)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			turtle
+		p	2			speed
 	m	()Z	m_9549250		m_9549250
-c	net/minecraft/unmapped/C_9378896$C_4364511		C_4364511
-	f	Lnet/minecraft/unmapped/C_9378896;	f_8670154		f_8670154
-	f	D	f_3845486		f_3845486
-	f	Lnet/minecraft/unmapped/C_9590849;	f_3423038		f_3423038
-	f	I	f_7520523		f_7520523
-	f	Ljava/util/Set;	f_2798451		f_2798451
+c	net/minecraft/unmapped/C_9378896$C_4364511		TemptGoal
+	f	Lnet/minecraft/unmapped/C_9378896;	f_8670154		turtle
+	f	D	f_3845486		speed
+	f	Lnet/minecraft/unmapped/C_9590849;	f_3423038		closestPlayer
+	f	I	f_7520523		cooldown
+	f	Ljava/util/Set;	f_2798451		food
 	m	(Lnet/minecraft/unmapped/C_9378896;DLnet/minecraft/unmapped/C_3755722;)V	<init>		<init>
 		p	1			p_1
-		p	2			p_2
+		p	2			speed
 		p	4			p_4
 	m	()Z	m_9549250		m_9549250
-	m	(Lnet/minecraft/unmapped/C_2454309;)Z	m_0292853		m_0292853
+	m	(Lnet/minecraft/unmapped/C_2454309;)Z	m_0292853		isTempted
 		p	1			p_1
 	m	()Z	m_4540487		m_4540487
 	m	()V	m_7242457		m_7242457
 	m	()V	m_3798730		m_3798730
-c	net/minecraft/unmapped/C_9378896$C_4608659		C_4608659
-	f	Lnet/minecraft/unmapped/C_9378896;	f_7164062		f_7164062
+c	net/minecraft/unmapped/C_9378896$C_4608659		LayEggGoal
+	f	Lnet/minecraft/unmapped/C_9378896;	f_7164062		turtle
 	m	(Lnet/minecraft/unmapped/C_9378896;D)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			turtle
+		p	2			speed
 	m	()Z	m_9549250		m_9549250
 	m	()Z	m_4540487		m_4540487
 	m	()V	m_3798730		m_3798730
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;)Z	m_4842222		m_4842222
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_9378896$C_5026737		C_5026737
-	f	Lnet/minecraft/unmapped/C_9378896;	f_2796533		f_2796533
+c	net/minecraft/unmapped/C_9378896$C_5026737		WanderInWaterGoal
+	f	Lnet/minecraft/unmapped/C_9378896;	f_2796533		turtle
 	m	(Lnet/minecraft/unmapped/C_9378896;D)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			turtle
+		p	2			speed
 	m	()Z	m_4540487		m_4540487
 	m	()Z	m_9549250		m_9549250
 	m	()I	m_3364102		m_3364102
@@ -1602,43 +1602,43 @@ c	net/minecraft/unmapped/C_9378896$C_5026737		C_5026737
 		p	1			p_1
 		p	2			p_2
 		p	4			p_4
-c	net/minecraft/unmapped/C_9378896$C_6193387		C_6193387
-	f	Lnet/minecraft/unmapped/C_9378896;	f_5853497		f_5853497
+c	net/minecraft/unmapped/C_9378896$C_6193387		WanderOnLandGoal
+	f	Lnet/minecraft/unmapped/C_9378896;	f_5853497		turtle
 	m	(Lnet/minecraft/unmapped/C_9378896;DI)V	<init>		<init>
 		p	1			p_1
-		p	2			p_2
-		p	4			p_4
+		p	2			speed
+		p	4			chance
 	m	()Z	m_9549250		m_9549250
 	m	(Lnet/minecraft/unmapped/C_9378896;DILnet/minecraft/unmapped/C_9378896$1;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
 		p	4			p_4
 		p	5			p_5
-c	net/minecraft/unmapped/C_9378896$C_6299400		C_6299400
-	f	Lnet/minecraft/unmapped/C_9378896;	f_2838838		f_2838838
+c	net/minecraft/unmapped/C_9378896$C_6299400		MateGoal
+	f	Lnet/minecraft/unmapped/C_9378896;	f_2838838		turtle
 	m	(Lnet/minecraft/unmapped/C_9378896;D)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			turtle
+		p	2			speed
 	m	()Z	m_9549250		m_9549250
 	m	()V	m_2172327		m_2172327
-c	net/minecraft/unmapped/C_9378896$C_9460786		C_9460786
-	f	Lnet/minecraft/unmapped/C_9378896;	f_5149708		f_5149708
-	f	D	f_4040139		f_4040139
-	f	Z	f_0111193		f_0111193
-	f	I	f_1833792		f_1833792
+c	net/minecraft/unmapped/C_9378896$C_9460786		GoHomeGoal
+	f	Lnet/minecraft/unmapped/C_9378896;	f_5149708		turtle
+	f	D	f_4040139		speed
+	f	Z	f_0111193		noPath
+	f	I	f_1833792		homeReachingTryTicks
 	m	(Lnet/minecraft/unmapped/C_9378896;D)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			turtle
+		p	2			speed
 	m	()Z	m_9549250		m_9549250
 	m	()V	m_3836415		m_3836415
 	m	()V	m_7242457		m_7242457
 	m	()Z	m_4540487		m_4540487
 	m	()V	m_3798730		m_3798730
-c	net/minecraft/unmapped/C_9378896$C_9951972		C_9951972
-	f	Lnet/minecraft/unmapped/C_9378896;	f_8596494		f_8596494
+c	net/minecraft/unmapped/C_9378896$C_9951972		TurtleMoveControl
+	f	Lnet/minecraft/unmapped/C_9378896;	f_8596494		turtle
 	m	(Lnet/minecraft/unmapped/C_9378896;)V	<init>		<init>
 		p	1			p_1
-	m	()V	m_4336203		m_4336203
+	m	()V	m_4336203		updateVelocity
 	m	()V	m_0741527		m_0741527
 c	net/minecraft/unmapped/C_9707472		net/minecraft/block/KelpBlock
 	f	Lnet/minecraft/unmapped/C_7077852;	f_0166185		AGE
