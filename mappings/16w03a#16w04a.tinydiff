@@ -51,19 +51,19 @@ c	net/minecraft/unmapped/C_0607826
 	f	F	f_1830969	f_1830969	
 	f	F	f_9877179	f_9877179	
 	f	F	f_9879550	f_9879550	
-	f	[F	f_8753258		f_8753258
-	f	F	f_9205722		f_9205722
-	f	F	f_5538943		f_5538943
-	f	F	f_6346660		f_6346660
+	f	[F	f_8753258		paddlePhases
+	f	F	f_9205722		velocityDecay
+	f	F	f_5538943		ticksUnderwater
+	f	F	f_6346660		yawVelocity
 	f	Z	f_1013479		inputLeft
 	f	Z	f_8075283		inputRight
 	f	Z	f_5175940		inputUp
 	f	Z	f_1276857		inputDown
-	f	D	f_6652221		f_6652221
-	f	F	f_3247951		f_3247951
-	f	Lnet/minecraft/unmapped/C_0607826$C_6184994;	f_1162355		f_1162355
-	f	Lnet/minecraft/unmapped/C_0607826$C_6184994;	f_9935108		f_9935108
-	f	D	f_3588285		f_3588285
+	f	D	f_6652221		waterLevel
+	f	F	f_3247951		nearbySlipperiness
+	f	Lnet/minecraft/unmapped/C_0607826$C_6184994;	f_1162355		location
+	f	Lnet/minecraft/unmapped/C_0607826$C_6184994;	f_9935108		lastLocation
+	f	D	f_3588285		fallVelocity
 	m	()V	m_6775881	m_6775881	
 	m	()V	m_5250045	m_5250045	
 	m	()Z	m_3808332	m_3808332	
@@ -74,10 +74,10 @@ c	net/minecraft/unmapped/C_0607826
 		p	2		p_2	
 	m	(Lnet/minecraft/unmapped/C_6912424;)F	m_0143252	m_0143252	
 		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_6912424;F)F	m_8886722	m_8886722	
+	m	(Lnet/minecraft/unmapped/C_6912424;F)F	m_8886722	interpolatePaddlePhase	
 		p	1		p_1	
 		p	2		p_2	
-	m	(FF)V	m_3106934	m_3106934	
+	m	(FF)V	m_3106934	setPaddleMovings	
 		p	1		p_1	
 		p	2		p_2	
 	m	(Lnet/minecraft/unmapped/C_6912424;Z)Z	m_0881437	m_0881437	
@@ -85,17 +85,17 @@ c	net/minecraft/unmapped/C_0607826
 		p	2		p_2	
 	m	(Lnet/minecraft/unmapped/C_6912424;)Lnet/minecraft/unmapped/C_0607826$C_7524789;	m_7922592	m_7922592	
 		p	1		p_1	
-	m	(ZZ)V	m_3106934		m_3106934
-		p	1			p_1
-		p	2			p_2
-	m	(IF)F	m_8886722		m_8886722
-		p	1			p_1
-		p	2			p_2
-	m	()Lnet/minecraft/unmapped/C_0607826$C_6184994;	m_0243142		m_0243142
-	m	()F	m_9989780		m_9989780
-	m	()F	m_6157341		m_6157341
-	m	()Z	m_7926481		m_7926481
-	m	()Lnet/minecraft/unmapped/C_0607826$C_6184994;	m_5068395		m_5068395
+	m	(ZZ)V	m_3106934		setPaddleMovings
+		p	1			leftMoving
+		p	2			rightMoving
+	m	(IF)F	m_8886722		interpolatePaddlePhase
+		p	1			paddle
+		p	2			tickDelta
+	m	()Lnet/minecraft/unmapped/C_0607826$C_6184994;	m_0243142		checkLocation
+	m	()F	m_9989780		getWaterHeightBelow
+	m	()F	m_6157341		getNearbySlipperiness
+	m	()Z	m_7926481		checkBoatInWater
+	m	()Lnet/minecraft/unmapped/C_0607826$C_6184994;	m_5068395		getUnderWaterLocation
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;)F	m_8612847		m_8612847
 		p	0			p_0
 		p	1			p_1
@@ -104,8 +104,8 @@ c	net/minecraft/unmapped/C_0607826
 		p	0			p_0
 		p	1			p_1
 		p	2			p_2
-	m	()V	m_8878323		m_8878323
-	m	()V	m_2983793		m_2983793
+	m	()V	m_8878323		updateVelocity
+	m	()V	m_2983793		updatePaddles
 	m	(I)Z	m_6343325		getPaddleState
 		p	1			side
 	m	(ZZZZ)V	m_4470257		setInput
@@ -288,7 +288,7 @@ c	net/minecraft/unmapped/C_7639596
 c	net/minecraft/unmapped/C_8099772
 	m	()Z	m_0294846	isTameable	
 	m	(Lnet/minecraft/unmapped/C_9590849;)Z	m_0294846		isTameable
-		p	1			p_1
+		p	1			player
 	m	(Lnet/minecraft/unmapped/C_0539808;Z)Z	m_7212753		m_7212753
 		p	1			p_1
 		p	2			p_2

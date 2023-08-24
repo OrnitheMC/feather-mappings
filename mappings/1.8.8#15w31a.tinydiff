@@ -284,9 +284,9 @@ c	net/minecraft/unmapped/C_0593414
 	f	I	f_3053881		f_3053881
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_0607826
-	f	I	f_5018884		f_5018884
-	f	I	f_6874810		f_6874810
-	f	I	f_4920454		f_4920454
+	f	I	f_5018884		DAMAGE_WOBBLE_TICKS
+	f	I	f_6874810		DAMAGE_WOBBLE_SIDE
+	f	I	f_4920454		DAMAGE_WOBBLE_STRENGTH
 	m	(Lnet/minecraft/unmapped/C_9590849;)Z	m_0995062	m_0995062	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_2454309;Lnet/minecraft/unmapped/C_4360192;)Z	m_0995062		m_0995062
@@ -1437,11 +1437,11 @@ c	net/minecraft/unmapped/C_2076519
 		p	3			p_3
 	m	()Lnet/minecraft/unmapped/C_4360192;	m_3057784		m_3057784
 c	net/minecraft/unmapped/C_2082251
-	f	Lnet/minecraft/unmapped/C_0539808;	f_8025158		f_8025158
-	f	I	f_7710895		f_7710895
+	f	Lnet/minecraft/unmapped/C_0539808;	f_8025158		collidedEntity
+	f	I	f_7710895		collidedEntityTime
 	m	()F	m_1428023	getSpeed	
 	m	()F	m_6982212	getStartPitchOffset	
-	m	(FFFFF)V	m_1897788		m_1897788
+	m	(FFFFF)V	m_1897788		setVelocity
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -1859,8 +1859,8 @@ c	net/minecraft/unmapped/C_2755677
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/unmapped/C_2833867
-	f	I	f_3142346		f_3142346
-	f	I	f_1266952		f_1266952
+	f	I	f_3142346		COMMAND
+	f	I	f_1266952		LAST_OUTPUT
 	m	(Lnet/minecraft/unmapped/C_9590849;)Z	m_0995062	m_0995062	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_2454309;Lnet/minecraft/unmapped/C_4360192;)Z	m_0995062		m_0995062
@@ -4123,7 +4123,7 @@ c	net/minecraft/unmapped/C_5940087
 	m	(I)V	m_0076822	setPotionValue	
 		p	1		damage	
 	m	()I	m_4168859	getMetadata	
-	m	(Lnet/minecraft/unmapped/C_3674802;)V	m_0280862		m_0280862
+	m	(Lnet/minecraft/unmapped/C_3674802;)V	m_0280862		extinguishFire
 		p	1			p_1
 	m	()Lnet/minecraft/unmapped/C_2454309;	m_4168859		getMetadata
 c	net/minecraft/unmapped/C_5944992	net/minecraft/client/render/texture/CompassSprite	
@@ -4689,9 +4689,9 @@ c	net/minecraft/unmapped/C_6991030
 		p	8			p_8
 		p	9			p_9
 c	net/minecraft/unmapped/C_7019121
-	f	I	f_9671800		f_9671800
-	f	I	f_3870543		f_3870543
-	f	I	f_9153609		f_9153609
+	f	I	f_9671800		HEALTH
+	f	I	f_3870543		BEGGING
+	f	I	f_9153609		COLLAR_COLOR
 	m	(Lnet/minecraft/unmapped/C_9590849;)Z	m_5581222	m_5581222	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_4360192;Lnet/minecraft/unmapped/C_2454309;)Z	m_5581222		m_5581222
@@ -5006,7 +5006,7 @@ c	net/minecraft/unmapped/C_7452508$1		1
 	f	[I	f_6854641		f_6854641
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_7465586
-	f	I	f_4426307		f_4426307
+	f	I	f_4426307		LIT
 	m	(Lnet/minecraft/unmapped/C_9590849;)Z	m_0995062	m_0995062	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_2454309;Lnet/minecraft/unmapped/C_4360192;)Z	m_0995062		m_0995062
@@ -5203,7 +5203,7 @@ c	net/minecraft/unmapped/C_8099772
 	m	(Lnet/minecraft/unmapped/C_9590849;)Z	m_5581222	canInteract	
 		p	1		player	
 	m	()Lnet/minecraft/unmapped/C_2516302;	m_1463042		m_1463042
-	m	()I	m_7806542		m_7806542
+	m	()I	m_7806542		getMaxHeadRotation
 	m	()Ljava/lang/Iterable;	m_3740173		m_3740173
 	m	()Ljava/lang/Iterable;	m_0529754		m_0529754
 	m	(Lnet/minecraft/unmapped/C_7278838;)Lnet/minecraft/unmapped/C_2454309;	m_0596534		m_0596534
@@ -5527,15 +5527,15 @@ c	net/minecraft/unmapped/C_8574306
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_8703287;)I	m_3188363		m_3188363
+	m	(Lnet/minecraft/unmapped/C_8703287;)I	m_3188363		getColor
+		p	0			potion
+	m	(Ljava/util/Collection;)I	m_1986855		getColor
+		p	0			statusEffects
+	m	(Lnet/minecraft/unmapped/C_2454309;)Lnet/minecraft/unmapped/C_8703287;	m_2834542		getPotion
 		p	0			p_0
-	m	(Ljava/util/Collection;)I	m_1986855		m_1986855
+	m	(Lnet/minecraft/unmapped/C_2454309;Lnet/minecraft/unmapped/C_8703287;)Lnet/minecraft/unmapped/C_2454309;	m_6892246		setPotion
 		p	0			p_0
-	m	(Lnet/minecraft/unmapped/C_2454309;)Lnet/minecraft/unmapped/C_8703287;	m_2834542		m_2834542
-		p	0			p_0
-	m	(Lnet/minecraft/unmapped/C_2454309;Lnet/minecraft/unmapped/C_8703287;)Lnet/minecraft/unmapped/C_2454309;	m_6892246		m_6892246
-		p	0			p_0
-		p	1			p_1
+		p	1			potion
 c	net/minecraft/unmapped/C_8595425	net/minecraft/entity/living/effect/PotionHelper	
 	f	Ljava/lang/String;	f_6342113	UNCRAFTABLE	
 	f	Ljava/lang/String;	f_2825102	SUGAR	
@@ -6256,12 +6256,12 @@ c	net/minecraft/unmapped/C_9482064$2		2
 		p	1			p_1
 	m	()Ljava/lang/String;	m_4637113		m_4637113
 c	net/minecraft/unmapped/C_9482745
-	f	I	f_0512016		f_0512016
-	f	I	f_9914718		f_9914718
-	f	I	f_1943650		f_1943650
-	f	I	f_2028104		f_2028104
-	f	I	f_1244763		f_1244763
-	f	I	f_2585162		f_2585162
+	f	I	f_0512016		DAMAGE_WOBBLE_TICKS
+	f	I	f_9914718		DAMAGE_WOBBLE_SIDE
+	f	I	f_1943650		DAMAGE_WOBBLE_STRENGTH
+	f	I	f_2028104		CUSTOM_BLOCK_ID
+	f	I	f_1244763		CUSTOM_BLOCK_OFFSET
+	f	I	f_2585162		CUSTOM_BLOCK_PRESENT
 c	net/minecraft/unmapped/C_9507262
 	m	(Lnet/minecraft/unmapped/C_2313930;I)V	m_2175670	m_2175670	
 		p	1		p_1	

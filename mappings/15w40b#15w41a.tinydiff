@@ -79,7 +79,7 @@ c	net/minecraft/unmapped/C_0539808
 		p	1			other
 	m	(Lnet/minecraft/unmapped/C_0539808;)Z	m_1411174		m_1411174
 		p	1			p_1
-	m	()Z	m_7331429		m_7331429
+	m	()Z	m_7331429		isLogicalSideForUpdatingMovement
 	m	()Lnet/minecraft/unmapped/C_0539808;	m_4838019		getMount
 c	net/minecraft/unmapped/C_0557736
 	m	()D	m_5196944		m_5196944
@@ -95,8 +95,8 @@ c	net/minecraft/unmapped/C_0607826
 	f	D	f_5038938	boatVelocityX	
 	f	D	f_0817662	boatVelocityY	
 	f	D	f_1495656	boatVelocityZ	
-	f	Lnet/minecraft/unmapped/C_6101761;	f_8921641		f_8921641
-	f	[Lnet/minecraft/unmapped/C_6101761;	f_2972433		PADDLE_DATA
+	f	Lnet/minecraft/unmapped/C_6101761;	f_8921641		BOAT_TYPE
+	f	[Lnet/minecraft/unmapped/C_6101761;	f_2972433		LEFT_PADDLE_MOVING
 	f	[F	f_6367054		f_6367054
 	f	[I	f_8526236		f_8526236
 	f	[F	f_7356598		f_7356598
@@ -104,17 +104,17 @@ c	net/minecraft/unmapped/C_0607826
 	f	F	f_1830969		f_1830969
 	f	F	f_9877179		f_9877179
 	f	F	f_9879550		f_9879550
-	f	I	f_0300073		f_0300073
-	f	D	f_3228872		f_3228872
-	f	D	f_8380544		f_8380544
-	f	D	f_4954032		f_4954032
-	f	D	f_3065064		f_3065064
-	f	D	f_9434447		f_9434447
+	f	I	f_0300073		steps
+	f	D	f_3228872		y
+	f	D	f_8380544		yaw
+	f	D	f_4954032		pitch
+	f	D	f_3065064		z
+	f	D	f_9434447		x
 	m	()V	m_9438827	m_9438827	
 	m	(Z)V	m_6277336	setEmpty	
 		p	1		empty	
-	m	()Lnet/minecraft/unmapped/C_3755722;	m_8928015		m_8928015
-	m	()V	m_6603229		m_6603229
+	m	()Lnet/minecraft/unmapped/C_3755722;	m_8928015		asItem
+	m	()V	m_6603229		updatePositionAndRotation
 	m	()V	m_6775881		m_6775881
 	m	()V	m_5250045		m_5250045
 	m	()Z	m_3808332		m_3808332
@@ -125,19 +125,19 @@ c	net/minecraft/unmapped/C_0607826
 		p	2			p_2
 	m	(Lnet/minecraft/unmapped/C_0539808;)V	m_9438827		m_9438827
 		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_0539808;)V	m_9516585		m_9516585
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_0539808;)V	m_9516585		copyEntityData
+		p	1			rider
 	m	(Lnet/minecraft/unmapped/C_0539808;)V	m_0179241		m_0179241
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_6912424;)F	m_0143252		m_0143252
 		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_6912424;F)F	m_8886722		m_8886722
+	m	(Lnet/minecraft/unmapped/C_6912424;F)F	m_8886722		interpolatePaddlePhase
 		p	1			p_1
 		p	2			p_2
 	m	(Lnet/minecraft/unmapped/C_0607826$C_7204670;)V	m_3435136		setType
 		p	1			type
 	m	()Lnet/minecraft/unmapped/C_0607826$C_7204670;	m_4554254		getType
-	m	(FF)V	m_3106934		m_3106934
+	m	(FF)V	m_3106934		setPaddleMovings
 		p	1			p_1
 		p	2			p_2
 	m	(Lnet/minecraft/unmapped/C_6912424;ZZ)Z	m_0881437		m_0881437
@@ -501,7 +501,7 @@ c	net/minecraft/unmapped/C_8180393
 	m	(Lnet/minecraft/unmapped/C_7240405;)Lnet/minecraft/unmapped/C_8180393;	m_0469981		fromPacket
 		p	0			buffer
 c	net/minecraft/unmapped/C_8878495
-	m	(Lnet/minecraft/unmapped/C_0539808;)Lcom/google/common/base/Predicate;	m_7080423		m_7080423
+	m	(Lnet/minecraft/unmapped/C_0539808;)Lcom/google/common/base/Predicate;	m_7080423		canBePushedBy
 		p	0			p_0
 c	net/minecraft/unmapped/C_8878495$6		6
 	f	Lnet/minecraft/unmapped/C_0539808;	f_4871694		f_4871694
