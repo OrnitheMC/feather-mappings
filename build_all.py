@@ -41,4 +41,5 @@ def find_minecraft_versions():
     return versions
 
 if __name__ == '__main__':
-    main()
+    print(os.getenv("MC_VERSIONS"))
+    # main()
