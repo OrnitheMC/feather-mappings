@@ -26,7 +26,7 @@ def split_in_jobs(n_jobs: int, versions: list[str]) -> list[dict[str, list[str]]
 def main():
     minecraft_versions: list[str] = list(set(find_minecraft_versions()))
     print(minecraft_versions)
-    jobs: list[dict[str, list[str]]] = split_in_jobs(19, minecraft_versions)
+    jobs: list[dict[str, list[str]]] = split_in_jobs(20, minecraft_versions)
     version_split: str = json.dumps({"include": jobs})
     with open(os.environ["GITHUB_OUTPUT"], "w") as f:
         f.write(f"versions={version_split}\n")
