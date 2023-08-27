@@ -1,0 +1,20 @@
+name: matrix_prepare
+on:
+  workflow_call:
+    outputs:
+      versions:
+        description: all the versions partitioned
+        value: ${{ jobs.matrix_prep.outputs.versions }}
+jobs:
+  matrix_prep:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v3
+
+      - name: get current version matrix
+        id: getMatrix
+        run: python3 .github/workflows/scripts/matrix_gen.py
+
+    outputs:
+      versions: ${{ steps.getMatrix.outputs.versions }}
