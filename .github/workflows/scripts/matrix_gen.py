@@ -24,7 +24,6 @@ def split_in_jobs(n_jobs: int, versions: list[str]) -> list[dict[str, list[str]]
 
 
 def main():
-    os.chdir("/home/kahzerx/Documents/black-lotus/feather-mappings")
     minecraft_versions: list[str] = list(set(find_minecraft_versions()))
     print(minecraft_versions)
     jobs: list[dict[str, list[str]]] = split_in_jobs(19, minecraft_versions)
