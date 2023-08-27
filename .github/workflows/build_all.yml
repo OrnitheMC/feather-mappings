@@ -16,6 +16,15 @@ jobs:
       - name: checkout repository
         uses: actions/checkout@v3
 
+      - name: setup java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: wrapper validation
+        uses: gradle/wrapper-validation-action@v1
+
       - name: run build script
         run: python3 build_all.py
         env:
