@@ -6,7 +6,7 @@ import time
 from datetime import datetime, timedelta
 from queue import Queue, Empty
 from threading import Thread
-from typing import Callable, Tuple, Optional, Generator
+from typing import Callable, Tuple, Optional
 
 
 class AbstractThreadExecutor:
@@ -54,6 +54,7 @@ class BuildExecutor(AbstractThreadExecutor):
         self._BUILD_TEMP_DIR: str = "build_temp"
         if not os.path.exists(self._BUILD_TEMP_DIR):
             os.mkdir(self._BUILD_TEMP_DIR)
+        self._exit_code: int = 0
 
     def schedule(self, version: str) -> None:
         print(f"Scheduled version {version}")
@@ -82,12 +83,16 @@ class BuildExecutor(AbstractThreadExecutor):
                 return True
         return False
 
+    def get_exit_code(self) -> int:
+        return self._exit_code
+
     def _process_checker(self) -> None:
         for thread, process in self._running_processes.copy().items():
             if thread.is_alive():
                 continue
             if process.get_exit_code() != 0:
                 print(f"{process.get_version()} got exit code {process.get_exit_code()}")
+                self._exit_code = process.get_exit_code()
                 sys.exit(process.get_exit_code())
             self._running_processes.pop(thread)
         if len(self._running_processes) > 0 or not self._queue.empty():
@@ -184,7 +189,7 @@ def main():
         builder.schedule(version)
     builder.join()
     print("Bye~")
-    sys.exit(0)
+    sys.exit(builder.get_exit_code())
 
 
 if __name__ == '__main__':
