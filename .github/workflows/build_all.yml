@@ -1,11 +1,38 @@
 name: Build All
-on: [workflow_dispatch]
+on: [ workflow_dispatch ]
 jobs:
-  build:
-    runs-on: self-hosted
-    timeout-minutes: 1440
-    steps:
-      - uses: actions/checkout@v2
+  matrix_prep:
+    uses: ./.github/workflows/matrix_prep.yml
 
-      - name: run feather script
+  display_versions:
+    needs: matrix_prep
+    runs-on: ubuntu-22.04
+    steps:
+      - name: display versions
+        run: echo '${{ needs.matrix_prep.outputs.versions }}' | jq '.include[].version_range[]'
+
+  build:
+    needs: matrix_prep
+    runs-on: ubuntu-22.04
+
+    strategy:
+      max-parallel: 20
+      matrix: ${{ fromJson(needs.matrix_prep.outputs.versions) }}
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v3
+
+      - name: setup java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: wrapper validation
+        uses: gradle/wrapper-validation-action@v1
+
+      - name: run build script
         run: python3 build_all.py
+        env:
+          MC_VERSIONS: ${{ join(matrix.version_range, ',') }}
