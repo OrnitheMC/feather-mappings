@@ -86,7 +86,8 @@ class GradleProcess:
 def main():
     version: str = os.getenv("MC_VER", "")
     if not version:
-        sys.exit(0)
+        print(f"No mc version found!")
+        sys.exit(1)
     with GradleProcess(version) as process:
         process.start()
         exit_code: int = process.get_exit_code()
