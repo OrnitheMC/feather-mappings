@@ -3,129 +3,33 @@ import shutil
 import subprocess
 import sys
 import time
-from datetime import datetime, timedelta
-from queue import Queue, Empty
-from threading import Thread
-from typing import Callable, Tuple, Optional
-
-
-class AbstractThreadExecutor:
-    def __init__(self):
-        self.__name: str = self.__class__.__name__
-        self.__stopped_looping: bool = False
-        self._executor_thread: Optional[Thread] = None
-
-    def should_keep_looping(self) -> bool:
-        return not self.__stopped_looping
-
-    def stop(self) -> None:
-        self.__stopped_looping = True
-
-    def start(self) -> Thread:
-        self._executor_thread: Optional[Thread] = self.start_thread(self.loop, (), self.__name)
-        return self._executor_thread
-
-    def loop(self) -> None:
-        while self.should_keep_looping():
-            self.tick()
-
-    def tick(self) -> None:
-        raise NotImplementedError()
-
-    def join(self) -> None:
-        if self._executor_thread is None:
-            raise RuntimeError()
-        self._executor_thread.join()
-
-    @staticmethod
-    def start_thread(func: Callable, args: Tuple, name: Optional[str] = None) -> Thread:
-        thread: Thread = Thread(target=func, args=args, name=name, daemon=True)
-        thread.start()
-        return thread
-
-
-class PublishExecutor(AbstractThreadExecutor):
-    def __init__(self, max_processes: int = 4):
-        super().__init__()
-        self._max_processes: int = max_processes
-        self._queue: Queue[str] = Queue(maxsize=10_000)
-        self._running_processes: dict[Thread, GradleProcess] = {}
-        self._timeout: Optional[datetime] = None
-        self._PUBLISH_TEMP_DIR: str = "publish_temp"
-        if not os.path.exists(self._PUBLISH_TEMP_DIR):
-            os.mkdir(self._PUBLISH_TEMP_DIR)
-        self._exit_code: int = 0
-
-    def schedule(self, version: str) -> None:
-        print(f"Scheduled version {version}")
-        self._queue.put(version)
-
-    def tick(self) -> None:
-        time.sleep(1)
-        self._process_checker()
-        if len(self._running_processes) >= self._max_processes:
-            return
-        if self._queue.empty():
-            return
-        try:
-            version: str = self._queue.get(block=False)
-            if self._is_being_processed(version):
-                return
-            gradle_process: GradleProcess = GradleProcess(self._PUBLISH_TEMP_DIR, version)
-            process: Thread = self.start_thread(gradle_process.start, (), version)
-            self._running_processes[process] = gradle_process
-        except Empty:
-            pass
-
-    def _is_being_processed(self, version: str) -> bool:
-        for thread, process in self._running_processes.copy().items():
-            if process.get_version() == version:
-                return True
-        return False
-
-    def get_exit_code(self) -> int:
-        return self._exit_code
-
-    def _process_checker(self) -> None:
-        for thread, process in self._running_processes.copy().items():
-            if thread.is_alive():
-                continue
-            if process.get_exit_code() != 0:
-                print(f"{process.get_version()} got exit code {process.get_exit_code()}")
-                self._exit_code = process.get_exit_code()
-                sys.exit(process.get_exit_code())
-            self._running_processes.pop(thread)
-        if len(self._running_processes) > 0 or not self._queue.empty():
-            self._timeout = None
-            return
-        if self._timeout is None:
-            self._timeout = datetime.now() + timedelta(seconds=15)
-        elif datetime.now() > self._timeout:
-            time.sleep(2)
-            print("Done!")
-            self.stop()
-
-    def stop(self) -> None:
-        super().stop()
-        if os.path.exists(self._PUBLISH_TEMP_DIR):
-            shutil.rmtree(self._PUBLISH_TEMP_DIR)
+from typing import Optional
 
 
 class GradleProcess:
-    def __init__(self, publish_dir: str, version: str):
+    def __init__(self, version: str):
+        self._PUBLISH_TEMP_DIR: str = "publish_temp"
         self._version: str = version
-        self._publish_dir: str = publish_dir
         self._gradle_command: str = "gradlew" if os.name == "nt" else "./gradlew"
         self._process: Optional[subprocess.Popen] = None
         self._times_run: int = 0
         self._TO_COPY: list[str] = ["gradle", "mappings", "build.gradle", "gradle.properties", "gradlew", "gradlew.bat", "settings.gradle"]
+
+    def __enter__(self):
+        if not os.path.exists(self._PUBLISH_TEMP_DIR):
+            os.mkdir(self._PUBLISH_TEMP_DIR)
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if os.path.exists(self._PUBLISH_TEMP_DIR):
+            shutil.rmtree(self._PUBLISH_TEMP_DIR)
 
     def start(self) -> None:
         while self._should_retry():
             self._times_run += 1
             print(f"Version {self._version}")
             self._delete_dir()
-            os.mkdir(os.path.join(self._publish_dir, self._version))
+            os.mkdir(os.path.join(self._PUBLISH_TEMP_DIR, self._version))
             self._get_ready()
             self._run_gradle_command()
             self._process_listener()
@@ -139,15 +43,15 @@ class GradleProcess:
         return self._times_run <= 2
 
     def _delete_dir(self) -> None:
-        if os.path.isdir(os.path.join(self._publish_dir, self._version)):
-            shutil.rmtree(os.path.join(self._publish_dir, self._version))
+        if os.path.isdir(os.path.join(self._PUBLISH_TEMP_DIR, self._version)):
+            shutil.rmtree(os.path.join(self._PUBLISH_TEMP_DIR, self._version))
 
     def _get_ready(self) -> None:
         for element in self._TO_COPY:
             if os.path.isdir(element):
-                shutil.copytree(element, os.path.join(self._publish_dir, self._version, element))
+                shutil.copytree(element, os.path.join(self._PUBLISH_TEMP_DIR, self._version, element))
             else:
-                shutil.copy(element, os.path.join(self._publish_dir, self._version, element))
+                shutil.copy(element, os.path.join(self._PUBLISH_TEMP_DIR, self._version, element))
 
     def get_exit_code(self) -> int:
         return self._process.returncode
@@ -166,7 +70,7 @@ class GradleProcess:
             stderr=subprocess.STDOUT,
             shell=True,
             env=env,
-            cwd=os.path.join(self._publish_dir, self._version)
+            cwd=os.path.join(self._PUBLISH_TEMP_DIR, self._version)
         )
 
     def _process_listener(self) -> None:
@@ -180,16 +84,13 @@ class GradleProcess:
 
 
 def main():
-    versions: list[str] = os.getenv("MC_VERSIONS", "").split(",")
-    publisher: PublishExecutor = PublishExecutor(max_processes=1)  # single process... for now
-    publisher.start()
-    for version in versions:
-        if not version.strip():
-            continue
-        publisher.schedule(version)
-    publisher.join()
-    print("Bye~")
-    sys.exit(publisher.get_exit_code())
+    version: str = os.getenv("MC_VER", "")
+    if not version:
+        sys.exit(0)
+    with GradleProcess(version) as process:
+        process.start()
+        exit_code: int = process.get_exit_code()
+    sys.exit(exit_code)
 
 
 if __name__ == '__main__':
