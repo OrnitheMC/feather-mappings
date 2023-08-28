@@ -1,8 +1,15 @@
-name: Build
-on: [ workflow_dispatch, push ]
+name: Build All
+on: [ workflow_dispatch ]
 jobs:
   matrix_prep:
     uses: ./.github/workflows/matrix_prep.yml
+
+  display_versions:
+    needs: matrix_prep
+    runs-on: ubuntu-22.04
+    steps:
+      - name: display versions
+        run: echo '${{ needs.matrix_prep.outputs.versions }}' | jq '.include[].version_range[]'
 
   build:
     needs: matrix_prep
