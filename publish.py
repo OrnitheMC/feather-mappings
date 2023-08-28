@@ -51,9 +51,9 @@ class PublishExecutor(AbstractThreadExecutor):
         self._queue: Queue[str] = Queue(maxsize=10_000)
         self._running_processes: dict[Thread, GradleProcess] = {}
         self._timeout: Optional[datetime] = None
-        self._BUILD_TEMP_DIR: str = "publish_temp"
-        if not os.path.exists(self._BUILD_TEMP_DIR):
-            os.mkdir(self._BUILD_TEMP_DIR)
+        self._PUBLISH_TEMP_DIR: str = "publish_temp"
+        if not os.path.exists(self._PUBLISH_TEMP_DIR):
+            os.mkdir(self._PUBLISH_TEMP_DIR)
         self._exit_code: int = 0
 
     def schedule(self, version: str) -> None:
@@ -71,7 +71,7 @@ class PublishExecutor(AbstractThreadExecutor):
             version: str = self._queue.get(block=False)
             if self._is_being_processed(version):
                 return
-            gradle_process: GradleProcess = GradleProcess(self._BUILD_TEMP_DIR, version)
+            gradle_process: GradleProcess = GradleProcess(self._PUBLISH_TEMP_DIR, version)
             process: Thread = self.start_thread(gradle_process.start, (), version)
             self._running_processes[process] = gradle_process
         except Empty:
@@ -107,14 +107,14 @@ class PublishExecutor(AbstractThreadExecutor):
 
     def stop(self) -> None:
         super().stop()
-        if os.path.exists(self._BUILD_TEMP_DIR):
-            shutil.rmtree(self._BUILD_TEMP_DIR)
+        if os.path.exists(self._PUBLISH_TEMP_DIR):
+            shutil.rmtree(self._PUBLISH_TEMP_DIR)
 
 
 class GradleProcess:
-    def __init__(self, build_dir: str, version: str):
+    def __init__(self, publish_dir: str, version: str):
         self._version: str = version
-        self._build_dir: str = build_dir
+        self._publish_dir: str = publish_dir
         self._gradle_command: str = "gradlew" if os.name == "nt" else "./gradlew"
         self._process: Optional[subprocess.Popen] = None
         self._times_run: int = 0
@@ -125,7 +125,7 @@ class GradleProcess:
             self._times_run += 1
             print(f"Version {self._version}")
             self._delete_dir()
-            os.mkdir(os.path.join(self._build_dir, self._version))
+            os.mkdir(os.path.join(self._publish_dir, self._version))
             self._get_ready()
             self._run_gradle_command()
             self._process_listener()
@@ -139,15 +139,15 @@ class GradleProcess:
         return self._times_run <= 2
 
     def _delete_dir(self) -> None:
-        if os.path.isdir(os.path.join(self._build_dir, self._version)):
-            shutil.rmtree(os.path.join(self._build_dir, self._version))
+        if os.path.isdir(os.path.join(self._publish_dir, self._version)):
+            shutil.rmtree(os.path.join(self._publish_dir, self._version))
 
     def _get_ready(self) -> None:
         for element in self._TO_COPY:
             if os.path.isdir(element):
-                shutil.copytree(element, os.path.join(self._build_dir, self._version, element))
+                shutil.copytree(element, os.path.join(self._publish_dir, self._version, element))
             else:
-                shutil.copy(element, os.path.join(self._build_dir, self._version, element))
+                shutil.copy(element, os.path.join(self._publish_dir, self._version, element))
 
     def get_exit_code(self) -> int:
         return self._process.returncode
@@ -166,7 +166,7 @@ class GradleProcess:
             stderr=subprocess.STDOUT,
             shell=True,
             env=env,
-            cwd=os.path.join(self._build_dir, self._version)
+            cwd=os.path.join(self._publish_dir, self._version)
         )
 
     def _process_listener(self) -> None:
