@@ -24,6 +24,7 @@ def split_in_workflows(max_versions: int, versions: list[str]) -> list[list[str]
 
 def main():
     minecraft_versions: list[str] = list(set(find_minecraft_versions()))
+    minecraft_versions.sort()
     workflows: list[list[str]] = split_in_workflows(230, minecraft_versions)
     for i, versions in enumerate(workflows):
         with open(".github/workflows/templates/publish_runner_template.yml", "r") as r_template:
