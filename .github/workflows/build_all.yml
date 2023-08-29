@@ -33,6 +33,10 @@ jobs:
       - name: wrapper validation
         uses: gradle/wrapper-validation-action@v1
 
+      - name: make gradle wrapper executable
+        if: ${{ runner.os != 'Windows' }}
+        run: chmod +x ./gradlew
+
       - name: run build script
         run: python3 build_all.py
         env:
