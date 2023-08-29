@@ -99,7 +99,7 @@ c	net/minecraft/unmapped/C_0915802
 c	net/minecraft/unmapped/C_0946921
 	m	()V	m_2612902		renderLeftArm
 c	net/minecraft/unmapped/C_0987157
-	f	Lnet/minecraft/unmapped/C_6324082;	f_6915977		settings
+	f	Lnet/minecraft/unmapped/C_6324082;	f_6915977		options
 	f	Lnet/minecraft/unmapped/C_1241852;	f_3633382		defaultLiquid
 	m	(Lnet/minecraft/unmapped/C_5553933;JZ)V	<init>	<init>	
 		p	1		world	
@@ -502,9 +502,9 @@ c	net/minecraft/unmapped/C_2925148
 		p	1			type
 		p	2			values
 c	net/minecraft/unmapped/C_2925725
-	f	I	f_4787039		f_4787039
-	f	Lnet/minecraft/unmapped/C_0519709;	f_7140859		f_7140859
-	f	Lcom/google/common/base/Predicate;	f_1383838		f_1383838
+	f	I	f_4787039		id
+	f	Lnet/minecraft/unmapped/C_0519709;	f_7140859		controller
+	f	Lcom/google/common/base/Predicate;	f_1383838		validator
 	m	(Lnet/minecraft/unmapped/C_3831727;IIII)V	<init>	<init>	
 		p	1		textRenderer	
 		p	2		x	
@@ -512,17 +512,17 @@ c	net/minecraft/unmapped/C_2925725
 		p	4		width	
 		p	5		height	
 	m	(ILnet/minecraft/unmapped/C_3831727;IIII)V	<init>		<init>
-		p	1			textRenderer
-		p	2			x
-		p	3			y
-		p	4			width
-		p	5			height
-		p	6			p_6
-	m	(Lnet/minecraft/unmapped/C_0519709;)V	m_3101858		m_3101858
+		p	1			id
+		p	2			textRenderer
+		p	3			x
+		p	4			y
+		p	5			width
+		p	6			height
+	m	(Lnet/minecraft/unmapped/C_0519709;)V	m_3101858		setController
 		p	1			p_1
-	m	(Lcom/google/common/base/Predicate;)V	m_1977869		m_1977869
-		p	1			p_1
-	m	()I	m_0528325		m_0528325
+	m	(Lcom/google/common/base/Predicate;)V	m_1977869		setValidator
+		p	1			validator
+	m	()I	m_0528325		getId
 c	net/minecraft/unmapped/C_3020744
 	m	()Z	m_3048937		isAltDown
 c	net/minecraft/unmapped/C_3037945
@@ -672,10 +672,10 @@ c	net/minecraft/unmapped/C_3747079
 	m	()Lnet/minecraft/unmapped/C_9264598;	m_3079613		m_3079613
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_3784880
-	m	(III)V	m_1433237		m_1433237
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(III)V	m_1433237		renderOutOfBounds
+		p	1			index
+		p	2			x
+		p	3			y
 c	net/minecraft/unmapped/C_3813953
 	f	Ljava/lang/Class;	f_9438609	blockEntityType	
 	f	Z	f_0926429	standing	
@@ -923,10 +923,10 @@ c	net/minecraft/unmapped/C_5916564
 	m	()V	m_3356138		m_3356138
 c	net/minecraft/unmapped/C_5999076
 	f	Z	f_1810131		visible
-	m	(III)V	m_2905689		m_2905689
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(III)V	m_2905689		renderEntryOutOfBounds
+		p	1			index
+		p	2			x
+		p	3			y
 	m	()V	m_1002325		handleMouse
 c	net/minecraft/unmapped/C_6022032
 	m	()V	m_3356138		m_3356138
@@ -1269,18 +1269,18 @@ c	net/minecraft/unmapped/C_7729923
 		p	1			p_1
 c	net/minecraft/unmapped/C_7732918
 	f	I	f_1818504		f_1818504
-	f	Ljava/util/List;	f_8383579	texts	f_8383579
+	f	Ljava/util/List;	f_8383579	texts	text
 	m	(Lnet/minecraft/unmapped/C_3831727;IIIIII)V	<init>		<init>
-		p	1			p_1
+		p	1			textRenderer
 		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-	m	(Ljava/lang/String;)V	m_7510582		m_7510582
-		p	1			p_1
-	m	()Lnet/minecraft/unmapped/C_7732918;	m_8971536		m_8971536
+		p	3			x
+		p	4			y
+		p	5			width
+		p	6			height
+		p	7			textColor
+	m	(Ljava/lang/String;)V	m_7510582		add
+		p	1			text
+	m	()Lnet/minecraft/unmapped/C_7732918;	m_8971536		setCentered
 c	net/minecraft/unmapped/C_7753067
 	f	Lnet/minecraft/unmapped/C_7077852;	f_3836496		MOISTURE
 	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;I)Lnet/minecraft/unmapped/C_2441996;	m_7685061		m_7685061
@@ -1707,23 +1707,23 @@ c	net/minecraft/unmapped/C_9986135
 	m	(Lnet/minecraft/unmapped/C_2441996;)I	m_5249160		m_5249160
 		p	1			p_1
 	m	()Lnet/minecraft/unmapped/C_9264598;	m_3079613		m_3079613
-c	net/minecraft/unmapped/C_0072076		net/minecraft/unmapped/C_0072076
-	f	Lnet/minecraft/unmapped/C_8478781;	f_5639236		f_5639236
-	f	F	f_6133100		f_6133100
-	f	F	f_5750227		f_5750227
-	f	F	f_4276599		f_4276599
+c	net/minecraft/unmapped/C_0072076		net/minecraft/client/gui/screen/world/OverworldGeneratorOptionsWidget__NumberOption
+	f	Lnet/minecraft/unmapped/C_8478781;	f_5639236		formatter
+	f	F	f_6133100		min
+	f	F	f_5750227		max
+	f	F	f_4276599		defaultValue
 	m	(ILjava/lang/String;ZLnet/minecraft/unmapped/C_8478781;FFF)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-	m	()Lnet/minecraft/unmapped/C_8478781;	m_8362792		m_8362792
-	m	()F	m_9556086		m_9556086
-	m	()F	m_1071812		m_1071812
-	m	()F	m_5094761		m_5094761
+		p	1			id
+		p	2			message
+		p	3			visible
+		p	4			formatter
+		p	5			min
+		p	6			max
+		p	7			defaultValue
+	m	()Lnet/minecraft/unmapped/C_8478781;	m_8362792		getFormatter
+	m	()F	m_9556086		getMin
+	m	()F	m_1071812		getMax
+	m	()F	m_5094761		getDefaultValue
 c	net/minecraft/unmapped/C_0124130		net/minecraft/block/LogBlock__2
 	f	[I	f_6154135		f_6154135
 	m	()V	<clinit>		<clinit>
@@ -1738,66 +1738,66 @@ c	net/minecraft/unmapped/C_0190361		net/minecraft/block/FlowerBlock__Type__1
 		p	1			p_1
 	m	(Ljava/lang/Object;)Z	apply		apply
 		p	1			type
-c	net/minecraft/unmapped/C_0464265		net/minecraft/unmapped/C_0464265
-	f	Ljava/util/List;	f_4158428		f_4158428
-	f	Lnet/minecraft/unmapped/C_0739569;	f_3222304		f_3222304
-	f	Ljava/util/List;	f_6134546		f_6134546
-	f	[[Lnet/minecraft/unmapped/C_1393381;	f_6694128		f_6694128
-	f	I	f_8569839		f_8569839
-	f	Lnet/minecraft/unmapped/C_0519709;	f_3257117		f_3257117
-	f	Lnet/minecraft/unmapped/C_2691939;	f_4905171		f_4905171
+c	net/minecraft/unmapped/C_0464265		net/minecraft/client/gui/screen/world/OverworldGeneratorOptionsWidget
+	f	Ljava/util/List;	f_4158428		entries
+	f	Lnet/minecraft/unmapped/C_0739569;	f_3222304		elements
+	f	Ljava/util/List;	f_6134546		textFields
+	f	[[Lnet/minecraft/unmapped/C_1393381;	f_6694128		options
+	f	I	f_8569839		page
+	f	Lnet/minecraft/unmapped/C_0519709;	f_3257117		controller
+	f	Lnet/minecraft/unmapped/C_2691939;	f_4905171		selected
 	m	(Lnet/minecraft/unmapped/C_8105098;IIIIILnet/minecraft/unmapped/C_0519709;[[Lnet/minecraft/unmapped/C_1393381;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
-	m	()V	m_3570016		m_3570016
-	m	()V	m_4944197		m_4944197
-	m	()I	m_5871471		m_5871471
-	m	()I	m_1729401		m_1729401
-	m	()Lnet/minecraft/unmapped/C_2691939;	m_8951523		m_8951523
-	m	()V	m_6900688		m_6900688
-	m	()V	m_0443284		m_0443284
-	m	(I)Lnet/minecraft/unmapped/C_2691939;	m_7033749		m_7033749
-		p	1			p_1
-	m	(II)V	m_2086788		m_2086788
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_2691939;Z)V	m_1475098		m_1475098
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_1393381;IZ)Lnet/minecraft/unmapped/C_2691939;	m_1709070		m_1709070
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			minecraft
+		p	2			width
+		p	3			height
+		p	4			minY
+		p	5			maxY
+		p	6			entryHeight
+		p	7			controller
+		p	8			options
+	m	()V	m_3570016		init
+	m	()V	m_4944197		buildPage
+	m	()I	m_5871471		getPage
+	m	()I	m_1729401		getOptionCount
+	m	()Lnet/minecraft/unmapped/C_2691939;	m_8951523		getSelected
+	m	()V	m_6900688		prevPage
+	m	()V	m_0443284		nextPage
+	m	(I)Lnet/minecraft/unmapped/C_2691939;	m_7033749		getElement
+		p	1			id
+	m	(II)V	m_2086788		changePage
+		p	1			from
+		p	2			to
+	m	(Lnet/minecraft/unmapped/C_2691939;Z)V	m_1475098		setVisible
+		p	1			option
+		p	2			visible
+	m	(Lnet/minecraft/unmapped/C_1393381;IZ)Lnet/minecraft/unmapped/C_2691939;	m_1709070		createElement
+		p	1			option
+		p	2			x
+		p	3			alone
 	m	(III)Z	m_7379893		m_7379893
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(IILnet/minecraft/unmapped/C_0072076;)Lnet/minecraft/unmapped/C_4159114;	m_5513852		m_5513852
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(IILnet/minecraft/unmapped/C_2682894;)Lnet/minecraft/unmapped/C_1063170;	m_8077927		m_8077927
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(IILnet/minecraft/unmapped/C_6879068;)Lnet/minecraft/unmapped/C_2925725;	m_1148024		m_1148024
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(IILnet/minecraft/unmapped/C_8586354;Z)Lnet/minecraft/unmapped/C_7732918;	m_9007379		m_9007379
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(CI)V	m_5367247		m_5367247
-		p	1			p_1
-		p	2			p_2
+	m	(IILnet/minecraft/unmapped/C_0072076;)Lnet/minecraft/unmapped/C_4159114;	m_5513852		createSlider
+		p	1			x
+		p	2			y
+		p	3			option
+	m	(IILnet/minecraft/unmapped/C_2682894;)Lnet/minecraft/unmapped/C_1063170;	m_8077927		createToggle
+		p	1			x
+		p	2			y
+		p	3			option
+	m	(IILnet/minecraft/unmapped/C_6879068;)Lnet/minecraft/unmapped/C_2925725;	m_1148024		createTextField
+		p	1			x
+		p	2			y
+		p	3			option
+	m	(IILnet/minecraft/unmapped/C_8586354;Z)Lnet/minecraft/unmapped/C_7732918;	m_9007379		createLabel
+		p	1			x
+		p	2			y
+		p	3			label
+		p	4			alone
+	m	(CI)V	m_5367247		keyPressed
+		p	1			chr
+		p	2			code
 	m	(I)Lnet/minecraft/unmapped/C_8266237;	m_5887834		getEntry
 		p	1			p_1
 	m	()I	m_3791031		m_3791031
@@ -1833,21 +1833,21 @@ c	net/minecraft/unmapped/C_0486822		net/minecraft/block/AbstractRailBlock__Shape
 	m	(I)Lnet/minecraft/unmapped/C_0486822;	m_2369926		byId
 		p	0			id
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_0519709		net/minecraft/unmapped/C_0519709
-	m	(IZ)V	m_6270650		m_6270650
-		p	1			p_1
-		p	2			p_2
-	m	(IF)V	m_9497436		m_9497436
-		p	1			p_1
-		p	2			p_2
-	m	(ILjava/lang/String;)V	m_2101455		m_2101455
-		p	1			p_1
-		p	2			p_2
+c	net/minecraft/unmapped/C_0519709		net/minecraft/client/gui/screen/world/OverworldGeneratorOptionsWidget__Controller
+	m	(IZ)V	m_6270650		setValue
+		p	1			id
+		p	2			value
+	m	(IF)V	m_9497436		setValue
+		p	1			id
+		p	2			value
+	m	(ILjava/lang/String;)V	m_2101455		setValue
+		p	1			id
+		p	2			value
 c	net/minecraft/unmapped/C_0526041		net/minecraft/client/gui/screen/world/CustomizeWorldPresetsScreen
 	f	Ljava/util/List;	f_8275541		PRESETS
-	f	Lnet/minecraft/unmapped/C_3434940;	f_5680616		f_5680616
+	f	Lnet/minecraft/unmapped/C_3434940;	f_5680616		presets
 	f	Lnet/minecraft/unmapped/C_2348249;	f_7284810		usePresetButton
-	f	Lnet/minecraft/unmapped/C_2925725;	f_3650128		f_3650128
+	f	Lnet/minecraft/unmapped/C_2925725;	f_3650128		presetField
 	f	Lnet/minecraft/unmapped/C_0868273;	f_8372320		parent
 	f	Ljava/lang/String;	f_5687988		title
 	f	Ljava/lang/String;	f_7980048		sharePresetText
@@ -1871,8 +1871,8 @@ c	net/minecraft/unmapped/C_0526041		net/minecraft/client/gui/screen/world/Custom
 		p	2			p_2
 		p	3			p_3
 	m	()V	m_2450377		m_2450377
-	m	()V	m_4193352		m_4193352
-	m	()Z	m_9147757		m_9147757
+	m	()V	m_4193352		updateButtons
+	m	()Z	m_9147757		hasSelectedPreset
 	m	()Ljava/util/List;	m_9303436		m_9303436
 	m	(Lnet/minecraft/unmapped/C_0526041;)Lnet/minecraft/unmapped/C_3434940;	m_1187376		m_1187376
 		p	0			p_0
@@ -1932,11 +1932,11 @@ c	net/minecraft/unmapped/C_0835395		net/minecraft/block/TorchBlock__1
 		p	1			dir
 c	net/minecraft/unmapped/C_0868273		net/minecraft/client/gui/screen/world/CustomizeWorldScreen
 	f	Lnet/minecraft/unmapped/C_7450921;	f_5421850		parentScreen
-	f	Ljava/lang/String;	f_1575155		screenTitle
-	f	Ljava/lang/String;	f_6353594		basePageCountString
-	f	Ljava/lang/String;	f_3080430		baseSettingsTypeString
-	f	[Ljava/lang/String;	f_2113005		f_2113005
-	f	Lnet/minecraft/unmapped/C_0464265;	f_4262764		f_4262764
+	f	Ljava/lang/String;	f_1575155		title
+	f	Ljava/lang/String;	f_6353594		pageTitle
+	f	Ljava/lang/String;	f_3080430		pageDescription
+	f	[Ljava/lang/String;	f_2113005		pageDescriptions
+	f	Lnet/minecraft/unmapped/C_0464265;	f_4262764		overworldGeneratorOptions
 	f	Lnet/minecraft/unmapped/C_2348249;	f_2354995		doneButton
 	f	Lnet/minecraft/unmapped/C_2348249;	f_4152493		randomizeButton
 	f	Lnet/minecraft/unmapped/C_2348249;	f_3910269		defaultsButton
@@ -1945,22 +1945,22 @@ c	net/minecraft/unmapped/C_0868273		net/minecraft/client/gui/screen/world/Custom
 	f	Lnet/minecraft/unmapped/C_2348249;	f_6379820		confirmYesButton
 	f	Lnet/minecraft/unmapped/C_2348249;	f_2305919		confirmNoButton
 	f	Lnet/minecraft/unmapped/C_2348249;	f_3973592		presetsButton
-	f	Z	f_1451343		f_1451343
-	f	I	f_5687559		f_5687559
-	f	Z	f_7503161		f_7503161
-	f	Lcom/google/common/base/Predicate;	f_9755578		f_9755578
-	f	Lnet/minecraft/unmapped/C_5461482;	f_6156377		f_6156377
-	f	Lnet/minecraft/unmapped/C_5461482;	f_1555583		f_1555583
-	f	Ljava/util/Random;	f_4073658		f_4073658
+	f	Z	f_1451343		defaultsButtonActive
+	f	I	f_5687559		queuedButtonId
+	f	Z	f_7503161		skipNextClick
+	f	Lcom/google/common/base/Predicate;	f_9755578		floatValidator
+	f	Lnet/minecraft/unmapped/C_5461482;	f_6156377		defaultOverworldGeneratorOptions
+	f	Lnet/minecraft/unmapped/C_5461482;	f_1555583		selectedOverworldGeneratorOptions
+	f	Ljava/util/Random;	f_4073658		random
 	m	(Lnet/minecraft/unmapped/C_3020744;Ljava/lang/String;)V	<init>		<init>
-		p	1			parentScreen
-		p	2			p_2
+		p	1			parent
+		p	2			overworldGeneratorOptions
 	m	()V	m_3593494		m_3593494
 	m	()V	m_3356138		m_3356138
-	m	()V	m_0498828		m_0498828
-	m	()Ljava/lang/String;	m_0309012		m_0309012
-	m	(Ljava/lang/String;)V	m_4359214		m_4359214
-		p	1			p_1
+	m	()V	m_0498828		updateOverworldGeneratorOptions
+	m	()Ljava/lang/String;	m_0309012		getOverworldGeneratorOptions
+	m	(Ljava/lang/String;)V	m_4359214		selectOverworldGeneratorOptions
+		p	1			generatorOptions
 	m	(ILjava/lang/String;)V	m_2101455		m_2101455
 		p	1			p_1
 		p	2			p_2
@@ -1968,9 +1968,9 @@ c	net/minecraft/unmapped/C_0868273		net/minecraft/client/gui/screen/world/Custom
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(IF)Ljava/lang/String;	m_9324118		m_9324118
-		p	1			p_1
-		p	2			p_2
+	m	(IF)Ljava/lang/String;	m_9324118		formatValue
+		p	1			id
+		p	2			value
 	m	(IZ)V	m_6270650		m_6270650
 		p	1			p_1
 		p	2			p_2
@@ -1979,18 +1979,18 @@ c	net/minecraft/unmapped/C_0868273		net/minecraft/client/gui/screen/world/Custom
 		p	2			p_2
 	m	(Lnet/minecraft/unmapped/C_2348249;)V	m_7971793		m_7971793
 		p	1			p_1
-	m	()V	m_8558277		m_8558277
-	m	(I)V	m_3786062		m_3786062
-		p	1			p_1
-	m	()V	m_8970113		m_8970113
+	m	()V	m_8558277		resetOverworldGeneratorOptions
+	m	(I)V	m_3786062		queueButtonClick
+		p	1			id
+	m	()V	m_8970113		toggleDefaults
 	m	(Z)V	m_8812589		m_8812589
 		p	1			p_1
-	m	()V	m_1895385		m_1895385
+	m	()V	m_1895385		updatePageIndicators
 	m	(CI)V	m_6992336		m_6992336
 		p	1			p_1
 		p	2			p_2
-	m	(F)V	m_2671802		m_2671802
-		p	1			p_1
+	m	(F)V	m_2671802		modifyValue
+		p	1			modifier
 	m	(III)V	m_7362766		m_7362766
 		p	1			p_1
 		p	2			p_2
@@ -2015,10 +2015,10 @@ c	net/minecraft/unmapped/C_0930778		net/minecraft/block/Leaves2Block__1
 		p	1			p_1
 	m	(Ljava/lang/Object;)Z	apply		apply
 		p	1			variant
-c	net/minecraft/unmapped/C_1063170		net/minecraft/unmapped/C_1063170
-	f	Z	f_6629323		f_6629323
-	f	Ljava/lang/String;	f_1028483		f_1028483
-	f	Lnet/minecraft/unmapped/C_0519709;	f_6969259		f_6969259
+c	net/minecraft/unmapped/C_1063170		net/minecraft/client/gui/screen/world/GeneratorOptionToggle
+	f	Z	f_6629323		value
+	f	Ljava/lang/String;	f_1028483		key
+	f	Lnet/minecraft/unmapped/C_0519709;	f_6969259		controller
 	m	(Lnet/minecraft/unmapped/C_0519709;IIILjava/lang/String;Z)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -2026,9 +2026,9 @@ c	net/minecraft/unmapped/C_1063170		net/minecraft/unmapped/C_1063170
 		p	4			p_4
 		p	5			p_5
 		p	6			p_6
-	m	()Ljava/lang/String;	m_1768623		m_1768623
-	m	(Z)V	m_1572571		m_1572571
-		p	1			p_1
+	m	()Ljava/lang/String;	m_1768623		updateMessage
+	m	(Z)V	m_1572571		setValue
+		p	1			value
 	m	(Lnet/minecraft/unmapped/C_8105098;II)Z	m_9491400		m_9491400
 		p	1			p_1
 		p	2			p_2
@@ -2060,17 +2060,17 @@ c	net/minecraft/unmapped/C_1308258		net/minecraft/block/StoneSlabBlock__Variant
 	m	(I)Lnet/minecraft/unmapped/C_1308258;	m_1140341		byId
 		p	0			id
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_1393381		net/minecraft/unmapped/C_1393381
-	f	I	f_9370971		f_9370971
-	f	Ljava/lang/String;	f_8560654		f_8560654
-	f	Z	f_1206724		f_1206724
+c	net/minecraft/unmapped/C_1393381		net/minecraft/client/gui/screen/world/OverworldGeneratorOptionsWidget__GeneratorOption
+	f	I	f_9370971		id
+	f	Ljava/lang/String;	f_8560654		message
+	f	Z	f_1206724		visible
 	m	(ILjava/lang/String;Z)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	()I	m_9436609		m_9436609
-	m	()Ljava/lang/String;	m_4780956		m_4780956
-	m	()Z	m_3115665		m_3115665
+		p	1			id
+		p	2			message
+		p	3			visible
+	m	()I	m_9436609		getId
+	m	()Ljava/lang/String;	m_4780956		getMessage
+	m	()Z	m_3115665		getVisible
 c	net/minecraft/unmapped/C_1444903		net/minecraft/block/WallSignBlock__1
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_3544601;)Z	m_5872478		m_5872478
@@ -2139,14 +2139,14 @@ c	net/minecraft/unmapped/C_2650420		net/minecraft/block/StonebrickBlock__Variant
 	m	(I)Lnet/minecraft/unmapped/C_2650420;	m_8917367		byId
 		p	0			id
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_2682894		net/minecraft/unmapped/C_2682894
-	f	Z	f_3430452		f_3430452
+c	net/minecraft/unmapped/C_2682894		net/minecraft/client/gui/screen/world/OverworldGeneratorOptionsWidget__ToggleOption
+	f	Z	f_3430452		defaultValue
 	m	(ILjava/lang/String;ZZ)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	()Z	m_5865757		m_5865757
+		p	1			id
+		p	2			message
+		p	3			visible
+		p	4			defaultValue
+	m	()Z	m_5865757		getDefaultValue
 c	net/minecraft/unmapped/C_2972137		net/minecraft/block/WallSignBlock
 	f	Lnet/minecraft/unmapped/C_3858757;	f_6607912		FACING
 	m	()V	<init>		<init>
@@ -2340,38 +2340,38 @@ c	net/minecraft/unmapped/C_4151455		net/minecraft/block/TallPlantBlock__Type
 	m	(I)Lnet/minecraft/unmapped/C_4151455;	m_5301547		byId
 		p	0			id
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_4159114		net/minecraft/unmapped/C_4159114
-	f	F	f_8862018		f_8862018
-	f	Z	f_9621698		f_9621698
-	f	Ljava/lang/String;	f_5790448		f_5790448
-	f	F	f_6239380		f_6239380
-	f	F	f_4310085		f_4310085
-	f	Lnet/minecraft/unmapped/C_0519709;	f_9878790		f_9878790
-	f	Lnet/minecraft/unmapped/C_8478781;	f_7678889		f_7678889
+c	net/minecraft/unmapped/C_4159114		net/minecraft/client/gui/screen/world/GeneratorOptionSlider
+	f	F	f_8862018		amount
+	f	Z	f_9621698		hovered
+	f	Ljava/lang/String;	f_5790448		key
+	f	F	f_6239380		min
+	f	F	f_4310085		max
+	f	Lnet/minecraft/unmapped/C_0519709;	f_9878790		controller
+	f	Lnet/minecraft/unmapped/C_8478781;	f_7678889		formatter
 	m	(Lnet/minecraft/unmapped/C_0519709;IIILjava/lang/String;FFFLnet/minecraft/unmapped/C_8478781;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
-		p	9			p_9
-	m	()F	m_1739589		m_1739589
-	m	(FZ)V	m_1990460		m_1990460
-		p	1			p_1
-		p	2			p_2
-	m	()F	m_1764464		m_1764464
-	m	()Ljava/lang/String;	m_4508308		m_4508308
+		p	1			controller
+		p	2			id
+		p	3			x
+		p	4			y
+		p	5			key
+		p	6			min
+		p	7			max
+		p	8			defaultValue
+		p	9			formatter
+	m	()F	m_1739589		getValue
+	m	(FZ)V	m_1990460		setValue
+		p	1			value
+		p	2			notify
+	m	()F	m_1764464		getAmount
+	m	()Ljava/lang/String;	m_4508308		updateMessage
 	m	(Z)I	m_8274414		m_8274414
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_8105098;II)V	m_7033877		m_7033877
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(F)V	m_2659858		m_2659858
-		p	1			p_1
+	m	(F)V	m_2659858		setAmount
+		p	1			amount
 	m	(Lnet/minecraft/unmapped/C_8105098;II)Z	m_9491400		m_9491400
 		p	1			p_1
 		p	2			p_2
@@ -2661,7 +2661,7 @@ c	net/minecraft/unmapped/C_5299936		net/minecraft/block/AbstractLogBlock__LogAxi
 		p	3			name
 	m	()Ljava/lang/String;	toString		toString
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_5461482		net/minecraft/world/gen/chunk/OverworldGeneratorSettings__Factory
+c	net/minecraft/unmapped/C_5461482		net/minecraft/world/gen/chunk/OverworldGeneratorOptions__Builder
 	f	Lcom/google/gson/Gson;	f_5311557		GSON
 	f	F	f_9742995		coordinateScale
 	f	F	f_5813938		heightScale
@@ -2790,7 +2790,7 @@ c	net/minecraft/unmapped/C_5821080		net/minecraft/server/world/ReadOnlyServerWor
 		p	1			p_1
 		p	2			p_2
 		p	4			p_4
-c	net/minecraft/unmapped/C_5858939		net/minecraft/world/gen/chunk/OverworldGeneratorSettings__Serializer
+c	net/minecraft/unmapped/C_5858939		net/minecraft/world/gen/chunk/OverworldGeneratorOptions__Serializer
 	m	()V	<init>		<init>
 	m	(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/unmapped/C_5461482;	m_4716203		deserialize
 		p	1			p_1
@@ -2805,7 +2805,7 @@ c	net/minecraft/unmapped/C_5858939		net/minecraft/world/gen/chunk/OverworldGener
 		p	2			type
 		p	3			context
 	m	(Ljava/lang/Object;Ljava/lang/reflect/Type;Lcom/google/gson/JsonSerializationContext;)Lcom/google/gson/JsonElement;	serialize		serialize
-		p	1			factory
+		p	1			builder
 		p	2			type
 		p	3			context
 c	net/minecraft/unmapped/C_5887726		net/minecraft/block/StairsBlock__1
@@ -2844,7 +2844,7 @@ c	net/minecraft/unmapped/C_6275080		net/minecraft/block/HorizontalFacingBlock__1
 		p	1			p_1
 	m	(Ljava/lang/Object;)Z	apply		apply
 		p	1			p_1
-c	net/minecraft/unmapped/C_6324082		net/minecraft/world/gen/chunk/OverworldGeneratorSettings
+c	net/minecraft/unmapped/C_6324082		net/minecraft/world/gen/chunk/OverworldGeneratorOptions
 	f	F	f_1427970		coordinateScale
 	f	F	f_3170177		heightScale
 	f	F	f_9485603		upperLimitScale
@@ -2923,7 +2923,7 @@ c	net/minecraft/unmapped/C_6324082		net/minecraft/world/gen/chunk/OverworldGener
 	f	I	f_0279868		lapisMinHeight
 	f	I	f_6545435		lapisMaxHeight
 	m	(Lnet/minecraft/unmapped/C_5461482;)V	<init>		<init>
-		p	1			factory
+		p	1			builder
 	m	(Lnet/minecraft/unmapped/C_5461482;Lnet/minecraft/unmapped/C_3632573;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -2946,14 +2946,14 @@ c	net/minecraft/unmapped/C_6830010		net/minecraft/unmapped/C_6830010
 	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_6390485;	m_5784337		m_5784337
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_6879068		net/minecraft/unmapped/C_6879068
-	f	Lcom/google/common/base/Predicate;	f_8137664		f_8137664
+c	net/minecraft/unmapped/C_6879068		net/minecraft/client/gui/screen/world/OverworldGeneratorOptionsWidget__TextOption
+	f	Lcom/google/common/base/Predicate;	f_8137664		validator
 	m	(ILjava/lang/String;ZLcom/google/common/base/Predicate;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	()Lcom/google/common/base/Predicate;	m_0587823		m_0587823
+		p	1			id
+		p	2			message
+		p	3			visible
+		p	4			validator
+	m	()Lcom/google/common/base/Predicate;	m_0587823		getValidator
 c	net/minecraft/unmapped/C_7023945		net/minecraft/block/DoublePlantBlock__1
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_3544601;)Z	m_3935416		m_3935416
@@ -3087,7 +3087,7 @@ c	net/minecraft/unmapped/C_7695480		net/minecraft/client/gui/screen/world/Custom
 	m	(Ljava/lang/String;)Z	m_2937979		apply
 		p	1			p_1
 	m	(Ljava/lang/Object;)Z	apply		apply
-		p	1			p_1
+		p	1			s
 c	net/minecraft/unmapped/C_7697897		net/minecraft/block/SandstoneBlock__Type
 	f	Lnet/minecraft/unmapped/C_7697897;	f_2722454		DEFAULT
 	f	Lnet/minecraft/unmapped/C_7697897;	f_5348421		CHISELED
@@ -3154,16 +3154,16 @@ c	net/minecraft/unmapped/C_8063394		net/minecraft/item/LayeredBlockItem
 c	net/minecraft/unmapped/C_8097830		net/minecraft/unmapped/C_2400640__1
 	f	[I	f_2149587		f_2149587
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_8266237		net/minecraft/unmapped/C_8266237
-	f	Lnet/minecraft/unmapped/C_8105098;	f_4570342		f_4570342
-	f	Lnet/minecraft/unmapped/C_2691939;	f_4594520		f_4594520
-	f	Lnet/minecraft/unmapped/C_2691939;	f_8989780		f_8989780
-	f	Lnet/minecraft/unmapped/C_2691939;	f_6755398		f_6755398
+c	net/minecraft/unmapped/C_8266237		net/minecraft/client/gui/screen/world/OverworldGeneratorOptionsWidget__GeneratorOptionsEntry
+	f	Lnet/minecraft/unmapped/C_8105098;	f_4570342		minecraft
+	f	Lnet/minecraft/unmapped/C_2691939;	f_4594520		left
+	f	Lnet/minecraft/unmapped/C_2691939;	f_8989780		right
+	f	Lnet/minecraft/unmapped/C_2691939;	f_6755398		selected
 	m	(Lnet/minecraft/unmapped/C_2691939;Lnet/minecraft/unmapped/C_2691939;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-	m	()Lnet/minecraft/unmapped/C_2691939;	m_5986738		m_5986738
-	m	()Lnet/minecraft/unmapped/C_2691939;	m_3688474		m_3688474
+		p	1			left
+		p	2			right
+	m	()Lnet/minecraft/unmapped/C_2691939;	m_5986738		getLeft
+	m	()Lnet/minecraft/unmapped/C_2691939;	m_3688474		getRight
 	m	(IIIIILnet/minecraft/unmapped/C_5786166;IIZ)V	m_2013749		m_2013749
 		p	1			p_1
 		p	2			p_2
@@ -3174,28 +3174,28 @@ c	net/minecraft/unmapped/C_8266237		net/minecraft/unmapped/C_8266237
 		p	7			p_7
 		p	8			p_8
 		p	9			p_9
-	m	(Lnet/minecraft/unmapped/C_2691939;IIIZ)V	m_4619686		m_4619686
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	(Lnet/minecraft/unmapped/C_2348249;IIIZ)V	m_4875921		m_4875921
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	(Lnet/minecraft/unmapped/C_2925725;IZ)V	m_3818052		m_3818052
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_7732918;IIIZ)V	m_5825641		m_5825641
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+	m	(Lnet/minecraft/unmapped/C_2691939;IIIZ)V	m_4619686		renderOption
+		p	1			option
+		p	2			y
+		p	3			mouseX
+		p	4			mouseY
+		p	5			outOfBounds
+	m	(Lnet/minecraft/unmapped/C_2348249;IIIZ)V	m_4875921		renderButton
+		p	1			option
+		p	2			y
+		p	3			mouseX
+		p	4			mouseY
+		p	5			outOfBounds
+	m	(Lnet/minecraft/unmapped/C_2925725;IZ)V	m_3818052		renderTextField
+		p	1			option
+		p	2			y
+		p	3			outOfBounds
+	m	(Lnet/minecraft/unmapped/C_7732918;IIIZ)V	m_5825641		renderLabel
+		p	1			label
+		p	2			y
+		p	3			mouseX
+		p	4			mouseY
+		p	5			outOfBounds
 	m	(III)V	m_1433237		m_1433237
 		p	1			p_1
 		p	2			p_2
@@ -3207,21 +3207,21 @@ c	net/minecraft/unmapped/C_8266237		net/minecraft/unmapped/C_8266237
 		p	4			p_4
 		p	5			p_5
 		p	6			p_6
-	m	(Lnet/minecraft/unmapped/C_2691939;III)Z	m_0647180		m_0647180
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_2348249;III)Z	m_7890476		m_7890476
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_2925725;III)V	m_2107874		m_2107874
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(Lnet/minecraft/unmapped/C_2691939;III)Z	m_0647180		mouseClicked
+		p	1			option
+		p	2			mouseX
+		p	3			mouseY
+		p	4			button
+	m	(Lnet/minecraft/unmapped/C_2348249;III)Z	m_7890476		mouseClicked
+		p	1			option
+		p	2			mouseX
+		p	3			mouseY
+		p	4			button
+	m	(Lnet/minecraft/unmapped/C_2925725;III)V	m_2107874		mouseClicked
+		p	1			option
+		p	2			mouseX
+		p	3			mouseY
+		p	4			button
 	m	(IIIIII)V	m_4703785		m_4703785
 		p	1			p_1
 		p	2			p_2
@@ -3229,16 +3229,16 @@ c	net/minecraft/unmapped/C_8266237		net/minecraft/unmapped/C_8266237
 		p	4			p_4
 		p	5			p_5
 		p	6			p_6
-	m	(Lnet/minecraft/unmapped/C_2691939;III)V	m_3432563		m_3432563
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_2348249;III)V	m_8479468		m_8479468
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(Lnet/minecraft/unmapped/C_2691939;III)V	m_3432563		mouseReleased
+		p	1			option
+		p	2			mouseX
+		p	3			mouseY
+		p	4			button
+	m	(Lnet/minecraft/unmapped/C_2348249;III)V	m_8479468		mouseReleased
+		p	1			option
+		p	2			mouseX
+		p	3			mouseY
+		p	4			button
 	m	(Lnet/minecraft/unmapped/C_8266237;)Lnet/minecraft/unmapped/C_2691939;	m_5899713		m_5899713
 		p	0			p_0
 c	net/minecraft/unmapped/C_8361953		net/minecraft/client/gui/screen/world/CustomizeWorldPresetsScreen__CustomWorldPreset
@@ -3255,15 +3255,15 @@ c	net/minecraft/unmapped/C_8388163		net/minecraft/item/Item__5
 		p	1			p_1
 	m	(Ljava/lang/Object;)Ljava/lang/Object;	apply		apply
 		p	1			stack
-c	net/minecraft/unmapped/C_8478781		net/minecraft/unmapped/C_8478781
-	m	(ILjava/lang/String;F)Ljava/lang/String;	m_5682495		m_5682495
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+c	net/minecraft/unmapped/C_8478781		net/minecraft/client/gui/screen/world/GeneratorOptionSlider__ValueFormatter
+	m	(ILjava/lang/String;F)Ljava/lang/String;	m_5682495		formatValue
+		p	1			id
+		p	2			message
+		p	3			value
 c	net/minecraft/unmapped/C_8560389		net/minecraft/block/TrapdoorBlock__2
 	f	[I	f_9214073		f_9214073
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_8586354		net/minecraft/unmapped/C_8586354
+c	net/minecraft/unmapped/C_8586354		net/minecraft/client/gui/screen/world/OverworldGeneratorOptionsWidget__Label
 	m	(ILjava/lang/String;Z)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -3407,7 +3407,7 @@ c	net/minecraft/unmapped/C_9933125		net/minecraft/block/FlowerBlock__Type
 	m	()Ljava/lang/String;	toString		toString
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_1975916	net/minecraft/item/Item__5	net/minecraft/item/Item__2
-c	net/minecraft/unmapped/C_3632573	net/minecraft/block/state/StateDefinition__1	net/minecraft/world/gen/chunk/OverworldGeneratorSettings__1
+c	net/minecraft/unmapped/C_3632573	net/minecraft/block/state/StateDefinition__1	net/minecraft/world/gen/chunk/OverworldGeneratorOptions__1
 c	net/minecraft/unmapped/C_4149152	net/minecraft/item/Item__4	net/minecraft/item/Item__11
 c	net/minecraft/unmapped/C_6817482	net/minecraft/item/Item__2	net/minecraft/item/Item__7
 c	net/minecraft/unmapped/C_8593412	net/minecraft/item/Item__3	net/minecraft/item/Item__8
