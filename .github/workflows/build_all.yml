@@ -42,28 +42,28 @@ jobs:
         env:
           MC_VERSIONS: ${{ join(matrix.version_range, ',') }}
 
-  generate_publish_workflows:
-    needs: build
-    runs-on: ubuntu-22.04
-    # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
-    permissions:
-      contents: write
-      actions: write
-    steps:
-      - name: checkout repository
-        uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.WORKFLOW_TOKEN }}
-
-      - name: generate publish workflow
-        run: python3 .github/workflows/scripts/workflow_gen.py
-
-      - name: submit publish files
-        run: |
-          rm -r .github/workflows/publish_*.yml
-          python3 .github/workflows/scripts/workflow_gen.py
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add .
-          git commit -m "publish workflows update"
-          git push
+#  generate_publish_workflows:  # not for now, if you want to enable check **requirements** here https://github.com/OrnitheMC/feather-mappings/pull/134
+#    needs: build
+#    runs-on: ubuntu-22.04
+#    # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
+#    permissions:
+#      contents: write
+#      actions: write
+#    steps:
+#      - name: checkout repository
+#        uses: actions/checkout@v3
+#        with:
+#          token: ${{ secrets.WORKFLOW_TOKEN }}
+#
+#      - name: generate publish workflow
+#        run: python3 .github/workflows/scripts/workflow_gen.py
+#
+#      - name: submit publish files
+#        run: |
+#          rm -r .github/workflows/publish_*.yml
+#          python3 .github/workflows/scripts/workflow_gen.py
+#          git config user.name github-actions
+#          git config user.email github-actions@github.com
+#          git add .
+#          git commit -m "publish workflows update"
+#          git push
