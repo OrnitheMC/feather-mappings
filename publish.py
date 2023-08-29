@@ -88,8 +88,6 @@ def main():
     if not version:
         print(f"No mc version found!")
         sys.exit(1)
-    print(f"Running publisher for version {version}...")
-    sys.exit(0)
     with GradleProcess(version) as process:
         process.start()
         exit_code: int = process.get_exit_code()
