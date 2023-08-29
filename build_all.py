@@ -181,6 +181,7 @@ class GradleProcess:
 
 def main():
     versions: list[str] = os.getenv("MC_VERSIONS", "").split(",")
+    versions.clear()
     builder: BuildExecutor = BuildExecutor(max_processes=1)  # single process... for now
     builder.start()
     for version in versions:
