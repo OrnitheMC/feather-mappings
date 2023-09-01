@@ -404,7 +404,7 @@ c	net/minecraft/unmapped/C_0539808
 		p	7		power	
 	m	(Lnet/minecraft/unmapped/C_5577922;)Z	m_6285358		doesNotCollide
 		p	1			box
-	m	()V	m_8611355		m_8611355
+	m	()V	m_8611355		setPositionFromShape
 	m	(Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1241852;)V	m_3032530		playStepSound
 		p	1			pos
 		p	2			block
@@ -8934,9 +8934,9 @@ c	net/minecraft/unmapped/C_5917668
 		p	1			min
 		p	2			max
 	m	(Lnet/minecraft/unmapped/C_1730529;[Ljava/lang/String;I)Lnet/minecraft/unmapped/C_3674802;	m_6265006		parseBlockPos
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
+		p	0			source
+		p	1			args
+		p	2			startIndex
 	m	(Ljava/lang/String;)D	m_2873804		parseDouble
 		p	0			s
 	m	(Ljava/lang/String;D)D	m_1891667		parseDouble
@@ -8958,22 +8958,22 @@ c	net/minecraft/unmapped/C_5917668
 	m	([Ljava/lang/String;I)Ljava/lang/String;	m_2253396		parseString
 		p	0			args
 		p	1			startIndex
-	m	(DLjava/lang/String;)Lnet/minecraft/unmapped/C_9515343;	m_0955716		parseCoordinate
-		p	0			p_0
-		p	2			p_2
-	m	(DLjava/lang/String;II)Lnet/minecraft/unmapped/C_9515343;	m_0895905		parseCoordinate
-		p	0			p_0
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(DLjava/lang/String;)D	m_2677201		parseRawCoordinate
-		p	0			p_0
-		p	2			p_2
-	m	(DLjava/lang/String;II)D	m_7317563		parseRawCoordinate
-		p	0			p_0
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(DLjava/lang/String;)Lnet/minecraft/unmapped/C_9515343;	m_0955716		parseTeleportCoordinate
+		p	0			c
+		p	2			s
+	m	(DLjava/lang/String;II)Lnet/minecraft/unmapped/C_9515343;	m_0895905		parseTeleportCoordinate
+		p	0			c
+		p	2			s
+		p	3			min
+		p	4			max
+	m	(DLjava/lang/String;)D	m_2677201		parseCoordinate
+		p	0			c
+		p	2			s
+	m	(DLjava/lang/String;II)D	m_7317563		parseCoordinate
+		p	0			c
+		p	2			s
+		p	3			min
+		p	4			max
 	m	(Ljava/util/List;)Lnet/minecraft/unmapped/C_9550253;	m_4740738		listText
 		p	0			text
 c	net/minecraft/unmapped/C_5956487
@@ -12869,9 +12869,9 @@ c	net/minecraft/unmapped/C_8814877
 		c	Items that the villager will buy from the player	
 	f	Ljava/util/Map;	f_1680023	SELL_OFFER_MAP	
 		c	Items that the villager will sell to the player	
-	f	Z	f_7155565		f_7155565
-	f	I	f_3381958		f_3381958
-	f	I	f_4282224		f_4282224
+	f	Z	f_7155565		willing
+	f	I	f_3381958		career
+	f	I	f_4282224		careerLevel
 	f	[[[[Lnet/minecraft/unmapped/C_3381986;	f_3703549		TRADE_SOURCES
 	m	(F)F	m_1844846	getChanceToCreateTrade	
 		p	1		baseChance	
@@ -15286,16 +15286,16 @@ c	net/minecraft/unmapped/C_9272309		net/minecraft/server/command/TargetSelector_
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_0539808;)Z	m_1473293		m_1473293
 		p	1			p_1
-c	net/minecraft/unmapped/C_9515343		net/minecraft/server/command/Command__Coordinate
-	f	D	f_3416631		absolute
-	f	D	f_5501061		relative
-	f	Z	f_5136014		isRelative
+c	net/minecraft/unmapped/C_9515343		net/minecraft/server/command/AbstractCommand__Coordinate
+	f	D	f_3416631		coordinate
+	f	D	f_5501061		input
+	f	Z	f_5136014		relative
 	m	(DDZ)V	<init>		<init>
-		p	1			absolute
-		p	3			relative
-		p	5			isRelative
-	m	()D	m_4222522		getAbsolute
-	m	()D	m_6305976		getRelative
+		p	1			coordinate
+		p	3			input
+		p	5			relative
+	m	()D	m_4222522		getCoordinate
+	m	()D	m_6305976		getInput
 	m	()Z	m_8174533		isRelative
 c	net/minecraft/unmapped/C_9583956		net/minecraft/entity/vehicle/MinecartEntity__1
 	f	[I	f_0472874		f_0472874

@@ -1193,9 +1193,9 @@ c	net/minecraft/unmapped/C_6435650
 		p	5		dir	
 		p	6		motive	
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			world
+		p	2			pos
+		p	3			facing
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;Ljava/lang/String;)V	<init>		<init>
 		p	1			world
 		p	2			x
@@ -1423,12 +1423,12 @@ c	net/minecraft/unmapped/C_8120996
 	m	()Lnet/minecraft/unmapped/C_4554835;	m_4835053		getAction
 c	net/minecraft/unmapped/C_8300121
 	f	I	f_7969889	pickupCooldown	
-	f	I	f_9459186		pickupCooldown
-	m	()V	m_4901560		resetPickupCooldown
-	m	()V	m_6280056		getPickupCooldown
-	m	(I)V	m_6186256		setPickupCooldown
-		p	1			p_1
-	m	()Z	m_1658294		m_1658294
+	f	I	f_9459186		pickUpDelay
+	m	()V	m_4901560		setDefaultPickUpDelay
+	m	()V	m_6280056		setNoPickUpDelay
+	m	(I)V	m_6186256		setPickUpDelay
+		p	1			delay
+	m	()Z	m_1658294		hasPickUpDelay
 c	net/minecraft/unmapped/C_8365298	net/minecraft/client/render/BlockRenderer__1	
 	f	[I	f_8100025	f_8100025	
 	m	()V	<clinit>	<clinit>	
@@ -1498,23 +1498,23 @@ c	net/minecraft/unmapped/C_8785182
 		p	2			p_2
 		p	4			p_4
 c	net/minecraft/unmapped/C_8814877
-	f	Z	f_1800797		f_1800797
-	f	Lnet/minecraft/unmapped/C_2810918;	f_0078634		f_0078634
+	f	Z	f_1800797		hasAgeDependentGoals
+	f	Lnet/minecraft/unmapped/C_2810918;	f_0078634		inventory
 	m	()Z	m_8000987	m_8000987	
-	m	()V	m_4674327		m_4674327
+	m	()V	m_4674327		registerAgeDependentGoals
 	m	()V	m_7338286		m_7338286
 	m	(Z)Z	m_1407840		m_1407840
 		p	1			p_1
-	m	()Lnet/minecraft/unmapped/C_2810918;	m_1510844		m_1510844
+	m	()Lnet/minecraft/unmapped/C_2810918;	m_1510844		getVillagerInventory
 	m	(Lnet/minecraft/unmapped/C_8300121;)V	m_3739998		m_3739998
 		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_3755722;)Z	m_2537755		m_2537755
-		p	1			p_1
-	m	()Z	m_8635293		m_8635293
-	m	()Z	m_8330100		m_8330100
-	m	()Z	m_1656296		m_1656296
-	m	(I)Z	m_7059505		m_7059505
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_3755722;)Z	m_2537755		isFood
+		p	1			item
+	m	()Z	m_8635293		hasExcessFood
+	m	()Z	m_8330100		wantsMoreFood
+	m	()Z	m_1656296		hasRoomForHarvest
+	m	(I)Z	m_7059505		hasFoodPoints
+		p	1			min
 	m	()Z	m_9353330		hasPlantableItems
 c	net/minecraft/unmapped/C_8980628
 	f	Lnet/minecraft/unmapped/C_3216249;	f_2817113	blockRenderer	
@@ -2294,7 +2294,7 @@ c	net/minecraft/unmapped/C_8208920		net/minecraft/C_35nmuvcol__1
 	f	[I	f_7160278		f_7160278
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_8307621		net/minecraft/entity/ai/goal/TradeWithVillagerGoal
-	f	I	f_0623106		f_0623106
+	f	I	f_0623106		cooldown
 	f	Lnet/minecraft/unmapped/C_8814877;	f_3770733		target
 	m	(Lnet/minecraft/unmapped/C_8814877;)V	<init>		<init>
 		p	1			target
@@ -2371,8 +2371,8 @@ c	net/minecraft/unmapped/C_8916815		net/minecraft/C_70xaaxyla
 c	net/minecraft/unmapped/C_8943705		net/minecraft/entity/ai/goal/VillagerFarmGoal
 	f	Lnet/minecraft/unmapped/C_8814877;	f_9585568		villager
 	f	Z	f_3912224		hasPlantableItems
-	f	Z	f_8491256		f_8491256
-	f	I	f_9338330		f_9338330
+	f	Z	f_8491256		hasRoomForHarvest
+	f	I	f_9338330		harvestDelay
 	m	(Lnet/minecraft/unmapped/C_8814877;D)V	<init>		<init>
 		p	1			villager
 		p	2			speed
