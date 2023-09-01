@@ -1,0 +1,39 @@
+name: Publish_PUBLISH_NUMBER
+on:
+  workflow_run:
+    workflows: [ "Publish" ]
+    types:
+      - completed
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    strategy:
+      max-parallel: 20
+      fail-fast: false
+      matrix:
+        version: PUBLISH_VERSIONS
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v3
+
+      - name: setup java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: wrapper validation
+        uses: gradle/wrapper-validation-action@v1
+
+      - name: make gradle wrapper executable
+        if: ${{ runner.os != 'Windows' }}
+        run: chmod +x ./gradlew
+
+      - name: run publish script
+        run: python3 feather.py publish ${{ matrix.version }}
+        env:
+          MAVEN_URL: ${{ secrets.NEW_MAVEN_URL }}
+          MAVEN_USERNAME: ${{ secrets.NEW_MAVEN_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.NEW_MAVEN_PASSWORD }}

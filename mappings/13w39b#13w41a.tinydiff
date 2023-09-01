@@ -111,11 +111,11 @@ c	net/minecraft/unmapped/C_0163020
 		p	8			p_8
 		p	9			p_9
 c	net/minecraft/unmapped/C_0168865	net/minecraft/network/packet/HandshakePacket	net/minecraft/network/packet/c2s/handshake/HandshakeC2SPacket
-	f	Ljava/lang/String;	f_9323404	protocol	
-	f	Lnet/minecraft/unmapped/C_2279766;	f_9323404		protocol
+	f	Ljava/lang/String;	f_9323404	username	
+	f	Lnet/minecraft/unmapped/C_2279766;	f_9323404		username
 	m	(ILjava/lang/String;Ljava/lang/String;I)V	<init>	<init>	
 		p	1		version	
-		p	2		protocol	
+		p	2		username	
 		p	3		address	
 		p	4		port	
 	m	(Ljava/io/DataInput;)V	m_4792371	m_4792371	
@@ -125,7 +125,7 @@ c	net/minecraft/unmapped/C_0168865	net/minecraft/network/packet/HandshakePacket	
 	m	(Lnet/minecraft/unmapped/C_7250084;)V	m_7216666	m_7216666	
 		p	1		p_1	
 	m	()I	m_4040470	m_4040470	
-	m	()Ljava/lang/String;	m_3836447	getProtocol	
+	m	()Ljava/lang/String;	m_3836447	getUsername	
 	m	(ILjava/lang/String;ILnet/minecraft/unmapped/C_2279766;)V	<init>		<init>
 		p	1			version
 		p	2			address
@@ -138,7 +138,7 @@ c	net/minecraft/unmapped/C_0168865	net/minecraft/network/packet/HandshakePacket	
 	m	(Lnet/minecraft/unmapped/C_7340217;)V	m_3077150		apply
 		p	1			p_1
 	m	()Z	m_7208514		m_7208514
-	m	()Lnet/minecraft/unmapped/C_2279766;	m_3836447		getProtocol
+	m	()Lnet/minecraft/unmapped/C_2279766;	m_3836447		getUsername
 	m	(Lnet/minecraft/unmapped/C_5444260;)V	m_7216666		m_7216666
 		p	1			p_1
 c	net/minecraft/unmapped/C_0332750	net/minecraft/network/packet/ChatMessagePacket	net/minecraft/network/packet/s2c/play/ChatMessageS2CPacket
@@ -1282,7 +1282,7 @@ c	net/minecraft/unmapped/C_4257480
 		p	1			width
 		p	2			height
 		p	3			size
-c	net/minecraft/unmapped/C_4279601	net/minecraft/network/packet/KeyPacket	net/minecraft/network/packet/c2s/login/KeyC2SPacket
+c	net/minecraft/unmapped/C_4279601	net/minecraft/network/packet/ClientReplyPacket	net/minecraft/network/packet/c2s/login/KeyC2SPacket
 	f	Ljavax/crypto/SecretKey;	f_5424091	key	
 	m	(Ljava/io/DataInput;)V	m_4792371	m_4792371	
 		p	1		p_1	
@@ -2027,9 +2027,9 @@ c	net/minecraft/unmapped/C_7250084	net/minecraft/network/PacketHandler	net/minec
 		p	1		packet	
 	m	(Lnet/minecraft/unmapped/C_0168865;)V	m_7479576	handleHandshake	
 		p	1		packet	
-	m	(Lnet/minecraft/unmapped/C_9547548;)V	m_8185232	handleHello	
+	m	(Lnet/minecraft/unmapped/C_9547548;)V	m_8185232	handleKey	
 		p	1		packet	
-	m	(Lnet/minecraft/unmapped/C_4279601;)V	m_7906493	handleKey	
+	m	(Lnet/minecraft/unmapped/C_4279601;)V	m_7906493	handleClientReply	
 		p	1		packet	
 	m	(Lnet/minecraft/unmapped/C_2076519;)V	m_9185796	handleInteractEntity	
 		p	1		packet	
@@ -2588,7 +2588,7 @@ c	net/minecraft/unmapped/C_9500540	net/minecraft/client/gui/screen/multiplayer/M
 		p	2		p_2	
 		p	3		p_3	
 	m	()V	run	run	
-c	net/minecraft/unmapped/C_9547548	net/minecraft/network/packet/HelloPacket	net/minecraft/network/packet/s2c/login/HelloS2CPacket
+c	net/minecraft/unmapped/C_9547548	net/minecraft/network/packet/KeyPacket	net/minecraft/network/packet/s2c/login/HelloS2CPacket
 	m	(Ljava/io/DataInput;)V	m_4792371	m_4792371	
 		p	1		p_1	
 	m	(Ljava/io/DataOutput;)V	m_6110406	m_6110406	
@@ -3228,7 +3228,7 @@ c	net/minecraft/unmapped/C_4354908		net/minecraft/network/Connection
 	f	Lio/netty/channel/Channel;	f_3570353		channel
 	f	Ljava/net/SocketAddress;	f_8323905		address
 	f	Lnet/minecraft/unmapped/C_5444260;	f_0065433		listener
-	f	Lnet/minecraft/unmapped/C_2279766;	f_1770381		state
+	f	Lnet/minecraft/unmapped/C_2279766;	f_1770381		protocol
 	f	Lnet/minecraft/unmapped/C_9550253;	f_8892175		disconnectReason
 	m	(Z)V	<init>		<init>
 		p	1			isClient
