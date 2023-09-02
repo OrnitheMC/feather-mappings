@@ -3,7 +3,9 @@ import sys
 import subprocess
 
 MAPPINGS_DIR = 'mappings'
-GRADLE_TASKS = ['clean', 'feather', 'build', 'javadoc', 'javadocJar', 'checkMappings', 'mapCalamusJar', 'mapNamedJar', 'decompileCFR', 'decompileQuiltflower', 'decompileProcyon', 'publish', 'separateMappings', 'insertMappings', 'propagateMappingsDown', 'propagateMappingsUp', 'propagateMappings']
+GRADLE_TASKS = ['clean', 'feather', 'build', 'javadoc', 'javadocJar', 'checkMappings', 'mapCalamusJar', 'mapNamedJar',
+                'decompileCFR', 'decompileQuiltflower', 'decompileProcyon', 'publish', 'separateMappings',
+                'insertMappings', 'propagateMappingsDown', 'propagateMappingsUp', 'propagateMappings']
 GRADLEW = 'gradlew' if os.name == 'nt' else './gradlew'
 
 # some jank to hide versions that are giving problems
@@ -65,17 +67,18 @@ VERSION_SHORTCUTS = {
     '1.RV-Pre1': 'af-2016'
 }
 
+
 def main():
-    possible_versions = find_minecraft_versions()
+    possible_versions = list(set(find_minecraft_versions()))
     versions = []
     tasks = []
-    
+
     args = sys.argv
-    
+
     for i in range(1, len(args)):
         arg = args[i]
         parsed_arg = parse_minecraft_version(arg, possible_versions)
-        
+
         if parsed_arg:
             for version in parsed_arg:
                 versions.append(version)
@@ -84,11 +87,11 @@ def main():
                 tasks.append(arg)
             else:
                 raise Exception('unrecognized arg ' + arg + '!')
-    
+
     if len(versions) == 0:
         if 'MC_VERSION' in os.environ:
             parsed_arg = parse_minecraft_version(os.environ['MC_VERSION'], possible_versions)
-            
+
             if parsed_arg:
                 for version in parsed_arg:
                     versions.append(version)
@@ -98,31 +101,24 @@ def main():
             raise Exception('no minecraft version given!')
     if len(tasks) == 0:
         raise Exception('no gradle tasks given!')
-    
+
     command = [GRADLEW]
     command.extend(tasks)
     command.append('--stacktrace')
-    
+
     for version in versions:
         os.environ['MC_VERSION'] = version
-        subprocess.run(" ".join(command), shell = True, check = True)
+        subprocess.run(" ".join(command), shell=True, check=True)
+
 
 def find_minecraft_versions():
-    versions = []
-    
-    for filename in os.listdir(MAPPINGS_DIR):
-        path = os.path.join(MAPPINGS_DIR, filename)
-        
-        if filename.endswith('.tiny'):
-            versions.append(filename[0:len(filename) - len('.tiny')])
-        elif filename.endswith('.tinydiff'):
-            raw_pair = filename[0:len(filename) - len('.tinydiff')]
-            pair = raw_pair.split('#')
-            
-            if len(pair) == 2:
-                versions.append(pair[-1])
-    
-    return versions
+    for filename in os.listdir("mappings"):
+        if filename.endswith(".tiny"):
+            yield filename.removesuffix(".tiny")
+        elif filename.endswith(".tinydiff"):
+            if len(pair := filename.removesuffix(".tinydiff").split("#")) == 2:
+                yield pair[-1]
+
 
 def parse_minecraft_version(arg, possible_versions):
     if arg in VERSION_SHORTCUTS.keys():
@@ -141,6 +137,7 @@ def parse_minecraft_version(arg, possible_versions):
         if version in UNAVAILABLE_VERSIONS:
             raise Exception('version ' + version + ' is unavailable at the moment!')
     return versions
+
 
 if __name__ == '__main__':
     main()

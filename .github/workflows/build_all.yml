@@ -1,11 +1,69 @@
 name: Build All
-on: [workflow_dispatch]
+on: [ workflow_dispatch ]
 jobs:
-  build:
-    runs-on: self-hosted
-    timeout-minutes: 1440
-    steps:
-      - uses: actions/checkout@v2
+  matrix_prep:
+    uses: ./.github/workflows/matrix_prep.yml
 
-      - name: run feather script
+  display_versions:
+    needs: matrix_prep
+    runs-on: ubuntu-22.04
+    steps:
+      - name: display versions
+        run: echo '${{ needs.matrix_prep.outputs.versions }}' | jq '.include[].version_range[]'
+
+  build:
+    needs: matrix_prep
+    runs-on: ubuntu-22.04
+
+    strategy:
+      max-parallel: 20
+      fail-fast: false
+      matrix: ${{ fromJson(needs.matrix_prep.outputs.versions) }}
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v3
+
+      - name: setup java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: wrapper validation
+        uses: gradle/wrapper-validation-action@v1
+
+      - name: make gradle wrapper executable
+        if: ${{ runner.os != 'Windows' }}
+        run: chmod +x ./gradlew
+
+      - name: run build script
         run: python3 build_all.py
+        env:
+          MC_VERSIONS: ${{ join(matrix.version_range, ',') }}
+
+#  generate_publish_workflows:  # not for now, if you want to enable check **requirements** here https://github.com/OrnitheMC/feather-mappings/pull/134
+#    needs: build
+#    runs-on: ubuntu-22.04
+#    # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
+#    permissions:
+#      contents: write
+#      actions: write
+#    steps:
+#      - name: checkout repository
+#        uses: actions/checkout@v3
+#        with:
+#          token: ${{ secrets.WORKFLOW_TOKEN }}
+#
+#      - name: generate publish workflow
+#        run: python3 .github/workflows/scripts/workflow_gen.py
+#
+#      - name: submit publish files
+#        run: |
+#          rm -r .github/workflows/publish_*.yml
+#          python3 .github/workflows/scripts/workflow_gen.py
+#          git config user.name github-actions
+#          git config user.email github-actions@github.com
+#          git add .
+#          git commit -m "publish workflows update"
+#          git push
