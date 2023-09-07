@@ -3405,14 +3405,14 @@ c	net/minecraft/unmapped/C_3779718
 		p	2		height	
 	m	()[I	m_1823577	getPixels	
 	m	(Lnet/minecraft/unmapped/C_7131921;)V	<init>		<init>
-		p	1			p_1
+		p	1			pixels
 	m	(IIZ)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			width
+		p	2			height
+		p	3			zero
 	m	()Lnet/minecraft/unmapped/C_7131921;	m_1823577		getPixels
-	m	(Lnet/minecraft/unmapped/C_7131921;)V	m_9977239		m_9977239
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_7131921;)V	m_9977239		setPixels
+		p	1			pixels
 	m	()V	close		close
 c	net/minecraft/unmapped/C_3831727
 	f	Lorg/apache/logging/log4j/Logger;	f_0997170		f_0997170
@@ -3940,7 +3940,7 @@ c	net/minecraft/unmapped/C_4858765
 	m	(Lcom/google/gson/JsonObject;)Ljava/lang/Object;	m_7071825		m_7071825
 		p	1			p_1
 c	net/minecraft/unmapped/C_4882708
-	m	()V	m_3118452		m_3118452
+	m	()V	m_3118452		bind
 c	net/minecraft/unmapped/C_4884298	net/minecraft/client/resource/SimpleResource	net/minecraft/resource/SimpleResource
 	f	Ljava/util/Map;	f_6798893	metadataProviders	
 	f	Lnet/minecraft/unmapped/C_1296613;	f_6740617	metadataSerializers	
@@ -7581,12 +7581,12 @@ c	net/minecraft/unmapped/C_3881557		net/minecraft/resource/pack/BuiltInPack
 	m	()Ljava/lang/String;	m_4900708		m_4900708
 	m	()V	close		close
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_4011766		net/minecraft/unmapped/C_4011766
-	f	Lorg/apache/logging/log4j/Logger;	f_1555344		f_1555344
-	m	()I	m_0976553		m_0976553
-	m	(I)V	m_7354424		m_7354424
-		p	0			p_0
-	m	(III)V	m_1974915		m_1974915
+c	net/minecraft/unmapped/C_4011766		com/mojang/blaze3d/platform/TextureUtil
+	f	Lorg/apache/logging/log4j/Logger;	f_1555344		LOGGER
+	m	()I	m_0976553		genTextures
+	m	(I)V	m_7354424		deleteTexture
+		p	0			texture
+	m	(III)V	m_1974915		prepareImage
 		p	0			p_0
 		p	1			p_1
 		p	2			p_2
@@ -7595,13 +7595,13 @@ c	net/minecraft/unmapped/C_4011766		net/minecraft/unmapped/C_4011766
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(I)V	m_3820211		m_3820211
-		p	0			p_0
+	m	(I)V	m_3820211		bindTexture
+		p	0			texture
 	m	(Lnet/minecraft/unmapped/C_6577431;Lnet/minecraft/unmapped/C_0561170;)[I	m_0580133		m_0580133
 		p	0			p_0
 		p	1			p_1
-	m	(Ljava/io/InputStream;)Ljava/nio/ByteBuffer;	m_4774192		m_4774192
-		p	0			p_0
+	m	(Ljava/io/InputStream;)Ljava/nio/ByteBuffer;	m_4774192		readResource
+		p	0			is
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_4034488		net/minecraft/unmapped/C_4034488
 	f	Ljava/nio/IntBuffer;	f_9671776		f_9671776
@@ -7759,53 +7759,53 @@ c	net/minecraft/unmapped/C_6647568		net/minecraft/server/resource/pack/ServerPac
 		p	1			p_1
 		p	2			p_2
 	m	()Lnet/minecraft/unmapped/C_7532262;	m_3528970		m_3528970
-c	net/minecraft/unmapped/C_7131921		net/minecraft/unmapped/C_7131921
-	f	I	f_2323758		f_2323758
-	f	I	f_1078660		f_1078660
-	f	Z	f_3876441		f_3876441
-	f	J	f_4867976		f_4867976
-	f	I	f_9382460		f_9382460
+c	net/minecraft/unmapped/C_7131921		com/mojang/blaze3d/platform/NativeImage
+	f	I	f_2323758		width
+	f	I	f_1078660		height
+	f	Z	f_3876441		useStbFree
+	f	J	f_4867976		pixels
+	f	I	f_9382460		size
 	m	(IIZ)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			width
+		p	2			height
+		p	3			zero
 	m	(IIZJ)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
 	m	()Ljava/lang/String;	toString		toString
-	m	(Ljava/io/InputStream;)Lnet/minecraft/unmapped/C_7131921;	m_6231984		m_6231984
+	m	(Ljava/io/InputStream;)Lnet/minecraft/unmapped/C_7131921;	m_6231984		read
 		p	0			p_0
-	m	(Ljava/nio/ByteBuffer;)Lnet/minecraft/unmapped/C_7131921;	m_0652930		m_0652930
+	m	(Ljava/nio/ByteBuffer;)Lnet/minecraft/unmapped/C_7131921;	m_0652930		read
 		p	0			p_0
-	m	(Z)V	m_6381918		m_6381918
-		p	0			p_0
-	m	(ZZ)V	m_2230480		m_2230480
+	m	(Z)V	m_6381918		setClamp
+		p	0			clamp
+	m	(ZZ)V	m_2230480		setFilter
 		p	0			p_0
 		p	1			p_1
-	m	()V	m_0505644		m_0505644
+	m	()V	m_0505644		checkAllocated
 	m	()V	close		close
-	m	()I	m_6121053		m_6121053
-	m	()I	m_0291324		m_0291324
-	m	(II)I	m_6022487		m_6022487
-		p	1			p_1
-		p	2			p_2
-	m	(III)V	m_5089632		m_5089632
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(III)V	m_2433400		m_2433400
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	()[I	m_8846747		m_8846747
-	m	(IIIZ)V	m_5056726		m_5056726
+	m	()I	m_6121053		getWidth
+	m	()I	m_0291324		getHeight
+	m	(II)I	m_6022487		getPixelRGBA
+		p	1			x
+		p	2			y
+	m	(III)V	m_5089632		setPixelRGBA
+		p	1			x
+		p	2			y
+		p	3			value
+	m	(III)V	m_2433400		blendPixel
+		p	1			x
+		p	2			y
+		p	3			value
+	m	()[I	m_8846747		makePixelArray
+	m	(IIIZ)V	m_5056726		upload
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(IIIIIIIZ)V	m_2138655		m_2138655
+	m	(IIIIIIIZ)V	m_2138655		upload
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -7814,7 +7814,7 @@ c	net/minecraft/unmapped/C_7131921		net/minecraft/unmapped/C_7131921
 		p	6			p_6
 		p	7			p_7
 		p	8			p_8
-	m	(IIIIIIIZZZ)V	m_2213769		m_2213769
+	m	(IIIIIIIZZZ)V	m_2213769		upload
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -7825,10 +7825,10 @@ c	net/minecraft/unmapped/C_7131921		net/minecraft/unmapped/C_7131921
 		p	8			p_8
 		p	9			p_9
 		p	10			p_10
-	m	(IZ)V	m_4340945		m_4340945
+	m	(IZ)V	m_4340945		downloadTexture
 		p	1			p_1
 		p	2			p_2
-	m	(Z)V	m_0374775		m_0374775
+	m	(Z)V	m_0374775		downloadFrameBuffer
 		p	1			p_1
 	m	(Ljava/lang/String;)V	m_7384155		m_7384155
 		p	1			p_1
