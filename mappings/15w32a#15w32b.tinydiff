@@ -412,8 +412,8 @@ c	net/minecraft/unmapped/C_5705147
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_2211410;)V	m_2503124		m_2503124
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_2211410;)V	m_2503124		updateButtons
+		p	1			selectedWorld
 c	net/minecraft/unmapped/C_5705147$C_4610092	WorldListWidget	
 	f	Lnet/minecraft/unmapped/C_5705147;	f_4981195	parent	
 	m	(Lnet/minecraft/unmapped/C_5705147;Lnet/minecraft/unmapped/C_8105098;)V	<init>	<init>	
@@ -485,22 +485,22 @@ c	net/minecraft/unmapped/C_1849144		net/minecraft/util/datafix/fixes/EquipmentTo
 	m	()I	m_5344326		m_5344326
 	m	(Lnet/minecraft/unmapped/C_2018497;)Lnet/minecraft/unmapped/C_2018497;	m_3031479		m_3031479
 		p	1			p_1
-c	net/minecraft/unmapped/C_2211410		net/minecraft/unmapped/C_2211410
-	f	Lorg/apache/logging/log4j/Logger;	f_9187875		f_9187875
-	f	Lnet/minecraft/unmapped/C_0561170;	f_2144232		f_2144232
-	f	Lnet/minecraft/unmapped/C_0561170;	f_1475573		f_1475573
-	f	Lnet/minecraft/unmapped/C_8105098;	f_1380556		f_1380556
-	f	Lnet/minecraft/unmapped/C_5705147;	f_2354765		f_2354765
-	f	Lnet/minecraft/unmapped/C_4405393;	f_9577656		f_9577656
-	f	Lnet/minecraft/unmapped/C_0561170;	f_2855924		f_2855924
-	f	Lnet/minecraft/unmapped/C_6043691;	f_4863873		f_4863873
-	f	Ljava/io/File;	f_5364305		f_5364305
-	f	Lnet/minecraft/unmapped/C_3779718;	f_6951259		f_6951259
-	f	J	f_4019357		f_4019357
+c	net/minecraft/unmapped/C_2211410		net/minecraft/client/gui/screen/world/WorldSelectionEntry
+	f	Lorg/apache/logging/log4j/Logger;	f_9187875		LOGGER
+	f	Lnet/minecraft/unmapped/C_0561170;	f_2144232		ICON_MISSING_LOCATION
+	f	Lnet/minecraft/unmapped/C_0561170;	f_1475573		ICON_OVERLAY_LOCATION
+	f	Lnet/minecraft/unmapped/C_8105098;	f_1380556		minecraft
+	f	Lnet/minecraft/unmapped/C_5705147;	f_2354765		screen
+	f	Lnet/minecraft/unmapped/C_4405393;	f_9577656		info
+	f	Lnet/minecraft/unmapped/C_0561170;	f_2855924		iconLocation
+	f	Lnet/minecraft/unmapped/C_6043691;	f_4863873		list
+	f	Ljava/io/File;	f_5364305		iconFile
+	f	Lnet/minecraft/unmapped/C_3779718;	f_6951259		icon
+	f	J	f_4019357		lastClickTime
 	m	(Lnet/minecraft/unmapped/C_6043691;Lnet/minecraft/unmapped/C_4405393;Lnet/minecraft/unmapped/C_5478016;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			list
+		p	2			info
+		p	3			storageSource
 	m	(IIIIIIIZ)V	m_2013749		m_2013749
 		p	1			p_1
 		p	2			p_2
@@ -517,12 +517,12 @@ c	net/minecraft/unmapped/C_2211410		net/minecraft/unmapped/C_2211410
 		p	4			p_4
 		p	5			p_5
 		p	6			p_6
-	m	()V	m_0607707		m_0607707
-	m	()V	m_6714061		m_6714061
-	m	()V	m_1525190		m_1525190
-	m	()V	m_9047887		m_9047887
-	m	()V	m_4692379		m_4692379
-	m	()V	m_3823971		m_3823971
+	m	()V	m_0607707		join
+	m	()V	m_6714061		delete
+	m	()V	m_1525190		edit
+	m	()V	m_9047887		recreate
+	m	()V	m_4692379		load
+	m	()V	m_3823971		loadIcon
 	m	(IIIIII)V	m_4703785		m_4703785
 		p	1			p_1
 		p	2			p_2
@@ -560,31 +560,31 @@ c	net/minecraft/unmapped/C_2211410$2		2
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/unmapped/C_3425393		net/minecraft/C_20wotwuqr
-c	net/minecraft/unmapped/C_6043691		net/minecraft/unmapped/C_6043691
-	f	Lorg/apache/logging/log4j/Logger;	f_3709843		f_3709843
-	f	Lnet/minecraft/unmapped/C_5705147;	f_4136237		f_4136237
-	f	Ljava/util/List;	f_1767920		f_1767920
-	f	I	f_9739988		f_9739988
+c	net/minecraft/unmapped/C_6043691		net/minecraft/client/gui/screen/world/WorldSelectionList
+	f	Lorg/apache/logging/log4j/Logger;	f_3709843		LOGGER
+	f	Lnet/minecraft/unmapped/C_5705147;	f_4136237		screen
+	f	Ljava/util/List;	f_1767920		entries
+	f	I	f_9739988		selected
 	m	(Lnet/minecraft/unmapped/C_5705147;Lnet/minecraft/unmapped/C_8105098;IIIII)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-	m	()V	m_0145049		m_0145049
+		p	1			screen
+		p	2			minecraft
+		p	3			width
+		p	4			height
+		p	5			minY
+		p	6			maxY
+		p	7			entryHeight
+	m	()V	m_0145049		load
 	m	(I)Lnet/minecraft/unmapped/C_2211410;	m_2357288		m_2357288
 		p	1			p_1
 	m	()I	m_3791031		m_3791031
 	m	()I	m_3021017		m_3021017
 	m	()I	m_6519286		m_6519286
-	m	(I)V	m_6442536		m_6442536
-		p	1			p_1
+	m	(I)V	m_6442536		select
+		p	1			index
 	m	(I)Z	m_5993229		m_5993229
 		p	1			p_1
-	m	()Lnet/minecraft/unmapped/C_2211410;	m_0211025		m_0211025
-	m	()Lnet/minecraft/unmapped/C_5705147;	m_5168468		m_5168468
+	m	()Lnet/minecraft/unmapped/C_2211410;	m_0211025		getSelected
+	m	()Lnet/minecraft/unmapped/C_5705147;	m_5168468		getScreen
 	m	(I)Lnet/minecraft/unmapped/C_1630332$C_8277969;	m_7118949		m_7118949
 		p	1			p_1
 	m	()V	<clinit>		<clinit>
