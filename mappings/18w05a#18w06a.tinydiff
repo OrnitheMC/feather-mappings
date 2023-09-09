@@ -835,10 +835,10 @@ c	net/minecraft/unmapped/C_0705111
 	m	(II)Lnet/minecraft/unmapped/C_6849228;	m_8872366	getChunk	
 		p	1		chunkX	
 		p	2		chunkZ	
-	m	(II)V	m_4129669	populate	
+	m	(II)V	m_4129669	populateChunk	
 		p	1		chunkX	
 		p	2		chunkZ	
-	m	(Lnet/minecraft/unmapped/C_6849228;II)Z	m_4331578	populateSpecial	
+	m	(Lnet/minecraft/unmapped/C_6849228;II)Z	m_4331578	populateChunkAfterTerrain	
 		p	1		chunk	
 		p	2		chunkX	
 		p	3		chunkZ	
@@ -850,10 +850,10 @@ c	net/minecraft/unmapped/C_0705111
 		p	1		world	
 		p	2		name	
 		p	3		pos	
-	m	(Lnet/minecraft/unmapped/C_0636026;)V	m_8872366		getChunk
+	m	(Lnet/minecraft/unmapped/C_0636026;)V	m_8872366		generate
 		p	1			chunk
 	m	(Lnet/minecraft/unmapped/C_3820473;)V	m_1530121		carve
-		p	1			p_1
+		p	1			region
 	m	(Lnet/minecraft/unmapped/C_3820473;)V	m_4129669		populate
 		p	1			region
 	m	(Lnet/minecraft/unmapped/C_3820473;)V	m_1060834		decorate
@@ -1340,6 +1340,7 @@ c	net/minecraft/unmapped/C_0987157
 	f	[D	f_1600399	maxLimitNoiseBuffer	
 	f	[D	f_7759390	depthNoiseBuffer	
 	f	Lorg/apache/logging/log4j/Logger;	f_7512156		LOGGER
+	f	Lnet/minecraft/unmapped/C_6324082;	f_6915977	options	settings
 	m	(Lnet/minecraft/unmapped/C_5553933;JZLjava/lang/String;)V	<init>	<init>	
 		p	1		world	
 		p	2		seed	
@@ -1382,9 +1383,9 @@ c	net/minecraft/unmapped/C_0987157
 		p	2		p_2	
 		p	3		p_3	
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_7235516;Lnet/minecraft/unmapped/C_6324082;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			world
+		p	2			biomeSource
+		p	3			settings
 	m	(Lnet/minecraft/unmapped/C_0636026;)V	m_8872366		m_8872366
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_3820473;)V	m_4129669		m_4129669
@@ -1922,7 +1923,7 @@ c	net/minecraft/unmapped/C_1316134
 		p	2			p_2
 	m	(Ljava/lang/Iterable;Ljava/util/function/Consumer;)Ljava/util/concurrent/CompletableFuture;	m_1724382		loadChunks
 		p	1			positions
-		p	2			action
+		p	2			callback
 	m	(II)Ljava/util/concurrent/CompletableFuture;	m_9598700		m_9598700
 		p	1			p_1
 		p	2			p_2
@@ -5814,24 +5815,24 @@ c	net/minecraft/unmapped/C_5537602	net/minecraft/world/gen/feature/Feature	net/m
 		p	2		pos	
 		p	3		state	
 	m	(Lnet/minecraft/unmapped/C_3331146;IILjava/util/Map;)[Lnet/minecraft/unmapped/C_0636026;	m_5496361		collectChunks
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	1			status
+		p	2			chunkX
+		p	3			chunkZ
+		p	4			chunks
 	m	(Lnet/minecraft/unmapped/C_3331146;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Map;II)Lnet/minecraft/unmapped/C_0636026;	m_3902267		run
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
+		p	1			status
+		p	2			world
+		p	3			generator
+		p	4			chunks
+		p	5			chunkX
+		p	6			chunkZ
 	m	(Lnet/minecraft/unmapped/C_3331146;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0705111;[Lnet/minecraft/unmapped/C_0636026;II)Lnet/minecraft/unmapped/C_0636026;	m_5487812		run
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
+		p	1			status
+		p	2			world
+		p	3			generator
+		p	4			chunks
+		p	5			chunkX
+		p	6			chunkZ
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_5540234
 	f	J	f_1291875	localWorldSeed	
