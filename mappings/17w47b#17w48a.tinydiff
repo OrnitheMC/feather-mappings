@@ -177,11 +177,11 @@ c	net/minecraft/unmapped/C_1023567
 		p	5		p_5	
 	m	()Lnet/minecraft/unmapped/C_6188183;	m_8508173	getRecipeBook	
 	m	(Lnet/minecraft/unmapped/C_8105098;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_5722573;Lnet/minecraft/unmapped/C_2854223;Lnet/minecraft/unmapped/C_4693257;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	1			minecraft
+		p	2			world
+		p	3			networkHandler
+		p	4			stats
+		p	5			recipeBook
 	m	()Lnet/minecraft/unmapped/C_4693257;	m_8508173		getRecipeBook
 c	net/minecraft/unmapped/C_1101271
 	m	()V	<init>	<init>	
@@ -328,7 +328,7 @@ c	net/minecraft/unmapped/C_2211410$2		2
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/unmapped/C_2361607
-	m	()Lnet/minecraft/unmapped/C_0561170;	m_7798854		getLocation
+	m	()Lnet/minecraft/unmapped/C_0561170;	m_7798854		getId
 	m	()Lnet/minecraft/unmapped/C_8113396;	m_5933558		getSerializer
 c	net/minecraft/unmapped/C_2366695
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3544601;Ljava/util/Random;)Ljava/util/List;	m_2421021	m_2421021	
@@ -465,17 +465,17 @@ c	net/minecraft/unmapped/C_4647073
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/unmapped/C_4693257
-	f	Lnet/minecraft/unmapped/C_7585705;	f_7807025		f_7807025
+	f	Lnet/minecraft/unmapped/C_7585705;	f_7807025		manager
 	m	()V	<init>	<init>	
 	m	(Lnet/minecraft/unmapped/C_0191817;)Lnet/minecraft/unmapped/C_0512768;	m_0705315
 		p	0		p_0	
 		p	1			p_1
 	m	()V	<clinit>	<clinit>	
 	m	(Lnet/minecraft/unmapped/C_7585705;)V	<init>		<init>
-		p	1			p_1
-	m	()V	m_2643396		m_2643396
-	m	()Ljava/util/List;	m_6272235		m_6272235
-	m	(Lnet/minecraft/unmapped/C_0191817;)Ljava/util/List;	m_4557531		m_4557531
+		p	1			manager
+	m	()V	m_2643396		reload
+	m	()Ljava/util/List;	m_6272235		getOrderedResults
+	m	(Lnet/minecraft/unmapped/C_0191817;)Ljava/util/List;	m_4557531		getResultsForGroup
 		p	1			p_1
 c	net/minecraft/unmapped/C_5242898
 	f	Lnet/minecraft/unmapped/C_6188183;	f_9474773	recipeBook	
@@ -533,10 +533,10 @@ c	net/minecraft/unmapped/C_6187210
 	m	()Lnet/minecraft/unmapped/C_2361607;	m_3388949	getRecipe	
 	m	()Lnet/minecraft/unmapped/C_0561170;	m_3388949		getRecipe
 c	net/minecraft/unmapped/C_6188183
-	f	Ljava/util/BitSet;	f_6549277	f_6549277	
-	f	Ljava/util/BitSet;	f_4212765	f_4212765	
-	f	Ljava/util/Set;	f_6549277		f_6549277
-	f	Ljava/util/Set;	f_4212765		f_4212765
+	f	Ljava/util/BitSet;	f_6549277	recipes	
+	f	Ljava/util/BitSet;	f_4212765	toBeDisplayed	
+	f	Ljava/util/Set;	f_6549277		recipes
+	f	Ljava/util/Set;	f_4212765		toBeDisplayed
 	m	(Lnet/minecraft/unmapped/C_2361607;)I	m_5011971	m_5011971	
 		p	0		p_0	
 c	net/minecraft/unmapped/C_6260518
@@ -914,26 +914,26 @@ c	net/minecraft/unmapped/C_1951451$C_7487928		SimpleSerializer
 		p	1			p_1
 		p	2			p_2
 	m	()Ljava/lang/String;	m_0360484		m_0360484
-c	net/minecraft/unmapped/C_2704409		net/minecraft/unmapped/C_2704409
-	f	Lit/unimi/dsi/fastutil/doubles/DoubleList;	f_9733975		f_9733975
-	f	Lit/unimi/dsi/fastutil/doubles/DoubleList;	f_4151019		f_4151019
-	f	Z	f_9575599		f_9575599
+c	net/minecraft/unmapped/C_2704409		net/minecraft/block/shape/DisjointIndexMerger
+	f	Lit/unimi/dsi/fastutil/doubles/DoubleList;	f_9733975		first
+	f	Lit/unimi/dsi/fastutil/doubles/DoubleList;	f_4151019		second
+	f	Z	f_9575599		inverted
 	m	(Lit/unimi/dsi/fastutil/doubles/DoubleList;Lit/unimi/dsi/fastutil/doubles/DoubleList;Z)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			first
+		p	2			second
+		p	3			inverted
 	m	()I	size		size
 	m	(Lnet/minecraft/unmapped/C_8926833$C_8178531;)Z	m_7825514		m_7825514
 		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_8926833$C_8178531;)Z	m_7588509		m_7588509
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_8926833$C_8178531;)Z	m_7588509		iterateSections
+		p	1			consumer
 	m	(I)D	getDouble		getDouble
-		p	1			p_1
+		p	1			position
 	m	(Lnet/minecraft/unmapped/C_8926833$C_8178531;III)Z	m_8384050		m_8384050
 		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			x
+		p	2			y
+		p	3			index
 c	net/minecraft/unmapped/C_7204865		net/minecraft/network/packet/s2c/play/RecipesS2CPacket
 	f	Ljava/util/List;	f_4814628		recipes
 	m	()V	<init>		<init>
