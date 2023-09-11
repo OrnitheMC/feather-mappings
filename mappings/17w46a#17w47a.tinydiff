@@ -6098,15 +6098,15 @@ c	net/minecraft/unmapped/C_3934632
 		p	1		ingredient	
 		p	2		result	
 	m	(Lnet/minecraft/unmapped/C_3755722;Lnet/minecraft/unmapped/C_3755722;Lnet/minecraft/unmapped/C_3755722;)V	m_4052326		registerCraftingRecipe
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
+		p	0			input
+		p	1			ingredient
+		p	2			output
 	m	(Lnet/minecraft/unmapped/C_3755722;)V	m_9627672		registerCraftingIngredient
-		p	0			p_0
+		p	0			item
 	m	(Lnet/minecraft/unmapped/C_8703287;Lnet/minecraft/unmapped/C_3755722;Lnet/minecraft/unmapped/C_8703287;)V	m_8483609		register
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
+		p	0			input
+		p	1			item
+		p	2			output
 c	net/minecraft/unmapped/C_3935684
 	m	(Lcom/mojang/brigadier/context/CommandContext;Ljava/lang/String;)Ljava/util/concurrent/CompletableFuture;	m_4655838	m_4655838	
 		p	1		p_1	
@@ -12884,8 +12884,8 @@ c	net/minecraft/unmapped/C_8775661
 	m	(I)V	<init>		<init>
 		p	1			p_1
 c	net/minecraft/unmapped/C_8814194
-	m	(Lnet/minecraft/unmapped/C_2454309;)V	m_2486569		m_2486569
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_2454309;)V	m_2486569		addInput
+		p	1			stack
 c	net/minecraft/unmapped/C_8814877
 c	net/minecraft/unmapped/C_8814877$C_1075720
 	f	Lnet/minecraft/unmapped/C_3755722;	f_7075806	item	
@@ -14991,15 +14991,15 @@ c	net/minecraft/unmapped/C_0225600		net/minecraft/block/ConcretePowderBlock
 		p	4			p_4
 		p	5			p_5
 		p	6			p_6
-c	net/minecraft/unmapped/C_0390322		net/minecraft/unmapped/C_0390322
-	f	Lit/unimi/dsi/fastutil/doubles/DoubleArrayList;	f_3793780		f_3793780
-	f	Lit/unimi/dsi/fastutil/ints/IntArrayList;	f_9619547		f_9619547
-	f	Lit/unimi/dsi/fastutil/ints/IntArrayList;	f_2650939		f_2650939
+c	net/minecraft/unmapped/C_0390322		net/minecraft/block/shape/SimpleIndexMerger
+	f	Lit/unimi/dsi/fastutil/doubles/DoubleArrayList;	f_3793780		valueIndices
+	f	Lit/unimi/dsi/fastutil/ints/IntArrayList;	f_9619547		minValues
+	f	Lit/unimi/dsi/fastutil/ints/IntArrayList;	f_2650939		maxValues
 	m	(Lit/unimi/dsi/fastutil/doubles/DoubleList;Lit/unimi/dsi/fastutil/doubles/DoubleList;ZZ)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	1			first
+		p	2			second
+		p	3			includeFirstOnly
+		p	4			includeSecondOnly
 	m	(Lnet/minecraft/unmapped/C_8926833$C_8178531;)Z	m_7825514		m_7825514
 		p	1			p_1
 	m	(I)D	getDouble		getDouble
@@ -15370,14 +15370,14 @@ c	net/minecraft/unmapped/C_1361861		net/minecraft/block/shape/VoxelSet
 		p	3			p_3
 		p	4			p_4
 	m	()Z	m_3100293		isEmpty
-	m	(Lnet/minecraft/unmapped/C_3544601$C_7482212;II)I	m_9795316		m_9795316
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_3544601$C_7482212;II)I	m_2105009		m_2105009
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(Lnet/minecraft/unmapped/C_3544601$C_7482212;II)I	m_9795316		getStartingAxisCoord
+		p	1			axis
+		p	2			from
+		p	3			to
+	m	(Lnet/minecraft/unmapped/C_3544601$C_7482212;II)I	m_2105009		getEndingAxisCoord
+		p	1			axis
+		p	2			from
+		p	3			to
 	m	(Lnet/minecraft/unmapped/C_3544601$C_7482212;)I	m_9632558		size
 		p	1			axis
 	m	()I	m_4517708		sizeX
@@ -15402,13 +15402,13 @@ c	net/minecraft/unmapped/C_1361861		net/minecraft/block/shape/VoxelSet
 		p	3			x
 		p	4			y
 		p	5			add
-	m	(IIIII)Z	m_1767322		m_1767322
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	(Lnet/minecraft/unmapped/C_1361861$C_6898933;Z)V	m_4797758		m_4797758
+	m	(IIIII)Z	m_1767322		containsWithinBoundsXZ
+		p	1			fromX
+		p	2			toX
+		p	3			fromZ
+		p	4			toZ
+		p	5			add
+	m	(Lnet/minecraft/unmapped/C_1361861$C_6898933;Z)V	m_4797758		forEachBox
 		p	1			action
 		p	2			closedLoop
 	m	()V	<clinit>		<clinit>
@@ -15464,14 +15464,14 @@ c	net/minecraft/unmapped/C_1453321		net/minecraft/block/shape/CroppedVoxelSet
 		p	3			p_3
 		p	4			p_4
 	m	()Z	m_3100293		m_3100293
-c	net/minecraft/unmapped/C_1656490		net/minecraft/unmapped/C_1656490
-	f	Lit/unimi/dsi/fastutil/doubles/DoubleList;	f_2060265		f_2060265
-	f	D	f_5662401		f_5662401
+c	net/minecraft/unmapped/C_1656490		net/minecraft/block/shape/OffsetDoubleList
+	f	Lit/unimi/dsi/fastutil/doubles/DoubleList;	f_2060265		oldList
+	f	D	f_5662401		offset
 	m	(Lit/unimi/dsi/fastutil/doubles/DoubleList;D)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			oldList
+		p	2			offset
 	m	(I)D	getDouble		getDouble
-		p	1			p_1
+		p	1			position
 	m	()I	size		size
 c	net/minecraft/unmapped/C_1737519		net/minecraft/block/shape/BooleanOp
 	f	Lnet/minecraft/unmapped/C_1737519;	FALSE		FALSE
@@ -16581,58 +16581,58 @@ c	net/minecraft/unmapped/C_7345216		net/minecraft/block/shape/VoxelShape
 		p	3			dy
 		p	5			dz
 	m	()Lnet/minecraft/unmapped/C_7345216;	m_2479571		optimize
-	m	(Lnet/minecraft/unmapped/C_7931345$C_0324914;)V	m_2046771		m_2046771
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_7931345$C_0324914;)V	m_6413513		m_6413513
-		p	1			p_1
-	m	()Ljava/util/List;	m_2659410		m_2659410
-	m	(Lnet/minecraft/unmapped/C_3544601$C_7482212;DD)D	m_1582882		m_1582882
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_3544601$C_7482212;DD)D	m_4035769		m_4035769
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_3544601$C_7482212;D)I	m_9479328		m_9479328
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/unmapped/C_7931345$C_0324914;)V	m_2046771		forEachEdge
+		p	1			consumer
+	m	(Lnet/minecraft/unmapped/C_7931345$C_0324914;)V	m_6413513		forEachBox
+		p	1			consumer
+	m	()Ljava/util/List;	m_2659410		getBoundingBoxes
+	m	(Lnet/minecraft/unmapped/C_3544601$C_7482212;DD)D	m_1582882		getStartingCoord
+		p	1			axis
+		p	2			from
+		p	4			to
+	m	(Lnet/minecraft/unmapped/C_3544601$C_7482212;DD)D	m_4035769		getEndingCoord
+		p	1			axis
+		p	2			from
+		p	4			to
+	m	(Lnet/minecraft/unmapped/C_3544601$C_7482212;D)I	m_9479328		getCoordIndex
+		p	1			axis
+		p	2			coord
 	m	(DLnet/minecraft/unmapped/C_3544601$C_7482212;I)Z	m_1904893		m_1904893
 		p	1			p_1
 		p	3			p_3
 		p	4			p_4
 	m	(Ljava/util/List;DDDDDD)V	m_9335631		m_9335631
 		p	0			p_0
-		p	1			p_1
-		p	3			p_3
-		p	5			p_5
-		p	7			p_7
-		p	9			p_9
-		p	11			p_11
+		p	1			x1
+		p	3			y1
+		p	5			z1
+		p	7			x2
+		p	9			y2
+		p	11			z2
 	m	(Lnet/minecraft/unmapped/C_7931345$C_0324914;IIIIII)V	m_8583371		m_8583371
 		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
+		p	2			minX
+		p	3			minY
+		p	4			minZ
+		p	5			maxX
+		p	6			maxY
+		p	7			maxZ
 	m	(Lnet/minecraft/unmapped/C_7931345$C_0324914;IIIIII)V	m_8157443		m_8157443
 		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
+		p	2			minX
+		p	3			minY
+		p	4			minZ
+		p	5			maxX
+		p	6			maxY
+		p	7			maxZ
 	m	([Lnet/minecraft/unmapped/C_7345216;DDDDDD)V	m_4683314		m_4683314
 		p	0			p_0
-		p	1			p_1
-		p	3			p_3
-		p	5			p_5
-		p	7			p_7
-		p	9			p_9
-		p	11			p_11
+		p	1			minX
+		p	3			minY
+		p	5			minZ
+		p	7			maxX
+		p	9			maxY
+		p	11			maxZ
 c	net/minecraft/unmapped/C_7347232		net/minecraft/unmapped/C_7347232
 	m	(I)V	<init>		<init>
 		p	1			p_1
@@ -16705,13 +16705,13 @@ c	net/minecraft/unmapped/C_7931345		net/minecraft/block/shape/VoxelShapes
 		p	0			a
 		p	1			b
 		p	2			op
-	m	(Lnet/minecraft/unmapped/C_8926833;Lnet/minecraft/unmapped/C_8926833;Lnet/minecraft/unmapped/C_8926833;Lnet/minecraft/unmapped/C_1361861;Lnet/minecraft/unmapped/C_1361861;Lnet/minecraft/unmapped/C_1737519;)Z	m_2458656		m_2458656
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+	m	(Lnet/minecraft/unmapped/C_8926833;Lnet/minecraft/unmapped/C_8926833;Lnet/minecraft/unmapped/C_8926833;Lnet/minecraft/unmapped/C_1361861;Lnet/minecraft/unmapped/C_1361861;Lnet/minecraft/unmapped/C_1737519;)Z	m_2458656		matchesAnywhere
+		p	0			mergedX
+		p	1			mergedY
+		p	2			mergedZ
+		p	3			shape1
+		p	4			shape2
+		p	5			predicate
 	m	(Lnet/minecraft/unmapped/C_3544601$C_7482212;Lnet/minecraft/unmapped/C_5577922;Lnet/minecraft/unmapped/C_7345216;D)D	m_8409842		m_8409842
 		p	0			p_0
 		p	1			p_1
@@ -16727,10 +16727,10 @@ c	net/minecraft/unmapped/C_7931345		net/minecraft/block/shape/VoxelShapes
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_7345216;Lnet/minecraft/unmapped/C_7345216;Lnet/minecraft/unmapped/C_3544601;)Z	m_5971922		m_5971922
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/unmapped/C_7345216;Lnet/minecraft/unmapped/C_7345216;Lnet/minecraft/unmapped/C_3544601;)Z	m_5971922		isSideCovered
+		p	0			shape
+		p	1			neighbor
+		p	2			direction
 	m	(Lit/unimi/dsi/fastutil/doubles/DoubleList;Lit/unimi/dsi/fastutil/doubles/DoubleList;ZZ)Lnet/minecraft/unmapped/C_8926833;	m_7100932		createIndexMerger
 		p	0			p_0
 		p	1			p_1
@@ -16742,9 +16742,9 @@ c	net/minecraft/unmapped/C_7931345		net/minecraft/block/shape/VoxelShapes
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
+		p	5			x1
+		p	6			x2
+		p	7			index1
 	m	(Lnet/minecraft/unmapped/C_8926833;Lnet/minecraft/unmapped/C_1737519;Lnet/minecraft/unmapped/C_1361861;ILnet/minecraft/unmapped/C_1361861;IIII)Z	m_6224968		m_6224968
 		p	0			p_0
 		p	1			p_1
@@ -16752,9 +16752,9 @@ c	net/minecraft/unmapped/C_7931345		net/minecraft/block/shape/VoxelShapes
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
+		p	6			y1
+		p	7			y2
+		p	8			index2
 	m	(Lnet/minecraft/unmapped/C_1737519;Lnet/minecraft/unmapped/C_1361861;IILnet/minecraft/unmapped/C_1361861;IIIII)Z	m_2116739		m_2116739
 		p	0			p_0
 		p	1			p_1
@@ -16763,9 +16763,9 @@ c	net/minecraft/unmapped/C_7931345		net/minecraft/block/shape/VoxelShapes
 		p	4			p_4
 		p	5			p_5
 		p	6			p_6
-		p	7			p_7
-		p	8			p_8
-		p	9			p_9
+		p	7			z1
+		p	8			z2
+		p	9			index3
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_7931345$1		1
 	m	(Lnet/minecraft/unmapped/C_1361861;)V	<init>		<init>

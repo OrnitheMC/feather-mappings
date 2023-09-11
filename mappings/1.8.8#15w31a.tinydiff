@@ -612,9 +612,9 @@ c	net/minecraft/unmapped/C_1014639$1
 	f	[I	f_6186203		f_6186203
 	f	[I	f_4092905		f_4092905
 c	net/minecraft/unmapped/C_1023567
-	f	I	f_7960749		f_7960749
-	f	Z	f_2173356		f_2173356
-	f	Lnet/minecraft/unmapped/C_4360192;	f_9348457		f_9348457
+	f	I	f_7960749		clientPermissionLevel
+	f	Z	f_2173356		usingItem
+	f	Lnet/minecraft/unmapped/C_4360192;	f_9348457		activeHand
 	m	()V	m_5308766	m_5308766	
 	m	(Lnet/minecraft/unmapped/C_4360192;)V	m_5308766		m_5308766
 		p	1			p_1
@@ -4323,7 +4323,7 @@ c	net/minecraft/unmapped/C_6583725
 		p	1			p_1
 	m	()Lnet/minecraft/unmapped/C_4360192;	m_1037166		m_1037166
 c	net/minecraft/unmapped/C_6607881
-	f	I	f_0759875		f_0759875
+	f	I	f_0759875		LIVING_FLAGS
 	f	I	f_0528808		f_0528808
 	f	I	f_8230611		f_8230611
 	f	I	f_6562973		f_6562973
@@ -4351,7 +4351,7 @@ c	net/minecraft/unmapped/C_6607881
 	m	(Ljava/util/Collection;)Z	m_9736215		m_9736215
 		p	0			p_0
 	m	(Lnet/minecraft/unmapped/C_3488550;)Lnet/minecraft/unmapped/C_0658987;	m_3848394		removeEffect
-		p	1			p_1
+		p	1			effect
 	m	(Lnet/minecraft/unmapped/C_3488550;)V	m_7500176		removeStatusEffect
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_2441996;)Z	m_1223943		m_1223943
@@ -4374,10 +4374,10 @@ c	net/minecraft/unmapped/C_6607881
 		p	2			p_2
 	m	()Lnet/minecraft/unmapped/C_6912424;	m_6651188		getMainArm
 	m	()Z	m_8994518		isUsingItem
-	m	()Lnet/minecraft/unmapped/C_4360192;	m_4928551		m_4928551
+	m	()Lnet/minecraft/unmapped/C_4360192;	m_4928551		getActiveHand
 	m	()V	m_8261491		m_8261491
-	m	(Lnet/minecraft/unmapped/C_4360192;)V	m_1514817		m_1514817
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_4360192;)V	m_1514817		setCurrentHand
+		p	1			hand
 	m	(I)V	m_8901560		m_8901560
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_2454309;I)V	m_4220361		m_4220361
@@ -4388,7 +4388,7 @@ c	net/minecraft/unmapped/C_6607881
 	m	()I	m_6884949		m_6884949
 	m	()I	m_8217651		m_8217651
 	m	()V	m_3831962		m_3831962
-	m	()V	m_4221115		m_4221115
+	m	()V	m_4221115		clearActiveItem
 	m	()Z	m_3939099		m_3939099
 c	net/minecraft/unmapped/C_6607881$2		2
 	f	[I	f_7525161		f_7525161
@@ -7508,25 +7508,25 @@ c	net/minecraft/unmapped/C_3934632		net/minecraft/potion/BrewingRecipes
 	f	Ljava/util/List;	f_0849470		RECIPES
 	f	Ljava/util/List;	f_7984053		CRAFTING_RECIPES
 	f	Ljava/util/List;	f_0856544		CRAFTING_INGREDIENTS
-	f	Lcom/google/common/base/Predicate;	f_6858199		f_6858199
-	m	(Lnet/minecraft/unmapped/C_2454309;)Z	m_1894891		m_1894891
-		p	0			p_0
-	m	(Lnet/minecraft/unmapped/C_2454309;)Z	m_2234235		m_2234235
-		p	0			p_0
-	m	(Lnet/minecraft/unmapped/C_2454309;)Z	m_8161385		m_8161385
-		p	0			p_0
-	m	(Lnet/minecraft/unmapped/C_2454309;Lnet/minecraft/unmapped/C_2454309;)Z	m_0415696		m_0415696
-		p	0			p_0
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_2454309;Lnet/minecraft/unmapped/C_2454309;)Z	m_5408466		m_5408466
-		p	0			p_0
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_2454309;Lnet/minecraft/unmapped/C_2454309;)Z	m_5859111		m_5859111
-		p	0			p_0
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_2454309;Lnet/minecraft/unmapped/C_2454309;)Lnet/minecraft/unmapped/C_2454309;	m_7155145		m_7155145
-		p	0			p_0
-		p	1			p_1
+	f	Lcom/google/common/base/Predicate;	f_6858199		POTION_TYPE_PREDICATE
+	m	(Lnet/minecraft/unmapped/C_2454309;)Z	m_1894891		isValidIngredient
+		p	0			stack
+	m	(Lnet/minecraft/unmapped/C_2454309;)Z	m_2234235		isItemRecipeIngredient
+		p	0			stack
+	m	(Lnet/minecraft/unmapped/C_2454309;)Z	m_8161385		isPotionRecipeIngredient
+		p	0			stack
+	m	(Lnet/minecraft/unmapped/C_2454309;Lnet/minecraft/unmapped/C_2454309;)Z	m_0415696		hasRecipe
+		p	0			input
+		p	1			ingredient
+	m	(Lnet/minecraft/unmapped/C_2454309;Lnet/minecraft/unmapped/C_2454309;)Z	m_5408466		hasItemRecipe
+		p	0			input
+		p	1			ingredient
+	m	(Lnet/minecraft/unmapped/C_2454309;Lnet/minecraft/unmapped/C_2454309;)Z	m_5859111		hasPotionRecipe
+		p	0			input
+		p	1			ingredient
+	m	(Lnet/minecraft/unmapped/C_2454309;Lnet/minecraft/unmapped/C_2454309;)Lnet/minecraft/unmapped/C_2454309;	m_7155145		craft
+		p	0			ingredient
+		p	1			input
 	m	()V	m_9467827		init
 	m	(Lnet/minecraft/unmapped/C_8574306;Lnet/minecraft/unmapped/C_3934632$C_2397247;Lnet/minecraft/unmapped/C_8574306;)V	m_4052326		registerCraftingRecipe
 		p	0			p_0
