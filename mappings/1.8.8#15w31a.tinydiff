@@ -217,10 +217,10 @@ c	net/minecraft/unmapped/C_0539808
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_1706316		m_1706316
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_8805713		m_8805713
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_1706316		onStartedTrackingBy
+		p	1			player
+	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_8805713		onStoppedTrackingBy
+		p	1			player
 	m	(Lnet/minecraft/unmapped/C_1241852$C_0480726;)F	m_3422896		rotate
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_1241852$C_4039788;)F	m_5151896		mirror
@@ -947,11 +947,11 @@ c	net/minecraft/unmapped/C_1440477
 		p	5			p_5
 		p	6			p_6
 c	net/minecraft/unmapped/C_1444189
-	f	I	f_0407274		f_0407274
-	f	I	f_9612820		f_9612820
-	f	I	f_2647995		f_2647995
-	f	I	f_0438541		f_0438541
-	f	Lnet/minecraft/unmapped/C_6178320;	f_3153270		f_3153270
+	f	I	f_0407274		TRACKED_ENTITY_ID_1
+	f	I	f_9612820		TRACKED_ENTITY_ID_2
+	f	I	f_2647995		TRACKED_ENTITY_ID_3
+	f	I	f_0438541		INVUL_TIMER
+	f	Lnet/minecraft/unmapped/C_6178320;	f_3153270		bossBar
 	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_1706316		m_1706316
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_8805713		m_8805713
@@ -3348,19 +3348,19 @@ c	net/minecraft/unmapped/C_4542654
 		p	2			p_2
 c	net/minecraft/unmapped/C_4551488
 	f	Lorg/apache/logging/log4j/Logger;	f_0783238		LOGGER
-	f	I	f_2381871		f_2381871
+	f	I	f_2381871		PHASE_TYPE
 	f	Lnet/minecraft/unmapped/C_2608212;	f_5720513		neck
 	f	Lnet/minecraft/unmapped/C_7121928;	f_6737758		fight
-	f	I	f_7551988		f_7551988
+	f	I	f_7551988		ticksUntilNextGrowl
 	f	I	f_0971954		f_0971954
 	f	Z	f_6934348		f_6934348
 	f	I	f_4562559		f_4562559
-	f	I	f_0249975		f_0249975
+	f	I	f_0249975		damageDuringSitting
 	f	I	f_0359432		f_0359432
 	f	Lnet/minecraft/unmapped/C_5577922;	f_0108029		f_0108029
-	f	[Lnet/minecraft/unmapped/C_8180393;	f_7978787		f_7978787
-	f	[I	f_1310863		f_1310863
-	f	Lnet/minecraft/unmapped/C_6732553;	f_5037579		f_5037579
+	f	[Lnet/minecraft/unmapped/C_8180393;	f_7978787		pathNodes
+	f	[I	f_1310863		pathNodeConnections
+	f	Lnet/minecraft/unmapped/C_6732553;	f_5037579		pathHeap
 	f	Lnet/minecraft/unmapped/C_2306016;	f_5659212		f_5659212
 	m	(Lnet/minecraft/unmapped/C_3674802;)V	m_8545629	createPortal	
 		c	Creates the portal after defeating the dragon. This is created around this.x and this.z.	
@@ -3371,32 +3371,32 @@ c	net/minecraft/unmapped/C_4551488
 	m	(Lnet/minecraft/unmapped/C_7805782;Z)Z	m_1609831		m_1609831
 		p	1			p_1
 		p	2			p_2
-	m	(F)F	m_3263188		m_3263188
-		p	1			p_1
+	m	(F)F	m_3263188		getHeadY
+		p	1			unused
 	m	()V	m_3539216		m_3539216
 	m	()V	m_5386145		m_5386145
-	m	()I	m_7502179		m_7502179
-	m	(DDD)I	m_0109240		m_0109240
-		p	1			p_1
-		p	3			p_3
-		p	5			p_5
-	m	(IILnet/minecraft/unmapped/C_8180393;)Lnet/minecraft/unmapped/C_2306016;	m_0026327		m_0026327
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_8180393;Lnet/minecraft/unmapped/C_8180393;)Lnet/minecraft/unmapped/C_2306016;	m_1905994		m_1905994
-		p	1			p_1
-		p	2			p_2
+	m	()I	m_7502179		getNearestPathNodeIndex
+	m	(DDD)I	m_0109240		getNearestPathNodeIndex
+		p	1			x
+		p	3			y
+		p	5			z
+	m	(IILnet/minecraft/unmapped/C_8180393;)Lnet/minecraft/unmapped/C_2306016;	m_0026327		findPath
+		p	1			from
+		p	2			to
+		p	3			pathNode
+	m	(Lnet/minecraft/unmapped/C_8180393;Lnet/minecraft/unmapped/C_8180393;)Lnet/minecraft/unmapped/C_2306016;	m_1905994		getPathOfAllPredecessors
+		p	1			unused
+		p	2			node
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_1129840		m_1129840
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_7694759		m_7694759
 		p	1			p_1
-	m	(I[D[D)F	m_9918691		m_9918691
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(F)Lnet/minecraft/unmapped/C_0557736;	m_9485077		m_9485077
-		p	1			p_1
+	m	(I[D[D)F	m_9918691		getChangeInNeckPitch
+		p	1			segmentOffset
+		p	2			segment1
+		p	3			segment2
+	m	(F)Lnet/minecraft/unmapped/C_0557736;	m_9485077		getRotationVectorFromPhase
+		p	1			tickDelta
 	m	(Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1161898;)V	m_4970250		onCrystalDestroyed
 		p	1			p_1
 		p	2			p_2
@@ -4330,7 +4330,7 @@ c	net/minecraft/unmapped/C_6607881
 	f	I	f_7450833		f_7450833
 	f	[Lnet/minecraft/unmapped/C_2454309;	f_5469608		f_5469608
 	f	Lnet/minecraft/unmapped/C_4360192;	f_6119003		mainHand
-	f	Lnet/minecraft/unmapped/C_2454309;	f_9963671		f_9963671
+	f	Lnet/minecraft/unmapped/C_2454309;	f_9963671		activeItemStack
 	f	I	f_2425220		f_2425220
 	m	(I)Z	m_2125280	hasStatusEffect	
 		p	1		id	
@@ -4358,7 +4358,7 @@ c	net/minecraft/unmapped/C_6607881
 		p	1			p_1
 		p	2			p_2
 	m	(Lnet/minecraft/unmapped/C_4360192;)V	m_5308766		swingHand
-		p	1			p_1
+		p	1			hand
 	m	()Lnet/minecraft/unmapped/C_2454309;	m_6358554		getMainHandStack
 	m	()Lnet/minecraft/unmapped/C_2454309;	m_0203268		getOffHandStack
 	m	(Lnet/minecraft/unmapped/C_4360192;)Lnet/minecraft/unmapped/C_2454309;	m_8494634		getHandStack
@@ -4373,7 +4373,7 @@ c	net/minecraft/unmapped/C_6607881
 		p	1			p_1
 		p	2			p_2
 	m	()Lnet/minecraft/unmapped/C_6912424;	m_6651188		getMainArm
-	m	()Z	m_8994518		m_8994518
+	m	()Z	m_8994518		isUsingItem
 	m	()Lnet/minecraft/unmapped/C_4360192;	m_4928551		m_4928551
 	m	()V	m_8261491		m_8261491
 	m	(Lnet/minecraft/unmapped/C_4360192;)V	m_1514817		m_1514817
@@ -6334,7 +6334,7 @@ c	net/minecraft/unmapped/C_9590849
 	f	I	f_2714698	itemUseTimer	
 	f	I	f_7891160		ABSORPTION_AMOUNT
 	f	I	f_7953727		SCORE
-	f	I	f_7376295		VIEW_DISTANCE
+	f	I	f_7376295		MODEL_PARTS
 	f	I	f_3653589		MAIN_ARM
 	m	()Lnet/minecraft/unmapped/C_2454309;	m_0276088	getItemInHand	
 	m	()I	m_3098348	getItemUseTimer	

@@ -729,10 +729,10 @@ c	net/minecraft/unmapped/C_2348249
 		p	3			y
 		p	4			tickDelta
 c	net/minecraft/unmapped/C_2361607
-	f	Lnet/minecraft/unmapped/C_0561170;	f_3798479		f_3798479
+	f	Lnet/minecraft/unmapped/C_0561170;	f_3798479		location
 	m	(Lnet/minecraft/unmapped/C_0561170;)V	<init>		<init>
-		p	1			p_1
-	m	()Lnet/minecraft/unmapped/C_0561170;	m_6179812		m_6179812
+		p	1			location
+	m	()Lnet/minecraft/unmapped/C_0561170;	m_6179812		getLocation
 	m	()Ljava/util/List;	m_7264146		getIngredients
 	m	()Z	m_6669880		isSpecial
 c	net/minecraft/unmapped/C_2507538
@@ -1613,9 +1613,9 @@ c	net/minecraft/unmapped/C_7585705
 	m	()Ljava/util/List;	m_1640005	getRecipes	
 	m	()V	m_5059845		load
 	m	(Lnet/minecraft/unmapped/C_0561170;Lcom/google/gson/JsonObject;)Lnet/minecraft/unmapped/C_2361607;	m_5743806		parseRecipe
-		p	1			p_1
+		p	1			json
 		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_5217418;Lnet/minecraft/unmapped/C_5553933;)Lnet/minecraft/unmapped/C_2361607;	m_4193731		getRecipe
+	m	(Lnet/minecraft/unmapped/C_5217418;Lnet/minecraft/unmapped/C_5553933;)Lnet/minecraft/unmapped/C_2361607;	m_4193731		findRecipe
 		p	1			world
 		p	2			p_2
 	m	()Ljava/util/Map;	m_1640005		getRecipes
@@ -2226,21 +2226,21 @@ c	net/minecraft/unmapped/C_9590849
 	m	(FF)V	m_7257934	m_7257934	
 		p	1		p_1	
 		p	2		p_2	
-	m	(I)V	m_1738655	m_1738655	
+	m	(I)V	m_1738655	applyEnchantmentCosts	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_2464728		playShoulderAmbientSound
 		p	1			shoulderData
-	m	(Ljava/util/List;)V	m_5701134		m_5701134
-		p	1			p_1
-	m	(Ljava/util/List;)V	m_4663737		m_4663737
-		p	1			p_1
+	m	(Ljava/util/List;)V	m_5701134		unlockRecipes
+		p	1			recipes
+	m	(Ljava/util/List;)V	m_4663737		lockRecipes
+		p	1			recipes
 	m	(FFF)V	m_7257934		m_7257934
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_2454309;I)V	m_1738655		m_1738655
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/unmapped/C_2454309;I)V	m_1738655		applyEnchantmentCosts
+		p	1			enchantedItem
+		p	2			experienceLevels
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_3699477		m_3699477
 		p	1			p_1
 	m	()V	m_2820371		dropShoulderEntities
@@ -3499,8 +3499,8 @@ c	net/minecraft/unmapped/C_5389817$1		1
 		p	1			p_1
 	m	(Ljava/lang/Object;)Z	apply		apply
 		p	1			mob
-c	net/minecraft/unmapped/C_5405916		net/minecraft/crafting/recipe/ServerRecipeBook
-	f	Lorg/apache/logging/log4j/Logger;	f_1421690		f_1421690
+c	net/minecraft/unmapped/C_5405916		net/minecraft/server/crafting/ServerRecipeBook
+	f	Lorg/apache/logging/log4j/Logger;	f_1421690		LOGGER
 	f	Ljava/util/Set;	f_9750572		f_9750572
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_3016510		m_3016510
@@ -3510,7 +3510,7 @@ c	net/minecraft/unmapped/C_5405916		net/minecraft/crafting/recipe/ServerRecipeBo
 		p	2			p_2
 		p	3			p_3
 	m	()Ljava/util/Set;	m_4202537		m_4202537
-	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_5317270		m_5317270
+	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_5317270		removeRecipes
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_2814637		m_2814637
 		p	1			p_1
@@ -3521,8 +3521,8 @@ c	net/minecraft/unmapped/C_5405916		net/minecraft/crafting/recipe/ServerRecipeBo
 	m	(Ljava/util/Map;)Ljava/lang/String;	m_7157721		m_7157721
 		p	0			p_0
 	m	()V	m_1541763		m_1541763
-	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_1614649		m_1614649
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_3292284;)V	m_1614649		sendInitRecipes
+		p	1			player
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_5438948		net/minecraft/advancement/criterion/CriterionTrigger
 	m	()Lnet/minecraft/unmapped/C_0561170;	m_5073087		getId
@@ -3882,30 +3882,30 @@ c	net/minecraft/unmapped/C_6187210$C_2959218		C_2959218
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/unmapped/C_6188183		net/minecraft/crafting/recipe/RecipeBook
-	f	Lorg/apache/logging/log4j/Logger;	f_6231532		f_6231532
-	f	Ljava/util/Map;	f_9026668		f_9026668
+c	net/minecraft/unmapped/C_6188183		net/minecraft/crafting/RecipeBook
+	f	Lorg/apache/logging/log4j/Logger;	f_6231532		LOGGER
+	f	Ljava/util/Map;	f_9026668		recipes
 	m	()V	<init>		<init>
-	m	()Ljava/util/Map;	m_0444535		m_0444535
-	m	(Lnet/minecraft/unmapped/C_0561170;)Z	m_9684830		m_9684830
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_0561170;ZZ)Z	m_3896048		m_3896048
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_0561170;)Z	m_2464489		m_2464489
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_0561170;)Z	m_9587478		m_9587478
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_0561170;)V	m_3321498		m_3321498
-		p	1			p_1
+	m	()Ljava/util/Map;	m_0444535		getRecipes
+	m	(Lnet/minecraft/unmapped/C_0561170;)Z	m_9684830		add
+		p	1			recipe
+	m	(Lnet/minecraft/unmapped/C_0561170;ZZ)Z	m_3896048		add
+		p	1			recipe
+		p	2			unlocked
+		p	3			exists
+	m	(Lnet/minecraft/unmapped/C_0561170;)Z	m_2464489		contains
+		p	1			recipe
+	m	(Lnet/minecraft/unmapped/C_0561170;)Z	m_9587478		exists
+		p	1			recipe
+	m	(Lnet/minecraft/unmapped/C_0561170;)V	m_3321498		grant
+		p	1			recipe
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_6188183$C_4272465		C_4272465
-	f	Z	f_4518732		f_4518732
-	f	Z	f_4120280		f_4120280
+c	net/minecraft/unmapped/C_6188183$C_4272465		Status
+	f	Z	f_4518732		unlocked
+	f	Z	f_4120280		exists
 	m	(ZZ)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			unlocked
+		p	2			exists
 c	net/minecraft/unmapped/C_6206008		net/minecraft/advancement/AdvancementProgress
 	f	Ljava/util/Map;	f_1944916		criteria
 	f	[[Ljava/lang/String;	f_3298546		requirements
