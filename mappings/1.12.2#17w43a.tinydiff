@@ -2068,8 +2068,8 @@ c	net/minecraft/unmapped/C_1860331$9		9
 		p	1			p_1
 		p	3			p_3
 c	net/minecraft/unmapped/C_1958650
-	m	(Lcom/google/gson/JsonObject;)Ljava/lang/Object;	m_7071825		m_7071825
-		p	1			p_1
+	m	(Lcom/google/gson/JsonObject;)Ljava/lang/Object;	m_7071825		deserialize
+		p	1			json
 c	net/minecraft/unmapped/C_1958760
 	m	(CI)V	m_6992336	m_6992336	
 		p	1		p_1	
@@ -2908,7 +2908,7 @@ c	net/minecraft/unmapped/C_2983776
 	f	Ljava/util/List;	f_3470950	availablePacks	
 	f	Ljava/util/List;	f_2374268	appliedPacks	
 	f	Lnet/minecraft/unmapped/C_8858101;	f_6120754		defaultPack
-	f	Lnet/minecraft/unmapped/C_4756188;	f_2805268		f_2805268
+	f	Lnet/minecraft/unmapped/C_4756188;	f_2805268		serverPack
 	m	(Ljava/io/File;Ljava/io/File;Lnet/minecraft/unmapped/C_7532262;Lnet/minecraft/unmapped/C_1296613;Lnet/minecraft/unmapped/C_1331819;)V	<init>	<init>	
 		p	1		dir	
 		p	2		file	
@@ -2933,12 +2933,12 @@ c	net/minecraft/unmapped/C_2983776
 		p	1		p_1	
 	m	()Lnet/minecraft/unmapped/C_0561170;	m_5802609	m_5802609	
 	m	(Ljava/io/File;Lnet/minecraft/unmapped/C_2716280;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			serverPackDir
+		p	2			assets
 	m	(Ljava/util/Map;Lnet/minecraft/unmapped/C_2191309$C_0933267;)V	m_3106366		m_3106366
 		p	1			p_1
 		p	2			p_2
-	m	()Lnet/minecraft/unmapped/C_8858101;	m_8018497		m_8018497
+	m	()Lnet/minecraft/unmapped/C_8858101;	m_8018497		getDefaultPack
 	m	(Ljava/io/File;)Lnet/minecraft/unmapped/C_7532262;	m_9663527		m_9663527
 		p	0			p_0
 	m	(Lnet/minecraft/unmapped/C_8105098;Lnet/minecraft/unmapped/C_1656849;)V	m_3565872		m_3565872
@@ -3235,7 +3235,7 @@ c	net/minecraft/unmapped/C_3435613
 	m	()V	m_3593494	m_3593494	
 	m	()Z	m_2729805		m_2729805
 c	net/minecraft/unmapped/C_3499437
-	f	Lnet/minecraft/unmapped/C_1608896;	f_8240669		f_8240669
+	f	Lnet/minecraft/unmapped/C_1608896;	f_8240669		SERIALIZER
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_3622827
 	m	(Lnet/minecraft/unmapped/C_8105098;IIF)V	m_5350167	m_5350167	
@@ -5017,7 +5017,7 @@ c	net/minecraft/unmapped/C_6333845$C_4650743
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/unmapped/C_6347954
-	f	Lnet/minecraft/unmapped/C_9155254;	f_8181816		f_8181816
+	f	Lnet/minecraft/unmapped/C_9155254;	f_8181816		SERIALIZER
 	m	(I)Z	m_3220723	usesNonDefaultFrameTime	
 		p	1		i	
 	m	()V	<clinit>		<clinit>
@@ -5667,17 +5667,17 @@ c	net/minecraft/unmapped/C_7532262	net/minecraft/client/resource/pack/ResourcePa
 		p	2		name	
 	m	()Ljava/awt/image/BufferedImage;	m_3372708	getIcon	
 	m	(Ljava/lang/String;)Ljava/io/InputStream;	m_8505362		getRootResource
-		p	1			name
+		p	1			path
 	m	(Lnet/minecraft/unmapped/C_9955562;Lnet/minecraft/unmapped/C_0561170;)Ljava/io/InputStream;	m_6783815		getResource
 		p	1			type
-		p	2			id
+		p	2			location
 	m	(Lnet/minecraft/unmapped/C_9955562;Ljava/lang/String;I)Ljava/util/Collection;	m_7730936		getResources
 		p	1			type
 		p	2			name
 		p	3			maxDepth
 	m	(Lnet/minecraft/unmapped/C_9955562;Lnet/minecraft/unmapped/C_0561170;)Z	m_0903969		hasResource
 		p	1			type
-		p	2			id
+		p	2			location
 	m	(Lnet/minecraft/unmapped/C_9955562;)Ljava/util/Set;	m_7140065		getNamespaces
 		p	1			type
 	m	(Lnet/minecraft/unmapped/C_1958650;)Ljava/lang/Object;	m_5376770		getMetadataSection
@@ -6148,7 +6148,7 @@ c	net/minecraft/unmapped/C_8166793$5		5
 		p	1			p_1
 		p	3			p_3
 c	net/minecraft/unmapped/C_8239170
-	f	Lnet/minecraft/unmapped/C_6414867;	f_6292249		f_6292249
+	f	Lnet/minecraft/unmapped/C_6414867;	f_6292249		SERIALIZER
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_8254035
 	f	Lorg/lwjgl/util/vector/Vector3f;	f_0423591	rotation	
@@ -7570,7 +7570,7 @@ c	net/minecraft/unmapped/C_3881557		net/minecraft/resource/pack/BuiltInPack
 		p	4			name
 	m	(Lnet/minecraft/unmapped/C_9955562;Lnet/minecraft/unmapped/C_0561170;)Ljava/io/InputStream;	m_2896732		openResource
 		p	1			type
-		p	2			id
+		p	2			location
 	m	(Lnet/minecraft/unmapped/C_9955562;Lnet/minecraft/unmapped/C_0561170;)Z	m_0903969		m_0903969
 		p	1			p_1
 		p	2			p_2
@@ -7675,9 +7675,9 @@ c	net/minecraft/unmapped/C_4137995		net/minecraft/resource/pack/PackCompatibilit
 	m	()Lnet/minecraft/unmapped/C_9550253;	m_3012810		getDescription
 	m	()Lnet/minecraft/unmapped/C_9550253;	m_2034731		getConfirmation
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_4756188		net/minecraft/unmapped/C_4756188
-	f	Lnet/minecraft/unmapped/C_7131921;	f_6151163		f_6151163
-	f	Lnet/minecraft/unmapped/C_0561170;	f_1073422		f_1073422
+c	net/minecraft/unmapped/C_4756188		net/minecraft/client/resource/pack/UnopenedResourcePack
+	f	Lnet/minecraft/unmapped/C_7131921;	f_6151163		icon
+	f	Lnet/minecraft/unmapped/C_0561170;	f_1073422		iconLocation
 	m	(Ljava/lang/String;ZLjava/util/function/Supplier;Lnet/minecraft/unmapped/C_7532262;Lnet/minecraft/unmapped/C_9785240;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -7685,17 +7685,17 @@ c	net/minecraft/unmapped/C_4756188		net/minecraft/unmapped/C_4756188
 		p	4			p_4
 		p	5			p_5
 	m	(Ljava/lang/String;ZLjava/util/function/Supplier;Lnet/minecraft/unmapped/C_9550253;Lnet/minecraft/unmapped/C_9550253;Lnet/minecraft/unmapped/C_4137995;Lnet/minecraft/unmapped/C_2191309$C_4728915;ZLnet/minecraft/unmapped/C_7131921;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
-		p	9			p_9
-	m	(Lnet/minecraft/unmapped/C_0876962;)V	m_0558739		m_0558739
-		p	1			p_1
+		p	1			id
+		p	2			required
+		p	3			builder
+		p	4			title
+		p	5			description
+		p	6			compatibility
+		p	7			position
+		p	8			fixed
+		p	9			icon
+	m	(Lnet/minecraft/unmapped/C_0876962;)V	m_0558739		bindIcon
+		p	1			textureManager
 c	net/minecraft/unmapped/C_5989181		com/mojang/blaze3d/platform/DebugMemoryUntracker
 	f	Ljava/lang/invoke/MethodHandle;	f_6951929		UNTRACK
 	m	(J)V	m_5172333		untrack
@@ -7735,7 +7735,7 @@ c	net/minecraft/unmapped/C_6267884		net/minecraft/unmapped/C_6267884
 	m	(Lnet/minecraft/unmapped/C_2018497;)Lnet/minecraft/unmapped/C_2018497;	m_3031479		m_3031479
 		p	1			p_1
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_6547202		net/minecraft/resource/pack/respository/DirectoryRepositorySource
+c	net/minecraft/unmapped/C_6547202		net/minecraft/resource/pack/repository/DirectoryRepositorySource
 	f	Ljava/io/FileFilter;	f_4499351		FILTER
 	f	Ljava/io/File;	f_5426467		directory
 	m	(Ljava/io/File;)V	<init>		<init>
@@ -7752,7 +7752,7 @@ c	net/minecraft/unmapped/C_6547202		net/minecraft/resource/pack/respository/Dire
 	m	(Ljava/io/File;)Z	m_8739466		m_8739466
 		p	0			file
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_6647568		net/minecraft/server/resource/pack/ServerPackSource
+c	net/minecraft/unmapped/C_6647568		net/minecraft/server/resource/pack/DataPacks
 	f	Lnet/minecraft/unmapped/C_3881557;	f_2614184		defaultPack
 	m	()V	<init>		<init>
 	m	(Ljava/util/Map;Lnet/minecraft/unmapped/C_2191309$C_0933267;)V	m_3106366		m_3106366
