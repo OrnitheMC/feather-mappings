@@ -112,8 +112,7 @@ def version_id = ENV.MC_VERSION ?: {
 }()
 def environment = parseEnvironment(version_id)
 def minecraft_version = parseVersion(version_id, environment)
-def build_number = nextBuildNumber(ENV, version_id)
-def featherVersion = "${version_id}+build.${build_number}"
+def featherVersion = nextFeatherVersion(ENV, version_id)
 
 enum Environment {
 
@@ -154,7 +153,7 @@ static String parseVersion(String id, Environment environment) {
 	}
 }
 
-static def nextBuildNumber(ENV, version_id) {
+static def nextFeatherVersion(ENV, version_id) {
 	if (ENV.MAVEN_URL) {
 		def build_number = 0
 
@@ -176,18 +175,24 @@ static def nextBuildNumber(ENV, version_id) {
 						if (number > build_number) {
 							build_number = number
 						}
-					} catch (NumberFormatException ignored) {
-
+					} catch (NumberFormatException e) {
+						throw new RuntimeException(e);
 					}
 				}
 			}
 		} catch (FileNotFoundException e) {
-
+			// Note: we consider it a hard failure if the maven-metadata.xml file does
+			// not exist. However if you don't have this file yet, you can comment out
+			// the line below to start at build number 1.
+			throw new RuntimeException(e);
 		}
 
-		return build_number + 1
+		// is 0 if no version is found in the above
+		def next_build_number = build_number + 1;
+
+		return "${version_id}+build.${next_build_number}"
 	} else {
-		return "local"
+		return "${version_id}+build.local"
 	}
 }
 
