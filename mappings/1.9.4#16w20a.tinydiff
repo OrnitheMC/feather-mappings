@@ -953,7 +953,7 @@ c	net/minecraft/unmapped/C_6490875$C_9743301		SimpleDebugRenderer
 		p	1			tickDelta
 		p	2			renderTimeLimit
 c	net/minecraft/unmapped/C_6607881
-	m	()F	m_7315381		m_7315381
+	m	()F	m_7315381		getBaseMovementSpeedMultiplier
 c	net/minecraft/unmapped/C_6878131
 c	net/minecraft/unmapped/C_6878131$C_4013422		Variant
 	f	Lnet/minecraft/unmapped/C_6878131$C_4013422;	f_9890723		NORMAL
@@ -1148,7 +1148,7 @@ c	net/minecraft/unmapped/C_8983523
 c	net/minecraft/unmapped/C_9006363
 	f	Lnet/minecraft/unmapped/C_0561170;	f_6686119		f_6686119
 c	net/minecraft/unmapped/C_9012949
-	m	()V	m_6908337		m_6908337
+	m	()V	m_6908337		callSameTypeForRevenge
 c	net/minecraft/unmapped/C_9094020
 	f	I	f_3839476	pitch	
 	f	F	f_3839476		pitch
@@ -1658,12 +1658,12 @@ c	net/minecraft/unmapped/C_8575933		net/minecraft/client/render/debug/WaterRende
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/unmapped/C_8740610		net/minecraft/entity/living/mob/passive/animal/PolarBearEntity
-	f	Lnet/minecraft/unmapped/C_6101761;	f_7020120		f_7020120
-	f	F	f_6550546		f_6550546
-	f	F	f_3807950		f_3807950
-	f	I	f_2676106		f_2676106
+	f	Lnet/minecraft/unmapped/C_6101761;	f_7020120		WARNING
+	f	F	f_6550546		lastWarningAnimationProgress
+	f	F	f_3807950		warningAnimationProgress
+	f	I	f_2676106		warningSoundCooldown
 	m	(Lnet/minecraft/unmapped/C_5553933;)V	<init>		<init>
-		p	1			p_1
+		p	1			world
 	m	(Lnet/minecraft/unmapped/C_5565812;)Lnet/minecraft/unmapped/C_5565812;	m_1345870		m_1345870
 		p	1			p_1
 	m	()V	m_6485717		m_6485717
@@ -1674,7 +1674,7 @@ c	net/minecraft/unmapped/C_8740610		net/minecraft/entity/living/mob/passive/anim
 	m	(Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1241852;)V	m_3032530		m_3032530
 		p	1			p_1
 		p	2			p_2
-	m	()V	m_7711332		m_7711332
+	m	()V	m_7711332		playWarningSound
 	m	()Lnet/minecraft/unmapped/C_0561170;	m_3514816		m_3514816
 	m	()V	m_1700770		m_1700770
 	m	(Lnet/minecraft/unmapped/C_2018497;)V	m_7694759		m_7694759
@@ -1684,11 +1684,11 @@ c	net/minecraft/unmapped/C_8740610		net/minecraft/entity/living/mob/passive/anim
 	m	()V	m_7274048		m_7274048
 	m	(Lnet/minecraft/unmapped/C_0539808;)Z	m_3916798		m_3916798
 		p	1			p_1
-	m	()Z	m_1854375		m_1854375
-	m	(Z)V	m_9306907		m_9306907
-		p	1			p_1
-	m	(F)F	m_5962563		m_5962563
-		p	1			p_1
+	m	()Z	m_1854375		isWarning
+	m	(Z)V	m_9306907		setWarning
+		p	1			warning
+	m	(F)F	m_5962563		getWarningAnimationProgress
+		p	1			tickDelta
 	m	()F	m_7315381		m_7315381
 	m	(Lnet/minecraft/unmapped/C_2716056;Lnet/minecraft/unmapped/C_2928020;)Lnet/minecraft/unmapped/C_2928020;	m_7592700		m_7592700
 		p	1			p_1
@@ -1696,16 +1696,16 @@ c	net/minecraft/unmapped/C_8740610		net/minecraft/entity/living/mob/passive/anim
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_8740610$1		1
 c	net/minecraft/unmapped/C_8740610$C_0487131		Data
-	f	Z	f_3223133		f_3223133
+	f	Z	f_3223133		parent
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_8740610$1;)V	<init>		<init>
 		p	1			p_1
-c	net/minecraft/unmapped/C_8740610$C_1203144		C_1203144
+c	net/minecraft/unmapped/C_8740610$C_1203144		PolarBearEscapeDangerGoal
 	f	Lnet/minecraft/unmapped/C_8740610;	f_1588945		f_1588945
 	m	(Lnet/minecraft/unmapped/C_8740610;)V	<init>		<init>
 		p	1			p_1
 	m	()Z	m_9549250		m_9549250
-c	net/minecraft/unmapped/C_8740610$C_4976676		C_4976676
+c	net/minecraft/unmapped/C_8740610$C_4976676		AttackGoal
 	f	Lnet/minecraft/unmapped/C_8740610;	f_1682088		f_1682088
 	m	(Lnet/minecraft/unmapped/C_8740610;)V	<init>		<init>
 		p	1			p_1
@@ -1714,13 +1714,13 @@ c	net/minecraft/unmapped/C_8740610$C_4976676		C_4976676
 		p	2			p_2
 	m	(Lnet/minecraft/unmapped/C_6607881;)D	m_3448051		m_3448051
 		p	1			p_1
-c	net/minecraft/unmapped/C_8740610$C_7505262		C_7505262
+c	net/minecraft/unmapped/C_8740610$C_7505262		ProtectBabiesGoal
 	f	Lnet/minecraft/unmapped/C_8740610;	f_4967813		f_4967813
 	m	(Lnet/minecraft/unmapped/C_8740610;)V	<init>		<init>
 		p	1			p_1
 	m	()Z	m_9549250		m_9549250
 	m	()D	m_9394640		m_9394640
-c	net/minecraft/unmapped/C_8740610$C_9323703		C_9323703
+c	net/minecraft/unmapped/C_8740610$C_9323703		PolarBearRevengeGoal
 	f	Lnet/minecraft/unmapped/C_8740610;	f_4352699		f_4352699
 	m	(Lnet/minecraft/unmapped/C_8740610;)V	<init>		<init>
 		p	1			p_1
