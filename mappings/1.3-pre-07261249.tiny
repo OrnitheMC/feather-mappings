@@ -1028,16 +1028,16 @@ c	net/minecraft/server/MinecraftServer	net/minecraft/server/MinecraftServer
 	f	Ljava/lang/String;	f_0591270	resourcePackUrl
 	f	Z	f_9264104	loading
 	f	J	f_2268715	lastWarnTime
-	f	Ljava/lang/String;	f_1837961	serverOperation
+	f	Ljava/lang/String;	f_1837961	loadingStage
 	f	Z	f_3600067	profiling
 	m	(Ljava/io/File;)V	<init>	<init>
 		p	1		gameDir
 	m	()Z	m_1472227	init
 	m	(Ljava/lang/String;)V	m_3768692	convertWorld
 		p	1		saveName
-	m	(Ljava/lang/String;)V	m_0270021	setServerOperation
-		p	1		operation
-	m	()Ljava/lang/String;	m_7001369	getServerOperation
+	m	(Ljava/lang/String;)V	m_0270021	setLoadingStage
+		p	1		stage
+	m	()Ljava/lang/String;	m_7001369	getLoadingStage
 	m	(Ljava/lang/String;Ljava/lang/String;JLnet/minecraft/unmapped/C_1518925;)V	m_8050829	loadWorld
 		p	1		saveName
 		p	2		name
@@ -1389,7 +1389,7 @@ c	net/minecraft/unmapped/C_0124240	net/minecraft/client/render/model/entity/Quad
 	m	(Lnet/minecraft/unmapped/C_0124240;F)V	m_9708376	renderAs
 		p	1		other
 		p	2		tickDelta
-c	net/minecraft/unmapped/C_0124899	net/minecraft/world/chunk/storage/io/FileIoThread
+c	net/minecraft/unmapped/C_0124899	net/minecraft/world/chunk/storage/io/ChunkIoThread
 	f	Lnet/minecraft/unmapped/C_0124899;	f_2205711	INSTANCE
 	f	Ljava/util/List;	f_8497098	callbacks
 	f	J	f_7142486	registered
@@ -3859,7 +3859,7 @@ c	net/minecraft/unmapped/C_0792283	net/minecraft/client/entity/particle/FlamePar
 	m	(F)F	m_9376546	m_9376546
 		p	1		p_1
 	m	()V	m_7274048	m_7274048
-c	net/minecraft/unmapped/C_0795795	net/minecraft/world/chunk/storage/io/FileIoCallback
+c	net/minecraft/unmapped/C_0795795	net/minecraft/world/chunk/storage/io/ChunkIoCallback
 	m	()Z	m_4993113	run
 c	net/minecraft/unmapped/C_0799715	net/minecraft/world/biome/StoneBeachBiome
 	m	(I)V	<init>	<init>
@@ -13129,7 +13129,7 @@ c	net/minecraft/unmapped/C_3292284	net/minecraft/server/entity/living/player/Ser
 	f	I	f_2269199	lastHealth
 	f	I	f_1497569	lastHungerLevel
 	f	Z	f_9468149	wasHungry
-	f	I	f_7833862	lastXp
+	f	I	f_7833862	lastSentXp
 	f	I	f_1130740	spawnProtectionTicks
 	f	I	f_6332607	chunkViewDistance
 	f	I	f_6738897	chatVisibility
@@ -17276,7 +17276,7 @@ c	net/minecraft/unmapped/C_4652455	net/minecraft/network/packet/WorldChunkPacket
 	m	(Lnet/minecraft/unmapped/C_6849228;ZI)V	<init>	<init>
 		p	1		chunk
 		p	2		full
-		p	3		dirtySections
+		p	3		sections
 	m	(Ljava/io/DataInputStream;)V	m_4792371	m_4792371
 		p	1		p_1
 	m	(Ljava/io/DataOutputStream;)V	m_6110406	m_6110406
@@ -17285,8 +17285,8 @@ c	net/minecraft/unmapped/C_4652455	net/minecraft/network/packet/WorldChunkPacket
 		p	1		p_1
 	m	()I	m_4040470	m_4040470
 	m	()Ljava/lang/String;	m_8387532	m_8387532
-	m	()[B	m_9365055	getRawChunkData
-	m	(Lnet/minecraft/unmapped/C_6849228;ZI)Lnet/minecraft/unmapped/C_6318874;	m_8816145	packChunkData
+	m	()[B	m_9365055	getChunkData
+	m	(Lnet/minecraft/unmapped/C_6849228;ZI)Lnet/minecraft/unmapped/C_6318874;	m_8816145	writeChunkData
 		p	0		chunk
 		p	1		full
 		p	2		dirtySections
@@ -22607,7 +22607,7 @@ c	net/minecraft/unmapped/C_6309557	net/minecraft/client/network/handler/ClientNe
 		p	1		p_1
 		p	2		p_2
 c	net/minecraft/unmapped/C_6318874	net/minecraft/network/packet/WorldChunkPacket__ChunkData
-	f	[B	f_6927365	rawChunkData
+	f	[B	f_6927365	bytes
 	f	I	f_4840802	sectionsWithData
 	f	I	f_4549348	sectionsWithBlockIdsUpper
 	m	()V	<init>	<init>
@@ -24139,7 +24139,7 @@ c	net/minecraft/unmapped/C_6849228	net/minecraft/world/chunk/WorldChunk
 		p	2		maxY
 	m	([Lnet/minecraft/unmapped/C_8042654;)V	m_9237514	setSections
 		p	1		sections
-	m	([BIIZ)V	m_5021997	set
+	m	([BIIZ)V	m_5021997	update
 		p	1		rawChunkData
 		p	2		sectionsWithData
 		p	3		sectionsWithBlockIdsUpper
