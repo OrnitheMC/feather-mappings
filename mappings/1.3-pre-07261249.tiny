@@ -15176,7 +15176,7 @@ c	net/minecraft/unmapped/C_3831727	net/minecraft/client/render/TextRenderer
 	f	F	f_1124179	xPos
 	f	F	f_3650536	zPos
 	f	Z	f_6847841	unicode
-	f	Z	f_1299652	rightToLeft
+	f	Z	f_1299652	bidirectional
 	f	F	f_7128607	r
 	f	F	f_9832395	g
 	f	F	f_3688722	b
@@ -15184,7 +15184,7 @@ c	net/minecraft/unmapped/C_3831727	net/minecraft/client/render/TextRenderer
 	f	I	f_0909950	color
 	f	Z	f_5358631	obfuscated
 	f	Z	f_6872672	bold
-	f	Z	f_0671583	reset
+	f	Z	f_0671583	italic
 	f	Z	f_3741083	underline
 	f	Z	f_2239719	strikethrough
 	m	()V	<init>	<init>
@@ -15193,18 +15193,18 @@ c	net/minecraft/unmapped/C_3831727	net/minecraft/client/render/TextRenderer
 		p	2		font
 		p	3		textureManager
 		p	4		unicode
-	m	(ICZ)F	m_1500134	renderText
+	m	(ICZ)F	m_1500134	drawGlyph
 		p	1		formattingChar
 		p	2		unicodeChar
 		p	3		reset
-	m	(IZ)F	m_1456542	renderBasicText
+	m	(IZ)F	m_1456542	drawBasicGlyph
 		p	1		formattingChar
 		p	2		reset
 	m	(I)V	m_1934776	bindFontPageTexture
 		p	1		page
-	m	(CZ)F	m_0274765	renderUnicodeText
-		p	1		unicodeCharacter
-		p	2		reset
+	m	(CZ)F	m_0274765	drawUnicodeGlyph
+		p	1		chr
+		p	2		italic
 	m	(Ljava/lang/String;III)I	m_1950885	draw
 		p	1		s
 		p	2		x
@@ -15216,22 +15216,22 @@ c	net/minecraft/unmapped/C_3831727	net/minecraft/client/render/TextRenderer
 		p	3		y
 		p	4		p_4
 		p	5		color
-	m	(Ljava/lang/String;III)V	m_4683674	drawWithoutShadow
+	m	(Ljava/lang/String;III)V	m_4683674	draw
 		p	1		text
 		p	2		x
 		p	3		y
 		p	4		color
-	m	(Ljava/lang/String;)Ljava/lang/String;	m_3609164	mirror
+	m	(Ljava/lang/String;)Ljava/lang/String;	m_3609164	bidirectionalShaping
 		p	1		text
 	m	()V	m_3983024	reset
-	m	(Ljava/lang/String;Z)V	m_1275050	drawLine
+	m	(Ljava/lang/String;Z)V	m_1275050	drawLayer
 		p	1		text
-		p	2		hasShadow
-	m	(Ljava/lang/String;IIIIZ)I	m_3173459	drawLayer
+		p	2		shadow
+	m	(Ljava/lang/String;IIIIZ)I	m_3173459	drawSplitLayer
 		p	1		line
 		p	2		x
 		p	3		y
-		p	4		maxWidth
+		p	4		width
 		p	5		color
 		p	6		colored
 	m	(Ljava/lang/String;IIIZ)I	m_7632532	drawLayer
@@ -15240,26 +15240,26 @@ c	net/minecraft/unmapped/C_3831727	net/minecraft/client/render/TextRenderer
 		p	3		y
 		p	4		color
 		p	5		colored
-	m	(Ljava/lang/String;)I	m_0040387	getStringWidth
+	m	(Ljava/lang/String;)I	m_0040387	getWidth
 		p	1		text
-	m	(C)I	m_4462203	getSpecialCharacterWidth
-		p	1		character
-	m	(Ljava/lang/String;I)Ljava/lang/String;	m_3198719	trimToWidth
-		p	1		text
-		p	2		width
-	m	(Ljava/lang/String;IZ)Ljava/lang/String;	m_6733238	trimToWidth
+	m	(C)I	m_4462203	getWidth
+		p	1		chr
+	m	(Ljava/lang/String;I)Ljava/lang/String;	m_3198719	trim
 		p	1		text
 		p	2		width
-		p	3		shouldInverse
+	m	(Ljava/lang/String;IZ)Ljava/lang/String;	m_6733238	trim
+		p	1		text
+		p	2		width
+		p	3		inverse
 	m	(Ljava/lang/String;)Ljava/lang/String;	m_3672753	m_3672753
 		p	0		p_0
-	m	(Ljava/lang/String;)Ljava/lang/String;	m_2131809	trimEndNewlines
+	m	(Ljava/lang/String;)Ljava/lang/String;	m_2131809	trimLineBreaks
 		p	1		text
-	m	(Ljava/lang/String;IIII)V	m_3921441	drawTrimmed
+	m	(Ljava/lang/String;IIII)V	m_3921441	drawSplit
 		p	1		text
 		p	2		x
 		p	3		y
-		p	4		maxWidth
+		p	4		width
 		p	5		color
 	m	(Ljava/lang/String;IIII)V	m_1601324	drawTrimmedWithColor
 		p	1		text
@@ -15287,25 +15287,25 @@ c	net/minecraft/unmapped/C_3831727	net/minecraft/client/render/TextRenderer
 		p	1		unicode
 	m	(Z)V	m_1676628	setRightToLeft
 		p	1		rightToLeft
-	m	(Ljava/lang/String;I)Ljava/util/List;	m_0466830	wrapLines
-		p	1		text
-		p	2		lineLength
-	m	(Ljava/lang/String;I)Ljava/lang/String;	m_7904065	wrapStringToWidth
+	m	(Ljava/lang/String;I)Ljava/util/List;	m_0466830	split
 		p	1		text
 		p	2		width
-	m	(Ljava/lang/String;I)I	m_4803626	getCharacterCountForWidth
+	m	(Ljava/lang/String;I)Ljava/lang/String;	m_7904065	insertLineBreaks
 		p	1		text
-		p	2		offset
-	m	(C)Z	m_1936315	isColorCharacter
+		p	2		width
+	m	(Ljava/lang/String;I)I	m_4803626	indexAtWidth
+		p	1		text
+		p	2		width
+	m	(C)Z	m_1936315	isColor
 		c	Checks if a certain formatting character is a color. The different colors are:\n<ul>\n<li><b>0:</b> <span style="color:#000000">black</span></li>\n<li><b>1:</b> <span style="color:#0000AA">dark blue</span></li>\n<li><b>2:</b> <span style="color:#00AA00">dark green</span></li>\n<li><b>3:</b> <span style="color:#00AAAA">dark aqua</span></li>\n<li><b>4:</b> <span style="color:#AA0000">dark red</span></li>\n<li><b>5:</b> <span style="color:#AA00AA">dark purple</span></li>\n<li><b>6:</b> <span style="color:#FFAA00">gold</span></li>\n<li><b>7:</b> <span style="color:#AAAAAA">gray</span></li>\n<li><b>8:</b> <span style="color:#555555">dark gray</span></li>\n<li><b>9:</b> <span style="color:#5555FF">blue</span></li>\n<li><b>a/A:</b> <span style="color:#55FF55">green</span></li>\n<li><b>b/B:</b> <span style="color:#55FFFF">aqua</span></li>\n<li><b>c/C:</b> <span style="color:#FF5555">red</span></li>\n<li><b>d/D:</b> <span style="color:#FF55FF">light_purple</span></li>\n<li><b>e/E:</b> <span style="color:#FFFF55">yellow</span></li>\n<li><b>f/F:</b> <span style="color:#FFFFFF">white</span></li>\n<li><b>g/G:</b> <span style="color:#DDD605">minecoin gold</span></li>\n</ul>
 		p	0		chr
-	m	(C)Z	m_5586909	isFormattingCharacter
+	m	(C)Z	m_5586909	isFormatting
 		c	Checks the type of formatting character.\n<ul>\n<li><b>k:</b> <span style="color:#000000">obfuscated</span></li>\n<li><b>l:</b> <span style="color:#000000"><b>bold</b></span></li>\n<li><b>m:</b> <span style="color:#000000"><s>strikethrough</s></span></li>\n<li><b>n:</b> <span style="color:#000000"><u>underline</u></span></li>\n<li><b>o:</b> <span style="color:#000000"><i>italic</i></span></li>\n<li><b>r:</b> <span style="color:#000000">reset</span></li>\n</ul>
 		p	0		chr
 	m	(Ljava/lang/String;)Ljava/lang/String;	m_1633235	isolateFormatting
 		c	Strips all non formatting characters from the string.
 		p	0		text
-	m	()Z	m_1412895	isRightToLeft
+	m	()Z	m_1412895	isBidirectional
 c	net/minecraft/unmapped/C_3838036	net/minecraft/world/biome/layer/RiverLayer
 	m	(JLnet/minecraft/unmapped/C_5540234;)V	<init>	<init>
 		p	1		seed
@@ -21730,7 +21730,7 @@ c	net/minecraft/unmapped/C_5999076	net/minecraft/client/gui/widget/ListWidget
 		p	1		renderHeader
 		p	2		headerHeight
 	m	()I	m_3791031	size
-	m	(IZ)V	m_0479322	selectEntry
+	m	(IZ)V	m_0479322	entryClicked
 		p	1		p_1
 		p	2		p_2
 	m	(I)Z	m_5993229	isEntrySelected
@@ -21747,7 +21747,7 @@ c	net/minecraft/unmapped/C_5999076	net/minecraft/client/gui/widget/ListWidget
 		p	1		x
 		p	2		y
 		p	3		tessellator
-	m	(II)V	m_6715763	render
+	m	(II)V	m_6715763	headerClicked
 		p	1		x
 		p	2		y
 	m	(II)V	m_6989976	renderDecorations
