@@ -27,10 +27,12 @@ def main():
     minecraft_versions.sort()
     workflows: list[list[str]] = split_in_workflows(230, minecraft_versions)
     for i, versions in enumerate(workflows):
+        formatted_versions = str(versions).replace("'", '"')
         with open(".github/workflows/templates/publish_runner_template.yml", "r") as r_template:
             template: str = r_template.read()
             template: str = template.replace("PUBLISH_NUMBER", str(i))
-            template: str = template.replace("PUBLISH_VERSIONS", f"{versions}")
+            template: str = template.replace("PUBLISH_VERSIONS", formatted_versions)
+            template: str = template.replace("PUBLISH_ID", "Publish" if i == 0 else f"Publish_{i - 1}")
         with open(f".github/workflows/publish_{i}.yml", "w") as publish:
             publish.write(template)
 
