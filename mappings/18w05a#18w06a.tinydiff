@@ -854,9 +854,9 @@ c	net/minecraft/unmapped/C_0705111
 		p	1			chunk
 	m	(Lnet/minecraft/unmapped/C_3820473;)V	m_1530121		carve
 		p	1			region
-	m	(Lnet/minecraft/unmapped/C_3820473;)V	m_4129669		populate
+	m	(Lnet/minecraft/unmapped/C_3820473;)V	m_4129669		decorate
 		p	1			region
-	m	(Lnet/minecraft/unmapped/C_3820473;)V	m_1060834		decorate
+	m	(Lnet/minecraft/unmapped/C_3820473;)V	m_1060834		populate
 		p	1			region
 	m	()Lnet/minecraft/unmapped/C_3287998;	m_0080754		getSettings
 	m	(Lnet/minecraft/unmapped/C_6928498;Lnet/minecraft/unmapped/C_9470286;)Z	m_6816261		canGenerateStructure
@@ -1897,9 +1897,13 @@ c	net/minecraft/unmapped/C_1314941
 	m	()Ljava/lang/String;	getString		getString
 c	net/minecraft/unmapped/C_1316134
 	f	Ljava/util/Set;	f_3272393	chunksToUnload	
+		c	Queue for chunks to unload.	
 	f	Lit/unimi/dsi/fastutil/longs/LongSet;	f_3272393		chunksToUnload
+		c		Queue for chunks to unload.
 	f	Lnet/minecraft/unmapped/C_3492960;	f_4549504		scheduler
+		c		The scheduler for chunk generation tasks.
 	f	Lnet/minecraft/unmapped/C_7197374;	f_2105655		taskManager
+		c		The task manager for chunk generation.
 	m	(Lnet/minecraft/unmapped/C_3865296;Lnet/minecraft/unmapped/C_3015672;Lnet/minecraft/unmapped/C_0705111;)V	<init>	<init>	
 		p	1		world	
 		p	2		storage	
@@ -1916,29 +1920,31 @@ c	net/minecraft/unmapped/C_1316134
 		p	3			generator
 		p	4			runner
 	m	(II)Lnet/minecraft/unmapped/C_6849228;	m_6914180		loadChunk
+		c		@return the world chunk at the given chunk coordinates,\nloading it from storage if needed, or {@code null} if it does not exist
 		p	1			chunkX
 		p	2			chunkZ
 	m	(II)Lnet/minecraft/unmapped/C_0636026;	m_6525570		m_6525570
 		p	1			p_1
 		p	2			p_2
-	m	(Ljava/lang/Iterable;Ljava/util/function/Consumer;)Ljava/util/concurrent/CompletableFuture;	m_1724382		loadChunks
+	m	(Ljava/lang/Iterable;Ljava/util/function/Consumer;)Ljava/util/concurrent/CompletableFuture;	m_1724382		generateChunks
 		p	1			positions
 		p	2			callback
-	m	(II)Ljava/util/concurrent/CompletableFuture;	m_9598700		m_9598700
-		p	1			p_1
-		p	2			p_2
+	m	(II)Ljava/util/concurrent/CompletableFuture;	m_9598700		getChunkGenerationFuture
+		p	1			chunkX
+		p	2			chunkZ
 	m	(IILjava/lang/Throwable;)Lnet/minecraft/unmapped/C_1038756;	m_2123662		createChunkGenerationCrashException
 		p	1			chunkX
 		p	2			chunkZ
 		p	3			cause
-	m	(Lnet/minecraft/unmapped/C_0636026;)Lnet/minecraft/unmapped/C_6849228;	m_0597442		completeLoadChunk
+	m	(Lnet/minecraft/unmapped/C_0636026;)Lnet/minecraft/unmapped/C_6849228;	m_0597442		finalizeChunk
+		c		Finalize a newly generated chunk and upgrade it to a full world chunk.
 		p	1			chunk
 	m	(Lnet/minecraft/unmapped/C_0636026;)V	m_3241806		saveChunk
 		p	1			chunk
 	m	()V	close		close
 	m	()Lnet/minecraft/unmapped/C_0705111;	m_4829896		m_4829896
 	m	(Lnet/minecraft/unmapped/C_0636026;)V	m_0594204		m_0594204
-		p	1			p_1
+		p	1			chunk
 	m	(II)Lnet/minecraft/unmapped/C_6849228;	m_4129669	loadChunk	loadChunkFromStorage
 c	net/minecraft/unmapped/C_1317396	net/minecraft/world/gen/feature/DoublePlantFeature	
 	f	Lnet/minecraft/unmapped/C_8730867;	f_5123104	variant	
@@ -10537,7 +10543,8 @@ c	net/minecraft/unmapped/C_9830617
 		p	5			p_5
 		p	6			p_6
 c	net/minecraft/unmapped/C_9848147
-	m	(II)Lnet/minecraft/unmapped/C_0636026;	m_6525570		getChunkLater
+	m	(II)Lnet/minecraft/unmapped/C_0636026;	m_6525570		getProtoChunk
+		c		@return the proto chunk at the given chunk coordinates, loading or generating it if needed
 		p	1			chunkX
 		p	2			chunkZ
 	m	()Lnet/minecraft/unmapped/C_0705111;	m_4829896		getGenerator
@@ -11004,15 +11011,15 @@ c	net/minecraft/unmapped/C_0114090		net/minecraft/util/Scheduler
 	m	(Ljava/lang/Object;)Ljava/util/concurrent/CompletableFuture;	m_6823114		schedule
 		p	1			key
 	m	()Ljava/util/concurrent/CompletableFuture;	m_9633099		poll
-	m	(Ljava/lang/Object;)Lnet/minecraft/unmapped/C_0114090$C_8296248;	m_6270166		getResult
-		p	1			p_1
+	m	(Ljava/lang/Object;)Lnet/minecraft/unmapped/C_0114090$C_8296248;	m_6270166		getFuture
+		p	1			key
 	m	()V	m_0949301		close
 	m	(Ljava/lang/Object;Lnet/minecraft/unmapped/C_7274288;Ljava/util/Map;)Ljava/lang/Object;	m_7212920		runTask
 		p	1			key
 		p	2			task
 		p	3			results
-	m	(Ljava/lang/Object;)Ljava/lang/Object;	m_1729875		getTaskResult
-		p	1			p_1
+	m	(Ljava/lang/Object;)Ljava/lang/Object;	m_1729875		getResult
+		p	1			key
 	m	()Ljava/util/concurrent/CompletableFuture;	m_6173646		peek
 	m	(Ljava/lang/Object;)Ljava/lang/Object;	m_3206050		m_3206050
 		p	0			result
@@ -11044,8 +11051,8 @@ c	net/minecraft/unmapped/C_0114090$1		1
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/unmapped/C_0114090$C_8296248		TaskResult
-	f	Ljava/util/Map;	f_9347649		futures
+c	net/minecraft/unmapped/C_0114090$C_8296248		TaskFuture
+	f	Ljava/util/Map;	f_9347649		dst
 	f	Ljava/lang/Object;	f_1731148		key
 	f	Ljava/lang/Object;	f_2740866		result
 	f	Lnet/minecraft/unmapped/C_0114090;	f_3661567		f_3661567
@@ -11055,7 +11062,7 @@ c	net/minecraft/unmapped/C_0114090$C_8296248		TaskResult
 		p	3			result
 		p	4			task
 	m	()Ljava/lang/Object;	m_2550137		get
-	m	(Ljava/util/concurrent/CompletableFuture;Lnet/minecraft/unmapped/C_7274288;)Ljava/util/concurrent/CompletableFuture;	m_7254456		getFuture
+	m	(Ljava/util/concurrent/CompletableFuture;Lnet/minecraft/unmapped/C_7274288;)Ljava/util/concurrent/CompletableFuture;	m_7254456		compute
 		p	1			prev
 		p	2			target
 	m	(Lnet/minecraft/unmapped/C_7274288;Ljava/util/Map;Ljava/util/concurrent/CompletableFuture;Lnet/minecraft/unmapped/C_7274288;)Ljava/util/concurrent/CompletableFuture;	m_7234207		m_7234207
@@ -11070,12 +11077,12 @@ c	net/minecraft/unmapped/C_0114090$C_8296248		TaskResult
 	m	(Ljava/util/concurrent/CompletableFuture;)Ljava/lang/Object;	m_9643018		m_9643018
 		p	0			future
 	m	(I)[Ljava/util/concurrent/CompletableFuture;	m_9890291		m_9890291
-		p	0			p_0
+		p	0			size
 	m	(Ljava/util/Map;Ljava/util/concurrent/CompletableFuture;Ljava/lang/Object;Lnet/minecraft/unmapped/C_7274288;)V	m_7409645		m_7409645
 		p	1			p_1
 		p	2			p_2
 		p	3			k
-		p	4			action
+		p	4			task
 	m	(Lnet/minecraft/unmapped/C_0114090$C_8296248;Ljava/util/concurrent/CompletableFuture;Lnet/minecraft/unmapped/C_7274288;)Ljava/util/concurrent/CompletableFuture;	m_6759740		m_6759740
 		p	0			p_0
 		p	1			p_1
@@ -11182,8 +11189,8 @@ c	net/minecraft/unmapped/C_0635266		net/minecraft/world/gen/feature/GrassConfigu
 		p	1			state
 c	net/minecraft/unmapped/C_0636026		net/minecraft/world/chunk/ChunkAccess
 	m	(Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_2441996;)Lnet/minecraft/unmapped/C_2441996;	m_0222822		setBlockState
-		p	1			p_1
-		p	2			p_2
+		p	1			pos
+		p	2			state
 	m	(Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3622326;)V	m_8176130		setBlockEntity
 		p	1			pos
 		p	2			blockEntity
@@ -11223,9 +11230,9 @@ c	net/minecraft/unmapped/C_0636026		net/minecraft/world/chunk/ChunkAccess
 		p	1			type
 		p	2			reference
 	m	()[Lnet/minecraft/unmapped/C_6928498;	m_1272190		getBiomes
-	m	(Z)V	m_1530040		m_1530040
-		p	1			p_1
-	m	()Z	m_7926118		m_7926118
+	m	(Z)V	m_1530040		setDirty
+		p	1			dirty
+	m	()Z	m_7926118		isDirty
 	m	()Lnet/minecraft/unmapped/C_3331146;	m_5940343		getStatus
 	m	(Lnet/minecraft/unmapped/C_3674802;)V	m_9656101		removeBlockEntity
 		p	1			pos
@@ -11399,7 +11406,7 @@ c	net/minecraft/unmapped/C_0960638		net/minecraft/world/chunk/ProtoChunk
 	m	(Lnet/minecraft/unmapped/C_3331146;)V	m_1603727		m_1603727
 		p	1			p_1
 	m	(Ljava/lang/String;)V	m_5597872		setStatus
-		p	1			id
+		p	1			key
 	m	()[Lnet/minecraft/unmapped/C_8042654;	m_3040753		m_3040753
 	m	(Lnet/minecraft/unmapped/C_2891045;Lnet/minecraft/unmapped/C_3674802;Z)I	m_7384565		m_7384565
 		p	1			p_1
@@ -11436,7 +11443,7 @@ c	net/minecraft/unmapped/C_0960638		net/minecraft/world/chunk/ProtoChunk
 	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_2706017;)V	m_0947452		m_0947452
 		p	1			p_1
 		p	2			p_2
-	m	()Ljava/util/Map;	m_1093662		m_1093662
+	m	()Ljava/util/Map;	m_1093662		getStructureStarts
 	m	(Ljava/util/Map;)V	m_3590719		setStructures
 		p	1			structures
 	m	(Ljava/lang/String;)Lit/unimi/dsi/fastutil/longs/LongSet;	m_5234960		m_5234960
@@ -11444,7 +11451,7 @@ c	net/minecraft/unmapped/C_0960638		net/minecraft/world/chunk/ProtoChunk
 	m	(Ljava/lang/String;J)V	m_8546445		m_8546445
 		p	1			p_1
 		p	2			p_2
-	m	()Ljava/util/Map;	m_6164720		m_6164720
+	m	()Ljava/util/Map;	m_6164720		getStructureReferences
 	m	(Ljava/util/Map;)V	m_8908268		setStructureReferences
 		p	1			references
 	m	(Lnet/minecraft/unmapped/C_2891045;ZLnet/minecraft/unmapped/C_3674802;I)V	m_2148279		m_2148279
@@ -11997,8 +12004,8 @@ c	net/minecraft/unmapped/C_3331146		net/minecraft/world/chunk/ChunkStatus
 	f	Lnet/minecraft/unmapped/C_3331146;	f_9976438		FINALIZED
 	f	Lnet/minecraft/unmapped/C_3331146;	f_9619629		FULL_CHUNK
 	f	Lnet/minecraft/unmapped/C_3331146;	f_6831449		POST_PROCESSED
-	f	Ljava/lang/String;	f_9119332		id
-	f	Ljava/util/Map;	f_3722242		BY_ID
+	f	Ljava/lang/String;	f_9119332		key
+	f	Ljava/util/Map;	f_3722242		BY_KEY
 	f	Lnet/minecraft/unmapped/C_5537602;	f_1088691		task
 	f	I	f_7772998		range
 	f	Lnet/minecraft/unmapped/C_3331146$C_3040737;	f_3126415		chunkType
@@ -12010,11 +12017,11 @@ c	net/minecraft/unmapped/C_3331146		net/minecraft/world/chunk/ChunkStatus
 	m	(Ljava/lang/String;ILjava/lang/String;Lnet/minecraft/unmapped/C_5537602;ILnet/minecraft/unmapped/C_3331146$C_3040737;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
-		p	3			id
+		p	3			key
 		p	4			task
 		p	5			range
 		p	6			chunkType
-	m	()Ljava/lang/String;	m_6452555		getId
+	m	()Ljava/lang/String;	m_6452555		getKey
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0705111;Ljava/util/Map;II)Lnet/minecraft/unmapped/C_0636026;	m_3285626		run
 		p	1			world
 		p	2			generator
@@ -12026,8 +12033,8 @@ c	net/minecraft/unmapped/C_3331146		net/minecraft/world/chunk/ChunkStatus
 		p	2			p_2
 	m	()I	m_2750817		getRange
 	m	()Lnet/minecraft/unmapped/C_3331146$C_3040737;	m_0378574		getChunkType
-	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_3331146;	m_7900833		byId
-		p	0			id
+	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_3331146;	m_7900833		byKey
+		p	0			key
 	m	()Lnet/minecraft/unmapped/C_3331146;	m_3905177		m_3905177
 	m	(Ljava/lang/Object;Ljava/util/function/BiConsumer;)V	m_9995865		m_9995865
 		p	1			p_1
@@ -12092,7 +12099,7 @@ c	net/minecraft/unmapped/C_3431957		net/minecraft/world/gen/feature/VoidStartPla
 		p	5			p_5
 c	net/minecraft/unmapped/C_3443771		net/minecraft/world/biome/FrozenRiverBiome
 	m	()V	<init>		<init>
-c	net/minecraft/unmapped/C_3492960		net/minecraft/server/world/chunk/ChunkScheduler
+c	net/minecraft/unmapped/C_3492960		net/minecraft/server/world/chunk/WorldGenScheduler
 	f	Lorg/apache/logging/log4j/Logger;	f_8503458		LOGGER
 	f	Lnet/minecraft/unmapped/C_5553933;	f_0238948		world
 	f	Lnet/minecraft/unmapped/C_0705111;	f_4437064		generator
@@ -12111,11 +12118,11 @@ c	net/minecraft/unmapped/C_3492960		net/minecraft/server/world/chunk/ChunkSchedu
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Ljava/util/function/Consumer;)V	m_7465529		m_7465529
-		p	1			p_1
-	m	(II)Lnet/minecraft/unmapped/C_0636026;	m_4609168		m_4609168
-		p	1			p_1
-		p	2			p_2
+	m	(Ljava/util/function/Consumer;)V	m_7465529		submit
+		p	1			action
+	m	(II)Lnet/minecraft/unmapped/C_0636026;	m_4609168		loadProtoChunk
+		p	1			chunkX
+		p	2			chunkZ
 	m	(Ljava/lang/Object;Lnet/minecraft/unmapped/C_7274288;Ljava/util/Map;)Ljava/lang/Object;	m_7212920		m_7212920
 		p	1			p_1
 		p	2			p_2

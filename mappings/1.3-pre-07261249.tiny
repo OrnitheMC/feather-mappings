@@ -6124,12 +6124,17 @@ c	net/minecraft/unmapped/C_1274722	argo/jdom/JsonListenerToJdomAdapter__3
 		p	1		p_1
 c	net/minecraft/unmapped/C_1316134	net/minecraft/server/world/chunk/ServerChunkCache
 	f	Ljava/util/Set;	f_3272393	chunksToUnload
+		c	Queue for chunks to unload.
 	f	Lnet/minecraft/unmapped/C_6849228;	f_1524534	empty
 	f	Lnet/minecraft/unmapped/C_9848147;	f_0416976	generator
+		c	Generator for new chunks.
 	f	Lnet/minecraft/unmapped/C_3015672;	f_5109721	storage
+		c	Storage for all existing chunks.
 	f	Z	f_2272594	forceLoad
 	f	Lnet/minecraft/unmapped/C_1431328;	f_9552996	chunksByPos
+		c	All loaded chunks, by chunk position.
 	f	Ljava/util/List;	f_5073208	chunks
+		c	All loaded chunks.
 	f	Lnet/minecraft/unmapped/C_3865296;	f_8836641	world
 	m	(Lnet/minecraft/unmapped/C_3865296;Lnet/minecraft/unmapped/C_3015672;Lnet/minecraft/unmapped/C_9848147;)V	<init>	<init>
 		p	1		world
@@ -6138,10 +6143,12 @@ c	net/minecraft/unmapped/C_1316134	net/minecraft/server/world/chunk/ServerChunkC
 	m	(II)Z	m_8714752	m_8714752
 		p	1		p_1
 		p	2		p_2
-	m	(II)V	m_9772073	scheduleUnload
+	m	(II)V	m_9772073	unloadChunk
+		c	Queue the chunk at the given chunk coordinates to be unloaded.\nThis will happen the next time this chunk source is ticked.
 		p	1		chunkX
 		p	2		chunkZ
-	m	()V	m_2372216	scheduleUnloadAll
+	m	()V	m_2372216	unloadAllChunks
+		c	Queue all chunks to be unloaded.\nThis will happen the next time this chunk cache is ticked.
 	m	(II)Lnet/minecraft/unmapped/C_6849228;	m_0804715	m_0804715
 		p	1		p_1
 		p	2		p_2
@@ -33847,12 +33854,15 @@ c	net/minecraft/unmapped/C_9806649	net/minecraft/world/storage/McRegionWorldStor
 	m	()V	m_8795896	m_8795896
 c	net/minecraft/unmapped/C_9848147	net/minecraft/world/chunk/ChunkSource
 	m	(II)Z	m_8714752	hasChunk
+		c	@return whether a chunk exists at the given chunk coordinates
 		p	1		chunkX
 		p	2		chunkZ
 	m	(II)Lnet/minecraft/unmapped/C_6849228;	m_8872366	getChunk
+		c	@return the world chunk at the given chunk coordinates, or {@code null} if it does not exist
 		p	1		chunkX
 		p	2		chunkZ
-	m	(II)Lnet/minecraft/unmapped/C_6849228;	m_0804715	loadChunk
+	m	(II)Lnet/minecraft/unmapped/C_6849228;	m_0804715	generateChunk
+		c	@return the world chunk at the given chunk coordinates, loading or generating it if needed
 		p	1		chunkX
 		p	2		chunkZ
 	m	(Lnet/minecraft/unmapped/C_9848147;II)V	m_4129669	populateChunk

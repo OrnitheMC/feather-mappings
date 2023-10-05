@@ -15,16 +15,16 @@ c	net/minecraft/server/MinecraftServer
 	m	(Ljava/util/function/BooleanSupplier;)V	m_9155537		tickWorlds
 		p	1			hasTimeLeft
 c	net/minecraft/unmapped/C_0114090
-	m	(Ljava/lang/Object;)Lnet/minecraft/unmapped/C_0114090$C_8296248;	m_6270166	getResult	
-		p	1		p_1	
-	m	(Ljava/lang/Object;)Ljava/lang/Object;	m_1729875	getTaskResult	
-		p	1		p_1	
-	m	(Ljava/lang/Object;)Lnet/minecraft/unmapped/C_0114090$C_8296248;	m_4487371		getResult
+	m	(Ljava/lang/Object;)Lnet/minecraft/unmapped/C_0114090$C_8296248;	m_6270166	getFuture	
+		p	1		key	
+	m	(Ljava/lang/Object;)Ljava/lang/Object;	m_1729875	getResult	
+		p	1		key	
+	m	(Ljava/lang/Object;)Lnet/minecraft/unmapped/C_0114090$C_8296248;	m_4487371		getFuture
 		p	1			key
-	m	(Ljava/lang/Object;Z)Lnet/minecraft/unmapped/C_0114090$C_8296248;	m_6270166		getResult
+	m	(Ljava/lang/Object;Z)Lnet/minecraft/unmapped/C_0114090$C_8296248;	m_6270166		getFuture
 		p	1			key
 		p	2			create
-	m	(Ljava/lang/Object;Z)Ljava/lang/Object;	m_1729875		getTaskResult
+	m	(Ljava/lang/Object;Z)Ljava/lang/Object;	m_1729875		getResult
 		p	1			key
 		p	2			create
 c	net/minecraft/unmapped/C_0199874
@@ -77,9 +77,11 @@ c	net/minecraft/unmapped/C_1316134
 		p	1		p_1	
 		p	2		p_2	
 	m	(II)Lnet/minecraft/unmapped/C_6849228;	m_4129669	loadChunkFromStorage	
+		c	@return the world chunk at the given chunk coordinates,\nloading it if needed, or {@code null} if it does not exist	
 		p	1		chunkX	
 		p	2		chunkZ	
 	m	(II)Lnet/minecraft/unmapped/C_6849228;	m_6914180	loadChunk	
+		c	@return the world chunk at the given chunk coordinates,\nloading it from storage if needed, or {@code null} if it does not exist	
 		p	1		chunkX	
 		p	2		chunkZ	
 	m	(II)Lnet/minecraft/unmapped/C_6849228;	m_8714752	m_8714752	
@@ -88,9 +90,9 @@ c	net/minecraft/unmapped/C_1316134
 	m	(II)Lnet/minecraft/unmapped/C_0636026;	m_6525570	m_6525570	
 		p	1		p_1	
 		p	2		p_2	
-	m	(II)Ljava/util/concurrent/CompletableFuture;	m_9598700	m_9598700	
-		p	1		p_1	
-		p	2		p_2	
+	m	(II)Ljava/util/concurrent/CompletableFuture;	m_9598700	getChunkGenerationFuture	
+		p	1		chunkX	
+		p	2		chunkZ	
 	m	(Lnet/minecraft/unmapped/C_6849228;)V	m_9334083	saveEntities	
 		p	1		chunk	
 	m	()Z	m_0299043	m_0299043	
@@ -242,8 +244,8 @@ c	net/minecraft/unmapped/C_3015107
 	m	()V	m_3669721	m_3669721	
 c	net/minecraft/unmapped/C_3015672
 	m	(Lnet/minecraft/unmapped/C_5250955;Lnet/minecraft/unmapped/C_6849228;)V	m_6437512	saveEntities	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		world	
+		p	2		chunk	
 	m	()V	m_3669721	tick	
 	m	(II)Z	m_5077695	doesChunkExist	
 		p	1		chunkX	
@@ -292,14 +294,14 @@ c	net/minecraft/unmapped/C_3338851
 c	net/minecraft/unmapped/C_3492960
 	m	(Lnet/minecraft/unmapped/C_7141926;)Lnet/minecraft/unmapped/C_0114090$C_8296248;	m_1166028	m_1166028	
 		p	1		p_1	
-	m	(II)Lnet/minecraft/unmapped/C_0960638;	m_4609168	m_4609168	
-		p	1		p_1	
-		p	2		p_2	
+	m	(II)Lnet/minecraft/unmapped/C_0960638;	m_4609168	loadProtoChunk	
+		p	1		chunkX	
+		p	2		chunkZ	
 	m	()V	m_7326599	tick	
 	m	(Ljava/lang/Object;)Lnet/minecraft/unmapped/C_0114090$C_8296248;	m_6270166	m_6270166	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_0114090$C_8296248;)V	m_5739955	m_5739955	
-		p	1		p_1	
+		p	1		future	
 	m	(Lnet/minecraft/unmapped/C_7141926;Z)Lnet/minecraft/unmapped/C_0114090$C_8296248;	m_1166028		m_1166028
 		p	1			p_1
 		p	2			p_2
@@ -1007,27 +1009,36 @@ c	net/minecraft/unmapped/C_9441491
 	f	Lnet/minecraft/unmapped/C_7400754;	f_0267460		f_0267460
 c	net/minecraft/unmapped/C_9848147
 	m	(II)Lnet/minecraft/unmapped/C_6849228;	m_8872366	getChunk	
+		c	@return the world chunk at the given chunk coordinates, or {@code null} if it does not exist	
 		p	1		chunkX	
 		p	2		chunkZ	
-	m	(II)Lnet/minecraft/unmapped/C_6849228;	m_8714752	getChunkNow	
+	m	(II)Lnet/minecraft/unmapped/C_6849228;	m_8714752	generateChunk	
+		c	@return the world chunk at the given chunk coordinates, loading or generating it if needed	
 		p	1		chunkX	
 		p	2		chunkZ	
-	m	(II)Lnet/minecraft/unmapped/C_0636026;	m_6525570	getChunkLater	
+	m	(II)Lnet/minecraft/unmapped/C_0636026;	m_6525570	getProtoChunk	
+		c	@return the proto chunk at the given chunk coordinates, loading or generating it if needed	
 		p	1		chunkX	
 		p	2		chunkZ	
 	m	()Z	m_0299043	tick	
 	m	(II)Z	m_0424767	doesChunkExist	
+		c	@return whether a chunk exists at the given chunk coordinates, i.e. whether it is loaded or it exists in storage.	
 		p	1		chunkX	
 		p	2		chunkZ	
 	m	(IIZZ)Lnet/minecraft/unmapped/C_6849228;	m_8872366		getChunk
+		c		@return the world chunk at the given chunk coordinates, loading or generating it if it does not exsit if requested
 		p	1			chunkX
 		p	2			chunkZ
 		p	3			load
+			c		whether to load the chunk from storage if it is not yet loaded
 		p	4			generate
-	m	(IIZ)Lnet/minecraft/unmapped/C_0636026;	m_6525570		getChunkNow
+			c		whether to generate a new chunk if it does not yet exist
+	m	(IIZ)Lnet/minecraft/unmapped/C_0636026;	m_6525570		getProtoChunk
+		c		@return the proto chunk at the given chunk coordinates, loading or generating it if it does not exsit if requested
 		p	1			chunkX
 		p	2			chunkZ
-		p	3			orThrow
+		p	3			generate
+			c		whether to generate a new chunk if it does not yet exist
 	m	(Ljava/util/function/BooleanSupplier;)Z	m_0299043		tick
 		p	1			hasTimeLeft
 c	net/minecraft/unmapped/C_9968495
