@@ -748,8 +748,8 @@ c	net/minecraft/unmapped/C_1316134
 		p	1			world
 		p	2			storage
 		p	3			generator
-	m	(II)Lnet/minecraft/unmapped/C_6849228;	m_4129669		loadChunk
-		c		@return the world chunk at the given chunk coordinates,\nloading it if needed, or {@code null} if it does not exist
+	m	(II)Lnet/minecraft/unmapped/C_6849228;	m_4129669		getGeneratedChunk
+		c		@return the chunk at the given chunk coordinates,\nloading it if needed, or {@code null} if it does not exist.
 		p	1			chunkX
 		p	2			chunkZ
 	m	(II)Lnet/minecraft/unmapped/C_6849228;	m_8714752		m_8714752
@@ -760,7 +760,7 @@ c	net/minecraft/unmapped/C_1316134
 	m	()V	m_1836040		save
 	m	()Z	m_6876447		canSave
 	m	()I	m_7720664		size
-	m	(II)Z	m_7591747		hasChunk
+	m	(II)Z	m_7591747		isChunkLoaded
 		c		@return whether the chunk at the given chunk coordinates is loaded
 		p	1			chunkX
 		p	2			chunkZ
@@ -3827,14 +3827,15 @@ c	net/minecraft/unmapped/C_9848147
 		c	@return whether a chunk exists at the given chunk coordinates	
 		p	1		chunkX	
 		p	2		chunkZ	
-	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_6849228;	m_7603521	getChunk	
-		c	@return the world chunk at the given position, or {@code null} if it does not exist	
+	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_6849228;	m_7603521	getLoadedChunk	
 		p	1		pos	
 	m	(Lnet/minecraft/unmapped/C_9848147;II)V	m_4129669	populateChunk	
+		c	Populates the chunk at the given chunk coordinates, placing features and spawning mobs.	
 		p	1		source	
 		p	2		chunkX	
 		p	3		chunkZ	
 	m	(Lnet/minecraft/unmapped/C_9848147;Lnet/minecraft/unmapped/C_6849228;II)Z	m_0435010	populateChunkAfterTerrain	
+		c	Performs a second pass of population on the chunk at the given chunk coordinates.	
 		p	1		source	
 		p	2		chunk	
 		p	3		chunkX	
@@ -3852,11 +3853,12 @@ c	net/minecraft/unmapped/C_9848147
 		p	3		pos	
 	m	()I	m_1486221	size	
 	m	(Lnet/minecraft/unmapped/C_6849228;II)V	m_6674995	placeStructures	
+		c	Place structure features in the chunk at the given chunk coordinates.	
 		p	1		chunk	
 		p	2		chunkX	
 		p	3		chunkZ	
 	m	()V	m_1069355	save	
-	m	(II)Lnet/minecraft/unmapped/C_6849228;	m_8714752		generateChunk
+	m	(II)Lnet/minecraft/unmapped/C_6849228;	m_8714752		getChunk
 		c		@return the world chunk at the given chunk coordinates, loading or generating it if needed
 		p	1			chunkX
 		p	2			chunkZ
