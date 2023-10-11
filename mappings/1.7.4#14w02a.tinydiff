@@ -166,13 +166,13 @@ c	net/minecraft/unmapped/C_0218708
 	f	I	f_7958286	doorX	
 	f	I	f_7175239	doorY	
 	f	I	f_7979053	doorZ	
-	f	Lnet/minecraft/unmapped/C_3674802;	f_4005524		f_4005524
+	f	Lnet/minecraft/unmapped/C_3674802;	f_4005524		doorPos
 	m	(III)Lnet/minecraft/unmapped/C_7842113;	m_2724486	getDoorBlock	
 		p	1		x	
 		p	2		y	
 		p	3		z	
 	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_7842113;	m_2724486		getDoorBlock
-		p	1			x
+		p	1			pos
 c	net/minecraft/unmapped/C_0231321
 	f	I	f_5353584	x	
 	f	I	f_9613427	y	
@@ -425,17 +425,17 @@ c	net/minecraft/unmapped/C_0539808
 	m	(Lnet/minecraft/unmapped/C_0539808;)V	m_6029580		copyNbtFrom
 		p	1			sourceEntity
 	m	(Lnet/minecraft/unmapped/C_8813417;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1241852;)F	m_6706410		getBlastResistance
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	1			explosion
+		p	2			world
+		p	3			pos
+		p	4			block
 	m	(Lnet/minecraft/unmapped/C_8813417;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_1241852;F)Z	m_5778009		canExplodeBlock
 		c		Check if an explosion caused by this entity can explode the given block.
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	1			explosion
+		p	2			world
+		p	3			pos
+		p	4			block
+		p	5			power
 	m	()Lnet/minecraft/unmapped/C_3544601;	m_2844901		getHorizontalFacing
 	m	()Lnet/minecraft/unmapped/C_5008376;	m_6296156		getHoverEvent
 c	net/minecraft/unmapped/C_0547482
@@ -6313,9 +6313,9 @@ c	net/minecraft/unmapped/C_4469972
 	m	()I	m_3162094	getZ	
 	m	()I	m_2581932	getFace	
 	m	(ILnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			action
+		p	2			pos
+		p	3			face
 	m	()Lnet/minecraft/unmapped/C_3674802;	m_8548477		getPos
 	m	()Lnet/minecraft/unmapped/C_3544601;	m_2581932		getFace
 c	net/minecraft/unmapped/C_4551488
@@ -8726,7 +8726,7 @@ c	net/minecraft/unmapped/C_5818647
 	m	(II)V	m_9761265		setData
 		p	1			id
 		p	2			value
-	m	()I	m_5310328		getDataCount
+	m	()I	m_5310328		getDataSize
 c	net/minecraft/unmapped/C_5825329
 	m	(II)Lnet/minecraft/unmapped/C_5307437;	m_8325719	m_8325719	
 		p	1		p_1	
@@ -9048,13 +9048,13 @@ c	net/minecraft/unmapped/C_6004512
 		p	6		skullType	
 		p	7		name	
 	m	(FFFLnet/minecraft/unmapped/C_3544601;FILjava/lang/String;)V	m_1144723		render
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
+		p	1			x
+		p	2			y
+		p	3			z
+		p	4			facing
+		p	5			rotation
+		p	6			type
+		p	7			extraType
 c	net/minecraft/unmapped/C_6028829
 	m	(Lnet/minecraft/unmapped/C_5553933;IIILnet/minecraft/unmapped/C_5577922;Ljava/util/List;Lnet/minecraft/unmapped/C_0539808;)V	m_6210370	m_6210370	
 		p	1		p_1	
@@ -9386,8 +9386,8 @@ c	net/minecraft/unmapped/C_6403501
 	m	()I	m_6155972	getY	
 	m	()I	m_2978583	getZ	
 	m	(Lnet/minecraft/unmapped/C_3674802;[Ljava/lang/String;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			pos
+		p	2			lines
 	m	()Lnet/minecraft/unmapped/C_3674802;	m_1807941		getPos
 c	net/minecraft/unmapped/C_6442677
 	m	(Lnet/minecraft/unmapped/C_5553933;Ljava/util/Random;II)V	m_0869981	m_0869981	
@@ -9686,7 +9686,7 @@ c	net/minecraft/unmapped/C_6849228
 	m	([I)V	m_3098180		setHeightmap
 		p	1			heightmap
 	m	()Ljava/util/Map;	m_1601732		getBlockEntities
-	m	()[Ljava/util/List;	m_1675877		getEntitiesBySection
+	m	()[Ljava/util/List;	m_1675877		getEntities
 	m	()Z	m_0145198		isTerrainPopulated
 	m	(Z)V	m_6857816		setTerrainPopulated
 		p	1			populated
@@ -9695,8 +9695,8 @@ c	net/minecraft/unmapped/C_6849228
 		p	1			populated
 	m	(Z)V	m_1530040		setDirty
 		p	1			dirty
-	m	(Z)V	m_3175831		setContainsEntities
-		p	1			containsEntities
+	m	(Z)V	m_3175831		setHasEntities
+		p	1			hasEntities
 	m	(J)V	m_2399911		setLastSaveTime
 		p	1			lastSaveTime
 	m	()I	m_5579494		getLowestHeight
@@ -9791,8 +9791,8 @@ c	net/minecraft/unmapped/C_6928498
 		p	2		y	
 		p	3		z	
 	m	(Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;)Ljava/lang/String;	m_4132497		getRandomFlower
-		p	1			p_1
-		p	2			p_2
+		p	1			random
+		p	2			pos
 	m	(Lnet/minecraft/unmapped/C_3674802;)F	m_2071612		getTemperature
 		p	1			pos
 	m	(Lnet/minecraft/unmapped/C_5553933;Ljava/util/Random;Lnet/minecraft/unmapped/C_3674802;)V	m_0869981		decorate
@@ -11138,9 +11138,9 @@ c	net/minecraft/unmapped/C_7581108
 		p	2			p_2
 		p	3			p_3
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;I)V	m_9101079		updateOutputState
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			world
+		p	2			pos
+		p	3			currentSignal
 	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_5577922;	m_3476780		getActivationBounds
 		c		Returns the bounds within which entities can activate this pressure plate.
 		p	1			pos
@@ -11567,9 +11567,9 @@ c	net/minecraft/unmapped/C_7794883
 		p	2			face
 	m	(Lnet/minecraft/unmapped/C_5266053;Lnet/minecraft/unmapped/C_0557736;Lnet/minecraft/unmapped/C_3544601;Lnet/minecraft/unmapped/C_3674802;)V	<init>		<init>
 		p	1			type
-		p	2			pos
+		p	2			offset
 		p	3			face
-		p	4			blockPos
+		p	4			pos
 	m	()Lnet/minecraft/unmapped/C_3674802;	m_1760520		getPos
 c	net/minecraft/unmapped/C_7804167
 	m	(II)Lnet/minecraft/unmapped/C_5307437;	m_8325719	m_8325719	
@@ -12750,10 +12750,10 @@ c	net/minecraft/unmapped/C_8620458
 		p	5			p_5
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;II)V	m_5993195		dropAppleWithChance
 		c		If leaf block has correct metadata, then drop an apple item with 1/chance probability
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	1			world
+		p	2			pos
+		p	3			metadata
+		p	4			chance
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_9590849;Lnet/minecraft/unmapped/C_3674802;I)V	m_9823382		m_9823382
 		p	1			p_1
 		p	2			p_2
@@ -13865,12 +13865,12 @@ c	net/minecraft/unmapped/C_9549896
 		p	2		z	
 	m	(Lnet/minecraft/unmapped/C_3674802;III)V	<init>		<init>
 		p	1			pos
-		p	2			dx
-		p	3			dy
+		p	2			indoorsOffsetX
+		p	3			indoorsOffsetZ
 		p	4			lastVillageTick
-	m	(Lnet/minecraft/unmapped/C_3674802;)I	m_1227316		getSquaredDistanceTo
+	m	(Lnet/minecraft/unmapped/C_3674802;)I	m_1227316		squaredDistanceTo
 		p	1			pos
-	m	(Lnet/minecraft/unmapped/C_3674802;)I	m_2037218		getSquaredDistanceToIndoors
+	m	(Lnet/minecraft/unmapped/C_3674802;)I	m_2037218		squaredDistanceToIndoors
 		p	1			pos
 	m	(Lnet/minecraft/unmapped/C_3674802;)Z	m_5289384		isIndoors
 		p	1			pos
@@ -14391,9 +14391,10 @@ c	net/minecraft/unmapped/C_9848147
 		p	4		y	
 		p	5		z	
 	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_6849228;	m_7603521		getLoadedChunk
+		c		@return the world chunk at the given position, or {@code null} if it does not exist
 		p	1			pos
 	m	(Lnet/minecraft/unmapped/C_0902334;Lnet/minecraft/unmapped/C_3674802;)Ljava/util/List;	m_6970926		getSpawnEntries
-		p	1			spawnGroup
+		p	1			category
 		p	2			pos
 	m	(Lnet/minecraft/unmapped/C_5553933;Ljava/lang/String;Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_3674802;	m_9732051		findNearestStructure
 		p	1			world
@@ -15050,9 +15051,9 @@ c	net/minecraft/unmapped/C_3947717		net/minecraft/network/packet/s2c/play/Player
 	m	(Ljava/util/Set;)I	m_5783482		getFlags
 		p	0			args
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_4686902		net/minecraft/C_72hkfcyvz
-	f	Lnet/minecraft/unmapped/C_4686902;	f_4666143		f_4666143
-	f	Lnet/minecraft/unmapped/C_4686902;	f_8891853		f_8891853
+c	net/minecraft/unmapped/C_4686902		net/minecraft/entity/BooleanOperation
+	f	Lnet/minecraft/unmapped/C_4686902;	f_4666143		OR
+	f	Lnet/minecraft/unmapped/C_4686902;	f_8891853		AND
 	f	[Lnet/minecraft/unmapped/C_4686902;	f_5466427		f_5466427
 	m	()[Lnet/minecraft/unmapped/C_4686902;	values		values
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_4686902;	valueOf		valueOf
@@ -15110,7 +15111,7 @@ c	net/minecraft/unmapped/C_5846779		net/minecraft/block/LeverBlock__1
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_5950140		net/minecraft/network/packet/s2c/play/DifficultyS2CPacket
 	f	Lnet/minecraft/unmapped/C_9550096;	f_9981194		difficulty
-	f	Z	f_4106139		hasCustomName
+	f	Z	f_4106139		locked
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_9550096;Z)V	<init>		<init>
 		p	1			difficulty
@@ -15141,16 +15142,16 @@ c	net/minecraft/unmapped/C_6150841		net/minecraft/world/chunk/WorldChunk__2
 		p	2			p_2
 	m	()Ljava/lang/String;	m_4268605		call
 	m	()Ljava/lang/Object;	call		call
-c	net/minecraft/unmapped/C_6263113		net/minecraft/C_41saynwcr
-	f	Lnet/minecraft/unmapped/C_4686902;	f_9145541		f_9145541
-	f	Ljava/util/List;	f_8283268		f_8283268
+c	net/minecraft/unmapped/C_6263113		net/minecraft/entity/ChainedEntityFilter
+	f	Lnet/minecraft/unmapped/C_4686902;	f_9145541		op
+	f	Ljava/util/List;	f_8283268		filters
 	m	(Lnet/minecraft/unmapped/C_4686902;[Lnet/minecraft/unmapped/C_8878495;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			op
+		p	2			filters
 	m	(Lnet/minecraft/unmapped/C_0539808;)Z	m_1473293		m_1473293
 		p	1			p_1
-	m	([Lnet/minecraft/unmapped/C_8878495;)Lnet/minecraft/unmapped/C_6263113;	m_0946056		m_0946056
-		p	1			p_1
+	m	([Lnet/minecraft/unmapped/C_8878495;)Lnet/minecraft/unmapped/C_6263113;	m_0946056		add
+		p	1			filters
 c	net/minecraft/unmapped/C_6496737		net/minecraft/block/PistonHeadBlock__1
 	f	[I	f_6312674		f_6312674
 	m	()V	<clinit>		<clinit>
@@ -15355,3 +15356,13 @@ c	net/minecraft/unmapped/C_5362986	net/minecraft/client/Minecraft__9	net/minecra
 c	net/minecraft/unmapped/C_9216568	net/minecraft/client/Minecraft__13	net/minecraft/client/Minecraft__12
 c	net/minecraft/unmapped/C_3525592	net/minecraft/client/Minecraft__7	net/minecraft/client/Minecraft__6
 c	net/minecraft/unmapped/C_8848365	net/minecraft/client/Minecraft__15	net/minecraft/client/Minecraft__14
+c	net/minecraft/unmapped/C_5486983	net/minecraft/C_85tuodeck	net/minecraft/unmapped/C_5486983
+c	net/minecraft/unmapped/C_9646922	net/minecraft/C_81mzsyzpj	net/minecraft/unmapped/C_9646922
+c	net/minecraft/unmapped/C_3366538
+	m	(Lnet/minecraft/unmapped/C_7794883;)V	m_6334540
+		p	1		hitResult	hit
+c	net/minecraft/unmapped/C_0614482
+	m	(Ljava/lang/String;)Z	m_4681679
+		p	0		string	s
+	m	(Ljava/lang/String;)Ljava/util/UUID;	m_6278303
+		p	0		string	s
