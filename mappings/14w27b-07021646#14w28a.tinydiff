@@ -254,15 +254,15 @@ c	net/minecraft/unmapped/C_0826810
 c	net/minecraft/unmapped/C_0915802
 	f	Lnet/minecraft/unmapped/C_0915802;	f_2592378		BLOCK_ALTERNATIVES
 c	net/minecraft/unmapped/C_0979881
-	f	I	f_4340425	f_4340425	
-	f	I	f_9874094	f_9874094	
-	m	(ZZ)V	m_3404029	method_11205	
-		p	0		p_0	
-		p	1		p_1	
+	f	I	f_4340425	textureMinFilter	
+	f	I	f_9874094	textureMagFilter	
+	m	(ZZ)V	m_3404029	updateTextureFilter	
+		p	0		blur	
+		p	1		mipmap	
 	m	()V	m_6713515	setHeldItemNonBlock	
-	m	(II)V	m_6997653	m_6997653	
-		p	0		p_0	
-		p	1		p_1	
+	m	(II)V	m_6997653	setTextureFilter	
+		p	0		min	
+		p	1		mag	
 c	net/minecraft/unmapped/C_0987157
 	m	(II)Lnet/minecraft/unmapped/C_6849228;	m_0804715	m_0804715	
 		p	1		p_1	
@@ -310,7 +310,7 @@ c	net/minecraft/unmapped/C_1155256
 c	net/minecraft/unmapped/C_1184371
 	m	()Lnet/minecraft/unmapped/C_2441996;	m_9077732		m_9077732
 c	net/minecraft/unmapped/C_1241852
-	m	()Z	m_3125703	m_3125703	
+	m	()Z	m_3125703	canBeReplaced	
 	m	(Lnet/minecraft/unmapped/C_2441996;)I	m_7636836		serialize
 		c		Converts the given block state into legacy block data.
 		p	0			state
@@ -443,7 +443,7 @@ c	net/minecraft/unmapped/C_1895985
 	f	I	f_5166812	regionX	
 	f	I	f_2315043	regionY	
 	f	I	f_2752168	regionZ	
-	f	Lnet/minecraft/unmapped/C_3674802;	f_6879913		f_6879913
+	f	Lnet/minecraft/unmapped/C_3674802;	f_6879913		origin
 	m	(IIIDDD)V	m_6649386	setPositions	
 		p	1		regionX	
 		p	2		regionY	
@@ -456,13 +456,13 @@ c	net/minecraft/unmapped/C_1895985
 		p	2		y	
 		p	3		z	
 	m	(Lnet/minecraft/unmapped/C_3674802;DDD)V	m_6649386		m_6649386
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
-		p	6			p_6
+		p	1			origin
+		p	2			cameraX
+		p	4			cameraY
+		p	6			cameraZ
 	m	(Lnet/minecraft/unmapped/C_3674802;)Z	m_8405137		m_8405137
 		p	1			p_1
-	m	()Lnet/minecraft/unmapped/C_3674802;	m_1365242		m_1365242
+	m	()Lnet/minecraft/unmapped/C_3674802;	m_1365242		getOrigin
 c	net/minecraft/unmapped/C_1898615
 	m	(IIIIILnet/minecraft/unmapped/C_5786166;IIZ)V	m_2013749	m_2013749	
 		p	1		p_1	
@@ -496,17 +496,17 @@ c	net/minecraft/unmapped/C_2019151
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3674802;)Z	m_4902034	m_4902034	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;)Z	m_0346713	renderSmooth	
+	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;)Z	m_0346713	renderWithAmbientOcclusion	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;)Z	m_1209340	m_1209340	
+	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;)Z	m_1209340	renderWithoutAmbientOcclusion	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;)V	m_7950279	renderFaceSmooth	
+	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;)V	m_7950279	renderFaceWithAmbientOcclusion	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;IZ)V	m_7128555	renderFaceFlat	
+	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;IZ)V	m_7128555	renderFaceWithoutAmbientOcclusion	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
@@ -520,26 +520,26 @@ c	net/minecraft/unmapped/C_2019151
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_8373595;)Z	m_0346713		renderSmooth
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_8373595;)Z	m_1209340		m_1209340
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;Lnet/minecraft/unmapped/C_8373595;)V	m_7950279		renderFaceSmooth
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;IZLnet/minecraft/unmapped/C_8373595;)V	m_7128555		renderFaceFlat
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
+	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_8373595;)Z	m_0346713		renderWithAmbientOcclusion
+		p	1			block
+		p	2			pos
+		p	3			bufferBuilder
+	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_8373595;)Z	m_1209340		renderWithoutAmbientOcclusion
+		p	1			block
+		p	2			pos
+		p	3			bufferBuilder
+	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;Lnet/minecraft/unmapped/C_8373595;)V	m_7950279		renderFaceWithAmbientOcclusion
+		p	1			block
+		p	2			pos
+		p	3			face
+		p	4			bufferBuilder
+	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;IZLnet/minecraft/unmapped/C_8373595;)V	m_7128555		renderFaceWithoutAmbientOcclusion
+		p	1			block
+		p	2			pos
+		p	3			face
+		p	4			lightColor
+		p	5			computeShape
+		p	6			bufferBuilder
 c	net/minecraft/unmapped/C_2046731
 	m	()Lnet/minecraft/unmapped/C_2441996;	m_9077732		m_9077732
 c	net/minecraft/unmapped/C_2123477
@@ -871,7 +871,7 @@ c	net/minecraft/unmapped/C_3677942
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3674802;)Z	m_4902034	m_4902034	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3674802;)Z	m_7437567	render	
+	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3674802;)Z	m_7437567	renderLiquid	
 		p	1		p_1	
 		p	2		p_2	
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_8373595;)Z	m_4249277		m_4249277
@@ -882,10 +882,10 @@ c	net/minecraft/unmapped/C_3677942
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_8373595;)Z	m_7437567		render
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_8373595;)Z	m_7437567		renderLiquid
+		p	1			state
+		p	2			pos
+		p	3			bufferBuilder
 c	net/minecraft/unmapped/C_3747079
 	m	()Lnet/minecraft/unmapped/C_2441996;	m_9077732		m_9077732
 c	net/minecraft/unmapped/C_3754158
@@ -1119,10 +1119,10 @@ c	net/minecraft/unmapped/C_4565244	net/minecraft/block/PumpkinBlock__1
 	f	[I	f_0809227	f_0809227	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_4590270
-	m	(I)V	m_5656269	updateBoundingBox	
+	m	(I)V	m_5656269	updateShape	
 		p	1		meta	
 	m	()Lnet/minecraft/unmapped/C_2441996;	m_9077732		m_9077732
-	m	(Lnet/minecraft/unmapped/C_2441996;)V	m_5656269		updateBoundingBox
+	m	(Lnet/minecraft/unmapped/C_2441996;)V	m_5656269		updateShape
 		p	1			state
 c	net/minecraft/unmapped/C_4594583
 	m	(I)Z	m_8436414	isHeadOfBed	
@@ -1145,8 +1145,8 @@ c	net/minecraft/unmapped/C_4612634
 		p	1			p_1
 c	net/minecraft/unmapped/C_4652455
 	f	I	f_7991950	sectionsWithData	
-	f	[B	f_1909535	compressedChunkData	
-	f	[B	f_5786854	rawChunkData	
+	f	[B	f_1909535	compressedData	
+	f	[B	f_5786854	data	
 	f	I	f_0288848	compressedSize	
 	f	[B	f_5909186	buffer	
 	f	Lnet/minecraft/unmapped/C_6318874;	f_1027799		data
@@ -1182,20 +1182,20 @@ c	net/minecraft/unmapped/C_4764902
 		p	7			p_7
 		p	8			p_8
 c	net/minecraft/unmapped/C_4833795
-	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3674802;)Z	m_4249277	m_4249277	
+	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3674802;)Z	m_4249277	prepareAndRender	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3674802;)Z	m_4902034	m_4902034	
+	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3674802;)Z	m_4902034	render	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_8373595;)Z	m_4249277		m_4249277
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_8373595;)Z	m_4902034		m_4902034
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_8373595;)Z	m_4249277		prepareAndRender
+		p	1			state
+		p	2			pos
+		p	3			bufferBuilder
+	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_8373595;)Z	m_4902034		render
+		p	1			state
+		p	2			pos
+		p	3			bufferBuilder
 c	net/minecraft/unmapped/C_4882708
 	m	(ZZ)V	m_9928263		pushFilter
 		p	1			blur
@@ -1297,7 +1297,7 @@ c	net/minecraft/unmapped/C_5114878
 c	net/minecraft/unmapped/C_5117296
 	m	(Lnet/minecraft/unmapped/C_0073700;)V	m_4922777		handleCompressionThreshold
 		p	1			packet
-c	net/minecraft/unmapped/C_5162947	net/minecraft/C_70krshzbj	
+c	net/minecraft/unmapped/C_5162947	net/minecraft/unmapped/C_5162947	
 c	net/minecraft/unmapped/C_5201828
 	m	(Lnet/minecraft/unmapped/C_5786166;Lnet/minecraft/unmapped/C_0539808;FFFFFF)V	m_2192689	m_2192689	
 		p	1		p_1	
@@ -1617,7 +1617,7 @@ c	net/minecraft/unmapped/C_6260416
 c	net/minecraft/unmapped/C_6296773
 	m	()Lnet/minecraft/unmapped/C_2441996;	m_9077732		m_9077732
 c	net/minecraft/unmapped/C_6306298
-	m	(Lnet/minecraft/unmapped/C_3622326;)I	m_6172847		getAnalogOutput
+	m	(Lnet/minecraft/unmapped/C_3622326;)I	m_6172847		getAnalogSignal
 		p	0			blockEntity
 c	net/minecraft/unmapped/C_6465443
 	f	Ljava/lang/String;	f_7471858	f_7471858	
@@ -1751,16 +1751,16 @@ c	net/minecraft/unmapped/C_6908992
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/unmapped/C_6912915
-	f	[I	f_4350585	sectionsWithData	
-	f	[B	f_8752804	compressedChunkData	
-	f	[[B	f_5607773	rawChunkData	
+	f	[I	f_4350585	sections	
+	f	[B	f_8752804	compressedData	
+	f	[[B	f_5607773	data	
 	f	I	f_5178988	size	
 	f	[B	f_6388378	buffer	
 	f	[Lnet/minecraft/unmapped/C_6318874;	f_3052838		data
 	m	()I	m_0168883	getPlayerChunkUpdateLimit	
-	m	()[I	m_9280429	getSectionsWithData	
+	m	()[I	m_9280429	getSections	
 	m	()V	<clinit>	<clinit>	
-	m	(I)I	m_3142446		getSectionsWithData
+	m	(I)I	m_3142446		getSections
 		p	1			index
 c	net/minecraft/unmapped/C_6967011
 	m	()Lnet/minecraft/unmapped/C_2441996;	m_9077732		m_9077732
@@ -1790,15 +1790,15 @@ c	net/minecraft/unmapped/C_7028449
 	f	I	f_7839409	chunkReloadOrder	
 	f	Z	f_5817086	glArbOcclusionPending	
 	f	Lnet/minecraft/unmapped/C_3674802;	f_4863579		origin
-	f	Lnet/minecraft/unmapped/C_3674802;	f_5654898		f_5654898
-	f	Lnet/minecraft/unmapped/C_3674802;	f_5645267		f_5645267
-	f	Lnet/minecraft/unmapped/C_3674802;	f_8218082		f_8218082
-	f	Z	f_6292528		f_6292528
-	f	[Z	f_8171855		f_8171855
-	f	Ljava/util/concurrent/locks/ReentrantLock;	f_0176851		f_0176851
-	f	Lnet/minecraft/unmapped/C_9450178;	f_6280856		f_6280856
+	f	Lnet/minecraft/unmapped/C_3674802;	f_5654898		edge
+	f	Lnet/minecraft/unmapped/C_3674802;	f_5645267		size
+	f	Lnet/minecraft/unmapped/C_3674802;	f_8218082		center
+	f	Z	f_6292528		visible
+	f	[Z	f_8171855		layers
+	f	Ljava/util/concurrent/locks/ReentrantLock;	f_0176851		lock
+	f	Lnet/minecraft/unmapped/C_9450178;	f_6280856		boundsRenderer
 	f	Z	f_5353207	glArbOcclusion	f_5353207
-	f	I	f_7712432	glArbOcclusionQuery	f_7712432
+	f	I	f_7712432	glArbOcclusionQuery	index
 	m	(Lnet/minecraft/unmapped/C_5553933;Ljava/util/List;IIII)V	<init>	<init>	
 		p	1		world	
 		p	2		globalBlockEntities	
@@ -1824,60 +1824,60 @@ c	net/minecraft/unmapped/C_7028449
 	m	()V	m_3698923	markDirty	
 	m	()V	<clinit>	<clinit>	
 	m	(Lnet/minecraft/unmapped/C_5553933;Ljava/util/List;Lnet/minecraft/unmapped/C_3674802;II)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	1			world
+		p	2			globalBlockEntities
+		p	3			origin
+		p	4			glList
+		p	5			index
 	m	(Lnet/minecraft/unmapped/C_3674802;)V	m_5351306		setOrigin
 		p	1			origin
 	m	(FFFLnet/minecraft/unmapped/C_8093177;)V	m_6673972		compile
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	1			cameraX
+		p	2			cameraY
+		p	3			cameraZ
+		p	4			bufferBuilders
 	m	(Lnet/minecraft/unmapped/C_8373595;)V	m_3148018		beginLayer
-		p	1			p_1
+		p	1			bufferBuilder
 	m	(Lnet/minecraft/unmapped/C_3333682;FFFLnet/minecraft/unmapped/C_8373595;)V	m_5353001		endLayer
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	1			layer
+		p	2			cameraX
+		p	3			cameraY
+		p	4			cameraZ
+		p	5			bufferBuilder
 	m	(FFFLnet/minecraft/unmapped/C_8373595;)V	m_8519042		rebuildTranslucent
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_3333682;)Z	m_4411180		m_4411180
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_3333682;)Z	m_1889251		m_1889251
-		p	1			p_1
-	m	()Lnet/minecraft/unmapped/C_3674802;	m_8981827		m_8981827
-	m	()Lnet/minecraft/unmapped/C_3674802;	m_4170504		m_4170504
+		p	1			cameraX
+		p	2			cameraY
+		p	3			cameraZ
+		p	4			bufferBuilder
+	m	(Lnet/minecraft/unmapped/C_3333682;)Z	m_4411180		hasBlocks
+		p	1			layer
+	m	(Lnet/minecraft/unmapped/C_3333682;)Z	m_1889251		hasLayer
+		p	1			layer
+	m	()Lnet/minecraft/unmapped/C_3674802;	m_8981827		getOrigin
+	m	()Lnet/minecraft/unmapped/C_3674802;	m_4170504		getCenter
 	m	()I	m_8076264		m_8076264
-	m	()I	m_8752306		m_8752306
-	m	()Lnet/minecraft/unmapped/C_3674802;	m_2710453		getOrigin
+	m	()I	m_8752306		getIndex
+	m	()Lnet/minecraft/unmapped/C_3674802;	m_2710453		getEdge
 	m	()Lnet/minecraft/unmapped/C_3674802;	m_6277521		m_6277521
 	m	()Z	m_0973961		isDirty
 	m	(Z)V	m_7206582		setDirty
 		p	1			dirty
-	m	()Z	m_0347270		m_0347270
-	m	(Z)V	m_6951557		m_6951557
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_9450178;)V	m_9741098		m_9741098
-		p	1			p_1
-	m	()Lnet/minecraft/unmapped/C_9450178;	m_6232975		m_6232975
+	m	()Z	m_0347270		isVisible
+	m	(Z)V	m_6951557		setVisible
+		p	1			visible
+	m	(Lnet/minecraft/unmapped/C_9450178;)V	m_9741098		setBoundsRenderer
+		p	1			renderer
+	m	()Lnet/minecraft/unmapped/C_9450178;	m_6232975		getBoundsRenderer
 c	net/minecraft/unmapped/C_7030350
 	m	()Lnet/minecraft/unmapped/C_2441996;	m_9077732		m_9077732
 c	net/minecraft/unmapped/C_7109321
 	f	[Ljava/lang/String;	f_8465518	VARIANTS	
-	m	(I)I	m_4135959	m_4135959	
-		p	0		p_0	
-	m	(I)I	m_9514839	m_9514839	
-		p	0		p_0	
-	m	(I)Lnet/minecraft/unmapped/C_3544601;	m_6097149	m_6097149	
-		p	0		p_0	
+	m	(I)I	m_4135959	getMetadataFromDamage	
+		p	0		damage	
+	m	(I)I	m_9514839	getDamageFromMetadata	
+		p	0		metadata	
+	m	(I)Lnet/minecraft/unmapped/C_3544601;	m_6097149	getFacingFromMetadata	
+		p	0		metadata	
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;I)V	m_4332722	m_4332722	
 		p	1		p_1	
 		p	2		p_2	
@@ -2120,9 +2120,9 @@ c	net/minecraft/unmapped/C_8373595
 		p	4			a
 	m	()I	m_8711360		getLimit
 c	net/minecraft/unmapped/C_8398976
-	f	I	f_9589198		f_9589198
-	f	Lnet/minecraft/unmapped/C_8093177;	f_1523400		f_1523400
-	f	Lnet/minecraft/unmapped/C_4253627;	f_4398270		f_4398270
+	f	I	f_9589198		chunkBoundsGlList
+	f	Lnet/minecraft/unmapped/C_8093177;	f_1523400		chunkBufferBuilders
+	f	Lnet/minecraft/unmapped/C_4253627;	f_4398270		chunkBufferUploader
 	m	(Lnet/minecraft/unmapped/C_5786166;Lnet/minecraft/unmapped/C_0539808;F)V	m_1913348	renderMiningProgress	
 		p	1		tessellator	
 		p	2		camera	
@@ -2730,26 +2730,26 @@ c	net/minecraft/unmapped/C_8920728		net/minecraft/util/math/BlockPos__2__1
 		p	1			p_1
 	m	()Lnet/minecraft/unmapped/C_2165440;	m_6390910		computeNext
 	m	()Ljava/lang/Object;	computeNext		computeNext
-c	net/minecraft/unmapped/C_9450178		net/minecraft/C_68jpdjizs
-	f	Z	f_6904404		f_6904404
-	f	Z	f_4430713		f_4430713
-	f	I	f_1818106		f_1818106
-	f	I	f_0437073		f_0437073
+c	net/minecraft/unmapped/C_9450178		net/minecraft/client/render/world/ChunkBoundsRenderer
+	f	Z	f_6904404		occluded
+	f	Z	f_4430713		pending
+	f	I	f_1818106		glList
+	f	I	f_0437073		glQuery
 	m	(IILnet/minecraft/unmapped/C_3674802;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_3674802;)V	m_5106283		m_5106283
-		p	1			p_1
-	m	()V	m_1886537		m_1886537
-	m	(Ljava/nio/IntBuffer;)V	m_1939218		m_1939218
-		p	1			p_1
-	m	(Z)V	m_2344272		m_2344272
-		p	1			p_1
-	m	()Z	m_5209532		m_5209532
-	m	()Z	m_0277008		m_0277008
-	m	(Z)V	m_1891126		m_1891126
-		p	1			p_1
+		p	1			glList
+		p	2			glQuery
+		p	3			pos
+	m	(Lnet/minecraft/unmapped/C_3674802;)V	m_5106283		setPos
+		p	1			pos
+	m	()V	m_1886537		render
+	m	(Ljava/nio/IntBuffer;)V	m_1939218		queryGlArbOcclusion
+		p	1			buffer
+	m	(Z)V	m_2344272		setOccluded
+		p	1			occluded
+	m	()Z	m_5209532		isOccluded
+	m	()Z	m_0277008		isPending
+	m	(Z)V	m_1891126		setPending
+		p	1			pending
 c	net/minecraft/unmapped/C_9591274		com/mojang/blaze3d/platform/GlStateManager__TexGenMode
 	f	Lnet/minecraft/unmapped/C_9591274;	f_5767840		S
 	f	Lnet/minecraft/unmapped/C_9591274;	f_3940633		T
@@ -2780,3 +2780,6 @@ c	net/minecraft/unmapped/C_4241305
 		p	2		p_2	chunkZ
 c	net/minecraft/unmapped/C_5158551	net/minecraft/server/network/handler/ServerLoginNetworkHandler__1	net/minecraft/server/network/handler/ServerLoginNetworkHandler__2
 c	net/minecraft/unmapped/C_4926045	com/mojang/blaze3d/vertex/Tessellator__1	com/mojang/blaze3d/vertex/BufferUploader__1
+c	net/minecraft/unmapped/C_9590849
+	m	(Lnet/minecraft/unmapped/C_3674802;)Lnet/minecraft/unmapped/C_3167010;	m_3004585
+		p	1		pos	x

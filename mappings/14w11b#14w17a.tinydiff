@@ -530,7 +530,7 @@ c	net/minecraft/unmapped/C_3037945
 	f	Ljava/util/List;	f_0444389		TEXTURES
 	f	Lnet/minecraft/unmapped/C_2925148;	f_6461426		VARIANT
 	f	Lnet/minecraft/unmapped/C_2925148;	f_2192623		HALF
-	f	Lnet/minecraft/unmapped/C_3858757;	f_4422997		f_4422997
+	f	Lnet/minecraft/unmapped/C_3858757;	f_4422997		FACING
 	m	()Ljava/util/List;	m_8746735		m_8746735
 	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;)Lnet/minecraft/unmapped/C_5307437;	m_4238763		m_4238763
 		p	1			p_1
@@ -1110,13 +1110,13 @@ c	net/minecraft/unmapped/C_7109321
 	f	Lnet/minecraft/unmapped/C_7077852;	f_0657714		DAMAGE
 	m	(I)I	m_4135959
 		p	1		p_1	
-		p	0			p_0
+		p	0			damage
 	m	(I)I	m_9514839
 		p	1		p_1	
-		p	0			p_0
+		p	0			metadata
 	m	(I)Lnet/minecraft/unmapped/C_3544601;	m_6097149
 		p	1		p_1	
-		p	0			p_0
+		p	0			metadata
 	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;I)Lnet/minecraft/unmapped/C_2441996;	m_7685061		m_7685061
 		p	1			p_1
 		p	2			p_2
@@ -1908,10 +1908,10 @@ c	net/minecraft/unmapped/C_0612533		net/minecraft/world/border/WorldBorderListen
 		p	1			border
 		p	2			size
 	m	(Lnet/minecraft/unmapped/C_7549223;DDI)V	m_4375195		onSizeChanged
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
-		p	6			p_6
+		p	1			border
+		p	2			size
+		p	4			sizeLerpTarget
+		p	6			sizeLerpTime
 	m	(Lnet/minecraft/unmapped/C_7549223;DD)V	m_7698821		onCenterChanged
 		p	1			border
 		p	2			centerX
@@ -2052,10 +2052,10 @@ c	net/minecraft/unmapped/C_1308258		net/minecraft/block/StoneSlabBlock__Variant
 	m	(Ljava/lang/String;IILjava/lang/String;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
-		p	3			index
-		p	4			id
+		p	3			id
+		p	4			name
 	m	()I	m_3373112		getId
-	m	()Ljava/lang/String;	m_6680053		getKey
+	m	()Ljava/lang/String;	m_6680053		getName
 	m	()Ljava/lang/String;	toString		toString
 	m	(I)Lnet/minecraft/unmapped/C_1308258;	m_1140341		byId
 		p	0			id
@@ -2491,10 +2491,10 @@ c	net/minecraft/unmapped/C_4744845		net/minecraft/block/InfestedBlock__Variant
 c	net/minecraft/unmapped/C_4878653		net/minecraft/network/packet/s2c/play/WorldBorderS2CPacket
 	f	Lnet/minecraft/unmapped/C_4927384;	f_7744159		type
 	f	D	f_6858332		centerX
-	f	D	f_3608978		centeZ
+	f	D	f_3608978		centerZ
 	f	D	f_1360474		sizeLerpTarget
 	f	D	f_6372852		lerpSize
-	f	I	f_2627835		f_2627835
+	f	I	f_2627835		lerpTime
 	m	()V	<init>		<init>
 	m	(D)V	<init>		<init>
 		p	1			p_1
@@ -2621,7 +2621,7 @@ c	net/minecraft/unmapped/C_5291991		net/minecraft/item/DyeColor
 	f	I	f_4462965		metadata
 	f	Ljava/lang/String;	f_9296720		name
 	f	Ljava/lang/String;	f_2263976		key
-	f	Lnet/minecraft/unmapped/C_9335057;	f_5934790		textureDiffuseColorBGR
+	f	Lnet/minecraft/unmapped/C_9335057;	f_5934790		materialColor
 	f	[Lnet/minecraft/unmapped/C_5291991;	f_5282530		f_5282530
 	m	()[Lnet/minecraft/unmapped/C_5291991;	values		values
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_5291991;	valueOf		valueOf
@@ -2629,16 +2629,16 @@ c	net/minecraft/unmapped/C_5291991		net/minecraft/item/DyeColor
 	m	(Ljava/lang/String;IIILjava/lang/String;Ljava/lang/String;Lnet/minecraft/unmapped/C_9335057;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
+		p	3			id
+		p	4			metadata
+		p	5			key
+		p	6			name
+		p	7			materialColor
 	m	()I	m_3352668		getId
 	m	()I	m_4341363		getMetadata
 	m	()Ljava/lang/String;	m_2184706		m_2184706
 	m	()Ljava/lang/String;	m_4912815		getName
-	m	()Lnet/minecraft/unmapped/C_9335057;	m_3991275		getTextureDiffuseColorBGR
+	m	()Lnet/minecraft/unmapped/C_9335057;	m_3991275		getMaterialColor
 	m	(I)Lnet/minecraft/unmapped/C_5291991;	m_3218730		byMetadata
 		p	0			metadata
 	m	(I)Lnet/minecraft/unmapped/C_5291991;	m_0483794		byId
@@ -3065,9 +3065,9 @@ c	net/minecraft/unmapped/C_7549223		net/minecraft/world/border/WorldBorder
 	m	(D)V	m_0988137		setSize
 		p	1			size
 	m	(DDI)V	m_7677601		setSize
-		p	1			p_1
-		p	3			p_3
-		p	5			p_5
+		p	1			size
+		p	3			sizeLerpTarget
+		p	5			sizeLerpTime
 	m	()Ljava/util/List;	m_9823699		getListeners
 	m	(Lnet/minecraft/unmapped/C_0612533;)V	m_5603299		addListener
 		p	1			listener
