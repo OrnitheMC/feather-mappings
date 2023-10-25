@@ -138,7 +138,7 @@ c	net/minecraft/unmapped/C_1741573
 	m	()F	m_9401628	m_9401628	
 c	net/minecraft/unmapped/C_1753171
 	f	I	f_1054107	delay	
-	f	Lnet/minecraft/unmapped/C_6833902;	f_9750224		delay
+	f	Lnet/minecraft/unmapped/C_6833902;	f_9750224		wakeUpFriendsGoal
 	m	()Lnet/minecraft/unmapped/C_0539808;	m_4575743	m_4575743	
 	m	(Lnet/minecraft/unmapped/C_0539808;F)V	m_3419281	m_3419281	
 		p	1		p_1	
@@ -579,7 +579,6 @@ c	net/minecraft/unmapped/C_5622853
 	f	Lnet/minecraft/unmapped/C_0539808;	f_5509521	target	
 	f	Z	f_1913423	wasAttacking	
 	f	I	f_5987394	fastMovementCooldown	
-	f	Lnet/minecraft/unmapped/C_2306016;	f_6186848	path	f_6186848
 	m	()Z	m_8049752	wasAttacking	
 	m	()V	m_2135259	m_2135259	
 	m	()V	m_7580829	setNewWanderingPath	
@@ -1145,9 +1144,9 @@ c	net/minecraft/unmapped/C_1090314		net/minecraft/server/command/TriggerCommand
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/unmapped/C_1426399		net/minecraft/unmapped/C_1426399
-	f	Lnet/minecraft/unmapped/C_3544601;	f_1468113		f_1468113
+	f	Lnet/minecraft/unmapped/C_3544601;	f_1468113		normal
 	f	F	f_2903850		f_2903850
-	f	Z	f_9618689		f_9618689
+	f	Z	f_9618689		tint
 	f	Z	f_9166763		f_9166763
 	f	[I	f_5007946		f_5007946
 	f	[I	f_0846623		f_0846623
@@ -1160,8 +1159,8 @@ c	net/minecraft/unmapped/C_1426399		net/minecraft/unmapped/C_1426399
 		p	2			p_2
 	m	()[I	m_1466324		m_1466324
 	m	()[I	m_2092025		m_2092025
-	m	()Lnet/minecraft/unmapped/C_3544601;	m_7111656		m_7111656
-	m	()Z	m_4946969		m_4946969
+	m	()Lnet/minecraft/unmapped/C_3544601;	m_7111656		getNormal
+	m	()Z	m_4946969		hasTint
 	m	()Z	m_0967755		m_0967755
 c	net/minecraft/unmapped/C_2019151		net/minecraft/client/render/block/BlockModelRenderer
 	f	Lnet/minecraft/unmapped/C_7184938;	f_3645657		model
@@ -1170,7 +1169,7 @@ c	net/minecraft/unmapped/C_2019151		net/minecraft/client/render/block/BlockModel
 	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;)Z	m_3732811		m_3732811
 		p	1			p_1
 		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;FFF)Z	m_5833331		renderWithAmbientOcclusion
+	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;FFF)Z	m_5833331		tessellateWithAmbientOcclusion
 		p	1			block
 		p	2			pos
 		p	3			r
@@ -1182,7 +1181,7 @@ c	net/minecraft/unmapped/C_2019151		net/minecraft/client/render/block/BlockModel
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_5307437;Lnet/minecraft/unmapped/C_3544601;FFF)I	m_3088040		renderFaceWithAmbientOcclusion
+	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_5307437;Lnet/minecraft/unmapped/C_3544601;FFF)I	m_3088040		tessellateFaceWithAmbientOcclusion
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -1194,7 +1193,7 @@ c	net/minecraft/unmapped/C_2019151		net/minecraft/client/render/block/BlockModel
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_5307437;Lnet/minecraft/unmapped/C_3544601;FFFI)V	m_7128555		renderFaceWithoutAmbientOcclusion
+	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_5307437;Lnet/minecraft/unmapped/C_3544601;FFFI)V	m_7128555		tessellateFaceWithoutAmbientOcclusion
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -1205,12 +1204,12 @@ c	net/minecraft/unmapped/C_2019151		net/minecraft/client/render/block/BlockModel
 		p	8			p_8
 	m	(Lnet/minecraft/unmapped/C_7184938;)V	m_8403322		setModel
 		p	1			model
-c	net/minecraft/unmapped/C_2380768		net/minecraft/unmapped/C_2380768
-	f	Lnet/minecraft/unmapped/C_1753171;	f_0671886		f_0671886
-	f	Lnet/minecraft/unmapped/C_3544601;	f_2973717		f_2973717
-	f	Z	f_9070299		f_9070299
+c	net/minecraft/unmapped/C_2380768		net/minecraft/entity/living/mob/hostile/SilverfishEntity__InfestStoneGoal
+	f	Lnet/minecraft/unmapped/C_1753171;	f_0671886		silverfish
+	f	Lnet/minecraft/unmapped/C_3544601;	f_2973717		dir
+	f	Z	f_9070299		infest
 	m	(Lnet/minecraft/unmapped/C_1753171;)V	<init>		<init>
-		p	1			p_1
+		p	1			silverfish
 	m	()Z	m_9549250		m_9549250
 	m	()Z	m_4540487		m_4540487
 	m	()V	m_3836415		m_3836415
@@ -1301,7 +1300,7 @@ c	net/minecraft/unmapped/C_4048583		net/minecraft/entity/living/mob/hostile/Ende
 		p	1			enderman
 	m	()Z	m_9549250		m_9549250
 	m	()V	m_3798730		m_3798730
-c	net/minecraft/unmapped/C_4343325		net/minecraft/unmapped/C_4343325
+c	net/minecraft/unmapped/C_4343325		net/minecraft/entity/living/mob/hostile/SpiderEntity__TargetGoal
 	m	(Lnet/minecraft/unmapped/C_2363721;)V	<init>		<init>
 		p	1			p_1
 	m	()Z	m_9549250		m_9549250
@@ -1359,15 +1358,15 @@ c	net/minecraft/unmapped/C_6609267		net/minecraft/client/render/entity/ZombieBas
 		p	1			p_1
 		p	2			p_2
 	m	()V	m_8680944		m_8680944
-c	net/minecraft/unmapped/C_6833902		net/minecraft/unmapped/C_6833902
-	f	Lnet/minecraft/unmapped/C_1753171;	f_5903889		f_5903889
-	f	I	f_6607444		f_6607444
+c	net/minecraft/unmapped/C_6833902		net/minecraft/entity/living/mob/hostile/SilverfishEntity__WakeUpFriendsGoal
+	f	Lnet/minecraft/unmapped/C_1753171;	f_5903889		silverfish
+	f	I	f_6607444		cooldown
 	m	(Lnet/minecraft/unmapped/C_1753171;)V	<init>		<init>
-		p	1			p_1
-	m	()V	m_9474976		m_9474976
+		p	1			silverfish
+	m	()V	m_9474976		onDamaged
 	m	()Z	m_9549250		m_9549250
 	m	()V	m_3798730		m_3798730
-c	net/minecraft/unmapped/C_6908992		net/minecraft/unmapped/C_6908992
+c	net/minecraft/unmapped/C_6908992		net/minecraft/entity/living/mob/hostile/SpiderEntity__SpiderAttackGoal
 	m	(Lnet/minecraft/unmapped/C_2363721;)V	<init>		<init>
 		p	1			p_1
 	m	()Z	m_4540487		m_4540487

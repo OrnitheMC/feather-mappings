@@ -57,11 +57,11 @@ c	net/minecraft/unmapped/C_1023567	net/minecraft/client/entity/living/player/Inp
 		p	4		dimension	
 	m	()V	m_4365058	jumpWithHorse	
 	m	(Lnet/minecraft/unmapped/C_8105098;Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_8730536;Lnet/minecraft/unmapped/C_5722573;Lnet/minecraft/unmapped/C_2854223;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	1			minecraft
+		p	2			world
+		p	3			session
+		p	4			networkHandler
+		p	5			stats
 	m	(Lnet/minecraft/unmapped/C_1161898;F)Z	m_8726131		m_8726131
 		p	1			p_1
 		p	2			p_2
@@ -150,8 +150,8 @@ c	net/minecraft/unmapped/C_1241852
 		p	1			world
 		p	2			pos
 		p	3			face
-	m	(Lnet/minecraft/unmapped/C_3544601;)Z	m_9799518		m_9799518
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_3544601;)Z	m_9799518		hasColor
+		p	1			face
 c	net/minecraft/unmapped/C_1582062
 	m	()V	m_2742415		m_2742415
 c	net/minecraft/unmapped/C_1586618
@@ -704,7 +704,7 @@ c	net/minecraft/unmapped/C_3216249	net/minecraft/client/render/BlockRenderer	net
 		p	0		type	
 	m	(Lnet/minecraft/unmapped/C_8030141;)V	m_5683253		setWorld
 		p	1			world
-	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;)Z	m_3073155		render
+	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;)Z	m_3073155		tessellateBlock
 		p	1			block
 		p	2			pos
 	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;FFF)Z	m_9734150		renderFacesWithMinAmbientOcclusion
@@ -779,18 +779,18 @@ c	net/minecraft/unmapped/C_3216249	net/minecraft/client/render/BlockRenderer	net
 		p	4			y
 		p	6			z
 		p	8			sprite
-	m	(Lnet/minecraft/unmapped/C_1241852;IF)V	m_5984142		prepareItem
+	m	(Lnet/minecraft/unmapped/C_1241852;IF)V	m_5984142		glColor
 		p	1			block
 		p	2			metadata
 		p	3			brightness
-	m	(Lnet/minecraft/unmapped/C_1241852;IF)V	m_5915080		renderDynamic
+	m	(Lnet/minecraft/unmapped/C_1241852;IF)V	m_5915080		render
 		p	1			block
 		p	2			metadata
 		p	3			brightness
 	m	(Lnet/minecraft/unmapped/C_1241852;DDDDDI)V	m_7752244
 		p	8		xOffset	offsetX
 		p	10		yOffset	offsetZ
-	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;)Z	m_3732811	renderSimpleBlock	renderBlock
+	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;)Z	m_3732811	renderSimpleBlock	tessellate
 c	net/minecraft/unmapped/C_3225627
 	m	(Ljava/io/DataInput;I)V	m_9918199	read	
 		p	1		input	
@@ -1249,7 +1249,7 @@ c	net/minecraft/unmapped/C_7035249
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/unmapped/C_7106153
-	f	Lnet/minecraft/unmapped/C_0561170;	f_5038870	skinTextureLocation	skinLocatio
+	f	Lnet/minecraft/unmapped/C_0561170;	f_5038870	skinTextureLocation	skinLocation
 	f	Lnet/minecraft/unmapped/C_0561170;	f_2122975	capeTextureLocation	capeLocation
 	m	()V	m_7227461	registerTextures	
 	m	()Lnet/minecraft/unmapped/C_1128759;	m_0505925	getSkinTexture	
@@ -1259,8 +1259,8 @@ c	net/minecraft/unmapped/C_7106153
 		p	1		playerName	
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_0561170;	m_6894126	getCapeTextureLocation	
 		p	0		playerName	
-	m	()Z	m_8705566		hasCape
-	m	()Z	m_8015569		hasSkin
+	m	()Z	m_8705566		hasCapeTexture
+	m	()Z	m_8015569		hasSkinTexture
 c	net/minecraft/unmapped/C_7112719
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_2454309;)Z	m_9625326		canSpawn
 		p	1			world
@@ -1358,12 +1358,11 @@ c	net/minecraft/unmapped/C_7842113
 		p	3			powered
 	m	(I)V	m_0479088		updateShape
 		p	1			metadata
-	m	(I)Z	m_6072847		getHalfFromMetadata
-		c		Returns true if the metadata represents the upper half.
+	m	(I)Z	m_6072847		isUpperHalf
 		p	0			metadata
-	m	(Lnet/minecraft/unmapped/C_3544601;)I	m_7418293		getMetadataFromFacing
+	m	(Lnet/minecraft/unmapped/C_3544601;)I	m_7418293		getMetadataClosedLowerHalf
 		p	0			facing
-	m	(I)Lnet/minecraft/unmapped/C_3544601;	m_1736476		getFacingFromMetadata
+	m	(I)Lnet/minecraft/unmapped/C_3544601;	m_1736476		getFacing
 		p	0			metadata
 c	net/minecraft/unmapped/C_7887747
 	m	([B)Lnet/minecraft/unmapped/C_2018497;	m_8795049	read	
@@ -1839,7 +1838,7 @@ c	net/minecraft/unmapped/C_3677942		net/minecraft/client/render/block/LiquidRend
 	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;)Z	m_3073155		m_3073155
 		p	1			p_1
 		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_3747079;Lnet/minecraft/unmapped/C_3674802;)Z	m_7437567		renderLiquid
+	m	(Lnet/minecraft/unmapped/C_3747079;Lnet/minecraft/unmapped/C_3674802;)Z	m_7437567		tessellate
 		p	1			liquid
 		p	2			pos
 	m	(Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_8048208;)F	m_9792460		getLiquidHeight
@@ -2066,7 +2065,7 @@ c	net/minecraft/unmapped/C_5496464		net/minecraft/client/render/block/CrossBlock
 c	net/minecraft/unmapped/C_5649066		net/minecraft/block/ButtonBlock__1
 	f	[I	f_8884641		f_8884641
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_5723484		net/minecraft/client/render/block/DynamicBlockEntityRenderer
+c	net/minecraft/unmapped/C_5723484		net/minecraft/client/render/block/AnimatedBlockEntityRenderer
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;)Z	m_3073155		m_3073155
 		p	1			p_1

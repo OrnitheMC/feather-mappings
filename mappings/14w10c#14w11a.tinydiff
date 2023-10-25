@@ -92,8 +92,8 @@ c	net/minecraft/unmapped/C_1241852
 c	net/minecraft/unmapped/C_1426399	net/minecraft/C_18hblzifm	net/minecraft/unmapped/C_1426399
 	f	[I	f_5007946	f_5007946	
 	f	[I	f_0846623	f_0846623	
-	f	Lnet/minecraft/unmapped/C_3544601;	f_6228325		f_6228325
-	f	Lnet/minecraft/unmapped/C_5282180;	f_6204913		f_6204913
+	f	Lnet/minecraft/unmapped/C_3544601;	f_6228325		face
+	f	Lnet/minecraft/unmapped/C_5282180;	f_6204913		uv
 	m	(Lnet/minecraft/unmapped/C_3544601;Lnet/minecraft/unmapped/C_5282180;Ljavax/vecmath/Vector3f;Ljavax/vecmath/Vector3f;FZZLnet/minecraft/unmapped/C_3544601;)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -125,8 +125,8 @@ c	net/minecraft/unmapped/C_1426399	net/minecraft/C_18hblzifm	net/minecraft/unmap
 		p	7			p_7
 		p	8			p_8
 		p	9			p_9
-	m	()Lnet/minecraft/unmapped/C_3544601;	m_2239690		m_2239690
-	m	()Lnet/minecraft/unmapped/C_5282180;	m_1866868		m_1866868
+	m	()Lnet/minecraft/unmapped/C_3544601;	m_2239690		getFace
+	m	()Lnet/minecraft/unmapped/C_5282180;	m_1866868		getUv
 	m	()F	m_8594675		m_8594675
 c	net/minecraft/unmapped/C_1444189
 	f	Lnet/minecraft/unmapped/C_8878495;	f_2979678	UNDEAD_FILTER	
@@ -162,7 +162,7 @@ c	net/minecraft/unmapped/C_1965587
 		p	7			shade
 c	net/minecraft/unmapped/C_2019151
 	f	Ljava/util/BitSet;	f_8812272		shapeState
-	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;FFFZ)V	m_3088040	renderFaceWithAmbientOcclusion	
+	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;FFFZ)V	m_3088040	tessellateFaceWithAmbientOcclusion	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
@@ -170,7 +170,7 @@ c	net/minecraft/unmapped/C_2019151
 		p	5		p_5	
 		p	6		p_6	
 		p	7		p_7	
-	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;FFFI)V	m_7128555	renderFaceWithoutAmbientOcclusion	
+	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;FFFI)V	m_7128555	tessellateFaceWithoutAmbientOcclusion	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
@@ -178,7 +178,7 @@ c	net/minecraft/unmapped/C_2019151
 		p	5		p_5	
 		p	6		p_6	
 		p	7		p_7	
-	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;FFF)V	m_3088040		renderFaceWithAmbientOcclusion
+	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;FFF)V	m_3088040		tessellateFaceWithAmbientOcclusion
 		p	1			block
 		p	2			pos
 		p	3			face
@@ -189,7 +189,7 @@ c	net/minecraft/unmapped/C_2019151
 		p	1			block
 		p	2			vertices
 		p	3			face
-	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;FFFIZ)V	m_7128555		renderFaceWithoutAmbientOcclusion
+	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_3544601;FFFIZ)V	m_7128555		tessellateFaceWithoutAmbientOcclusion
 		p	1			block
 		p	2			pos
 		p	3			face
@@ -417,7 +417,7 @@ c	net/minecraft/unmapped/C_5788449
 c	net/minecraft/unmapped/C_5904422
 	f	Lnet/minecraft/unmapped/C_3980755;	f_7215360		fleeExplodingCreeperGoal
 c	net/minecraft/unmapped/C_5917668
-	f	Ljava/util/regex/Pattern;	f_3902939		f_3902939
+	f	Ljava/util/regex/Pattern;	f_3902939		UUID_PATTERN
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_6004512
 	m	(FFFLnet/minecraft/unmapped/C_3544601;FILjava/lang/String;)V	m_1144723	render	
@@ -486,7 +486,7 @@ c	net/minecraft/unmapped/C_6479467
 		p	1			type
 	m	(Lcom/mojang/authlib/GameProfile;)V	m_4638875		setProfile
 		p	1			profile
-	m	()V	m_5310312		m_5310312
+	m	()V	m_5310312		updateProfile
 c	net/minecraft/unmapped/C_6603775
 	m	(Lnet/minecraft/unmapped/C_0539808;)Z	m_1473293	m_1473293	
 		p	1		p_1	
@@ -865,7 +865,7 @@ c	net/minecraft/unmapped/C_2025047		net/minecraft/block/SandBlock__Variant
 	f	Lnet/minecraft/unmapped/C_2025047;	f_8685052		RED_SAND
 	f	[Lnet/minecraft/unmapped/C_2025047;	f_8769553		BY_ID
 	f	I	f_8205787		id
-	f	Ljava/lang/String;	f_3594310		f_3594310
+	f	Ljava/lang/String;	f_3594310		key
 	f	Ljava/lang/String;	f_9557789		name
 	f	Lnet/minecraft/unmapped/C_9335057;	f_7702363		color
 	f	[Lnet/minecraft/unmapped/C_2025047;	f_0006919		f_0006919
@@ -875,12 +875,12 @@ c	net/minecraft/unmapped/C_2025047		net/minecraft/block/SandBlock__Variant
 	m	(Ljava/lang/String;IILjava/lang/String;Ljava/lang/String;Lnet/minecraft/unmapped/C_9335057;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-	m	()I	m_2700135		getIndex
-	m	()Ljava/lang/String;	m_1055154		m_1055154
+		p	3			id
+		p	4			key
+		p	5			name
+		p	6			color
+	m	()I	m_2700135		getId
+	m	()Ljava/lang/String;	m_1055154		getName
 	m	()Ljava/lang/String;	m_1017436		getKey
 	m	()Ljava/lang/String;	toString		toString
 	m	()Lnet/minecraft/unmapped/C_9335057;	m_1526561		getColor
@@ -910,8 +910,8 @@ c	net/minecraft/unmapped/C_2400640		net/minecraft/client/resource/model/BakedQua
 	m	()Ljavax/vecmath/Matrix4d;	m_0096729		m_0096729
 	m	()[I	m_2143757		getVertices
 	m	()Lnet/minecraft/unmapped/C_3544601;	m_4966440		getNormal
-	m	()Lnet/minecraft/unmapped/C_3544601;	m_5851476		getFacing
-	m	()Z	m_7284683		hasColor
+	m	()Lnet/minecraft/unmapped/C_3544601;	m_5851476		getFace
+	m	()Z	m_7284683		hasTint
 	m	()Z	m_4693524		m_4693524
 c	net/minecraft/unmapped/C_2441996		net/minecraft/block/state/BlockState
 	m	(Lnet/minecraft/unmapped/C_7612169;)Ljava/lang/Object;	m_9983199		get
@@ -1042,8 +1042,8 @@ c	net/minecraft/unmapped/C_5286840		net/minecraft/nbt/NbtUtils
 	m	(Lnet/minecraft/unmapped/C_2018497;)Lcom/mojang/authlib/GameProfile;	m_4738037		readProfile
 		p	0			nbt
 	m	(Lnet/minecraft/unmapped/C_2018497;Lcom/mojang/authlib/GameProfile;)V	m_6846490		writeProfile
-		p	0			p_0
-		p	1			p_1
+		p	0			nbt
+		p	1			profile
 c	net/minecraft/unmapped/C_5341719		net/minecraft/client/render/block/BlockModelRenderer__2
 	f	[I	f_4783395		f_4783395
 	m	()V	<clinit>		<clinit>
@@ -1058,7 +1058,7 @@ c	net/minecraft/unmapped/C_5840038		net/minecraft/block/state/StateDefinition__B
 	m	(Lnet/minecraft/unmapped/C_7612169;Ljava/lang/Object;Lnet/minecraft/unmapped/C_2441996;)V	m_1414581		addNeighbor
 		p	1			property
 		p	2			value
-		p	3			neighbor
+		p	3			state
 	m	(Ljava/lang/Object;)Z	equals		equals
 		p	1			obj
 	m	()I	hashCode		hashCode
@@ -1082,8 +1082,8 @@ c	net/minecraft/unmapped/C_5922218		net/minecraft/block/PlanksBlock__Variant
 	f	Lnet/minecraft/unmapped/C_5922218;	f_2144248		DARK_OAK
 	f	[Lnet/minecraft/unmapped/C_5922218;	f_7044197		BY_ID
 	f	I	f_9666681		id
-	f	Ljava/lang/String;	f_9907433		f_9907433
-	f	Ljava/lang/String;	f_2955131		f_2955131
+	f	Ljava/lang/String;	f_9907433		spriteName
+	f	Ljava/lang/String;	f_2955131		name
 	f	Ljava/lang/String;	f_1115704		key
 	f	[Lnet/minecraft/unmapped/C_5922218;	f_4113244		f_4113244
 	m	()[Lnet/minecraft/unmapped/C_5922218;	values		values
@@ -1093,12 +1093,12 @@ c	net/minecraft/unmapped/C_5922218		net/minecraft/block/PlanksBlock__Variant
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
+		p	4			spriteName
+		p	5			name
+		p	6			key
 	m	()I	m_1376292		getId
-	m	()Ljava/lang/String;	m_7805782		m_7805782
-	m	()Ljava/lang/String;	m_5238665		m_5238665
+	m	()Ljava/lang/String;	m_7805782		getSpriteName
+	m	()Ljava/lang/String;	m_5238665		getName
 	m	()Ljava/lang/String;	m_9497142		getKey
 	m	()Ljava/lang/String;	toString		toString
 	m	(I)Lnet/minecraft/unmapped/C_5922218;	m_9622425		byId
@@ -1189,8 +1189,8 @@ c	net/minecraft/unmapped/C_8988084		net/minecraft/block/DirtBlock__Variant
 	m	(Ljava/lang/String;IILjava/lang/String;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
-		p	3			index
-		p	4			id
+		p	3			id
+		p	4			name
 	m	()I	m_1833825		getId
 	m	()Ljava/lang/String;	m_1682946		getKey
 	m	()Ljava/lang/String;	toString		toString
