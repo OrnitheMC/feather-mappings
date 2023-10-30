@@ -42,8 +42,8 @@ c	net/minecraft/unmapped/C_0259655
 		p	2			tickDelta
 		p	3			anaglyphRenderPass
 c	net/minecraft/unmapped/C_0593414
-	m	()Ljava/lang/String;	m_5454970	getParticleName	
-	m	()Lnet/minecraft/unmapped/C_4701530;	m_5454970		getParticleName
+	m	()Ljava/lang/String;	m_5454970	getParticleType	
+	m	()Lnet/minecraft/unmapped/C_4701530;	m_5454970		getParticleType
 c	net/minecraft/unmapped/C_0612533
 	m	(Lnet/minecraft/unmapped/C_7549223;I)V	m_3033894		onWarningTimeChanged
 		p	1			border
@@ -190,16 +190,16 @@ c	net/minecraft/unmapped/C_4878653
 	f	I	f_6873999		warningTime
 	f	I	f_4177932		warningBlocks
 	m	(Lnet/minecraft/unmapped/C_7549223;)V	<init>	<init>	
-		p	1		p_1	
+		p	1		worldBorder	
 	m	(D)V	<init>	<init>	
-		p	1		p_1	
+		p	1		sizeLerpTarget	
 	m	(DDI)V	<init>	<init>	
-		p	1		p_1	
-		p	3		p_3	
-		p	5		p_5	
+		p	1		lerpSize	
+		p	3		sizeLerpTarget	
+		p	5		lerpTime	
 	m	(DD)V	<init>	<init>	
-		p	1		p_1	
-		p	3		p_3	
+		p	1		centerX	
+		p	3		centerZ	
 	m	(Lnet/minecraft/unmapped/C_7549223;Lnet/minecraft/unmapped/C_4927384;)V	<init>		<init>
 		p	1			worldBorder
 		p	2			type
@@ -208,7 +208,7 @@ c	net/minecraft/unmapped/C_4927384
 	f	Lnet/minecraft/unmapped/C_4927384;	f_2443924		SET_WARNING_BLOCKS
 c	net/minecraft/unmapped/C_5553933
 	m	(Ljava/lang/String;DDDDDD)V	m_2061725	addParticle	
-		p	1		name	
+		p	1		type	
 		p	2		x	
 		p	4		y	
 		p	6		z	
@@ -465,9 +465,9 @@ c	net/minecraft/unmapped/C_8651652
 	m	()Lnet/minecraft/unmapped/C_2291899;	m_1709414		getSpectatorGui
 c	net/minecraft/unmapped/C_8814877
 	m	(Ljava/lang/String;)V	m_5173230	addParticles	
-		p	1		particleName	
+		p	1		type	
 	m	(Lnet/minecraft/unmapped/C_4701530;)V	m_5173230		addParticles
-		p	1			particleName
+		p	1			type
 c	net/minecraft/unmapped/C_9590849
 	m	(I)Z	m_6562501	getDataFlag	
 		p	1		pos	
@@ -569,19 +569,19 @@ c	net/minecraft/unmapped/C_0874147		net/minecraft/client/entity/particle/LavaPar
 		p	13			p_13
 		p	15			p_15
 c	net/minecraft/unmapped/C_1183588		net/minecraft/network/packet/s2c/play/PlayerInfoS2CPacket__Entry
-	f	Ljava/util/UUID;	f_5547996		f_5547996
-	f	Ljava/lang/String;	f_8864457		f_8864457
+	f	Ljava/util/UUID;	f_5547996		uuid
+	f	Ljava/lang/String;	f_8864457		name
 	f	I	f_3868743		ping
 	f	Lnet/minecraft/unmapped/C_4223822;	f_1367765		gameMode
 	f	Lnet/minecraft/unmapped/C_8385625;	f_0729365		f_0729365
 	m	(Lnet/minecraft/unmapped/C_8385625;Ljava/util/UUID;Ljava/lang/String;ILnet/minecraft/unmapped/C_4223822;)V	<init>		<init>
 		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	()Ljava/util/UUID;	m_1463864		m_1463864
-	m	()Ljava/lang/String;	m_8464288		m_8464288
+		p	2			uuid
+		p	3			name
+		p	4			ping
+		p	5			gameMode
+	m	()Ljava/util/UUID;	m_1463864		getUuid
+	m	()Ljava/lang/String;	m_8464288		getName
 	m	()I	m_8901420		getPing
 	m	()Lnet/minecraft/unmapped/C_4223822;	m_5186737		getGameMode
 c	net/minecraft/unmapped/C_1244306		net/minecraft/client/entity/particle/WaterSplashParticle__Factory
@@ -713,8 +713,8 @@ c	net/minecraft/unmapped/C_2717027		net/minecraft/network/packet/s2c/play/Player
 	f	Lnet/minecraft/unmapped/C_2717027;	f_7933738		UPDATE_GAME_MODE
 	f	Lnet/minecraft/unmapped/C_2717027;	f_4541157		UPDATE_PING
 	f	Lnet/minecraft/unmapped/C_2717027;	f_3440494		REMOVE_PLAYER
-	f	[Lnet/minecraft/unmapped/C_2717027;	f_3374421		f_3374421
-	f	I	f_7964656		f_7964656
+	f	[Lnet/minecraft/unmapped/C_2717027;	f_3374421		BY_ID
+	f	I	f_7964656		id
 	f	[Lnet/minecraft/unmapped/C_2717027;	f_7275699		f_7275699
 	m	()[Lnet/minecraft/unmapped/C_2717027;	values		values
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_2717027;	valueOf		valueOf
@@ -722,7 +722,7 @@ c	net/minecraft/unmapped/C_2717027		net/minecraft/network/packet/s2c/play/Player
 	m	(Ljava/lang/String;II)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
-		p	3			p_3
+		p	3			id
 	m	()[Lnet/minecraft/unmapped/C_2717027;	m_4153527		m_4153527
 	m	(Lnet/minecraft/unmapped/C_2717027;)I	m_0688272		m_0688272
 		p	0			p_0
@@ -770,7 +770,7 @@ c	net/minecraft/unmapped/C_3725235		net/minecraft/client/gui/spectator/Spectator
 		p	1			hud
 	m	()Lnet/minecraft/unmapped/C_9550253;	m_5910528		getDisplayName
 	m	(I)V	m_7762758		render
-		p	1			p_1
+		p	1			slot
 c	net/minecraft/unmapped/C_3913199		net/minecraft/client/entity/particle/ItemParticle__SlimeBallFactory
 	m	()V	<init>		<init>
 	m	(ILnet/minecraft/unmapped/C_5553933;DDDDDD[I)Lnet/minecraft/unmapped/C_1350658;	m_6227983		m_6227983
@@ -1126,7 +1126,7 @@ c	net/minecraft/unmapped/C_7671936		net/minecraft/client/entity/particle/DepthSu
 c	net/minecraft/unmapped/C_8537278		net/minecraft/client/gui/spectator/SpectatorMenu__PaginationMenuItem
 	f	I	f_1217954		slot
 	m	(I)V	<init>		<init>
-		p	1			p_1
+		p	1			slot
 	m	(Lnet/minecraft/unmapped/C_9259189;)V	m_2934731		m_2934731
 		p	1			p_1
 	m	()Lnet/minecraft/unmapped/C_9550253;	m_5910528		m_5910528

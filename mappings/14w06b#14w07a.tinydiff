@@ -10,8 +10,8 @@ c	net/minecraft/unmapped/C_0066205
 	m	()V	m_9301474		onTextureDownloaded
 c	net/minecraft/unmapped/C_0115545
 	m	(Lnet/minecraft/unmapped/C_9550253;Lnet/minecraft/unmapped/C_0539808;)Lnet/minecraft/unmapped/C_9550253;	m_5652444		updateForEntity
-		p	0			p_0
-		p	1			p_1
+		p	0			text
+		p	1			entity
 c	net/minecraft/unmapped/C_0164812
 	m	(Lnet/minecraft/unmapped/C_3225627;Lnet/minecraft/unmapped/C_3225627;)Z	m_6915380	matchesNbt	
 		p	0		nbt	
@@ -25,7 +25,7 @@ c	net/minecraft/unmapped/C_0169618	net/minecraft/client/render/block/CocoaRender
 	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;)Z	m_3073155	m_3073155	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/unmapped/C_3106743;Lnet/minecraft/unmapped/C_3674802;)Z	m_6738119	renderCocoa	
+	m	(Lnet/minecraft/unmapped/C_3106743;Lnet/minecraft/unmapped/C_3674802;)Z	m_6738119	tessellateCocoa	
 		p	1		cocoa	
 		p	2		pos	
 c	net/minecraft/unmapped/C_0231321
@@ -35,7 +35,7 @@ c	net/minecraft/unmapped/C_0341741	net/minecraft/client/render/block/DragonEggRe
 	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;)Z	m_3073155	m_3073155	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/unmapped/C_5349997;Lnet/minecraft/unmapped/C_3674802;)Z	m_1790568	renderDragonEgg	
+	m	(Lnet/minecraft/unmapped/C_5349997;Lnet/minecraft/unmapped/C_3674802;)Z	m_1790568	tessellateDragonEgg	
 		p	1		dragonEgg	
 		p	2		pos	
 	m	(Lnet/minecraft/unmapped/C_1241852;IF)V	m_5915080	m_5915080	
@@ -59,7 +59,7 @@ c	net/minecraft/unmapped/C_0960869	net/minecraft/client/render/block/BeaconRende
 	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;)Z	m_3073155	m_3073155	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/unmapped/C_5788730;Lnet/minecraft/unmapped/C_3674802;)Z	m_8865079	renderBeacon	
+	m	(Lnet/minecraft/unmapped/C_5788730;Lnet/minecraft/unmapped/C_3674802;)Z	m_8865079	tessellateBeacon	
 		p	1		beacon	
 		p	2		pos	
 	m	(Lnet/minecraft/unmapped/C_1241852;IF)V	m_5915080	m_5915080	
@@ -73,14 +73,14 @@ c	net/minecraft/unmapped/C_1014639
 c	net/minecraft/unmapped/C_1128759
 	m	()Z	m_6384698	isUploaded	
 c	net/minecraft/unmapped/C_1241852
-	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;)I	m_3537838		m_3537838
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/unmapped/C_8030141;Lnet/minecraft/unmapped/C_3674802;)I	m_3537838		getMetadataForModel
+		p	1			world
+		p	2			pos
 c	net/minecraft/unmapped/C_1264786
 	m	(Lnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_2454309;)V	m_2442845		setBlockNbt
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
+		p	0			world
+		p	1			pos
+		p	2			stack
 c	net/minecraft/unmapped/C_1426399
 	m	(Lnet/minecraft/unmapped/C_7184938;Lcom/google/gson/JsonObject;)V	<init>	<init>	
 		p	1		p_1	
@@ -117,13 +117,13 @@ c	net/minecraft/unmapped/C_1945050
 		p	0			id
 c	net/minecraft/unmapped/C_2019151
 	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_5307437;Lnet/minecraft/unmapped/C_3544601;FFF)I	m_3088040	tessellateFaceWithAmbientOcclusion	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
-		p	7		p_7	
+		p	1		block	
+		p	2		pos	
+		p	3		sprite	
+		p	4		face	
+		p	5		r	
+		p	6		g	
+		p	7		b	
 	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;Lnet/minecraft/unmapped/C_5307437;Lnet/minecraft/unmapped/C_3544601;FFFZ)V	m_3088040		tessellateFaceWithAmbientOcclusion
 		p	1			p_1
 		p	2			p_2
@@ -142,11 +142,11 @@ c	net/minecraft/unmapped/C_2054191	net/minecraft/unmapped/C_3728608__1
 	m	()Ljava/lang/reflect/Type;	getOwnerType	getOwnerType	
 c	net/minecraft/unmapped/C_2208347
 	f	Ljava/util/concurrent/ExecutorService;	f_2872015		EXECUTOR
-	m	(Lcom/mojang/authlib/minecraft/MinecraftProfileTexture;Lcom/mojang/authlib/minecraft/MinecraftProfileTexture$Type;)Lorg/apache/commons/lang3/tuple/Pair;	m_5525944	m_5525944	
-		p	1		p_1	
-		p	2		p_2	
-	m	(Lcom/mojang/authlib/GameProfile;)Ljava/util/Map;	m_6100449	m_6100449	
-		p	1		p_1	
+	m	(Lcom/mojang/authlib/minecraft/MinecraftProfileTexture;Lcom/mojang/authlib/minecraft/MinecraftProfileTexture$Type;)Lorg/apache/commons/lang3/tuple/Pair;	m_5525944	register	
+		p	1		texture	
+		p	2		type	
+	m	(Lcom/mojang/authlib/GameProfile;)Ljava/util/Map;	m_6100449	getTextures	
+		p	1		profile	
 	m	(Lcom/mojang/authlib/minecraft/MinecraftProfileTexture;Lcom/mojang/authlib/minecraft/MinecraftProfileTexture$Type;Lnet/minecraft/unmapped/C_1108006;)V	m_5525944		register
 		p	1			p_1
 		p	2			p_2
@@ -208,7 +208,7 @@ c	net/minecraft/unmapped/C_4822062	net/minecraft/client/render/block/LadderRende
 	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;)Z	m_3073155	m_3073155	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/unmapped/C_7233506;Lnet/minecraft/unmapped/C_3674802;)Z	m_9527182	renderLadder	
+	m	(Lnet/minecraft/unmapped/C_7233506;Lnet/minecraft/unmapped/C_3674802;)Z	m_9527182	tessellateLadder	
 		p	1		ladder	
 		p	2		pos	
 c	net/minecraft/unmapped/C_5100287
@@ -243,18 +243,18 @@ c	net/minecraft/unmapped/C_7106153
 	m	(Lcom/mojang/authlib/minecraft/MinecraftProfileTexture$Type;Lnet/minecraft/unmapped/C_0561170;)V	m_5735451		m_5735451
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_7184938	net/minecraft/C_32vjshntr	net/minecraft/C_61dtjmqkq
+c	net/minecraft/unmapped/C_7184938
 	f	[[Lnet/minecraft/unmapped/C_1426399;	f_3254605	faces	
-	f	Lorg/apache/logging/log4j/Logger;	f_0422750		f_0422750
+	f	Lorg/apache/logging/log4j/Logger;	f_0422750		LOGGER
 	f	Ljava/util/List;	f_3254605		faces
-	f	F	f_9090373		f_9090373
+	f	F	f_9090373		pixelScale
 	f	Z	f_6303012		f_6303012
 	m	(Ljava/lang/String;)I	m_9006666	m_9006666	
 		p	1		p_1	
 	m	(I)[Lnet/minecraft/unmapped/C_1426399;	m_8303533	getQuads	
-		p	1		p_1	
+		p	1		index	
 	m	(Lnet/minecraft/unmapped/C_3544601;)[Lnet/minecraft/unmapped/C_1426399;	m_4600483	getQuads	
-		p	1		p_1	
+		p	1		face	
 	m	(Ljavax/vecmath/Vector3f;Ljavax/vecmath/Vector3f;)V	m_0074032		bakeFaces
 		p	1			p_1
 		p	2			p_2
@@ -287,7 +287,7 @@ c	net/minecraft/unmapped/C_7564305	net/minecraft/client/render/block/EndPortalFr
 	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;)Z	m_3073155	m_3073155	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/unmapped/C_9986135;Lnet/minecraft/unmapped/C_3674802;)Z	m_2860384	renderEndPortalFrame	
+	m	(Lnet/minecraft/unmapped/C_9986135;Lnet/minecraft/unmapped/C_3674802;)Z	m_2860384	tessellateEndPortalFrame	
 		p	1		endPortalFrame	
 		p	2		pos	
 c	net/minecraft/unmapped/C_8003124
@@ -358,11 +358,11 @@ c	net/minecraft/unmapped/C_8105098
 		p	11			p_11
 		p	12			p_12
 	m	()Lcom/mojang/authlib/properties/PropertyMap;	m_0134977		getUserProperties
-	m	(Ljava/util/concurrent/Callable;)Lcom/google/common/util/concurrent/ListenableFuture;	m_7581301		m_7581301
-		p	1			p_1
-	m	(Ljava/lang/Runnable;)Lcom/google/common/util/concurrent/ListenableFuture;	m_2167033		m_2167033
-		p	1			p_1
-	m	()Z	m_7691568		m_7691568
+	m	(Ljava/util/concurrent/Callable;)Lcom/google/common/util/concurrent/ListenableFuture;	m_7581301		submit
+		p	1			event
+	m	(Ljava/lang/Runnable;)Lcom/google/common/util/concurrent/ListenableFuture;	m_2167033		submit
+		p	1			event
+	m	()Z	m_7691568		isOnSameThread
 c	net/minecraft/unmapped/C_8300121
 	m	()V	m_8071993		setNeverPickUp
 	m	()V	m_7263675		makeFakeItem
@@ -385,7 +385,7 @@ c	net/minecraft/unmapped/C_8916815	net/minecraft/client/render/block/VineRendere
 	m	(Lnet/minecraft/unmapped/C_1241852;Lnet/minecraft/unmapped/C_3674802;)Z	m_3073155	m_3073155	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/unmapped/C_1014639;Lnet/minecraft/unmapped/C_3674802;)Z	m_3828117	renderVine	
+	m	(Lnet/minecraft/unmapped/C_1014639;Lnet/minecraft/unmapped/C_3674802;)Z	m_3828117	tessellateVine	
 		p	1		vine	
 		p	2		pos	
 c	net/minecraft/unmapped/C_9220821
@@ -479,7 +479,7 @@ c	net/minecraft/unmapped/C_2373767		net/minecraft/text/ScoreText
 		p	1			p_1
 	m	()Ljava/lang/String;	toString		toString
 	m	()Lnet/minecraft/unmapped/C_9550253;	m_6415269		m_6415269
-c	net/minecraft/unmapped/C_2449985		net/minecraft/C_61dtjmqkq__C_2449985
+c	net/minecraft/unmapped/C_2449985		net/minecraft/client/resource/model/BakedModel__C_2449985
 	f	Lnet/minecraft/unmapped/C_2449985;	f_6353663		f_6353663
 	f	Lnet/minecraft/unmapped/C_2449985;	f_0297854		f_0297854
 	f	Lnet/minecraft/unmapped/C_2449985;	f_3797706		f_3797706
@@ -505,7 +505,7 @@ c	net/minecraft/unmapped/C_2449985		net/minecraft/C_61dtjmqkq__C_2449985
 		p	5			p_5
 		p	6			p_6
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_2615367		net/minecraft/C_61dtjmqkq__1
+c	net/minecraft/unmapped/C_2615367		net/minecraft/client/resource/model/BakedModel__1
 	f	[I	f_5402861		f_5402861
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_2897779		net/minecraft/server/command/TargetSelector__2
