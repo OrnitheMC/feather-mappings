@@ -522,14 +522,14 @@ task downloadMcJars(dependsOn: downloadVersionDetails) {
     }
 }
 
-task downloadCalamus(dependsOn: downloadMcJars, type: Download) {
+task downloadCalamus(type: Download) {
 	group = buildMappingGroup
 	def url = "https://github.com/OrnitheMC/calamus/raw/main/mappings/${version_id}.tiny"
 	src UrlEscapers.urlFragmentEscaper().escape(url)
 	dest calamusV1File
 }
 
-task downloadCalamusV2(dependsOn: downloadMcJars, type: Download) {
+task downloadCalamusV2(type: Download) {
 	group = buildMappingGroup
 	def url = "https://maven.ornithemc.net/releases/net/ornithemc/calamus-${namespace}/${version_id}/calamus-${namespace}-${version_id}-v2.jar"
 	src UrlEscapers.urlFragmentEscaper().escape(url)
@@ -849,12 +849,11 @@ task feather(dependsOn: [nestJar, separateMappings]) {
 	}
 }
 
-task separateMappingsForBuild(type: WithV2FileOutput) {
+task separateMappingsForBuild(type: FileOutput) {
 	inputs.dir mappingsDir
 
-	v1Output = new File(tempDir, "separated-mappings.tiny")
-	v2Output = new File(tempDir, "separated-mappings-v2.tiny")
-
+	output = new File(tempDir, "separated-mappings-v2.tiny")
+	outputs.file(output)
 	outputs.upToDateWhen { false }
 
 	doLast {
@@ -862,25 +861,19 @@ task separateMappingsForBuild(type: WithV2FileOutput) {
 		Mappings mappings = MappingUtils.separateMappings(graph, version_id);
 
 		mappings.setValidator(REMOVE_DUMMY)
-		Format.TINY_V2.writeMappings(v2Output.toPath(), mappings)
-
-		new ConvertMappingsCommand().run(
-			"tinyv2",
-			v2Output.getAbsolutePath(),
-			"tiny:${namespace}:named",
-			v1Output.getAbsolutePath())
+		Format.TINY_V2.writeMappings(output.toPath(), mappings)
 	}
 }
 
 task checkMappings(dependsOn: [mapCalamusJar, separateMappingsForBuild]) {
 	group = buildMappingGroup
-	inputs.file separateMappingsForBuild.v2Output
+	inputs.file separateMappingsForBuild.output
 	doLast {
 		logger.lifecycle(":checking mappings")
 
 		String[] args = [
 				mainJar.getAbsolutePath(),
-				separateMappingsForBuild.v2Output.getAbsolutePath()
+				separateMappingsForBuild.output.getAbsolutePath()
 		]
 
 		try {
@@ -893,7 +886,7 @@ task checkMappings(dependsOn: [mapCalamusJar, separateMappingsForBuild]) {
 
 task buildFeatherTiny(dependsOn: [mapCalamusJar, separateMappingsForBuild], type: WithV2FileOutput) {
 	group = buildMappingGroup
-	inputs.file separateMappingsForBuild.v2Output
+	inputs.file separateMappingsForBuild.output
 	if (!libs.exists()) {
 		libs.mkdirs()
 	}
@@ -909,7 +902,7 @@ task buildFeatherTiny(dependsOn: [mapCalamusJar, separateMappingsForBuild], type
 		new MapSpecializedMethodsCommand().run(
 				calamusJar.getAbsolutePath(),
 				"tinyv2",
-				separateMappingsForBuild.v2Output.getAbsolutePath(),
+				separateMappingsForBuild.output.getAbsolutePath(),
 				"tinyv2:${namespace}:named",
 				v2Output.getAbsolutePath()
 		)
