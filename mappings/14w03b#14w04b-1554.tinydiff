@@ -40,13 +40,17 @@ c	net/minecraft/unmapped/C_1023567	net/minecraft/client/entity/living/player/Inp
 	f	Lnet/minecraft/unmapped/C_9285671;	f_0868172	f_0868172	
 	f	Lnet/minecraft/unmapped/C_5722573;	f_6362094		networkHandler
 	f	Lnet/minecraft/unmapped/C_2854223;	f_2394748		stats
-	f	D	f_4183297		lastX
-	f	D	f_7345261		lastY
-	f	D	f_9293146		lastZ
-	f	F	f_1467598		lastYaw
-	f	F	f_7883703		lastPitch
-	f	Z	f_5994855		wasSneaking
-	f	Z	f_1796128		wasSprinting
+	f	D	f_4183297		serverX
+		c		The last position sent to the server.\nA new PlayerMoveC2SPacket.Position is sent when the current player position differs from the last position sent to the server by 0.03 blocks or more, or every 20 ticks.\n@see #sendMovementToServer()
+	f	D	f_7345261		serverY
+	f	D	f_9293146		serverZ
+	f	F	f_1467598		serverYaw
+		c		The last rotation sent to the server.\nA new PlayerMoveC2SPacket.Angles is sent when the current player rotation differs from the last rotation sent to the server.\n@see #sendMovementToServer
+	f	F	f_7883703		serverPitch
+	f	Z	f_5994855		serverSneaking
+		c		The last sneaking status sent to the server.\n@see #sendMovementToServer
+	f	Z	f_1796128		serverSprinting
+		c		The last sprinting status sent to the server.\nThis can easily desync with the serverside sprinting status.\n@see #sendMovementToServer
 	f	I	f_9228460		movementUpdateTimer
 	f	Z	f_8905330		healthInitialized
 	f	Ljava/lang/String;	f_6485835		serverBrand
@@ -70,7 +74,8 @@ c	net/minecraft/unmapped/C_1023567	net/minecraft/client/entity/living/player/Inp
 	m	(Lnet/minecraft/unmapped/C_0539808;)V	m_6537603		m_6537603
 		p	1			p_1
 	m	()V	m_7274048		m_7274048
-	m	()V	m_8690781		updateMovement
+	m	()V	m_8690781		sendMovementToServer
+		c		Sends updated position, rotation, sneaking, and sprinting status to the server.
 	m	(Z)Lnet/minecraft/unmapped/C_8300121;	m_0699542		m_0699542
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_8300121;)V	m_9669532		m_9669532
