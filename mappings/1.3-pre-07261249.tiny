@@ -2913,7 +2913,8 @@ c	net/minecraft/unmapped/C_0539808	net/minecraft/entity/Entity
 		p	1		x
 		p	3		y
 		p	5		z
-	m	(FF)V	m_8701474	updateSmoothCamera
+	m	(FF)V	m_8701474	updateLocalPlayerCamera
+		c	Called by @see GameRenderer#render(float, long) every frame when not spectating an entity.\nThis is only ever called on the local player entity.\nThis causes the local player entity's prevPitch/Yaw to always be the same as its pitch/yaw.
 		p	1		yaw
 		p	2		pitch
 	m	(FF)V	m_9903894	m_9903894
@@ -4580,7 +4581,7 @@ c	net/minecraft/unmapped/C_1023567	net/minecraft/client/entity/living/player/Inp
 	f	I	f_7935139	sprintingCooldown
 	f	F	f_6427248	easedYaw
 	f	F	f_0892713	easedPitch
-	f	F	f_4499763	lastEastedYaw
+	f	F	f_4499763	lastEasedYaw
 	f	F	f_9420838	lastEasedPitch
 	f	F	f_6607781	f_6607781
 	f	F	f_2462387	f_2462387
@@ -23358,7 +23359,8 @@ c	net/minecraft/unmapped/C_6607881	net/minecraft/entity/living/LivingEntity
 		p	1		jumping
 	m	()V	m_0095412	tickAi
 	m	()Z	m_6682221	aiEnabled
-	m	()Z	m_1451667	isServer
+	m	()Z	m_1451667	isLocallyControlled
+		c	@return Whether the entity is "locally controlled".\nA locally controlled entity will tick AI and movement.\nA non-locally controlled entity does not have collision and will not move.\nNo entities on the client are locally controlled, except for the local player entity.
 	m	()Z	m_6522268	isDead
 	m	()Z	m_0876818	shouldShowNameTag
 	m	()V	m_8252269	jump
@@ -33110,8 +33112,9 @@ c	net/minecraft/unmapped/C_9590849	net/minecraft/entity/living/player/PlayerEnti
 	f	I	f_0851860	xpLevel
 	f	I	f_3445670	xp
 	f	F	f_8990906	xpProgress
-	f	Lnet/minecraft/unmapped/C_2454309;	f_2926336	heldItem
+	f	Lnet/minecraft/unmapped/C_2454309;	f_2926336	itemInUse
 	f	I	f_2714698	itemUseTimer
+		c	The amount of ticks the current item being used has been in use for.
 	f	F	f_7146506	speed
 	f	F	f_4228554	flyingSpeed
 	f	Lnet/minecraft/unmapped/C_3422238;	f_5528391	fishingBobber
@@ -33121,10 +33124,10 @@ c	net/minecraft/unmapped/C_9590849	net/minecraft/entity/living/player/PlayerEnti
 	m	()V	m_1700770	m_1700770
 	m	()Lnet/minecraft/unmapped/C_2454309;	m_0276088	getItemInHand
 	m	()I	m_3098348	getItemUseTimer
-	m	()Z	m_2916573	isHoldingItem
-	m	()I	m_0647487	getHeldItemCooldown
-	m	()V	m_5896897	stopUsingHand
-	m	()V	m_4149634	emptyHand
+	m	()Z	m_2916573	isUsingItem
+	m	()I	m_0647487	getRemainingItemUseDuration
+	m	()V	m_5896897	stopUsingItem
+	m	()V	m_4149634	clearItemInUse
 	m	()Z	m_0876818	m_0876818
 	m	()V	m_7274048	m_7274048
 	m	(Lnet/minecraft/unmapped/C_2454309;I)V	m_2322744	onConsumeItem
