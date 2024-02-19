@@ -3,7 +3,7 @@ import sys
 import subprocess
 
 MAPPINGS_DIR = 'mappings'
-GRADLE_TASKS = ['clean', 'feather', 'build', 'javadoc', 'javadocJar', 'checkMappings', 'mapCalamusJar', 'mapNamedJar',
+GRADLE_TASKS = ['clean', 'enigma', 'feather', 'build', 'javadoc', 'javadocJar', 'checkMappings', 'mapCalamusJar', 'mapNamedJar',
                 'decompileCFR', 'decompileQuiltflower', 'decompileProcyon', 'publish', 'separateMappings',
                 'insertMappings', 'propagateMappingsDown', 'propagateMappingsUp', 'propagateMappings']
 GRADLEW = 'gradlew' if os.name == 'nt' else './gradlew'
@@ -126,13 +126,6 @@ def parse_minecraft_version(arg, possible_versions):
     versions = []
     if arg in possible_versions:
         versions.append(arg)
-    else:
-        client_arg = arg + '-client'
-        server_arg = arg + '-server'
-        if client_arg in possible_versions:
-            versions.append(client_arg)
-        if server_arg in possible_versions:
-            versions.append(server_arg)
     for version in versions:
         if version in UNAVAILABLE_VERSIONS:
             raise Exception('version ' + version + ' is unavailable at the moment!')
