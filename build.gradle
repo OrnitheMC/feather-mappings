@@ -65,7 +65,7 @@ buildscript {
 		classpath "net.ornithemc:tiny-remapper:0.8.4"
 		classpath "net.ornithemc:enigma-cli:1.2.7"
 		classpath "net.ornithemc:stitch:0.12.1"
-		classpath "net.ornithemc:mapping-utils:0.9.2"
+		classpath "net.ornithemc:mapping-utils:0.10.0"
 		classpath "io.github.gaming32:signature-changer:1.0.0-beta.1"
 		classpath "commons-io:commons-io:2.8.0"
 		classpath "org.codehaus.groovy:groovy-json:3.0.9"
@@ -174,7 +174,7 @@ def clientCalamusFile = new File(mappingsDir, "${minecraft_version}-calamus-gen$
 def serverCalamusFile = new File(mappingsDir, "${minecraft_version}-calamus-gen${intermediary_gen}-server.tiny")
 def mergedCalamusFile = new File(mappingsDir, "${minecraft_version}-calamus-gen${intermediary_gen}.tiny")
 def nestedClientCalamusFile = new File(processedMappingsDir, "${minecraft_version}-nested-calamus-gen${intermediary_gen}-client.tiny")
-def nestedCerverCalamusFile = new File(processedMappingsDir, "${minecraft_version}-nested-calamus-gen${intermediary_gen}-server.tiny")
+def nestedServerCalamusFile = new File(processedMappingsDir, "${minecraft_version}-nested-calamus-gen${intermediary_gen}-server.tiny")
 def nestedMergedCalamusFile = new File(processedMappingsDir, "${minecraft_version}-nested-calamus-gen${intermediary_gen}.tiny")
 def clientNestsFile = new File(nestsDir, "${minecraft_version}-client.nest")
 def serverNestsFile = new File(nestsDir, "${minecraft_version}-server.nest")
@@ -185,6 +185,9 @@ def calamusMergedNestsFile = new File(nestsDir, "${minecraft_version}-calamus-ge
 def clientSparrowFile = new File(sparrowDir, "${minecraft_version}-client.sigs")
 def serverSparrowFile = new File(sparrowDir, "${minecraft_version}-server.sigs")
 def mergedSparrowFile = new File(sparrowDir, "${minecraft_version}.sigs")
+def calamusClientSparrowFile = new File(nestsDir, "${minecraft_version}-calamus-gen-${intermediary_gen}-client.nest")
+def calamusServerSparrowFile = new File(nestsDir, "${minecraft_version}-calamus-gen-${intermediary_gen}-server.nest")
+def calamusMergedSparrowFile = new File(nestsDir, "${minecraft_version}-calamus-gen-${intermediary_gen}.nest")
 def libraries = new ArrayList<File>()
 def workingDir = new File(mappingsRunDir, "${minecraft_version}")
 
@@ -514,7 +517,34 @@ task mapNestsToIntermediary(dependsOn: [downloadNests, downloadIntermediary]) {
 	}
 }
 
-task downloadSparrow(dependsOn: downloadVersionDetails) {
+task applyNestsToIntermediary(dependsOn: mapNestsToIntermediary) {
+	group = enigmaGroup
+	
+	inputs.files downloadIntermediary.outputs.files.files
+	outputs.file(nestedMergedCalamusFile)
+	outputs.upToDateWhen {
+		return false
+	}
+
+	doLast {
+		if (nesting) {
+			logger.lifecycle(":applying nests to intermediary")
+
+			if (versionDetails.sharedMappings) {
+				MappingUtils.applyNests(Format.TINY_V1, mergedCalamusFile.toPath(), nestedMergedCalamusFile.toPath(), calamusMergedNestsFile.toPath())
+			} else {
+				if (versionDetails.client) {
+					MappingUtils.applyNests(Format.TINY_V1, clientCalamusFile.toPath(), nestedClientCalamusFile.toPath(), calamusClientNestsFile.toPath())
+				}
+				if (versionDetails.server) {
+					MappingUtils.applyNests(Format.TINY_V1, serverCalamusFile.toPath(), nestedServerCalamusFile.toPath(), calamusServerNestsFile.toPath())
+				}
+			}
+		}
+	}
+}
+
+task downloadSignatures(dependsOn: downloadVersionDetails) {
 	group = enigmaGroup
 
 	//Force the task to always run
@@ -552,7 +582,36 @@ task downloadSparrow(dependsOn: downloadVersionDetails) {
 	}
 }
 
-task processMcJars(dependsOn: [mapMcJarsToIntermediary, mapNestsToIntermediary, downloadSparrow]) {
+task mapSignaturesToIntermediary(dependsOn: [downloadSignatures, applyNestsToIntermediary]) {
+	group = enigmaGroup
+
+	//Force the task to always run
+	outputs.upToDateWhen { false }
+
+	doLast {
+		if (signaturePatching) {
+			logger.lifecycle(":mapping signatures to intermediary")
+
+			if (versionDetails.sharedMappings) {
+				MappingUtils.mapSignatures(mergedSparrowFile.toPath(), calamusMergedSparrowFile.toPath(), Format.TINY_V1, nestedMergedCalamusFile.toPath())
+			} else {
+				if (versionDetails.client) {
+					MappingUtils.mapSignatures(clientSparrowFile.toPath(), calamusClientSparrowFile.toPath(), Format.TINY_V1, nestedClientCalamusFile.toPath())
+				}
+				if (versionDetails.server) {
+					MappingUtils.mapSignatures(serverSparrowFile.toPath(), calamusServerSparrowFile.toPath(), Format.TINY_V1, nestedServerCalamusFile.toPath())
+				}
+				if (versionDetails.client && versionDetails.server) {
+					logger.lifecycle(":merging intermediary signatures")
+
+					MappingUtils.mergeSignatures(calamusClientSparrowFile.toPath(), calamusServerSparrowFile.toPath(), calamusMergedSparrowFile.toPath())
+				}
+			}
+		}
+	}
+}
+
+task processMcJars(dependsOn: [mapMcJarsToIntermediary, mapNestsToIntermediary, mapSignaturesToIntermediary]) {
 	group = enigmaGroup
 	
 	inputs.files mapMcJarsToIntermediary.outputs.files.files
@@ -602,15 +661,21 @@ task processMcJars(dependsOn: [mapMcJarsToIntermediary, mapNestsToIntermediary, 
 			clientOut = signaturePatchedClientJar
 			serverOut = signaturePatchedServerJar
 
-			if (versionDetails.client) {
-				dataFile = versionDetails.sharedMappings ? mergedSparrowFile : clientSparrowFile
-				java.nio.file.Files.copy(clientIn, clientOut)
-				ApplyAction.run(dataFile, List.of(clientOut))
-			}
-			if (versionDetails.server) {
-				dataFile = versionDetails.sharedMappings ? mergedSparrowFile : serverSparrowFile
-				java.nio.file.Files.copy(serverIn, serverOut)
-				ApplyAction.run(dataFile, List.of(serverOut))
+			if (versionDetails.client && versionDetails.server) {
+				dataFile = calamusMergedSparrowFile
+				java.nio.file.Files.copy(mergedIn, mergedOut)
+				ApplyAction.run(dataFile, List.of(mergedOut))
+			} else {
+				if (versionDetails.client) {
+					dataFile = versionDetails.sharedMappings ? calamusMergedSparrowFile : calamusClientSparrowFile
+					java.nio.file.Files.copy(clientIn, clientOut)
+					ApplyAction.run(dataFile, List.of(clientOut))
+				}
+				if (versionDetails.server) {
+					dataFile = versionDetails.sharedMappings ? calamusMergedSparrowFile : calamusServerSparrowFile
+					java.nio.file.Files.copy(serverIn, serverOut)
+					ApplyAction.run(dataFile, List.of(serverOut))
+				}
 			}
 		}
 
