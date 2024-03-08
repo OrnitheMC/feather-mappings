@@ -767,6 +767,21 @@ task separateMappings(dependsOn: patchNests) {
 	}
 }
 
+static def separateMappings(File mappingsDir, File workingMappings, String version_id, File calamusNestsFile, MappingValidator validator) {
+	VersionGraph graph = VersionGraph.of(Format.TINY_V2, mappingsDir.toPath())
+	Mappings mappings = MappingUtils.separateMappings(graph, version_id);
+
+	if (calamusNestsFile.exists()) {
+		Nests nests = Nests.empty()
+		NesterIo.read(nests, calamusNestsFile.toPath())
+
+		mappings = MappingUtils.applyNests(mappings, nests)
+	}
+
+	mappings.setValidator(validator)
+	Format.ENIGMA_DIR.writeMappings(workingMappings.toPath(), mappings)
+}
+
 static def insertMappings(version_id, mappingsDir, workingMappingsPath, nestsPath, dir, validator) {
 	VersionGraph graph = VersionGraph.of(Format.TINY_V2, mappingsDir);
 
@@ -798,6 +813,7 @@ task insertMappings(dependsOn: patchNests) {
 		logger.lifecycle(":saving mappings for ${version_id}")
 
 		insertMappings(version_id, mappingsDir.toPath(), workingMappings.toPath(), calamusNestsFile.toPath(), PropagationDirection.NONE, INSERT_DUMMY)
+		separateMappings(mappingsDir, workingMappings, version_id, calamusNestsFile, REMOVE_DUMMY)
 	}
 }
 
@@ -807,6 +823,7 @@ task propagateMappingsDown(dependsOn: patchNests) {
 		logger.lifecycle(":saving mappings for ${version_id}")
 
 		insertMappings(version_id, mappingsDir.toPath(), workingMappings.toPath(), calamusNestsFile.toPath(), PropagationDirection.DOWN, INSERT_DUMMY)
+		separateMappings(mappingsDir, workingMappings, version_id, calamusNestsFile, REMOVE_DUMMY)
 	}
 }
 
@@ -816,6 +833,7 @@ task propagateMappingsUp(dependsOn: patchNests) {
 		logger.lifecycle(":saving mappings for ${version_id}")
 
 		insertMappings(version_id, mappingsDir.toPath(), workingMappings.toPath(), calamusNestsFile.toPath(), PropagationDirection.UP, INSERT_DUMMY)
+		separateMappings(mappingsDir, workingMappings, version_id, calamusNestsFile, REMOVE_DUMMY)
 	}
 }
 
@@ -825,6 +843,7 @@ task propagateMappings(dependsOn: patchNests) {
 		logger.lifecycle(":saving mappings for ${version_id}")
 
 		insertMappings(version_id, mappingsDir.toPath(), workingMappings.toPath(), calamusNestsFile.toPath(), PropagationDirection.BOTH, INSERT_DUMMY)
+		separateMappings(mappingsDir, workingMappings, version_id, calamusNestsFile, REMOVE_DUMMY)
 	}
 }
 
