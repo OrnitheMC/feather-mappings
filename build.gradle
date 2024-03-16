@@ -62,10 +62,10 @@ buildscript {
 	}
 
 	dependencies {
-		classpath "net.ornithemc:tiny-remapper:0.8.4"
+		classpath "net.fabricmc:tiny-remapper:0.9.0"
 		classpath "net.ornithemc:enigma-cli:1.2.7"
-		classpath "net.ornithemc:stitch:0.12.1"
-		classpath "net.ornithemc:mapping-utils:0.10.0"
+		classpath "net.ornithemc:stitch:0.13.9"
+		classpath "net.ornithemc:mapping-utils:0.10.1"
 		classpath "io.github.gaming32:signature-changer:1.0.0-beta.1"
 		classpath "commons-io:commons-io:2.8.0"
 		classpath "org.codehaus.groovy:groovy-json:3.0.9"
@@ -185,9 +185,9 @@ def calamusMergedNestsFile = new File(nestsDir, "${minecraft_version}-calamus-ge
 def clientSparrowFile = new File(sparrowDir, "${minecraft_version}-client.sigs")
 def serverSparrowFile = new File(sparrowDir, "${minecraft_version}-server.sigs")
 def mergedSparrowFile = new File(sparrowDir, "${minecraft_version}.sigs")
-def calamusClientSparrowFile = new File(nestsDir, "${minecraft_version}-calamus-gen-${intermediary_gen}-client.nest")
-def calamusServerSparrowFile = new File(nestsDir, "${minecraft_version}-calamus-gen-${intermediary_gen}-server.nest")
-def calamusMergedSparrowFile = new File(nestsDir, "${minecraft_version}-calamus-gen-${intermediary_gen}.nest")
+def calamusClientSparrowFile = new File(sparrowDir, "${minecraft_version}-calamus-gen-${intermediary_gen}-client.sigs")
+def calamusServerSparrowFile = new File(sparrowDir, "${minecraft_version}-calamus-gen-${intermediary_gen}-server.sigs")
+def calamusMergedSparrowFile = new File(sparrowDir, "${minecraft_version}-calamus-gen-${intermediary_gen}.sigs")
 def libraries = new ArrayList<File>()
 def workingDir = new File(mappingsRunDir, "${minecraft_version}")
 
@@ -240,6 +240,7 @@ task downloadVersionInfo(dependsOn: downloadVersionsManifest) {
 	group = jarSetupGroup
 
 	outputs.files(versionInfoFile)
+	outputs.upToDateWhen { false }
 
 	doLast {
 		def manifestVersion = getManifestVersion(manifestFile, minecraft_version)
@@ -260,6 +261,7 @@ task downloadVersionDetails(dependsOn: downloadVersionsManifest) {
 	group = jarSetupGroup
 
 	outputs.files(versionDetailsFile)
+	outputs.upToDateWhen { false }
 
 	doLast {
 		def manifestVersion = getManifestVersion(manifestFile, minecraft_version)
@@ -296,12 +298,15 @@ task downloadMcLibs(dependsOn: downloadVersionInfo) {
 				return
 			}
 			def downloadUrl = artifact.url
+			def checksum = artifact.sha1
 			def libraryFile = new File(librariesDir, downloadUrl.substring(downloadUrl.lastIndexOf("/") + 1))
 
-			download {
-				src downloadUrl
-				dest libraryFile
-				overwrite false
+			if (!libraryFile.exists() || !validateChecksum(libraryFile, checksum)) {
+				download {
+					src downloadUrl
+					dest libraryFile
+					overwrite true
+				}
 			}
 
 			libraries.add(libraryFile);
@@ -353,9 +358,7 @@ task mergeMcJars(dependsOn: downloadMcJars) {
 
 	inputs.files downloadMcJars.outputs.files.files
 	outputs.file(mergedJar)
-	outputs.upToDateWhen {
-		return false
-	}
+	outputs.upToDateWhen { false }
 
 	doLast {
 		if (versionDetails.sharedMappings && versionDetails.client && versionDetails.server) {
@@ -394,21 +397,24 @@ task mapMcJarsToIntermediary(dependsOn: [downloadMcLibs, downloadIntermediary, m
 	outputs.upToDateWhen { false }
 
 	doLast {
-		logger.lifecycle(":mapping minecraft to calamus")
+		logger.lifecycle(":mapping minecraft to intermediary")
 
-		if (versionDetails.sharedMappings && versionDetails.client && versionDetails.server) {
-			mapJar(mergedJar, calamusMergedJar, mergedCalamusFile, libraries, "official", "intermediary")
+		boolean client = versionDetails.client
+		boolean server = versionDetails.server
+
+		if (versionDetails.sharedMappings) {
+			def jarIn = (client && server) ? mergedJar : (client ? clientJar : serverJar)
+			def jarOut = (client && server) ? calamusMergedJar : (client ? calamusClientJar : calamusServerJar)
+			
+			mapJar(jarIn, jarOut, mergedCalamusFile, libraries, "official", "intermediary")
 		} else {
-			def clientMappings = versionDetails.sharedMappings ? mergedCalamusFile : clientCalamusFile
-			def serverMappings = versionDetails.sharedMappings ? mergedCalamusFile : serverCalamusFile
-
-			if (versionDetails.client) {
-				mapJar(clientJar, calamusClientJar, clientMappings, libraries, "official", "intermediary")
+			if (client) {
+				mapJar(clientJar, calamusClientJar, clientCalamusFile, libraries, "official", "intermediary")
 			}
-			if (versionDetails.server) {
-				mapJar(serverJar, calamusServerJar, serverMappings, libraries, "official", "intermediary")
+			if (server) {
+				mapJar(serverJar, calamusServerJar, serverCalamusFile, libraries, "official", "intermediary")
 			}
-			if (versionDetails.client && versionDetails.server) {
+			if (client && server) {
 				// only reached when sharedMappings is false
 				logger.lifecycle(":merging intermediary jars")
 
@@ -522,9 +528,7 @@ task applyNestsToIntermediary(dependsOn: mapNestsToIntermediary) {
 	
 	inputs.files downloadIntermediary.outputs.files.files
 	outputs.file(nestedMergedCalamusFile)
-	outputs.upToDateWhen {
-		return false
-	}
+	outputs.upToDateWhen { false }
 
 	doLast {
 		if (nesting) {
@@ -616,9 +620,7 @@ task processMcJars(dependsOn: [mapMcJarsToIntermediary, mapNestsToIntermediary, 
 	
 	inputs.files mapMcJarsToIntermediary.outputs.files.files
 	outputs.file(processedMergedJar)
-	outputs.upToDateWhen {
-		return false
-	}
+	outputs.upToDateWhen { false }
 
 	doLast {
 		def clientIn
@@ -658,23 +660,25 @@ task processMcJars(dependsOn: [mapMcJarsToIntermediary, mapNestsToIntermediary, 
 
 			clientIn = clientOut
 			serverIn = serverOut
+			mergedIn = mergedOut
 			clientOut = signaturePatchedClientJar
 			serverOut = signaturePatchedServerJar
+			mergedOut = signaturePatchedMergedJar
 
 			if (versionDetails.client && versionDetails.server) {
 				dataFile = calamusMergedSparrowFile
-				java.nio.file.Files.copy(mergedIn, mergedOut)
-				ApplyAction.run(dataFile, List.of(mergedOut))
+				java.nio.file.Files.copy(mergedIn.toPath(), mergedOut.toPath(), StandardCopyOption.REPLACE_EXISTING)
+				ApplyAction.run(dataFile.toPath(), List.of(mergedOut.toPath()))
 			} else {
 				if (versionDetails.client) {
 					dataFile = versionDetails.sharedMappings ? calamusMergedSparrowFile : calamusClientSparrowFile
-					java.nio.file.Files.copy(clientIn, clientOut)
-					ApplyAction.run(dataFile, List.of(clientOut))
+					java.nio.file.Files.copy(clientIn.toPath(), clientOut.toPath(), StandardCopyOption.REPLACE_EXISTING)
+					ApplyAction.run(dataFile.toPath(), List.of(clientOut.toPath()))
 				}
 				if (versionDetails.server) {
 					dataFile = versionDetails.sharedMappings ? calamusMergedSparrowFile : calamusServerSparrowFile
-					java.nio.file.Files.copy(serverIn, serverOut)
-					ApplyAction.run(dataFile, List.of(serverOut))
+					java.nio.file.Files.copy(serverIn.toPath(), serverOut.toPath(), StandardCopyOption.REPLACE_EXISTING)
+					ApplyAction.run(dataFile.toPath(), List.of(serverOut.toPath()))
 				}
 			}
 		}
@@ -696,111 +700,25 @@ task separateMappings(dependsOn: mapNestsToIntermediary) {
 	group = enigmaGroup
 
 	outputs.dirs(workingDir)
-	//Force the task to always run
 	outputs.upToDateWhen { false }
 
 	doLast {
 		logger.lifecycle(":separating mappings for ${minecraft_version}")
 
-		VersionGraph graph = VersionGraph.of(Format.TINY_V2, mappingsGraphDir.toPath())
-		Mappings mappings = MappingUtils.separateMappings(graph, minecraft_version)
-
-		if (nesting) {
-			Nests nests = Nests.empty()
-
-			if (versionDetails.sharedMappings) {
-				NesterIo.read(nests, calamusMergedNestsFile.toPath())
-			} else {
-				if (versionDetails.client) {
-					NesterIo.read(nests, calamusClientNestsFile.toPath())
-				}
-				if (versionDetails.server) {
-					NesterIo.read(nests, calamusServerNestsFile.toPath())
-				}
-			}
-
-			mappings = MappingUtils.applyNests(mappings, nests)
-		}
-
-		mappings.setValidator(new MappingValidator() {
-
-			@Override
-			public boolean validate(ClassMapping c) {
-				if (!MappingsDiff.safeIsDiff(ClassMapping.getSimplified(c.src()), c.get()) && (c.get().startsWith("C_") || c.get().startsWith("net/minecraft/unmapped/C_"))) {
-					c.set("");
-					return !c.getJavadoc().isEmpty() || c.hasChildren();
-				}
-
-				return true;
-			}
-
-			@Override
-			public boolean validate(FieldMapping f) {
-				if (!MappingsDiff.safeIsDiff(f.src(), f.get()) && f.get().startsWith("f_")) {
-					f.set("");
-					return !f.getJavadoc().isEmpty();
-				}
-
-				return true;
-			}
-
-			@Override
-			public boolean validate(MethodMapping m) {
-				if (!MappingsDiff.safeIsDiff(m.src(), m.get()) && (m.get().startsWith("m_") || m.get().equals("<init>") || m.get().equals("<clinit>"))) {
-					m.set("");
-					return !m.getJavadoc().isEmpty() || m.hasChildren();
-				}
-
-				return true;
-			}
-
-			@Override
-			public boolean validate(ParameterMapping p) {
-				if (p.get().startsWith("p_")) {
-					p.set("");
-					return !p.getJavadoc().isEmpty();
-				}
-
-				return true;
-			}
-		})
-
-		Format.ENIGMA_DIR.writeMappings(workingDir.toPath(), mappings)
-	}
-}
-
-task enigma(dependsOn: [processMcJars, separateMappings]) {
-	group = enigmaGroup
-
-	doLast {
-		def jar = null
-
-		if (versionDetails.client && versionDetails.server) {
-			jar = processedMergedJar
+		def nests
+		
+		if (versionDetails.sharedMappings) {
+			nests = calamusMergedNestsFile
 		} else {
 			if (versionDetails.client) {
-				jar = processedClientJar
+				nests = calamusClientNestsFile
 			}
 			if (versionDetails.server) {
-				jar = processedServerJar
+				nests = calamusServerNestsFile
 			}
 		}
 
-		ant.setLifecycleLogLevel "WARN"
-		ant.java(
-			classname: 'cuchaz.enigma.gui.Main',
-			classpath: configurations.enigmaRuntime.asPath,
-			fork: true,
-			spawn: true
-		) {
-			jvmarg(value: "-Xmx2048m")
-			arg(value: '-jar')
-			arg(value: jar.toPath())
-			arg(value: '-mappings')
-			arg(value: workingDir.toPath())
-			arg(value: '-profile')
-			arg(value: 'enigma_profile.json')
-		}
+		separateMappings(minecraft_version, mappingsGraphDir, workingDir, nests)
 	}
 }
 
@@ -810,7 +728,20 @@ task insertMappings(dependsOn: mapNestsToIntermediary) {
 	doLast {
 		logger.lifecycle(":saving mappings for ${minecraft_version}")
 
-		insertMappings(minecraft_version, mappingsGraphDir, workingDir, calamusMergedNestsFile, PropagationDirection.NONE)
+		def nests
+		
+		if (versionDetails.sharedMappings) {
+			nests = calamusMergedNestsFile
+		} else {
+			if (versionDetails.client) {
+				nests = calamusClientNestsFile
+			}
+			if (versionDetails.server) {
+				nests = calamusServerNestsFile
+			}
+		}
+
+		insertMappings(minecraft_version, mappingsGraphDir, workingDir, nests, PropagationDirection.NONE)
 	}
 }
 
@@ -820,7 +751,20 @@ task propagateMappingsDown(dependsOn: mapNestsToIntermediary) {
 	doLast {
 		logger.lifecycle(":saving mappings for ${minecraft_version}")
 
-		insertMappings(minecraft_version, mappingsGraphDir, workingDir, calamusMergedNestsFile, PropagationDirection.DOWN)
+		def nests
+		
+		if (versionDetails.sharedMappings) {
+			nests = calamusMergedNestsFile
+		} else {
+			if (versionDetails.client) {
+				nests = calamusClientNestsFile
+			}
+			if (versionDetails.server) {
+				nests = calamusServerNestsFile
+			}
+		}
+
+		insertMappings(minecraft_version, mappingsGraphDir, workingDir, nests, PropagationDirection.DOWN)
 	}
 }
 
@@ -830,7 +774,20 @@ task propagateMappingsUp(dependsOn: mapNestsToIntermediary) {
 	doLast {
 		logger.lifecycle(":saving mappings for ${minecraft_version}")
 
-		insertMappings(minecraft_version, mappingsGraphDir, workingDir, calamusMergedNestsFile, PropagationDirection.UP)
+		def nests
+		
+		if (versionDetails.sharedMappings) {
+			nests = calamusMergedNestsFile
+		} else {
+			if (versionDetails.client) {
+				nests = calamusClientNestsFile
+			}
+			if (versionDetails.server) {
+				nests = calamusServerNestsFile
+			}
+		}
+
+		insertMappings(minecraft_version, mappingsGraphDir, workingDir, nests, PropagationDirection.UP)
 	}
 }
 
@@ -840,14 +797,84 @@ task propagateMappings(dependsOn: mapNestsToIntermediary) {
 	doLast {
 		logger.lifecycle(":saving mappings for ${minecraft_version}")
 
-		insertMappings(minecraft_version, mappingsGraphDir, workingDir, calamusMergedNestsFile, PropagationDirection.BOTH)
+		def nests
+		
+		if (versionDetails.sharedMappings) {
+			nests = calamusMergedNestsFile
+		} else {
+			if (versionDetails.client) {
+				nests = calamusClientNestsFile
+			}
+			if (versionDetails.server) {
+				nests = calamusServerNestsFile
+			}
+		}
+
+		insertMappings(minecraft_version, mappingsGraphDir, workingDir, nests, PropagationDirection.BOTH)
 	}
 }
 
-static void insertMappings(String version_id, File mappingsGraphDir, File workingDir, File nestsFile, PropagationDirection dir) {
+void separateMappings(String minecraft_version, File mappingsGraphDir, File workingDir, File nestsFile) {
+	VersionGraph graph = VersionGraph.of(Format.TINY_V2, mappingsGraphDir.toPath())
+	Mappings mappings = MappingUtils.separateMappings(graph, minecraft_version)
+
+	if (nestsFile.exists()) {
+		Nests nests = Nests.empty()
+		NesterIo.read(nests, nestsFile.toPath())
+
+		mappings = MappingUtils.applyNests(mappings, nests)
+	}
+
+	mappings.setValidator(new MappingValidator() {
+
+		@Override
+		public boolean validate(ClassMapping c) {
+			if (!MappingsDiff.safeIsDiff(ClassMapping.getSimplified(c.src()), c.get()) && (c.get().startsWith("C_") || c.get().startsWith("net/minecraft/unmapped/C_"))) {
+				c.set("");
+				return !c.getJavadoc().isEmpty() || c.hasChildren();
+			}
+
+			return true;
+		}
+
+		@Override
+		public boolean validate(FieldMapping f) {
+			if (!MappingsDiff.safeIsDiff(f.src(), f.get()) && f.get().startsWith("f_")) {
+				f.set("");
+				return !f.getJavadoc().isEmpty();
+			}
+
+			return true;
+		}
+
+		@Override
+		public boolean validate(MethodMapping m) {
+			if (!MappingsDiff.safeIsDiff(m.src(), m.get()) && (m.get().startsWith("m_") || m.get().equals("<init>") || m.get().equals("<clinit>"))) {
+				m.set("");
+				return !m.getJavadoc().isEmpty() || m.hasChildren();
+			}
+
+			return true;
+		}
+
+		@Override
+		public boolean validate(ParameterMapping p) {
+			if (p.get().startsWith("p_")) {
+				p.set("");
+				return !p.getJavadoc().isEmpty();
+			}
+
+			return true;
+		}
+	})
+
+	Format.ENIGMA_DIR.writeMappings(workingDir.toPath(), mappings)
+}
+
+void insertMappings(String minecraft_version, File mappingsGraphDir, File workingDir, File nestsFile, PropagationDirection dir) {
 	VersionGraph graph = VersionGraph.of(Format.TINY_V2, mappingsGraphDir.toPath());
 
-	Mappings separatedMappings = MappingUtils.separateMappings(graph, version_id);
+	Mappings separatedMappings = MappingUtils.separateMappings(graph, minecraft_version);
 	Mappings workingMappings = Format.ENIGMA_DIR.readMappings(workingDir.toPath());
 	// enigma format does not have namespace info...
 	workingMappings.setSrcNamespace(separatedMappings.getSrcNamespace())
@@ -909,9 +936,44 @@ static void insertMappings(String version_id, File mappingsGraphDir, File workin
 	});
 
 	PropagationOptions options = new PropagationOptions.Builder().setPropagationDirection(dir).lenient().build();
-	MappingUtils.insertMappings(options, graph, changes, version_id);
+	MappingUtils.insertMappings(options, graph, changes, minecraft_version);
 
 	delete(workingDir)
+}
+
+task enigma(dependsOn: [processMcJars, separateMappings]) {
+	group = enigmaGroup
+
+	doLast {
+		def jar = null
+
+		if (versionDetails.client && versionDetails.server) {
+			jar = processedMergedJar
+		} else {
+			if (versionDetails.client) {
+				jar = processedClientJar
+			}
+			if (versionDetails.server) {
+				jar = processedServerJar
+			}
+		}
+
+		ant.setLifecycleLogLevel "WARN"
+		ant.java(
+			classname: 'cuchaz.enigma.gui.Main',
+			classpath: configurations.enigmaRuntime.asPath,
+			fork: true,
+			spawn: true
+		) {
+			jvmarg(value: "-Xmx2048m")
+			arg(value: '-jar')
+			arg(value: jar.toPath())
+			arg(value: '-mappings')
+			arg(value: workingDir.toPath())
+			arg(value: '-profile')
+			arg(value: 'enigma_profile.json')
+		}
+	}
 }
 
 static void generateDummyMappings(File jar, File map) {
@@ -930,7 +992,6 @@ task resetGraph(dependsOn: mapMcJarsToIntermediary) {
 	group = enigmaGroup
 
 	outputs.dir(mappingsGraphDir)
-	//Force the task to always run
 	outputs.upToDateWhen { false }
 
 	doLast {
@@ -964,7 +1025,6 @@ task extendGraph(dependsOn: mapMcJarsToIntermediary) {
 	group = enigmaGroup
 
 	outputs.dir(mappingsGraphDir)
-	//Force the task to always run
 	outputs.upToDateWhen { false }
 
 	doLast {
