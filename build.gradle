@@ -65,7 +65,7 @@ buildscript {
 		classpath "net.fabricmc:tiny-remapper:0.9.0"
 		classpath "net.ornithemc:enigma-cli:1.2.7"
 		classpath "net.ornithemc:stitch:0.13.9"
-		classpath "net.ornithemc:mapping-utils:0.10.1"
+		classpath "net.ornithemc:mapping-utils:0.10.2"
 		classpath "io.github.gaming32:signature-changer:1.0.0-beta.1"
 		classpath "commons-io:commons-io:2.8.0"
 		classpath "org.codehaus.groovy:groovy-json:3.0.9"
@@ -597,13 +597,13 @@ task mapSignaturesToIntermediary(dependsOn: [downloadSignatures, applyNestsToInt
 			logger.lifecycle(":mapping signatures to intermediary")
 
 			if (versionDetails.sharedMappings) {
-				MappingUtils.mapSignatures(mergedSparrowFile.toPath(), calamusMergedSparrowFile.toPath(), Format.TINY_V1, nestedMergedCalamusFile.toPath())
+				MappingUtils.mapSignatures(mergedSparrowFile.toPath(), calamusMergedSparrowFile.toPath(), Format.TINY_V1, nesting ? nestedMergedCalamusFile.toPath() : mergedCalamusFile.toPath())
 			} else {
 				if (versionDetails.client) {
-					MappingUtils.mapSignatures(clientSparrowFile.toPath(), calamusClientSparrowFile.toPath(), Format.TINY_V1, nestedClientCalamusFile.toPath())
+					MappingUtils.mapSignatures(clientSparrowFile.toPath(), calamusClientSparrowFile.toPath(), Format.TINY_V1, nesting ? nestedClientCalamusFile.toPath() : clientCalamusFile.toPath())
 				}
 				if (versionDetails.server) {
-					MappingUtils.mapSignatures(serverSparrowFile.toPath(), calamusServerSparrowFile.toPath(), Format.TINY_V1, nestedServerCalamusFile.toPath())
+					MappingUtils.mapSignatures(serverSparrowFile.toPath(), calamusServerSparrowFile.toPath(), Format.TINY_V1, nesting ? nestedServerCalamusFile.toPath() : serverCalamusFile.toPath())
 				}
 				if (versionDetails.client && versionDetails.server) {
 					logger.lifecycle(":merging intermediary signatures")
