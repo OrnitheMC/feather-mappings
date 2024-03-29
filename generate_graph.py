@@ -2,45 +2,139 @@ import os
 import os.path
 import subprocess
 
-ROOT = '1.3-pre-07261249'
+ROOT = 'b1.0'
 VERSIONS= [
 [
 ROOT,
-'12w30e', '12w30d', '12w30c', '12w30b', '12w30a',
-'12w27a',
-'12w26a',
-'12w25a',
-'12w24a',
-'12w23b', '12w23a',
-'12w22a',
-'12w21b', '12w21a',
-'12w19a',
-'12w18a',
-'12w17a',
-'12w16a',
-'12w15a'
+'b1.0_01',
+'b1.0.2'
 ],
 [
-'12w15a',
-'1.2.5',
-'1.2.4',
-'1.2.3',
-'1.2.2',
-'1.2.1',
-'1.2',
-'12w08a',
-'12w07b','12w07a',
-'12w06a',
-'12w05b','12w05a-1442',
-'12w04a',
-'12w03a'
+'b1.0.2:b1.0_01',
+'b1.1-1245',
+'b1.1-1255',
+'b1.1-1255:b1.1-1245',
+'b1.1_01',
+'b1.1_02'
 ],
 [
-'12w03a',
+'b1.1_02',
+'b1.2',
+'b1.2_01',
+'b1.2_02'
+],
+[
+'b1.2_02',
+'b1.3-1750',
+'b1.3_01'
+],
+[
+'b1.2_01',
+'b1.3-1731'
+],
+[
+'b1.2_02:b1.2_01',
+'b1.4-1507',
+'b1.4-1634',
+'b1.4-1634:b1.4-1507',
+'b1.4_01'
+],
+[
+'b1.4_01',
+'b1.5',
+'b1.5_01',
+'b1.5_02'
+],
+[
+'b1.5_02',
+'b1.6-pre-trailer',
+'b1.6-pre-trailer:b1.5_01',
+'b1.6-tb3',
+'b1.6',
+'b1.6.1',
+'b1.6.2',
+'b1.6.3',
+'b1.6.4',
+'b1.6.5',
+'b1.6.6'
+],
+[
+'b1.6.6',
+'b1.7',
+'b1.7_01',
+'b1.7.2',
+'b1.7.3'
+],
+[
+'b1.7.3',
+'b1.8-pre1-201109081459',
+'b1.8-pre1-201109081459:b1.7.3',
+'b1.8-pre1-201109091357',
+'b1.8-pre2',
+'b1.8',
+'b1.8.1'
+],
+[
+'b1.8.1',
+'b1.9-pre1',
+'b1.9-pre2',
+'b1.9-pre3-201110061350',
+'b1.9-pre3-201110061402',
+'b1.9-pre3-201110061402:b1.9-pre3-201110061350',
+'b1.9-pre4-201110131434',
+'b1.9-pre4-201110131440',
+'b1.9-pre4-201110131440:b1.9-pre4-201110131434',
+'b1.9-pre5',
+'b1.9-pre6'
+],
+[
+'b1.9-pre6',
+'1.0.0-rc1',
+'1.0.0-rc1:b1.9-pre6',
+'1.0.0-rc2-3',
+'1.0.0',
+'1.0.1'
+],
+[
+'1.0.1:1.0.0',
+'11w47a',
+'11w48a',
+'11w49a',
+'11w50a',
+'12w01a',
 '1.1'
 ],
 [
-ROOT,
+'1.1',
+'12w03a',
+'12w04a',
+'12w05a-1442','12w05b',
+'12w06a',
+'12w07a','12w07b',
+'12w08a',
+'1.2',
+'1.2.1',
+'1.2.2',
+'1.2.3',
+'1.2.4',
+'1.2.5',
+],
+[
+'1.2.5',
+'12w15a',
+'12w16a',
+'12w17a',
+'12w18a',
+'12w19a',
+'12w21a','12w21b',
+'12w22a',
+'12w23a','12w23b',
+'12w24a',
+'12w25a',
+'12w26a',
+'12w27a',
+'12w30a','12w30b','12w30c','12w30d','12w30e',
+'1.3-pre-07261249',
 '1.3.1',
 '1.3.2'
 ],
@@ -326,10 +420,22 @@ def main():
 	
 	for versions in VERSIONS:
 		for i in range(1, len(versions)):
-			os.environ['FROM_MC_VERSION'] = versions[i - 1]
-			os.environ['MC_VERSION'] = versions[i]
+			frm = versions[i - 1]
+			to = versions[i]
 			
-			subprocess.run("./gradlew extendGraph --stacktrace", shell = True, check = True)
+			if ':' not in to:
+				if ':' in frm:
+					parts = frm.split(':', 2)
+					
+					os.environ['FROM_MC_VERSION'] = parts[0]
+					os.environ['FROM_FROM_MC_VERSION'] = parts[1]
+				else:
+					os.environ['FROM_MC_VERSION'] = frm
+					os.environ.pop('FROM_FROM_MC_VERSION', None)
+				
+				os.environ['MC_VERSION'] = to
+			
+				subprocess.run("./gradlew extendGraph --stacktrace", shell = True, check = True)
 
 if __name__ == '__main__':
 	main()
