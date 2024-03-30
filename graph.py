@@ -6,6 +6,140 @@ ROOT = 'b1.0'
 VERSIONS= [
 [
 ROOT,
+'a1.2.6',
+'a1.2.5',
+'a1.2.4_01',
+'a1.2.3_05','a1.2.3_04','a1.2.3_02','a1.2.3_01-0958','a1.2.3',
+'a1.2.2-1938','a1.2.2-1624',
+'a1.2.1_01',
+'a1.2.0_02','a1.2.0_01','a1.2.0',
+'a1.1.2_01','a1.1.2',
+'a1.1.1',
+'a1.1.0-131933',
+'a1.0.17_04','a1.0.17_03','a1.0.17_02',
+'a1.0.16_02','a1.0.16_01','a1.0.16',
+'a1.0.15',
+'a1.0.14-1659',
+'a1.0.13_01-1444','a1.0.13',
+'a1.0.12',
+'a1.0.11',
+'a1.0.10',
+'a1.0.9',
+'a1.0.8_01',
+'a1.0.7',
+'a1.0.6_03','a1.0.6_01','a1.0.6',
+'a1.0.5_01','a1.0.5-2149',
+'a1.0.4',
+'a1.0.3',
+'a1.0.2_02','a1.0.2_01',
+'a1.0.1_01'
+],
+[
+'a1.0.1_01',
+'inf-20100630-1835',
+'inf-20100630-1340',
+'inf-20100629',
+'inf-20100627',
+'inf-20100625-1917',
+'inf-20100625-0922',
+'inf-20100624',
+'inf-20100618',
+'inf-20100617-1531',
+'inf-20100617-1205',
+'inf-20100616',
+'inf-20100615',
+'inf-20100611',
+'inf-20100608',
+'inf-20100607',
+'inf-20100420',
+'inf-20100415',
+'inf-20100414',
+'inf-20100413',
+'inf-20100330-1611',
+'inf-20100327',
+'inf-20100325-1640',
+'inf-20100321-1857',
+'inf-20100320',
+'inf-20100316',
+'inf-20100313',
+'inf-20100227-1433'
+],
+[
+'inf-20100227-1433',
+'in-20100223',
+'in-20100219',
+'in-20100218',
+'in-20100214',
+'in-20100213',
+'in-20100212-1622',
+'in-20100212-1210',
+'in-20100207-1703',
+'in-20100207-1101',
+'in-20100206-2103',
+'in-20100202-2330',
+'in-20100201-2227',
+'in-20100201-0025',
+'in-20100131-2244',
+'in-20100130',
+'in-20100129-1452',
+'in-20100128-2304',
+'in-20100125',
+'in-20100124-2310',
+'in-20100110',
+'in-20100105',
+'in-20091231-2257',
+'in-20091223-1459'
+],
+[
+'in-20091223-1459',
+'c0.30-c-renew',
+'c0.30-c',
+'c0.30-s',
+'c0.29_02',
+'c0.29_01',
+'c0.28_01',
+'c0.27_st',
+'c0.25_05_st',
+'c0.24_st_03',
+'c0.0.23a_01',
+'c0.0.22a_05',
+'c0.0.21a',
+'c0.0.20a_01',
+'c0.0.19a_06-0137',
+'c0.0.18a_02',
+'c0.0.17a',
+'c0.0.16a_02',
+'c0.0.14a_08',
+'c0.0.13a_03-launcher',
+'c0.0.13a-launcher',
+'c0.0.12a_03',
+'c0.0.11a-launcher'
+],
+[
+'c0.0.11a-launcher',
+'rd-161348-launcher',
+'rd-160052-launcher',
+'rd-132328-launcher',
+'rd-132211-launcher'
+],
+[
+ROOT,
+'server-a0.2.8',
+'server-a0.2.7',
+'server-a0.2.6_02','server-a0.2.6_01','server-a0.2.6',
+'server-a0.2.5_02','server-a0.2.5_01','server-a0.2.5-1004',
+'server-a0.2.4',
+'server-a0.2.3',
+'server-a0.2.2_01','server-a0.2.2',
+'server-a0.2.1',
+'server-a0.2.0_01','server-a0.2.0',
+'server-a0.1.4',
+'server-a0.1.3',
+'server-a0.1.2_01',
+'server-a0.1.0'
+],
+[
+ROOT,
 'b1.0_01',
 'b1.0.2'
 ],
@@ -415,10 +549,45 @@ ROOT,
 ]
 
 def main():
-	os.environ['MC_VERSION'] = ROOT
+	args = sys.argv
+	
+	if len(args) == 0:
+		raise Exception('no command given!')
+	
+	command = args[0]
+	
+	if command == 'generate':
+		if len(args) == 1:
+			generate(ROOT, VERSIONS)
+		else:
+			root = args[1]
+			versions = []
+			for i in range(2, len(args)):
+				versions.append(args[i])
+			
+			generate(root, versions)
+	elif command == 'extend':
+		if len(args) == 3:
+			frm = args[1]
+			to = args[2]
+			
+			extend(None, frm, to)
+		elif len(args) == 4:
+			frm_frm = args[1]
+			frm = args[2]
+			to = args[3]
+			
+			extend(frm_frm, frm, to)
+		else:
+			raise Exception('too many arguments for extend command')
+	else:
+		raise Exception('unknown command ' + command)
+
+def generate(root, mc_versions):
+	os.environ['MC_VERSION'] = root
 	subprocess.run("./gradlew resetGraph --stacktrace", shell = True, check = True)
 	
-	for versions in VERSIONS:
+	for versions in mc_versions:
 		for i in range(1, len(versions)):
 			frm = versions[i - 1]
 			to = versions[i]
@@ -436,6 +605,14 @@ def main():
 				os.environ['MC_VERSION'] = to
 			
 				subprocess.run("./gradlew extendGraph --stacktrace", shell = True, check = True)
+
+def extend(frm_frm, frm, to):
+	if frm_frm is not None:
+		os.environ['FROM_FROM_MC_VERSION'] = frm_frm
+	os.environ['FROM_MC_VERSION'] = frm
+	os.environ['MC_VERSION'] = to
+	
+	subprocess.run("./gradlew extendGraph --stacktrace", shell = True, check = True)
 
 if __name__ == '__main__':
 	main()
