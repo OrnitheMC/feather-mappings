@@ -12,13 +12,12 @@ GRADLEW = 'gradlew' if os.name == 'nt' else './gradlew'
 UNAVAILABLE_VERSIONS = []
 # shortcuts for versions with ugly ids
 VERSION_SHORTCUTS = {
-    'a1.0.5': 'a1.0.5-2149-client',
-    'a1.0.13_01': 'a1.0.13_01-1444-client',
-    'a1.0.14': 'a1.0.14-1659-client',
-    'a1.1.0': 'a1.1.0-131933-client',
-    'a1.2.3_01': 'a1.2.3_01-0958-client',
-    'a0.2.5-server': 'server-a0.2.5-1004-server',
-    'server-a0.2.5': 'server-a0.2.5-1004-server',
+    'a1.0.5': 'a1.0.5-2149',
+    'a1.0.13_01': 'a1.0.13_01-1444',
+    'a1.0.14': 'a1.0.14-1659',
+    'a1.1.0': 'a1.1.0-131933',
+    'a1.2.3_01': 'a1.2.3_01-0958',
+    'server-a0.2.5': 'server-a0.2.5-1004',
     'b1.1': 'b1.1-1245',
     'b1.1-client': 'b1.1-1255',
     'b1.3-client': 'b1.3-1750-client',
