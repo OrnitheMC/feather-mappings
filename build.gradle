@@ -165,7 +165,7 @@ def sparrowDir = new File(buildCacheDir, "sparrow")
 // project dirs
 def mappingsGraphDir = file("mappings");
 def mappingsRunDir = file("run")
-def mappingsBuildDir = new File(".gradle/tmp")
+def mappingsBuildDir = file(".gradle/tmp")
 
 def minecraft_version = ENV.MC_VERSION
 def from_minecraft_version = ENV.FROM_MC_VERSION
@@ -1197,10 +1197,12 @@ task checkMappings(dependsOn: [mapMcJarsToIntermediary, prepareBuild]) {
 		def jar = pickSide(versionDetails, calamusMergedJar, calamusClientJar, calamusServerJar)
 
 		try {
-			new CheckMappingsCommand().run([
+			String[] args = [
 				jar.getAbsolutePath(),
 				tiny.getAbsolutePath()
-			])
+			]
+
+			new CheckMappingsCommand().run(args)
 		} catch (IllegalStateException e) {
 		}
 	}
