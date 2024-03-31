@@ -1,5 +1,5 @@
 import os
-import os.path
+import sys
 import subprocess
 
 ROOT = 'b1.0'
@@ -554,28 +554,28 @@ def main():
 	if len(args) == 0:
 		raise Exception('no command given!')
 	
-	command = args[0]
+	command = args[1]
 	
 	if command == 'generate':
-		if len(args) == 1:
+		if len(args) == 2:
 			generate(ROOT, VERSIONS)
 		else:
-			root = args[1]
+			root = args[2]
 			versions = []
-			for i in range(2, len(args)):
+			for i in range(3, len(args)):
 				versions.append(args[i])
 			
 			generate(root, versions)
 	elif command == 'extend':
-		if len(args) == 3:
-			frm = args[1]
-			to = args[2]
-			
-			extend(None, frm, to)
-		elif len(args) == 4:
-			frm_frm = args[1]
+		if len(args) == 4:
 			frm = args[2]
 			to = args[3]
+			
+			extend(None, frm, to)
+		elif len(args) == 5:
+			frm_frm = args[2]
+			frm = args[3]
+			to = args[4]
 			
 			extend(frm_frm, frm, to)
 		else:
