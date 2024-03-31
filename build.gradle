@@ -1241,11 +1241,9 @@ task buildTiny(dependsOn: [downloadIntermediary, completeMappings]) {
 			mappings.accept(writer)
 		}
 
-		def calamusFile = pickSide(versionDetails, mergedCalamusFile, clientCalamusFile, serverCalamusFile)
-
 		if (versionDetails.sharedMappings) {
 			def visitor = new MappingSourceNsSwitch(mappings, "intermediary")
-			MappingReader.read(calamusFile.toPath(), visitor)
+			MappingReader.read(mergedCalamusFile.toPath(), visitor)
 
 			try (MappingWriter writer = MappingWriter.create(mergedTinyV1.toPath(), MappingFormat.TINY_FILE)) {
 				mappings.accept(new MappingSourceNsSwitch(new MappingDstNsReorder(writer, "intermediary", "named"), "official"))
@@ -1254,7 +1252,7 @@ task buildTiny(dependsOn: [downloadIntermediary, completeMappings]) {
 				mappings.accept(new MappingSourceNsSwitch(new MappingDstNsReorder(writer, "intermediary", "named"), "official"))
 			}
 		} else {
-			MappingReader.read(calamusFile.toPath(), mappings)
+			MappingReader.read(mergedCalamusFile.toPath(), mappings)
 
 			try (MappingWriter writer = MappingWriter.create(mergedTinyV1.toPath(), MappingFormat.TINY_FILE)) {
 				mappings.accept(new MappingDstNsReorder(writer, "clientOfficial", "serverOfficial", "named"))
