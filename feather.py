@@ -3,9 +3,10 @@ import sys
 import subprocess
 
 MAPPINGS_DIR = 'mappings'
-GRADLE_TASKS = ['clean', 'enigma', 'feather', 'build', 'javadoc', 'javadocJar', 'checkMappings', 'mapCalamusJar', 'mapNamedJar',
-                'decompileCFR', 'decompileQuiltflower', 'decompileProcyon', 'publish', 'separateMappings',
-                'insertMappings', 'propagateMappingsDown', 'propagateMappingsUp', 'propagateMappings']
+GRADLE_TASKS = ['clean', 'enigma', 'feather', 'build', 'javadoc', 'javadocJar', 'checkMappings',
+                'mapMcJarsToIntermediary', 'mapMcJarsToNamed', 'decompileCFR', 'decompileVineflower',
+                'publish', 'separateMappings', 'insertMappings', 'propagateMappingsDown', 'propagateMappingsUp',
+                'propagateMappings']
 GRADLEW = 'gradlew' if os.name == 'nt' else './gradlew'
 
 # some jank to hide versions that are giving problems

@@ -2,13 +2,23 @@ import java.nio.charset.Charset
 import java.nio.file.NoSuchFileException
 import java.nio.file.StandardCopyOption
 import java.util.List
+import java.util.zip.GZIPOutputStream
 import groovy.json.JsonSlurper
 
 import com.google.common.io.Files
 import com.google.common.hash.Hashing
 import com.google.common.net.UrlEscapers
+import cuchaz.enigma.command.CheckMappingsCommand
 import cuchaz.enigma.command.ConvertMappingsCommand
 import io.github.gaming32.signaturechanger.cli.ApplyAction
+import net.fabricmc.mappingio.MappingReader
+import net.fabricmc.mappingio.MappingWriter
+import net.fabricmc.mappingio.adapter.MappingDstNsReorder
+import net.fabricmc.mappingio.adapter.MappingSourceNsSwitch
+import net.fabricmc.mappingio.format.MappingFormat
+import net.fabricmc.mappingio.tree.MappingTree
+import net.fabricmc.mappingio.tree.MemoryMappingTree
+import net.fabricmc.nameproposal.MappingNameCompleter
 import net.fabricmc.stitch.commands.CommandSplitTiny
 import net.fabricmc.stitch.merge.JarMerger
 import net.fabricmc.tinyremapper.OutputConsumerPath
@@ -67,6 +77,8 @@ buildscript {
 		classpath "net.ornithemc:stitch:0.15.4"
 		classpath "net.ornithemc:mapping-utils:0.10.3"
 		classpath "io.github.gaming32:signature-changer:1.0.0-beta.1"
+		classpath "net.fabricmc:mapping-io:0.5.1"
+		classpath "net.fabricmc:name-proposal:0.2.0"
 		classpath "commons-io:commons-io:2.8.0"
 		classpath "org.codehaus.groovy:groovy-json:3.0.9"
 		classpath "org.codehaus.groovy:groovy-xml:3.0.9"
@@ -113,11 +125,22 @@ repositories {
 
 configurations {
 	enigmaRuntime
+	javadocClasspath
+	decompileClasspath
+	mappingPoetJar {
+		transitive = false
+	}
+	mappingPoet {
+		extendsFrom mappingPoetJar
+		transitive = true
+	}
 }
 
 dependencies {
 	enigmaRuntime "net.ornithemc:enigma-swing:${project.enigma_version}"
 	enigmaRuntime "org.quiltmc:quilt-enigma-plugin:${project.quilt_enigma_plugin_version}"
+	decompileClasspath "net.fabricmc:cfr:${project.cfr_version}"
+	decompileClasspath "org.vineflower:vineflower:${project.vineflower_version}"
 }
 
 def ENV = System.getenv()
@@ -125,6 +148,8 @@ def ENV = System.getenv()
 def jarSetupGroup = "jar setup"
 def enigmaGroup = "enigma"
 def buildMappingsGroup = "build mappings"
+def mapMcJarsGroup = "map minecraft jar(s)"
+def javadocGroup = "javadoc generation"
 // cache dirs
 def buildCacheDir = new File(project.gradle.gradleUserHomeDir, "caches/ornithe-cache")
 def versionJsonsDir = new File(buildCacheDir, "version-jsons")
@@ -139,6 +164,7 @@ def sparrowDir = new File(buildCacheDir, "sparrow")
 // project dirs
 def mappingsGraphDir = file("mappings");
 def mappingsRunDir = file("run")
+def mappingsBuildDir = new File(".gradle/tmp")
 
 def minecraft_version = ENV.MC_VERSION
 def from_minecraft_version = ENV.FROM_MC_VERSION
@@ -156,7 +182,6 @@ def mergedJar = new File(gameJarsDir, "${minecraft_version}.jar")
 def calamusClientJar = new File(mappedJarsDir, "${minecraft_version}-calamus-gen${intermediary_gen}-client.jar")
 def calamusServerJar = new File(mappedJarsDir, "${minecraft_version}-calamus-gen${intermediary_gen}-server.jar")
 def calamusMergedJar = new File(mappedJarsDir, "${minecraft_version}-calamus-gen${intermediary_gen}.jar")
-def featherMergedJar = new File(mappedJarsDir, "${minecraft_version}-feather-gen${intermediary_gen}.jar")
 // only 1.8.2-pre4 and below need nests, but this information is not in the manifest
 // on top of that, not all versions below 1.8.2-pre4 have nests available yet
 def nesting = false
@@ -190,8 +215,25 @@ def mergedSparrowFile = new File(sparrowDir, "${minecraft_version}.sigs")
 def calamusClientSparrowFile = new File(sparrowDir, "${minecraft_version}-calamus-gen-${intermediary_gen}-client.sigs")
 def calamusServerSparrowFile = new File(sparrowDir, "${minecraft_version}-calamus-gen-${intermediary_gen}-server.sigs")
 def calamusMergedSparrowFile = new File(sparrowDir, "${minecraft_version}-calamus-gen-${intermediary_gen}.sigs")
+def featherJar = new File(mappedJarsDir, "${minecraft_version}-feather-gen${intermediary_gen}.jar")
 def libraries = new ArrayList<File>()
 def workingDir = new File(mappingsRunDir, "${minecraft_version}")
+// build prep
+def tiny = new File(mappingsBuildDir, "${minecraft_version}.tiny")
+def completedTiny = new File(mappingsBuildDir, "${minecraft_version}-completed.tiny")
+// build files
+def tinyV1 = new File(mappingsBuildDir, "${minecraft_version}-v1.tiny")
+def tinyV2 = new File(mappingsBuildDir, "${minecraft_version}-v2.tiny")
+def mergedTinyV1 = new File(mappingsBuildDir, "${minecraft_version}-merged-v1.tiny")
+def mergedTinyV2 = new File(mappingsBuildDir, "${minecraft_version}-merged-v2.tiny")
+def compressedTinyV1 = new File(mappingsBuildDir, "${minecraft_version}-merged-v1.gz")
+// javadoc
+def fakeSourceDir = new File(mappingsBuildDir, "fakeSource")
+// decompile
+def namedSrcDir = file("namedSrc")
+
+def artifact_id = "feather-gen${intermediary_gen}"
+def feather_version = nextFeatherVersion(ENV, minecraft_version, intermediary_gen)
 
 // used for extending the graph
 def fromVersionInfo = null;
@@ -209,7 +251,51 @@ def fromFromCalamusClientJar = new File(mappedJarsDir, "${from_from_minecraft_ve
 def fromFromCalamusServerJar = new File(mappedJarsDir, "${from_from_minecraft_version}-calamus-gen${intermediary_gen}-server.jar")
 def fromFromCalamusMergedJar = new File(mappedJarsDir, "${from_from_minecraft_version}-calamus-gen${intermediary_gen}.jar")
 
-def artifact_id = "feather-gen${intermediary_gen}"
+
+// utility methods
+
+static def nextFeatherVersion(ENV, minecraft_version, intermediary_gen) {
+	if (ENV.MAVEN_URL) {
+		def build_number = 0
+
+		try {
+			def xml = new URL("https://maven.ornithemc.net/releases/net/ornithemc/${intermediary_gen}/maven-metadata.xml").text
+			def metadata = new XmlSlurper().parseText(xml)
+
+			def version_build = "${minecraft_version}+build."
+			def i = version_build.length()
+
+			metadata.versioning.versions.version.each {
+				def version = it.text()
+
+				if (version.startsWith(version_build)) {
+					def number_text = version.substring(i)
+					try {
+						def number = Integer.parseInt(number_text)
+
+						if (number > build_number) {
+							build_number = number
+						}
+					} catch (NumberFormatException e) {
+						throw new RuntimeException(e);
+					}
+				}
+			}
+		} catch (FileNotFoundException e) {
+			// Note: we consider it a hard failure if the maven-metadata.xml file does
+			// not exist. However if you don't have this file yet, you can comment out
+			// the line below to start at build number 1.
+			throw new RuntimeException(e);
+		}
+
+		// is 0 if no version is found in the above
+		def next_build_number = build_number + 1;
+
+		return "${minecraft_version}+build.${next_build_number}"
+	} else {
+		return "${minecraft_version}+build.local"
+	}
+}
 
 static def pickSide(def details, def merged, def client, def server) {
 	if (details.client && details.server) {
@@ -257,6 +343,7 @@ static boolean validateChecksum(File file, String checksum) {
 	}
 	return false
 }
+
 
 task downloadVersionsManifest {
 	group = jarSetupGroup
@@ -756,7 +843,7 @@ task separateMappings(dependsOn: mapNestsToIntermediary) {
 		logger.lifecycle(":separating mappings for ${minecraft_version}")
 
 		def nests = pickEnv(versionDetails, calamusMergedNestsFile, calamusClientNestsFile, calamusServerNestsFile)
-		separateMappings(minecraft_version, mappingsGraphDir, workingDir, nests)
+		separateMappings(minecraft_version, mappingsGraphDir, nests, Format.ENIGMA_DIR, workingDir)
 	}
 }
 
@@ -804,11 +891,15 @@ task propagateMappings(dependsOn: mapNestsToIntermediary) {
 	}
 }
 
-void separateMappings(String minecraft_version, File mappingsGraphDir, File workingDir, File nestsFile) {
+void separateMappings(String minecraft_version, File mappingsGraphDir, File nestsFile, Format format, File output) {
+	separateMappings(minecraft_version, mappingsGraphDir, nestsFile, Map.of(format, output))
+}
+
+void separateMappings(String minecraft_version, File mappingsGraphDir, File nestsFile, Map<Format, File> outputs) {
 	VersionGraph graph = VersionGraph.of(Format.TINY_V2, mappingsGraphDir.toPath())
 	Mappings mappings = MappingUtils.separateMappings(graph, minecraft_version)
 
-	if (nestsFile.exists()) {
+	if (nestsFile != null && nestsFile.exists()) {
 		Nests nests = Nests.empty()
 		NesterIo.read(nests, nestsFile.toPath())
 
@@ -858,7 +949,9 @@ void separateMappings(String minecraft_version, File mappingsGraphDir, File work
 		}
 	})
 
-	Format.ENIGMA_DIR.writeMappings(workingDir.toPath(), mappings)
+	for (Map.Entry<Format, File> output : outputs.entrySet()) {
+		output.key.writeMappings(output.value.toPath(), mappings)
+	}
 }
 
 void insertMappings(String minecraft_version, File mappingsGraphDir, File workingDir, File nestsFile, PropagationDirection dir) {
@@ -1082,91 +1175,344 @@ task extendGraph(dependsOn: mapMcJarsToIntermediary) {
 		delete(tmpGraphDir)
 	}
 }
-/*
- static List<String> getPublishedVersions(def artifact_id) {
- def xml = new URL("https://maven.ornithemc.net/releases/net/ornithemc/${artifact_id}/maven-metadata.xml").text
- def metadata = new XmlSlurper().parseText(xml)
- def versions = metadata.versioning.versions.version*.text()
- return versions
- }
- def publishedVersions
- try {
- publishedVersions = getPublishedVersions(artifact_id)
- } catch (ignored) {
- }
- def localMappingsPath = "$buildDir/v2Mappings"
- new File(localMappingsPath).mkdirs()
- file('mappings').eachFile {
- if (!it.name.endsWith(".tiny")) {
- return
- }
- def mcVer = it.name.replace(".tiny", "")
- if (publishedVersions != null && publishedVersions.contains(mcVer)) {
- return
- }
- File v1MappingFile = it
- File v2MappingFile = new File("$localMappingsPath/${it.name}")
- def conversionTask = "convert${it.name}ToV2"
- tasks.register(conversionTask) {
- group = "V2 Conversion"
- inputs.file(v1MappingFile)
- outputs.file(v2MappingFile)
- doLast {
- new ConvertMappingsCommand().run(
- "tiny",
- v1MappingFile.path,
- versionDetails.sharedMappings ? "tinyv2:${namespace}:clientOfficial:serverOfficial" : "tinyv2:official:${namespace}",
- v2MappingFile.path
- )
- }
- }
- Jar makeV1Jar = makeJar(mcVer, v1MappingFile, false)
- Jar makeV2Jar = makeJar(mcVer, v2MappingFile, true)
- build.dependsOn makeV1Jar
- build.dependsOn makeV2Jar
- makeV2Jar.dependsOn conversionTask
- publishing {
- publications {
- create("${mcVer.replace(" ", "")}_mavenJava", MavenPublication) {
- groupId 'net.ornithemc'
- artifactId artifact_id
- version mcVer
- artifact(makeV1Jar.archiveFile) {
- builtBy makeV1Jar
- }
- artifact(makeV2Jar.archiveFile) {
- builtBy makeV2Jar
- classifier = "v2"
- }
- }
- }
- }
- }
- def makeJar(String mcVersion, File mappings, boolean v2) {
- def jarFilename = "calamus-" + mcVersion + (v2 ? "-v2" : "")
- return task("${mcVersion}_makeJar" + (v2 ? "v2" : ""), type: Jar) {
- archiveBaseName.set(jarFilename)
- from(file(mappings)) {
- into "mappings"
- rename mappings.name, "mappings.tiny"
- }
- destinationDirectory = file("build/jars")
- }
- }
- publishing {
- repositories {
- if (ENV.MAVEN_URL) {
- maven {
- url ENV.MAVEN_URL
- credentials {
- username ENV.MAVEN_USERNAME
- password ENV.MAVEN_PASSWORD
- }
- authentication {
- basic(BasicAuthentication)
- }
- }
- }
- }
- }
- */
+
+task prepareBuild(dependsOn: downloadIntermediary) {
+	group = buildMappingsGroup
+
+	outputs.files(tiny)
+	outputs.upToDateWhen { false }
+
+	doLast {
+		logger.lifecycle(":preparing mappings for build")
+
+		separateMappings(minecraft_version, mappingsGraphDir, null, Format.TINY_V2, tiny)
+	}
+}
+
+task checkMappings(dependsOn: [mapMcJarsToIntermediary, prepareBuild]) {
+	group = buildMappingsGroup
+
+	doLast {
+		def jar = pickSide(versionDetails, calamusMergedJar, calamusClientJar, calamusServerJar)
+
+		try {
+			new CheckMappingsCommand().run([
+				jar.getAbsolutePath(),
+				tiny.getAbsolutePath()
+			])
+		} catch (IllegalStateException e) {
+		}
+	}
+}
+
+task completeMappings(dependsOn: [mapMcJarsToIntermediary, prepareBuild]) {
+	group = buildMappingsGroup
+
+	outputs.file(completedTiny)
+	outputs.upToDateWhen { false }
+
+	doLast {
+		logger.lifecycle(":completing mappings with name proposal")
+
+		def calamusJar = pickSide(versionDetails, calamusMergedJar, calamusClientJar, calamusServerJar)
+		def calamusMappings = pickSide(versionDetails, mergedCalamusFile, clientCalamusFile, serverCalamusFile)
+
+		MappingNameCompleter.completeNames(calamusJar.toPath(), tiny.toPath(), calamusMappings.toPath(), completedTiny.toPath())
+	}
+}
+
+task buildTiny(dependsOn: [downloadIntermediary, completeMappings]) {
+	group = buildMappingsGroup
+
+	outputs.files(tinyV1, tinyV2, mergedTinyV2)
+	outputs.upToDateWhen { false }
+
+	doLast {
+		logger.lifecycle(":building mappings")
+
+		MappingTree mappings = new MemoryMappingTree()
+		MappingReader.read(completedTiny.toPath(), mappings)
+
+		try (MappingWriter writer = MappingWriter.create(tinyV1.toPath(), MappingFormat.TINY_FILE)) {
+			mappings.accept(writer)
+		}
+
+		try (MappingWriter writer = MappingWriter.create(tinyV2.toPath(), MappingFormat.TINY_2_FILE)) {
+			mappings.accept(writer)
+		}
+
+		def calamusFile = pickSide(versionDetails, mergedCalamusFile, clientCalamusFile, serverCalamusFile)
+
+		if (versionDetails.sharedMappings) {
+			def visitor = new MappingSourceNsSwitch(mappings, "intermediary")
+			MappingReader.read(calamusFile.toPath(), visitor)
+
+			try (MappingWriter writer = MappingWriter.create(mergedTinyV1.toPath(), MappingFormat.TINY_FILE)) {
+				mappings.accept(new MappingSourceNsSwitch(new MappingDstNsReorder(writer, "intermediary", "named"), "official"))
+			}
+			try (MappingWriter writer = MappingWriter.create(mergedTinyV2.toPath(), MappingFormat.TINY_2_FILE)) {
+				mappings.accept(new MappingSourceNsSwitch(new MappingDstNsReorder(writer, "intermediary", "named"), "official"))
+			}
+		} else {
+			MappingReader.read(calamusFile.toPath(), mappings)
+
+			try (MappingWriter writer = MappingWriter.create(mergedTinyV1.toPath(), MappingFormat.TINY_FILE)) {
+				mappings.accept(new MappingDstNsReorder(writer, "clientOfficial", "serverOfficial", "named"))
+			}
+			try (MappingWriter writer = MappingWriter.create(mergedTinyV2.toPath(), MappingFormat.TINY_2_FILE)) {
+				mappings.accept(new MappingDstNsReorder(writer, "clientOfficial", "serverOfficial", "named"))
+			}
+		}
+	}
+}
+
+task compressTiny(dependsOn: buildTiny) {
+	group = buildMappingsGroup
+
+	outputs.file(compressedTinyV1)
+	outputs.upToDateWhen { false }
+
+	doLast {
+		logger.lifecycle(":compressing mappings")
+
+		def buffer = new byte[1024]
+		def fileOutputStream = new FileOutputStream(compressedTinyV1)
+		def outputStream = new GZIPOutputStream(fileOutputStream)
+		def fileInputStream = new FileInputStream(mergedTinyV1)
+
+		def length
+		while ((length = fileInputStream.read(buffer)) > 0) {
+			outputStream.write(buffer, 0, length)
+		}
+
+		fileInputStream.close()
+		outputStream.finish()
+		outputStream.close()
+	}
+}
+
+task mapMcJarsToNamed(dependsOn: [buildTiny, mapMcJarsToIntermediary]) {
+	group = mapMcJarsGroup
+
+	inputs.files downloadMcLibs.outputs.files.files
+	outputs.file(featherJar)
+
+	outputs.upToDateWhen { false }
+
+	doLast {
+		logger.lifecycle(":mapping minecraft to named")
+
+		def calamusJar = pickSide(versionDetails, calamusMergedJar, calamusClientJar, calamusServerJar)
+		mapJar(calamusJar, featherJar, mergedTinyV2, libraries, "intermediary", "named")
+	}
+}
+
+task decompileCFR(type: JavaExec, dependsOn: mapMcJarsToNamed) {
+	classpath = configurations.decompileClasspath
+	mainClass.set("org.benf.cfr.reader.Main")
+
+	args featherJar.getAbsolutePath(), "--outputdir", namedSrcDir.getAbsolutePath()
+
+	doFirst {
+		delete(namedSrcDir)
+	}
+}
+
+task decompileVineflower(type: JavaExec, dependsOn: mapMcJarsToNamed) {
+	classpath = configurations.decompileClasspath
+	mainClass.set("org.jetbrains.java.decompiler.main.decompiler.ConsoleDecompiler")
+
+	args featherJar.getAbsolutePath(), namedSrcDir.getAbsolutePath()
+
+	doFirst {
+		delete(namedSrcDir)
+	}
+}
+
+task genFakeSource(type: JavaExec, dependsOn: [mapMcJarsToNamed, buildTiny]) {
+	group = javadocGroup
+
+	outputs.upToDateWhen { false }
+
+	if (!JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_17)) {
+		javaLauncher.set(javaToolchains.launcherFor {
+			languageVersion = JavaLanguageVersion.of(17)
+		})
+	}
+
+	mainClass.set("net.fabricmc.mappingpoet.Main")
+	classpath configurations.mappingPoet
+	// use merged v2 so we have all namespaces in jd
+	args mergedTinyV2.getAbsolutePath(), featherJar.getAbsolutePath(), fakeSourceDir.getAbsolutePath(), librariesDir.getAbsolutePath()
+
+	doLast {
+		logger.lifecycle(":generated fake source")
+	}
+}
+
+javadoc {
+	dependsOn genFakeSource
+	dependsOn downloadMcLibs
+
+	group = javadocGroup
+
+	outputs.upToDateWhen { false }
+
+	def mappingPoetJar = project.provider { zipTree configurations.mappingPoetJar.singleFile }
+
+	failOnError = false
+	maxMemory = '2G'
+
+	if (!JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_17)) {
+		javadocTool.set(javaToolchains.javadocToolFor {
+			languageVersion = JavaLanguageVersion.of(17)
+		})
+	}
+	// verbose = true // enable to debug
+	options {
+		// verbose() // enable to debug
+		source = "11"
+		encoding = 'UTF-8'
+		charSet = 'UTF-8'
+		memberLevel = JavadocMemberLevel.PRIVATE
+		splitIndex true
+		tags(
+				'apiNote:a:API Note:',
+				'implSpec:a:Implementation Requirements:',
+				'implNote:a:Implementation Note:'
+		)
+		taglets "net.fabricmc.mappingpoet.jd.MappingTaglet"
+		// taglet path, header, extra stylesheet settings deferred
+
+		addBooleanOption "-allow-script-in-comments", true
+		links(
+				'https://guava.dev/releases/21.0/api/docs/',
+				'https://www.javadoc.io/doc/com.google.code.gson/gson/2.8.0/',
+				'https://logging.apache.org/log4j/2.x/javadoc/log4j-api/',
+				// jsr305 need to come before jdk or the anno links are broken
+				'https://www.javadoc.io/doc/com.google.code.findbugs/jsr305/3.0.2/',
+				'https://javadoc.lwjgl.org/',
+				'https://fastutil.di.unimi.it/docs/',
+				'https://netty.io/4.1/api/',
+				'https://commons.apache.org/proper/commons-logging/javadocs/api-1.1.3/',
+				'https://commons.apache.org/proper/commons-lang/javadocs/api-3.5',
+				'https://commons.apache.org/proper/commons-io/javadocs/api-2.5',
+				'https://commons.apache.org/proper/commons-codec/archives/1.10/apidocs',
+				'https://javadoc.io/doc/org.apache.commons/commons-compress/1.8.1',
+				"https://maven.fabricmc.net/javadocs/net/fabricmc/fabric-loader-${project.fabric_loader_version}/",
+				"https://docs.oracle.com/en/java/javase/11/docs/api/"
+				// Need to add loader jd publication for env annotations!
+		)
+		// https://docs.oracle.com/en/java/javase/17/docs/specs/man/javadoc.html#additional-options-provided-by-the-standard-doclet
+		addBooleanOption 'Xdoclint:html', true
+		addBooleanOption 'Xdoclint:syntax', true
+		addBooleanOption 'Xdoclint:reference', true
+		addBooleanOption 'Xdoclint:accessibility', true
+	}
+	source fakeSourceDir
+	classpath = configurations.javadocClasspath.plus downloadMcLibs.outputs.files.asFileTree
+
+	doLast {
+		project.copy {
+			from mappingPoetJar
+			include "copy_on_click.js"
+			into javadoc.outputDirectory
+		}
+	}
+
+	doFirst {
+		// lazy setting
+		options {
+			tagletPath configurations.mappingPoet.files.toList()
+			header mappingPoetJar.get().filter { it.name == 'javadoc_header.txt' }.singleFile.text.trim()
+			// cannot include line breaks
+			addFileOption "-add-stylesheet", mappingPoetJar.get().filter { it.name == 'forms.css' }.singleFile
+		}
+	}
+}
+
+task tinyV1Jar(type: Jar, dependsOn: buildTiny) {
+	group = buildMappingsGroup
+	outputs.upToDateWhen { false }
+	archiveFileName = "${artifact_id}-${feather_version}.jar"
+	destinationDirectory.set(file("build/libs"))
+	archiveClassifier.set("")
+	from(mergedTinyV1) {
+		rename { "mappings/mappings.tiny" }
+	}
+}
+
+task tinyV2Jar(type: Jar, dependsOn: buildTiny) {
+	group = buildMappingsGroup
+	outputs.upToDateWhen { false }
+	archiveFileName = "${artifact_id}-${feather_version}-v2.jar"
+	destinationDirectory.set(file("build/libs"))
+	archiveClassifier.set("v2")
+	from(tinyV2) {
+		rename { "mappings/mappings.tiny" }
+	}
+}
+
+task mergedTinyV2Jar(type: Jar, dependsOn: buildTiny) {
+	group = buildMappingsGroup
+	outputs.upToDateWhen { false }
+	archiveFileName = "${artifact_id}-${feather_version}-mergedv2.jar"
+	destinationDirectory.set(file("build/libs"))
+	archiveClassifier.set("mergedv2")
+	from(mergedTinyV2) {
+		rename { "mappings/mappings.tiny" }
+	}
+}
+
+task javadocJar(type: Jar, dependsOn: [javadoc]) {
+	group = javadocGroup
+
+	from javadoc.destinationDir
+
+	archiveVersion.set feather_version
+	archiveClassifier.set('javadoc')
+}
+
+clean.doFirst {
+	delete buildCacheDir, mappingsBuildDir
+}
+
+tasks.build.dependsOn "compressTiny", "tinyV1Jar", "tinyV2Jar", "mergedTinyV2Jar"
+
+publishing {
+	publications {
+		maven(MavenPublication) {
+			groupId 'net.ornithemc'
+			artifactId artifact_id
+			version feather_version
+
+			artifact(compressedTinyV1) {
+				classifier "tiny"
+				builtBy compressTiny
+			}
+			artifact(mergedTinyV1)
+			artifact(tinyV2) {
+				classifier "v2"
+			}
+			artifact(mergedTinyV2) {
+				classifier "mergedv2"
+			}
+			artifact javadocJar
+		}
+
+	}
+	repositories {
+		if (ENV.MAVEN_URL) {
+			maven {
+				url ENV.MAVEN_URL
+				credentials {
+					username ENV.MAVEN_USERNAME
+					password ENV.MAVEN_PASSWORD
+				}
+				authentication {
+					basic(BasicAuthentication)
+				}
+			}
+		}
+	}
+}
