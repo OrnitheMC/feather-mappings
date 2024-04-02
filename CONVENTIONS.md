@@ -136,7 +136,7 @@ Use `dx`, `dy`, and `dz` for distances along an axis.
 Use these if possible.
 
 - Use `random`, not `rand`
-- Use `client` for `Minecraft` fields
+- Use `minecraft` for `Minecraft` fields
 - Use `server` for `MinecraftServer` fields
 - Use `connection` for `Connection` fields
 - Use `proxy` for `Proxy` fields
