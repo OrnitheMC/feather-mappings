@@ -75,7 +75,7 @@ buildscript {
 		classpath "net.fabricmc:tiny-remapper:0.9.0"
 		classpath "net.ornithemc:enigma-cli:1.2.7"
 		classpath "net.ornithemc:stitch:0.15.4"
-		classpath "net.ornithemc:mapping-utils:0.10.3"
+		classpath "net.ornithemc:mapping-utils:0.11.0"
 		classpath "io.github.gaming32:signature-changer:1.0.0-beta.1"
 		classpath "net.fabricmc:mapping-io:0.5.1"
 		classpath "net.fabricmc:name-proposal:0.2.0"
@@ -843,7 +843,7 @@ task separateMappings(dependsOn: mapNestsToIntermediary) {
 	doLast {
 		logger.lifecycle(":separating mappings for ${minecraft_version}")
 
-		def nests = pickEnv(versionDetails, calamusMergedNestsFile, calamusClientNestsFile, calamusServerNestsFile)
+		def nests = pickSide(versionDetails, calamusMergedNestsFile, calamusClientNestsFile, calamusServerNestsFile)
 		separateMappings(minecraft_version, mappingsGraphDir, nests, Format.ENIGMA_DIR, workingDir)
 	}
 }
@@ -854,7 +854,7 @@ task insertMappings(dependsOn: mapNestsToIntermediary) {
 	doLast {
 		logger.lifecycle(":saving mappings for ${minecraft_version}")
 
-		def nests = pickEnv(versionDetails, calamusMergedNestsFile, calamusClientNestsFile, calamusServerNestsFile)
+		def nests = pickSide(versionDetails, calamusMergedNestsFile, calamusClientNestsFile, calamusServerNestsFile)
 		insertMappings(minecraft_version, mappingsGraphDir, workingDir, nests, PropagationDirection.NONE)
 		separateMappings(minecraft_version, mappingsGraphDir, nests, Format.ENIGMA_DIR, workingDir)
 	}
@@ -866,7 +866,7 @@ task propagateMappingsDown(dependsOn: mapNestsToIntermediary) {
 	doLast {
 		logger.lifecycle(":saving mappings for ${minecraft_version}")
 
-		def nests = pickEnv(versionDetails, calamusMergedNestsFile, calamusClientNestsFile, calamusServerNestsFile)
+		def nests = pickSide(versionDetails, calamusMergedNestsFile, calamusClientNestsFile, calamusServerNestsFile)
 		insertMappings(minecraft_version, mappingsGraphDir, workingDir, nests, PropagationDirection.DOWN)
 		separateMappings(minecraft_version, mappingsGraphDir, nests, Format.ENIGMA_DIR, workingDir)
 	}
@@ -878,7 +878,7 @@ task propagateMappingsUp(dependsOn: mapNestsToIntermediary) {
 	doLast {
 		logger.lifecycle(":saving mappings for ${minecraft_version}")
 
-		def nests = pickEnv(versionDetails, calamusMergedNestsFile, calamusClientNestsFile, calamusServerNestsFile)
+		def nests = pickSide(versionDetails, calamusMergedNestsFile, calamusClientNestsFile, calamusServerNestsFile)
 		insertMappings(minecraft_version, mappingsGraphDir, workingDir, nests, PropagationDirection.UP)
 		separateMappings(minecraft_version, mappingsGraphDir, nests, Format.ENIGMA_DIR, workingDir)
 	}
@@ -890,7 +890,7 @@ task propagateMappings(dependsOn: mapNestsToIntermediary) {
 	doLast {
 		logger.lifecycle(":saving mappings for ${minecraft_version}")
 
-		def nests = pickEnv(versionDetails, calamusMergedNestsFile, calamusClientNestsFile, calamusServerNestsFile)
+		def nests = pickSide(versionDetails, calamusMergedNestsFile, calamusClientNestsFile, calamusServerNestsFile)
 		insertMappings(minecraft_version, mappingsGraphDir, workingDir, nests, PropagationDirection.BOTH)
 		separateMappings(minecraft_version, mappingsGraphDir, nests, Format.ENIGMA_DIR, workingDir)
 	}
