@@ -207,15 +207,15 @@ def nestedMergedCalamusFile = new File(processedMappingsDir, "${minecraft_versio
 def clientNestsFile = new File(nestsDir, "${minecraft_version}-client.nest")
 def serverNestsFile = new File(nestsDir, "${minecraft_version}-server.nest")
 def mergedNestsFile = new File(nestsDir, "${minecraft_version}.nest")
-def calamusClientNestsFile = new File(nestsDir, "${minecraft_version}-calamus-gen-${intermediary_gen}-client.nest")
-def calamusServerNestsFile = new File(nestsDir, "${minecraft_version}-calamus-gen-${intermediary_gen}-server.nest")
-def calamusMergedNestsFile = new File(nestsDir, "${minecraft_version}-calamus-gen-${intermediary_gen}.nest")
+def calamusClientNestsFile = new File(nestsDir, "${minecraft_version}-calamus-gen${intermediary_gen}-client.nest")
+def calamusServerNestsFile = new File(nestsDir, "${minecraft_version}-calamus-gen${intermediary_gen}-server.nest")
+def calamusMergedNestsFile = new File(nestsDir, "${minecraft_version}-calamus-gen${intermediary_gen}.nest")
 def clientSparrowFile = new File(sparrowDir, "${minecraft_version}-client.sigs")
 def serverSparrowFile = new File(sparrowDir, "${minecraft_version}-server.sigs")
 def mergedSparrowFile = new File(sparrowDir, "${minecraft_version}.sigs")
-def calamusClientSparrowFile = new File(sparrowDir, "${minecraft_version}-calamus-gen-${intermediary_gen}-client.sigs")
-def calamusServerSparrowFile = new File(sparrowDir, "${minecraft_version}-calamus-gen-${intermediary_gen}-server.sigs")
-def calamusMergedSparrowFile = new File(sparrowDir, "${minecraft_version}-calamus-gen-${intermediary_gen}.sigs")
+def calamusClientSparrowFile = new File(sparrowDir, "${minecraft_version}-calamus-gen${intermediary_gen}-client.sigs")
+def calamusServerSparrowFile = new File(sparrowDir, "${minecraft_version}-calamus-gen${intermediary_gen}-server.sigs")
+def calamusMergedSparrowFile = new File(sparrowDir, "${minecraft_version}-calamus-gen${intermediary_gen}.sigs")
 def featherJar = new File(mappedJarsDir, "${minecraft_version}-feather-gen${intermediary_gen}.jar")
 def libraries = new ArrayList<File>()
 def workingDir = new File(mappingsRunDir, "${minecraft_version}")
@@ -234,7 +234,7 @@ def fakeSourceDir = new File(mappingsBuildDir, "fakeSource")
 def namedSrcDir = file("namedSrc")
 
 def artifact_id = "feather-gen${intermediary_gen}"
-def feather_version = nextFeatherVersion(ENV, minecraft_version, intermediary_gen)
+def feather_version = nextFeatherVersion(ENV, minecraft_version, artifact_id)
 
 // used for extending the graph
 def fromVersionInfo = null;
@@ -255,12 +255,12 @@ def fromFromCalamusMergedJar = new File(mappedJarsDir, "${from_from_minecraft_ve
 
 // utility methods
 
-static def nextFeatherVersion(ENV, minecraft_version, intermediary_gen) {
+static def nextFeatherVersion(ENV, minecraft_version, artifact_id) {
 	if (ENV.MAVEN_URL) {
 		def build_number = 0
 
 		try {
-			def xml = new URL("https://maven.ornithemc.net/releases/net/ornithemc/${intermediary_gen}/maven-metadata.xml").text
+			def xml = new URL("https://maven.ornithemc.net/releases/net/ornithemc/${artifact_id}/maven-metadata.xml").text
 			def metadata = new XmlSlurper().parseText(xml)
 
 			def version_build = "${minecraft_version}+build."
@@ -1015,6 +1015,15 @@ void insertMappings(String minecraft_version, File mappingsGraphDir, File workin
 						d.set(DiffSide.B, "p_" + ((ParameterDiff)d).getIndex());
 					} else {
 						d.set(DiffSide.B, d.src());
+					}
+				}
+				if (d.target() == MappingTarget.CLASS) {
+					String src = d.src().substring(d.src().lastIndexOf('/') + 1)
+					if (src.startsWith("C_")) {
+						src = src.substring(2)
+					}
+					if (d.get(DiffSide.A).endsWith(src) && d.get(DiffSide.B).equals(d.src())) {
+						d.set(DiffSide.B, d.get(DiffSide.A))
 					}
 				}
 			}
