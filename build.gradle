@@ -14,6 +14,7 @@ import io.github.gaming32.signaturechanger.cli.ApplyAction
 import net.fabricmc.mappingio.MappingReader
 import net.fabricmc.mappingio.MappingWriter
 import net.fabricmc.mappingio.adapter.MappingDstNsReorder
+import net.fabricmc.mappingio.adapter.MappingNsCompleter
 import net.fabricmc.mappingio.adapter.MappingSourceNsSwitch
 import net.fabricmc.mappingio.format.MappingFormat
 import net.fabricmc.mappingio.tree.MappingTree
@@ -1173,7 +1174,11 @@ task prepareBuild(dependsOn: mapNestsToIntermediary) {
 
 		def nests = pickSide(versionDetails, calamusMergedNestsFile, calamusClientNestsFile, calamusServerNestsFile)
 
-		separateMappings(minecraft_version, mappingsGraphDir, Format.TINY_V2, tiny)
+		VersionGraph graph = VersionGraph.of(Format.TINY_V2, mappingsGraphDir.toPath())
+		Mappings mappings = MappingUtils.separateMappings(graph, minecraft_version)
+
+		Format.TINY_V2.writeMappings(tiny.toPath(), mappings)
+
 		if (nests.exists()) {
 			MappingUtils.undoNests(Format.TINY_V2, tiny.toPath(), tiny.toPath(), nests.toPath())
 		}
