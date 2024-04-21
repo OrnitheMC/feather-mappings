@@ -3,6 +3,7 @@ import java.nio.file.NoSuchFileException
 import java.nio.file.StandardCopyOption
 import java.util.List
 import java.util.zip.GZIPOutputStream
+import groovy.json.JsonGenerator
 import groovy.json.JsonSlurper
 
 import com.google.common.io.Files
@@ -167,6 +168,8 @@ def sparrowDir = new File(buildCacheDir, "sparrow")
 def mappingsGraphDir = file("mappings");
 def mappingsRunDir = file("run")
 def mappingsBuildDir = file(".gradle/tmp")
+def nestsBuildsCache = file("nests-builds.json")
+def sparrowBuildsCache = file("sparrow-builds.json")
 
 def minecraft_version = ENV.MC_VERSION
 def from_minecraft_version = ENV.FROM_MC_VERSION
@@ -181,42 +184,62 @@ def versionDetailsFile = new File(versionJsonsDir, "${minecraft_version}-details
 def clientJar = new File(gameJarsDir, "${minecraft_version}-client.jar")
 def serverJar = new File(gameJarsDir, "${minecraft_version}-server.jar")
 def mergedJar = new File(gameJarsDir, "${minecraft_version}.jar")
+def clientCalamusFile = new File(mappingsDir, "${minecraft_version}-calamus-gen${intermediary_gen}-client.tiny")
+def serverCalamusFile = new File(mappingsDir, "${minecraft_version}-calamus-gen${intermediary_gen}-server.tiny")
+def mergedCalamusFile = new File(mappingsDir, "${minecraft_version}-calamus-gen${intermediary_gen}.tiny")
+def client_nests_build = getBuildFromCache(nestsBuildsCache, "${minecraft_version}-client")
+def server_nests_build = getBuildFromCache(nestsBuildsCache, "${minecraft_version}-server")
+def merged_nests_build = getBuildFromCache(nestsBuildsCache, minecraft_version)
+							?: (client_nests_build && server_nests_build
+								? "${client_nests_build}&${server_nests_build}"
+								: (client_nests_build
+									? client_nests_build
+									: (server_nests_build
+										? server_nests_build
+										: null)))
+def clientNestsFile = new File(nestsDir, "${minecraft_version}-nests+build.${client_nests_build}-client.nest")
+def serverNestsFile = new File(nestsDir, "${minecraft_version}-nests+build.${server_nests_build}-server.nest")
+def mergedNestsFile = new File(nestsDir, "${minecraft_version}-nests+build.${merged_nests_build}.nest")
+def calamusClientNestsFile = new File(nestsDir, "${minecraft_version}-calamus-gen${intermediary_gen}-nests+build.${client_nests_build}-client.nest")
+def calamusServerNestsFile = new File(nestsDir, "${minecraft_version}-calamus-gen${intermediary_gen}-nests+build.${server_nests_build}-server.nest")
+def calamusMergedNestsFile = new File(nestsDir, "${minecraft_version}-calamus-gen${intermediary_gen}-nests+build.${merged_nests_build}.nest")
+def client_sparrow_build = getBuildFromCache(sparrowBuildsCache, "${minecraft_version}-client")
+def server_sparrow_build = getBuildFromCache(sparrowBuildsCache, "${minecraft_version}-server")
+def merged_sparrow_build = getBuildFromCache(sparrowBuildsCache, minecraft_version)
+							?: (client_sparrow_build && server_sparrow_build
+								? "${client_sparrow_build}&${server_sparrow_build}"
+								: (client_sparrow_build
+									? client_sparrow_build
+									: (server_sparrow_build
+										? server_sparrow_build
+										: null)))
+def clientSparrowFile = new File(sparrowDir, "${minecraft_version}-sparrow+build.${client_sparrow_build}-client.sigs")
+def serverSparrowFile = new File(sparrowDir, "${minecraft_version}-sparrow+build.${server_sparrow_build}-server.sigs")
+def mergedSparrowFile = new File(sparrowDir, "${minecraft_version}-sparrow+build.${merged_sparrow_build}.sigs")
+def calamusClientSparrowFile = new File(sparrowDir, "${minecraft_version}-calamus-gen${intermediary_gen}-sparrow+build.${client_sparrow_build}-client.sigs")
+def calamusServerSparrowFile = new File(sparrowDir, "${minecraft_version}-calamus-gen${intermediary_gen}-sparrow+build.${server_sparrow_build}-server.sigs")
+def calamusMergedSparrowFile = new File(sparrowDir, "${minecraft_version}-calamus-gen${intermediary_gen}-sparrow+build.${merged_sparrow_build}.sigs")
+def nestedClientCalamusFile = new File(processedMappingsDir, "${minecraft_version}-nests+build.${client_nests_build}-calamus-gen${intermediary_gen}-client.tiny")
+def nestedServerCalamusFile = new File(processedMappingsDir, "${minecraft_version}-nests+build.${server_nests_build}-calamus-gen${intermediary_gen}-server.tiny")
+def nestedMergedCalamusFile = new File(processedMappingsDir, "${minecraft_version}-nests+build.${merged_nests_build}-calamus-gen${intermediary_gen}.tiny")
 def calamusClientJar = new File(mappedJarsDir, "${minecraft_version}-calamus-gen${intermediary_gen}-client.jar")
 def calamusServerJar = new File(mappedJarsDir, "${minecraft_version}-calamus-gen${intermediary_gen}-server.jar")
 def calamusMergedJar = new File(mappedJarsDir, "${minecraft_version}-calamus-gen${intermediary_gen}.jar")
 // only 1.8.2-pre4 and below need nests, but this information is not in the manifest
 // on top of that, not all versions below 1.8.2-pre4 have nests available yet
 def nesting = false
-def nestedClientJar = new File(processedJarsDir, "${minecraft_version}-calamus-gen${intermediary_gen}-nested-client.jar")
-def nestedServerJar = new File(processedJarsDir, "${minecraft_version}-calamus-gen${intermediary_gen}-nested-server.jar")
-def nestedMergedJar = new File(processedJarsDir, "${minecraft_version}-calamus-gen${intermediary_gen}-nested.jar")
+def nestedClientJar = new File(processedJarsDir, "${minecraft_version}-nests+build.${client_nests_build}-client.jar")
+def nestedServerJar = new File(processedJarsDir, "${minecraft_version}-nests+build.${server_nests_build}-server.jar")
+def nestedMergedJar = new File(processedJarsDir, "${minecraft_version}-nests+build.${merged_nests_build}.jar")
 // only 1.8.2-pre4 and below need signature patching, but this information is not in the manifest
 // on top of that, not all versions below 1.8.2-pre4 have signature patches available yet
 def signaturePatching = false
-def signaturePatchedClientJar = new File(processedJarsDir, "${minecraft_version}-calamus-gen${intermediary_gen}-signature-patched-client.jar")
-def signaturePatchedServerJar = new File(processedJarsDir, "${minecraft_version}-calamus-gen${intermediary_gen}-signature-patched-server.jar")
-def signaturePatchedMergedJar = new File(processedJarsDir, "${minecraft_version}-calamus-gen${intermediary_gen}-signature-patched.jar")
-def processedClientJar = new File(processedJarsDir, "${minecraft_version}-calamus-gen${intermediary_gen}-processed-client.jar")
-def processedServerJar = new File(processedJarsDir, "${minecraft_version}-calamus-gen${intermediary_gen}-processed-server.jar")
-def processedMergedJar = new File(processedJarsDir, "${minecraft_version}-calamus-gen${intermediary_gen}-processed.jar")
-def clientCalamusFile = new File(mappingsDir, "${minecraft_version}-calamus-gen${intermediary_gen}-client.tiny")
-def serverCalamusFile = new File(mappingsDir, "${minecraft_version}-calamus-gen${intermediary_gen}-server.tiny")
-def mergedCalamusFile = new File(mappingsDir, "${minecraft_version}-calamus-gen${intermediary_gen}.tiny")
-def nestedClientCalamusFile = new File(processedMappingsDir, "${minecraft_version}-nested-calamus-gen${intermediary_gen}-client.tiny")
-def nestedServerCalamusFile = new File(processedMappingsDir, "${minecraft_version}-nested-calamus-gen${intermediary_gen}-server.tiny")
-def nestedMergedCalamusFile = new File(processedMappingsDir, "${minecraft_version}-nested-calamus-gen${intermediary_gen}.tiny")
-def clientNestsFile = new File(nestsDir, "${minecraft_version}-client.nest")
-def serverNestsFile = new File(nestsDir, "${minecraft_version}-server.nest")
-def mergedNestsFile = new File(nestsDir, "${minecraft_version}.nest")
-def calamusClientNestsFile = new File(nestsDir, "${minecraft_version}-calamus-gen${intermediary_gen}-client.nest")
-def calamusServerNestsFile = new File(nestsDir, "${minecraft_version}-calamus-gen${intermediary_gen}-server.nest")
-def calamusMergedNestsFile = new File(nestsDir, "${minecraft_version}-calamus-gen${intermediary_gen}.nest")
-def clientSparrowFile = new File(sparrowDir, "${minecraft_version}-client.sigs")
-def serverSparrowFile = new File(sparrowDir, "${minecraft_version}-server.sigs")
-def mergedSparrowFile = new File(sparrowDir, "${minecraft_version}.sigs")
-def calamusClientSparrowFile = new File(sparrowDir, "${minecraft_version}-calamus-gen${intermediary_gen}-client.sigs")
-def calamusServerSparrowFile = new File(sparrowDir, "${minecraft_version}-calamus-gen${intermediary_gen}-server.sigs")
-def calamusMergedSparrowFile = new File(sparrowDir, "${minecraft_version}-calamus-gen${intermediary_gen}.sigs")
+def signaturePatchedClientJar = new File(processedJarsDir, "${minecraft_version}-sparrow+build.${client_sparrow_build}-client.jar")
+def signaturePatchedServerJar = new File(processedJarsDir, "${minecraft_version}-sparrow+build.${server_sparrow_build}-server.jar")
+def signaturePatchedMergedJar = new File(processedJarsDir, "${minecraft_version}-sparrow+build.${merged_sparrow_build}.jar")
+def processedClientJar = new File(processedJarsDir, "${minecraft_version}-processed-client.jar")
+def processedServerJar = new File(processedJarsDir, "${minecraft_version}-processed-server.jar")
+def processedMergedJar = new File(processedJarsDir, "${minecraft_version}-processed.jar")
 def featherJar = new File(mappedJarsDir, "${minecraft_version}-feather-gen${intermediary_gen}.jar")
 def libraries = new ArrayList<File>()
 def workingDir = new File(mappingsRunDir, "${minecraft_version}")
@@ -235,7 +258,13 @@ def fakeSourceDir = new File(mappingsBuildDir, "fakeSource")
 def namedSrcDir = file("namedSrc")
 
 def artifact_id = "feather-gen${intermediary_gen}"
-def feather_version = nextFeatherVersion(ENV, minecraft_version, artifact_id)
+def __feather_version__ = null
+java.util.function.Supplier<String> feather_version = {
+	if (__feather_version__ == null) {
+		__feather_version__ = nextFeatherVersion(ENV, minecraft_version, artifact_id)
+	}
+	return __feather_version__
+}
 
 // used for extending the graph
 def fromVersionInfo = null;
@@ -253,6 +282,11 @@ def fromFromProcessedClientJar = new File(processedJarsDir, "${from_from_minecra
 def fromFromProcessedServerJar = new File(processedJarsDir, "${from_from_minecraft_version}-calamus-gen${intermediary_gen}-processed-server.jar")
 def fromFromProcessedMergedJar = new File(processedJarsDir, "${from_from_minecraft_version}-calamus-gen${intermediary_gen}-processed.jar")
 
+def refresh = project.getGradle().getStartParameter().isRefreshDependencies()
+
+if (!buildCacheDir.exists()) {
+	buildCacheDir.mkdirs()
+}
 
 // utility methods
 
@@ -297,6 +331,14 @@ static def nextFeatherVersion(ENV, minecraft_version, artifact_id) {
 	} else {
 		return "${minecraft_version}+build.local"
 	}
+}
+
+static String getBuildFromCache(def buildsCache, String version) {
+	if (!buildsCache.exists()) {
+		return null
+	}
+	def builds = new JsonSlurper().parseText(FileUtils.readFileToString(buildsCache, Charset.defaultCharset()))
+	return builds.get(version)
 }
 
 static def pickSide(def details, def merged, def client, def server) {
@@ -355,8 +397,10 @@ task downloadVersionsManifest {
 	outputs.file(manifestFile)
 
 	doLast {
-		logger.lifecycle(":downloading minecraft versions manifest")
-		FileUtils.copyURLToFile(new URL("https://skyrising.github.io/mc-versions/version_manifest.json"), manifestFile)
+		if (!manifestFile.exists() || refresh) {
+			logger.lifecycle(":downloading minecraft versions manifest")
+			FileUtils.copyURLToFile(new URL("https://skyrising.github.io/mc-versions/version_manifest.json"), manifestFile)
+		}
 	}
 }
 
@@ -367,9 +411,9 @@ static def getManifestVersion(File manifestFile, String minecraft_version) {
 	}).findFirst() : java.util.Optional.empty()
 }
 
-def getVersionInfo(def version, def file, def minecraft_version, def env_var) {
+def getVersionInfo(def refresh, def version, def file, def minecraft_version, def env_var) {
 	if (version.isPresent() || file.exists()) {
-		if (version.isPresent()) {
+		if (version.isPresent() && (!file.exists() || refresh)) {
 			FileUtils.copyURLToFile(new URL(version.get().url), file)
 		}
 	} else {
@@ -385,24 +429,28 @@ task downloadVersionInfo(dependsOn: downloadVersionsManifest) {
 	outputs.files(versionInfoFile)
 	outputs.upToDateWhen { false }
 
+	if (!versionJsonsDir.exists()) {
+		versionJsonsDir.mkdirs()
+	}
+
 	doLast {
 		def manifestVersion = getManifestVersion(manifestFile, minecraft_version)
 		def fromManifestVersion = getManifestVersion(manifestFile, from_minecraft_version)
 		def fromFromManifestVersion = getManifestVersion(manifestFile, from_from_minecraft_version)
 
-		versionInfo = getVersionInfo(manifestVersion, versionInfoFile, minecraft_version, "MC_VERSION")
+		versionInfo = getVersionInfo(refresh, manifestVersion, versionInfoFile, minecraft_version, "MC_VERSION")
 		if (from_minecraft_version != null) {
-			fromVersionInfo = getVersionInfo(fromManifestVersion, fromVersionInfoFile, from_minecraft_version, "FROM_MC_VERSION")
+			fromVersionInfo = getVersionInfo(refresh, fromManifestVersion, fromVersionInfoFile, from_minecraft_version, "FROM_MC_VERSION")
 			if (from_from_minecraft_version != null) {
-				fromFromVersionInfo = getVersionInfo(fromFromManifestVersion, fromFromVersionInfoFile, from_from_minecraft_version, "FROM_FROM_MC_VERSION")
+				fromFromVersionInfo = getVersionInfo(refresh, fromFromManifestVersion, fromFromVersionInfoFile, from_from_minecraft_version, "FROM_FROM_MC_VERSION")
 			}
 		}
 	}
 }
 
-def getVersionDetails(def version, def file, def minecraft_version, def env_var) {
+def getVersionDetails(def refresh, def version, def file, def minecraft_version, def env_var) {
 	if (version.isPresent() || file.exists()) {
-		if (version.isPresent()) {
+		if (version.isPresent() && (!file.exists() || refresh)) {
 			FileUtils.copyURLToFile(new URL(version.get().details), file)
 		}
 	} else {
@@ -418,16 +466,20 @@ task downloadVersionDetails(dependsOn: downloadVersionsManifest) {
 	outputs.files(versionDetailsFile)
 	outputs.upToDateWhen { false }
 
+	if (!versionJsonsDir.exists()) {
+		versionJsonsDir.mkdirs()
+	}
+
 	doLast {
 		def manifestVersion = getManifestVersion(manifestFile, minecraft_version)
 		def fromManifestVersion = getManifestVersion(manifestFile, from_minecraft_version)
 		def fromFromManifestVersion = getManifestVersion(manifestFile, from_from_minecraft_version)
 
-		versionDetails = getVersionDetails(manifestVersion, versionDetailsFile, minecraft_version, "MC_VERSION")
+		versionDetails = getVersionDetails(refresh, manifestVersion, versionDetailsFile, minecraft_version, "MC_VERSION")
 		if (from_minecraft_version != null) {
-			fromVersionDetails = getVersionDetails(fromManifestVersion, fromVersionDetailsFile, from_minecraft_version, "FROM_MC_VERSION")
+			fromVersionDetails = getVersionDetails(refresh, fromManifestVersion, fromVersionDetailsFile, from_minecraft_version, "FROM_MC_VERSION")
 			if (from_from_minecraft_version != null) {
-				fromFromVersionDetails = getVersionDetails(fromFromManifestVersion, fromFromVersionDetailsFile, from_from_minecraft_version, "FROM_FROM_MC_VERSION")
+				fromFromVersionDetails = getVersionDetails(refresh, fromFromManifestVersion, fromFromVersionDetailsFile, from_from_minecraft_version, "FROM_FROM_MC_VERSION")
 			}
 		}
 	}
@@ -439,6 +491,10 @@ task downloadMcLibs(dependsOn: downloadVersionInfo) {
 	inputs.files versionInfoFile
 	outputs.dir(librariesDir)
 	outputs.upToDateWhen { false }
+
+	if (!librariesDir.exists()) {
+		librariesDir.mkdirs()
+	}
 
 	doLast {
 		logger.lifecycle(":downloading minecraft libraries")
@@ -456,7 +512,7 @@ task downloadMcLibs(dependsOn: downloadVersionInfo) {
 			def checksum = artifact.sha1
 			def libraryFile = new File(librariesDir, downloadUrl.substring(downloadUrl.lastIndexOf("/") + 1))
 
-			if (!libraryFile.exists() || !validateChecksum(libraryFile, checksum)) {
+			if (!libraryFile.exists() || !validateChecksum(libraryFile, checksum) || refresh) {
 				project.download {
 					src downloadUrl
 					dest libraryFile
@@ -478,10 +534,14 @@ task downloadMcJars(dependsOn: downloadVersionDetails) {
 		if (project.gradle.startParameter.isRefreshDependencies()) {
 			return false
 		}
-		def validClient = (!versionDetails.client || (clientJar.exists() && validateChecksum(clientJar, versionDetails.downloads.client.sha1)))
-		def validServer = (!versionDetails.server || (serverJar.exists() && validateChecksum(serverJar, versionDetails.downloads.server.sha1)))
+		def validClient = (!versionDetails.client || (clientJar.exists() && validateChecksum(clientJar, versionDetails.downloads.client.sha1) && !refresh))
+		def validServer = (!versionDetails.server || (serverJar.exists() && validateChecksum(serverJar, versionDetails.downloads.server.sha1) && !refresh))
 
 		return validClient && validServer
+	}
+
+	if (!gameJarsDir.exists()) {
+		gameJarsDir.mkdirs()
 	}
 
 	doLast {
@@ -517,25 +577,52 @@ task mergeMcJars(dependsOn: downloadMcJars) {
 
 	doLast {
 		if (versionDetails.sharedMappings && versionDetails.client && versionDetails.server) {
-			logger.lifecycle(":merging obfuscated jars")
+			if (!mergedJar.exists() || refresh) {
+				logger.lifecycle(":merging obfuscated jars")
 
-			def jarMerger = new JarMerger(clientJar, serverJar, mergedJar)
-			jarMerger.merge()
-			jarMerger.close()
+				def jarMerger = new JarMerger(clientJar, serverJar, mergedJar)
+				jarMerger.merge()
+				jarMerger.close()
+			}
 		}
 	}
 }
 
-task downloadIntermediary(dependsOn: downloadVersionDetails, type: Download) {
+task downloadIntermediary(dependsOn: downloadVersionDetails) {
 	group = jarSetupGroup
 
-	src UrlEscapers.urlFragmentEscaper().escape("https://github.com/OrnitheMC/calamus/raw/gen${intermediary_gen}/mappings/${minecraft_version}.tiny")
-	dest mergedCalamusFile
+	inputs.file(versionDetailsFile)
+	outputs.file(mergedCalamusFile)
+	outputs.upToDateWhen { false }
+
+	if (!mappingsDir.exists()) {
+		mappingsDir.mkdirs()
+	}
 
 	doLast {
+		if (!mergedCalamusFile.exists() || refresh) {
+			def tmpDir = project.file(".downloads")
+					def tmpJar = new File(tmpDir, "calamus.jar")
+					def tmpFile = new File(tmpDir, mergedCalamusFile.name)
+					download {
+				src new URL("https://maven.ornithemc.net/releases/net/ornithemc/calamus-intermediary-gen${intermediary_gen}/${minecraft_version}/calamus-intermediary-gen${intermediary_gen}-${minecraft_version}.jar")
+				dest tmpJar
+				overwrite true
+			}
+			copy {
+				from({ zipTree(tmpJar) }) {
+					from 'nests/mappings.nest'
+					rename 'mappings.nest', "../${tmpFile.name}"
+				}
+				
+				into tmpDir
+			}
+			java.nio.file.Files.copy(tmpFile.toPath(), mergedCalamusFile.toPath())
+			delete(tmpDir)
+		}
 		if (!versionDetails.sharedMappings) {
-			boolean clientMissing = (versionDetails.client && !clientCalamusFile.exists())
-			boolean serverMissing = (versionDetails.server && !serverCalamusFile.exists())
+			boolean clientMissing = (versionDetails.client && (!clientCalamusFile.exists() || refresh))
+			boolean serverMissing = (versionDetails.server && (!serverCalamusFile.exists() || refresh))
 
 			if (clientMissing || serverMissing) {
 				new CommandSplitTiny().run(
@@ -556,6 +643,10 @@ task mapMcJarsToIntermediary(dependsOn: [downloadMcLibs, downloadIntermediary, m
 	//Force the task to always run
 	outputs.upToDateWhen { false }
 
+	if (!mappedJarsDir.exists()) {
+		mappedJarsDir.mkdirs()
+	}
+
 	doLast {
 		logger.lifecycle(":mapping minecraft to intermediary")
 
@@ -563,21 +654,25 @@ task mapMcJarsToIntermediary(dependsOn: [downloadMcLibs, downloadIntermediary, m
 			def jarIn = pickSide(versionDetails, mergedJar, clientJar, serverJar)
 			def jarOut = pickSide(versionDetails, calamusMergedJar, calamusClientJar, calamusServerJar)
 			
-			mapJar(jarIn, jarOut, mergedCalamusFile, libraries, "official", "intermediary")
+			if (!mergedCalamusFile.exists() || refresh) {
+				mapJar(jarIn, jarOut, mergedCalamusFile, libraries, "official", "intermediary")
+			}
 		} else {
-			if (versionDetails.client) {
+			if (versionDetails.client && (!calamusClientJar.exists() || refresh)) {
 				mapJar(clientJar, calamusClientJar, clientCalamusFile, libraries, "official", "intermediary")
 			}
-			if (versionDetails.server) {
+			if (versionDetails.server && (!calamusServerJar.exists() || refresh)) {
 				mapJar(serverJar, calamusServerJar, serverCalamusFile, libraries, "official", "intermediary")
 			}
 			if (versionDetails.client && versionDetails.server) {
 				// only reached when sharedMappings is false
-				logger.lifecycle(":merging intermediary jars")
+				if (!calamusMergedJar.exists() || refresh) {
+					logger.lifecycle(":merging intermediary jars")
 
-				def jarMerger = new JarMerger(calamusClientJar, calamusServerJar, calamusMergedJar)
-				jarMerger.merge()
-				jarMerger.close()
+					def jarMerger = new JarMerger(calamusClientJar, calamusServerJar, calamusMergedJar)
+					jarMerger.merge()
+					jarMerger.close()
+				}
 			}
 		}
 	}
@@ -613,36 +708,63 @@ static void mapJar(File input, File output, File mappings, List<File> libraries,
 	}
 }
 
-void downloadNests(def version, def file) {
+task updateNestsBuilds() {
+	doLast {
+		def generator = new JsonGenerator.Options().build()
+
+		def meta = new JsonSlurper().parse(new URL("https://meta.ornithemc.net/v3/versions/nests").openStream())
+		def builds = new LinkedHashMap<>();
+
+		meta.forEach({
+			builds.put(it.gameVersion, it.build)
+		})
+
+		FileUtils.writeStringToFile(nestsBuildsCache, generator.toJson(builds), Charset.defaultCharset())
+	}
+}
+
+void downloadNests(def version, def build, def file) {
+	def tmpDir = project.file(".downloads")
+	def tmpJar = new File(tmpDir, "nests.jar")
+	def tmpFile = new File(tmpDir, file.name)
 	project.download {
-		src new URL("https://github.com/OrnitheMC/nests/raw/main/nests/${version}.nest")
-		dest file
+		src new URL("https://maven.ornithemc.net/releases/net/ornithemc/nests/${version}+build.${build}/nests-${version}+build.${build}.jar")
+		dest tmpJar
 		overwrite true
 	}
+	copy {
+		from({ zipTree(tmpJar) }) {
+			from 'nests/mappings.nest'
+			rename 'mappings.nest', "../${tmpFile.name}"
+		}
+		into tmpDir
+	}
+	java.nio.file.Files.copy(tmpFile.toPath(), file.toPath())
+	delete(tmpDir)
 }
 
 task downloadNests(dependsOn: downloadVersionDetails) {
 	group = enigmaGroup
 
-	//Force the task to always run
-	outputs.upToDateWhen { false }
+	nesting = (merged_nests_build != null)
+	outputs.upToDateWhen { !nesting }
+
+	if (!nestsDir.exists()) {
+		nestsDir.mkdirs()
+	}
 
 	doLast {
-		try {
-			if (versionDetails.sharedMappings) {
-				downloadNests(minecraft_version, mergedNestsFile)
-			} else {
-				if (versionDetails.client) {
-					downloadNests("${minecraft_version}-client", clientNestsFile)
-				}
-				if (versionDetails.server) {
-					downloadNests("${minecraft_version}-server", serverNestsFile)
-				}
+		if (versionDetails.sharedMappings) {
+			if (merged_nests_build && merged_nests_build.indexOf('&') < 0 && (!mergedNestsFile.exists() || refresh)) {
+				downloadNests(minecraft_version, merged_nests_build, mergedNestsFile)
 			}
-
-			nesting = true
-		} catch (Throwable ignored) {
-			nesting = false
+		} else {
+			if (versionDetails.client && client_nests_build && (!clientNestsFile.exists() || refresh)) {
+				downloadNests("${minecraft_version}-client", client_nests_build, clientNestsFile)
+			}
+			if (versionDetails.server && server_nests_build && (!serverNestsFile.exists() || refresh)) {
+				downloadNests("${minecraft_version}-server", server_nests_build, serverNestsFile)
+			}
 		}
 	}
 }
@@ -650,26 +772,29 @@ task downloadNests(dependsOn: downloadVersionDetails) {
 task mapNestsToIntermediary(dependsOn: [downloadNests, downloadIntermediary]) {
 	group = enigmaGroup
 
-	//Force the task to always run
-	outputs.upToDateWhen { false }
+	outputs.upToDateWhen { !nesting }
 
 	doLast {
 		if (nesting) {
 			logger.lifecycle(":mapping nests to intermediary")
-
+			
 			if (versionDetails.sharedMappings) {
-				MappingUtils.mapNests(mergedNestsFile.toPath(), calamusMergedNestsFile.toPath(), Format.TINY_V1, mergedCalamusFile.toPath())
+				if (!calamusMergedNestsFile.exists() || refresh) {
+					MappingUtils.mapNests(mergedNestsFile.toPath(), calamusMergedNestsFile.toPath(), Format.TINY_V1, mergedCalamusFile.toPath())
+				}
 			} else {
-				if (versionDetails.client) {
+				if (versionDetails.client && (!calamusClientNestsFile.exists() || refresh)) {
 					MappingUtils.mapNests(clientNestsFile.toPath(), calamusClientNestsFile.toPath(), Format.TINY_V1, clientCalamusFile.toPath())
 				}
-				if (versionDetails.server) {
+				if (versionDetails.server && (!calamusServerNestsFile.exists() || refresh)) {
 					MappingUtils.mapNests(serverNestsFile.toPath(), calamusServerNestsFile.toPath(), Format.TINY_V1, serverCalamusFile.toPath())
 				}
 				if (versionDetails.client && versionDetails.server) {
 					logger.lifecycle(":merging intermediary nests")
 
-					MappingUtils.mergeNests(calamusClientNestsFile.toPath(), calamusServerNestsFile.toPath(), calamusMergedNestsFile.toPath())
+					if (!calamusMergedNestsFile.exists() || refresh) {
+						MappingUtils.mergeNests(calamusClientNestsFile.toPath(), calamusServerNestsFile.toPath(), calamusMergedNestsFile.toPath())
+					}
 				}
 			}
 		}
@@ -681,7 +806,11 @@ task applyNestsToIntermediary(dependsOn: mapNestsToIntermediary) {
 	
 	inputs.files downloadIntermediary.outputs.files.files
 	outputs.file(nestedMergedCalamusFile)
-	outputs.upToDateWhen { false }
+	outputs.upToDateWhen { !nesting }
+
+	if (!processedMappingsDir.exists()) {
+		processedMappingsDir.mkdirs()
+	}
 
 	doLast {
 		if (nesting) {
@@ -691,41 +820,70 @@ task applyNestsToIntermediary(dependsOn: mapNestsToIntermediary) {
 			def nestedCalamus = pickEnv(versionDetails, nestedMergedCalamusFile.toPath(), nestedClientCalamusFile.toPath(), nestedServerCalamusFile.toPath())
 			def nests = pickEnv(versionDetails, mergedNestsFile.toPath(), clientNestsFile.toPath(), serverNestsFile.toPath())
 
-			MappingUtils.applyNests(Format.TINY_V1, calamus, nestedCalamus, nests)
+			if (!java.nio.file.Files.exists(nestedCalamus) || refresh) {
+				MappingUtils.applyNests(Format.TINY_V1, calamus, nestedCalamus, nests)
+			}
 		}
 	}
 }
 
-void downloadSignatures(def version, def file) {
+task updateSparrowBuilds() {
+	doLast {
+		def generator = new JsonGenerator.Options().build()
+
+		def meta = new JsonSlurper().parse(new URL("https://meta.ornithemc.net/v3/versions/sparrow").openStream())
+		def builds = new LinkedHashMap<>();
+
+		meta.forEach({
+			builds.put(it.gameVersion, it.build)
+		})
+
+		FileUtils.writeStringToFile(sparrowBuildsCache, generator.toJson(builds), Charset.defaultCharset())
+	}
+}
+
+void downloadSignatures(def version, def build, def file) {
+	def tmpDir = project.file(".downloads")
+	def tmpJar = new File(tmpDir, "sparrow.jar")
+	def tmpFile = new File(tmpDir, file.name)
 	project.download {
-		src new URL("https://github.com/OrnitheMC/sparrow/raw/main/signatures/${version}.sigs")
-		dest file
+		src new URL("https://maven.ornithemc.net/releases/net/ornithemc/sparrow/${version}+build.${build}/sparrow-${version}+build.${build}.jar")
+		dest tmpJar
 		overwrite true
 	}
+	copy {
+		from({ zipTree(tmpJar) }) {
+			from 'signatures/mappings.sigs'
+			rename 'mappings.sigs', "../${tmpFile.name}"
+		}
+		into tmpDir
+	}
+	java.nio.file.Files.copy(tmpFile.toPath(), file.toPath())
+	delete(tmpDir)
 }
 
 task downloadSignatures(dependsOn: downloadVersionDetails) {
 	group = enigmaGroup
 
-	//Force the task to always run
-	outputs.upToDateWhen { false }
+	signaturePatching = (merged_sparrow_build != null)
+	outputs.upToDateWhen { !signaturePatching }
+
+	if (!sparrowDir.exists()) {
+		sparrowDir.mkdirs()
+	}
 
 	doLast {
-		try {
-			if (versionDetails.sharedMappings) {
-				downloadSignatures(minecraft_version, mergedSparrowFile)
-			} else {
-				if (versionDetails.client) {
-					downloadSignatures("${minecraft_version}-client", clientSparrowFile)
-				}
-				if (versionDetails.server) {
-					downloadSignatures("${minecraft_version}-server", serverSparrowFile)
-				}
+		if (versionDetails.sharedMappings) {
+			if (merged_sparrow_build && merged_sparrow_build.indexOf('&') < 0 && (!mergedSparrowFile.exists() || refresh)) {
+				downloadSignatures(minecraft_version, merged_sparrow_build, mergedSparrowFile)
 			}
-
-			signaturePatching = true
-		} catch (Throwable ignored) {
-			signaturePatching = false
+		} else {
+			if (versionDetails.client && client_sparrow_build && (!clientSparrowFile.exists() || refresh)) {
+				downloadSignatures("${minecraft_version}-client", client_sparrow_build, clientSparrowFile)
+			}
+			if (versionDetails.server && server_sparrow_build && (!serverSparrowFile.exists() || refresh)) {
+				downloadSignatures("${minecraft_version}-server", server_sparrow_build, serverSparrowFile)
+			}
 		}
 	}
 }
@@ -733,26 +891,29 @@ task downloadSignatures(dependsOn: downloadVersionDetails) {
 task mapSignaturesToIntermediary(dependsOn: [downloadSignatures, applyNestsToIntermediary]) {
 	group = enigmaGroup
 
-	//Force the task to always run
-	outputs.upToDateWhen { false }
+	outputs.upToDateWhen { !signaturePatching }
 
 	doLast {
 		if (signaturePatching) {
 			logger.lifecycle(":mapping signatures to intermediary")
 
 			if (versionDetails.sharedMappings) {
-				MappingUtils.mapSignatures(mergedSparrowFile.toPath(), calamusMergedSparrowFile.toPath(), Format.TINY_V1, nesting ? nestedMergedCalamusFile.toPath() : mergedCalamusFile.toPath())
+				if (!calamusMergedSparrowFile.exists() || refresh) {
+					MappingUtils.mapSignatures(mergedSparrowFile.toPath(), calamusMergedSparrowFile.toPath(), Format.TINY_V1, nesting ? nestedMergedCalamusFile.toPath() : mergedCalamusFile.toPath())
+				}
 			} else {
-				if (versionDetails.client) {
+				if (versionDetails.client && (!calamusClientSparrowFile.exists() || refresh)) {
 					MappingUtils.mapSignatures(clientSparrowFile.toPath(), calamusClientSparrowFile.toPath(), Format.TINY_V1, nesting ? nestedClientCalamusFile.toPath() : clientCalamusFile.toPath())
 				}
-				if (versionDetails.server) {
+				if (versionDetails.server && (!calamusServerSparrowFile.exists() || refresh)) {
 					MappingUtils.mapSignatures(serverSparrowFile.toPath(), calamusServerSparrowFile.toPath(), Format.TINY_V1, nesting ? nestedServerCalamusFile.toPath() : serverCalamusFile.toPath())
 				}
 				if (versionDetails.client && versionDetails.server) {
 					logger.lifecycle(":merging intermediary signatures")
 
-					MappingUtils.mergeSignatures(calamusClientSparrowFile.toPath(), calamusServerSparrowFile.toPath(), calamusMergedSparrowFile.toPath())
+					if (!calamusMergedSparrowFile.exists() || refresh) {
+						MappingUtils.mergeSignatures(calamusClientSparrowFile.toPath(), calamusServerSparrowFile.toPath(), calamusMergedSparrowFile.toPath())
+					}
 				}
 			}
 		}
@@ -765,6 +926,10 @@ task processMcJars(dependsOn: [mapMcJarsToIntermediary, mapNestsToIntermediary, 
 	inputs.files mapMcJarsToIntermediary.outputs.files.files
 	outputs.file(processedMergedJar)
 	outputs.upToDateWhen { false }
+
+	if (!processedJarsDir.exists()) {
+		processedJarsDir.mkdirs()
+	}
 
 	doLast {
 		def clientIn
@@ -1430,7 +1595,7 @@ javadoc {
 task tinyV1Jar(type: Jar, dependsOn: buildTiny) {
 	group = buildMappingsGroup
 	outputs.upToDateWhen { false }
-	archiveFileName = "${artifact_id}-${feather_version}.jar"
+	archiveFileName = "${artifact_id}-${feather_version.get()}.jar"
 	destinationDirectory.set(file("build/libs"))
 	archiveClassifier.set("")
 	from(mergedTinyV1) {
@@ -1441,7 +1606,7 @@ task tinyV1Jar(type: Jar, dependsOn: buildTiny) {
 task tinyV2Jar(type: Jar, dependsOn: buildTiny) {
 	group = buildMappingsGroup
 	outputs.upToDateWhen { false }
-	archiveFileName = "${artifact_id}-${feather_version}-v2.jar"
+	archiveFileName = "${artifact_id}-${feather_version.get()}-v2.jar"
 	destinationDirectory.set(file("build/libs"))
 	archiveClassifier.set("v2")
 	from(tinyV2) {
@@ -1452,7 +1617,7 @@ task tinyV2Jar(type: Jar, dependsOn: buildTiny) {
 task mergedTinyV2Jar(type: Jar, dependsOn: buildTiny) {
 	group = buildMappingsGroup
 	outputs.upToDateWhen { false }
-	archiveFileName = "${artifact_id}-${feather_version}-mergedv2.jar"
+	archiveFileName = "${artifact_id}-${feather_version.get()}-mergedv2.jar"
 	destinationDirectory.set(file("build/libs"))
 	archiveClassifier.set("mergedv2")
 	from(mergedTinyV2) {
@@ -1465,7 +1630,7 @@ task javadocJar(type: Jar, dependsOn: [javadoc]) {
 
 	from javadoc.destinationDir
 
-	archiveVersion.set feather_version
+	archiveVersion.set feather_version.get()
 	archiveClassifier.set('javadoc')
 }
 
@@ -1480,7 +1645,7 @@ publishing {
 		maven(MavenPublication) {
 			groupId 'net.ornithemc'
 			artifactId artifact_id
-			version feather_version
+			version feather_version.get()
 
 			artifact(compressedTinyV1) {
 				classifier "tiny"
