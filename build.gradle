@@ -4,6 +4,7 @@ import java.nio.file.StandardCopyOption
 import java.util.List
 import java.util.zip.GZIPOutputStream
 import groovy.json.JsonGenerator
+import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
 import com.google.common.io.Files
@@ -714,11 +715,11 @@ task updateNestsBuilds() {
 		def meta = new JsonSlurper().parse(new URL("https://meta.ornithemc.net/v3/versions/nests").openStream())
 		def builds = new LinkedHashMap<>();
 
-		meta.forEach({
-			builds.put(it.gameVersion, it.build)
+		meta.forEach({ entry ->
+			builds.computeIfAbsent(entry.gameVersion, { entry.build })
 		})
 
-		FileUtils.writeStringToFile(nestsBuildsCache, generator.toJson(builds), Charset.defaultCharset())
+		FileUtils.writeStringToFile(nestsBuildsCache, JsonOutput.prettyPrint(generator.toJson(builds)), Charset.defaultCharset())
 	}
 }
 
@@ -832,11 +833,11 @@ task updateSparrowBuilds() {
 		def meta = new JsonSlurper().parse(new URL("https://meta.ornithemc.net/v3/versions/sparrow").openStream())
 		def builds = new LinkedHashMap<>();
 
-		meta.forEach({
-			builds.put(it.gameVersion, it.build)
+		meta.forEach({ entry ->
+			builds.computeIfAbsent(entry.gameVersion, { entry.build })
 		})
 
-		FileUtils.writeStringToFile(sparrowBuildsCache, generator.toJson(builds), Charset.defaultCharset())
+		FileUtils.writeStringToFile(sparrowBuildsCache, JsonOutput.prettyPrint(generator.toJson(builds)), Charset.defaultCharset())
 	}
 }
 
