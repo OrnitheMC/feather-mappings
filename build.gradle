@@ -602,19 +602,18 @@ task downloadIntermediary(dependsOn: downloadVersionDetails) {
 	doLast {
 		if (!mergedCalamusFile.exists() || refresh) {
 			def tmpDir = project.file(".downloads")
-					def tmpJar = new File(tmpDir, "calamus.jar")
-					def tmpFile = new File(tmpDir, mergedCalamusFile.name)
-					download {
+			def tmpJar = new File(tmpDir, "calamus.jar")
+			def tmpFile = new File(tmpDir, mergedCalamusFile.name)
+			download {
 				src new URL("https://maven.ornithemc.net/releases/net/ornithemc/calamus-intermediary-gen${intermediary_gen}/${minecraft_version}/calamus-intermediary-gen${intermediary_gen}-${minecraft_version}.jar")
 				dest tmpJar
 				overwrite true
 			}
 			copy {
 				from({ zipTree(tmpJar) }) {
-					from 'nests/mappings.nest'
-					rename 'mappings.nest', "../${tmpFile.name}"
+					from 'mappings/mappings.tiny'
+					rename 'mappings.tiny', "../${tmpFile.name}"
 				}
-				
 				into tmpDir
 			}
 			java.nio.file.Files.copy(tmpFile.toPath(), mergedCalamusFile.toPath())
