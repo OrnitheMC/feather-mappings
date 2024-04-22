@@ -227,13 +227,13 @@ def calamusServerJar = new File(mappedJarsDir, "${minecraft_version}-calamus-gen
 def calamusMergedJar = new File(mappedJarsDir, "${minecraft_version}-calamus-gen${intermediary_gen}.jar")
 // only 1.8.2-pre4 and below need nests, but this information is not in the manifest
 // on top of that, not all versions below 1.8.2-pre4 have nests available yet
-def nesting = false
+def nesting = (merged_nests_build != null)
 def nestedClientJar = new File(processedJarsDir, "${minecraft_version}-nests+build.${client_nests_build}-client.jar")
 def nestedServerJar = new File(processedJarsDir, "${minecraft_version}-nests+build.${server_nests_build}-server.jar")
 def nestedMergedJar = new File(processedJarsDir, "${minecraft_version}-nests+build.${merged_nests_build}.jar")
 // only 1.8.2-pre4 and below need signature patching, but this information is not in the manifest
 // on top of that, not all versions below 1.8.2-pre4 have signature patches available yet
-def signaturePatching = false
+def signaturePatching = (merged_sparrow_build != null)
 def signaturePatchedClientJar = new File(processedJarsDir, "${minecraft_version}-sparrow+build.${client_sparrow_build}-client.jar")
 def signaturePatchedServerJar = new File(processedJarsDir, "${minecraft_version}-sparrow+build.${server_sparrow_build}-server.jar")
 def signaturePatchedMergedJar = new File(processedJarsDir, "${minecraft_version}-sparrow+build.${merged_sparrow_build}.jar")
@@ -283,10 +283,6 @@ def fromFromProcessedServerJar = new File(processedJarsDir, "${from_from_minecra
 def fromFromProcessedMergedJar = new File(processedJarsDir, "${from_from_minecraft_version}-calamus-gen${intermediary_gen}-processed.jar")
 
 def refresh = project.getGradle().getStartParameter().isRefreshDependencies()
-
-if (!buildCacheDir.exists()) {
-	buildCacheDir.mkdirs()
-}
 
 // utility methods
 
@@ -397,6 +393,10 @@ task downloadVersionsManifest {
 	outputs.file(manifestFile)
 
 	doLast {
+		if (!buildCacheDir.exists()) {
+			buildCacheDir.mkdirs()
+		}
+
 		if (!manifestFile.exists() || refresh) {
 			logger.lifecycle(":downloading minecraft versions manifest")
 			FileUtils.copyURLToFile(new URL("https://skyrising.github.io/mc-versions/version_manifest.json"), manifestFile)
@@ -429,11 +429,11 @@ task downloadVersionInfo(dependsOn: downloadVersionsManifest) {
 	outputs.files(versionInfoFile)
 	outputs.upToDateWhen { false }
 
-	if (!versionJsonsDir.exists()) {
-		versionJsonsDir.mkdirs()
-	}
-
 	doLast {
+		if (!versionJsonsDir.exists()) {
+			versionJsonsDir.mkdirs()
+		}
+
 		def manifestVersion = getManifestVersion(manifestFile, minecraft_version)
 		def fromManifestVersion = getManifestVersion(manifestFile, from_minecraft_version)
 		def fromFromManifestVersion = getManifestVersion(manifestFile, from_from_minecraft_version)
@@ -466,11 +466,11 @@ task downloadVersionDetails(dependsOn: downloadVersionsManifest) {
 	outputs.files(versionDetailsFile)
 	outputs.upToDateWhen { false }
 
-	if (!versionJsonsDir.exists()) {
-		versionJsonsDir.mkdirs()
-	}
-
 	doLast {
+		if (!versionJsonsDir.exists()) {
+			versionJsonsDir.mkdirs()
+		}
+
 		def manifestVersion = getManifestVersion(manifestFile, minecraft_version)
 		def fromManifestVersion = getManifestVersion(manifestFile, from_minecraft_version)
 		def fromFromManifestVersion = getManifestVersion(manifestFile, from_from_minecraft_version)
@@ -492,11 +492,11 @@ task downloadMcLibs(dependsOn: downloadVersionInfo) {
 	outputs.dir(librariesDir)
 	outputs.upToDateWhen { false }
 
-	if (!librariesDir.exists()) {
-		librariesDir.mkdirs()
-	}
-
 	doLast {
+		if (!librariesDir.exists()) {
+			librariesDir.mkdirs()
+		}
+
 		logger.lifecycle(":downloading minecraft libraries")
 
 		versionInfo.libraries.each {
@@ -540,13 +540,13 @@ task downloadMcJars(dependsOn: downloadVersionDetails) {
 		return validClient && validServer
 	}
 
-	if (!gameJarsDir.exists()) {
-		gameJarsDir.mkdirs()
-	}
-
 	doLast {
 		if (!versionDetailsFile.exists() || versionDetails == null) {
 			throw new RuntimeException("Can't download the jars without the ${versionDetailsFile.name} file!")
+		}
+
+		if (!gameJarsDir.exists()) {
+			gameJarsDir.mkdirs()
 		}
 
 		logger.lifecycle(":downloading minecraft jar(s) for ${minecraft_version}")
@@ -595,11 +595,11 @@ task downloadIntermediary(dependsOn: downloadVersionDetails) {
 	outputs.file(mergedCalamusFile)
 	outputs.upToDateWhen { false }
 
-	if (!mappingsDir.exists()) {
-		mappingsDir.mkdirs()
-	}
-
 	doLast {
+		if (!mappingsDir.exists()) {
+			mappingsDir.mkdirs()
+		}
+
 		if (!mergedCalamusFile.exists() || refresh) {
 			def tmpDir = project.file(".downloads")
 			def tmpJar = new File(tmpDir, "calamus.jar")
@@ -642,18 +642,18 @@ task mapMcJarsToIntermediary(dependsOn: [downloadMcLibs, downloadIntermediary, m
 	//Force the task to always run
 	outputs.upToDateWhen { false }
 
-	if (!mappedJarsDir.exists()) {
-		mappedJarsDir.mkdirs()
-	}
-
 	doLast {
+		if (!mappedJarsDir.exists()) {
+			mappedJarsDir.mkdirs()
+		}
+
 		logger.lifecycle(":mapping minecraft to intermediary")
 
 		if (versionDetails.sharedMappings) {
 			def jarIn = pickSide(versionDetails, mergedJar, clientJar, serverJar)
 			def jarOut = pickSide(versionDetails, calamusMergedJar, calamusClientJar, calamusServerJar)
 			
-			if (!mergedCalamusFile.exists() || refresh) {
+			if (!jarOut.exists() || refresh) {
 				mapJar(jarIn, jarOut, mergedCalamusFile, libraries, "official", "intermediary")
 			}
 		} else {
@@ -745,14 +745,13 @@ void downloadNests(def version, def build, def file) {
 task downloadNests(dependsOn: downloadVersionDetails) {
 	group = enigmaGroup
 
-	nesting = (merged_nests_build != null)
-	outputs.upToDateWhen { !nesting }
-
-	if (!nestsDir.exists()) {
-		nestsDir.mkdirs()
-	}
+	outputs.upToDateWhen { false }
 
 	doLast {
+		if (!nestsDir.exists()) {
+			nestsDir.mkdirs()
+		}
+
 		if (versionDetails.sharedMappings) {
 			if (merged_nests_build && merged_nests_build.indexOf('&') < 0 && (!mergedNestsFile.exists() || refresh)) {
 				downloadNests(minecraft_version, merged_nests_build, mergedNestsFile)
@@ -771,7 +770,7 @@ task downloadNests(dependsOn: downloadVersionDetails) {
 task mapNestsToIntermediary(dependsOn: [downloadNests, downloadIntermediary]) {
 	group = enigmaGroup
 
-	outputs.upToDateWhen { !nesting }
+	outputs.upToDateWhen { false }
 
 	doLast {
 		if (nesting) {
@@ -805,14 +804,14 @@ task applyNestsToIntermediary(dependsOn: mapNestsToIntermediary) {
 	
 	inputs.files downloadIntermediary.outputs.files.files
 	outputs.file(nestedMergedCalamusFile)
-	outputs.upToDateWhen { !nesting }
-
-	if (!processedMappingsDir.exists()) {
-		processedMappingsDir.mkdirs()
-	}
+	outputs.upToDateWhen { false }
 
 	doLast {
 		if (nesting) {
+			if (!processedMappingsDir.exists()) {
+				processedMappingsDir.mkdirs()
+			}
+
 			logger.lifecycle(":applying nests to intermediary")
 
 			def calamus = pickEnv(versionDetails, mergedCalamusFile.toPath(), clientCalamusFile.toPath(), serverCalamusFile.toPath())
@@ -864,14 +863,13 @@ void downloadSignatures(def version, def build, def file) {
 task downloadSignatures(dependsOn: downloadVersionDetails) {
 	group = enigmaGroup
 
-	signaturePatching = (merged_sparrow_build != null)
-	outputs.upToDateWhen { !signaturePatching }
-
-	if (!sparrowDir.exists()) {
-		sparrowDir.mkdirs()
-	}
+	outputs.upToDateWhen { false }
 
 	doLast {
+		if (!sparrowDir.exists()) {
+			sparrowDir.mkdirs()
+		}
+
 		if (versionDetails.sharedMappings) {
 			if (merged_sparrow_build && merged_sparrow_build.indexOf('&') < 0 && (!mergedSparrowFile.exists() || refresh)) {
 				downloadSignatures(minecraft_version, merged_sparrow_build, mergedSparrowFile)
@@ -890,7 +888,7 @@ task downloadSignatures(dependsOn: downloadVersionDetails) {
 task mapSignaturesToIntermediary(dependsOn: [downloadSignatures, applyNestsToIntermediary]) {
 	group = enigmaGroup
 
-	outputs.upToDateWhen { !signaturePatching }
+	outputs.upToDateWhen { false }
 
 	doLast {
 		if (signaturePatching) {
@@ -926,11 +924,11 @@ task processMcJars(dependsOn: [mapMcJarsToIntermediary, mapNestsToIntermediary, 
 	outputs.file(processedMergedJar)
 	outputs.upToDateWhen { false }
 
-	if (!processedJarsDir.exists()) {
-		processedJarsDir.mkdirs()
-	}
-
 	doLast {
+		if (!processedJarsDir.exists()) {
+			processedJarsDir.mkdirs()
+		}
+
 		def clientIn
 		def serverIn
 		def mergedIn
