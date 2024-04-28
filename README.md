@@ -11,10 +11,10 @@ everyone mod Minecraft freely and openly, while also being able to innovate and 
 ## Usage
 To use feather-deobfuscated Minecraft for Minecraft modding or as a dependency in a Java project, you can use [loom](https://github.com/FabricMC/fabric-loom) and [ploceus](https://github.com/OrnitheMC/ploceus) Gradle plugins. See [fabric wiki tutorial](https://fabricmc.net/wiki/tutorial:setup) for more information.
 
-To obtain a deobfuscated Minecraft jar, [`py feather.py mapMcJarsToNamed <minecraft version>`](#mapMcJarsToNamed) will generate a jar named like `<minecraft version>-feather-gen2.jar`, which can be sent to a decompiler for deobfuscated code.
-You can also directly generate a mapped jar and decompile the code using one of the following commands (no need to run the `mapNamedJar` task first):
-- CFR: `py feather.py decompileCFR <minecraft version>`
-- Vineflower: `py feather.py decompileVineflower <minecraft version>`
+To obtain a deobfuscated Minecraft jar, [`py feather.py mapMinecraftToNamed <minecraft version>`](#mapMinecraftToNamed) will generate a jar named like `<minecraft version>-feather-gen2.jar`, which can be sent to a decompiler for deobfuscated code.
+You can also directly generate a mapped jar and decompile the code using one of the following commands (no need to run the `mapMinecraftToNamed` task first):
+- CFR: `py feather.py decompileWithCfr <minecraft version>`
+- Vineflower: `py feather.py decompileWithVineflower <minecraft version>`
 
 ## Contributing
 
@@ -29,17 +29,17 @@ Please have a look at the [naming conventions](/CONVENTIONS.md) before submittin
 1. Fork and clone the repo
 2. Run `py feather.py enigma <minecraft version>` to open [Enigma](https://github.com/OrnitheMC/Enigma), a user interface to easily edit the mappings
 3. Save your changes in Enigma and store them by running one of the following save tasks (`py feather.py <task> <minecraft version>`):
-   - `propagateMappings`: propagate your changes up and down the version graph and save them to every applicable Minecraft version (this is most likely the task you want to use)
+   - `saveMappings`: propagate your changes up and down the version graph and save them to every applicable Minecraft version (this is most likely the task you want to use)
    - `insertMappings`: save your changes only to the specified Minecraft version
-   - `propagateMappingsDown`: propagate your changes down the version graph (to versions further away from the root (b1.0)) and save them to every applicable Minecraft version
-   - `propagateMappingsUp`: propagate your changes up the version graph (to versions closer to the root (b1.0)) and save them to every applicable Minecraft version
+   - `saveMappingsDown`: propagate your changes down the version graph (to versions further away from the root (b1.0)) and save them to every applicable Minecraft version
+   - `saveMappingsUp`: propagate your changes up the version graph (to versions closer to the root (b1.0)) and save them to every applicable Minecraft version
 4. If you wish to continue working in Enigma, make sure to reload the mappings.
 5. When you're done, commit and push your work to your fork
 6. Open a pull request with your changes
 
 #### NOTE
 
-The `enigma` task separates the mappings for the specified version out into temporary files in the `/run/` folder. Enigma will read and write to these files, and the save tasks will use these files to save the mappings back into the version graph.
+The `enigma` task loads the mappings for the specified version out into temporary files in the `/run/` folder. Enigma will read and write to these files, and the save tasks will use these files to save the mappings back into the version graph.
 
 - DO NOT MANUALLY EDIT THESE FILES! You may corrupt the mappings!
 - Running the `enigma` task **will** overwrite these files. If you have unsaved changes, make sure to run one of the save tasks **before** running the `enigma` task to open Enigma again!
@@ -48,7 +48,7 @@ The `enigma` task separates the mappings for the specified version out into temp
 ## Gradle
 Feather uses Gradle to provide a number of utility tasks for working with the mappings.
 
-### `feather`
+### `enigma`
 Download and launch the latest version of [Enigma](https://github.com/OrnitheMC/Enigma) automatically configured to use the merged jar and the mappings.
 
 Compared to launching Enigma externally, the gradle task adds a name guesser plugin that automatically map enums and a few constant field names.
@@ -56,17 +56,17 @@ Compared to launching Enigma externally, the gradle task adds a name guesser plu
 ### `build`
 Build a GZip'd archive containing a tiny mapping between official (obfuscated), [intermediary](https://github.com/OrnitheMC/calamus), and Feather names ("named") and packages Tiny V1 mappings into a zip archive.
 
-### `mapMcJarsToNamed`
+### `mapMinecraftToNamed`
 Builds a deobfuscated jar with Feather mappings and automapped fields (enums, etc.). Unmapped names will be filled with [intermediary](https://github.com/OrnitheMC/calamus) names.
 
-### `decompileCFR`
+### `decompileWithCfr`
 Decompile the mapped source code with the CFR decompiler. **Note:** This is not designed to be recompiled.
 
-### `decompileVineflower`
+### `decompileWithVineflower`
 Decompile the mapped source code with the Vineflower decompiler. **Note:** This is not designed to be recompiled.
 
-### `downloadMcJars`
+### `downloadMinecraftJars`
 Downloads the client and server Minecraft jars for the current Minecraft version to `/ornithe-cache/game-jars/` in your user gradle cache.
 
-### `mergeJars`
+### `mergeMinecraftJars`
 Merges the client and server jars into one merged jar, located at `/ornithe-cache/game-jars/<minecraft_version>-merged.jar` in your user gradle cache.
