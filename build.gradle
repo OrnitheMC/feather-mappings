@@ -26,7 +26,7 @@ import net.ornithemc.mappingutils.PropagationDirection
 plugins {
 	id 'java'
 	id 'maven-publish'
-	id 'keratin' version '1.7'
+	id 'keratin' version '2.0'
 }
 
 def ENV = System.getenv()
@@ -107,26 +107,24 @@ static def getNextFeatherVersion(ENV, minecraft_version, intermediary_gen) {
 	}
 }
 
-task genFakeSource(dependsOn: [mapMinecraftToNamed, buildMappings]) {
-	doLast {
-		def minecraftVersion = keratin.minecraftVersion.get()
+task genFakeSource(type: JavaExec, dependsOn: [mapMinecraftToNamed, buildMappings]) {
+	def minecraftVersion = keratin.minecraftVersion.get()
 
+	def map = keratin.files.getMergedTinyV2NamedMappings(minecraftVersion)
+	def jar = keratin.files.getNamedJar(minecraftVersion)
+	def lib = keratin.files.librariesCache
+
+	mainClass = 'net.fabricmc.mappingpoet.Main'
+	classpath configurations.mappingPoet
+	args map.absolutePath, jar.absolutePath, fakeSourceDir.absolutePath, lib.absolutePath
+
+	doFirst {
 		logger.lifecycle(":generating fake source for Minecraft ${minecraftVersion}")
-
-		getProject().javaexec({
-			mainClass.set('net.fabricmc.mappingpoet.Main')
-			classpath configurations.mappingPoet
-			args keratin.files.getMergedTinyV2NamedMappings(minecraftVersion).absolutePath
-			args keratin.files.getNamedJar(minecraftVersion).absolutePath
-			args fakeSourceDir.absolutePath
-			args keratin.files.librariesCache.absolutePath
-		});
 	}
 }
 
 javadoc {
 	dependsOn genFakeSource
-	dependsOn downloadMinecraftLibraries
 
 	outputs.upToDateWhen { false }
 
@@ -178,6 +176,7 @@ javadoc {
 	}
 
 	source fakeSourceDir
+	classpath = configurations.javadocClasspath.plus configurations.minecraftLibraries
 
 	doLast {
 		project.copy {
@@ -195,11 +194,6 @@ javadoc {
 			// cannot include line breaks
 			addFileOption "-add-stylesheet", mappingPoetJar.get().filter { it.name == 'forms.css' }.singleFile
 		}
-
-		def clspth = configurations.javadocClasspath.asFileTree
-		clspth.files.addAll keratin.files.getLibraries(keratin.minecraftVersion.get())
-
-		classpath = clspth
 	}
 }
 
