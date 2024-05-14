@@ -26,7 +26,7 @@ import net.ornithemc.mappingutils.PropagationDirection
 plugins {
 	id 'java'
 	id 'maven-publish'
-	id 'keratin' version '2.1'
+	id 'keratin' version '2.10'
 }
 
 def ENV = System.getenv()
@@ -53,6 +53,11 @@ dependencies {
 	javadocClasspath "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
 	javadocClasspath "com.google.code.findbugs:jsr305:3.0.2"
 	mappingPoetJar "net.fabricmc:mappingpoet:${project.mapping_poet_version}"
+}
+
+extendGraph {
+	fromMinecraftVersion = ENV.FROM_MC_VERSION
+	fromFromMinecraftVersion = ENV.FROM_FROM_MC_VERSION
 }
 
 def fakeSourceDir = new File(keratin.files.localBuildCache, "fakeSource")
