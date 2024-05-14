@@ -96,11 +96,8 @@ static def getNextFeatherVersion(ENV, minecraft_version, intermediary_gen) {
 					}
 				}
 			}
-		} catch (FileNotFoundException e) {
-			// Note: we consider it a hard failure if the maven-metadata.xml file does
-			// not exist. However if you don't have this file yet, you can comment out
-			// the line below to start at build number 1.
-			throw new RuntimeException(e);
+		} catch (FileNotFoundException ignored) {
+			// no maven metadata exists, so these will be the first builds
 		}
 
 		// is 0 if no version is found in the above
