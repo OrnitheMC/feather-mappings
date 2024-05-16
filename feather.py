@@ -102,10 +102,12 @@ def main():
     command.extend(tasks)
     command.append('--stacktrace')
 
-    for version in versions:
-        os.environ['MC_VERSION'] = version
-        subprocess.run(" ".join(command), shell=True, check=True)
-
+    if len(versions) == 1:
+        os.environ['MC_VERSION'] = versions[0]
+    else:
+        os.environ['MC_VERSIONS'] = ",".join(versions)
+    
+    subprocess.run(" ".join(command), shell=True, check=True)
 
 def find_minecraft_versions():
     for filename in os.listdir("mappings"):

@@ -1,142 +1,38 @@
 import net.ornithemc.keratin.api.TaskSelection
-import net.ornithemc.keratin.api.task.build.PrepareBuildTask
-import net.ornithemc.keratin.api.task.build.BuildMappingsJarTask
-import net.ornithemc.keratin.api.task.build.BuildMappingsTask
-import net.ornithemc.keratin.api.task.build.CheckMappingsTask
-import net.ornithemc.keratin.api.task.build.CompleteMappingsTask
-import net.ornithemc.keratin.api.task.decompiling.DecompileMinecraftWithCfrTask
-import net.ornithemc.keratin.api.task.decompiling.DecompileMinecraftWithVineflowerTask
-import net.ornithemc.keratin.api.task.mapping.DownloadIntermediaryTask
-import net.ornithemc.keratin.api.task.mapping.MapMinecraftTask
-import net.ornithemc.keratin.api.task.mapping.MapNestsTask
-import net.ornithemc.keratin.api.task.mapping.MapProcessedMinecraftTask
-import net.ornithemc.keratin.api.task.mapping.MapSparrowTask
 import net.ornithemc.keratin.api.task.mapping.graph.ExtendGraphTask
-import net.ornithemc.keratin.api.task.mapping.graph.LoadMappingsFromGraphTask
-import net.ornithemc.keratin.api.task.mapping.graph.ResetGraphTask
-import net.ornithemc.keratin.api.task.mapping.graph.SaveMappingsIntoGraphTask
-import net.ornithemc.keratin.api.task.merging.MergeMinecraftJarsTask
-import net.ornithemc.keratin.api.task.merging.MergeNestsTask
-import net.ornithemc.keratin.api.task.merging.MergeSparrowTask
-import net.ornithemc.keratin.api.task.processing.ProcessMappingsTask
-import net.ornithemc.keratin.api.task.processing.ProcessMinecraftTask
-
-import net.ornithemc.mappingutils.PropagationDirection
 
 plugins {
 	id 'java'
 	id 'maven-publish'
-	id 'keratin' version '2.10'
+	id 'keratin' version '3.1'
 }
 
 def ENV = System.getenv()
 
 keratin {
-	minecraftVersion = ENV.MC_VERSION ?: 'b1.0'
+	if (ENV.MC_VERSION) {
+		minecraftVersions ENV.MC_VERSION
+	}
+	if (ENV.MC_VERSIONS) {
+		minecraftVersions ENV.MC_VERSIONS.split('[,]')
+	}
 	intermediaryGen = 2
 		
 	tasks TaskSelection.FEATHER
 }
 
-configurations {
-	javadocClasspath
-	mappingPoetJar {
-		transitive = false
-	}
-	mappingPoet {
-		extendsFrom mappingPoetJar
-		transitive = true
-	}
-}
+tasks.withType(ExtendGraphTask, {
+	it.fromMinecraftVersion = ENV.FROM_MC_VERSION
+	it.fromFromMinecraftVersion = ENV.FROM_FROM_MC_VERSION
+})
 
-dependencies {
-	javadocClasspath "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
-	javadocClasspath "com.google.code.findbugs:jsr305:3.0.2"
-	mappingPoetJar "net.fabricmc:mappingpoet:${project.mapping_poet_version}"
-}
-
-extendGraph {
-	fromMinecraftVersion = ENV.FROM_MC_VERSION
-	fromFromMinecraftVersion = ENV.FROM_FROM_MC_VERSION
-}
-
-def fakeSourceDir = new File(keratin.files.localBuildCache, "fakeSource")
-def __featherVersion__
-java.util.function.Supplier<String> featherVersion = {
-	if (__featherVersion__ == null) {
-		__featherVersion__ = getNextFeatherVersion(ENV, keratin.minecraftVersion.get(), keratin.intermediaryGen.get())
-	}
-	return __featherVersion__
-}
-
-static def getNextFeatherVersion(ENV, minecraft_version, intermediary_gen) {
-	if (ENV.MAVEN_URL) {
-		def build_number = 0
-
-		try {
-			def xml = new URL("https://maven.ornithemc.net/releases/net/ornithemc/feather-gen${intermediary_gen}/maven-metadata.xml").text
-			def metadata = new XmlSlurper().parseText(xml)
-
-			def version_build = "${minecraft_version}+build."
-			def i = version_build.length()
-
-			metadata.versioning.versions.version.each {
-				def version = it.text()
-
-				if (version.startsWith(version_build)) {
-					def number_text = version.substring(i)
-					try {
-						def number = Integer.parseInt(number_text)
-
-						if (number > build_number) {
-							build_number = number
-						}
-					} catch (NumberFormatException e) {
-						throw new RuntimeException(e);
-					}
-				}
-			}
-		} catch (FileNotFoundException ignored) {
-			// no maven metadata exists, so these will be the first builds
-		}
-
-		// is 0 if no version is found in the above
-		def next_build_number = build_number + 1;
-
-		return "${minecraft_version}+build.${next_build_number}"
-	} else {
-		return "${minecraft_version}+build.local"
-	}
-}
-
-task genFakeSource(type: JavaExec, dependsOn: [mapMinecraftToNamed, buildMappings]) {
-	def minecraftVersion = keratin.minecraftVersion.get()
-
-	def map = keratin.files.getMergedTinyV2NamedMappings(minecraftVersion)
-	def jar = keratin.files.getNamedJar(minecraftVersion)
-	def lib = keratin.files.librariesCache
-
-	mainClass = 'net.fabricmc.mappingpoet.Main'
-	classpath configurations.mappingPoet
-	args map.absolutePath, jar.absolutePath, fakeSourceDir.absolutePath, lib.absolutePath
-
-	doFirst {
-		logger.lifecycle(":generating fake source for Minecraft ${minecraftVersion}")
-	}
-}
-
-javadoc {
-	dependsOn genFakeSource
-
-	outputs.upToDateWhen { false }
+tasks.withType(Javadoc, {
+	it.outputs.upToDateWhen { false }
 
 	def mappingPoetJar = project.provider { zipTree configurations.mappingPoetJar.singleFile }
 
-	failOnError = false
-	maxMemory = '2G'
-
 	// verbose = true // enable to debug
-	options {
+	it.options {
 		// verbose() // enable to debug
 		source = "11"
 		encoding = 'UTF-8'
@@ -166,7 +62,7 @@ javadoc {
 				'https://commons.apache.org/proper/commons-io/javadocs/api-2.5',
 				'https://commons.apache.org/proper/commons-codec/archives/1.10/apidocs',
 				'https://javadoc.io/doc/org.apache.commons/commons-compress/1.8.1',
-				"https://maven.fabricmc.net/javadocs/net/fabricmc/fabric-loader-${project.fabric_loader_version}/",
+				"https://maven.fabricmc.net/javadocs/net/fabricmc/fabric-loader-0.15.11/",
 				"https://docs.oracle.com/en/java/javase/11/docs/api/"
 				// Need to add loader jd publication for env annotations!
 		)
@@ -177,10 +73,7 @@ javadoc {
 		addBooleanOption 'Xdoclint:accessibility', true
 	}
 
-	source fakeSourceDir
-	classpath = configurations.javadocClasspath.plus configurations.minecraftLibraries
-
-	doLast {
+	it.doLast {
 		project.copy {
 			from mappingPoetJar
 			include "copy_on_click.js"
@@ -188,7 +81,7 @@ javadoc {
 		}
 	}
 
-	doFirst {
+	it.doFirst {
 		// lazy setting
 		options {
 			tagletPath configurations.mappingPoet.files.toList()
@@ -197,52 +90,9 @@ javadoc {
 			addFileOption "-add-stylesheet", mappingPoetJar.get().filter { it.name == 'forms.css' }.singleFile
 		}
 	}
-}
-
-task tinyV1Jar(type: BuildMappingsJarTask, dependsOn: buildMappings) {
-	archiveFileName = "${keratin.minecraftVersion.get()}-feather.jar"
-	mappings keratin.files.getMergedTinyV1NamedMappings(keratin.minecraftVersion.get())
-}
-
-task tinyV2Jar(type: BuildMappingsJarTask, dependsOn: buildMappings) {
-	archiveFileName = "${keratin.minecraftVersion.get()}-feather-v2.jar"
-	mappings keratin.files.getTinyV2NamedMappings(keratin.minecraftVersion.get())
-}
-
-task mergedTinyV2Jar(type: BuildMappingsJarTask, dependsOn: buildMappings) {
-	archiveFileName = "${keratin.minecraftVersion.get()}-feather-mergedv2.jar"
-	mappings keratin.files.getMergedTinyV2NamedMappings(keratin.minecraftVersion.get())
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-	from javadoc.destinationDir
-
-	archiveFileName = "${keratin.minecraftVersion.get()}-feather-javadoc.jar"
-	destinationDirectory.set(file('build/libs'))
-}
-
-tasks.build.dependsOn tinyV1Jar, tinyV2Jar, mergedTinyV2Jar, javadocJar
+})
 
 publishing {
-	publications {
-		maven(MavenPublication) {
-			groupId 'net.ornithemc'
-			artifactId "feather-gen${keratin.intermediaryGen.get()}"
-			version featherVersion.get()
-
-			artifact(tinyV1Jar)
-			artifact(tinyV2Jar) {
-				classifier 'v2'
-			}
-			artifact(mergedTinyV2Jar) {
-				classifier 'mergedv2'
-			}
-			artifact(javadocJar) {
-				classifier 'javadoc'
-			}
-		}
-
-	}
 	repositories {
 		if (ENV.MAVEN_URL) {
 			maven {
