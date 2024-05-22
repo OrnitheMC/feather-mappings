@@ -10997,22 +10997,22 @@ c	net/minecraft/unmapped/C_0114090		net/minecraft/util/Scheduler
 	f	Ljava/util/concurrent/ExecutorService;	f_8012921		scheduler
 	f	Ljava/util/concurrent/ExecutorService;	f_9562814		worker
 	f	Ljava/util/concurrent/atomic/AtomicInteger;	f_1581492		workerId
-	f	Ljava/util/List;	f_9596509		scheduled
-	f	Ljava/util/concurrent/CompletableFuture;	f_2072531		next
-	f	Ljava/util/concurrent/CompletableFuture;	f_9399172		last
-	f	Ljava/util/function/Supplier;	f_9915590		results
+	f	Ljava/util/List;	f_9596509		currentBatch
+	f	Ljava/util/concurrent/CompletableFuture;	f_2072531		prevBatch
+	f	Ljava/util/concurrent/CompletableFuture;	f_9399172		lastBatch
+	f	Ljava/util/function/Supplier;	f_9915590		futuresMaps
 	f	Ljava/util/function/Supplier;	f_9325623		f_9325623
 	f	Lnet/minecraft/unmapped/C_7274288;	f_1628253		target
 	m	(Ljava/lang/String;ILnet/minecraft/unmapped/C_7274288;Ljava/util/function/Supplier;Ljava/util/function/Supplier;)V	<init>		<init>
 		p	1			name
 		p	2			parallelism
 		p	3			target
-		p	4			results
+		p	4			futuresMaps
 		p	5			p_5
 	m	(Ljava/lang/Object;)Ljava/util/concurrent/CompletableFuture;	m_6823114		schedule
 		p	1			key
-	m	()Ljava/util/concurrent/CompletableFuture;	m_9633099		poll
-	m	(Ljava/lang/Object;)Lnet/minecraft/unmapped/C_0114090$C_8296248;	m_6270166		getFuture
+	m	()Ljava/util/concurrent/CompletableFuture;	m_9633099		collect
+	m	(Ljava/lang/Object;)Lnet/minecraft/unmapped/C_0114090$C_8296248;	m_6270166		getTasks
 		p	1			key
 	m	()V	m_0949301		close
 	m	(Ljava/lang/Object;Lnet/minecraft/unmapped/C_7274288;Ljava/util/Map;)Ljava/lang/Object;	m_7212920		runTask
@@ -11021,14 +11021,14 @@ c	net/minecraft/unmapped/C_0114090		net/minecraft/util/Scheduler
 		p	3			results
 	m	(Ljava/lang/Object;)Ljava/lang/Object;	m_1729875		getResult
 		p	1			key
-	m	()Ljava/util/concurrent/CompletableFuture;	m_6173646		peek
+	m	()Ljava/util/concurrent/CompletableFuture;	m_6173646		lastBatch
 	m	(Ljava/lang/Object;)Ljava/lang/Object;	m_3206050		m_3206050
 		p	0			result
 	m	(Ljava/util/concurrent/CompletableFuture;Ljava/lang/Void;)Ljava/util/concurrent/CompletionStage;	m_7531409		m_7531409
 		p	0			p_0
 		p	1			v
 	m	(Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletionStage;	m_0128320		m_0128320
-		p	0			result
+		p	0			future
 	m	(Ljava/lang/Object;Ljava/util/concurrent/CompletableFuture;)Ljava/util/concurrent/CompletableFuture;	m_2144065		m_2144065
 		p	1			p_1
 		p	2			p_2
@@ -11052,8 +11052,8 @@ c	net/minecraft/unmapped/C_0114090$1		1
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/unmapped/C_0114090$C_8296248		TaskFuture
-	f	Ljava/util/Map;	f_9347649		dst
+c	net/minecraft/unmapped/C_0114090$C_8296248		Tasks
+	f	Ljava/util/Map;	f_9347649		futures
 	f	Ljava/lang/Object;	f_1731148		key
 	f	Ljava/lang/Object;	f_2740866		result
 	f	Lnet/minecraft/unmapped/C_0114090;	f_3661567		f_3661567
@@ -11061,10 +11061,10 @@ c	net/minecraft/unmapped/C_0114090$C_8296248		TaskFuture
 		p	1			p_1
 		p	2			key
 		p	3			result
-		p	4			task
+		p	4			base
 	m	()Ljava/lang/Object;	m_2550137		getResult
-	m	(Ljava/util/concurrent/CompletableFuture;Lnet/minecraft/unmapped/C_7274288;)Ljava/util/concurrent/CompletableFuture;	m_7254456		compute
-		p	1			prev
+	m	(Ljava/util/concurrent/CompletableFuture;Lnet/minecraft/unmapped/C_7274288;)Ljava/util/concurrent/CompletableFuture;	m_7254456		getFuture
+		p	1			prevBatch
 		p	2			target
 	m	(Lnet/minecraft/unmapped/C_7274288;Ljava/util/Map;Ljava/util/concurrent/CompletableFuture;Lnet/minecraft/unmapped/C_7274288;)Ljava/util/concurrent/CompletableFuture;	m_7234207		m_7234207
 		p	1			p_1
@@ -12106,7 +12106,7 @@ c	net/minecraft/unmapped/C_3492960		net/minecraft/server/world/chunk/WorldGenSch
 	f	Lnet/minecraft/unmapped/C_0705111;	f_4437064		generator
 	f	Lnet/minecraft/unmapped/C_3015672;	f_0563111		storage
 	f	Lnet/minecraft/unmapped/C_2528621;	f_7517380		runner
-	f	Lit/unimi/dsi/fastutil/longs/Long2ObjectMap;	f_0500628		chunks
+	f	Lit/unimi/dsi/fastutil/longs/Long2ObjectMap;	f_0500628		chunkTasks
 	m	(ILnet/minecraft/unmapped/C_5553933;Lnet/minecraft/unmapped/C_0705111;Lnet/minecraft/unmapped/C_3015672;Lnet/minecraft/unmapped/C_2528621;)V	<init>		<init>
 		p	1			parallelism
 		p	2			world
@@ -12136,10 +12136,10 @@ c	net/minecraft/unmapped/C_3492960		net/minecraft/server/world/chunk/WorldGenSch
 		p	1			p_1
 	m	(Ljava/util/function/Consumer;Lnet/minecraft/unmapped/C_0114090$C_8296248;)V	m_9059221		m_9059221
 		p	0			p_0
-		p	1			p_1
+		p	1			tasks
 	m	(Lnet/minecraft/unmapped/C_7141926;Ljava/lang/Long;)Lnet/minecraft/unmapped/C_0114090$C_8296248;	m_2030476		m_2030476
 		p	1			p_1
-		p	2			p_2
+		p	2			k
 	m	()Ljava/util/Map;	m_9462710		m_9462710
 	m	()Ljava/util/Map;	m_5487646		m_5487646
 	m	()V	<clinit>		<clinit>
@@ -13783,10 +13783,10 @@ c	net/minecraft/unmapped/C_7238841		net/minecraft/world/gen/feature/decorator/Fo
 		p	6			p_6
 		p	7			p_7
 c	net/minecraft/unmapped/C_7274288		net/minecraft/util/Task
-	m	()Lnet/minecraft/unmapped/C_7274288;	m_6781910		previous
-	m	(Ljava/lang/Object;Ljava/util/function/BiConsumer;)V	m_9995865		accept
+	m	()Lnet/minecraft/unmapped/C_7274288;	m_6781910		getParent
+	m	(Ljava/lang/Object;Ljava/util/function/BiConsumer;)V	m_9995865		prepare
 		p	1			key
-		p	2			action
+		p	2			dependencies
 c	net/minecraft/unmapped/C_7279893		net/minecraft/world/biome/SnowyBeachBiome
 	m	()V	<init>		<init>
 c	net/minecraft/unmapped/C_7332071		net/minecraft/unmapped/C_7332071
