@@ -1,15 +1,15 @@
 tiny	2	0
 c	net/minecraft/server/MinecraftServer
-	f	Z	f_3140624	f_3140624	
+	f	Z	f_3140624	pvpEnabled	
 c	net/minecraft/unmapped/C_0324512
-	f	I	f_5431237	f_5431237	
+	f	I	f_5431237	lastHealth	
 	m	()V	m_2258453	m_2258453	
 	m	(DZ)V	m_5838082	m_5838082	
 		p	1		p_1	
 		p	3		p_3	
-	m	(DZ)V	m_7783162	m_7783162	
-		p	1		p_1	
-		p	3		p_3	
+	m	(DZ)V	m_7783162	handleFall	
+		p	1		distance	
+		p	3		onGround	
 c	net/minecraft/unmapped/C_0901730
 	f	Z	f_6048660	f_6048660	
 c	net/minecraft/unmapped/C_1013763
@@ -18,13 +18,13 @@ c	net/minecraft/unmapped/C_1013763
 	m	(DF)Lnet/minecraft/unmapped/C_5853518;	m_6712369		m_6712369
 		p	1			p_1
 		p	3			p_3
-c	net/minecraft/unmapped/C_2422346	net/minecraft/unmapped/C_2422346	
-	f	I	f_4063259	f_4063259	
-	f	B	f_4986110	f_4986110	
+c	net/minecraft/unmapped/C_2422346	net/minecraft/network/packet/EntityEventPacket	
+	f	I	f_4063259	id	
+	f	B	f_4986110	event	
 	m	()V	<init>	<init>	
 	m	(IB)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		id	
+		p	2		event	
 	m	(Ljava/io/DataInputStream;)V	m_8784008	m_8784008	
 		p	1		p_1	
 	m	(Ljava/io/DataOutputStream;)V	m_4625396	m_4625396	
@@ -33,24 +33,24 @@ c	net/minecraft/unmapped/C_2422346	net/minecraft/unmapped/C_2422346
 		p	1		p_1	
 	m	()I	m_0079091	m_0079091	
 c	net/minecraft/unmapped/C_2750078
-	m	(Lnet/minecraft/unmapped/C_1013763;)V	m_3149288	m_3149288	
+	m	(Lnet/minecraft/unmapped/C_1013763;)V	m_3149288	attackEntity	
 		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_6385858;)I	m_8066283	m_8066283	
-		p	1		p_1	
+	m	(Lnet/minecraft/unmapped/C_6385858;)I	m_8066283	getAttackDamage	
+		p	1		target	
 c	net/minecraft/unmapped/C_3906126
-	m	(Lnet/minecraft/unmapped/C_6385858;B)V	m_7993438	m_7993438	
-		p	1		p_1	
-		p	2		p_2	
+	m	(Lnet/minecraft/unmapped/C_6385858;B)V	m_7993438	doEntityEvent	
+		p	1		entity	
+		p	2		event	
 c	net/minecraft/unmapped/C_4030632
-	m	(Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_1013763;)V	m_9532015	m_9532015	
+	m	(Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_1013763;)V	m_9532015	attackEntity	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/unmapped/C_6385858;)I	m_1072215	m_1072215	
-		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_1013763;)V	m_3129782	m_3129782	
-		p	1		p_1	
-		p	2		p_2	
-c	net/minecraft/unmapped/C_4177687	net/minecraft/unmapped/C_4177687	
+	m	(Lnet/minecraft/unmapped/C_6385858;)I	m_1072215	getAttackDamage	
+		p	1		target	
+	m	(Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_1013763;)V	m_3129782	interact	
+		p	1		stack	
+		p	2		entity	
+c	net/minecraft/unmapped/C_4177687	net/minecraft/network/packet/PlayerRespawnPacket	
 	m	()V	<init>	<init>	
 	m	(Lnet/minecraft/unmapped/C_4443804;)V	m_0240895	m_0240895	
 		p	1		p_1	
@@ -60,15 +60,15 @@ c	net/minecraft/unmapped/C_4177687	net/minecraft/unmapped/C_4177687
 		p	1		p_1	
 	m	()I	m_0079091	m_0079091	
 c	net/minecraft/unmapped/C_4286596
-	m	(Lnet/minecraft/unmapped/C_6385858;)I	m_0415661	m_0415661	
-		p	1		p_1	
+	m	(Lnet/minecraft/unmapped/C_6385858;)I	m_0415661	getAttackDamage	
+		p	1		target	
 c	net/minecraft/unmapped/C_4443804
-	m	(Lnet/minecraft/unmapped/C_2422346;)V	m_5537422	m_5537422	
-		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_6020368;)V	m_3368680	m_3368680	
-		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_4177687;)V	m_5512038	m_5512038	
-		p	1		p_1	
+	m	(Lnet/minecraft/unmapped/C_2422346;)V	m_5537422	handleEntityEvent	
+		p	1		packet	
+	m	(Lnet/minecraft/unmapped/C_6020368;)V	m_3368680	handlePlayerHealth	
+		p	1		packet	
+	m	(Lnet/minecraft/unmapped/C_4177687;)V	m_5512038	handlePlayerRespawn	
+		p	1		packet	
 c	net/minecraft/unmapped/C_4937211
 	m	(Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_1013763;)V	m_3129782	m_3129782	
 		p	1		p_1	
@@ -77,12 +77,13 @@ c	net/minecraft/unmapped/C_4937211
 		p	1		p_1	
 		p	2		p_2	
 c	net/minecraft/unmapped/C_4946369
-	f	I	f_2696260	f_2696260	
+	f	I	f_2696260	action	
+		c	The type of action. The possible values are as follows:\n<br>0: interact\n<br>1: attack	
 c	net/minecraft/unmapped/C_5009044
-	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_4777054	m_4777054	
+	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_4777054	interact	
 		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_1901461	m_1901461	
-		p	1		p_1	
+	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_1901461	attack	
+		p	1		target	
 	m	()V	m_2258453	m_2258453	
 c	net/minecraft/unmapped/C_5434245
 	m	(Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_1013763;)V	m_9532015	m_9532015	
@@ -101,11 +102,11 @@ c	net/minecraft/unmapped/C_5584362
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-c	net/minecraft/unmapped/C_6020368	net/minecraft/unmapped/C_6020368	
-	f	I	f_4054824	f_4054824	
+c	net/minecraft/unmapped/C_6020368	net/minecraft/network/packet/PlayerHealthPacket	
+	f	I	f_4054824	health	
 	m	()V	<init>	<init>	
 	m	(I)V	<init>	<init>	
-		p	1		p_1	
+		p	1		health	
 	m	(Ljava/io/DataInputStream;)V	m_8784008	m_8784008	
 		p	1		p_1	
 	m	(Ljava/io/DataOutputStream;)V	m_4625396	m_4625396	
@@ -114,11 +115,11 @@ c	net/minecraft/unmapped/C_6020368	net/minecraft/unmapped/C_6020368
 		p	1		p_1	
 	m	()I	m_0079091	m_0079091	
 c	net/minecraft/unmapped/C_6385858
-	f	Z	f_8821238	f_8821238	
-	m	(DZ)V	m_5838082	m_5838082	
-		p	1		p_1	
-		p	3		p_3	
-	m	()V	m_2567411	m_2567411	
+	f	Z	f_8821238	damaged	
+	m	(DZ)V	m_5838082	onFall	
+		p	1		dy	
+		p	3		onGround	
+	m	()V	m_2567411	onDamaged	
 c	net/minecraft/unmapped/C_7366354
 	m	(Lnet/minecraft/unmapped/C_6385858;B)V	m_7993438	m_7993438	
 		p	1		p_1	
