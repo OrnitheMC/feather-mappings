@@ -2,10 +2,10 @@ tiny	2	0
 c	net/minecraft/client/Minecraft
 	f	[J	f_4898713	f_4898713	
 	f	I	f_9040180	f_9040180	
-	f	J	f_4786763	f_4786763	
-	m	(Lnet/minecraft/unmapped/C_8135468;)V	m_8906868	m_8906868	
+	f	J	f_4786763	timeAfterLastTick	
+	m	(Lnet/minecraft/unmapped/C_8135468;)V	m_8906868	printCrashReport	
 		p	1		p_1	
-	m	()V	m_8779594	m_8779594	
+	m	()V	m_8779594	renderProfilerChart	
 c	net/minecraft/unmapped/C_0070166
 	f	Lnet/minecraft/unmapped/C_2286002;	f_9906129	storage	
 	f	I	f_2563350	cachedChunkX	
@@ -476,16 +476,16 @@ c	net/minecraft/unmapped/C_4643161
 	m	(Ljava/lang/String;Ljava/lang/String;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_4977943	net/minecraft/unmapped/C_4977943	
-	f	Ljava/awt/image/BufferedImage;	f_7327812	f_7327812	
+c	net/minecraft/unmapped/C_4977943	net/minecraft/unmapped/LogoCanvas	
+	f	Ljava/awt/image/BufferedImage;	f_7327812	logo	
 	m	()V	<init>	<init>	
 	m	(Ljava/awt/Graphics;)V	paint	paint	
 		p	1		p_1	
 c	net/minecraft/unmapped/C_5009044
 	m	()V	m_4691206	m_4691206	
-c	net/minecraft/unmapped/C_5147087	net/minecraft/unmapped/C_5147087	
+c	net/minecraft/unmapped/C_5147087	net/minecraft/client/CrashReportPanel	
 	m	(Lnet/minecraft/unmapped/C_8135468;)V	<init>	<init>	
-		p	1		p_1	
+		p	1		report	
 c	net/minecraft/unmapped/C_5283200
 	f	Z	f_8843907	compiled	
 	f	Lnet/minecraft/unmapped/C_3466301;	f_3953567		f_3953567
@@ -625,9 +625,9 @@ c	net/minecraft/unmapped/C_7256819
 	m	(Lnet/minecraft/unmapped/C_5009044;)V	m_6033607		m_6033607
 		p	1			p_1
 	m	()F	m_2124677		m_2124677
-c	net/minecraft/unmapped/C_7334919	net/minecraft/unmapped/C_7334919	
+c	net/minecraft/unmapped/C_7334919	net/minecraft/client/CrashReportPanel__BorderCanvas	
 	m	(I)V	<init>	<init>	
-		p	1		p_1	
+		p	1		size	
 c	net/minecraft/unmapped/C_7693268
 	m	(Lnet/minecraft/unmapped/C_3906126;IIII)V	m_2949677	spreadTo	
 		p	1		world	
@@ -671,17 +671,17 @@ c	net/minecraft/unmapped/C_8125832
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-c	net/minecraft/unmapped/C_8135468	net/minecraft/unmapped/C_8135468	
-	f	Ljava/lang/Exception;	f_8880657	f_8880657	
+c	net/minecraft/unmapped/C_8135468	net/minecraft/nbt/NbtIo	
+	f	Ljava/lang/Exception;	f_8880657	cause	
 	m	(Ljava/lang/String;Ljava/lang/Exception;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		description	
+		p	2		cause	
 	m	()V	<init>	<init>	
-	m	(Ljava/io/InputStream;)Lnet/minecraft/unmapped/C_2800860;	m_2540889	m_2540889	
-		p	0		p_0	
-	m	(Lnet/minecraft/unmapped/C_2800860;Ljava/io/OutputStream;)V	m_4670107	m_4670107	
-		p	0		p_0	
-		p	1		p_1	
+	m	(Ljava/io/InputStream;)Lnet/minecraft/unmapped/C_2800860;	m_2540889	readCompressed	
+		p	0		is	
+	m	(Lnet/minecraft/unmapped/C_2800860;Ljava/io/OutputStream;)V	m_4670107	writeCompressed	
+		p	0		nbt	
+		p	1		os	
 	m	([B)Lnet/minecraft/unmapped/C_2800860;	m_8871842	m_8871842	
 		p	0		p_0	
 	m	(Lnet/minecraft/unmapped/C_2800860;)[B	m_2766149	m_2766149	
@@ -689,9 +689,9 @@ c	net/minecraft/unmapped/C_8135468	net/minecraft/unmapped/C_8135468
 	m	(Ljava/io/DataInput;)Lnet/minecraft/unmapped/C_2800860;	m_3407981	m_3407981	
 		p	0		p_0	
 c	net/minecraft/unmapped/C_8425960
-	f	Z	f_6911213	f_6911213	
-	m	(Ljava/lang/String;)V	m_6435809	m_6435809	
-		p	1		p_1	
+	f	Z	f_6911213	updated	
+	m	(Ljava/lang/String;)V	m_6435809	setInitialTitle	
+		p	1		title	
 	m	()V	m_5266201	m_5266201	
 	m	()V	<init>		<init>
 	m	(Ljava/io/InputStream;)Lnet/minecraft/unmapped/C_2800860;	m_1070817		m_1070817
@@ -713,11 +713,11 @@ c	net/minecraft/unmapped/C_8443484
 		p	4			p_4
 		p	5			p_5
 c	net/minecraft/unmapped/C_8593406
-	f	Lnet/minecraft/unmapped/C_2286002;	f_9348117	f_9348117	
+	f	Lnet/minecraft/unmapped/C_2286002;	f_9348117	storage	
 	f	Ljava/io/File;	f_8873346		f_8873346
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_2286002;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		world	
+		p	2		storage	
 	m	(ZLnet/minecraft/unmapped/C_5902900;)Z	m_8231616	m_8231616	
 		p	1		p_1	
 		p	2		p_2	

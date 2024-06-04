@@ -351,7 +351,6 @@ c	net/minecraft/unmapped/C_2587956
 	f	Lnet/minecraft/unmapped/C_6385858;	f_0618839	currentTarget	
 	f	I	f_5671183	angryCountdown	
 		c	The countdown that decids how long it should keep attacking the same target	
-	f	Lnet/minecraft/unmapped/C_5640967;	f_9910988	motionControl	movementControl
 	m	()Z	m_4680808	m_4680808	
 	m	()V	m_6773208	m_6773208	
 	m	()V	m_6941201	initSpawningEquipment	
@@ -368,12 +367,12 @@ c	net/minecraft/unmapped/C_2587956
 		p	1			localDifficulty
 		p	2			entityData
 c	net/minecraft/unmapped/C_2747331
-	m	()V	m_5705402	m_5705402	
-	m	(FFFF)V	m_3573017	m_3573017	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
+	m	()V	m_5705402	clearColor	
+	m	(FFFF)V	m_3573017	setColor	
+		p	1		a	
+		p	2		r	
+		p	3		g	
+		p	4		b	
 c	net/minecraft/unmapped/C_2750078
 	f	Lnet/minecraft/unmapped/C_3635204;	f_3382024		cachedPlaceOnBlockOverride
 	f	Z	f_7603250		cachedPlaceOnBlockOverrideResult
@@ -419,33 +418,33 @@ c	net/minecraft/unmapped/C_2984832
 		p	1			charging
 	m	()I	m_2353420		getFireballStrength
 	m	()F	m_6131251		m_6131251
-c	net/minecraft/unmapped/C_2984832$C_3342438		GhastLookGoal
+c	net/minecraft/unmapped/C_2984832$C_3342438		LookAroundGoal
 	f	Lnet/minecraft/unmapped/C_2984832;	f_6670703		ghast
 	m	(Lnet/minecraft/unmapped/C_2984832;)V	<init>		<init>
 		p	1			ghast
 	m	()Z	m_5896190		m_5896190
 	m	()V	m_4528414		m_4528414
-c	net/minecraft/unmapped/C_2984832$C_3825469		GhastMovementControl
+c	net/minecraft/unmapped/C_2984832$C_3825469		MovementControl
 	f	Lnet/minecraft/unmapped/C_2984832;	f_1653557		ghast
-	f	I	f_0451570		floatDuration
+	f	I	f_0451570		cooldown
 	m	(Lnet/minecraft/unmapped/C_2984832;)V	<init>		<init>
 		p	1			ghast
 	m	()V	m_9420910		m_9420910
-	m	(DDDD)Z	m_7783322		canReach
-		p	1			x
-		p	3			y
-		p	5			z
-		p	7			distance
+	m	(DDDD)Z	m_7783322		hasLineOfSight
+		p	1			targetX
+		p	3			targetY
+		p	5			targetZ
+		p	7			range
 c	net/minecraft/unmapped/C_2984832$C_5364099		ShootFireballGoal
 	f	Lnet/minecraft/unmapped/C_2984832;	f_8800133		ghast
-	f	I	f_2934639		chargeTime
+	f	I	f_2934639		chargeTicks
 	m	(Lnet/minecraft/unmapped/C_2984832;)V	<init>		<init>
 		p	1			ghast
 	m	()Z	m_5896190		m_5896190
 	m	()V	m_5289183		m_5289183
 	m	()V	m_2223255		m_2223255
 	m	()V	m_4528414		m_4528414
-c	net/minecraft/unmapped/C_2984832$C_7219862		FloatAroundGoal
+c	net/minecraft/unmapped/C_2984832$C_7219862		MoveAroundGoal
 	f	Lnet/minecraft/unmapped/C_2984832;	f_9556705		ghast
 	m	(Lnet/minecraft/unmapped/C_2984832;)V	<init>		<init>
 		p	1			ghast
@@ -654,16 +653,16 @@ c	net/minecraft/unmapped/C_3544601
 		p	3			id
 		p	4			opposite
 		p	5			idHorizontal
-		p	6			name
+		p	6			key
 		p	7			axisDir
 		p	8			axis
 		p	9			normal
-	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_3544601;	m_2656971		byName
-		p	0			name
+	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_3544601;	m_2656971		byKey
+		p	0			key
 	m	()Lnet/minecraft/unmapped/C_7282479;	m_1692555		getNormal
 c	net/minecraft/unmapped/C_3604011
 	m	(Lnet/minecraft/unmapped/C_5009044;)V	m_8078064	renderPlayerRightHandModel	
-		p	1		p_1	
+		p	1		player	
 	m	(Lnet/minecraft/unmapped/C_7106153;)V	m_8078064		renderPlayerRightHandModel
 		p	1			player
 c	net/minecraft/unmapped/C_3635204
@@ -676,12 +675,12 @@ c	net/minecraft/unmapped/C_3695747
 		p	1		p_1	
 		p	2		p_2	
 	m	()V	m_4958068		m_4958068
-c	net/minecraft/unmapped/C_3695747$C_5802636		C_5802636
-	f	Lnet/minecraft/unmapped/C_3695747;	f_7163011		f_7163011
-	f	I	f_3161876		f_3161876
-	f	I	f_8151479		f_8151479
+c	net/minecraft/unmapped/C_3695747$C_5802636		AttackGoal
+	f	Lnet/minecraft/unmapped/C_3695747;	f_7163011		blaze
+	f	I	f_3161876		step
+	f	I	f_8151479		ticks
 	m	(Lnet/minecraft/unmapped/C_3695747;)V	<init>		<init>
-		p	1			p_1
+		p	1			blaze
 	m	()Z	m_5896190		m_5896190
 	m	()V	m_5289183		m_5289183
 	m	()V	m_2223255		m_2223255
@@ -765,7 +764,7 @@ c	net/minecraft/unmapped/C_4948697
 	m	(Lnet/minecraft/unmapped/C_4948697;Lnet/minecraft/unmapped/C_6385858;)V	m_9398442		m_9398442
 		p	0			p_0
 		p	1			p_1
-c	net/minecraft/unmapped/C_4948697$C_8181996		ZombiePigmanRevengeGoal
+c	net/minecraft/unmapped/C_4948697$C_8181996		RevengeGoal
 	m	(Lnet/minecraft/unmapped/C_4948697;)V	<init>		<init>
 		p	1			pigman
 	m	(Lnet/minecraft/unmapped/C_3419581;Lnet/minecraft/unmapped/C_1013763;)V	m_3281506		m_3281506
@@ -883,17 +882,17 @@ c	net/minecraft/unmapped/C_5475923
 	m	()F	m_6131251		m_6131251
 	m	(B)V	m_9129586		m_9129586
 		p	1			p_1
-	m	(FFF)V	m_5100887		m_5100887
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	()Z	m_7967128		m_7967128
+	m	(FFF)V	m_5100887		setTarget
+		p	1			x
+		p	2			y
+		p	3			z
+	m	()Z	m_7967128		hasTarget
 	m	(Lnet/minecraft/unmapped/C_5475923;)Z	m_6302077		m_6302077
 		p	0			p_0
-c	net/minecraft/unmapped/C_5475923$C_3041222		C_3041222
-	f	Lnet/minecraft/unmapped/C_5475923;	f_6659209		f_6659209
+c	net/minecraft/unmapped/C_5475923$C_3041222		SwimAroundGoal
+	f	Lnet/minecraft/unmapped/C_5475923;	f_6659209		squid
 	m	(Lnet/minecraft/unmapped/C_5475923;)V	<init>		<init>
-		p	1			p_1
+		p	1			squid
 	m	()Z	m_5896190		m_5896190
 	m	()V	m_4528414		m_4528414
 c	net/minecraft/unmapped/C_5508909
@@ -1056,7 +1055,7 @@ c	net/minecraft/unmapped/C_8125832
 	m	()I	m_0839636		m_0839636
 	m	()I	m_1863884		m_1863884
 c	net/minecraft/unmapped/C_8191584
-	f	Lnet/minecraft/unmapped/C_9507262;	f_0585666	f_0585666	
+	f	Lnet/minecraft/unmapped/C_9507262;	f_0585666	armorLayer	
 	f	Ljava/nio/FloatBuffer;	f_1130827		tintBuffer
 	f	Z	f_2829043		solidRender
 	m	(Lnet/minecraft/unmapped/C_1013763;FFFFFFF)V	m_4466167	m_4466167	
@@ -1114,8 +1113,8 @@ c	net/minecraft/unmapped/C_8345828
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/unmapped/C_8370969
-	f	Lnet/minecraft/unmapped/C_9507262;	f_0441385	f_0441385	
-	f	Lnet/minecraft/unmapped/C_0022305;	f_1559101	f_1559101	
+	f	Lnet/minecraft/unmapped/C_9507262;	f_0441385	zombieArmorLayer	
+	f	Lnet/minecraft/unmapped/C_0022305;	f_1559101	zombieVillagerArmorLayer	
 	f	Ljava/util/List;	f_3564137		zombieVillagerModel2
 	f	Ljava/util/List;	f_1849101		zombieVillagerModel3
 c	net/minecraft/unmapped/C_8370969$6609267		6609267
@@ -1137,9 +1136,7 @@ c	net/minecraft/unmapped/C_8644453	net/minecraft/client/render/block/CrossBlockR
 		p	3		p_3	
 c	net/minecraft/unmapped/C_8837730
 	f	D	f_3672987	y	
-	f	D	f_9264577	minY	y
 	m	()D	m_0246351	getY	
-	m	()D	m_3622951	getMinY	getY
 c	net/minecraft/unmapped/C_8837730$C_4004004
 	m	(DDDDZ)V	<init>	<init>	
 		p	1		x	
@@ -1149,7 +1146,7 @@ c	net/minecraft/unmapped/C_8837730$C_4004004
 		p	9		onGround	
 	m	(DDDZ)V	<init>		<init>
 		p	1			x
-		p	3			y
+		p	3			minY
 		p	5			z
 		p	7			onGround
 c	net/minecraft/unmapped/C_8837730$C_8094787
@@ -1163,7 +1160,7 @@ c	net/minecraft/unmapped/C_8837730$C_8094787
 		p	11		onGround	
 	m	(DDDFFZ)V	<init>		<init>
 		p	1			x
-		p	3			y
+		p	3			minY
 		p	5			z
 		p	7			yaw
 		p	8			pitch
@@ -1224,7 +1221,7 @@ c	net/minecraft/unmapped/C_9697997
 	m	(Lnet/minecraft/unmapped/C_2627205;)V	m_4348267	pushWorld	
 		p	1		world	
 	m	()V	m_6962935	popWorld	
-	m	(Lnet/minecraft/unmapped/C_3635204;Lnet/minecraft/unmapped/C_6707278;Lnet/minecraft/unmapped/C_5307437;)V	m_2685809	renderWithSprite	
+	m	(Lnet/minecraft/unmapped/C_3635204;Lnet/minecraft/unmapped/C_6707278;Lnet/minecraft/unmapped/C_5307437;)V	m_2685809	renderMiningOverlay	
 		p	1		block	
 		p	2		pos	
 		p	3		sprite	
@@ -1246,7 +1243,7 @@ c	net/minecraft/unmapped/C_9697997
 		p	1			block
 		p	2			metadata
 		p	3			model
-	m	(Lnet/minecraft/unmapped/C_3635204;Lnet/minecraft/unmapped/C_6707278;Lnet/minecraft/unmapped/C_5307437;Lnet/minecraft/unmapped/C_2627205;)V	m_2685809		renderWithSprite
+	m	(Lnet/minecraft/unmapped/C_3635204;Lnet/minecraft/unmapped/C_6707278;Lnet/minecraft/unmapped/C_5307437;Lnet/minecraft/unmapped/C_2627205;)V	m_2685809		renderMiningOverlay
 		p	1			block
 		p	2			pos
 		p	3			sprite

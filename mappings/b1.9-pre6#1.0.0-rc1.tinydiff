@@ -41,14 +41,14 @@ c	net/minecraft/server/MinecraftServer	net/minecraft/server/MinecraftServer
 	m	()V	m_4656559	scheduleStop	
 	m	()V	run	run	
 	m	()V	m_9071158	tick	
-	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_2182707;)V	m_3813815	addCommand	
+	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_2182707;)V	m_3813815	queueCommands	
 		p	1		command	
 		p	2		source	
-	m	()V	m_2515286	runCommands	
+	m	()V	m_2515286	runPendingCommands	
 	m	(Lnet/minecraft/unmapped/C_4753572;)V	m_1782684	addTickable	
 		p	1		tickable	
 	m	([Ljava/lang/String;)V	main	main	
-		p	0		p_0	
+		p	0		args	
 	m	(Ljava/lang/String;)Ljava/io/File;	m_6879300	getFile	
 		p	1		path	
 	m	(Ljava/lang/String;)V	m_7400010	m_7400010	
@@ -94,7 +94,7 @@ c	net/minecraft/server/MinecraftServer	net/minecraft/server/MinecraftServer
 		p	0		p_0	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/server/MinecraftServer$3360339	3360339	
-	f	J	f_0282003	systemTime	
+	f	J	f_0282003	lastLogTime	
 	f	Lnet/minecraft/server/MinecraftServer;	f_0334723	f_0334723	
 	m	(Lnet/minecraft/server/MinecraftServer;)V	<init>	<init>	
 		p	1		p_1	
@@ -111,12 +111,12 @@ c	net/minecraft/server/MinecraftServer$6018901	6018901
 		p	2		p_2	
 	m	()V	run	run	
 c	net/minecraft/server/MinecraftServer$6215553	6215553	
-	f	Lnet/minecraft/server/MinecraftServer;	f_6364022	server	
+	f	Lnet/minecraft/server/MinecraftServer;	f_6364022	f_6364022	
 	m	(Lnet/minecraft/server/MinecraftServer;)V	<init>	<init>	
 		p	1		p_1	
 	m	()V	run	run	
 c	net/minecraft/server/MinecraftServer$7546151	7546151	
-	f	Lnet/minecraft/server/MinecraftServer;	f_9334367	server	
+	f	Lnet/minecraft/server/MinecraftServer;	f_9334367	f_9334367	
 	m	(Lnet/minecraft/server/MinecraftServer;)V	<init>	<init>	
 		p	1		p_1	
 	m	()V	run	run	
@@ -402,7 +402,7 @@ c	net/minecraft/unmapped/C_0386427	net/minecraft/server/network/handler/ServerLo
 	m	(Lnet/minecraft/server/MinecraftServer;Ljava/net/Socket;Ljava/lang/String;)V	<init>	<init>	
 		p	1		server	
 		p	2		socket	
-		p	3		address	
+		p	3		name	
 	m	()V	m_2105523	tick	
 	m	(Ljava/lang/String;)V	m_2166157	disconnect	
 		p	1		reason	
@@ -440,7 +440,7 @@ c	net/minecraft/unmapped/C_0509876
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-c	net/minecraft/unmapped/C_0535659	net/minecraft/command/PendingCommand	
+c	net/minecraft/unmapped/C_0535659	net/minecraft/server/PendingCommand	
 	f	Ljava/lang/String;	f_5102708	command	
 	f	Lnet/minecraft/unmapped/C_2182707;	f_4647043	source	
 	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_2182707;)V	<init>	<init>	
@@ -449,12 +449,12 @@ c	net/minecraft/unmapped/C_0535659	net/minecraft/command/PendingCommand
 c	net/minecraft/unmapped/C_0673136	net/minecraft/server/rcon/RconBase	
 	f	Z	f_8215492	running	
 	f	Lnet/minecraft/unmapped/C_3440247;	f_5696166	server	
-	f	Ljava/lang/Thread;	f_6136627	rconThread	
-	f	I	f_0203836	five	
+	f	Ljava/lang/Thread;	f_6136627	thread	
+	f	I	f_0203836	f_0203836	
 	f	Ljava/util/List;	f_4144583	sockets	
 	f	Ljava/util/List;	f_4890040	closeableSockets	
 	m	(Lnet/minecraft/unmapped/C_3440247;)V	<init>	<init>	
-		p	1		p_1	
+		p	1		server	
 	m	()V	m_0220412	start	
 	m	()Z	m_4316455	isRunning	
 	m	(Ljava/lang/String;)V	m_8606171	log	
@@ -593,11 +593,11 @@ c	net/minecraft/unmapped/C_1404514
 		p	1		levelProgress	
 		p	2		xp	
 		p	3		level	
-c	net/minecraft/unmapped/C_1591456	net/minecraft/server/network/ListenThread	
+c	net/minecraft/unmapped/C_1591456	net/minecraft/server/network/ConnectionListener	
 	f	Ljava/util/logging/Logger;	f_4712395	LOGGER	
 	f	Ljava/net/ServerSocket;	f_2249420	socket	
 	f	Ljava/lang/Thread;	f_6787912	thread	
-	f	Z	f_4491805	listening	
+	f	Z	f_4491805	open	
 	f	I	f_4846762	connectionCounter	
 	f	Ljava/util/ArrayList;	f_2524500	pendingConnections	
 	f	Ljava/util/ArrayList;	f_2574916	connections	
@@ -687,12 +687,12 @@ c	net/minecraft/unmapped/C_1896634$C_9146344	ChunkHolder
 	f	Lnet/minecraft/unmapped/C_9386942;	f_8173213	pos	
 	f	[S	f_4075506	dirtyBlocks	
 	f	I	f_9962350	blocksChanged	
-	f	I	f_3997197	minX	
-	f	I	f_5120411	maxX	
-	f	I	f_1940458	minY	
-	f	I	f_1662215	maxY	
-	f	I	f_7646537	minZ	
-	f	I	f_4006557	maxZ	
+	f	I	f_3997197	dirtyLocalMinX	
+	f	I	f_5120411	dirtyLocalMaxX	
+	f	I	f_1940458	dirtyMinY	
+	f	I	f_1662215	dirtyMaxY	
+	f	I	f_7646537	dirtyLocalMinZ	
+	f	I	f_4006557	dirtyLocalMaxZ	
 	f	Lnet/minecraft/unmapped/C_1896634;	f_6195631	f_6195631	
 	m	(Lnet/minecraft/unmapped/C_1896634;II)V	<init>	<init>	
 		p	1		p_1	
@@ -735,8 +735,6 @@ c	net/minecraft/unmapped/C_2354122
 	m	()Ljava/net/SocketAddress;	m_0697034	getAddress	
 	m	()I	m_4311815	getBlockDataSendQueueSize	
 	m	()Ljava/net/Socket;	m_7422269	getSocket	
-	m	(Ljava/net/Socket;Ljava/lang/String;Lnet/minecraft/unmapped/C_4443804;)V	<init>
-		p	2		name	address
 c	net/minecraft/unmapped/C_2422346
 	m	(IB)V	<init>	<init>	
 		p	1		id	
@@ -769,11 +767,11 @@ c	net/minecraft/unmapped/C_3298564
 	m	(II)V	<init>	<init>	
 		p	1		statId	
 		p	2		value	
-c	net/minecraft/unmapped/C_3440247	net/minecraft/server/IMinecraftServer	
-	m	(Ljava/lang/String;I)I	m_5848886	getPropertyOrDefault	
+c	net/minecraft/unmapped/C_3440247	net/minecraft/server/MinecraftServerAccess	
+	m	(Ljava/lang/String;I)I	m_5848886	getIntProperty	
 		p	1		key	
 		p	2		defaultValue	
-	m	(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;	m_8463699	getPropertyOrDefault	
+	m	(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;	m_8463699	getStringProperty	
 		p	1		key	
 		p	2		defaultValue	
 	m	(Ljava/lang/String;Ljava/lang/Object;)V	m_3659685	setProperty	
@@ -845,17 +843,19 @@ c	net/minecraft/unmapped/C_3571139	net/minecraft/server/world/chunk/ServerChunkC
 		p	1		p_1	
 		p	2		p_2	
 	m	(II)V	m_7368554	unloadChunk	
-		c	Queue the chunk at the given chunk coordinates to be unloaded.\nThis will happen the next time this chunk source is ticked.	
+		c	Queue the world chunk at the given chunk coordinates to be unloaded.\nThis will happen the next time this chunk cache is ticked.	
 		p	1		chunkX	
 		p	2		chunkZ	
 	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_1066391	m_1066391	
+		c	Loads the world chunk at the given chunk coordinates, generating it if needed.	
 		p	1		p_1	
 		p	2		p_2	
 	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_8303908	m_8303908	
+		c	@return the world chunk at the given chunk coordinates, or an empty chunk if it does not exist	
 		p	1		p_1	
 		p	2		p_2	
-	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_7681709	loadChunk	
-		c	Load the chunk at the given chunk coordinates from storage.	
+	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_7681709	loadChunkFromStorage	
+		c	Loads the world chunk at the given chunk coordinates from storage.	
 		p	1		chunkX	
 		p	2		chunkZ	
 	m	(Lnet/minecraft/unmapped/C_6755599;)V	m_5884770	saveEntities	
@@ -897,25 +897,6 @@ c	net/minecraft/unmapped/C_3906126
 		p	6		widthZ	
 	m	(J)V	m_1779740	changeTime	
 		p	1		time	
-	m	()Lnet/minecraft/unmapped/C_9143244;	m_9380668	getBiomeSource	m_9380668
-	m	(III)Z	m_6808962	isAir	m_6808962
-		p	1		x	p_1
-		p	2		y	p_2
-		p	3		z	p_3
-	m	(III)F	m_6019688	getBrightness	m_6019688
-		p	1		x	p_1
-		p	2		y	p_2
-		p	3		z	p_3
-	m	(Lnet/minecraft/unmapped/C_5009044;IIII)V	m_7254465
-		p	1		p_1	player
-		p	2		p_2	x
-		p	3		p_3	y
-		p	4		p_4	z
-		p	5		p_5	face
-	m	(III)Z	m_2070585	isOpaqueCube	m_2070585
-		p	1		x	p_1
-		p	2		y	p_2
-		p	3		z	p_3
 c	net/minecraft/unmapped/C_4030632
 	m	()Z	m_2422629	isNetworkSynced	
 c	net/minecraft/unmapped/C_4034049
@@ -1117,8 +1098,6 @@ c	net/minecraft/unmapped/C_6385858
 		p	3			z
 		p	4			blockId
 c	net/minecraft/unmapped/C_6755599
-	f	[B	f_2408816
-		c	The block id for each position in this chunk.	The block id at each position in this chunk.
 	m	([BIIIIIII)I	m_5989424	packChunkData	
 		p	1		data	
 		p	2		minX	
@@ -1193,21 +1172,21 @@ c	net/minecraft/unmapped/C_7102748	net/minecraft/server/dedicated/gui/DedicatedS
 		p	0		p_0	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_7102748$3093966	3093966	
-	f	Ljavax/swing/JTextField;	f_8149827	textField	
-	f	Lnet/minecraft/unmapped/C_7102748;	f_4939829	gui	
+	f	Ljavax/swing/JTextField;	f_8149827	f_8149827	
+	f	Lnet/minecraft/unmapped/C_7102748;	f_4939829	f_4939829	
 	m	(Lnet/minecraft/unmapped/C_7102748;Ljavax/swing/JTextField;)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
 	m	(Ljava/awt/event/ActionEvent;)V	actionPerformed	actionPerformed	
 		p	1		p_1	
 c	net/minecraft/unmapped/C_7102748$3568167	3568167	
-	f	Lnet/minecraft/server/MinecraftServer;	f_3148831	server	
+	f	Lnet/minecraft/server/MinecraftServer;	f_3148831	f_3148831	
 	m	(Lnet/minecraft/server/MinecraftServer;)V	<init>	<init>	
 		p	1		p_1	
 	m	(Ljava/awt/event/WindowEvent;)V	windowClosing	windowClosing	
 		p	1		p_1	
 c	net/minecraft/unmapped/C_7102748$6190168	6190168	
-	f	Lnet/minecraft/unmapped/C_7102748;	f_4809850	gui	
+	f	Lnet/minecraft/unmapped/C_7102748;	f_4809850	f_4809850	
 	m	(Lnet/minecraft/unmapped/C_7102748;)V	<init>	<init>	
 		p	1		p_1	
 	m	(Ljava/awt/event/FocusEvent;)V	focusGained	focusGained	
@@ -1228,7 +1207,7 @@ c	net/minecraft/unmapped/C_7255299
 	m	(Lnet/minecraft/unmapped/C_5009044;)V	m_2233467	m_2233467	
 		p	1		p_1	
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_2800860;	m_0163728	loadPlayerData	
-		p	1		name	
+		p	1		playerName	
 	m	()Lnet/minecraft/unmapped/C_2260875;	m_2831732	m_2831732	
 	m	()V	m_6528281	m_6528281	
 c	net/minecraft/unmapped/C_7362472
@@ -1306,7 +1285,7 @@ c	net/minecraft/unmapped/C_7684706
 	m	(Lnet/minecraft/unmapped/C_2786920;)V	m_4023501	m_4023501	
 		p	1		p_1	
 c	net/minecraft/unmapped/C_7688744
-	m	(I)Ljava/lang/String;	m_6035754		getKeyNameFromCode
+	m	(I)Ljava/lang/String;	m_6035754		getKeyName
 		p	0			keyCode
 c	net/minecraft/unmapped/C_7699185
 	m	(Lnet/minecraft/unmapped/C_2786920;)V	m_4023501	addListener	
@@ -1320,8 +1299,6 @@ c	net/minecraft/unmapped/C_7699185
 	m	(Lnet/minecraft/unmapped/C_5009044;Z)V	m_0697184	setSynced	
 		p	1		player	
 		p	2		synced	
-	m	(Lnet/minecraft/unmapped/C_7192378;)V	m_6017734
-		p	1		p_1	slot
 c	net/minecraft/unmapped/C_7897127	net/minecraft/server/ServerPlayerInteractionManager	
 	f	Lnet/minecraft/unmapped/C_3906126;	f_7087740	world	
 	f	Lnet/minecraft/unmapped/C_5009044;	f_5832068	player	
@@ -1377,7 +1354,7 @@ c	net/minecraft/unmapped/C_7897127	net/minecraft/server/ServerPlayerInteractionM
 		p	7		face	
 	m	(Lnet/minecraft/unmapped/C_7366354;)V	m_2675564	setWorld	
 		p	1		world	
-c	net/minecraft/unmapped/C_8088383	net/minecraft/entity/living/mob/passive/Tradable	
+c	net/minecraft/unmapped/C_8088383	net/minecraft/entity/living/mob/passive/Npc	
 c	net/minecraft/unmapped/C_8215726
 	m	()Lnet/minecraft/unmapped/C_4844124;	m_1279143	m_1279143	
 	m	()Z	m_1185573	isEditable	
@@ -1398,21 +1375,21 @@ c	net/minecraft/unmapped/C_8347941	net/minecraft/server/rcon/QueryResponseHandle
 	f	I	f_1317866	port	
 	f	I	f_0408022	maxPlayerCount	
 	f	Ljava/lang/String;	f_4260169	motd	
-	f	Ljava/lang/String;	f_3726786	levelName	
+	f	Ljava/lang/String;	f_3726786	worldSaveName	
 	f	Ljava/net/DatagramSocket;	f_5763955	socket	
 	f	[B	f_9602591	packetBuffer	
 	f	Ljava/net/DatagramPacket;	f_8992429	currentPacket	
-	f	Ljava/util/HashMap;	f_0933749	map	
-	f	Ljava/lang/String;	f_4572232	ip	
-	f	Ljava/lang/String;	f_2528916	hostname	
-	f	Ljava/util/HashMap;	f_0204229	queryByPacket	
-	f	J	f_6628601	creationTime	
+	f	Ljava/util/HashMap;	f_0933749	f_0933749	
+	f	Ljava/lang/String;	f_4572232	hostIp	
+	f	Ljava/lang/String;	f_2528916	ip	
+	f	Ljava/util/HashMap;	f_0204229	queries	
+	f	J	f_6628601	f_6628601	
 	f	Lnet/minecraft/unmapped/C_8852653;	f_1477510	dataStreamHelper	
 	f	J	f_3824239	lastResponseTime	
 	m	(Lnet/minecraft/unmapped/C_3440247;)V	<init>	<init>	
 		p	1		p_1	
 	m	([BLjava/net/DatagramPacket;)V	m_2654413	reply	
-		p	1		buf	
+		p	1		buffer	
 		p	2		packet	
 	m	(Ljava/net/DatagramPacket;)Z	m_9357736	handle	
 		p	1		packet	
@@ -1532,13 +1509,13 @@ c	net/minecraft/unmapped/C_8546801	net/minecraft/server/entity/EntityTracker
 c	net/minecraft/unmapped/C_8550120	net/minecraft/server/rcon/RconServer	
 	f	I	f_7768710	port	
 	f	I	f_4224559	serverPort	
-	f	Ljava/lang/String;	f_8714001	hostname	
+	f	Ljava/lang/String;	f_8714001	serverIp	
 	f	Ljava/net/ServerSocket;	f_4430139	listener	
 	f	Ljava/lang/String;	f_3802357	password	
-	f	Ljava/util/HashMap;	f_4736036	clientBySocket	
+	f	Ljava/util/HashMap;	f_4736036	clients	
 	m	(Lnet/minecraft/unmapped/C_3440247;)V	<init>	<init>	
 		p	1		p_1	
-	m	()V	m_5590358	initMap	
+	m	()V	m_5590358	clearClients	
 	m	()V	m_5054559	removeStoppedClients	
 	m	()V	run	run	
 	m	()V	m_0220412	m_0220412	
@@ -1709,63 +1686,7 @@ c	net/minecraft/unmapped/C_0070166
 		c		Queue for chunks to unload.
 	f	Ljava/util/List;	f_6510170
 		c		All loaded chunks.
-	f	Lnet/minecraft/unmapped/C_1264342;	f_8148180	chunkMap	chunksByPos
+	f	Lnet/minecraft/unmapped/C_1264342;	f_8148180
 		c		All loaded chunks, by chunk position.
-	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_4452120
-		c		Load the chunk at the given chunk coordinates from storage.
-	m	(II)V	m_4733887	scheduleUnload	unloadChunk
+	m	(II)V	m_4733887
 		c		Queue the chunk at the given chunk coordinates to be unloaded.\nThis will happen the next time this chunk source is ticked.
-c	net/minecraft/unmapped/C_3635204
-	m	()Ljava/lang/String;	m_4535639	getCreativeModeTab	getTranslationKey
-c	net/minecraft/unmapped/C_3635204$C_5846486
-	m	()Ljava/lang/String;	m_6108844	m_6108844	getDigSound
-c	net/minecraft/unmapped/C_4443804
-	m	(Lnet/minecraft/unmapped/C_8338563;)V	m_8696746	handlerPlayerInput	handlePlayerInput
-c	net/minecraft/unmapped/C_4844124
-	m	(Ljava/io/DataInputStream;)Lnet/minecraft/unmapped/C_2750078;	m_4582369
-		p	1		p_1	input
-	m	(Lnet/minecraft/unmapped/C_2750078;Ljava/io/DataOutputStream;)V	m_0927322
-		p	2		p_2	output
-	m	(Ljava/io/DataInputStream;)Lnet/minecraft/unmapped/C_2800860;	m_7405563
-		p	1		p_1	input
-	m	(Lnet/minecraft/unmapped/C_2800860;Ljava/io/DataOutputStream;)V	m_1834624
-		p	2		p_2	output
-c	net/minecraft/unmapped/C_7185906
-	m	(I)I	m_1777167	abs	m_1777167
-		p	0		x	p_0
-c	net/minecraft/unmapped/C_7256819
-	f	D	f_6857484	pushZ	pushX
-	f	D	f_2130559	pushX	pushZ
-c	net/minecraft/unmapped/C_8837730
-c	net/minecraft/unmapped/C_8837730$C_4004004
-	m	(DDDDZ)V	<init>
-		p	1		p_1	x
-		p	3		p_3	minY
-		p	5		p_5	y
-		p	7		p_7	z
-		p	9		p_9	onGround
-c	net/minecraft/unmapped/C_8837730$C_7170474
-	m	(FFZ)V	<init>
-		p	1		p_1	yaw
-		p	2		p_2	pitch
-		p	3		p_3	onGround
-c	net/minecraft/unmapped/C_9143244
-	f	Lnet/minecraft/unmapped/C_6297854;	f_5073996	biomesIndex	f_5073996
-c	net/minecraft/unmapped/C_8447387
-	m	(ILnet/minecraft/unmapped/C_2750078;)V	m_7256119
-		p	1		id	input
-		p	2		itemStack	stack
-c	net/minecraft/unmapped/C_8664891
-	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_3473914;	m_9827163	getData	m_9827163
-		p	1		worldName	p_1
-	m	(Ljava/lang/String;Z)Lnet/minecraft/unmapped/C_9147018;	m_5678133	get	m_5678133
-		p	1		worldName	p_1
-		p	2		createPlayerDataDir	p_2
-c	net/minecraft/unmapped/C_8588387
-c	net/minecraft/unmapped/C_8588387$C_4149823
-	m	(II)F	m_8330176	m_8330176	getTemperature
-		p	1		p_1	x
-		p	2		p_2	y
-	m	(II)F	m_1755837	m_1755837	getDownfall
-		p	1		p_1	x
-		p	2		p_2	y

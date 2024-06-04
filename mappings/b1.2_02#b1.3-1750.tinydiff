@@ -6,7 +6,7 @@ c	net/minecraft/client/Minecraft
 	f	Lnet/minecraft/unmapped/C_1013763;	f_6974776		camera
 	f	Lnet/minecraft/unmapped/C_3113421;	f_9265499		worldStorageSource
 	m	(Ljava/lang/String;)V	m_2139624	startGame	
-		p	1		p_1	
+		p	1		saveName	
 	m	()Lnet/minecraft/unmapped/C_3113421;	m_2918157		getWorldStorageSource
 	m	(Ljava/lang/String;Ljava/lang/String;J)V	m_2139624		startGame
 		p	1			p_1
@@ -50,12 +50,12 @@ c	net/minecraft/unmapped/C_0141705
 		p	9			r
 		p	10			g
 		p	11			b
-c	net/minecraft/unmapped/C_0932780	net/minecraft/unmapped/C_0932780	
-	f	I	f_7177981	f_7177981	
-	f	I	f_0809651	f_0809651	
+c	net/minecraft/unmapped/C_0932780	net/minecraft/world/chunk/ChunkPos	
+	f	I	f_7177981	x	
+	f	I	f_0809651	z	
 	m	(II)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		x	
+		p	2		z	
 	m	(Ljava/lang/Object;)Z	equals	equals	
 		p	1		p_1	
 	m	()I	hashCode	hashCode	
@@ -69,7 +69,7 @@ c	net/minecraft/unmapped/C_1044273
 		p	2		p_2	
 		p	3		p_3	
 	m	(Lnet/minecraft/unmapped/C_5009044;Z)Z	m_7785939	compileChunks	
-		p	1		p_1	
+		p	1		camera	
 		p	2		p_2	
 	m	(Lnet/minecraft/unmapped/C_1013763;ID)I	m_8682700		render
 		p	1			camera
@@ -166,12 +166,12 @@ c	net/minecraft/unmapped/C_3604011
 		p	2			p_2
 		p	4			p_4
 		p	6			p_6
-	m	(Lnet/minecraft/unmapped/C_5009044;DDD)V	m_8264697		applyTranslation
+	m	(Lnet/minecraft/unmapped/C_5009044;DDD)V	m_8264697		m_8264697
 		p	1			p_1
 		p	2			p_2
 		p	4			p_4
 		p	6			p_6
-	m	(Lnet/minecraft/unmapped/C_5009044;FFF)V	m_7446952		applyRotation
+	m	(Lnet/minecraft/unmapped/C_5009044;FFF)V	m_7446952		m_7446952
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -246,7 +246,7 @@ c	net/minecraft/unmapped/C_3906126
 		p	1		x	
 		p	2		y	
 		p	3		z	
-		p	4		blockId	
+		p	4		block	
 	m	(Lnet/minecraft/unmapped/C_1767579;Ljava/lang/String;Lnet/minecraft/unmapped/C_9219192;J)V	<init>		<init>
 		p	1			storage
 		p	2			name
@@ -492,7 +492,6 @@ c	net/minecraft/unmapped/C_6698663
 		p	0			selectWorldScreen
 	m	(Lnet/minecraft/unmapped/C_6698663;)Ljava/lang/String;	m_8051380		getConversionText
 		p	0			selectWorldScreen
-	m	()V	m_7766669	m_7766669	addButtons
 c	net/minecraft/unmapped/C_6698663$C_5111699		WorldListWidget
 	f	Lnet/minecraft/unmapped/C_6698663;	f_7454553		parent
 	m	(Lnet/minecraft/unmapped/C_6698663;)V	<init>		<init>
@@ -586,23 +585,25 @@ c	net/minecraft/unmapped/C_8191584
 		p	5			dy
 		p	7			dz
 		p	9			range
-c	net/minecraft/unmapped/C_8593406	net/minecraft/unmapped/C_8593406	
-	f	[Lnet/minecraft/unmapped/C_6755599;	f_1145022	f_1145022	
-	f	Lnet/minecraft/unmapped/C_3906126;	f_9442623	f_9442623	
-	f	Lnet/minecraft/unmapped/C_2286002;	f_9348117	f_9348117	
-	f	[B	f_6542603	f_6542603	
+c	net/minecraft/unmapped/C_8593406	net/minecraft/world/chunk/AlphaChunkCache	
+	f	[Lnet/minecraft/unmapped/C_6755599;	f_1145022	chunks	
+	f	Lnet/minecraft/unmapped/C_3906126;	f_9442623	world	
+	f	Lnet/minecraft/unmapped/C_2286002;	f_9348117	storage	
+	f	[B	f_6542603	blocksForNewChunks	
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_2286002;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		world	
+		p	2		storage	
 	m	(II)Z	m_3469388	m_3469388	
 		p	1		p_1	
 		p	2		p_2	
 	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_8303908	m_8303908	
+		c	@return the world chunk at the given chunk coordinates, loading it if needed, or an empty chunk if it does not exist	
 		p	1		p_1	
 		p	2		p_2	
-	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_6463720	m_6463720	
-		p	1		p_1	
-		p	2		p_2	
+	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_6463720	loadChunkFromStorage	
+		c	Loads the chunk at the given chunk coordinates from storage.	
+		p	1		chunkX	
+		p	2		chunkZ	
 	m	(Lnet/minecraft/unmapped/C_9484672;II)V	m_3412382	m_3412382	
 		p	1		p_1	
 		p	2		p_2	
@@ -1286,7 +1287,7 @@ c	net/minecraft/unmapped/C_6165066		net/minecraft/world/storage/WorldSaveInfo
 	m	()J	m_1532293		getSize
 	m	()Z	m_6077378		isSameVersion
 	m	()J	m_4044084		getLastPlayed
-	m	(Lnet/minecraft/unmapped/C_6165066;)I	m_4227708		compareTo
+	m	(Lnet/minecraft/unmapped/C_6165066;)I	m_4227708		m_4227708
 		p	1			p_1
 	m	(Ljava/lang/Object;)I	compareTo		compareTo
 		p	1			p_1
@@ -1366,7 +1367,7 @@ c	net/minecraft/unmapped/C_9081410		net/minecraft/util/math/BlockPos
 	m	(Ljava/lang/Object;)Z	equals		equals
 		p	1			p_1
 	m	()I	hashCode		hashCode
-	m	(Lnet/minecraft/unmapped/C_9081410;)I	m_3009837		compareTo
+	m	(Lnet/minecraft/unmapped/C_9081410;)I	m_3009837		m_3009837
 		p	1			p_1
 	m	(Ljava/lang/Object;)I	compareTo		compareTo
 		p	1			p_1

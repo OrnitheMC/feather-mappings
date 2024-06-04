@@ -33,7 +33,7 @@ c	net/minecraft/unmapped/C_0914500
 		p	4			p_4
 		p	5			p_5
 c	net/minecraft/unmapped/C_1013763
-	f	Lnet/minecraft/unmapped/C_1013763;	f_7863798		attackTarget
+	f	Lnet/minecraft/unmapped/C_1013763;	f_7863798		attacker
 		c		The target that this entity is currently attacking.
 	f	Lnet/minecraft/unmapped/C_9418483;	f_8312914		lookControl
 	f	Lnet/minecraft/unmapped/C_5640967;	f_6730740		movementControl
@@ -43,13 +43,13 @@ c	net/minecraft/unmapped/C_1013763
 	m	()Lnet/minecraft/unmapped/C_5640967;	m_5451904		getDamageTracker
 	m	()Lnet/minecraft/unmapped/C_1279860;	m_1724752		getPathNavigation
 	m	()Ljava/util/Random;	m_7879772		getRandom
-	m	()Lnet/minecraft/unmapped/C_1013763;	m_2110149		getAttackTarget
+	m	()Lnet/minecraft/unmapped/C_1013763;	m_2110149		getAttacker
 	m	()I	m_8112233		getDespawnTimer
 	m	(F)V	m_6420337		setForwardSpeed
 		p	1			forwardSpeed
 	m	(Z)V	m_2447688		setJumping
 		p	1			jumping
-	m	()F	m_0292482		getAttacker
+	m	()F	m_0292482		getTargetSpeed
 	m	()V	m_4958068		serverTickAi
 c	net/minecraft/unmapped/C_1203617
 	f	Z	f_8120510		unicode
@@ -116,7 +116,7 @@ c	net/minecraft/unmapped/C_4413269
 	m	(JIZZ)V	<init>	<init>	
 		p	1		seed	
 		p	3		gameMode	
-		p	4		allowStructures	
+		p	4		generateStructures	
 		p	5		hardcore	
 	m	(JIZZLnet/minecraft/unmapped/C_3997653;)V	<init>		<init>
 		p	1			seed
@@ -178,12 +178,8 @@ c	net/minecraft/unmapped/C_8345828
 	m	()V	m_6773208		m_6773208
 c	net/minecraft/unmapped/C_8428861
 	f	Lnet/minecraft/unmapped/C_1805909;	f_4868841		doneButton
-	m	(Lnet/minecraft/unmapped/C_8428861;)Lnet/minecraft/unmapped/C_1805909;	m_7240595		getDoneButton
-		p	0			screen
-c	net/minecraft/unmapped/C_8428861$C_8420955	C_8420955	LanguageSelectionListWidget
-	f	Ljava/util/ArrayList;	f_6855412	f_6855412	languages
-	f	Ljava/util/TreeMap;	f_8312642	f_8312642	defenitionByLanguage
-	f	Lnet/minecraft/unmapped/C_8428861;	f_8193745	f_8193745	languageOptionsScreen
+	m	(Lnet/minecraft/unmapped/C_8428861;)Lnet/minecraft/unmapped/C_1805909;	m_7240595		m_7240595
+		p	0			p_0
 c	net/minecraft/unmapped/C_9219192
 	f	Lnet/minecraft/unmapped/C_3997653;	f_8356976		generatorType
 	m	()I	m_0545560		getMinSpawnY
@@ -211,15 +207,15 @@ c	net/minecraft/unmapped/C_9614477
 		p	9			p_9
 		p	10			p_10
 c	net/minecraft/unmapped/C_0143040		net/minecraft/unmapped/C_0143040
-c	net/minecraft/unmapped/C_1279860		net/minecraft/unmapped/C_1279860
-	m	(DDD)V	m_1193028		m_1193028
+c	net/minecraft/unmapped/C_1279860		net/minecraft/entity/ai/pathing/Navigation
+	m	(DDD)V	m_1193028		moveTo
 		p	1			p_1
 		p	3			p_3
 		p	5			p_5
-	m	(Lnet/minecraft/unmapped/C_1013763;)V	m_6476655		m_6476655
+	m	(Lnet/minecraft/unmapped/C_1013763;)V	m_6476655		moveTo
 		p	1			p_1
-	m	()V	m_8956789		m_8956789
-	m	()Z	m_5118189		m_5118189
+	m	()V	m_8956789		tick
+	m	()Z	m_5118189		isDone
 c	net/minecraft/unmapped/C_1611709		net/minecraft/entity/ai/pathing/PathNavigation
 	f	Lnet/minecraft/unmapped/C_1013763;	f_3362886		mob
 	f	Lnet/minecraft/unmapped/C_3906126;	f_4093625		world
@@ -236,7 +232,7 @@ c	net/minecraft/unmapped/C_1611709		net/minecraft/entity/ai/pathing/PathNavigati
 		p	1			p_1
 	m	()V	m_8956789		m_8956789
 	m	()Z	m_5118189		m_5118189
-c	net/minecraft/unmapped/C_3317525		net/minecraft/world/biome/layer/ShoreLayer
+c	net/minecraft/unmapped/C_3317525		net/minecraft/world/biome/layer/AddSunflowerPlainsLayer
 	m	(JLnet/minecraft/unmapped/C_6297854;)V	<init>		<init>
 		p	1			seed
 		p	3			parent
@@ -245,7 +241,7 @@ c	net/minecraft/unmapped/C_3317525		net/minecraft/world/biome/layer/ShoreLayer
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-c	net/minecraft/unmapped/C_3336285		net/minecraft/world/biome/layer/AddDeepOceanLayer
+c	net/minecraft/unmapped/C_3336285		net/minecraft/world/biome/layer/RegionHillsLayer
 	m	(JLnet/minecraft/unmapped/C_6297854;)V	<init>		<init>
 		p	1			seed
 		p	3			parent
@@ -311,14 +307,14 @@ c	net/minecraft/unmapped/C_6273786		net/minecraft/entity/ai/goal/Goal
 	f	Ljava/util/ArrayList;	f_0998315		f_0998315
 	m	()V	<init>		<init>
 	m	()Z	m_5896190		canStart
-	m	()Z	m_1332509		shouldContinue
-	m	()Z	m_3298012		canStop
-	m	()V	m_5289183		start
-	m	()V	m_2223255		stop
-	m	()V	m_4528414		tick
+	m	()Z	m_1332509		m_1332509
+	m	()Z	m_3298012		m_3298012
+	m	()V	m_5289183		m_5289183
+	m	()V	m_2223255		m_2223255
+	m	()V	m_4528414		m_4528414
 	m	(Lnet/minecraft/unmapped/C_0143040;)V	m_3593036		m_3593036
 		p	1			p_1
-	m	()Ljava/util/ArrayList;	m_8104401		getControls
+	m	()Ljava/util/ArrayList;	m_8104401		m_8104401
 c	net/minecraft/unmapped/C_6285024		net/minecraft/entity/ai/goal/GoalSelector
 	f	Ljava/util/ArrayList;	f_3006626		goals
 	f	Ljava/util/ArrayList;	f_5585963		activeGoals

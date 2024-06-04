@@ -48,21 +48,21 @@ c	net/minecraft/unmapped/C_0052982
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_1013763;I)V	<init>	<init>	
 		p	1		world	
 		p	2		thrower	
-		p	3		metadata	
+		p	3		statusEffect	
 	m	(Lnet/minecraft/unmapped/C_3906126;DDDI)V	<init>	<init>	
 		p	1		world	
 		p	2		x	
 		p	4		y	
-		p	6		p_6	
-		p	8		p_8	
+		p	6		z	
+		p	8		statusEffect	
 	m	()F	m_9176853	m_9176853	
 	m	()F	m_5446516	m_5446516	
 	m	(I)V	m_0076822	setPotionValue	
 		p	1		damage	
-	m	()I	m_5092614	getMetadata	
+	m	()I	m_5092614	getStatusEffect	
 	m	(Lnet/minecraft/unmapped/C_6707278;)V	m_0280862		extinguishFire
 		p	1			p_1
-	m	()Lnet/minecraft/unmapped/C_2750078;	m_5092614		getMetadata
+	m	()Lnet/minecraft/unmapped/C_2750078;	m_5092614		getStatusEffect
 c	net/minecraft/unmapped/C_0061491
 	m	(ILnet/minecraft/unmapped/C_0561170;I)V	<init>	<init>	
 		p	1		id	
@@ -674,8 +674,8 @@ c	net/minecraft/unmapped/C_1013763
 	m	()Lnet/minecraft/unmapped/C_2750078;	m_7121925	getStackInHand	
 	m	(I)Lnet/minecraft/unmapped/C_2750078;	m_5260880	getStackInInventory	
 		p	1		id	
-	m	(I)Lnet/minecraft/unmapped/C_2750078;	m_5901136	m_5901136	
-		p	1		p_1	
+	m	(I)Lnet/minecraft/unmapped/C_2750078;	m_5901136	getArmorStack	
+		p	1		armorSlot	
 	m	(ILnet/minecraft/unmapped/C_2750078;)V	m_0129682	m_0129682	
 		p	1		p_1	
 		p	2		p_2	
@@ -1051,7 +1051,7 @@ c	net/minecraft/unmapped/C_1719086$C_0300086	Variant
 	m	()I	hashCode	hashCode	
 c	net/minecraft/unmapped/C_1719086$C_0300086$C_8142879	Serializer	
 	m	()V	<init>	<init>	
-	m	(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/unmapped/C_1719086$C_0300086;	m_0898649	deserialize	
+	m	(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/unmapped/C_1719086$C_0300086;	m_0898649	m_0898649	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
@@ -1555,7 +1555,7 @@ c	net/minecraft/unmapped/C_2610956	net/minecraft/network/packet/s2c/play/EntityS
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_7240405;)V	m_4625396	m_4625396	
 		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_4443804;)V	m_4665088	apply	
+	m	(Lnet/minecraft/unmapped/C_4443804;)V	m_4665088	m_4665088	
 		p	1		p_1	
 	m	()Lnet/minecraft/unmapped/C_2800860;	m_4897879	getNbt	
 	m	(Lnet/minecraft/unmapped/C_3906126;)Lnet/minecraft/unmapped/C_6385858;	m_9061563	getEntity	
@@ -1695,7 +1695,7 @@ c	net/minecraft/unmapped/C_2751481
 	f	F	f_2262411	lastHandHeight	lastMainHandHeight
 	m	(Lnet/minecraft/unmapped/C_1013763;Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_2232601$C_8537563;)V	m_7986777	render	
 		p	1		entity	
-		p	2		item	
+		p	2		stack	
 		p	3		transform	
 	m	(Lnet/minecraft/unmapped/C_7106153;)V	m_5491343	setHandLightColor	
 		p	1		player	
@@ -1732,14 +1732,14 @@ c	net/minecraft/unmapped/C_2751481
 	m	()V	m_0120829	onBlockUsed	
 	m	()V	m_8665200	onItemUsed	
 	m	(Lnet/minecraft/unmapped/C_1013763;Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_2232601$C_8537563;)V	m_8401279		render
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			entity
+		p	2			stack
+		p	3			transform
 	m	(Lnet/minecraft/unmapped/C_1013763;Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_2232601$C_8537563;Z)V	m_7986777		render
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	1			entity
+		p	2			stack
+		p	3			transform
+		p	4			mirror
 	m	()V	m_5491343		setHandLightColor
 	m	(F)V	m_4116681		applyHandSway
 		p	1			p_1
@@ -1781,7 +1781,6 @@ c	net/minecraft/unmapped/C_2751481
 		p	7			p_7
 	m	(Lnet/minecraft/unmapped/C_4360192;)V	m_0120829		onItemUsed
 		p	1			hand
-	m	()V	m_0593782	updateHeldItem	tick
 c	net/minecraft/unmapped/C_2800860
 	m	(Ljava/lang/String;Ljava/util/UUID;)V	m_9137084		putUuid
 		p	1			key
@@ -3184,40 +3183,6 @@ c	net/minecraft/unmapped/C_4030632$8204865		8204865
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/unmapped/C_4030632$1975916
-	m	(Lnet/minecraft/unmapped/C_2750078;)Ljava/lang/String;	m_7853793	apply	m_7853793
-c	net/minecraft/unmapped/C_4030632$4149152
-	m	(Lnet/minecraft/unmapped/C_2750078;)Ljava/lang/String;	m_6665253	apply	m_6665253
-c	net/minecraft/unmapped/C_4030632$5643080
-	m	(Lnet/minecraft/unmapped/C_2750078;)Ljava/lang/String;	m_7544376	apply	m_7544376
-c	net/minecraft/unmapped/C_4030632$6817482
-	m	(Lnet/minecraft/unmapped/C_2750078;)Ljava/lang/String;	m_8904905	apply	m_8904905
-c	net/minecraft/unmapped/C_4030632$8593412
-	m	(Lnet/minecraft/unmapped/C_2750078;)Ljava/lang/String;	m_6402606	apply	m_6402606
-c	net/minecraft/unmapped/C_4030632$3660075
-	m	(Lnet/minecraft/unmapped/C_2750078;)Ljava/lang/String;	m_4539558	apply	m_4539558
-c	net/minecraft/unmapped/C_4030632$3751852
-	m	(Lnet/minecraft/unmapped/C_2750078;)Ljava/lang/String;	m_0074173	apply	m_0074173
-c	net/minecraft/unmapped/C_4030632$4631290
-	m	(Lnet/minecraft/unmapped/C_2750078;)Ljava/lang/String;	m_0054836	apply	m_0054836
-c	net/minecraft/unmapped/C_4030632$5696352
-	m	(Lnet/minecraft/unmapped/C_2750078;)Ljava/lang/String;	m_8660281	apply	m_8660281
-c	net/minecraft/unmapped/C_4030632$5801539
-	m	(Lnet/minecraft/unmapped/C_2750078;)Ljava/lang/String;	m_1264601	apply	m_1264601
-c	net/minecraft/unmapped/C_4030632$7246727
-	m	(Lnet/minecraft/unmapped/C_2750078;)Ljava/lang/String;	m_4178545	apply	m_4178545
-c	net/minecraft/unmapped/C_4030632$7719052
-	m	(Lnet/minecraft/unmapped/C_2750078;)Ljava/lang/String;	m_9725227	apply	m_9725227
-c	net/minecraft/unmapped/C_4030632$8388163
-	m	(Lnet/minecraft/unmapped/C_2750078;)Ljava/lang/String;	m_6263986	apply	m_6263986
-c	net/minecraft/unmapped/C_4030632$8960578
-	m	(Lnet/minecraft/unmapped/C_2750078;)Ljava/lang/String;	m_8843097	apply	m_8843097
-c	net/minecraft/unmapped/C_4030632$3414609
-	m	(Lnet/minecraft/unmapped/C_2750078;)Ljava/lang/String;	m_7010000	apply	m_7010000
-c	net/minecraft/unmapped/C_4030632$8291208
-	m	(Lnet/minecraft/unmapped/C_2750078;)Ljava/lang/String;	m_9807816	apply	m_9807816
-c	net/minecraft/unmapped/C_4030632$4893335
-	m	(Lnet/minecraft/unmapped/C_2750078;)Ljava/lang/String;	m_5190968	apply	m_5190968
 c	net/minecraft/unmapped/C_4034049
 	m	(Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_5009044;)Lnet/minecraft/unmapped/C_2750078;	m_6337043	m_6337043	
 		p	1		p_1	
@@ -3622,7 +3587,7 @@ c	net/minecraft/unmapped/C_4917405
 	m	(Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_1013763;Lnet/minecraft/unmapped/C_2232601$C_8537563;)V	m_6851649	renderHeldItem	
 		p	1		stack	
 		p	2		entity	
-		p	3		transformationType	
+		p	3		transform	
 	m	(Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_8675191;Lnet/minecraft/unmapped/C_2232601$C_8537563;)V	m_8635040	renderHeldItem	
 		p	1		stack	
 		p	2		model	
@@ -3636,24 +3601,24 @@ c	net/minecraft/unmapped/C_4917405
 		p	2		x	
 		p	3		y	
 	m	(Lnet/minecraft/unmapped/C_8373595;Ljava/lang/Iterable;ILnet/minecraft/unmapped/C_2750078;)V	m_8644792		renderQuads
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_1013763;)Lnet/minecraft/unmapped/C_8675191;	m_3774328		m_3774328
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			bufferBuilder
+		p	2			quads
+		p	3			color
+		p	4			stack
+	m	(Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_1013763;)Lnet/minecraft/unmapped/C_8675191;	m_3774328		getModel
+		p	1			stack
+		p	2			world
+		p	3			entity
 	m	(Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_1013763;Lnet/minecraft/unmapped/C_2232601$C_8537563;Z)V	m_6851649		renderHeldItem
 		p	1			stack
 		p	2			entity
 		p	3			tranformationType
-		p	4			p_4
+		p	4			mirror
 	m	(Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_8675191;Lnet/minecraft/unmapped/C_2232601$C_8537563;Z)V	m_8635040		renderHeldItem
 		p	1			stack
 		p	2			model
 		p	3			transformationType
-		p	4			p_4
+		p	4			mirror
 	m	(Lnet/minecraft/unmapped/C_2750078;II)V	m_5702970		renderGuiItemModel
 		p	1			stack
 		p	2			x
@@ -4646,8 +4611,6 @@ c	net/minecraft/unmapped/C_6781194$6755062		6755062
 		p	1			p_1
 	m	(Ljava/lang/Object;)Z	apply		apply
 		p	1			p_1
-c	net/minecraft/unmapped/C_6781194$7918736
-	m	(Lnet/minecraft/unmapped/C_6390485;Lnet/minecraft/unmapped/C_6390485;)I	m_0611637	compare	m_0611637
 c	net/minecraft/unmapped/C_6790978
 	f	I	f_5261412		CHILD
 	m	(Lnet/minecraft/unmapped/C_5009044;)Z	m_8048017	m_8048017	
@@ -4719,7 +4682,7 @@ c	net/minecraft/unmapped/C_7000411
 c	net/minecraft/unmapped/C_7015659
 c	net/minecraft/unmapped/C_7015659$4368515	4368515	
 	m	()V	<init>	<init>	
-	m	(Lnet/minecraft/unmapped/C_3544601;)Z	m_0311862	test	
+	m	(Lnet/minecraft/unmapped/C_3544601;)Z	m_0311862	m_0311862	
 		p	1		p_1	
 	m	(Ljava/lang/Object;)Z	apply	apply	
 		p	1		p_1	
@@ -5365,7 +5328,7 @@ c	net/minecraft/unmapped/C_8263475
 		p	2		viewDistance	
 		p	3		chatVisibility	
 		p	4		chatColors	
-		p	5		difficulty	
+		p	5		modelParts	
 	m	(Ljava/lang/String;ILnet/minecraft/unmapped/C_5009044$C_9618642;ZILnet/minecraft/unmapped/C_6912424;)V	<init>		<init>
 		p	1			language
 		p	2			viewDistance
@@ -5936,7 +5899,7 @@ c	net/minecraft/unmapped/C_9232780$8813820
 	f	[I	f_7143765		f_7143765
 	f	[I	f_9711948		f_9711948
 c	net/minecraft/unmapped/C_9255863
-	m	(Lnet/minecraft/unmapped/C_1444189;DDDFF)V	m_6533146	render	
+	m	(Lnet/minecraft/unmapped/C_1444189;DDDFF)V	m_6533146	m_6533146	
 		p	1		p_1	
 		p	2		p_2	
 		p	4		p_4	
@@ -5978,7 +5941,7 @@ c	net/minecraft/unmapped/C_9264598$2290435	2290435
 	f	Lnet/minecraft/unmapped/C_9264598;	f_2209246	f_2209246	
 	m	(Lnet/minecraft/unmapped/C_9264598;)V	<init>	<init>	
 		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_7612169;Lnet/minecraft/unmapped/C_7612169;)I	m_1064367	compare	
+	m	(Lnet/minecraft/unmapped/C_7612169;Lnet/minecraft/unmapped/C_7612169;)I	m_1064367	m_1064367	
 		p	1		p_1	
 		p	2		p_2	
 	m	(Ljava/lang/Object;Ljava/lang/Object;)I	compare	compare	
@@ -6378,7 +6341,6 @@ c	net/minecraft/unmapped/C_9913447$6289161
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/unmapped/C_9913447$7525977
-	f	Lnet/minecraft/unmapped/C_2673437;	f_3284453	normal	f_3284453
 c	net/minecraft/unmapped/C_9913447$7525977$9473488
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_9373743;)Lnet/minecraft/unmapped/C_9098932;	m_6246506	m_6246506	
 		p	1		p_1	
@@ -6399,20 +6361,6 @@ c	net/minecraft/unmapped/C_9913447$5646034		5646034
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/unmapped/C_9913447$1370944
-	f	Lnet/minecraft/unmapped/C_2673437;	f_5781542	fallback	f_5781542
-c	net/minecraft/unmapped/C_9913447$5121935
-	f	Lnet/minecraft/unmapped/C_2673437;	f_0065883	fallback	f_0065883
-c	net/minecraft/unmapped/C_9913447$5994497
-	f	Lnet/minecraft/unmapped/C_2673437;	f_1417639	normal	f_1417639
-c	net/minecraft/unmapped/C_9913447$4614909
-	f	Z	f_6986011	ignited	f_6986011
-c	net/minecraft/unmapped/C_9913447$5104661
-	f	Z	f_7579152	dyed	f_7579152
-c	net/minecraft/unmapped/C_9913447$1300015
-	f	Z	f_5776561	spawnedWither	f_5776561
-c	net/minecraft/unmapped/C_9913447$3392886
-	f	Z	f_5538659	spawnedGolem	f_5538659
 c	net/minecraft/unmapped/C_9939341
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3635204$C_0480726;)Lnet/minecraft/unmapped/C_2441996;	m_6626229		m_6626229
 		p	1			p_1
@@ -6919,7 +6867,7 @@ c	net/minecraft/unmapped/C_2219604		net/minecraft/item/ItemProperty
 	m	(Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_1013763;)F	m_3799054		apply
 		p	1			stack
 		p	2			world
-		p	3			entity
+		p	3			owner
 c	net/minecraft/unmapped/C_2424347		net/minecraft/potion/Potions
 	f	Lnet/minecraft/unmapped/C_8703287;	f_4809451		WATER
 	f	Lnet/minecraft/unmapped/C_8703287;	f_9709559		MUNDANE
@@ -7885,7 +7833,7 @@ c	net/minecraft/unmapped/C_5517808		net/minecraft/world/gen/structure/template/S
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	()Lnet/minecraft/unmapped/C_5517808;	m_8441501		copy
+	m	()Lnet/minecraft/unmapped/C_5517808;	m_8441501		m_8441501
 	m	(Lnet/minecraft/unmapped/C_3635204$C_4039788;)Lnet/minecraft/unmapped/C_5517808;	m_2046554		setMirror
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_3635204$C_0480726;)Lnet/minecraft/unmapped/C_5517808;	m_0896567		setRotation
@@ -8027,18 +7975,18 @@ c	net/minecraft/unmapped/C_6178320		net/minecraft/server/world/ServerBossEvent
 	m	(Z)V	m_6746176		setVisible
 		p	1			visible
 	m	()Ljava/util/Collection;	m_2379171		getPlayers
-c	net/minecraft/unmapped/C_6488493		net/minecraft/unmapped/C_6488493
-	f	Ljava/util/Map;	f_8094980		f_8094980
-	f	Lnet/minecraft/unmapped/C_0561170;	f_7837034		f_7837034
-	m	(Ljava/lang/String;Ljava/util/List;Ljava/util/List;)Lnet/minecraft/unmapped/C_0561170;	m_5469741		m_5469741
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
+c	net/minecraft/unmapped/C_6488493		net/minecraft/client/render/BannerTextureCache
+	f	Ljava/util/Map;	f_8094980		TEXTURES
+	f	Lnet/minecraft/unmapped/C_0561170;	f_7837034		BASE_LOCATION
+	m	(Ljava/lang/String;Ljava/util/List;Ljava/util/List;)Lnet/minecraft/unmapped/C_0561170;	m_5469741		get
+		p	0			path
+		p	1			patterns
+		p	2			colors
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_6488493$7415248		7415248
-c	net/minecraft/unmapped/C_6488493$C_2663676		C_2663676
-	f	J	f_9141185		f_9141185
-	f	Lnet/minecraft/unmapped/C_0561170;	f_7511883		f_7511883
+c	net/minecraft/unmapped/C_6488493$C_2663676		CachedTexture
+	f	J	f_9141185		timestamp
+	f	Lnet/minecraft/unmapped/C_0561170;	f_7511883		location
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_6488493$7415248;)V	<init>		<init>
 		p	1			p_1
@@ -8768,6 +8716,3 @@ c	net/minecraft/unmapped/C_9881691		net/minecraft/entity/projectile/ArrowEntity
 	m	(B)V	m_9129586		m_9129586
 		p	1			p_1
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_0289174
-	m	(F)V	m_0246274
-		p	1		scale	tickDelta

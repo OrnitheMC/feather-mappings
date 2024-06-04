@@ -82,9 +82,9 @@ c	net/minecraft/unmapped/C_0635266
 	m	(Lcom/mojang/datafixers/types/DynamicOps;)Lcom/mojang/datafixers/Dynamic;	m_0420110		m_0420110
 		p	1			p_1
 c	net/minecraft/unmapped/C_0636026
-	m	()Z	m_4020379	m_4020379	
-	m	()Ljava/util/BitSet;	m_9859246	m_9859246	
-	m	()V	m_2499302	m_2499302	
+	m	()Z	m_4020379	hasNoiseMask	
+	m	()Ljava/util/BitSet;	m_9859246	getNoiseMask	
+	m	()V	m_2499302	removeNoiseMask	
 	m	(Lnet/minecraft/unmapped/C_6707278;)Lnet/minecraft/unmapped/C_4636105;	m_8916721		m_8916721
 		p	1			p_1
 c	net/minecraft/unmapped/C_0686909
@@ -227,11 +227,11 @@ c	net/minecraft/unmapped/C_0937684
 		p	0			p_0
 		p	1			p_1
 c	net/minecraft/unmapped/C_0960638
-	f	Ljava/util/BitSet;	f_8670736	f_8670736	
+	f	Ljava/util/BitSet;	f_8670736	noiseMask	
 	m	()Z	m_4020379	m_4020379	
 	m	()Ljava/util/BitSet;	m_9859246	m_9859246	
-	m	(Ljava/util/BitSet;)V	m_2605535	m_2605535	
-		p	1		p_1	
+	m	(Ljava/util/BitSet;)V	m_2605535	setNoiseMask	
+		p	1		noiseMask	
 	m	()V	m_2499302	m_2499302	
 c	net/minecraft/unmapped/C_0977261
 	m	(Lcom/mojang/datafixers/types/DynamicOps;)Lcom/mojang/datafixers/Dynamic;	m_0420110		m_0420110
@@ -295,7 +295,7 @@ c	net/minecraft/unmapped/C_1143792$C_0498636
 	m	(ILjava/util/Random;Lnet/minecraft/unmapped/C_0624720;Lnet/minecraft/unmapped/C_3544601;)V	<init>	<init>	
 		p	1		generationDepth	
 		p	2		random	
-		p	3		box	
+		p	3		bounds	
 		p	4		facing	
 	m	(Ljava/util/List;Ljava/util/Random;IIILnet/minecraft/unmapped/C_3544601;I)Lnet/minecraft/unmapped/C_1143792$C_0498636;	m_7587356	of	
 		p	0		pieces	
@@ -329,7 +329,7 @@ c	net/minecraft/unmapped/C_1143792$C_1020713
 	m	(ILjava/util/Random;Lnet/minecraft/unmapped/C_0624720;Lnet/minecraft/unmapped/C_3544601;)V	<init>	<init>	
 		p	1		generationDepth	
 		p	2		random	
-		p	3		box	
+		p	3		bounds	
 		p	4		facing	
 	m	(Ljava/util/List;Ljava/util/Random;IIILnet/minecraft/unmapped/C_3544601;I)Lnet/minecraft/unmapped/C_1143792$C_1020713;	m_6224951	of	
 		p	0		pieces	
@@ -376,7 +376,7 @@ c	net/minecraft/unmapped/C_1143792$C_3941151
 	m	(ILjava/util/Random;Lnet/minecraft/unmapped/C_0624720;Lnet/minecraft/unmapped/C_3544601;)V	<init>	<init>	
 		p	1		generationDepth	
 		p	2		random	
-		p	3		box	
+		p	3		bounds	
 		p	4		facing	
 	m	(Ljava/util/List;Ljava/util/Random;IIILnet/minecraft/unmapped/C_3544601;I)Lnet/minecraft/unmapped/C_1143792$C_3941151;	m_5829700	of	
 		p	0		pieces	
@@ -405,7 +405,7 @@ c	net/minecraft/unmapped/C_1143792$C_4119729
 	m	(ILjava/util/Random;Lnet/minecraft/unmapped/C_0624720;Lnet/minecraft/unmapped/C_3544601;)V	<init>	<init>	
 		p	1		generationDepth	
 		p	2		random	
-		p	3		box	
+		p	3		bounds	
 		p	4		facing	
 	m	(Ljava/util/List;Ljava/util/Random;IIILnet/minecraft/unmapped/C_3544601;I)Lnet/minecraft/unmapped/C_1143792$C_4119729;	m_2230824	of	
 		p	0		pieces	
@@ -434,7 +434,7 @@ c	net/minecraft/unmapped/C_1143792$C_4864526
 	m	(ILjava/util/Random;Lnet/minecraft/unmapped/C_0624720;Lnet/minecraft/unmapped/C_3544601;)V	<init>	<init>	
 		p	1		generationDepth	
 		p	2		random	
-		p	3		box	
+		p	3		bounds	
 		p	4		facing	
 	m	(Ljava/util/List;Ljava/util/Random;IIILnet/minecraft/unmapped/C_3544601;I)Lnet/minecraft/unmapped/C_1143792$C_4864526;	m_8709022	of	
 		p	0		pieces	
@@ -463,7 +463,7 @@ c	net/minecraft/unmapped/C_1143792$C_4968273
 	m	(ILjava/util/Random;Lnet/minecraft/unmapped/C_0624720;Lnet/minecraft/unmapped/C_3544601;)V	<init>	<init>	
 		p	1		generationDepth	
 		p	2		random	
-		p	3		box	
+		p	3		bounds	
 		p	4		facing	
 	m	(Ljava/util/List;Ljava/util/Random;IIILnet/minecraft/unmapped/C_3544601;I)Lnet/minecraft/unmapped/C_1143792$C_4968273;	m_6406399	of	
 		p	0		pieces	
@@ -505,7 +505,7 @@ c	net/minecraft/unmapped/C_1143792$C_6918914
 	m	(ILjava/util/Random;Lnet/minecraft/unmapped/C_0624720;Lnet/minecraft/unmapped/C_3544601;)V	<init>	<init>	
 		p	1		generationDepth	
 		p	2		random	
-		p	3		box	
+		p	3		bounds	
 		p	4		facing	
 	m	(Ljava/util/List;Ljava/util/Random;IIIILnet/minecraft/unmapped/C_3544601;)Lnet/minecraft/unmapped/C_1143792$C_6918914;	m_5248191	of	
 		p	0		pieces	
@@ -513,8 +513,8 @@ c	net/minecraft/unmapped/C_1143792$C_6918914
 		p	2		x	
 		p	3		y	
 		p	4		z	
-		p	5		facing	
-		p	6		type	
+		p	5		generationDepth	
+		p	6		facing	
 	m	(ILnet/minecraft/unmapped/C_0624720;Lnet/minecraft/unmapped/C_3544601;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -534,7 +534,7 @@ c	net/minecraft/unmapped/C_1143792$C_7802531
 	m	(ILjava/util/Random;Lnet/minecraft/unmapped/C_0624720;Lnet/minecraft/unmapped/C_3544601;)V	<init>	<init>	
 		p	1		generationDepth	
 		p	2		random	
-		p	3		box	
+		p	3		bounds	
 		p	4		facing	
 	m	(Ljava/util/List;Ljava/util/Random;IIILnet/minecraft/unmapped/C_3544601;I)Lnet/minecraft/unmapped/C_1143792$C_7802531;	m_1469812	of	
 		p	0		pieces	
@@ -582,7 +582,7 @@ c	net/minecraft/unmapped/C_1143792$C_8944306
 	m	(ILjava/util/Random;Lnet/minecraft/unmapped/C_0624720;Lnet/minecraft/unmapped/C_3544601;)V	<init>	<init>	
 		p	1		generationDepth	
 		p	2		random	
-		p	3		box	
+		p	3		bounds	
 		p	4		facing	
 	m	(Lnet/minecraft/unmapped/C_2800860;Lnet/minecraft/unmapped/C_0899004;)V	m_1922521	m_1922521	
 		p	1		p_1	
@@ -593,8 +593,8 @@ c	net/minecraft/unmapped/C_1143792$C_8944306
 		p	2		x	
 		p	3		y	
 		p	4		z	
-		p	5		facing	
-		p	6		generationDepth	
+		p	5		generationDepth	
+		p	6		facing	
 	m	(ILnet/minecraft/unmapped/C_0624720;Lnet/minecraft/unmapped/C_3544601;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -1338,7 +1338,7 @@ c	net/minecraft/unmapped/C_3862529
 		p	5		p_5	
 	m	()Lnet/minecraft/unmapped/C_9006197$C_5274331;	m_6172530		m_6172530
 c	net/minecraft/unmapped/C_3862529$C_8916964
-	f	Lnet/minecraft/unmapped/C_3862529$C_4013422;	f_5325976	f_5325976	
+	f	Lnet/minecraft/unmapped/C_3862529$C_4013422;	f_5325976	variant	
 	m	()V	<init>	<init>	
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_8679709;Lnet/minecraft/unmapped/C_0163201;IILnet/minecraft/unmapped/C_4636105;)V	<init>	<init>	
 		p	1		p_1	
@@ -1514,7 +1514,7 @@ c	net/minecraft/unmapped/C_4615590$C_3020447
 	m	(ILjava/util/Random;Lnet/minecraft/unmapped/C_0624720;Lnet/minecraft/unmapped/C_3544601;)V	<init>	<init>	
 		p	1		generationDepth	
 		p	2		random	
-		p	3		box	
+		p	3		bounds	
 		p	4		facing	
 	m	(Lnet/minecraft/unmapped/C_2800860;Lnet/minecraft/unmapped/C_0899004;)V	m_1922521	m_1922521	
 		p	1		p_1	
@@ -1619,7 +1619,7 @@ c	net/minecraft/unmapped/C_4615590$C_7597447
 	m	(ILjava/util/Random;Lnet/minecraft/unmapped/C_0624720;Lnet/minecraft/unmapped/C_3544601;)V	<init>	<init>	
 		p	1		generationDepth	
 		p	2		random	
-		p	3		box	
+		p	3		bounds	
 		p	4		facing	
 	m	(Lnet/minecraft/unmapped/C_2800860;Lnet/minecraft/unmapped/C_0899004;)V	m_1922521	m_1922521	
 		p	1		p_1	
@@ -2734,10 +2734,10 @@ c	net/minecraft/unmapped/C_8679709
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_0636026;)V	m_8303908	m_8303908	
 		p	1		p_1	
-	m	(IILnet/minecraft/unmapped/C_0636026;)V	m_0874705	m_0874705	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+	m	(IILnet/minecraft/unmapped/C_0636026;)V	m_0874705	generate	
+		p	1		chunkX	
+		p	2		chunkZ	
+		p	3		chunk	
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_0636026;Lnet/minecraft/unmapped/C_8679709;)V	m_6100832	m_6100832	
 		p	1		p_1	
 		p	2		p_2	
@@ -2908,14 +2908,14 @@ c	net/minecraft/unmapped/C_9107899
 	m	(Lcom/mojang/datafixers/types/DynamicOps;)Lcom/mojang/datafixers/Dynamic;	m_0420110		m_0420110
 		p	1			p_1
 c	net/minecraft/unmapped/C_9143244
-	m	(Lnet/minecraft/unmapped/C_6707278;Lnet/minecraft/unmapped/C_4636105;)Lnet/minecraft/unmapped/C_4636105;	m_2941275	getBiomeOrDefault	
+	m	(Lnet/minecraft/unmapped/C_6707278;Lnet/minecraft/unmapped/C_4636105;)Lnet/minecraft/unmapped/C_4636105;	m_2941275	getBiome	
 		p	1		pos	
 		p	2		defaultValue	
 	m	(IILnet/minecraft/unmapped/C_4636105;)Lnet/minecraft/unmapped/C_4636105;	m_6425571	m_6425571	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(Lnet/minecraft/unmapped/C_6707278;)Lnet/minecraft/unmapped/C_4636105;	m_2941275		getBiomeOrDefault
+	m	(Lnet/minecraft/unmapped/C_6707278;)Lnet/minecraft/unmapped/C_4636105;	m_2941275		getBiome
 		p	1			p_1
 	m	(II)Lnet/minecraft/unmapped/C_4636105;	m_6425571		m_6425571
 		p	1			p_1
@@ -3185,7 +3185,7 @@ c	net/minecraft/unmapped/C_9921707$C_3594140
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_3544601;Lnet/minecraft/unmapped/C_0624720;)V	<init>	<init>	
 		p	1		facing	
-		p	2		box	
+		p	2		bounds	
 	m	(ILnet/minecraft/unmapped/C_3544601;Lnet/minecraft/unmapped/C_9921707$C_5997299;III)V	<init>	<init>	
 		p	1		generationDepth	
 		p	2		facing	

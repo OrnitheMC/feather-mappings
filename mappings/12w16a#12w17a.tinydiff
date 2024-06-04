@@ -23,9 +23,9 @@ c	net/minecraft/unmapped/C_0386427
 	m	(Lnet/minecraft/unmapped/C_8329233;)V	m_6609228		m_6609228
 		p	1			p_1
 	m	()V	m_7298942		acceptLogin
-	m	(Lnet/minecraft/unmapped/C_0386427;)Lnet/minecraft/server/MinecraftServer;	m_1057713		getServer
-		p	0			serverLoginNetworkHandler
-	m	(Lnet/minecraft/unmapped/C_0386427;)Ljavax/crypto/SecretKey;	m_0253215		getProfile
+	m	(Lnet/minecraft/unmapped/C_0386427;)Lnet/minecraft/server/MinecraftServer;	m_1057713		m_1057713
+		p	0			p_0
+	m	(Lnet/minecraft/unmapped/C_0386427;)Ljavax/crypto/SecretKey;	m_0253215		m_0253215
 		p	0			p_0
 	m	(Lnet/minecraft/unmapped/C_0386427;)Ljava/lang/String;	m_3338240		m_3338240
 		p	0			p_0
@@ -43,7 +43,7 @@ c	net/minecraft/unmapped/C_0675137
 	m	(Lnet/minecraft/unmapped/C_2182707;)Ljava/lang/String;	m_7897311		m_7897311
 		p	1			p_1
 c	net/minecraft/unmapped/C_1011144
-	m	(I)Lnet/minecraft/unmapped/C_3984704;	m_0173998		remove
+	m	(I)Lnet/minecraft/unmapped/C_3984704;	m_0173998		removeElement
 		p	1			index
 c	net/minecraft/unmapped/C_1236108
 	m	(Lnet/minecraft/unmapped/C_3906126;III)I	m_0328423		m_0328423
@@ -88,13 +88,11 @@ c	net/minecraft/unmapped/C_2354122
 	f	Ljava/security/PrivateKey;	f_1389554		privateKey
 	m	(Ljava/net/Socket;Ljava/lang/String;Lnet/minecraft/unmapped/C_4443804;Ljava/security/PrivateKey;)V	<init>		<init>
 		p	1			socket
-		p	2			address
+		p	2			name
 		p	3			listener
 		p	4			privateKey
 	m	()V	m_3405495		decryptInput
 	m	()V	m_8875470		encryptOutput
-	m	(Ljava/net/Socket;Ljava/lang/String;Lnet/minecraft/unmapped/C_4443804;)V	<init>
-		p	2		name	address
 c	net/minecraft/unmapped/C_2371258
 	f	Lnet/minecraft/unmapped/C_1793890;	f_7202068		singleSlab
 	f	Lnet/minecraft/unmapped/C_1793890;	f_1912427		doubleSlab
@@ -195,17 +193,19 @@ c	net/minecraft/unmapped/C_4821901
 		p	4			p_4
 c	net/minecraft/unmapped/C_4844124
 	m	(Ljava/io/DataInputStream;)Lnet/minecraft/unmapped/C_2750078;	m_4582369
-		p	1		p_1	
+		p	1		input	
 		p	0			input
 	m	(Lnet/minecraft/unmapped/C_2750078;Ljava/io/DataOutputStream;)V	m_0927322
-		p	2		p_2	
+		p	2		output	
 		p	0			stack
+		p	1		stack	output
 	m	(Ljava/io/DataInputStream;)Lnet/minecraft/unmapped/C_2800860;	m_7405563
-		p	1		p_1	
+		p	1		input	
 		p	0			input
 	m	(Lnet/minecraft/unmapped/C_2800860;Ljava/io/DataOutputStream;)V	m_1834624
-		p	2		p_2	
+		p	2		output	
 		p	0			nbt
+		p	1		nbt	output
 	m	(Ljava/io/DataOutputStream;[B)V	m_9223305		writeData
 		p	0			output
 		p	1			data
@@ -314,19 +314,19 @@ c	net/minecraft/unmapped/C_7185906
 	m	(D)I	m_9480524		ceil
 		p	0			x
 c	net/minecraft/unmapped/C_7688744
-	f	[Ljava/lang/String;	f_1832629		f_1832629
-	f	I	f_3313574		chatVisible
+	f	[Ljava/lang/String;	f_1832629		CHAT_VISIBILITY_SETTINGS
+	f	I	f_3313574		chatVisibility
 	f	Z	f_6271413		chatColors
 	f	Z	f_5485886		chatLinks
 	f	Z	f_0646108		chatLinksPrompt
 	f	F	f_6812914		chatOpacity
 	f	Lnet/minecraft/unmapped/C_5027199;	f_9261557		commandKey
 c	net/minecraft/unmapped/C_7688744$C_0457152
-	f	Lnet/minecraft/unmapped/C_7688744$C_0457152;	f_2078769		f_2078769
-	f	Lnet/minecraft/unmapped/C_7688744$C_0457152;	f_2192127		f_2192127
-	f	Lnet/minecraft/unmapped/C_7688744$C_0457152;	f_8869652		f_8869652
-	f	Lnet/minecraft/unmapped/C_7688744$C_0457152;	f_8709754		f_8709754
-	f	Lnet/minecraft/unmapped/C_7688744$C_0457152;	f_3830557		f_3830557
+	f	Lnet/minecraft/unmapped/C_7688744$C_0457152;	f_2078769		CHAT_VISIBILITY
+	f	Lnet/minecraft/unmapped/C_7688744$C_0457152;	f_2192127		CHAT_COLOR
+	f	Lnet/minecraft/unmapped/C_7688744$C_0457152;	f_8869652		CHAT_LINKS
+	f	Lnet/minecraft/unmapped/C_7688744$C_0457152;	f_8709754		CHAT_OPACITY
+	f	Lnet/minecraft/unmapped/C_7688744$C_0457152;	f_3830557		CHAT_LINKS_PROMPT
 c	net/minecraft/unmapped/C_8055952
 	m	(Lnet/minecraft/unmapped/C_2182707;)Ljava/lang/String;	m_7897311		m_7897311
 		p	1			p_1
@@ -363,17 +363,17 @@ c	net/minecraft/unmapped/C_9007058
 		p	1			p_1
 c	net/minecraft/unmapped/C_9165859
 	f	I	f_6175615	age	
-	f	I	f_0837298		f_0837298
-	f	I	f_1095510		f_1095510
+	f	I	f_0837298		timeOfCreation
+	f	I	f_1095510		id
 	m	(Ljava/lang/String;)V	<init>	<init>	
 		p	1		text	
 	m	(ILjava/lang/String;I)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	()Ljava/lang/String;	m_7737198		m_7737198
-	m	()I	m_3136456		m_3136456
-	m	()I	m_8609414		m_8609414
+		p	1			timeOfCreation
+		p	2			text
+		p	3			id
+	m	()Ljava/lang/String;	m_7737198		getText
+	m	()I	m_3136456		getTimeOfCreation
+	m	()I	m_8609414		getId
 c	net/minecraft/unmapped/C_9232780
 	m	(Lnet/minecraft/unmapped/C_3906126;III)I	m_0328423		m_0328423
 		p	1			p_1
@@ -547,8 +547,8 @@ c	net/minecraft/unmapped/C_2465765		net/minecraft/client/gui/screen/options/Chat
 	f	Lnet/minecraft/unmapped/C_7688744;	f_7793043		options
 	f	Ljava/lang/String;	f_4750102		chatOptionsTitle
 	m	(Lnet/minecraft/unmapped/C_0786431;Lnet/minecraft/unmapped/C_7688744;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			parent
+		p	2			options
 	m	()V	m_2060594		m_2060594
 	m	(Lnet/minecraft/unmapped/C_2621421;)V	m_9403981		m_9403981
 		p	1			p_1
@@ -595,7 +595,7 @@ c	net/minecraft/unmapped/C_5091011		net/minecraft/client/gui/chat/ChatGui
 	f	I	f_7825952		scroll
 	f	Z	f_8263825		hasNewMessagesSinceScroll
 	m	(Lnet/minecraft/client/Minecraft;)V	<init>		<init>
-		p	1			p_1
+		p	1			minecraft
 	m	(I)V	m_3091898		render
 		p	1			ticks
 	m	()V	m_2321808		clear
@@ -724,7 +724,7 @@ c	net/minecraft/unmapped/C_6635016		net/minecraft/item/BookAndQuillItem
 	m	()Z	m_6706480		m_6706480
 	m	(Lnet/minecraft/unmapped/C_2800860;)Z	m_3774504		isValid
 		p	0			tag
-c	net/minecraft/unmapped/C_7192742		net/minecraft/command/AbstractHelpCommand
+c	net/minecraft/unmapped/C_7192742		net/minecraft/command/HelpCommand
 	m	()V	<init>		<init>
 	m	()Ljava/lang/String;	m_5375943		m_5375943
 	m	(Lnet/minecraft/unmapped/C_2182707;)Ljava/lang/String;	m_7897311		m_7897311
@@ -735,11 +735,11 @@ c	net/minecraft/unmapped/C_7192742		net/minecraft/command/AbstractHelpCommand
 		p	2			p_2
 	m	(Lnet/minecraft/unmapped/C_2182707;)Ljava/util/List;	m_1819362		getAvailableCommands
 		p	1			source
-c	net/minecraft/unmapped/C_7380621		net/minecraft/client/command/HelpCommand
+c	net/minecraft/unmapped/C_7380621		net/minecraft/client/command/ClientHelpCommand
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_2182707;)Ljava/util/List;	m_1819362		m_1819362
 		p	1			p_1
-c	net/minecraft/unmapped/C_7559603		net/minecraft/server/command/HelpCommand
+c	net/minecraft/unmapped/C_7559603		net/minecraft/server/command/ServerHelpCommand
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_2182707;)Ljava/util/List;	m_1819362		m_1819362
 		p	1			p_1

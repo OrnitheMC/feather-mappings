@@ -105,9 +105,9 @@ c	net/minecraft/unmapped/C_1021050
 c	net/minecraft/unmapped/C_1492128
 	f	Ljava/util/regex/Pattern;	f_0491837	UUID_PATTERN	
 	m	(Ljava/lang/String;)Z	m_4681679	isValidUuid	
-		p	0		string	
+		p	0		s	
 	m	(Ljava/lang/String;)Ljava/util/UUID;	m_6278303	getUuidFromString	
-		p	0		string	
+		p	0		s	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_1677199
 	m	(CI)V	m_2815482		m_2815482
@@ -116,16 +116,15 @@ c	net/minecraft/unmapped/C_1677199
 c	net/minecraft/unmapped/C_3075663
 	f	Lorg/apache/logging/log4j/Logger;	f_8484072	LOGGER	
 	f	Ljava/lang/String;	f_4629683	user	
-	f	Ljava/lang/String;	f_9478694	operator	source
 	m	(Ljava/lang/String;)V	<init>	<init>	
-		p	1		playerName	
-	m	()Ljava/lang/String;	m_2506854	getPlayerName	
+		p	1		user	
+	m	()Ljava/lang/String;	m_2506854	getUser	
 	m	()Ljava/util/Date;	m_3883031	getStartDate	
 	m	(Ljava/util/Date;)V	m_4137415	setStartDate	
 		p	1		date	
-	m	()Ljava/lang/String;	m_1023883	getOperator	
-	m	(Ljava/lang/String;)V	m_6788043	setOperator	
-		p	1		name	
+	m	()Ljava/lang/String;	m_1023883	getSource	
+	m	(Ljava/lang/String;)V	m_6788043	setSource	
+		p	1		source	
 	m	(Ljava/util/Date;)V	m_3810689	setExpirationDate	
 		p	1		date	
 	m	(Ljava/lang/String;)V	m_9419832	setReason	
@@ -144,7 +143,7 @@ c	net/minecraft/unmapped/C_3075663
 		p	2			p_2
 	m	(Lcom/google/gson/JsonObject;)V	m_2413061		m_2413061
 		p	1			p_1
-	m	()Z	m_0911642	isExpired	m_0911642
+	m	()Z	m_0911642	hasExpired	m_0911642
 c	net/minecraft/unmapped/C_3540933
 	f	Ljava/io/File;	f_7514278		f_7514278
 	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_0561170;Lnet/minecraft/unmapped/C_5556060;)V	<init>	<init>	
@@ -175,7 +174,6 @@ c	net/minecraft/unmapped/C_4707822
 	f	Z	f_3105019		f_3105019
 	f	Z	f_8276267		f_8276267
 	f	Ljava/util/Set;	f_9994771		f_9994771
-	f	Z	f_2819199	opened	f_2819199
 	m	()Ljava/lang/String;	m_4105859	getServerState	
 	m	(Lnet/minecraft/unmapped/C_4707822;)Lnet/minecraft/unmapped/C_2621421;	m_1355998	m_1355998	
 		p	0		p_0	
@@ -365,8 +363,6 @@ c	net/minecraft/unmapped/C_6479467
 c	net/minecraft/unmapped/C_7106153
 	f	Lnet/minecraft/unmapped/C_3540933;	f_1229150	skinTexture	
 	f	Lnet/minecraft/unmapped/C_3540933;	f_1814478	capeTexture	
-	f	Lnet/minecraft/unmapped/C_0561170;	f_5038870	skinTextureLocation	f_5038870
-	f	Lnet/minecraft/unmapped/C_0561170;	f_2122975	capeTextureLocation	f_2122975
 	m	()V	m_7227461	registerTextures	
 	m	()Lnet/minecraft/unmapped/C_3540933;	m_0505925	getSkinTexture	
 	m	()Lnet/minecraft/unmapped/C_3540933;	m_7934561	getCapeTexture	
@@ -389,11 +385,11 @@ c	net/minecraft/unmapped/C_7106153
 		p	0		playerName	
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_0561170;	m_9260229	getHeadTextureLocation	
 		p	0		playerName	
-	m	()Z	m_7453136		m_7453136
-	m	()Z	m_7065855		m_7065855
+	m	()Z	m_7453136		hasCape
+	m	()Z	m_7065855		hasSkin
 	m	(Lnet/minecraft/unmapped/C_0561170;Ljava/lang/String;)Lnet/minecraft/unmapped/C_3540933;	m_2614428		loadTexture
-		p	0			p_0
-		p	1			p_1
+		p	0			location
+		p	1			playerName
 	m	(Lcom/mojang/authlib/minecraft/MinecraftProfileTexture$Type;Lnet/minecraft/unmapped/C_0561170;)V	m_4174527		m_4174527
 		p	1			p_1
 		p	2			p_2
@@ -402,7 +398,7 @@ c	net/minecraft/unmapped/C_7106153$0759855		0759855
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_7255299
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_2800860;	m_0163728	loadPlayerData	
-		p	1		name	
+		p	1		playerName	
 c	net/minecraft/unmapped/C_7293551
 	m	()Z	m_7472553		m_7472553
 c	net/minecraft/unmapped/C_7628181
@@ -416,7 +412,6 @@ c	net/minecraft/unmapped/C_7628181
 		p	3			p_3
 c	net/minecraft/unmapped/C_7688744
 	f	Z	f_7870340	serverTextures	
-	f	Z	f_0193228	snooperEnabled	serverTextures
 c	net/minecraft/unmapped/C_7688744$C_0457152
 	f	Lnet/minecraft/unmapped/C_7688744$C_0457152;	f_5291208	USE_SERVER_TEXTURES	
 c	net/minecraft/unmapped/C_8618725

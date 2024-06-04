@@ -97,20 +97,20 @@ c	net/minecraft/unmapped/C_1188209	net/minecraft/unmapped/C_1188209
 		p	0		p_0	
 		p	2		p_2	
 		p	3		p_3	
-c	net/minecraft/unmapped/C_1279860	net/minecraft/unmapped/C_1279860	
-	m	(DDDF)Z	m_1193028	m_1193028	
-		p	1		p_1	
-		p	3		p_3	
-		p	5		p_5	
-		p	7		p_7	
-	m	(Lnet/minecraft/unmapped/C_1013763;F)Z	m_6476655	m_6476655	
-		p	1		p_1	
-		p	2		p_2	
-	m	(F)V	m_5042361	m_5042361	
-		p	1		p_1	
-	m	()V	m_8956789	m_8956789	
-	m	()Z	m_5118189	m_5118189	
-	m	()V	m_2299203	m_2299203	
+c	net/minecraft/unmapped/C_1279860	net/minecraft/entity/ai/pathing/Navigation	
+	m	(DDDF)Z	m_1193028	moveTo	
+		p	1		x	
+		p	3		y	
+		p	5		z	
+		p	7		speed	
+	m	(Lnet/minecraft/unmapped/C_1013763;F)Z	m_6476655	moveTo	
+		p	1		entity	
+		p	2		speed	
+	m	(F)V	m_5042361	setSpeed	
+		p	1		speed	
+	m	()V	m_8956789	tick	
+	m	()Z	m_5118189	isDone	
+	m	()V	m_2299203	stop	
 c	net/minecraft/unmapped/C_1415320
 	m	()V	m_5855336	m_5855336	
 	m	()I	m_7473390	m_7473390	
@@ -172,12 +172,12 @@ c	net/minecraft/unmapped/C_1893016
 	m	()Z	m_1538589		m_1538589
 c	net/minecraft/unmapped/C_1896634
 c	net/minecraft/unmapped/C_1896634$C_9146344
-	f	I	f_3997197	minX	
-	f	I	f_5120411	maxX	
-	f	I	f_1940458	minY	
-	f	I	f_1662215	maxY	
-	f	I	f_7646537	minZ	
-	f	I	f_4006557	maxZ	
+	f	I	f_3997197	dirtyLocalMinX	
+	f	I	f_5120411	dirtyLocalMaxX	
+	f	I	f_1940458	dirtyMinY	
+	f	I	f_1662215	dirtyMaxY	
+	f	I	f_7646537	dirtyLocalMinZ	
+	f	I	f_4006557	dirtyLocalMaxZ	
 	f	I	f_2693427		dirtySections
 c	net/minecraft/unmapped/C_2011173
 	f	Lnet/minecraft/unmapped/C_1013763;	f_0425766	entity	
@@ -336,11 +336,11 @@ c	net/minecraft/unmapped/C_3746086	net/minecraft/unmapped/C_3746086
 		p	3		p_3	
 		p	4		p_4	
 c	net/minecraft/unmapped/C_3906126
-	f	I	f_2471371	f_2471371	
-	f	I	f_4259520	f_4259520	
+	f	I	f_2471371	zBitOffset	
+	f	I	f_4259520	xBitOffset	
 	f	I	f_2542250	height	
-	f	I	f_0138462	f_0138462	
-	f	I	f_2243065	f_2243065	
+	f	I	f_0138462	maxY	
+	f	I	f_2243065	coordinateMask	
 	f	Lnet/minecraft/unmapped/C_9974825;	f_2306961		villageSiege
 	m	(IIIIII[B)V	m_3353779	unpackChunkData	
 		p	1		minX	
@@ -357,17 +357,17 @@ c	net/minecraft/unmapped/C_3906126
 		p	4		widthX	
 		p	5		height	
 		p	6		widthZ	
-	m	(Lnet/minecraft/unmapped/C_5863046;IIIIII)V	m_0387766	m_0387766	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
-		p	7		p_7	
-	m	(II)Lnet/minecraft/unmapped/C_4636105;	m_4850746		getBiome
-		p	1			x
-		p	2			z
+	m	(Lnet/minecraft/unmapped/C_5863046;IIIIII)V	m_0387766	checkLight	
+		p	1		type	
+		p	2		minX	
+		p	3		minY	
+		p	4		minZ	
+		p	5		maxX	
+		p	6		maxY	
+		p	7		maxZ	
+	m	(II)Lnet/minecraft/unmapped/C_4636105;	m_4850746		m_4850746
+		p	1			p_1
+		p	2			p_2
 	m	(III)Z	m_6138492		hasBlockEntity
 		p	1			x
 		p	2			y
@@ -382,7 +382,6 @@ c	net/minecraft/unmapped/C_3906126
 		p	3			z
 		p	5			range
 	m	()Z	m_4365968		m_4365968
-	m	()I	m_0662443	m_0662443	getHeight
 c	net/minecraft/unmapped/C_3926894	net/minecraft/unmapped/C_3926894	
 	f	Lnet/minecraft/unmapped/C_6297854;	f_5017574	f_5017574	
 	f	I	f_6602446	f_6602446	
@@ -537,13 +536,13 @@ c	net/minecraft/unmapped/C_6019608
 	m	()V	m_5289183		m_5289183
 c	net/minecraft/unmapped/C_6755599
 	f	[B	f_2408816	blockIds	
-		c	The block id for each position in this chunk.	
+		c	The block id at each position in this chunk.	
 	f	Lnet/minecraft/unmapped/C_2758065;	f_1318735	blockMetadata	
 	f	Lnet/minecraft/unmapped/C_2758065;	f_1708356	skyLight	
 	f	Lnet/minecraft/unmapped/C_2758065;	f_8076802	blockLight	
 	f	[B	f_5707511	heightMap	
 	f	I	f_4496722	lowestHeight	
-	f	Z	f_2762764	f_2762764	
+	f	Z	f_2762764	empty	
 	f	[Lnet/minecraft/unmapped/C_3710347;	f_3333048		sections
 	f	[B	f_6311173		biomes
 		c		The biome id for each column in this chunk.
@@ -612,17 +611,17 @@ c	net/minecraft/unmapped/C_8554894
 c	net/minecraft/unmapped/C_8588387
 	m	(II)F	m_0908884	getTemperature	
 		p	1		x	
-		p	2		y	
+		p	2		z	
 	m	(II)F	m_4596335	getDownfall	
 		p	1		x	
-		p	2		y	
+		p	2		z	
 c	net/minecraft/unmapped/C_8588387$C_4149823
-	m	(II)F	m_8330176	m_8330176	
-		p	1		p_1	
-		p	2		p_2	
-	m	(II)F	m_1755837	m_1755837	
-		p	1		p_1	
-		p	2		p_2	
+	m	(II)F	m_8330176	getTemperature	
+		p	1		x	
+		p	2		z	
+	m	(II)F	m_1755837	getDownfall	
+		p	1		x	
+		p	2		z	
 c	net/minecraft/unmapped/C_8716847
 	f	I	f_2674034		minCooldown
 	f	I	f_7127546		f_7127546
@@ -637,9 +636,8 @@ c	net/minecraft/unmapped/C_8716847
 c	net/minecraft/unmapped/C_8958653
 	m	()Z	m_4680808		m_4680808
 c	net/minecraft/unmapped/C_9143244
-	f	Lnet/minecraft/unmapped/C_6297854;	f_5073996	biomesIndex	
+	f	Lnet/minecraft/unmapped/C_6297854;	f_5073996	f_5073996	
 	f	Lnet/minecraft/unmapped/C_6297854;	f_5401900	f_5401900	
-	f	Lnet/minecraft/unmapped/C_6297854;	f_6495071	f_6495071	biomesIndex
 	m	(Lnet/minecraft/unmapped/C_9386942;)Lnet/minecraft/unmapped/C_4636105;	m_5731652	m_5731652	
 		p	1		p_1	
 	m	(II)F	m_8247716	getDownfall	

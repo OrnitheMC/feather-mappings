@@ -62,7 +62,7 @@ c	net/minecraft/unmapped/C_0820158	net/minecraft/entity/FishingBobberEntity
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_9618795	m_9618795	
 		p	1		p_1	
-c	net/minecraft/unmapped/C_0914500	net/minecraft/world/biome/FixedBiomeSource	
+c	net/minecraft/unmapped/C_0914500	net/minecraft/world/biome/source/FixedBiomeSource	
 	f	Lnet/minecraft/unmapped/C_4636105;	f_6040254	biome	
 	f	D	f_0126498	temperature	
 	f	D	f_8774085	downfall	
@@ -266,11 +266,11 @@ c	net/minecraft/unmapped/C_4078372
 	f	[Lnet/minecraft/unmapped/C_4636105;	f_5383852	biomes	
 	f	[D	f_9021032	f_9021032	
 	m	(II[B[Lnet/minecraft/unmapped/C_4636105;[D)V	m_8884370	generate	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
+		p	1		chunkX	
+		p	2		chunkZ	
+		p	3		blockIds	
+		p	4		biomes	
+		p	5		targetStretch	
 	m	(II[B[Lnet/minecraft/unmapped/C_4636105;)V	m_0713473	generateBiomes	
 		p	1		chunkX	
 		p	2		chunkZ	
@@ -400,7 +400,7 @@ c	net/minecraft/unmapped/C_4636105	net/minecraft/world/biome/Biome
 	f	I	f_3675268	mutatedColor	
 	f	[Ljava/lang/Class;	f_0345530	monsterEntries	
 	f	[Ljava/lang/Class;	f_3862425	passiveEntries	
-	f	[Lnet/minecraft/unmapped/C_4636105;	f_3006990	f_3006990	
+	f	[Lnet/minecraft/unmapped/C_4636105;	f_3006990	BY_ID	
 	m	()V	<init>	<init>	
 	m	()V	m_8703345	m_8703345	
 	m	()Lnet/minecraft/unmapped/C_4636105;	m_5999602	setSnowy	
@@ -444,7 +444,7 @@ c	net/minecraft/unmapped/C_4948697	net/minecraft/entity/living/mob/hostile/Zombi
 	m	()I	m_4601038	m_4601038	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_5009044
-	f	I	f_4194242	dimensionId	
+	f	I	f_4194242	dimension	
 	f	Lnet/minecraft/unmapped/C_0820158;	f_7834582	fishingBobber	
 c	net/minecraft/unmapped/C_5164011	net/minecraft/world/gen/feature/FirePatchFeature	
 	m	()V	<init>	<init>	
@@ -573,7 +573,7 @@ c	net/minecraft/unmapped/C_6668603	net/minecraft/unmapped/C_6668603
 		p	12		p_12	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_6755599
-	m	()V	m_2789942	m_2789942	
+	m	()V	m_2789942	populateBlockLight	
 c	net/minecraft/unmapped/C_6761734	net/minecraft/world/gen/feature/NetherLiquidFallFeature	
 	f	I	f_1090544	liquid	
 	m	(I)V	<init>	<init>	
@@ -664,7 +664,7 @@ c	net/minecraft/unmapped/C_8565077
 c	net/minecraft/unmapped/C_8794786	net/minecraft/item/FishingRodItem	
 	m	(I)V	<init>	<init>	
 		p	1		p_1	
-c	net/minecraft/unmapped/C_9143244	net/minecraft/world/biome/BiomeSource	
+c	net/minecraft/unmapped/C_9143244	net/minecraft/world/biome/source/BiomeSource	
 	f	Lnet/minecraft/unmapped/C_5587398;	f_3729960	f_3729960	
 	f	Lnet/minecraft/unmapped/C_5587398;	f_2940416	f_2940416	
 	f	Lnet/minecraft/unmapped/C_5587398;	f_7187911	f_7187911	
@@ -676,12 +676,12 @@ c	net/minecraft/unmapped/C_9143244	net/minecraft/world/biome/BiomeSource
 	f	D	f_6643239	f_6643239	
 	m	()V	<init>	<init>	
 	m	(Lnet/minecraft/unmapped/C_3906126;)V	<init>	<init>	
-		p	1		p_1	
+		p	1		world	
 	m	(Lnet/minecraft/unmapped/C_9386942;)Lnet/minecraft/unmapped/C_4636105;	m_5731652	m_5731652	
 		p	1		p_1	
-	m	(II)Lnet/minecraft/unmapped/C_4636105;	m_4232370	m_4232370	
-		p	1		p_1	
-		p	2		p_2	
+	m	(II)Lnet/minecraft/unmapped/C_4636105;	m_4232370	getBiome	
+		p	1		x	
+		p	2		z	
 	m	(IIII)[Lnet/minecraft/unmapped/C_4636105;	m_2836963	m_2836963	
 		p	1		p_1	
 		p	2		p_2	
@@ -693,12 +693,12 @@ c	net/minecraft/unmapped/C_9143244	net/minecraft/world/biome/BiomeSource
 		p	3		p_3	
 		p	4		p_4	
 		p	5		p_5	
-	m	([Lnet/minecraft/unmapped/C_4636105;IIII)[Lnet/minecraft/unmapped/C_4636105;	m_6329777	m_6329777	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
+	m	([Lnet/minecraft/unmapped/C_4636105;IIII)[Lnet/minecraft/unmapped/C_4636105;	m_6329777	getBiomes	
+		p	1		biomes	
+		p	2		x	
+		p	3		z	
+		p	4		width	
+		p	5		length	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_9219192	net/minecraft/world/dimension/Dimension	
 	f	Lnet/minecraft/unmapped/C_3906126;	f_1257834	world	

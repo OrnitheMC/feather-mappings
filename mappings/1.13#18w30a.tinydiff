@@ -92,7 +92,7 @@ c	net/minecraft/unmapped/C_1492128$C_4847718		IdentityStrategy
 c	net/minecraft/unmapped/C_2137190
 	m	(Lnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_1414550;)Ljava/util/List;	m_9684691	getEntities	
 		p	1		exclude	
-		p	2		box	
+		p	2		bounds	
 	m	(Lnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_1414550;DDD)Lnet/minecraft/unmapped/C_7345216;	m_7648319	getCollisions	
 		p	1		p_1	
 		p	2		p_2	
@@ -107,8 +107,8 @@ c	net/minecraft/unmapped/C_2137190
 		p	6		p_6	
 		p	8		p_8	
 	m	(Lnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_1414550;)Lnet/minecraft/unmapped/C_7345216;	m_7342636	getCollisions	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		entity	
+		p	2		bounds	
 	m	(Lnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_7345216;Lnet/minecraft/unmapped/C_7345216;Ljava/util/Set;Z)Lnet/minecraft/unmapped/C_7345216;	m_5878369	getCollisions	
 		p	1		p_1	
 		p	2		p_2	
@@ -161,9 +161,11 @@ c	net/minecraft/unmapped/C_2587956
 		p	1			p_1
 c	net/minecraft/unmapped/C_2616453
 	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_8303908	m_8303908	
+		c	@return the world chunk at the given chunk coordinates, or an empty chunk if it does not exist	
 		p	1		p_1	
 		p	2		p_2	
-	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_1066391	generateChunk	
+	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_1066391	loadChunk	
+		c	Loads a new world chunk at the given chunk coordinates into memory.	
 		p	1		chunkX	
 		p	2		chunkZ	
 	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_3469388	m_3469388	
@@ -240,17 +242,17 @@ c	net/minecraft/unmapped/C_3310179
 	m	()F	m_8530833	m_8530833	
 	m	()F	m_6194748	m_6194748	
 	m	()F	m_0831354	m_0831354	
-	m	(Lnet/minecraft/unmapped/C_3385278;ZFFLnet/minecraft/unmapped/C_8373595;FFFF)V	m_8715475	m_8715475	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
-		p	7		p_7	
-		p	8		p_8	
-		p	9		p_9	
-	m	()Lnet/minecraft/unmapped/C_0561170;	m_6048751	m_6048751	
+	m	(Lnet/minecraft/unmapped/C_3385278;ZFFLnet/minecraft/unmapped/C_8373595;FFFF)V	m_8715475	render	
+		p	1		textureManager	
+		p	2		shadow	
+		p	3		x	
+		p	4		y	
+		p	5		bufferBuilder	
+		p	6		r	
+		p	7		g	
+		p	8		b	
+		p	9		a	
+	m	()Lnet/minecraft/unmapped/C_0561170;	m_6048751	getTextureLocation	
 	m	()F	m_7423871		m_7423871
 	m	(Z)F	m_9483830		m_9483830
 		p	1			bold
@@ -278,6 +280,7 @@ c	net/minecraft/unmapped/C_3492960
 		p	2			p_2
 c	net/minecraft/unmapped/C_3571139
 	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_8303908	m_8303908	
+		c	@return the world chunk at the given chunk coordinates, or an empty chunk if it does not exist	
 		p	1		p_1	
 		p	2		p_2	
 	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_3855039	loadChunk	
@@ -331,7 +334,7 @@ c	net/minecraft/unmapped/C_3635204
 		p	1			newState
 		p	2			world
 		p	3			pos
-c	net/minecraft/unmapped/C_3653861	net/minecraft/unmapped/C_3653861	
+c	net/minecraft/unmapped/C_3653861	net/minecraft/client/render/font/EmptyGlyph	
 	f	I	f_2477903	f_2477903	
 	m	(I)V	<init>	<init>	
 		p	1		p_1	
@@ -413,6 +416,9 @@ c	net/minecraft/unmapped/C_3906126
 		p	5			p_5
 	m	()I	m_8408022		getEntityCount
 	m	(Lnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_1414550;Ljava/util/function/Predicate;)Ljava/util/List;	m_1689591	getEntities	m_1689591
+		p	1		exclude	p_1
+		p	2		bounds	p_2
+		p	3		filter	p_3
 c	net/minecraft/unmapped/C_4253713
 	f	Lit/unimi/dsi/fastutil/objects/Object2ObjectMap;	f_4074620	chunkSaveQueue	
 	f	Ljava/util/Map;	f_4074620		chunkSaveQueue
@@ -947,7 +953,7 @@ c	net/minecraft/unmapped/C_9252894
 		p	2		p_2	
 c	net/minecraft/unmapped/C_9484672
 	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_8303908	getLoadedChunk	
-		c	@return the world chunk at the given chunk coordinates, or {@code null} if it does not exist	
+		c	@return the world chunk at the given chunk coordinates, or an empty chunk if it does not exist	
 		p	1		chunkX	
 		p	2		chunkZ	
 	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_3469388	getChunk	
@@ -963,7 +969,7 @@ c	net/minecraft/unmapped/C_9484672
 		c	@return whether a chunk exists at the given chunk coordinates, i.e. whether it is loaded or it exists in storage.	
 		p	1		chunkX	
 		p	2		chunkZ	
-	m	(IIZZ)Lnet/minecraft/unmapped/C_6755599;	m_8303908		getChunk
+	m	(IIZZ)Lnet/minecraft/unmapped/C_6755599;	m_8303908		getLoadedChunk
 		c		@return the world chunk at the given chunk coordinates, loading or generating it if needed if requested
 		p	1			chunkX
 		p	2			chunkZ

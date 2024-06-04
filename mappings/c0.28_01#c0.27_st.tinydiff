@@ -37,8 +37,8 @@ c	net/minecraft/unmapped/C_0823907
 c	net/minecraft/unmapped/C_0974371
 	m	()I	m_3282602		m_3282602
 c	net/minecraft/unmapped/C_1044273
-	f	Ljava/util/List;	f_5607847	f_5607847	
-	f	Ljava/util/Set;	f_5607847		f_5607847
+	f	Ljava/util/List;	f_5607847	pendingChunks	
+	f	Ljava/util/Set;	f_5607847		pendingChunks
 	m	(F)V	m_3907130		m_3907130
 		p	1			p_1
 	m	(III)V	m_1486881		m_1486881
@@ -116,7 +116,7 @@ c	net/minecraft/unmapped/C_3635204
 	f	Z	f_8002233		f_8002233
 	m	(Lnet/minecraft/unmapped/C_2334550;)V	m_5198489	m_5198489	
 		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_3906126;IIII)Z	m_8199947	m_8199947	
+	m	(Lnet/minecraft/unmapped/C_3906126;IIII)Z	m_8199947	shouldRenderFace	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
@@ -130,7 +130,8 @@ c	net/minecraft/unmapped/C_3635204
 		p	3		p_3	
 		p	4		p_4	
 		p	5		p_5	
-	m	()I	m_5117733	m_5117733	
+	m	()I	m_5117733	getRenderLayer	
+		c	Returns this block's render layer. The possible values are as follows:\n<br>0: solid\n<br>1: mipped cutout\n<br>2: cutout\n<br>3: translucent	
 	m	(Lnet/minecraft/unmapped/C_2334550;Lnet/minecraft/unmapped/C_3906126;IIII)Z	m_7740877		m_7740877
 		p	1			p_1
 		p	2			p_2
@@ -138,7 +139,7 @@ c	net/minecraft/unmapped/C_3635204
 		p	4			p_4
 		p	5			p_5
 		p	6			p_6
-	m	(Lnet/minecraft/unmapped/C_3906126;IIIII)Z	m_8199947		m_8199947
+	m	(Lnet/minecraft/unmapped/C_3906126;IIIII)Z	m_8199947		shouldRenderFace
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -268,14 +269,14 @@ c	net/minecraft/unmapped/C_5242387	net/minecraft/unmapped/C_5242387
 		p	6		p_6	
 		p	7		p_7	
 c	net/minecraft/unmapped/C_5283200
-	m	()V	m_0330444	m_0330444	
+	m	()V	m_0330444	compile	
 	m	([III)I	m_8783499	m_8783499	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(Lnet/minecraft/unmapped/C_0669153;)V	m_5092852	m_5092852	
+	m	(Lnet/minecraft/unmapped/C_0669153;)V	m_5092852	updateVisibility	
 		p	1		p_1	
-	m	(Z)V	m_0330444		m_0330444
+	m	(Z)V	m_0330444		compile
 		p	1			p_1
 	m	([IIIFFF)I	m_8783499		m_8783499
 		p	1			p_1
@@ -284,7 +285,7 @@ c	net/minecraft/unmapped/C_5283200
 		p	4			p_4
 		p	5			p_5
 		p	6			p_6
-	m	(Lnet/minecraft/unmapped/C_8199124;)V	m_5092852		m_5092852
+	m	(Lnet/minecraft/unmapped/C_8199124;)V	m_5092852		updateVisibility
 		p	1			p_1
 c	net/minecraft/unmapped/C_5376418
 	m	([I)V	m_6035318		m_6035318
@@ -311,7 +312,7 @@ c	net/minecraft/unmapped/C_6156706	net/minecraft/unmapped/C_6156706
 	m	()V	m_9434000	m_9434000	
 c	net/minecraft/unmapped/C_6385858
 	f	Z	f_1308746	f_1308746	
-	f	F	f_6786615	f_6786615	
+	f	F	f_6786615	stepHeight	
 	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_1120357	m_1120357	
 		p	1		p_1	
 	m	()Z	m_4017312	m_4017312	
@@ -322,15 +323,16 @@ c	net/minecraft/unmapped/C_6760097
 	f	Lnet/minecraft/unmapped/C_1168442;	f_7721878	f_7721878	
 c	net/minecraft/unmapped/C_7138722	net/minecraft/unmapped/C_7138722	
 	m	()V	<init>	<init>	
-c	net/minecraft/unmapped/C_7185906	net/minecraft/unmapped/C_7185906	
-	f	[F	f_1103932	f_1103932	
+c	net/minecraft/unmapped/C_7185906	net/minecraft/util/math/MathHelper	
+	f	[F	f_1103932	SINE_TABLE	
+		c	A table of sine values in the range [0, 2pi) with steps of 2pi / 65536.	
 	m	()V	<init>	<init>	
-	m	(F)F	m_1654586	m_1654586	
-		p	0		p_0	
-	m	(F)F	m_7301336	m_7301336	
-		p	0		p_0	
-	m	(F)F	m_0270358	m_0270358	
-		p	0		p_0	
+	m	(F)F	m_1654586	sin	
+		p	0		x	
+	m	(F)F	m_7301336	cos	
+		p	0		x	
+	m	(F)F	m_0270358	sqrt	
+		p	0		x	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_7318150
 	m	(Lnet/minecraft/unmapped/C_3906126;III)V	m_4860267		m_4860267
@@ -338,7 +340,7 @@ c	net/minecraft/unmapped/C_7318150
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-c	net/minecraft/unmapped/C_7542541	net/minecraft/unmapped/C_7542541	
+c	net/minecraft/unmapped/C_7542541	net/minecraft/client/gui/screen/inventory/menu/InventoryMenuScreen	
 	m	()V	<init>	<init>	
 	m	(II)I	m_8154932	m_8154932	
 		p	1		p_1	
@@ -350,7 +352,7 @@ c	net/minecraft/unmapped/C_7542541	net/minecraft/unmapped/C_7542541
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-c	net/minecraft/unmapped/C_7564962	net/minecraft/unmapped/C_7564962	
+c	net/minecraft/unmapped/C_7564962	net/minecraft/client/CreativeInteractionManager	
 	m	(Lnet/minecraft/client/Minecraft;)V	<init>	<init>	
 		p	1		p_1	
 	m	()V	m_1894352	m_1894352	

@@ -1,7 +1,7 @@
 tiny	2	0
 c	net/minecraft/server/MinecraftServer
-	f	Lnet/minecraft/unmapped/C_7366354;	f_3723005	worlds	
-	f	Lnet/minecraft/unmapped/C_8546801;	f_4955494	entityTrackers	
+	f	Lnet/minecraft/unmapped/C_7366354;	f_3723005	world	
+	f	Lnet/minecraft/unmapped/C_8546801;	f_4955494	entityTracker	
 	f	[Lnet/minecraft/unmapped/C_7366354;	f_3723005		worlds
 	f	[Lnet/minecraft/unmapped/C_8546801;	f_4955494		entityTrackers
 	m	(I)Lnet/minecraft/unmapped/C_7366354;	m_7777040		getWorld
@@ -9,7 +9,7 @@ c	net/minecraft/server/MinecraftServer
 	m	(I)Lnet/minecraft/unmapped/C_8546801;	m_9151553		getEntityTracker
 		p	1			dimension
 c	net/minecraft/unmapped/C_0019534
-	f	Lnet/minecraft/unmapped/C_1896634;	f_6531510	chunkMaps	
+	f	Lnet/minecraft/unmapped/C_1896634;	f_6531510	chunkMap	
 	f	[Lnet/minecraft/unmapped/C_1896634;	f_6531510		chunkMaps
 	m	(Lnet/minecraft/unmapped/C_7366354;)V	m_8887204	setWorld	
 		p	1		world	
@@ -41,18 +41,22 @@ c	net/minecraft/unmapped/C_0019534
 		p	1			player
 		p	2			world
 c	net/minecraft/unmapped/C_0070166
-	f	[Lnet/minecraft/unmapped/C_6755599;	f_6510170	chunksToUnload	
+	f	[Lnet/minecraft/unmapped/C_6755599;	f_6510170	chunks	
 	f	I	f_2563350	cachedChunkX	
 	f	I	f_2498441	cachedChunkZ	
 	f	Lnet/minecraft/unmapped/C_6755599;	f_4622140	cachedChunk	
-	f	I	f_9595077	f_9595077	
-	f	I	f_8347114	f_8347114	
+	f	I	f_9595077	spawnChunkX	
+	f	I	f_8347114	spawnChunkZ	
 	f	Ljava/util/Set;	f_0430880		chunksToUnload
-	f	Ljava/util/Map;	f_8148180		chunkMap
+	f	Ljava/util/Map;	f_8148180		chu
 	f	Ljava/util/List;	f_6510170		chunks
-	m	(II)Z	m_9180346	m_9180346	
-		p	1		p_1	
-		p	2		p_2	
+	m	(II)Z	m_9180346	isSpawnChunk	
+		p	1		chunkX	
+		p	2		chunkZ	
+	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_8303908
+		c	@return the world chunk at the given chunk coordinates, loading or generating it if needed	@return the world chunk at the given chunk coordinates, loading it if needed
+	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_1066391
+		c		Loads the world chunk at the given chunk coordinates, generating it if needed.
 c	net/minecraft/unmapped/C_0324512
 	m	(Lnet/minecraft/unmapped/C_3906126;)V	m_6683300		m_6683300
 		p	1			p_1
@@ -177,7 +181,7 @@ c	net/minecraft/unmapped/C_3484604
 c	net/minecraft/unmapped/C_3571139
 	f	Z	f_6261642		forceLoad
 c	net/minecraft/unmapped/C_3635204
-	f	Lnet/minecraft/unmapped/C_3635204;	f_0271504	f_0271504	
+	f	Lnet/minecraft/unmapped/C_3635204;	f_0271504	TALLGRASS	
 	f	Lnet/minecraft/unmapped/C_6588851;	f_0271504		TALLGRASS
 	f	Lnet/minecraft/unmapped/C_3635204;	f_8634642		TRAPDOOR
 	m	(Lnet/minecraft/unmapped/C_2627205;IIII)Z	m_8199947	shouldRenderFace	
@@ -233,10 +237,10 @@ c	net/minecraft/unmapped/C_3906126
 	m	(II)I	m_0299234		getSurfaceHeight
 		p	1			x
 		p	2			z
-	m	(III)Z	m_2070585		isOpaqueCube
-		p	1			x
-		p	2			y
-		p	3			z
+	m	(III)Z	m_2070585		m_2070585
+		p	1			p_1
+		p	2			p_2
+		p	3			p_3
 	m	(IIIIZI)Z	m_2921988		canReplace
 		p	1			blockId
 		p	2			x
@@ -252,6 +256,7 @@ c	net/minecraft/unmapped/C_3906126
 		p	2			id
 	m	(Ljava/lang/String;)I	m_7464373		getSavedDataCount
 		p	1			id
+	m	(II)I	m_4297226	getSurfaceHeight	getPrecipitationHeight
 c	net/minecraft/unmapped/C_4030632
 	f	Lnet/minecraft/unmapped/C_6786653;	f_2716157		FILLED_MAP
 	m	(Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_6385858;IZ)V	m_1814919		tick
@@ -274,7 +279,7 @@ c	net/minecraft/unmapped/C_4176306
 		p	5		p_5	
 	m	()Z	m_1538589		m_1538589
 c	net/minecraft/unmapped/C_4177687
-	f	B	f_1021426		dimensionId
+	f	B	f_1021426		dimension
 	m	(B)V	<init>		<init>
 		p	1			dimensionId
 c	net/minecraft/unmapped/C_4286596
@@ -595,7 +600,7 @@ c	net/minecraft/unmapped/C_4944737		net/minecraft/item/NetworkSyncedItem
 	m	(I)V	<init>		<init>
 		p	1			p_1
 	m	()Z	m_2422629		m_2422629
-	m	(Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_5009044;)Lnet/minecraft/unmapped/C_4844124;	m_4104674		getSyncPacket
+	m	(Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_5009044;)Lnet/minecraft/unmapped/C_4844124;	m_4104674		getUpdatePacket
 		p	1			stack
 		p	2			world
 		p	3			player
@@ -823,7 +828,3 @@ c	net/minecraft/unmapped/C_9760469		net/minecraft/world/gen/feature/DeadBushFeat
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-c	net/minecraft/unmapped/C_9484672
-	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_8303908	getLoadedChunk	getChunk
-	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_1066391	getChunk	generateChunk
-		c	@return the world chunk at the given chunk coordinates, or {@code null} if it does not exist	@return the world chunk at the given chunk coordinates, loading or generating it if needed

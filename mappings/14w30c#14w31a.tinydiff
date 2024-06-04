@@ -2,27 +2,13 @@ tiny	2	0
 c	net/minecraft/client/Minecraft
 	f	Z	f_9756392	reloadTextures	
 	m	()V	m_1912892	onApplyServerResourcePack	
-	m	()Lcom/google/common/util/concurrent/ListenableFuture;	m_1912892		reloadResourcesSync
-	m	()Ljava/util/Map;	m_9745719		m_9745719
+	m	()Lcom/google/common/util/concurrent/ListenableFuture;	m_1912892		reloadResourcesAsync
+	m	()Ljava/util/Map;	m_9745719		getHttpRequestProperties
 c	net/minecraft/client/Minecraft$9009795		9009795
 	f	Lnet/minecraft/client/Minecraft;	f_4966088		f_4966088
 	m	(Lnet/minecraft/client/Minecraft;)V	<init>		<init>
 		p	1			p_1
 	m	()V	run		run
-c	net/minecraft/client/Minecraft$4759699
-	m	()Ljava/lang/String;	m_7542283	m_7542283	call
-c	net/minecraft/client/Minecraft$6829636
-	m	()Ljava/lang/String;	m_9794433	m_9794433	call
-c	net/minecraft/client/Minecraft$2873216
-	m	()Ljava/lang/String;	m_2473095	m_2473095	call
-c	net/minecraft/client/Minecraft$6054370
-	m	()Ljava/lang/String;	m_8418756	m_8418756	call
-c	net/minecraft/client/Minecraft$6173633
-	m	()Ljava/lang/String;	m_0789350	m_0789350	call
-c	net/minecraft/client/Minecraft$8848365
-	m	()Ljava/lang/String;	m_0284574	m_0284574	call
-c	net/minecraft/client/Minecraft$6380374
-	m	()Ljava/lang/String;	m_5374894	m_5374894	call
 c	net/minecraft/server/MinecraftServer
 	f	Ljava/lang/String;	f_2444200		resourcePackHash
 	m	(Ljava/lang/String;)V	m_9209200	setResourcePack	
@@ -149,25 +135,24 @@ c	net/minecraft/unmapped/C_2983776
 	f	Z	f_3103408	awaitingServerResourcePack	
 	f	Ljava/util/concurrent/locks/ReentrantLock;	f_0989844		lock
 	f	Lcom/google/common/util/concurrent/ListenableFuture;	f_2587008		serverPackFuture
-	m	(Ljava/lang/String;)V	m_9785882	downloadServerResourcePack	
+	m	(Ljava/lang/String;)V	m_9785882	downloadServerPack	
 		p	1		url	
-	m	(Ljava/lang/String;Ljava/io/File;)V	m_2169959	downloadServerResourcePack	
+	m	(Ljava/lang/String;Ljava/io/File;)V	m_2169959	downloadServerPack	
 		p	1		url	
 		p	2		dst	
 	m	(Ljava/io/File;Z)V	m_8737191	applyServerPack	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		file	
+		p	2		skipReload	
 	m	(Lnet/minecraft/unmapped/C_2983776;)Z	m_9418445	isSet	
 		p	0		resourcePackLoader	
 	m	(Lnet/minecraft/unmapped/C_2983776;Z)Z	m_7018620	setIsSet	
 		p	0		resourcePackLoader	
 		p	1		isSet	
-	m	(Ljava/lang/String;Ljava/lang/String;)Lcom/google/common/util/concurrent/ListenableFuture;	m_7948515		applyServerPack
+	m	(Ljava/lang/String;Ljava/lang/String;)Lcom/google/common/util/concurrent/ListenableFuture;	m_7948515		downloadServerPack
 		p	1			url
 		p	2			hash
 	m	(Ljava/io/File;)Lcom/google/common/util/concurrent/ListenableFuture;	m_8737191		applyServerPack
-		p	1			f
-	m	()V	m_1225965	removeServerResourcePack	reload
+		p	1			file
 c	net/minecraft/unmapped/C_2983776$2223412	2223412	
 	f	Lnet/minecraft/unmapped/C_2983776;	f_9864410	loader	
 	m	(Lnet/minecraft/unmapped/C_2983776;)V	<init>	<init>	
@@ -252,7 +237,7 @@ c	net/minecraft/unmapped/C_4337926
 	m	()J	m_9307607	getTime	
 c	net/minecraft/unmapped/C_4384798
 	f	Lcom/google/common/util/concurrent/ListeningExecutorService;	f_7946715		DOWNLOAD_THREAD_FACTORY
-	m	(Ljava/io/File;Ljava/lang/String;Lnet/minecraft/unmapped/C_6284197;Ljava/util/Map;ILnet/minecraft/unmapped/C_7918626;Ljava/net/Proxy;)V	m_2019612	downloadServerPack	
+	m	(Ljava/io/File;Ljava/lang/String;Lnet/minecraft/unmapped/C_6284197;Ljava/util/Map;ILnet/minecraft/unmapped/C_7918626;Ljava/net/Proxy;)V	m_2019612	downloadServerResourcePack	
 		p	0		file	
 		p	1		url	
 		p	2		resourcePack	
@@ -260,7 +245,7 @@ c	net/minecraft/unmapped/C_4384798
 		p	4		maxFileSize	
 		p	5		progressListener	
 		p	6		proxy	
-	m	(Ljava/io/File;Ljava/lang/String;Ljava/util/Map;ILnet/minecraft/unmapped/C_7918626;Ljava/net/Proxy;)Lcom/google/common/util/concurrent/ListenableFuture;	m_2019612		downloadServerPack
+	m	(Ljava/io/File;Ljava/lang/String;Ljava/util/Map;ILnet/minecraft/unmapped/C_7918626;Ljava/net/Proxy;)Lcom/google/common/util/concurrent/ListenableFuture;	m_2019612		downloadServerResourcePack
 		p	0			file
 		p	1			url
 		p	2			hashmap
@@ -296,8 +281,8 @@ c	net/minecraft/unmapped/C_4939758
 	m	(Lnet/minecraft/unmapped/C_4939758;)Lnet/minecraft/unmapped/C_4354908;	m_0762452		m_0762452
 		p	0			p_0
 c	net/minecraft/unmapped/C_4939758$2710514	2710514	
-	f	Ljava/lang/String;	f_4021066	name	
-	f	Lnet/minecraft/unmapped/C_4939758;	f_9000901	networkHandler	
+	f	Ljava/lang/String;	f_4021066	f_4021066	
+	f	Lnet/minecraft/unmapped/C_4939758;	f_9000901	f_9000901	
 	m	(Lnet/minecraft/unmapped/C_4939758;Ljava/lang/String;)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -349,7 +334,7 @@ c	net/minecraft/unmapped/C_4939758$6471106		6471106
 	m	(Ljava/lang/Throwable;)V	onFailure		onFailure
 		p	1			p_1
 c	net/minecraft/unmapped/C_4948697
-c	net/minecraft/unmapped/C_4948697$C_1482454		AngerTargetPlayerGoal
+c	net/minecraft/unmapped/C_4948697$C_1482454		TargetPlayerGoal
 	m	(Lnet/minecraft/unmapped/C_4948697;)V	<init>		<init>
 		p	1			pigman
 	m	()Z	m_5896190		m_5896190
@@ -358,9 +343,9 @@ c	net/minecraft/unmapped/C_5009044
 c	net/minecraft/unmapped/C_5102005
 	m	(Lnet/minecraft/unmapped/C_6385858;Ljava/lang/String;)Z	m_1118652		is
 		p	0			entity
-		p	1			id
-	m	(Ljava/lang/String;)Z	m_5040729		isId
-		p	0			id
+		p	1			key
+	m	(Ljava/lang/String;)Z	m_5040729		isKey
+		p	0			key
 c	net/minecraft/unmapped/C_5251467
 	f	Lnet/minecraft/unmapped/C_6150373;	f_3064090		INVERTED_DAYLIGHT_DETECTOR
 c	net/minecraft/unmapped/C_6049345
@@ -469,7 +454,7 @@ c	net/minecraft/unmapped/C_7338567
 	m	()Z	m_2297385		m_2297385
 c	net/minecraft/unmapped/C_7366354
 	m	(Lnet/minecraft/unmapped/C_9466447;Lnet/minecraft/unmapped/C_4636105$C_1133452;Lnet/minecraft/unmapped/C_6707278;)Z	m_3636123		isValidSpawnEntry
-		p	1			group
+		p	1			category
 		p	2			entry
 		p	3			pos
 c	net/minecraft/unmapped/C_7549223
@@ -538,7 +523,7 @@ c	net/minecraft/unmapped/C_8585851		net/minecraft/network/packet/s2c/play/Resour
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_7240405;)V	m_4625396		m_4625396
 		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_4443804;)V	m_4491830		apply
+	m	(Lnet/minecraft/unmapped/C_4443804;)V	m_4491830		m_4491830
 		p	1			p_1
 	m	()Ljava/lang/String;	m_8732465		getUrl
 	m	()Ljava/lang/String;	m_2247916		getHash
@@ -555,7 +540,7 @@ c	net/minecraft/unmapped/C_9153377		net/minecraft/network/packet/c2s/play/Resour
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_7240405;)V	m_4625396		m_4625396
 		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_3809662;)V	m_4178261		apply
+	m	(Lnet/minecraft/unmapped/C_3809662;)V	m_4178261		m_4178261
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_5444260;)V	m_0240895		m_0240895
 		p	1			p_1

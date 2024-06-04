@@ -3,10 +3,10 @@ c	net/minecraft/client/Minecraft
 	f	Lnet/minecraft/unmapped/C_4729290;	f_9061771		resourceManager
 	f	Ljava/util/List;	f_8477173		defaultResourcePacks
 	m	()V	m_5411275		reloadResources
-	m	()V	m_8010828		m_8010828
-c	net/minecraft/client/Minecraft$C_2181292		C_2181292
-	f	Ljava/util/List;	f_8299020		f_8299020
-	f	Lnet/minecraft/unmapped/C_7378130;	f_3057492		f_3057492
+	m	()V	m_8010828		addDefaultResourcePacks
+c	net/minecraft/client/Minecraft$C_2181292		SelectedTexturePackWrapper
+	f	Ljava/util/List;	f_8299020		namespaces
+	f	Lnet/minecraft/unmapped/C_7378130;	f_3057492		texturePack
 	f	Lnet/minecraft/client/Minecraft;	f_7065893		f_7065893
 	m	(Lnet/minecraft/client/Minecraft;)V	<init>		<init>
 		p	1			p_1
@@ -74,23 +74,16 @@ c	net/minecraft/unmapped/C_0979881
 	m	(Lnet/minecraft/unmapped/C_6577431;Ljava/lang/String;)[I	m_0899679		getPixels
 		p	0			manager
 		p	1			path
-	m	([IIIIIZZ)V	m_6943440
-		p	0		image	p_0
-		p	1		xOffset	p_1
-		p	2		yOffset	p_2
-		p	5		blur	p_5
-		p	6		mipmap	p_6
 c	net/minecraft/unmapped/C_1013763
 	f	F	f_0541165	landSpeed	
 	f	Ljava/util/UUID;	f_8834834		SPRINTING_SPEED_MODIFIER_ID
 	f	Lnet/minecraft/unmapped/C_2237759;	f_6333618		SPRINTING_SPEED_MODIFIER
 	f	[Lnet/minecraft/unmapped/C_2750078;	f_9948017		equippedItems
-	f	Lnet/minecraft/unmapped/C_9549387;	f_0217020	f_0217020	attributes
 	m	()F	m_6679960	m_6679960	
 	m	(F)V	m_1971311	m_1971311	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_3731908;)Lnet/minecraft/unmapped/C_5801153;	m_1803524	getAttribute	
-		p	1		p_1	
+		p	1		attribute	
 	m	()F	m_0161842	getMovementSpeed	
 	m	()F	m_2991484	getSpeedModifier	
 	m	(Lnet/minecraft/unmapped/C_3731908;)Lnet/minecraft/unmapped/C_6232047;	m_1803524		getAttribute
@@ -99,11 +92,10 @@ c	net/minecraft/unmapped/C_1013763
 		p	1			p_1
 	m	()F	m_0732788		getMovementSpeed
 	m	()V	<clinit>		<clinit>
-	m	()Lnet/minecraft/unmapped/C_9549387;	m_3436453	m_3436453	getAttributes
 c	net/minecraft/unmapped/C_1168245
 	m	()V	m_1987632		m_1987632
 c	net/minecraft/unmapped/C_1203617
-	f	Ljava/util/regex/Pattern;	f_3725589		TRANSLATION_ARG_PATTERN
+	f	Ljava/util/regex/Pattern;	f_3725589		ILLEGAL_CHARACTERS_PATTERN
 c	net/minecraft/unmapped/C_1309851
 	m	(Ljava/lang/String;)V	m_7400010	m_7400010	
 		p	1		p_1	
@@ -154,7 +146,6 @@ c	net/minecraft/unmapped/C_2237759
 c	net/minecraft/unmapped/C_2340941
 	f	Lnet/minecraft/unmapped/C_3731908;	f_1120751	f_1120751	
 	f	Lnet/minecraft/unmapped/C_2750078;	f_9173372	f_9173372	
-	f	Lnet/minecraft/unmapped/C_1485454;	f_2807026	f_2807026	inventory
 	m	()D	m_4552632	m_4552632	
 	m	()F	m_0161842	m_0161842	
 	m	(Lnet/minecraft/unmapped/C_2750078;)I	m_8693560		getArmorIndex
@@ -305,12 +296,12 @@ c	net/minecraft/unmapped/C_4560329
 		p	1		path	
 		p	2		file	
 	m	(Lnet/minecraft/unmapped/C_6577431;)V	<init>		<init>
-		p	1			p_1
+		p	1			resourceManager
 	m	(Lnet/minecraft/unmapped/C_6577431;Z)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			resourceManager
+		p	2			trimTrailingDigits
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_0488196;	m_4373192		load
-		p	1			p_1
+		p	1			path
 	m	(Lnet/minecraft/unmapped/C_4560329;)Lnet/minecraft/unmapped/C_6577431;	m_3516925		m_3516925
 		p	0			p_0
 c	net/minecraft/unmapped/C_4560329$5160525		5160525
@@ -439,9 +430,9 @@ c	net/minecraft/unmapped/C_6853732
 		p	1			p_1
 c	net/minecraft/unmapped/C_6907923
 	m	(Lnet/minecraft/unmapped/C_1013763;)Ljava/lang/String;	m_7501958	getDeathMessage	
-		p	1		p_1	
+		p	1		entity	
 	m	(Lnet/minecraft/unmapped/C_1013763;)Lnet/minecraft/unmapped/C_9550253;	m_7501958		getDeathMessage
-		p	1			p_1
+		p	1			entity
 c	net/minecraft/unmapped/C_6954368
 	m	()Ljava/lang/String;	m_2950008	getDeathMessage	
 	m	()Lnet/minecraft/unmapped/C_9550253;	m_2950008		getDeathMessage
@@ -502,10 +493,10 @@ c	net/minecraft/unmapped/C_9572077
 	m	()Z	m_5113178	m_5113178	
 	m	()V	<clinit>	<clinit>	
 	m	(Lnet/minecraft/unmapped/C_9550253;)V	<init>		<init>
-		p	1			p_1
+		p	1			message
 	m	(Lnet/minecraft/unmapped/C_9550253;Z)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			message
+		p	2			system
 c	net/minecraft/unmapped/C_9665890
 	m	(Lnet/minecraft/unmapped/C_2182707;)Ljava/lang/String;	m_7897311		m_7897311
 		p	1			p_1
@@ -637,9 +628,9 @@ c	net/minecraft/unmapped/C_5968220		net/minecraft/network/packet/EntityAttribute
 c	net/minecraft/unmapped/C_6122773		net/minecraft/entity/living/attribute/EntityAttributeContainer
 	f	Ljava/util/Set;	f_8916403		tracked
 	m	()V	<init>		<init>
-	m	(Lnet/minecraft/unmapped/C_3731908;)Lnet/minecraft/unmapped/C_5801153;	m_2594740		get
+	m	(Lnet/minecraft/unmapped/C_3731908;)Lnet/minecraft/unmapped/C_5801153;	m_2594740		m_2594740
 		p	1			p_1
-	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_5801153;	m_4491892		get
+	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_5801153;	m_4491892		m_4491892
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_3731908;)Lnet/minecraft/unmapped/C_6232047;	m_1621097		m_1621097
 		p	1			p_1
@@ -830,11 +821,11 @@ c	net/minecraft/unmapped/C_9550253		net/minecraft/text/Text
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_9550253$C_9313132		Serializer
 	m	()V	<init>		<init>
-	m	(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/unmapped/C_9550253;	m_6562518		deserialize
+	m	(Lcom/google/gson/JsonElement;Ljava/lang/reflect/Type;Lcom/google/gson/JsonDeserializationContext;)Lnet/minecraft/unmapped/C_9550253;	m_6562518		m_6562518
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_9550253;Ljava/lang/reflect/Type;Lcom/google/gson/JsonSerializationContext;)Lcom/google/gson/JsonElement;	m_9532765		serialize
+	m	(Lnet/minecraft/unmapped/C_9550253;Ljava/lang/reflect/Type;Lcom/google/gson/JsonSerializationContext;)Lcom/google/gson/JsonElement;	m_9532765		m_9532765
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
