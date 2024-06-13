@@ -27,30 +27,30 @@ c	net/minecraft/unmapped/C_0263952$C_6010945
 		p	5			p_5
 		p	6			p_6
 c	net/minecraft/unmapped/C_0870392
-	f	Lnet/minecraft/unmapped/C_8474433;	f_6980210	f_6980210	
-	f	Lnet/minecraft/unmapped/C_8474433;	f_5688281	f_5688281	
-	f	Lnet/minecraft/unmapped/C_3537985;	f_6980210		f_6980210
-	f	I	f_5688281		f_5688281
+	f	Lnet/minecraft/unmapped/C_8474433;	f_6980210	leader	
+	f	Lnet/minecraft/unmapped/C_8474433;	f_5688281	nextStartTime	
+	f	Lnet/minecraft/unmapped/C_3537985;	f_6980210		leader
+	f	I	f_5688281		nextStartTime
 	m	(Lnet/minecraft/unmapped/C_8474433;)V	<init>	<init>	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_3537985;)V	<init>		<init>
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_3537985;)I	m_2337123		m_2337123
-		p	1			p_1
+		p	1			leader
+	m	(Lnet/minecraft/unmapped/C_3537985;)I	m_2337123		getNextStartTime
+		p	1			leader
 	m	(Lnet/minecraft/unmapped/C_3537985;)Z	m_4010286		m_4010286
-		p	0			p_0
+		p	0			fish
 	m	(Lnet/minecraft/unmapped/C_3537985;)Z	m_2844020		m_2844020
-		p	0			p_0
+		p	0			fish
 c	net/minecraft/unmapped/C_3906126
-	m	(DDD)Lnet/minecraft/unmapped/C_5009044;	m_3108367		m_3108367
-		p	1			p_1
-		p	3			p_3
-		p	5			p_5
+	m	(DDD)Lnet/minecraft/unmapped/C_5009044;	m_3108367		getClosestPlayer
+		p	1			x
+		p	3			y
+		p	5			z
 c	net/minecraft/unmapped/C_6755599
-	f	Lnet/minecraft/unmapped/C_9386942;	f_6072922		f_6072922
-	m	(Lnet/minecraft/unmapped/C_6707278;Lnet/minecraft/unmapped/C_2800860;)Lnet/minecraft/unmapped/C_2074023;	m_4553484		m_4553484
-		p	1			p_1
-		p	2			p_2
+	f	Lnet/minecraft/unmapped/C_9386942;	f_6072922		pos
+	m	(Lnet/minecraft/unmapped/C_6707278;Lnet/minecraft/unmapped/C_2800860;)Lnet/minecraft/unmapped/C_2074023;	m_4553484		loadBlockEntity
+		p	1			pos
+		p	2			nbt
 c	net/minecraft/unmapped/C_7219505
 	m	()V	m_6485717	m_6485717	
 c	net/minecraft/unmapped/C_8474433
@@ -66,45 +66,45 @@ c	net/minecraft/unmapped/C_8474433
 	m	(Z)V	m_1669731	m_1669731	
 		p	1		p_1	
 	m	()Z	m_5775401	m_5775401	
-	m	()Z	m_7187022		m_7187022
+	m	()Z	m_7187022		canRandomSwim
 c	net/minecraft/unmapped/C_9378896
 	m	()Z	m_5685476	m_5685476	
 c	net/minecraft/unmapped/C_9752420
 	m	()V	m_6485717	m_6485717	
 	m	()I	m_3619232	m_3619232	
 	m	()I	m_2917580		m_2917580
-c	net/minecraft/unmapped/C_3537985		net/minecraft/unmapped/C_3537985
-	f	Lnet/minecraft/unmapped/C_3537985;	f_2476275		f_2476275
-	f	I	f_1917266		f_1917266
+c	net/minecraft/unmapped/C_3537985		net/minecraft/entity/living/mob/water/SchoolingFishEntity
+	f	Lnet/minecraft/unmapped/C_3537985;	f_2476275		leader
+	f	I	f_1917266		schoolSize
 	m	(Lnet/minecraft/unmapped/C_5102005;Lnet/minecraft/unmapped/C_3906126;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
 	m	()V	m_6485717		m_6485717
 	m	()I	m_6082938		m_6082938
-	m	()I	m_2917580		m_2917580
+	m	()I	m_2917580		getShoalMaxSize
 	m	()Z	m_7187022		m_7187022
-	m	()Z	m_7557065		m_7557065
-	m	(Lnet/minecraft/unmapped/C_3537985;)Lnet/minecraft/unmapped/C_3537985;	m_0481578		m_0481578
-		p	1			p_1
-	m	()V	m_8598845		m_8598845
-	m	()V	m_2659953		m_2659953
-	m	()V	m_9343164		m_9343164
-	m	()Z	m_7995549		m_7995549
+	m	()Z	m_7557065		isFollower
+	m	(Lnet/minecraft/unmapped/C_3537985;)Lnet/minecraft/unmapped/C_3537985;	m_0481578		startFollowing
+		p	1			fish
+	m	()V	m_8598845		stopFollowing
+	m	()V	m_2659953		addFollower
+	m	()V	m_9343164		removeFollower
+	m	()Z	m_7995549		canBeFollowed
 	m	()V	m_0718337		m_0718337
-	m	()Z	m_0935188		m_0935188
-	m	()Z	m_3604708		m_3604708
-	m	()V	m_9242334		m_9242334
-	m	(Ljava/util/stream/Stream;)V	m_2753987		m_2753987
-		p	1			p_1
+	m	()Z	m_0935188		hasFollowers
+	m	()Z	m_3604708		isInRangeOfLeader
+	m	()V	m_9242334		moveToLeader
+	m	(Ljava/util/stream/Stream;)V	m_2753987		addFollowers
+		p	1			fish
 	m	(Lnet/minecraft/unmapped/C_2716056;Lnet/minecraft/unmapped/C_2928020;Lnet/minecraft/unmapped/C_2800860;)Lnet/minecraft/unmapped/C_2928020;	m_0405912		m_0405912
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 	m	(Lnet/minecraft/unmapped/C_3537985;)V	m_8924202		m_8924202
-		p	1			p_1
+		p	1			f
 	m	(Lnet/minecraft/unmapped/C_3537985;)Z	m_8485081		m_8485081
-		p	1			p_1
-c	net/minecraft/unmapped/C_3537985$C_6902351		C_6902351
-	f	Lnet/minecraft/unmapped/C_3537985;	f_6766841		f_6766841
+		p	1			f
+c	net/minecraft/unmapped/C_3537985$C_6902351		Data
+	f	Lnet/minecraft/unmapped/C_3537985;	f_6766841		leader
 	m	(Lnet/minecraft/unmapped/C_3537985;)V	<init>		<init>
-		p	1			p_1
+		p	1			leader
