@@ -110,15 +110,15 @@ c	net/minecraft/client/Minecraft	net/minecraft/client/Minecraft
 	m	()V	m_6182440	changeDimension
 	m	(Lnet/minecraft/unmapped/C_3906126;)V	m_3501995	setWorld
 		p	1		world
-	m	(Lnet/minecraft/unmapped/C_3906126;Ljava/lang/String;)V	m_5784106	m_5784106
-		p	1		p_1
-		p	2		p_2
+	m	(Lnet/minecraft/unmapped/C_3906126;Ljava/lang/String;)V	m_5784106	setWorld
+		p	1		world
+		p	2		title
 	m	(Lnet/minecraft/unmapped/C_3906126;Ljava/lang/String;Lnet/minecraft/unmapped/C_5009044;)V	m_5733981	setWorld
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-	m	(Ljava/lang/String;)V	m_4743605	m_4743605
-		p	1		p_1
+		p	1		world
+		p	2		title
+		p	3		player
+	m	(Ljava/lang/String;)V	m_4743605	loadWorld
+		p	1		saveName
 	m	(Ljava/lang/String;Ljava/io/File;)V	m_4381886	loadResource
 		p	1		path
 		p	2		file
@@ -2908,7 +2908,7 @@ c	net/minecraft/unmapped/C_2286002	net/minecraft/world/chunk/storage/ChunkStorag
 		p	1		world
 		p	2		chunk
 	m	()V	m_0540904	tick
-	m	()V	m_1776271	save
+	m	()V	m_1776271	flush
 c	net/minecraft/unmapped/C_2293006	net/minecraft/client/render/Window
 	f	I	f_4560063	width
 	f	I	f_2999022	height
@@ -3283,7 +3283,7 @@ c	net/minecraft/unmapped/C_2616453	net/minecraft/client/world/chunk/MultiplayerC
 		p	1		chunkX
 		p	2		chunkZ
 	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_8303908	m_8303908
-		c	@return the world chunk at the given chunk coordinates, or an empty chunk if it does not exist
+		c	@return the world chunk at the given chunk coordinates, or an empty chunk if it is not loaded.
 		p	1		p_1
 		p	2		p_2
 	m	(ZLnet/minecraft/unmapped/C_7918626;)Z	m_8231616	m_8231616
@@ -4623,6 +4623,7 @@ c	net/minecraft/unmapped/C_3571139	net/minecraft/server/world/chunk/ServerChunkC
 		p	2		storage
 		p	3		generator
 	m	(II)Z	m_3469388	m_3469388
+		c	@return whether the world chunk at the given chunk coordinates is loaded.
 		p	1		p_1
 		p	2		p_2
 	m	(II)V	m_7368554	unloadChunk
@@ -4634,7 +4635,7 @@ c	net/minecraft/unmapped/C_3571139	net/minecraft/server/world/chunk/ServerChunkC
 		p	1		chunkX
 		p	2		chunkZ
 	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_8303908	m_8303908
-		c	@return the world chunk at the given chunk coordinates, or an empty chunk if it does not exist
+		c	@return the world chunk at the given chunk coordinates, or an empty chunk if it is not loaded.
 		p	1		p_1
 		p	2		p_2
 	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_7681709	loadChunkFromStorage
@@ -5622,7 +5623,7 @@ c	net/minecraft/unmapped/C_3906126	net/minecraft/world/World
 	m	()V	m_8530625	m_8530625
 	m	(Lnet/minecraft/unmapped/C_5009044;)V	m_0762970	addPlayer
 		p	1		player
-	m	(ZLnet/minecraft/unmapped/C_7918626;)V	m_4418114	save
+	m	(ZLnet/minecraft/unmapped/C_7918626;)V	m_4418114	saveAll
 		p	1		saveEntities
 		p	2		progressListener
 	m	()V	m_1813388	saveData
@@ -5632,10 +5633,10 @@ c	net/minecraft/unmapped/C_3906126	net/minecraft/world/World
 		p	1		p_1
 		p	2		p_2
 		p	3		p_3
-	m	(III)Z	m_6808962	m_6808962
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
+	m	(III)Z	m_6808962	isAir
+		p	1		x
+		p	2		y
+		p	3		z
 	m	(III)Z	m_2296533	isChunkLoaded
 		p	1		x
 		p	2		y
@@ -10267,7 +10268,7 @@ c	net/minecraft/unmapped/C_7318150	net/minecraft/block/TntBlock
 c	net/minecraft/unmapped/C_7366354	net/minecraft/server/world/ServerWorld
 	f	Lnet/minecraft/unmapped/C_3571139;	f_4355570	chunkCache
 	f	Z	f_8250949	f_8250949
-	f	Z	f_8586684	saving
+	f	Z	f_8586684	savingDisabled
 	f	Lnet/minecraft/server/MinecraftServer;	f_1177250	server
 	f	Lnet/minecraft/unmapped/C_3837238;	f_3045964	entitiesById
 	m	(Lnet/minecraft/server/MinecraftServer;Ljava/io/File;Ljava/lang/String;I)V	<init>	<init>
@@ -12352,8 +12353,8 @@ c	net/minecraft/unmapped/C_9484672	net/minecraft/world/chunk/ChunkSource
 		c	@return whether a world chunk exists at the given chunk coordinates
 		p	1		chunkX
 		p	2		chunkZ
-	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_8303908	getLoadedChunk
-		c	@return the world chunk at the given chunk coordinates, or an empty chunk if it does not exist
+	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_8303908	getChunk
+		c	@return the world chunk at the given chunk coordinates.
 		p	1		chunkX
 		p	2		chunkZ
 	m	(Lnet/minecraft/unmapped/C_9484672;II)V	m_3412382	populateChunk
@@ -12361,12 +12362,12 @@ c	net/minecraft/unmapped/C_9484672	net/minecraft/world/chunk/ChunkSource
 		p	1		source
 		p	2		chunkX
 		p	3		chunkZ
-	m	(ZLnet/minecraft/unmapped/C_7918626;)Z	m_8231616	save
+	m	(ZLnet/minecraft/unmapped/C_7918626;)Z	m_8231616	saveAll
 		c	Saves all loaded world chunks to storage.
 		p	1		saveEntities
 		p	2		listener
 	m	()Z	m_1591842	tick
-	m	()Z	m_2288809	canSave
+	m	()Z	m_2288809	isSavingEnabled
 c	net/minecraft/unmapped/C_9526661	net/minecraft/client/gui/screen/options/ControlsOptionsScreen
 	f	Lnet/minecraft/unmapped/C_0786431;	f_7810183	parent
 	f	Ljava/lang/String;	f_8754163	title

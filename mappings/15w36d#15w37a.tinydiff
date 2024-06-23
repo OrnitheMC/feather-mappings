@@ -861,6 +861,8 @@ c	net/minecraft/unmapped/C_2616453
 	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_3469388		m_3469388
 		p	1			p_1
 		p	2			p_2
+	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_8303908
+		c	@return the world chunk at the given chunk coordinates, or an empty chunk if it is not loaded.	
 c	net/minecraft/unmapped/C_2624096
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_6707278;Lnet/minecraft/unmapped/C_2441996;)Lnet/minecraft/unmapped/C_1414550;	m_9650578	m_9650578	
 		p	1		p_1	
@@ -1176,10 +1178,11 @@ c	net/minecraft/unmapped/C_3571139
 		p	2		storage	
 		p	3		generator	
 	m	(II)Z	m_3469388	m_3469388	
+		c	@return whether the world chunk at the given chunk coordinates is loaded.	
 		p	1		p_1	
 		p	2		p_2	
-	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_6520615	generateChunk	
-		c	@return the world chunk at the given chunk coordinates, loading or generating it if needed	
+	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_6520615	loadChunk	
+		c	Loads the world chunk at the given chunk coordinates.	
 		p	1		chunkX	
 		p	2		chunkZ	
 	m	(Lnet/minecraft/unmapped/C_9484672;II)V	m_3412382	m_3412382	
@@ -1208,19 +1211,19 @@ c	net/minecraft/unmapped/C_3571139
 		p	2			storage
 		p	3			generator
 	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_3412382		getGeneratedChunk
-		c		@return the chunk at the given chunk coordinates,\nloading it if needed, or {@code null} if it does not exist.
+		c		@return the world chunk at the given chunk coordinates,\nloading it from storage if needed, or {@code null} if it does not exist.
 		p	1			chunkX
 		p	2			chunkZ
 	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_3469388		m_3469388
 		p	1			p_1
 		p	2			p_2
-	m	(Z)Z	m_6309491		save
+	m	(Z)Z	m_6309491		saveAll
 		p	1			saveEntities
-	m	()V	m_1836040		save
-	m	()Z	m_6876447		canSave
+	m	()V	m_1836040		flush
+	m	()Z	m_6876447		isSavingEnabled
 	m	()I	m_7720664		size
 	m	(II)Z	m_7591747		isChunkLoaded
-		c		@return whether the chunk at the given chunk coordinates is loaded
+		c		@return whether the world chunk at the given chunk coordinates is loaded.
 		p	1			chunkX
 		p	2			chunkZ
 	m	(Lnet/minecraft/unmapped/C_9466447;Lnet/minecraft/unmapped/C_6707278;)Ljava/util/List;	m_0621452	m_0621452	getSpawnEntries
@@ -1228,8 +1231,11 @@ c	net/minecraft/unmapped/C_3571139
 		p	2		p_2	pos
 	m	(Lnet/minecraft/unmapped/C_3906126;Ljava/lang/String;Lnet/minecraft/unmapped/C_6707278;)Lnet/minecraft/unmapped/C_6707278;	m_8216820	m_8216820	findNearestStructure
 		p	1		p_1	world
-		p	2		p_2	name
+		p	2		p_2	type
 		p	3		p_3	pos
+	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_8303908
+		c	@return the world chunk at the given chunk coordinates, or an empty chunk if it is not loaded.	
+	m	()Ljava/util/List;	m_8729355	getChunks	getLoadedChunks
 c	net/minecraft/unmapped/C_3583868
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_6707278;Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_1414550;Ljava/util/List;Lnet/minecraft/unmapped/C_6385858;)V	m_1441794	m_1441794	
 		p	1		p_1	
@@ -3831,8 +3837,8 @@ c	net/minecraft/unmapped/C_9484672
 		c	@return whether a world chunk exists at the given chunk coordinates	
 		p	1		chunkX	
 		p	2		chunkZ	
-	m	(Lnet/minecraft/unmapped/C_6707278;)Lnet/minecraft/unmapped/C_6755599;	m_7603521	getLoadedChunk	
-		c	@return the world chunk at the given position, or {@code null} if it does not exist	
+	m	(Lnet/minecraft/unmapped/C_6707278;)Lnet/minecraft/unmapped/C_6755599;	m_7603521	getChunk	
+		c	@return the world chunk at the given position.	
 		p	1		pos	
 	m	(Lnet/minecraft/unmapped/C_9484672;II)V	m_3412382	populateChunk	
 		c	Populates the world chunk at the given chunk coordinates, placing features and spawning mobs.	
@@ -3845,17 +3851,17 @@ c	net/minecraft/unmapped/C_9484672
 		p	2		chunk	
 		p	3		chunkX	
 		p	4		chunkZ	
-	m	(ZLnet/minecraft/unmapped/C_7918626;)Z	m_8231616	save	
+	m	(ZLnet/minecraft/unmapped/C_7918626;)Z	m_8231616	saveAll	
 		c	Saves all loaded world chunks to storage.	
 		p	1		saveEntities	
 		p	2		listener	
-	m	()Z	m_2288809	canSave	
+	m	()Z	m_2288809	isSavingEnabled	
 	m	(Lnet/minecraft/unmapped/C_9466447;Lnet/minecraft/unmapped/C_6707278;)Ljava/util/List;	m_0621452	getSpawnEntries	
 		p	1		category	
 		p	2		pos	
 	m	(Lnet/minecraft/unmapped/C_3906126;Ljava/lang/String;Lnet/minecraft/unmapped/C_6707278;)Lnet/minecraft/unmapped/C_6707278;	m_8216820	findNearestStructure	
 		p	1		world	
-		p	2		name	
+		p	2		type	
 		p	3		pos	
 	m	()I	m_7966672	size	
 	m	(Lnet/minecraft/unmapped/C_6755599;II)V	m_6674995	placeStructures	
@@ -3863,11 +3869,13 @@ c	net/minecraft/unmapped/C_9484672
 		p	1		chunk	
 		p	2		chunkX	
 		p	3		chunkZ	
-	m	()V	m_1230720	save	
+	m	()V	m_1230720	flush	
 	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_3469388		getChunk
-		c		@return the world chunk at the given chunk coordinates, loading or generating it if needed
+		c		@return the world chunk at the given chunk coordinates, loading or generating it if needed.
 		p	1			chunkX
 		p	2			chunkZ
+	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_8303908	getChunk	getLoadedChunk
+		c	@return the world chunk at the given chunk coordinates.	@return the world chunk at the given chunk coordinates, or {@code null} if it is not loaded.
 c	net/minecraft/unmapped/C_9532309
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_6707278;Lnet/minecraft/unmapped/C_2441996;)Lnet/minecraft/unmapped/C_1414550;	m_9650578	m_9650578	
 		p	1		p_1	
@@ -4037,13 +4045,16 @@ c	net/minecraft/unmapped/C_0646374		net/minecraft/block/piston/PistonMoveBehavio
 		p	2			p_2
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_0705111		net/minecraft/world/chunk/ChunkGenerator
-	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_8303908		getChunk
+	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_8303908		generateChunk
+		c		Generates a world chunk at the given chunk coordinates.
 		p	1			chunkX
 		p	2			chunkZ
 	m	(II)V	m_3412382		populateChunk
+		c		Populates the world chunk at the given chunk coordinates, placing features and spawning mobs.
 		p	1			chunkX
 		p	2			chunkZ
 	m	(Lnet/minecraft/unmapped/C_6755599;II)Z	m_4331578		populateChunkAfterTerrain
+		c		Performs a second pass of population on the chunk at the given chunk coordinates.
 		p	1			chunk
 		p	2			chunkX
 		p	3			chunkZ
@@ -4052,9 +4063,10 @@ c	net/minecraft/unmapped/C_0705111		net/minecraft/world/chunk/ChunkGenerator
 		p	2			pos
 	m	(Lnet/minecraft/unmapped/C_3906126;Ljava/lang/String;Lnet/minecraft/unmapped/C_6707278;)Lnet/minecraft/unmapped/C_6707278;	m_8216820		findNearestStructure
 		p	1			world
-		p	2			name
+		p	2			type
 		p	3			pos
 	m	(Lnet/minecraft/unmapped/C_6755599;II)V	m_9111949		placeStructures
+		c		Place structure features in the chunk at the given chunk coordinates.
 		p	1			chunk
 		p	2			chunkX
 		p	3			chunkZ
