@@ -223,7 +223,7 @@ c	net/minecraft/server/MinecraftServer	net/minecraft/server/MinecraftServer
 	m	()V	<init>	<init>
 	m	()Z	m_0615401	init
 	m	(Ljava/lang/String;)V	m_2695328	loadWorld
-		p	1		p_1
+		p	1		saveName
 	m	(Ljava/lang/String;I)V	m_4174934	logProgress
 		p	1		progressType
 		p	2		progress
@@ -237,12 +237,12 @@ c	net/minecraft/server/MinecraftServer	net/minecraft/server/MinecraftServer
 		p	1		command
 		p	2		source
 	m	()V	m_2515286	runPendingCommands
-	m	(Ljava/lang/String;Ljava/lang/String;)V	m_2224501	m_2224501
-		p	1		p_1
-		p	2		p_2
-	m	(Ljava/lang/String;I)I	m_7639919	m_7639919
-		p	1		p_1
-		p	2		p_2
+	m	(Ljava/lang/String;Ljava/lang/String;)V	m_2224501	sendCommandFeedback
+		p	1		player
+		p	2		message
+	m	(Ljava/lang/String;I)I	m_7639919	parseInt
+		p	1		s
+		p	2		defaultValue
 	m	(Lnet/minecraft/unmapped/C_4753572;)V	m_1782684	addTickable
 		p	1		tickable
 	m	([Ljava/lang/String;)V	main	main
@@ -620,10 +620,10 @@ c	net/minecraft/unmapped/C_0324512	net/minecraft/server/entity/living/player/Ser
 		c	Coordinates of chunks that have come within view of the player, but have not yet\nbeen sent to the client.
 	f	Ljava/util/Set;	f_5806656	allLoadedChunks
 	f	D	f_7252894	f_7252894
-	f	Z	f_1534277	f_1534277
+	f	Z	f_1534277	sneaking
 	f	I	f_5431237	lastHealth
 	f	I	f_1478225	spawnProtectionTicks
-	f	[I	f_5960888	f_5960888
+	f	[I	f_5960888	equipmentStacks
 	f	I	f_3098613	menuId
 	f	Z	f_2104338	useItemCooldown
 	m	(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/unmapped/C_3906126;Ljava/lang/String;Lnet/minecraft/unmapped/C_7897127;)V	<init>	<init>
@@ -634,10 +634,10 @@ c	net/minecraft/unmapped/C_0324512	net/minecraft/server/entity/living/player/Ser
 	m	()V	m_8923386	initMenu
 	m	()[I	m_9919834	m_9919834
 	m	()V	m_0718337	m_0718337
-	m	(I)I	m_4716717	m_4716717
-		p	1		p_1
-	m	(Lnet/minecraft/unmapped/C_2750078;)I	m_1764085	m_1764085
-		p	1		p_1
+	m	(I)I	m_4716717	getItem
+		p	1		slot
+	m	(Lnet/minecraft/unmapped/C_2750078;)I	m_1764085	getItem
+		p	1		stack
 	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_4650833	m_4650833
 		p	1		p_1
 	m	(Lnet/minecraft/unmapped/C_6385858;I)Z	m_3238154	m_3238154
@@ -646,8 +646,8 @@ c	net/minecraft/unmapped/C_0324512	net/minecraft/server/entity/living/player/Ser
 	m	(I)V	m_6031420	m_6031420
 		p	1		p_1
 	m	()V	m_3062804	tickPlayer
-	m	(Lnet/minecraft/unmapped/C_2074023;)V	m_4194840	m_4194840
-		p	1		p_1
+	m	(Lnet/minecraft/unmapped/C_2074023;)V	m_4194840	sendBlockEntityUpdate
+		p	1		blockEntity
 	m	()V	m_5818797	m_5818797
 	m	(Lnet/minecraft/unmapped/C_6385858;I)V	m_8950914	m_8950914
 		p	1		p_1
@@ -946,8 +946,8 @@ c	net/minecraft/unmapped/C_0488196	net/minecraft/client/sound/system/SoundFile
 c	net/minecraft/unmapped/C_0526782	net/minecraft/item/FoodItem
 	f	I	f_1063376	hungerPoints
 	m	(II)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
+		p	1		item
+		p	2		hungerPoints
 	m	(Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_5009044;)Lnet/minecraft/unmapped/C_2750078;	m_6337043	m_6337043
 		p	1		p_1
 		p	2		p_2
@@ -1362,13 +1362,13 @@ c	net/minecraft/unmapped/C_0870622	net/minecraft/world/LightUpdate
 		p	7		maxZ
 	m	(Lnet/minecraft/unmapped/C_3906126;)V	m_7664052	run
 		p	1		world
-	m	(IIIIII)Z	m_2956096	m_2956096
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-		p	5		p_5
-		p	6		p_6
+	m	(IIIIII)Z	m_2956096	overlaps
+		p	1		minX
+		p	2		minY
+		p	3		minZ
+		p	4		maxX
+		p	5		maxY
+		p	6		maxZ
 c	net/minecraft/unmapped/C_0873063	net/minecraft/inventory/menu/CraftingTableMenu
 	f	Lnet/minecraft/unmapped/C_2178068;	f_8748895	craftingTable
 	f	Lnet/minecraft/unmapped/C_4390289;	f_5994796	resultInventory
@@ -1391,8 +1391,8 @@ c	net/minecraft/unmapped/C_0873063	net/minecraft/inventory/menu/CraftingTableMen
 c	net/minecraft/unmapped/C_0878570	net/minecraft/item/WheatSeedsItem
 	f	I	f_1421800	plantBlock
 	m	(II)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
+		p	1		item
+		p	2		plantBlock
 	m	(Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_5009044;Lnet/minecraft/unmapped/C_3906126;IIII)Z	m_9844872	m_9844872
 		p	1		p_1
 		p	2		p_2
@@ -1640,7 +1640,7 @@ c	net/minecraft/unmapped/C_1013763	net/minecraft/entity/living/LivingEntity
 		p	2		p_2
 	m	()V	m_9996923	m_9996923
 	m	(I)V	m_0677528	applyDamage
-		p	1		p_1
+		p	1		amount
 	m	()F	m_9886824	getSoundVolume
 	m	()Ljava/lang/String;	m_9980999	getSound
 	m	()Ljava/lang/String;	m_0628689	getHurtSound
@@ -1651,7 +1651,7 @@ c	net/minecraft/unmapped/C_1013763	net/minecraft/entity/living/LivingEntity
 		p	3		dx
 		p	5		dz
 	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_4650833	onKilled
-		p	1		p_1
+		p	1		entity
 	m	()I	m_4601038	getDroppedItem
 	m	(F)V	m_8092679	m_8092679
 		p	1		p_1
@@ -2237,10 +2237,10 @@ c	net/minecraft/unmapped/C_1310888	net/minecraft/client/gui/screen/DownloadingTe
 		p	3		p_3
 c	net/minecraft/unmapped/C_1324542	net/minecraft/item/PickaxeItem
 	f	[Lnet/minecraft/unmapped/C_3635204;	f_6532851	EFFECTIVE_BLOCKS
-	f	I	f_0801486	f_0801486
+	f	I	f_0801486	tier
 	m	(II)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
+		p	1		item
+		p	2		tier
 	m	(Lnet/minecraft/unmapped/C_3635204;)Z	m_8581178	m_8581178
 		p	1		p_1
 	m	()V	<clinit>	<clinit>
@@ -2415,12 +2415,12 @@ c	net/minecraft/unmapped/C_1518064	net/minecraft/world/gen/carver/CaveWorldCarve
 		p	6		p_6
 		p	8		p_8
 	m	(II[BDDDFFFIID)V	m_1959732	placeBranch
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-		p	6		p_6
-		p	8		p_8
+		p	1		centerChunkX
+		p	2		centerChunkZ
+		p	3		blocks
+		p	4		x
+		p	6		y
+		p	8		z
 		p	10		p_10
 		p	11		p_11
 		p	12		p_12
@@ -2833,7 +2833,7 @@ c	net/minecraft/unmapped/C_2154975	net/minecraft/crafting/CraftingManager
 		p	1		result
 		p	2		args
 	m	([I)Lnet/minecraft/unmapped/C_2750078;	m_5439592	applyRecipe
-		p	1		p_1
+		p	1		inventory
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/unmapped/C_2154975$7900111	net/minecraft/crafting/CraftingManager$7900111
 	f	Lnet/minecraft/unmapped/C_2154975;	f_6953915	registry
@@ -2883,14 +2883,14 @@ c	net/minecraft/unmapped/C_2250623	net/minecraft/nbt/NbtDouble
 	m	()B	m_0326927	m_0326927
 	m	()Ljava/lang/String;	toString	toString
 c	net/minecraft/unmapped/C_2260875	net/minecraft/world/storage/PlayerDataStorage
-	f	Ljava/util/logging/Logger;	f_2561336	f_2561336
-	f	Ljava/io/File;	f_9370701	f_9370701
+	f	Ljava/util/logging/Logger;	f_2561336	LOGGER
+	f	Ljava/io/File;	f_9370701	dir
 	m	(Ljava/io/File;)V	<init>	<init>
-		p	1		p_1
+		p	1		dir
 	m	(Lnet/minecraft/unmapped/C_0324512;)V	m_3491877	savePlayerData
-		p	1		p_1
+		p	1		player
 	m	(Lnet/minecraft/unmapped/C_0324512;)V	m_2233467	loadPlayerData
-		p	1		p_1
+		p	1		player
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/unmapped/C_2280850	net/minecraft/client/render/model/entity/PigModel
 	m	()V	<init>	<init>
@@ -3607,7 +3607,7 @@ c	net/minecraft/unmapped/C_2741119	net/minecraft/item/RedstoneItem
 c	net/minecraft/unmapped/C_2750078	net/minecraft/item/ItemStack
 	f	I	f_2279018	size
 	f	I	f_8576246	popAnimationTime
-	f	I	f_0780610	itemId
+	f	I	f_0780610	item
 	f	I	f_2995789	metadata
 	m	(Lnet/minecraft/unmapped/C_3635204;)V	<init>	<init>
 		p	1		block
@@ -3620,10 +3620,10 @@ c	net/minecraft/unmapped/C_2750078	net/minecraft/item/ItemStack
 		p	1		item
 		p	2		size
 	m	(I)V	<init>	<init>
-		p	1		p_1
+		p	1		item
 	m	(II)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
+		p	1		item
+		p	2		size
 	m	(III)V	<init>	<init>
 		p	1		itemId
 		p	2		size
@@ -3655,12 +3655,12 @@ c	net/minecraft/unmapped/C_2750078	net/minecraft/item/ItemStack
 	m	(I)V	m_7305709	damageAndBreak
 		p	1		p_1
 	m	(Lnet/minecraft/unmapped/C_1013763;)V	m_3149288	attackEntity
-		p	1		p_1
+		p	1		entity
 	m	(IIII)V	m_3316715	mineBlock
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
+		p	1		x
+		p	2		y
+		p	3		z
+		p	4		face
 	m	(Lnet/minecraft/unmapped/C_6385858;)I	m_8066283	getAttackDamage
 		p	1		target
 	m	(Lnet/minecraft/unmapped/C_3635204;)Z	m_9260974	canEffectivelyMine
@@ -3889,25 +3889,25 @@ c	net/minecraft/unmapped/C_2923961	net/minecraft/entity/living/mob/hostile/Spide
 		p	1		p_1
 	m	()I	m_4601038	m_4601038
 c	net/minecraft/unmapped/C_2941751	net/minecraft/unmapped/C_2941751
-	f	Ljava/awt/image/BufferedImage;	f_3349358	f_3349358
-	f	Lnet/minecraft/unmapped/C_3906126;	f_4671375	f_4671375
-	f	I	f_2691840	f_2691840
-	f	I	f_0783700	f_0783700
+	f	Ljava/awt/image/BufferedImage;	f_3349358	image
+	f	Lnet/minecraft/unmapped/C_3906126;	f_4671375	world
+	f	I	f_2691840	chunkX
+	f	I	f_0783700	chunkZ
 	f	Z	f_8781079	f_8781079
 	f	Z	f_8388581	f_8388581
-	f	I	f_3297939	f_3297939
+	f	I	f_3297939	frames
 	f	Z	f_6255679	f_6255679
 	m	(Lnet/minecraft/unmapped/C_3906126;II)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-	m	(II)V	m_5903322	m_5903322
-		p	1		p_1
-		p	2		p_2
-	m	(Lnet/minecraft/unmapped/C_3906126;II)V	m_2315191	m_2315191
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
+		p	1		world
+		p	2		chunkX
+		p	3		chunkZ
+	m	(II)V	m_5903322	reset
+		p	1		chunkX
+		p	2		chunkZ
+	m	(Lnet/minecraft/unmapped/C_3906126;II)V	m_2315191	setWorld
+		p	1		world
+		p	2		chunkX
+		p	3		chunkZ
 c	net/minecraft/unmapped/C_2984832	net/minecraft/entity/living/mob/GhastEntity
 	f	I	f_6172306	collisionCheckCooldown
 	f	D	f_3368863	wanderTargetX
@@ -3935,19 +3935,19 @@ c	net/minecraft/unmapped/C_2984832	net/minecraft/entity/living/mob/GhastEntity
 c	net/minecraft/unmapped/C_3002588	net/minecraft/inventory/slot/CraftingResultSlot
 	f	Lnet/minecraft/unmapped/C_4390289;	f_4120416	craftingInventory
 	m	(Lnet/minecraft/unmapped/C_4390289;Lnet/minecraft/unmapped/C_4390289;III)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-		p	5		p_5
+		p	1		craftingInventory
+		p	2		inventory
+		p	3		slot
+		p	4		x
+		p	5		y
 	m	(Lnet/minecraft/unmapped/C_2750078;)Z	m_6628482	m_6628482
 		p	1		p_1
 	m	()V	m_7573710	m_7573710
 c	net/minecraft/unmapped/C_3006620	net/minecraft/world/chunk/storage/AlphaChunkStorage
-	f	Ljava/io/File;	f_4492955	file
+	f	Ljava/io/File;	f_4492955	dir
 	f	Z	f_4835804	make
 	m	(Ljava/io/File;Z)V	<init>	<init>
-		p	1		file
+		p	1		dir
 		p	2		make
 	m	(II)Ljava/io/File;	m_4725022	getChunkFile
 		p	1		chunkX
@@ -3960,9 +3960,9 @@ c	net/minecraft/unmapped/C_3006620	net/minecraft/world/chunk/storage/AlphaChunkS
 		p	1		p_1
 		p	2		p_2
 	m	(Lnet/minecraft/unmapped/C_6755599;Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_2800860;)V	m_5818832	saveChunkToNbt
-		p	1		world
-		p	2		nbt
-		p	3		p_3
+		p	1		chunk
+		p	2		world
+		p	3		nbt
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_2800860;)Lnet/minecraft/unmapped/C_6755599;	m_7851158	loadChunkFromNbt
 		p	0		world
 		p	1		nbt
@@ -5045,7 +5045,7 @@ c	net/minecraft/unmapped/C_3635204	net/minecraft/block/Block
 		p	2		x
 		p	3		y
 		p	4		z
-		p	5		neighborBlockId
+		p	5		neighborBlock
 	m	()I	m_4073353	getTickRate
 	m	(Lnet/minecraft/unmapped/C_3906126;III)V	m_0767742	onAdded
 		p	1		world
@@ -5572,12 +5572,12 @@ c	net/minecraft/unmapped/C_3906126	net/minecraft/world/World
 	f	Lnet/minecraft/unmapped/C_9219192;	f_6597519	dimension
 	f	Ljava/util/List;	f_6260143	eventListeners
 	f	Lnet/minecraft/unmapped/C_9484672;	f_5139049	chunkSource
-	f	Ljava/io/File;	f_1707582	f_1707582
-	f	Ljava/io/File;	f_2537859	dir
+	f	Ljava/io/File;	f_1707582	dir
+	f	Ljava/io/File;	f_2537859	saveDir
 	f	J	f_1783857	seed
-	f	Lnet/minecraft/unmapped/C_2800860;	f_0762360	f_0762360
+	f	Lnet/minecraft/unmapped/C_2800860;	f_0762360	playerData
 	f	J	f_8535327	sizeOnDisk
-	f	Ljava/lang/String;	f_9320105	f_9320105
+	f	Ljava/lang/String;	f_9320105	saveName
 	f	Z	f_5996800	isSearchingSpawnPoint
 	f	Ljava/util/ArrayList;	f_1719259	collisions
 	f	I	f_7370886	lightUpdateDepth
@@ -5586,36 +5586,36 @@ c	net/minecraft/unmapped/C_3906126	net/minecraft/world/World
 	f	I	f_1902481	ambientSoundCooldown
 	f	Ljava/util/List;	f_1449524	entitiesInArea
 	f	Z	f_2117871	isMultiplayer
-	m	(Ljava/io/File;Ljava/lang/String;)Lnet/minecraft/unmapped/C_2800860;	m_9312594	m_9312594
-		p	0		p_0
-		p	1		p_1
-	m	(Ljava/io/File;Ljava/lang/String;)V	m_9583644	m_9583644
-		p	0		p_0
-		p	1		p_1
-	m	([Ljava/io/File;)V	m_4805602	m_4805602
-		p	0		p_0
+	m	(Ljava/io/File;Ljava/lang/String;)Lnet/minecraft/unmapped/C_2800860;	m_9312594	getWorldData
+		p	0		gameDir
+		p	1		saveName
+	m	(Ljava/io/File;Ljava/lang/String;)V	m_9583644	deleteWorld
+		p	0		gameDir
+		p	1		saveName
+	m	([Ljava/io/File;)V	m_4805602	deleteFilesRecursively
+		p	0		files
 	m	()Lnet/minecraft/unmapped/C_9143244;	m_9380668	getBiomeSource
 	m	(Ljava/io/File;Ljava/lang/String;)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
+		p	1		dir
+		p	2		saveName
 	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_9219192;J)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
+		p	1		saveName
+		p	2		dimension
+		p	3		seed
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_9219192;)V	<init>	<init>
 		p	1		world
 		p	2		dimension
 	m	(Ljava/io/File;Ljava/lang/String;J)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
+		p	1		dir
+		p	2		saveName
+		p	3		seed
 	m	(Ljava/io/File;Ljava/lang/String;JLnet/minecraft/unmapped/C_9219192;)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	5		p_5
+		p	1		dir
+		p	2		saveName
+		p	3		seed
+		p	5		dimension
 	m	(Ljava/io/File;)Lnet/minecraft/unmapped/C_9484672;	m_7447312	createChunkCache
-		p	1		p_1
+		p	1		dir
 	m	()V	m_3566975	resetSpawnPoint
 	m	(II)I	m_3043681	getSurfaceBlock
 		p	1		x
@@ -5883,10 +5883,10 @@ c	net/minecraft/unmapped/C_3906126	net/minecraft/world/World
 		p	1		pos
 		p	2		bounds
 	m	(IIII)V	m_7254465	extinguishFire
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
+		p	1		x
+		p	2		y
+		p	3		z
+		p	4		face
 	m	(Ljava/lang/Class;)Lnet/minecraft/unmapped/C_6385858;	m_2356502	m_2356502
 		p	1		p_1
 	m	()Ljava/lang/String;	m_9392586	getEntitiesDebugInfo
@@ -6266,17 +6266,17 @@ c	net/minecraft/unmapped/C_4030632	net/minecraft/item/Item
 	m	()I	m_7986821	getMaxStackSize
 	m	()I	m_3198345	getMaxDamage
 	m	(Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_1013763;)V	m_9532015	attackEntity
-		p	1		p_1
-		p	2		p_2
+		p	1		stack
+		p	2		target
 	m	(Lnet/minecraft/unmapped/C_2750078;IIII)V	m_5872189	mineBlock
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-		p	5		p_5
+		p	1		stack
+		p	2		x
+		p	3		y
+		p	4		z
+		p	5		face
 	m	(Lnet/minecraft/unmapped/C_6385858;)I	m_1072215	getAttackDamage
 		p	1		target
-	m	(Lnet/minecraft/unmapped/C_3635204;)Z	m_8581178	canEffectivelyMine
+	m	(Lnet/minecraft/unmapped/C_3635204;)Z	m_8581178	isEffectiveOn
 		p	1		block
 	m	(Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_1013763;)V	m_3129782	interact
 		p	1		stack
@@ -7144,14 +7144,14 @@ c	net/minecraft/unmapped/C_4636105	net/minecraft/world/biome/Biome
 	f	Lnet/minecraft/unmapped/C_4636105;	f_0467620	HELL
 	f	Ljava/lang/String;	f_1274684	name
 	f	I	f_1895912	baseColor
-	f	B	f_1916586	surfaceBlockId
-	f	B	f_6006915	subsurfaceBlockId
+	f	B	f_1916586	surfaceBlock
+	f	B	f_6006915	subsurfaceBlock
 	f	I	f_3675268	mutatedColor
 	f	[Ljava/lang/Class;	f_0345530	monsterEntries
 	f	[Ljava/lang/Class;	f_3862425	passiveEntries
 	f	[Lnet/minecraft/unmapped/C_4636105;	f_3006990	BY_ID
 	m	()V	<init>	<init>
-	m	()V	m_8703345	m_8703345
+	m	()V	m_8703345	init
 	m	()Lnet/minecraft/unmapped/C_4636105;	m_5999602	setSnowy
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_4636105;	m_7713250	setName
 		p	1		name
@@ -7162,13 +7162,13 @@ c	net/minecraft/unmapped/C_4636105	net/minecraft/world/biome/Biome
 	m	(DD)Lnet/minecraft/unmapped/C_4636105;	m_0756365	m_0756365
 		p	0		p_0
 		p	2		p_2
-	m	(FF)Lnet/minecraft/unmapped/C_4636105;	m_2003135	m_2003135
-		p	0		p_0
-		p	1		p_1
+	m	(FF)Lnet/minecraft/unmapped/C_4636105;	m_2003135	getBiome
+		p	0		temperature
+		p	1		downfall
 	m	(F)I	m_0387382	getSkyColor
 		p	1		temperature
 	m	(Lnet/minecraft/unmapped/C_9466447;)[Ljava/lang/Class;	m_7461209	getSpawnEntries
-		p	1		p_1
+		p	1		category
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/unmapped/C_4643161	net/minecraft/client/gui/screen/FatalErrorScreen
 	f	Ljava/lang/String;	f_9270758	title
@@ -7348,12 +7348,12 @@ c	net/minecraft/unmapped/C_4796873$C_4858115	net/minecraft/network/packet/Entity
 	m	(Ljava/io/DataOutputStream;)V	m_4625396	m_4625396
 		p	1		p_1
 	m	()I	m_0079091	m_0079091
-c	net/minecraft/unmapped/C_4814958	net/minecraft/unmapped/C_4814958
-	f	Lnet/minecraft/unmapped/C_4814958;	f_8756767	f_8756767
-	f	Lnet/minecraft/unmapped/C_4814958;	f_4277849	f_4277849
-	f	Lnet/minecraft/unmapped/C_4814958;	f_9359910	f_9359910
-	f	Lnet/minecraft/unmapped/C_4814958;	f_6510704	f_6510704
-	f	Lnet/minecraft/unmapped/C_4814958;	f_9849018	f_9849018
+c	net/minecraft/unmapped/C_4814958	net/minecraft/client/OS
+	f	Lnet/minecraft/unmapped/C_4814958;	f_8756767	LINUX
+	f	Lnet/minecraft/unmapped/C_4814958;	f_4277849	SOLARIS
+	f	Lnet/minecraft/unmapped/C_4814958;	f_9359910	WINDOWS
+	f	Lnet/minecraft/unmapped/C_4814958;	f_6510704	MACOS
+	f	Lnet/minecraft/unmapped/C_4814958;	f_9849018	UNKNOWN
 	f	[Lnet/minecraft/unmapped/C_4814958;	f_8137984	f_8137984
 	m	()[Lnet/minecraft/unmapped/C_4814958;	values	values
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_4814958;	valueOf	valueOf
@@ -7733,14 +7733,14 @@ c	net/minecraft/unmapped/C_5009044	net/minecraft/entity/living/player/PlayerEnti
 		p	2		p_2
 	m	()V	m_7604701	dropItem
 	m	(Lnet/minecraft/unmapped/C_2750078;)V	m_6898692	dropItem
-		p	1		p_1
+		p	1		stack
 	m	(Lnet/minecraft/unmapped/C_2750078;Z)V	m_1776845	dropItem
-		p	1		p_1
+		p	1		stack
 		p	2		p_2
 	m	(Lnet/minecraft/unmapped/C_3050136;)V	m_8347472	spawnDroppedItem
 		p	1		item
 	m	(Lnet/minecraft/unmapped/C_3635204;)F	m_0404633	getMiningSpeed
-		p	1		p_1
+		p	1		block
 	m	(Lnet/minecraft/unmapped/C_3635204;)Z	m_8092094	canBreakBlock
 		p	1		block
 	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_9618795	m_9618795
@@ -7768,7 +7768,7 @@ c	net/minecraft/unmapped/C_5009044	net/minecraft/entity/living/player/PlayerEnti
 		c	Open a sign or command block editor.
 		p	1		sign
 	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_4777054	interact
-		p	1		p_1
+		p	1		target
 	m	()Lnet/minecraft/unmapped/C_2750078;	m_8873804	getMainHandStack
 	m	()V	m_3907584	clearSelectedSlot
 	m	()D	m_1375534	m_1375534
@@ -8139,8 +8139,8 @@ c	net/minecraft/unmapped/C_5422301	net/minecraft/block/SaplingBlock
 c	net/minecraft/unmapped/C_5434245	net/minecraft/item/SwordItem
 	f	I	f_5737317	attackDamage
 	m	(II)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
+		p	1		item
+		p	2		tier
 	m	(Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_3635204;)F	m_3907516	m_3907516
 		p	1		p_1
 		p	2		p_2
@@ -8217,27 +8217,27 @@ c	net/minecraft/unmapped/C_5584362	net/minecraft/entity/PrimedTntEntity
 		p	1		p_1
 	m	()F	m_3413954	m_3413954
 c	net/minecraft/unmapped/C_5586685	net/minecraft/client/MinecraftCanvas
-	f	I	f_5260949	f_5260949
-	f	I	f_2667138	f_2667138
-	f	Z	f_8920088	f_8920088
+	f	I	f_5260949	frames
+	f	I	f_2667138	scale
+	f	Z	f_8920088	renderDebugInfo
 	f	Lnet/minecraft/unmapped/C_3906126;	f_5862609	world
-	f	Ljava/io/File;	f_5103971	f_5103971
-	f	Z	f_7243712	f_7243712
+	f	Ljava/io/File;	f_5103971	workingDir
+	f	Z	f_7243712	running
 	f	Ljava/util/List;	f_7806128	f_7806128
 	f	[[Lnet/minecraft/unmapped/C_2941751;	f_3079561	f_3079561
-	f	I	f_0474735	f_0474735
-	f	I	f_9058831	f_9058831
-	f	I	f_5216979	f_5216979
-	f	I	f_7667496	f_7667496
-	m	()Ljava/io/File;	m_5136659	m_5136659
-	m	(Ljava/lang/String;)Ljava/io/File;	m_8619112	m_8619112
-		p	1		p_1
-	m	()Lnet/minecraft/unmapped/C_4814958;	m_8951458	m_8951458
+	f	I	f_0474735	offsetX
+	f	I	f_9058831	offsetZ
+	f	I	f_5216979	mouseX
+	f	I	f_7667496	mouseY
+	m	()Ljava/io/File;	m_5136659	getWorkingDirectory
+	m	(Ljava/lang/String;)Ljava/io/File;	m_8619112	getWorkingDirectory
+		p	1		name
+	m	()Lnet/minecraft/unmapped/C_4814958;	m_8951458	getOs
 	m	()V	<init>	<init>
-	m	(Ljava/lang/String;)V	m_1343311	m_1343311
-		p	1		p_1
-	m	(I)V	m_1021743	m_1021743
-		p	1		p_1
+	m	(Ljava/lang/String;)V	m_1343311	openWorld
+		p	1		saveName
+	m	(I)V	m_1021743	setAmbientDarkness
+		p	1		ambientDarkness
 	m	()V	m_5959115	start
 	m	()V	m_7717219	stop
 	m	(II)Lnet/minecraft/unmapped/C_2941751;	m_5520251	m_5520251
@@ -8248,9 +8248,9 @@ c	net/minecraft/unmapped/C_5586685	net/minecraft/client/MinecraftCanvas
 		p	1		p_1
 	m	(Ljava/awt/Graphics;)V	paint	paint
 		p	1		p_1
-	m	()V	m_2489959	m_2489959
-	m	(Ljava/awt/Graphics2D;)V	m_6243187	m_6243187
-		p	1		p_1
+	m	()V	m_2489959	render
+	m	(Ljava/awt/Graphics2D;)V	m_6243187	render
+		p	1		graphics
 	m	(Ljava/awt/event/MouseEvent;)V	mouseDragged	mouseDragged
 		p	1		p_1
 	m	(Ljava/awt/event/MouseEvent;)V	mouseMoved	mouseMoved
@@ -8318,15 +8318,15 @@ c	net/minecraft/unmapped/C_5590212	net/minecraft/item/AxeItem
 	f	[Lnet/minecraft/unmapped/C_3635204;	f_2206537	EFFECTIVE_BLOCKS
 		c	The items that are broken more efficiently with an axe
 	m	(II)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
+		p	1		item
+		p	2		tier
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/unmapped/C_5602753	net/minecraft/block/PressurePlateBlock
 	f	Lnet/minecraft/unmapped/C_5602753$C_7629809;	f_2399905	rule
 	m	(IILnet/minecraft/unmapped/C_5602753$C_7629809;)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
+		p	1		id
+		p	2		sprite
+		p	3		rule
 	m	()I	m_4073353	m_4073353
 	m	(Lnet/minecraft/unmapped/C_3906126;III)Lnet/minecraft/unmapped/C_1414550;	m_9650578	m_9650578
 		p	1		p_1
@@ -9024,8 +9024,8 @@ c	net/minecraft/unmapped/C_6385858	net/minecraft/entity/Entity
 		p	5		velocityZ
 	m	()V	m_2567411	onDamaged
 	m	(Lnet/minecraft/unmapped/C_6385858;I)Z	m_3238154	damage
-		p	1		p_1
-		p	2		p_2
+		p	1		entity
+		p	2		amount
 	m	()Z	m_7828889	hasCollision
 	m	()Z	m_4933034	isPushable
 	m	(Lnet/minecraft/unmapped/C_6385858;I)V	m_6349202	onKillEntity
@@ -9354,7 +9354,7 @@ c	net/minecraft/unmapped/C_6698663	net/minecraft/client/gui/screen/world/SelectW
 		p	3		p_3
 c	net/minecraft/unmapped/C_6726911	net/minecraft/unmapped/C_6726911
 	f	[F	f_8948415	f_8948415
-	f	[I	f_8082555	f_8082555
+	f	[I	f_8082555	pixels
 	f	[I	f_5319275	f_5319275
 	f	[I	f_8747005	f_8747005
 	f	[I	f_0174030	f_0174030
@@ -9384,7 +9384,7 @@ c	net/minecraft/unmapped/C_6755599	net/minecraft/world/chunk/WorldChunk
 	f	Z	f_6943970	dirty
 		c	Used to check if this chunk has changes that need to be saved to disk.
 	f	Z	f_2762764	empty
-	f	Z	f_6954152	f_6954152
+	f	Z	f_6954152	dummy
 	f	Z	f_1431993	hasEntities
 		c	True if this chunk contains entities - used to decide how often to save this chunk to disk.
 	f	J	f_0568428	lastSaveTime
@@ -9759,8 +9759,8 @@ c	net/minecraft/unmapped/C_7132859	net/minecraft/client/entity/particle/LavaPart
 	m	()V	m_0718337	m_0718337
 c	net/minecraft/unmapped/C_7137679	net/minecraft/item/HoeItem
 	m	(II)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
+		p	1		item
+		p	2		tier
 	m	(Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_5009044;Lnet/minecraft/unmapped/C_3906126;IIII)Z	m_9844872	m_9844872
 		p	1		p_1
 		p	2		p_2
@@ -9963,22 +9963,23 @@ c	net/minecraft/unmapped/C_7213435	net/minecraft/crafting/recipe/ShapedRecipe
 	f	I	f_6833129	height
 	f	[I	f_5794450	ingredients
 	f	Lnet/minecraft/unmapped/C_2750078;	f_4221171	result
-	f	I	f_3431472	resultId
+	f	I	f_3431472	resultItem
 	m	(II[ILnet/minecraft/unmapped/C_2750078;)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-	m	([I)Z	m_7723385	m_7723385
-		p	1		p_1
+		p	1		width
+		p	2		heigt
+		p	3		ingredients
+		p	4		result
+	m	([I)Z	m_7723385	matches
+		p	1		inventory
 	m	([IIIZ)Z	m_7169649	matches
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
-		p	4		p_4
-	m	([I)Lnet/minecraft/unmapped/C_2750078;	m_6879194	m_6879194
-		p	1		p_1
-	m	()I	m_1008057	m_1008057
+		p	1		inventory
+		p	2		x
+		p	3		y
+		p	4		rotate
+	m	([I)Lnet/minecraft/unmapped/C_2750078;	m_6879194	getResult
+		p	1		inventory
+	m	()I	m_1008057	getPriority
+		c	@return the priority used to sort recipes in the stats menu.
 c	net/minecraft/unmapped/C_7216962	net/minecraft/world/gen/feature/CactusFeature
 	m	()V	<init>	<init>
 	m	(Lnet/minecraft/unmapped/C_3906126;Ljava/util/Random;III)Z	m_2665009	m_2665009
@@ -10274,7 +10275,7 @@ c	net/minecraft/unmapped/C_7366354	net/minecraft/server/world/ServerWorld
 	m	(Lnet/minecraft/server/MinecraftServer;Ljava/io/File;Ljava/lang/String;I)V	<init>	<init>
 		p	1		server
 		p	2		dir
-		p	3		name
+		p	3		saveName
 		p	4		dimension
 	m	()V	m_0624358	m_0624358
 	m	(Lnet/minecraft/unmapped/C_6385858;Z)V	m_3502009	m_3502009
@@ -11192,8 +11193,8 @@ c	net/minecraft/unmapped/C_8321936	net/minecraft/network/packet/EntityAttachPack
 	f	I	f_6278313	holderId
 	m	()V	<init>	<init>
 	m	(Lnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_6385858;)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
+		p	1		entity
+		p	2		holder
 	m	()I	m_0079091	m_0079091
 	m	(Ljava/io/DataInputStream;)V	m_8784008	m_8784008
 		p	1		p_1
@@ -11794,11 +11795,11 @@ c	net/minecraft/unmapped/C_8906619	net/minecraft/item/ToolItem
 	f	[Lnet/minecraft/unmapped/C_3635204;	f_1572854	effectiveBlocks
 	f	F	f_0901712	miningSpeed
 	f	I	f_3491040	attackDamage
-	f	I	f_2854125	material
+	f	I	f_2854125	tier
 	m	(III[Lnet/minecraft/unmapped/C_3635204;)V	<init>	<init>
 		p	1		id
 		p	2		damage
-		p	3		material
+		p	3		tier
 		p	4		effectiveBlocks
 	m	(Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_3635204;)F	m_3907516	m_3907516
 		p	1		p_1
@@ -11945,8 +11946,8 @@ c	net/minecraft/unmapped/C_8998310	net/minecraft/entity/ai/pathing/BinaryHeap
 c	net/minecraft/unmapped/C_9011699	net/minecraft/item/ShovelItem
 	f	[Lnet/minecraft/unmapped/C_3635204;	f_3506684	EFFECTIVE_BLOCKS
 	m	(II)V	<init>	<init>
-		p	1		p_1
-		p	2		p_2
+		p	1		item
+		p	2		tier
 	m	(Lnet/minecraft/unmapped/C_3635204;)Z	m_8581178	m_8581178
 		p	1		p_1
 	m	()V	<clinit>	<clinit>
@@ -12016,7 +12017,7 @@ c	net/minecraft/unmapped/C_9079950	net/minecraft/nbt/NbtByte
 		p	1		p_1
 	m	()B	m_0326927	m_0326927
 	m	()Ljava/lang/String;	toString	toString
-c	net/minecraft/unmapped/C_9092862	net/minecraft/unmapped/C_9092862
+c	net/minecraft/unmapped/C_9092862	net/minecraft/client/gui/screen/world/DeleteWorldScreen
 	m	(Lnet/minecraft/unmapped/C_0786431;)V	<init>	<init>
 		p	1		p_1
 	m	()V	m_7766669	m_7766669
@@ -12101,8 +12102,8 @@ c	net/minecraft/unmapped/C_9219192	net/minecraft/world/dimension/Dimension
 	m	()V	m_5242136	initBrightnessTable
 	m	()V	m_1057452	initBiomeSource
 	m	()Lnet/minecraft/unmapped/C_9484672;	m_7695518	createChunkGenerator
-	m	(Ljava/io/File;)Lnet/minecraft/unmapped/C_2286002;	m_6041517	m_6041517
-		p	1		p_1
+	m	(Ljava/io/File;)Lnet/minecraft/unmapped/C_2286002;	m_6041517	createChunkStorage
+		p	1		dir
 	m	(II)Z	m_8691549	isValidSpawnPoint
 		p	1		x
 		p	2		z
@@ -12292,8 +12293,8 @@ c	net/minecraft/unmapped/C_9386942	net/minecraft/util/math/ChunkPos
 	m	()I	hashCode	hashCode
 	m	(Ljava/lang/Object;)Z	equals	equals
 		p	1		p_1
-	m	(Lnet/minecraft/unmapped/C_6385858;)D	m_4819229	m_4819229
-		p	1		p_1
+	m	(Lnet/minecraft/unmapped/C_6385858;)D	m_4819229	squaredHorizontalDistanceToCenter
+		p	1		entity
 c	net/minecraft/unmapped/C_9404371	net/minecraft/inventory/menu/PlayerMenu
 	f	Lnet/minecraft/unmapped/C_2178068;	f_5673749	craftingInventory
 	f	Lnet/minecraft/unmapped/C_4390289;	f_8215645	resultInventory

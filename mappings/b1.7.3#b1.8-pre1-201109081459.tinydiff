@@ -297,7 +297,7 @@ c	net/minecraft/unmapped/C_0324512	net/minecraft/server/entity/living/player/Ser
 	f	Ljava/util/Set;	f_5806656	allLoadedChunks	
 	f	I	f_5431237	lastHealth	
 	f	I	f_1478225	spawnProtectionTicks	
-	f	[Lnet/minecraft/unmapped/C_2750078;	f_5960888	f_5960888	
+	f	[Lnet/minecraft/unmapped/C_2750078;	f_5960888	equipmentStacks	
 	f	I	f_3098613	menuId	
 	f	Z	f_2104338	useItemCooldown	
 	m	(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/unmapped/C_3906126;Ljava/lang/String;Lnet/minecraft/unmapped/C_7897127;)V	<init>	<init>	
@@ -312,7 +312,7 @@ c	net/minecraft/unmapped/C_0324512	net/minecraft/server/entity/living/player/Ser
 	m	()V	m_9844463	m_9844463	
 	m	()F	m_9119163	m_9119163	
 	m	()V	m_0718337	m_0718337	
-	m	(I)Lnet/minecraft/unmapped/C_2750078;	m_4716717	m_4716717	
+	m	(I)Lnet/minecraft/unmapped/C_2750078;	m_4716717	getItem	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_4650833	m_4650833	
 		p	1		p_1	
@@ -324,8 +324,8 @@ c	net/minecraft/unmapped/C_0324512	net/minecraft/server/entity/living/player/Ser
 		p	1		p_1	
 	m	(Z)V	m_3062804	tickPlayer	
 		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_2074023;)V	m_4194840	m_4194840	
-		p	1		p_1	
+	m	(Lnet/minecraft/unmapped/C_2074023;)V	m_4194840	sendBlockEntityUpdate	
+		p	1		blockEntity	
 	m	()V	m_5818797	m_5818797	
 	m	(Lnet/minecraft/unmapped/C_6385858;I)V	m_8950914	m_8950914	
 		p	1		p_1	
@@ -530,13 +530,13 @@ c	net/minecraft/unmapped/C_0870622	net/minecraft/world/LightUpdate
 		p	7		maxZ	
 	m	(Lnet/minecraft/unmapped/C_3906126;)V	m_7664052	run	
 		p	1		world	
-	m	(IIIIII)Z	m_2956096	m_2956096	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
+	m	(IIIIII)Z	m_2956096	overlaps	
+		p	1		minX	
+		p	2		minY	
+		p	3		minZ	
+		p	4		maxX	
+		p	5		maxY	
+		p	6		maxZ	
 c	net/minecraft/unmapped/C_0894181	net/minecraft/server/ServerProperties	
 	f	Ljava/util/logging/Logger;	f_3492944	LOGGER	
 	f	Ljava/util/Properties;	f_6829945	properties	
@@ -661,9 +661,9 @@ c	net/minecraft/unmapped/C_1013763
 		p	1		p_1	
 		p	2		p_2	
 	m	(I)V	m_0677528	applyDamage	
-		p	1		p_1	
+		p	1		amount	
 	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_4650833	onKilled	
-		p	1		p_1	
+		p	1		entity	
 	m	()V	m_5891931	dropLoot	
 	m	(Lnet/minecraft/unmapped/C_5009044;)I	m_4502663		getXpDrop
 		p	1			playerEntity
@@ -847,12 +847,12 @@ c	net/minecraft/unmapped/C_1518064
 		p	6		p_6	
 		p	8		p_8	
 	m	(II[BDDDFFFIID)V	m_1959732	placeBranch	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	6		p_6	
-		p	8		p_8	
+		p	1		centerChunkX	
+		p	2		centerChunkZ	
+		p	3		blocks	
+		p	4		x	
+		p	6		y	
+		p	8		z	
 		p	10		p_10	
 		p	11		p_11	
 		p	12		p_12	
@@ -1847,14 +1847,14 @@ c	net/minecraft/unmapped/C_4636105
 	f	Lnet/minecraft/unmapped/C_7949756;	f_8018955		spruceTree
 	f	Lnet/minecraft/unmapped/C_7019197;	f_4683844		swampTree
 	m	()V	<init>	<init>	
-	m	()V	m_8703345	m_8703345	
+	m	()V	m_8703345	init	
 	m	()Lnet/minecraft/unmapped/C_4636105;	m_5999602	setSnowy	
 	m	(DD)Lnet/minecraft/unmapped/C_4636105;	m_0756365	m_0756365	
 		p	0		p_0	
 		p	2		p_2	
-	m	(FF)Lnet/minecraft/unmapped/C_4636105;	m_2003135	m_2003135	
-		p	0		p_0	
-		p	1		p_1	
+	m	(FF)Lnet/minecraft/unmapped/C_4636105;	m_2003135	getBiome	
+		p	0		temperature	
+		p	1		downfall	
 	m	(I)V	<init>		<init>
 		p	1			id
 	m	()Lnet/minecraft/unmapped/C_9151514;	m_8876734		createDecorator
@@ -2270,8 +2270,8 @@ c	net/minecraft/unmapped/C_6385858
 	f	F	f_2682000	f_2682000	
 	f	Z	f_8701594		velocityDirty
 	m	(Lnet/minecraft/unmapped/C_6385858;I)Z	m_3238154	damage	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		entity	
+		p	2		amount	
 	m	()[Lnet/minecraft/unmapped/C_2750078;	m_9919834	getEquipmentStacks	
 	m	(Z)V	m_8609807	setSneaking	
 		p	1		sneaking	
@@ -2735,8 +2735,8 @@ c	net/minecraft/unmapped/C_8215726
 		p	1		p_1	
 c	net/minecraft/unmapped/C_8321936
 	m	(Lnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_6385858;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		entity	
+		p	2		holder	
 c	net/minecraft/unmapped/C_8338563
 	m	()F	m_8122368	getSidewaysSpeed	
 	m	()F	m_9504974	getPitch	

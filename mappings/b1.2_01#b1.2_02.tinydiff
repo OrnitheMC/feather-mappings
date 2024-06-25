@@ -27,7 +27,7 @@ c	net/minecraft/server/MinecraftServer	net/minecraft/server/MinecraftServer
 	m	()V	<init>	<init>	
 	m	()Z	m_0615401	init	
 	m	(Ljava/lang/String;)V	m_2695328	loadWorld	
-		p	1		p_1	
+		p	1		saveName	
 	m	(Ljava/lang/String;I)V	m_4174934	logProgress	
 		p	1		progressType	
 		p	2		progress	
@@ -41,12 +41,12 @@ c	net/minecraft/server/MinecraftServer	net/minecraft/server/MinecraftServer
 		p	1		command	
 		p	2		source	
 	m	()V	m_2515286	runPendingCommands	
-	m	(Ljava/lang/String;Ljava/lang/String;)V	m_2224501	m_2224501	
-		p	1		p_1	
-		p	2		p_2	
-	m	(Ljava/lang/String;I)I	m_7639919	m_7639919	
-		p	1		p_1	
-		p	2		p_2	
+	m	(Ljava/lang/String;Ljava/lang/String;)V	m_2224501	sendCommandFeedback	
+		p	1		player	
+		p	2		message	
+	m	(Ljava/lang/String;I)I	m_7639919	parseInt	
+		p	1		s	
+		p	2		defaultValue	
 	m	(Lnet/minecraft/unmapped/C_4753572;)V	m_1782684	addTickable	
 		p	1		tickable	
 	m	([Ljava/lang/String;)V	main	main	
@@ -168,7 +168,7 @@ c	net/minecraft/unmapped/C_0324512	net/minecraft/server/entity/living/player/Ser
 	f	D	f_7252894	f_7252894	
 	f	I	f_5431237	lastHealth	
 	f	I	f_1478225	spawnProtectionTicks	
-	f	[Lnet/minecraft/unmapped/C_2750078;	f_5960888	f_5960888	
+	f	[Lnet/minecraft/unmapped/C_2750078;	f_5960888	equipmentStacks	
 	f	I	f_3098613	menuId	
 	f	Z	f_2104338	useItemCooldown	
 	m	(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/unmapped/C_3906126;Ljava/lang/String;Lnet/minecraft/unmapped/C_7897127;)V	<init>	<init>	
@@ -179,7 +179,7 @@ c	net/minecraft/unmapped/C_0324512	net/minecraft/server/entity/living/player/Ser
 	m	()V	m_8923386	initMenu	
 	m	()[Lnet/minecraft/unmapped/C_2750078;	m_9919834	m_9919834	
 	m	()V	m_0718337	m_0718337	
-	m	(I)Lnet/minecraft/unmapped/C_2750078;	m_4716717	m_4716717	
+	m	(I)Lnet/minecraft/unmapped/C_2750078;	m_4716717	getItem	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_4650833	m_4650833	
 		p	1		p_1	
@@ -189,8 +189,8 @@ c	net/minecraft/unmapped/C_0324512	net/minecraft/server/entity/living/player/Ser
 	m	(I)V	m_6031420	m_6031420	
 		p	1		p_1	
 	m	()V	m_3062804	tickPlayer	
-	m	(Lnet/minecraft/unmapped/C_2074023;)V	m_4194840	m_4194840	
-		p	1		p_1	
+	m	(Lnet/minecraft/unmapped/C_2074023;)V	m_4194840	sendBlockEntityUpdate	
+		p	1		blockEntity	
 	m	()V	m_5818797	m_5818797	
 	m	(Lnet/minecraft/unmapped/C_6385858;I)V	m_8950914	m_8950914	
 		p	1		p_1	
@@ -537,14 +537,14 @@ c	net/minecraft/unmapped/C_2182707	net/minecraft/command/source/CommandSource
 		p	1		message	
 	m	()Ljava/lang/String;	m_7291241	getSourceName	
 c	net/minecraft/unmapped/C_2260875	net/minecraft/world/storage/PlayerDataStorage	
-	f	Ljava/util/logging/Logger;	f_2561336	f_2561336	
-	f	Ljava/io/File;	f_9370701	f_9370701	
+	f	Ljava/util/logging/Logger;	f_2561336	LOGGER	
+	f	Ljava/io/File;	f_9370701	dir	
 	m	(Ljava/io/File;)V	<init>	<init>	
-		p	1		p_1	
+		p	1		dir	
 	m	(Lnet/minecraft/unmapped/C_0324512;)V	m_3491877	savePlayerData	
-		p	1		p_1	
+		p	1		player	
 	m	(Lnet/minecraft/unmapped/C_0324512;)V	m_2233467	loadPlayerData	
-		p	1		p_1	
+		p	1		player	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_2354122
 	m	(Lnet/minecraft/unmapped/C_4443804;)V	m_5723360	setListener	
@@ -844,7 +844,7 @@ c	net/minecraft/unmapped/C_7366354	net/minecraft/server/world/ServerWorld
 	m	(Lnet/minecraft/server/MinecraftServer;Ljava/io/File;Ljava/lang/String;I)V	<init>	<init>	
 		p	1		server	
 		p	2		dir	
-		p	3		name	
+		p	3		saveName	
 		p	4		dimension	
 	m	()V	m_0624358	m_0624358	
 	m	(Lnet/minecraft/unmapped/C_6385858;Z)V	m_3502009	m_3502009	
@@ -953,8 +953,8 @@ c	net/minecraft/unmapped/C_8215726
 	m	()Lnet/minecraft/unmapped/C_4844124;	m_1279143	m_1279143	
 c	net/minecraft/unmapped/C_8321936
 	m	(Lnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_6385858;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		entity	
+		p	2		holder	
 c	net/minecraft/unmapped/C_8479751	net/minecraft/server/world/ServerWorldEventListener	
 	f	Lnet/minecraft/server/MinecraftServer;	f_8020825	server	
 	m	(Lnet/minecraft/server/MinecraftServer;)V	<init>	<init>	
@@ -1112,8 +1112,8 @@ c	net/minecraft/unmapped/C_9381557
 		p	2		slotId	
 		p	3		stack	
 c	net/minecraft/unmapped/C_9386942
-	m	(Lnet/minecraft/unmapped/C_6385858;)D	m_4819229	m_4819229	
-		p	1		p_1	
+	m	(Lnet/minecraft/unmapped/C_6385858;)D	m_4819229	squaredHorizontalDistanceToCenter	
+		p	1		entity	
 c	net/minecraft/unmapped/C_9462692
 	m	([BIIIIIII)I	m_5989424	m_5989424	
 		p	1		p_1	
