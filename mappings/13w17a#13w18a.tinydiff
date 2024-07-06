@@ -46,7 +46,7 @@ c	net/minecraft/unmapped/C_0640744
 		p	5		holderSize	
 	m	(Lnet/minecraft/unmapped/C_9713437;)V	m_8370992	addSprite	
 		p	1		texture	
-	m	()Lnet/minecraft/unmapped/C_2686552;	m_1280577	register	
+	m	()Lnet/minecraft/unmapped/C_2686552;	m_1280577	rebuild	
 	m	(Lnet/minecraft/unmapped/C_9713437;)Z	m_4537316	addAndStitch	
 		p	1		holder	
 	m	(Lnet/minecraft/unmapped/C_9713437;)Z	m_9332891	stitch	
@@ -367,8 +367,8 @@ c	net/minecraft/unmapped/C_3374628
 	m	(I)[I	m_6860639		getFrame
 		p	1			p_1
 	m	()I	m_8744894		getFrameCount
-	m	(Lnet/minecraft/unmapped/C_6347954;)V	m_7644134		m_7644134
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_6347954;)V	m_7644134		setAnimation
+		p	1			metadata
 	m	(I)V	m_3632901		setWidth
 		p	1			width
 	m	(I)V	m_9676478		setHeight
@@ -376,9 +376,9 @@ c	net/minecraft/unmapped/C_3374628
 	m	()I	m_8554210	m_8554210	getX
 	m	()I	m_1426877	m_1426877	getY
 c	net/minecraft/unmapped/C_3385278
-	f	Ljava/util/HashMap;	f_3266729	textures	
+	f	Ljava/util/HashMap;	f_3266729	textureIds	
 	f	Ljava/util/HashMap;	f_8158548	colors	
-	f	Lnet/minecraft/unmapped/C_3837238;	f_2107354	boundTextures	
+	f	Lnet/minecraft/unmapped/C_3837238;	f_2107354	textureImages	
 	f	Ljava/nio/IntBuffer;	f_2030366	imageBuffer	
 	f	Ljava/util/Map;	f_3335921	httpTextures	
 	f	Ljava/util/Map;	f_2943928	f_2943928	
@@ -405,18 +405,18 @@ c	net/minecraft/unmapped/C_3385278
 	m	(Ljava/lang/String;)V	m_4291731	bind	
 		p	1		path	
 	m	(I)V	m_2714907	bind	
-		p	1		texture	
+		p	1		id	
 	m	()V	m_7738932	clear	
 	m	(Ljava/lang/String;)I	m_6177175	load	
 		p	1		path	
-	m	(Ljava/awt/image/BufferedImage;)I	m_3538832	bind	
+	m	(Ljava/awt/image/BufferedImage;)I	m_3538832	load	
 		p	1		image	
 	m	(Ljava/awt/image/BufferedImage;I)V	m_7106890	bind	
 		p	1		image	
 		p	2		glId	
-	m	(Ljava/awt/image/BufferedImage;IZZ)V	m_5303716	bind	
+	m	(Ljava/awt/image/BufferedImage;IZZ)V	m_5303716	load	
 		p	1		image	
-		p	2		glId	
+		p	2		id	
 		p	3		blur	
 		p	4		mipmap	
 	m	([I)[I	m_3259654	applyAnaglyphFilter	
@@ -426,18 +426,18 @@ c	net/minecraft/unmapped/C_3385278
 		p	2		width	
 		p	3		height	
 		p	4		texture	
-	m	(I)V	m_8321296	remove	
+	m	(I)V	m_8321296	release	
 		p	1		texture	
-	m	(Ljava/lang/String;Ljava/lang/String;)I	m_6514596	bindHttpTexture	
-		p	1		path	
-		p	2		defaultPath	
+	m	(Ljava/lang/String;Ljava/lang/String;)I	m_6514596	loadHttpTexture	
+		p	1		url	
+		p	2		backup	
 	m	(Ljava/lang/String;)Z	m_3505589	hasHttpTexture	
 		p	1		path	
-	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_5556060;)Lnet/minecraft/unmapped/C_3540933;	m_0065802	getHttpTexture	
-		p	1		path	
+	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_5556060;)Lnet/minecraft/unmapped/C_3540933;	m_0065802	addHttpTexture	
+		p	1		url	
 		p	2		processor	
 	m	(Ljava/lang/String;)V	m_7598923	removeHttpTexture	
-		p	1		path	
+		p	1		url	
 	m	(Ljava/lang/String;[Ljava/lang/String;)V	m_8974142	m_8974142	
 		p	1		p_1	
 		p	2		p_2	
@@ -737,8 +737,8 @@ c	net/minecraft/unmapped/C_6019608
 	f	Lnet/minecraft/unmapped/C_1013763;	f_2772213	target	
 c	net/minecraft/unmapped/C_6385858
 	f	Ljava/lang/String;	f_1581698	skin	
-	f	Ljava/lang/String;	f_9050550	cloak	
-	m	()V	m_4467970	registerCloak	
+	f	Ljava/lang/String;	f_9050550	cape	
+	m	()V	m_4467970	prepareCape	
 c	net/minecraft/unmapped/C_7178022
 	f	I	f_1395761	texture	
 	f	Lnet/minecraft/unmapped/C_4766485;	f_0639800	textRenderer	
@@ -800,8 +800,8 @@ c	net/minecraft/unmapped/C_8905061
 		p	1			sprite
 c	net/minecraft/unmapped/C_9302567
 	m	(Ljava/lang/String;Ljava/lang/String;)Z	m_4333097	bindHttpTexture	
-		p	1		path	
-		p	2		defaultPath	
+		p	1		url	
+		p	2		backup	
 c	net/minecraft/unmapped/C_9368128
 	m	()V	m_1389123	m_1389123	
 	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_1389123		m_1389123
@@ -830,12 +830,12 @@ c	net/minecraft/unmapped/C_9713437	net/minecraft/client/texture/TextureHolder
 		p	1		p_1	
 	m	(Ljava/lang/Object;)I	compareTo	compareTo	
 		p	1		p_1	
-c	net/minecraft/unmapped/C_0979881		com/mojang/blaze3d/platform/TextureUtil
+c	net/minecraft/unmapped/C_0979881		net/minecraft/client/render/texture/TextureUtil
 	f	Ljava/nio/IntBuffer;	f_7807755		BUFFER
 	f	Lnet/minecraft/unmapped/C_3779718;	f_7281272		MISSING_TEXTURE
 	f	[I	f_4397336		MISSING_DATA
-	m	()I	m_9352345		m_9352345
-	m	(I)V	m_1616265		m_1616265
+	m	()I	m_9352345		glGenTextures
+	m	(I)V	m_1616265		glDeleteTextures
 		p	0			p_0
 	m	(ILjava/awt/image/BufferedImage;)I	m_3862315		uploadTexture
 		p	0			id
@@ -889,8 +889,8 @@ c	net/minecraft/unmapped/C_0979881		com/mojang/blaze3d/platform/TextureUtil
 	m	(I)V	m_1192743		bind
 		p	0			texture
 	m	(Lnet/minecraft/unmapped/C_7378130;Ljava/lang/String;)[I	m_0899679		getPixels
-		p	0			p_0
-		p	1			p_1
+		p	0			pack
+		p	1			path
 	m	([I)V	m_0450555		getAnaglyphColors
 		p	0			p_0
 	m	()V	<clinit>		<clinit>

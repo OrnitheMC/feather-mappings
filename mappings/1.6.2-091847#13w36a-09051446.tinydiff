@@ -206,10 +206,10 @@ c	net/minecraft/unmapped/C_0456473
 	m	(ILnet/minecraft/unmapped/C_8554894;Z)V	<init>	<init>	
 		p	1		id	
 		p	2		material	
-		p	3		fancyGraphics	
+		p	3		culling	
 	m	(Lnet/minecraft/unmapped/C_8554894;Z)V	<init>		<init>
 		p	1			material
-		p	2			fancyGraphics
+		p	2			culling
 c	net/minecraft/unmapped/C_0509876
 	m	(IIII)V	m_4546144	m_4546144	
 		p	1		p_1	
@@ -433,7 +433,7 @@ c	net/minecraft/unmapped/C_0814381
 		p	1			member
 		p	2			teamName
 c	net/minecraft/unmapped/C_0820158
-	f	I	f_3268047	catchTimer	
+	f	I	f_3268047	block	
 	f	I	f_5447474	fishTravelTimer	
 	f	Ljava/util/List;	f_9951256		JUNK_LOOT
 	f	Ljava/util/List;	f_4387745		TREASURE_LOOT
@@ -725,8 +725,8 @@ c	net/minecraft/unmapped/C_1124552
 		p	2		p_2	
 	m	(I)V	<init>	<init>	
 		p	1		id	
-	m	(I)Z	m_9338725	canPlantOn	
-		p	1		blockId	
+	m	(I)Z	m_9338725	canBePlacedOn	
+		p	1		block	
 	m	(Lnet/minecraft/unmapped/C_3906126;IIII)V	m_6252045	m_6252045	
 		p	1		p_1	
 		p	2		p_2	
@@ -736,7 +736,7 @@ c	net/minecraft/unmapped/C_1124552
 	m	(Lnet/minecraft/unmapped/C_8554894;)V	<init>		<init>
 		p	1			p_1
 	m	()V	<init>		<init>
-	m	(Lnet/minecraft/unmapped/C_3635204;)Z	m_9338725		canPlantOn
+	m	(Lnet/minecraft/unmapped/C_3635204;)Z	m_9338725		canBePlacedOn
 		p	1			block
 	m	(Lnet/minecraft/unmapped/C_3906126;IIILnet/minecraft/unmapped/C_3635204;)V	m_6252045		m_6252045
 		p	1			p_1
@@ -1404,13 +1404,13 @@ c	net/minecraft/unmapped/C_2426381
 		p	4			p_4
 	m	()Lnet/minecraft/unmapped/C_4030632;	m_2225185		m_2225185
 c	net/minecraft/unmapped/C_2454294
-	m	(IIIII)V	m_5212298	addBlockMiningParticles	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-	m	(IIILnet/minecraft/unmapped/C_3635204;I)V	m_5212298		addBlockBreakingParticles
+	m	(IIIII)V	m_5212298	handleBlockBreaking	
+		p	1		x	
+		p	2		y	
+		p	3		z	
+		p	4		block	
+		p	5		metadata	
+	m	(IIILnet/minecraft/unmapped/C_3635204;I)V	m_5212298		handleBlockBreaking
 		p	1			x
 		p	2			y
 		p	3			z
@@ -1786,7 +1786,7 @@ c	net/minecraft/unmapped/C_2983776
 	f	Z	f_3103408		awaitingServerResourcePack
 	m	(Ljava/io/File;Lnet/minecraft/unmapped/C_7532262;Lnet/minecraft/unmapped/C_1296613;Lnet/minecraft/unmapped/C_7688744;)V	<init>	<init>	
 		p	1		dir	
-		p	2		defaultResourcePack	
+		p	2		defaultPack	
 		p	3		metadataSerializers	
 		p	4		options	
 	m	()Ljava/lang/String;	m_2439860	getTopAppliedName	
@@ -1938,26 +1938,26 @@ c	net/minecraft/unmapped/C_3172064
 		p	3			p_3
 	m	()Ljava/lang/String;	m_8154406		getUuid
 c	net/minecraft/unmapped/C_3187085
-	m	(Ljava/io/File;II)Ljava/lang/String;	m_2520735	saveScreenshot	
-		p	0		parentDir	
+	m	(Ljava/io/File;II)Ljava/lang/String;	m_2520735	take	
+		p	0		gameDir	
 		p	1		width	
 		p	2		height	
-	m	(Ljava/io/File;Ljava/lang/String;II)Ljava/lang/String;	m_2872564	saveScreenshot	
-		p	0		parentDir	
+	m	(Ljava/io/File;Ljava/lang/String;II)Ljava/lang/String;	m_2872564	take	
+		p	0		gameDir	
 		p	1		name	
 		p	2		width	
 		p	3		height	
-	m	(Ljava/io/File;IILnet/minecraft/unmapped/C_5207848;)Ljava/lang/String;	m_2520735		saveScreenshot
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Ljava/io/File;Ljava/lang/String;IILnet/minecraft/unmapped/C_5207848;)Ljava/lang/String;	m_2872564		saveScreenshot
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(Ljava/io/File;IILnet/minecraft/unmapped/C_5207848;)Ljava/lang/String;	m_2520735		take
+		p	0			gameDir
+		p	1			width
+		p	2			height
+		p	3			target
+	m	(Ljava/io/File;Ljava/lang/String;IILnet/minecraft/unmapped/C_5207848;)Ljava/lang/String;	m_2872564		take
+		p	0			gameDir
+		p	1			name
+		p	2			width
+		p	3			height
+		p	4			target
 c	net/minecraft/unmapped/C_3298564
 	f	I	f_9128496	statId	
 	f	I	f_3460613	value	
@@ -2251,7 +2251,7 @@ c	net/minecraft/unmapped/C_3624347
 		p	4		z	
 		p	5		volume	
 		p	6		pitch	
-	m	(Ljava/lang/String;FFFFFI)V	m_9527440	play	
+	m	(Ljava/lang/String;FFFFFI)V	m_9527440	playLater	
 		p	1		id	
 		p	2		x	
 		p	3		y	
@@ -2262,24 +2262,24 @@ c	net/minecraft/unmapped/C_3624347
 	m	(Lnet/minecraft/unmapped/C_2787601;)F	m_4636035		getVolume
 		p	1			category
 	m	(Ljava/lang/String;FFFFFLnet/minecraft/unmapped/C_2787601;)V	m_6358286		play
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-	m	(Ljava/lang/String;FFFFFILnet/minecraft/unmapped/C_2787601;)V	m_9527440		play
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
+		p	1			id
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			volume
+		p	6			pitch
+		p	7			category
+	m	(Ljava/lang/String;FFFFFILnet/minecraft/unmapped/C_2787601;)V	m_9527440		playLater
+		p	1			id
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			volume
+		p	6			pitch
+		p	7			delay
+		p	8			category
 c	net/minecraft/unmapped/C_3624347$C_9597328
-	f	Lnet/minecraft/unmapped/C_2787601;	f_3380684		f_3380684
+	f	Lnet/minecraft/unmapped/C_2787601;	f_3380684		category
 	m	(Ljava/lang/String;FFFFFI)V	<init>	<init>	
 		p	1		id	
 		p	2		x	
@@ -2289,20 +2289,20 @@ c	net/minecraft/unmapped/C_3624347$C_9597328
 		p	6		pitch	
 		p	7		delay	
 	m	(Ljava/lang/String;FFFFFILnet/minecraft/unmapped/C_2787601;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
+		p	1			id
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			volume
+		p	6			pitch
+		p	7			delay
+		p	8			category
 c	net/minecraft/unmapped/C_3635204
 	f	[Lnet/minecraft/unmapped/C_3635204;	f_3809114	BY_ID	
 	f	[Z	f_8396961	IS_OPAQUE	
 	f	[I	f_5232409	OPACITIES	
 	f	[Z	f_1548894	IS_TRANSLUCENT	
-	f	[I	f_9216618	LIGHT_LEVELS	
+	f	[I	f_9216618	LIGHT	
 	f	[Z	f_0761032	USES_NEIGHBOR_LIGHT	
 	f	Lnet/minecraft/unmapped/C_3635204;	f_5255693	STONE	
 	f	Lnet/minecraft/unmapped/C_0823907;	f_0804334	GRASS	
@@ -2472,13 +2472,13 @@ c	net/minecraft/unmapped/C_3635204
 	f	Z	f_2532304		opaqueCube
 	f	I	f_0627550		opacity
 	f	Z	f_9528049		isTranslucent
-	f	I	f_8237136		lightLevel
+	f	I	f_8237136		light
 	f	Z	f_4504486		useNeighborLight
 	m	(ILnet/minecraft/unmapped/C_8554894;)V	<init>	<init>	
 		p	1		id	
 		p	2		material	
 	m	()V	m_1438549	init	
-	m	(I)Z	m_5533517	isConductor	
+	m	(I)Z	m_5533517	isSolid	
 		c	Returns whether the block with the given id conducts redstone signals.	
 		p	0		id	
 	m	(Lnet/minecraft/unmapped/C_3906126;IIII)V	m_6252045	neighborChanged	
@@ -2519,7 +2519,7 @@ c	net/minecraft/unmapped/C_3635204
 		p	0			block
 	m	(Lnet/minecraft/unmapped/C_3635204;)Z	m_3315086		usesNeighborLight
 		p	0			block
-	m	(Lnet/minecraft/unmapped/C_3635204;)I	m_2399533		getLightLevel
+	m	(Lnet/minecraft/unmapped/C_3635204;)I	m_2399533		getLight
 		p	0			block
 	m	(Lnet/minecraft/unmapped/C_3635204;)I	m_5858756		getOpacity
 		p	0			block
@@ -2533,7 +2533,7 @@ c	net/minecraft/unmapped/C_3635204
 		c		Registers all blocks.
 	m	(Lnet/minecraft/unmapped/C_8554894;)V	<init>		<init>
 		p	1			material
-	m	(Lnet/minecraft/unmapped/C_3635204;)Z	m_5533517		isConductor
+	m	(Lnet/minecraft/unmapped/C_3635204;)Z	m_5533517		isSolid
 		c		Returns whether the block with the given id conducts redstone signals.
 		p	0			p_0
 	m	(Lnet/minecraft/unmapped/C_3906126;IIILnet/minecraft/unmapped/C_3635204;)V	m_6252045		neighborChanged
@@ -2785,17 +2785,17 @@ c	net/minecraft/unmapped/C_3906126
 		p	1		x	
 		p	2		y	
 		p	3		z	
-	m	(Lnet/minecraft/unmapped/C_5863046;III)V	m_3108055	checkLight	
+	m	(Lnet/minecraft/unmapped/C_5863046;III)V	m_3108055	updateLight	
 		p	1		type	
 		p	2		x	
 		p	3		y	
 		p	4		z	
-	m	(IIIIZILnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_2750078;)Z	m_2921988	canReplace	
-		p	1		blockId	
+	m	(IIIIZILnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_2750078;)Z	m_2921988	canPlace	
+		p	1		block	
 		p	2		x	
 		p	3		y	
 		p	4		z	
-		p	5		isFalling	
+		p	5		skipCollisionChecks	
 		p	6		face	
 		p	7		entity	
 		p	8		stack	
@@ -2898,17 +2898,17 @@ c	net/minecraft/unmapped/C_3906126
 		p	1			x
 		p	2			y
 		p	3			z
-	m	(Lnet/minecraft/unmapped/C_5863046;III)Z	m_3108055		checkLight
+	m	(Lnet/minecraft/unmapped/C_5863046;III)Z	m_3108055		updateLight
 		p	1			type
 		p	2			x
 		p	3			y
 		p	4			z
-	m	(Lnet/minecraft/unmapped/C_3635204;IIIZILnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_2750078;)Z	m_2921988		canReplace
+	m	(Lnet/minecraft/unmapped/C_3635204;IIIZILnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_2750078;)Z	m_2921988		canPlace
 		p	1			block
 		p	2			x
 		p	3			y
 		p	4			z
-		p	5			isFalling
+		p	5			skipCollisionChecks
 		p	6			face
 		p	7			entity
 		p	8			stack
@@ -3264,9 +3264,9 @@ c	net/minecraft/unmapped/C_4034049
 	m	(Lnet/minecraft/unmapped/C_3635204;)V	<init>		<init>
 		p	1			p_1
 c	net/minecraft/unmapped/C_4078372
-	f	Lnet/minecraft/unmapped/C_6205974;	f_4543428	surfaceNoise	
-	f	[D	f_5533962	f_5533962	
-	f	Lnet/minecraft/unmapped/C_9070784;	f_4543428		surfaceNoise
+	f	Lnet/minecraft/unmapped/C_6205974;	f_4543428	perlinNoise3	
+	f	[D	f_5533962	scaleNoiseBuffer	
+	f	Lnet/minecraft/unmapped/C_9070784;	f_4543428		perlinNoise3
 	f	Lnet/minecraft/unmapped/C_3997653;	f_5843321		type
 	m	(II[B[Lnet/minecraft/unmapped/C_4636105;)V	m_0713473	generateBiomes	
 		p	1		chunkX	
@@ -3614,7 +3614,7 @@ c	net/minecraft/unmapped/C_4584288
 	f	Lnet/minecraft/unmapped/C_3635204;	f_4772593		block
 	m	(ILnet/minecraft/unmapped/C_3635204;)V	<init>	<init>	
 		p	1		id	
-		p	2		p_2	
+		p	2		block	
 	m	(Lnet/minecraft/unmapped/C_3635204;)V	<init>		<init>
 		p	1			block
 c	net/minecraft/unmapped/C_4598210
@@ -4520,9 +4520,9 @@ c	net/minecraft/unmapped/C_6223866
 c	net/minecraft/unmapped/C_6240881
 	m	(ILjava/lang/String;)V	<init>	<init>	
 		p	1		id	
-		p	2		p_2	
+		p	2		record	
 	m	(Ljava/lang/String;)V	<init>		<init>
-		p	1			recordType
+		p	1			record
 c	net/minecraft/unmapped/C_6259709
 	m	(ILnet/minecraft/unmapped/C_8554894;)V	<init>	<init>	
 		p	1		id	
@@ -4595,7 +4595,7 @@ c	net/minecraft/unmapped/C_6385858
 	m	(IIF)Lnet/minecraft/unmapped/C_3050136;	m_4336212	dropItem	
 		p	1		id	
 		p	2		amount	
-		p	3		yOffset	
+		p	3		offsetY	
 	m	(Lnet/minecraft/unmapped/C_3632207;Lnet/minecraft/unmapped/C_3906126;IIIIF)Z	m_5778009	canExplodeBlock	
 		c	Check if an explosion caused by this entity can explode the given block.	
 		p	1		explosion	
@@ -4616,7 +4616,7 @@ c	net/minecraft/unmapped/C_6385858
 	m	(Lnet/minecraft/unmapped/C_4030632;IF)Lnet/minecraft/unmapped/C_3050136;	m_4336212		dropItem
 		p	1			item
 		p	2			count
-		p	3			yOffset
+		p	3			offsetY
 	m	(Lnet/minecraft/unmapped/C_3632207;Lnet/minecraft/unmapped/C_3906126;IIILnet/minecraft/unmapped/C_3635204;F)Z	m_5778009		canExplodeBlock
 		c		Check if an explosion caused by this entity can explode the given block.
 		p	1			explosion
@@ -5088,7 +5088,7 @@ c	net/minecraft/unmapped/C_6755599
 	f	Z	f_4553381		lightPopulated
 	f	Z	f_1165169		hasTicked
 		c		True if this chunk has ticked at least once.
-	m	()V	m_9994958	recheckGaps	
+	m	()V	m_9994958	lightGaps	
 	m	(III)I	m_2661127	getBlockAt	
 		p	1		localX	
 		p	2		y	
@@ -5097,7 +5097,7 @@ c	net/minecraft/unmapped/C_6755599
 		p	1		localX	
 		p	2		y	
 		p	3		localZ	
-		p	4		blockId	
+		p	4		block	
 		p	5		metadata	
 	m	()V	m_8729732	tick	
 	m	(Lnet/minecraft/unmapped/C_3906126;[B[BII)V	<init>		<init>
@@ -5106,7 +5106,7 @@ c	net/minecraft/unmapped/C_6755599
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	(Z)V	m_9994958		recheckGaps
+	m	(Z)V	m_9994958		lightGaps
 		p	1			checkOne
 	m	(III)Lnet/minecraft/unmapped/C_3635204;	m_2661127		getBlockAt
 		p	1			localX
@@ -5119,7 +5119,7 @@ c	net/minecraft/unmapped/C_6755599
 		p	4			block
 		p	5			metadata
 	m	(Z)V	m_8729732		tick
-		p	1			skipRecheckGaps
+		p	1			skipCheckGaps
 	m	()Z	m_3595593		isPopulated
 	m	()V	m_6849889		populateLight
 	m	(I)V	m_7903574		checkBorderLight
@@ -5484,14 +5484,14 @@ c	net/minecraft/unmapped/C_7199020
 c	net/minecraft/unmapped/C_7213435
 	f	I	f_3431472	resultItem	
 c	net/minecraft/unmapped/C_7221329
-	f	I	f_2774789	blockId	
+	f	I	f_2774789	block	
 	f	Lnet/minecraft/unmapped/C_3635204;	f_2774789		block
 	m	(Lnet/minecraft/unmapped/C_3906126;DDDI)V	<init>	<init>	
 		p	1		world	
 		p	2		x	
 		p	4		y	
 		p	6		z	
-		p	8		blockId	
+		p	8		block	
 	m	(Lnet/minecraft/unmapped/C_3906126;DDDII)V	<init>	<init>	
 		p	1		world	
 		p	2		x	
@@ -6456,11 +6456,11 @@ c	net/minecraft/unmapped/C_8443484
 		p	1		id	
 		p	2		spriteName	
 		p	3		material	
-		p	4		sideVisible	
+		p	4		culling	
 	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_8554894;Z)V	<init>		<init>
 		p	1			spriteName
 		p	2			material
-		p	3			sideVisible
+		p	3			culling
 c	net/minecraft/unmapped/C_8446326
 	m	(I)V	<init>	<init>	
 		p	1		id	
@@ -7013,12 +7013,12 @@ c	net/minecraft/unmapped/C_9079950
 	m	()D	m_4780162		m_4780162
 	m	()F	m_8536863		m_8536863
 c	net/minecraft/unmapped/C_9143244
-	m	([FIIII)[F	m_2266722	getTemperature	
-		p	1		temperature	
+	m	([FIIII)[F	m_2266722	getTemperatures	
+		p	1		temperatures	
 		p	2		x	
 		p	3		z	
-		p	4		width	
-		p	5		length	
+		p	4		sizeX	
+		p	5		sizeZ	
 c	net/minecraft/unmapped/C_9147018
 	m	()Ljava/io/File;	m_6501199		getDirectory
 c	net/minecraft/unmapped/C_9151514
@@ -7546,8 +7546,8 @@ c	net/minecraft/unmapped/C_9685768
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/unmapped/C_9746149
-	f	I	f_0779124	inBlock	
-	f	Lnet/minecraft/unmapped/C_3635204;	f_0779124		inBlock
+	f	I	f_0779124	block	
+	f	Lnet/minecraft/unmapped/C_3635204;	f_0779124		block
 c	net/minecraft/unmapped/C_9760469
 	f	I	f_3624158	deadBushId	
 	f	Lnet/minecraft/unmapped/C_3635204;	f_3624158		deadBush
@@ -7943,8 +7943,8 @@ c	net/minecraft/unmapped/C_2787601		net/minecraft/client/sound/SoundCategory
 		p	4			id
 	m	()Ljava/lang/String;	m_7740427		getName
 	m	()I	m_7916616		getId
-	m	(I)Lnet/minecraft/unmapped/C_2787601;	m_5992175		byName
-		p	0			p_0
+	m	(I)Lnet/minecraft/unmapped/C_2787601;	m_5992175		byId
+		p	0			id
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_3091493		net/minecraft/world/biome/layer/AddDeepOceanLayer
 	m	(JLnet/minecraft/unmapped/C_6297854;)V	<init>		<init>
@@ -9168,16 +9168,16 @@ c	net/minecraft/unmapped/C_9060047		net/minecraft/world/biome/layer/AddSnowLayer
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-c	net/minecraft/unmapped/C_9070784		net/minecraft/world/gen/noise/PerlinNoiseGenerator
-	f	[Lnet/minecraft/unmapped/C_3656644;	f_1755106		samplers
-	f	I	f_5550626		samplerCount
+c	net/minecraft/unmapped/C_9070784		net/minecraft/world/gen/noise/PerlinNoiseGenerator2
+	f	[Lnet/minecraft/unmapped/C_3656644;	f_1755106		noiseLevels
+	f	I	f_5550626		levels
 	m	(Ljava/util/Random;I)V	<init>		<init>
 		p	1			random
-		p	2			samplerCount
+		p	2			levels
 	m	(DD)D	m_6396979		getNoise
 		p	1			x
 		p	3			z
-	m	([DDDIIDDD)[D	m_6472130		getNoise
+	m	([DDDIIDDD)[D	m_6472130		getRegion
 		p	1			noise
 		p	2			x
 		p	4			z
@@ -9186,7 +9186,7 @@ c	net/minecraft/unmapped/C_9070784		net/minecraft/world/gen/noise/PerlinNoiseGen
 		p	8			scaleX
 		p	10			scaleZ
 		p	12			scaleExponent
-	m	([DDDIIDDDD)[D	m_5581270		getNoise
+	m	([DDDIIDDDD)[D	m_5581270		getRegion
 		p	1			noise
 		p	2			x
 		p	4			z

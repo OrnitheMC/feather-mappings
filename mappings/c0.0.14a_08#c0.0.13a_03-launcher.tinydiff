@@ -2,19 +2,19 @@ tiny	2	0
 c	com/mojang/minecraft/MinecraftApplet
 	m	()V	m_0146433	m_0146433	
 c	net/minecraft/client/Minecraft
-	f	I	f_2615354	f_2615354	
+	f	I	f_2615354	ticks	
 	f	Ljava/awt/Robot;	f_9154570	f_9154570	
 	f	[I	f_8115571	f_8115571	
 	f	F	f_9762585	f_9762585	
 	f	F	f_7808593	f_7808593	
 	f	F	f_0991746	f_0991746	
-	f	I	f_7539337	f_7539337	
+	f	I	f_7539337	lastClickTicks	
 	f	F	f_0224003	f_0224003	
 	f	I	f_5984003	f_5984003	
 	f	I	f_4890835	f_4890835	
 	f	Ljava/util/ArrayList;	f_6333965		f_6333965
 	m	()V	m_5998520	m_5998520	
-	m	()V	m_5678101	doUse	
+	m	()V	m_5678101	handleMouseClick	
 	m	(I)V	m_0092759	m_0092759	
 		p	1		p_1	
 	m	(ILjava/lang/String;)Z	m_7765695	m_7765695	
@@ -25,13 +25,13 @@ c	net/minecraft/client/Minecraft
 	m	()V	<clinit>	<clinit>	
 	m	()V	m_0607497		m_0607497
 	m	()V	m_0092759		m_0092759
-c	net/minecraft/unmapped/C_0456473	net/minecraft/block/BlockWithCulling	
+c	net/minecraft/unmapped/C_0456473	net/minecraft/block/TransparentBlock	
 	m	(II)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
 	m	()Z	m_1944525	m_1944525	
 	m	()Z	m_3237591	m_3237591	
-c	net/minecraft/unmapped/C_0639491	net/minecraft/client/player/input/GameInput	
+c	net/minecraft/unmapped/C_0639491	net/minecraft/client/entity/mob/player/KeyboardInput	
 	f	[Z	f_9923725	inputKeys	
 	m	()V	<init>	<init>	
 	m	(IZ)V	m_6133262	m_6133262	
@@ -45,7 +45,7 @@ c	net/minecraft/unmapped/C_0974371	net/minecraft/block/LogBlock
 	m	(I)I	m_9597800	m_9597800	
 		p	1		p_1	
 c	net/minecraft/unmapped/C_1044273
-	f	Ljava/util/Set;	f_5607847	pendingChunks	
+	f	Ljava/util/Set;	f_5607847	dirtyChunks	
 	f	I	f_4574005	ticks	
 	m	(Lnet/minecraft/unmapped/C_3385278;)V	<init>	<init>	
 		p	1		p_1	
@@ -65,7 +65,7 @@ c	net/minecraft/unmapped/C_1044273
 		p	2			p_2
 c	net/minecraft/unmapped/C_1414550
 	f	J	f_2749082	f_2749082	
-	m	(FFF)Lnet/minecraft/unmapped/C_1414550;	m_3310866	grow	
+	m	(FFF)Lnet/minecraft/unmapped/C_1414550;	m_3310866	expanded	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
@@ -188,10 +188,10 @@ c	net/minecraft/unmapped/C_3906126
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
-	m	(III)Z	m_3624759	m_3624759	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+	m	(III)Z	m_3624759	isSolidBlock	
+		p	1		x	
+		p	2		y	
+		p	3		z	
 	m	()V	m_8605860	m_8605860	
 	m	(III)Z	m_9458565	m_9458565	
 		p	1		p_1	
@@ -236,14 +236,14 @@ c	net/minecraft/unmapped/C_3906126
 		p	4		p_4	
 	m	(Lnet/minecraft/unmapped/C_6385858;)F	m_6146563	m_6146563	
 		p	1		p_1	
-c	net/minecraft/unmapped/C_4045198	net/minecraft/client/player/input/PlayerInput	
+c	net/minecraft/unmapped/C_4045198	net/minecraft/client/entity/mob/player/Input	
 	f	F	f_7472910	movementSideways	
 	f	F	f_7984611	movementForward	
 	f	Z	f_5816164	f_5816164	
 	f	Z	f_0314305	jumping	
 	m	()V	<init>	<init>	
 	m	()V	m_0500842	tick	
-	m	()V	m_0460692	grabMouse	
+	m	()V	m_0460692	releaseAllKeys	
 	m	(IZ)V	m_6133262	handleKeyEvent	
 		p	1		key	
 		p	2		state	
@@ -294,7 +294,7 @@ c	net/minecraft/unmapped/C_5009044
 	m	(Lnet/minecraft/unmapped/C_3906126;)V	<init>		<init>
 		p	1			p_1
 c	net/minecraft/unmapped/C_5283200
-	f	[Z	f_6592967	blocks	
+	f	[Z	f_6592967	empty	
 	f	Lnet/minecraft/unmapped/C_1414550;	f_4407194		f_4407194
 	f	F	f_7213209		f_7213209
 	f	F	f_5205272		f_5205272
@@ -311,7 +311,7 @@ c	net/minecraft/unmapped/C_5283200
 	m	(Ljava/nio/IntBuffer;I)V	m_0937596	m_0937596	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lnet/minecraft/unmapped/C_8199124;)V	m_5092852	updateVisibility	
+	m	(Lnet/minecraft/unmapped/C_8199124;)V	m_5092852	cull	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_3906126;IIIIII)V	<init>		<init>
 		p	1			p_1
@@ -396,7 +396,7 @@ c	net/minecraft/unmapped/C_8199124
 		p	6		p_6	
 c	net/minecraft/unmapped/C_8905061
 	m	(Lnet/minecraft/unmapped/C_2334550;FFFFFF)V	m_7521183	render	
-		p	1		bufferBuilder	
+		p	1		tesselator	
 		p	2		tickDelta	
 		p	3		dx	
 		p	4		dy	

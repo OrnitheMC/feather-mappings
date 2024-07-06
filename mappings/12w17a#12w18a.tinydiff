@@ -1,6 +1,6 @@
 tiny	2	0
 c	net/minecraft/client/Minecraft
-	f	Lnet/minecraft/unmapped/C_6015078;	f_8161264	f_8161264	
+	f	Lnet/minecraft/unmapped/C_6015078;	f_8161264	commandManager	
 	f	Lnet/minecraft/unmapped/C_3906126;	f_5337597	world	
 	f	Lnet/minecraft/unmapped/C_5367636;	f_5473933	player	
 	f	I	f_8278041		f_8278041
@@ -8,7 +8,7 @@ c	net/minecraft/client/Minecraft
 	f	Lnet/minecraft/unmapped/C_3133904;	f_7288166		snooper
 	f	Lnet/minecraft/unmapped/C_8817873;	f_5337597		world
 	f	Lnet/minecraft/unmapped/C_1388208;	f_5473933		player
-	f	Lnet/minecraft/unmapped/C_6378766;	f_1791985		f_1791985
+	f	Lnet/minecraft/unmapped/C_6378766;	f_1791985		serverDownloader
 	f	I	f_0570703		currentFps
 	f	Z	f_9756392		reloadTextures
 	m	(Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/unmapped/C_4413269;)V	m_2139624	startGame	
@@ -16,36 +16,36 @@ c	net/minecraft/client/Minecraft
 		p	2		name	
 		p	3		settings	
 	m	(I)V	m_6182440	changeDimension	
-		p	1		dimensionId	
-	m	(Ljava/lang/String;)V	m_0663491	m_0663491	
-		p	1		p_1	
+		p	1		dimension	
+	m	(Ljava/lang/String;)V	m_0663491	removeWorld	
+		p	1		message	
 	m	(Lnet/minecraft/unmapped/C_3906126;)V	m_3501995	setWorld	
 		p	1		world	
 	m	(Lnet/minecraft/unmapped/C_3906126;Ljava/lang/String;)V	m_5784106	setWorld	
 		p	1		world	
-		p	2		title	
+		p	2		message	
 	m	(Lnet/minecraft/unmapped/C_3906126;Ljava/lang/String;Lnet/minecraft/unmapped/C_5009044;)V	m_5733981	setWorld	
 		p	1		world	
-		p	2		title	
+		p	2		message	
 		p	3		player	
-	m	(Ljava/lang/String;Ljava/lang/String;)V	m_4034211	convertWorld	
+	m	(Ljava/lang/String;Ljava/lang/String;)V	m_4034211	convertWorldAndStartGame	
 		p	1		saveName	
 		p	2		name	
-	m	(Ljava/lang/String;)V	m_4743605	loadWorld	
+	m	(Ljava/lang/String;)V	m_4743605	prepareWorld	
 		p	1		saveName	
-	m	(ZIZ)V	m_6862388	m_6862388	
-		p	1		p_1	
-		p	2		dimensionId	
-		p	3		p_3	
-	m	(Ljava/lang/String;Ljava/lang/String;Z)V	m_6139283	m_6139283	
-		p	0		p_0	
-		p	1		p_1	
-		p	2		p_2	
-	m	(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V	m_9802560	m_9802560	
-		p	0		p_0	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+	m	(ZIZ)V	m_6862388	respawnPlayer	
+		p	1		worldSpawn	
+		p	2		dimension	
+		p	3		keepInventory	
+	m	(Ljava/lang/String;Ljava/lang/String;Z)V	m_6139283	start	
+		p	0		username	
+		p	1		sessionId	
+		p	2		demo	
+	m	(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V	m_9802560	startAndConnect	
+		p	0		username	
+		p	1		sessionId	
+		p	2		server	
+		p	3		demo	
 	m	()Ljava/lang/String;	m_2805364	m_2805364	
 	m	()V	m_6938015	m_6938015	
 	m	()Lnet/minecraft/unmapped/C_6015078;	m_5779938	getCommandHandler	
@@ -55,28 +55,28 @@ c	net/minecraft/client/Minecraft
 	m	(Lnet/minecraft/unmapped/C_8817873;)V	m_3501995		setWorld
 		p	1			world
 	m	(Lnet/minecraft/unmapped/C_8817873;Ljava/lang/String;)V	m_5784106		setWorld
-		p	1			p_1
-		p	2			p_2
+		p	1			world
+		p	2			message
 	m	(Lnet/minecraft/unmapped/C_8817873;Ljava/lang/String;Lnet/minecraft/unmapped/C_5009044;)V	m_5733981		setWorld
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(I)V	m_8218202		teleportToDimension
-		p	1			dimensionId
-	m	(Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;Ljava/lang/String;)V	m_6139283		m_6139283
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;Ljava/lang/String;)V	m_9802560		m_9802560
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	()Lnet/minecraft/unmapped/C_6378766;	m_0200454		m_0200454
+		p	1			world
+		p	2			message
+		p	3			player
+	m	(I)V	m_8218202		respawnPlayer
+		p	1			dimension
+	m	(Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;Ljava/lang/String;)V	m_6139283		start
+		p	0			username
+		p	1			sessionId
+		p	2			demo
+		p	3			serverPath
+		p	4			serverEntry
+	m	(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZLjava/lang/String;Ljava/lang/String;)V	m_9802560		startAndConnect
+		p	0			username
+		p	1			sessionId
+		p	2			server
+		p	3			demo
+		p	4			serverPath
+		p	5			serverEntry
+	m	()Lnet/minecraft/unmapped/C_6378766;	m_0200454		getServerDownloader
 	m	()V	m_7113176		markTexturesDirty
 	m	(Lnet/minecraft/unmapped/C_3133904;)V	m_1865667		m_1865667
 		p	1			p_1
@@ -268,16 +268,16 @@ c	net/minecraft/unmapped/C_0749844	net/minecraft/unmapped/C_0749844
 	m	()V	m_2483976	m_2483976	
 c	net/minecraft/unmapped/C_0820158
 	m	(Lnet/minecraft/unmapped/C_3906126;DDD)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	4		p_4	
-		p	6		p_6	
+		p	1		world	
+		p	2		x	
+		p	4		y	
+		p	6		z	
 	m	(Lnet/minecraft/unmapped/C_3906126;DDDLnet/minecraft/unmapped/C_5009044;)V	<init>		<init>
 		p	1			world
 		p	2			x
 		p	4			y
 		p	6			z
-		p	8			player
+		p	8			thrower
 	m	()V	m_7572763		m_7572763
 c	net/minecraft/unmapped/C_0974371
 	f	[Ljava/lang/String;	f_8948117		VARIANTS
@@ -325,23 +325,23 @@ c	net/minecraft/unmapped/C_1331878
 	f	[Ljava/lang/String;	f_1533733		VARIANTS
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_1368426
-	f	Lnet/minecraft/unmapped/C_7688744;	f_8192592	f_8192592	
-	f	Lnet/minecraft/unmapped/C_3385278;	f_3640473	defaultPack	
+	f	Lnet/minecraft/unmapped/C_7688744;	f_8192592	options	
+	f	Lnet/minecraft/unmapped/C_3385278;	f_3640473	textureManager	
 	f	Lnet/minecraft/client/Minecraft;	f_9562788		minecraft
-	f	Ljava/io/File;	f_5549673		texturePacksMpCacheDir
+	f	Ljava/io/File;	f_5549673		multiplayerDir
 	f	Z	f_8515075		hasServerTextures
 	m	(Ljava/io/File;Lnet/minecraft/unmapped/C_7688744;Lnet/minecraft/unmapped/C_3385278;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+		p	1		gameDir	
+		p	2		options	
+		p	3		textureManager	
 	m	(Ljava/io/File;Lnet/minecraft/client/Minecraft;)V	<init>		<init>
-		p	1			dir
+		p	1			gameDir
 		p	2			minecraft
 	m	(Ljava/lang/String;)V	m_3987547		selectServerPack
 		p	1			url
 	m	(Ljava/lang/String;Ljava/io/File;)V	m_5658014		downloadServerPack
 		p	1			url
-		p	2			f
+		p	2			dst
 	m	()Z	m_2391968		hasServerTextures
 	m	()V	m_0740180		removeServerTextures
 	m	()Z	m_7684569		mustAcceptTextures
@@ -515,7 +515,7 @@ c	net/minecraft/unmapped/C_3271339	net/minecraft/client/SurvivalInteractionManag
 	f	I	f_4935633	targetBlockZ	
 	f	F	f_1634419	miningProgress	
 	f	F	f_7952219	lastMiningProgress	
-	f	F	f_8501336	miningSoundTimer	
+	f	F	f_8501336	miningTicks	
 	f	I	f_2257000	miningCooldown	
 	m	(Lnet/minecraft/client/Minecraft;)V	<init>	<init>	
 		p	1		p_1	
@@ -630,7 +630,7 @@ c	net/minecraft/unmapped/C_3906126
 	f	Ljava/util/TreeSet;	f_7861349	scheduledTicksInOrder	
 	f	Ljava/util/Set;	f_9143601	scheduledTicks	
 	f	J	f_3211652	initTimeMillis	
-	f	Z	f_4655699	fresh	
+	f	Z	f_4655699	isNew	
 	f	Z	f_0617423	allPlayersSleeping	
 	f	[Lnet/minecraft/unmapped/C_5720232;	f_2992651	BONUS_CHEST_LOOT_TABLE	
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_9219192;)V	<init>	<init>	
@@ -643,24 +643,24 @@ c	net/minecraft/unmapped/C_3906126
 	m	()V	m_4453174	placeBonusChest	
 	m	()Lnet/minecraft/unmapped/C_6707278;	m_1327295	getForcedSpawnPoint	
 	m	()V	m_3566975	resetSpawnPoint	
-	m	(Lnet/minecraft/unmapped/C_5009044;)V	m_0762970	addPlayer	
+	m	(Lnet/minecraft/unmapped/C_5009044;)V	m_0762970	loadPlayer	
 		p	1		player	
-	m	(ZLnet/minecraft/unmapped/C_7918626;)V	m_4418114	saveAll	
+	m	(ZLnet/minecraft/unmapped/C_7918626;)V	m_4418114	save	
 		p	1		saveEntities	
 		p	2		progressListener	
 	m	()V	m_1813388	saveData	
-	m	(I)Z	m_0537941	clickSave	
+	m	(I)Z	m_0537941	saveWhilePaused	
 		p	1		button	
-	m	(Ljava/lang/Class;)Lnet/minecraft/unmapped/C_6385858;	m_2356502	m_2356502	
+	m	(Ljava/lang/Class;)Lnet/minecraft/unmapped/C_6385858;	m_2356502	getEntityOfSubtype	
 		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_7918626;)V	m_5794371	waitIfSaving	
+	m	(Lnet/minecraft/unmapped/C_7918626;)V	m_5794371	forceSave	
 		p	1		progressListener	
 	m	()V	m_3546969	clearWeather	
 	m	(III)V	m_8169946	doRandomDisplayTicks	
 		p	1		x	
 		p	2		y	
 		p	3		z	
-	m	()V	m_6787182	simulateForABit	
+	m	()V	m_6787182	prepare	
 	m	(DDD)Lnet/minecraft/unmapped/C_5009044;	m_1876612	getClosestPlayer	
 		p	1		x	
 		p	3		z	
@@ -694,7 +694,7 @@ c	net/minecraft/unmapped/C_4030632
 		p	1			stack
 c	net/minecraft/unmapped/C_4078372
 	m	()I	m_7966672		m_7966672
-c	net/minecraft/unmapped/C_4136842	net/minecraft/network/packet/ChunkUpdatePacket	
+c	net/minecraft/unmapped/C_4136842	net/minecraft/network/packet/LoadWorldChunkPacket	
 	f	I	f_8021129	chunkX	
 	f	I	f_9992431	chunkZ	
 	f	Z	f_8043100	load	
@@ -730,7 +730,7 @@ c	net/minecraft/unmapped/C_4237166
 	f	I	f_4863811		selectedHotbarSlot
 	m	(Lnet/minecraft/client/Minecraft;)V	<init>	<init>	
 		p	1		minecraft	
-	m	(IIII)V	m_5386984	mineBlockInCreative	
+	m	(IIII)V	m_5386984	startMiningBlock	
 		p	1		x	
 		p	2		y	
 		p	3		z	
@@ -754,7 +754,7 @@ c	net/minecraft/unmapped/C_4237166
 		p	0			player
 	m	(Lnet/minecraft/unmapped/C_5009044;)V	m_6734984		setSurvivalMode
 		p	0			player
-	m	(Lnet/minecraft/client/Minecraft;Lnet/minecraft/unmapped/C_4237166;IIII)V	m_5386984		mineBlockInCreative
+	m	(Lnet/minecraft/client/Minecraft;Lnet/minecraft/unmapped/C_4237166;IIII)V	m_5386984		instaMineBlock
 		p	0			minecraft
 		p	1			interactionManager
 		p	2			x
@@ -763,7 +763,7 @@ c	net/minecraft/unmapped/C_4237166
 		p	5			face
 	m	(Z)V	m_4850235		setGameMode
 		p	1			isCreative
-	m	(IIII)V	m_2484873		updateBlockMining
+	m	(IIII)V	m_2484873		tickBlockMining
 		p	1			x
 		p	2			y
 		p	3			z
@@ -771,6 +771,7 @@ c	net/minecraft/unmapped/C_4237166
 	m	()V	m_9607021		updateSelectedHotbarSlot
 	m	(Lnet/minecraft/unmapped/C_3906126;)Lnet/minecraft/unmapped/C_1388208;	m_8774636		createPlayer
 		p	1			world
+	m	(IIII)V	m_1681170	tickBlockMining	startMiningBlock
 c	net/minecraft/unmapped/C_4286596
 	f	Lnet/minecraft/unmapped/C_2750078;	f_1756474		mainHandStack
 c	net/minecraft/unmapped/C_4384798
@@ -797,7 +798,7 @@ c	net/minecraft/unmapped/C_4384798$6377215		6377215
 		p	6			p_6
 	m	()V	run		run
 c	net/minecraft/unmapped/C_4443804
-	m	(Lnet/minecraft/unmapped/C_4136842;)V	m_7931068	handleChunkUpdate	
+	m	(Lnet/minecraft/unmapped/C_4136842;)V	m_7931068	handleLoadWorldChunk	
 		p	1		packet	
 	m	(Lnet/minecraft/unmapped/C_0693747;)V	m_6796272		handleSoundEvent
 		p	1			packet
@@ -891,7 +892,7 @@ c	net/minecraft/unmapped/C_6794191	net/minecraft/client/MultiplayerInteractionMa
 	f	I	f_6658859	targetBlockZ	
 	f	F	f_8859176	miningProgress	
 	f	F	f_0036702	lastMiningProgress	
-	f	F	f_0963205	miningSoundTimer	
+	f	F	f_0963205	miningTicks	
 	f	I	f_2954349	miningCooldown	
 	f	Z	f_9024333	isMiningBlock	
 	f	Z	f_9720245	isCreativeMode	
@@ -925,7 +926,7 @@ c	net/minecraft/unmapped/C_6794191	net/minecraft/client/MultiplayerInteractionMa
 		p	1		p_1	
 	m	()F	m_5235168	m_5235168	
 	m	()V	m_8517616	m_8517616	
-	m	()V	m_0616403	updateSelectedHotbarSlot	
+	m	()V	m_0616403	sendSelectedHotbarSlot	
 	m	(Lnet/minecraft/unmapped/C_5009044;Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_2750078;IIII)Z	m_0257155	m_0257155	
 		p	1		p_1	
 		p	2		p_2	
@@ -1029,9 +1030,9 @@ c	net/minecraft/unmapped/C_7366354
 		p	1			settings
 	m	()V	m_3585198		placeBonusChest
 	m	()Lnet/minecraft/unmapped/C_6707278;	m_9767542		getForcedSpawnPoint
-	m	(ZLnet/minecraft/unmapped/C_7918626;)V	m_5918996		saveAll
+	m	(ZLnet/minecraft/unmapped/C_7918626;)V	m_5918996		save
 		p	1			saveEntities
-		p	2			progressListener
+		p	2			listener
 	m	()V	m_2377081		saveData
 	m	()Lnet/minecraft/unmapped/C_5009044;	m_2812860		m_2812860
 	m	(J)V	m_8564090		changeTime
@@ -1161,7 +1162,7 @@ c	net/minecraft/unmapped/C_8263475
 	m	()I	m_3867756		getDifficulty
 c	net/minecraft/unmapped/C_8425960
 	m	()V	m_4545362		m_4545362
-	m	(Ljava/lang/String;)V	m_6435809	setInitialTitle	m_6435809
+	m	(Ljava/lang/String;)V	m_6435809	progressStart	m_6435809
 		p	1		title	p_1
 c	net/minecraft/unmapped/C_8514158	net/minecraft/server/command/ServerGameModeCommand	
 	m	()V	<init>	<init>	
@@ -1419,25 +1420,25 @@ c	net/minecraft/unmapped/C_5797014		net/minecraft/unmapped/C_5797014
 	m	(Lnet/minecraft/unmapped/C_4718193;)V	m_9226870		m_9226870
 		p	1			p_1
 c	net/minecraft/unmapped/C_6378766		net/minecraft/client/ServerDownloader
-	f	Ljava/io/File;	f_9745096		f_9745096
+	f	Ljava/io/File;	f_9745096		serverPath
 	f	Ljava/io/File;	f_4242131		f_4242131
 	f	Lnet/minecraft/unmapped/C_4718193;	f_8535199		f_8535199
-	f	Ljava/lang/String;	f_2522029		f_2522029
+	f	Ljava/lang/String;	f_2522029		serverEntry
 	m	()V	<init>		<init>
 	m	(Ljava/io/File;Ljava/io/File;)V	<init>		<init>
-		p	1			p_1
+		p	1			serverPath
 		p	2			p_2
-	m	(Ljava/lang/String;I)V	m_5740047		m_5740047
-		p	1			p_1
-		p	2			p_2
+	m	(Ljava/lang/String;I)V	m_5740047		startLocalServer
+		p	1			worldSaveName
+		p	2			port
 	m	()Z	m_2265861		m_2265861
 	m	()V	m_2730587		m_2730587
-	m	()I	m_1660762		m_1660762
-	m	()Ljava/io/File;	m_4851205		m_4851205
-	m	(Ljava/io/File;)V	m_1193585		m_1193585
-		p	1			p_1
-	m	(Ljava/lang/String;)V	m_2498716		m_2498716
-		p	1			p_1
+	m	()I	m_1660762		getLocalPort
+	m	()Ljava/io/File;	m_4851205		getServerPath
+	m	(Ljava/io/File;)V	m_1193585		setServerPath
+		p	1			path
+	m	(Ljava/lang/String;)V	m_2498716		setServerEntry
+		p	1			entry
 c	net/minecraft/unmapped/C_6378766$1576203		1576203
 	f	Lnet/minecraft/unmapped/C_6378766;	f_7289634		f_7289634
 	m	(Lnet/minecraft/unmapped/C_6378766;)V	<init>		<init>
@@ -1463,17 +1464,17 @@ c	net/minecraft/unmapped/C_7994583		net/minecraft/client/gui/screen/ServerTextur
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/unmapped/C_8036756		net/minecraft/unmapped/C_8036756
+c	net/minecraft/unmapped/C_8036756		net/minecraft/client/JavaProcessLauncher
 	f	Ljava/lang/String;	f_4359139		f_4359139
-	f	Ljava/lang/String;	f_5065271		f_5065271
-	f	Ljava/util/List;	f_7083346		f_7083346
+	f	Ljava/lang/String;	f_5065271		JAVA
+	f	Ljava/util/List;	f_7083346		commands
 	f	Ljava/io/File;	f_4563470		f_4563470
 	m	([Ljava/lang/String;)V	<init>		<init>
 		p	1			p_1
 	m	()Lnet/minecraft/unmapped/C_4718193;	m_4579880		m_4579880
 	m	()Ljava/util/List;	m_4201006		m_4201006
-	m	([Ljava/lang/String;)V	m_6718652		m_6718652
-		p	1			p_1
+	m	([Ljava/lang/String;)V	m_6718652		addCommands
+		p	1			commands
 	m	(Ljava/io/File;)Lnet/minecraft/unmapped/C_8036756;	m_1968332		m_1968332
 		p	1			p_1
 	m	()Ljava/lang/String;	toString		toString

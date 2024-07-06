@@ -1,11 +1,11 @@
 tiny	2	0
 c	net/minecraft/client/Minecraft
-	m	(Ljava/io/File;IIII)Ljava/lang/String;	m_0756011	m_0756011	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
+	m	(Ljava/io/File;IIII)Ljava/lang/String;	m_0756011	takeHugeScreenshot	
+		p	1		gameDir	
+		p	2		columnWidth	
+		p	3		rowHeight	
+		p	4		width	
+		p	5		height	
 c	net/minecraft/client/Minecraft$0497028		0497028
 	f	Lnet/minecraft/client/Minecraft;	f_5797501		f_5797501
 	m	(Lnet/minecraft/client/Minecraft;)V	<init>		<init>
@@ -177,25 +177,25 @@ c	net/minecraft/unmapped/C_3077593
 	m	(I)I	m_1532371		m_1532371
 		p	1			p_1
 c	net/minecraft/unmapped/C_3187085
-	f	I	f_8438169	f_8438169	
-	f	Ljava/io/DataOutputStream;	f_8858656	f_8858656	
-	f	[B	f_4271363	f_4271363	
-	f	I	f_7610117	f_7610117	
-	f	I	f_3093601	f_3093601	
-	f	Ljava/io/File;	f_9872106	f_9872106	
+	f	I	f_8438169	rowHeight	
+	f	Ljava/io/DataOutputStream;	f_8858656	output	
+	f	[B	f_4271363	pixelsForRow	
+	f	I	f_7610117	width	
+	f	I	f_3093601	height	
+	f	Ljava/io/File;	f_9872106	file	
 	m	(Ljava/io/File;III)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-	m	(Ljava/nio/ByteBuffer;IIII)V	m_6705572	m_6705572	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-	m	()V	m_9812907	m_9812907	
-	m	()Ljava/lang/String;	m_7745323	m_7745323	
+		p	1		file	
+		p	2		width	
+		p	3		height	
+		p	4		rowHeight	
+	m	(Ljava/nio/ByteBuffer;IIII)V	m_6705572	addRegion	
+		p	1		pixels	
+		p	2		centerX	
+		p	3		centerY	
+		p	4		rangeX	
+		p	5		rangeY	
+	m	()V	m_9812907	saveRow	
+	m	()Ljava/lang/String;	m_7745323	close	
 c	net/minecraft/unmapped/C_3466301
 	f	Z	f_6711480		fancyGraphics
 	m	(Lnet/minecraft/unmapped/C_3635204;III)Z	m_9806368	tesselateRail	
@@ -276,7 +276,7 @@ c	net/minecraft/unmapped/C_3964879
 		p	0			id
 c	net/minecraft/unmapped/C_4030632
 	m	(Lnet/minecraft/unmapped/C_2750078;)I	m_1532371	getSprite	
-		p	1		p_1	
+		p	1		stack	
 	m	(I)I	m_1532371		getSprite
 		p	1			metadata
 	m	(Lnet/minecraft/unmapped/C_2750078;)I	m_8620274		getSprite
@@ -312,10 +312,10 @@ c	net/minecraft/unmapped/C_4179150
 		p	2			y
 c	net/minecraft/unmapped/C_4237166
 	m	(IIILnet/minecraft/unmapped/C_5009044;)Lnet/minecraft/unmapped/C_2750078;	m_5196022	clickSlot	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
+		p	1		menuId	
+		p	2		slot	
+		p	3		button	
+		p	4		player	
 	m	(IIIZLnet/minecraft/unmapped/C_5009044;)Lnet/minecraft/unmapped/C_2750078;	m_5196022		clickSlot
 		p	1			menuId
 		p	2			slot
@@ -347,16 +347,16 @@ c	net/minecraft/unmapped/C_4766485
 c	net/minecraft/unmapped/C_4824661
 	f	Z	f_4619496		thiccFog
 	f	I	f_6644116		weatherSoundAttempts
-	m	(DDD)V	m_3044613	m_3044613	
-		p	1		p_1	
-		p	3		p_3	
-		p	5		p_5	
-	m	()V	m_8888188	m_8888188	
-	m	(I)V	m_1114865	renderFog	
+	m	(DDD)V	m_3044613	zoomIn	
+		p	1		zoom	
+		p	3		zoomX	
+		p	5		zoomY	
+	m	()V	m_8888188	zoomOut	
+	m	(I)V	m_1114865	setupFog	
 		p	1		p_1	
 	m	(F)V	m_7235148		renderSnowAndRain
 		p	1			tickDelta
-	m	(IF)V	m_1114865		renderFog
+	m	(IF)V	m_1114865		setupFog
 		p	1			mode
 		p	2			tickDelta
 c	net/minecraft/unmapped/C_4844124
@@ -384,11 +384,11 @@ c	net/minecraft/unmapped/C_4844124
 c	net/minecraft/unmapped/C_4883920
 	f	Z	f_0122511		quickMove
 	m	(IIILnet/minecraft/unmapped/C_2750078;S)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
+		p	1		menuId	
+		p	2		slotId	
+		p	3		clickData	
+		p	4		stack	
+		p	5		interactionId	
 	m	(IIIZLnet/minecraft/unmapped/C_2750078;S)V	<init>		<init>
 		p	1			menuId
 		p	2			slotId
@@ -399,19 +399,19 @@ c	net/minecraft/unmapped/C_4883920
 c	net/minecraft/unmapped/C_4917405
 	f	Z	f_6576570		useCustomDisplayColor
 	m	(Lnet/minecraft/unmapped/C_4766485;Lnet/minecraft/unmapped/C_3385278;Lnet/minecraft/unmapped/C_2750078;II)V	m_7605997	renderGuiItem	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
+		p	1		textRenderer	
+		p	2		textureManager	
+		p	3		stack	
+		p	4		x	
+		p	5		y	
 	m	(Lnet/minecraft/unmapped/C_4766485;Lnet/minecraft/unmapped/C_3385278;IIIII)V	m_7605997		renderGuiItem
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
+		p	1			textRenderer
+		p	2			textureManager
+		p	3			item
+		p	4			metadata
+		p	5			sprite
+		p	6			x
+		p	7			y
 	m	(Lnet/minecraft/unmapped/C_4766485;Lnet/minecraft/unmapped/C_3385278;Lnet/minecraft/unmapped/C_2750078;II)V	m_3023684		renderGuiItemWithEnchantmentGlint
 		p	1			textRenderer
 		p	2			textureManager
@@ -457,8 +457,8 @@ c	net/minecraft/unmapped/C_5287522
 		p	1			p_1
 c	net/minecraft/unmapped/C_5294331
 	m	(Lnet/minecraft/unmapped/C_4390289;Lnet/minecraft/unmapped/C_1196485;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		playerInventory	
+		p	2		furnace	
 	m	(Lnet/minecraft/unmapped/C_4286596;Lnet/minecraft/unmapped/C_1196485;)V	<init>		<init>
 		p	1			playerInventory
 		p	2			furnace
@@ -505,7 +505,7 @@ c	net/minecraft/unmapped/C_5525347$4627746		4627746
 	m	(I)Ljava/lang/String;	m_4138711		m_4138711
 		p	1			p_1
 c	net/minecraft/unmapped/C_6385858
-	m	()Z	m_7260987		isBeingRainedOn
+	m	()Z	m_7260987		isWet
 	m	()Z	m_5438767		isInWater
 	m	(Lnet/minecraft/unmapped/C_1992549;)V	m_0423668		onLightningStrike
 		p	1			lightning
@@ -581,13 +581,13 @@ c	net/minecraft/unmapped/C_7688744$C_0457152
 	f	Lnet/minecraft/unmapped/C_7688744$C_0457152;	f_6719243		ADVANCED_OPENGL
 c	net/minecraft/unmapped/C_7699185
 	m	(IILnet/minecraft/unmapped/C_5009044;)Lnet/minecraft/unmapped/C_2750078;	m_0676143	onClickSlot	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+		p	1		slot	
+		p	2		button	
+		p	3		player	
 	m	(I)Lnet/minecraft/unmapped/C_2750078;	m_6350238		quickMoveStack
 		p	1			id
 	m	(IIZLnet/minecraft/unmapped/C_5009044;)Lnet/minecraft/unmapped/C_2750078;	m_0676143		onClickSlot
-		p	1			id
+		p	1			slot
 		p	2			button
 		p	3			quickMove
 		p	4			player
@@ -705,7 +705,7 @@ c	net/minecraft/unmapped/C_9614477
 	m	(Ljava/lang/String;Ljava/lang/String;I)V	<init>	<init>	
 		p	1		username	
 		p	2		password	
-		p	3		id	
+		p	3		gameVersion	
 	m	(Ljava/lang/String;Ljava/lang/String;IJB)V	<init>	<init>	
 		p	1		username	
 		p	2		password	

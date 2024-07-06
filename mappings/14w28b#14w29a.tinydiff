@@ -114,7 +114,7 @@ c	net/minecraft/unmapped/C_1036880
 c	net/minecraft/unmapped/C_1044273
 	f	Ljava/util/Map;	f_0705813		customMiningProgress
 	f	Lnet/minecraft/unmapped/C_8377075;	f_2168011		chunkVertexBufferUploader
-	m	()V	m_6291103	render	
+	m	()V	m_6291103	renderLastChunks	
 	m	(F)V	m_3653635	renderEndSky	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_3333682;Lnet/minecraft/unmapped/C_8373595;ILnet/minecraft/unmapped/C_6707278;)V	m_1757683	m_1757683	
@@ -124,7 +124,7 @@ c	net/minecraft/unmapped/C_1044273
 		p	4		p_4	
 	m	(Z)V	m_2729219		reloadGlArbOcclusion
 		p	1			wasEnabled
-	m	(Lnet/minecraft/unmapped/C_3333682;)V	m_6291103		render
+	m	(Lnet/minecraft/unmapped/C_3333682;)V	m_6291103		renderLastChunks
 		p	1			layer
 	m	(Ljava/util/Iterator;)V	m_0755344		updateMiningProgress
 		p	1			miningProgress
@@ -400,7 +400,7 @@ c	net/minecraft/unmapped/C_2433962
 	m	(Lnet/minecraft/unmapped/C_3333682;)V	m_4389031		renderLayer
 		p	1			layer
 	m	()V	m_9825814		glTranslatef
-	m	(Lnet/minecraft/unmapped/C_3333682;)V	m_8923851		m_8923851
+	m	(Lnet/minecraft/unmapped/C_3333682;)V	m_8923851		renderWithVbo
 		p	1			layer
 	m	()V	m_9137168		m_9137168
 c	net/minecraft/unmapped/C_2589652
@@ -525,15 +525,15 @@ c	net/minecraft/unmapped/C_3466301	net/minecraft/client/render/block/BlockRender
 		p	1		world	
 	m	(Lnet/minecraft/unmapped/C_3635204;)V	m_7312222	prepare	
 		p	1		block	
-	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_6707278;Lnet/minecraft/unmapped/C_8373595;)Z	m_2563994	tesselateBlock	
+	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_6707278;Lnet/minecraft/unmapped/C_8373595;)Z	m_2563994	tesselateInWorld	
 		p	1		state	
 		p	2		pos	
 		p	3		bufferBuilder	
-	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_6707278;Lnet/minecraft/unmapped/C_8373595;)Z	m_0041392	tesselate	
+	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_6707278;Lnet/minecraft/unmapped/C_8373595;)Z	m_0041392	tesselateBlock	
 		p	1		state	
 		p	2		pos	
 		p	3		bufferBuilder	
-	m	(Lnet/minecraft/unmapped/C_3635204;IF)V	m_6974549	render	
+	m	(Lnet/minecraft/unmapped/C_3635204;IF)V	m_6974549	tesselateItem	
 		p	1		block	
 		p	2		metadata	
 		p	3		brightness	
@@ -582,9 +582,9 @@ c	net/minecraft/unmapped/C_3831356
 	f	[Lnet/minecraft/unmapped/C_0561170;	f_0211671		MINING_PROGRESS_LOCATIONS
 	m	(Lnet/minecraft/unmapped/C_2074023;DDDF)V	m_7825810	render	
 		p	1		blockEntity	
-		p	2		x	
-		p	4		y	
-		p	6		z	
+		p	2		dx	
+		p	4		dy	
+		p	6		dz	
 		p	8		tickDelta	
 	m	(Lnet/minecraft/unmapped/C_2074023;DDDFI)V	m_7825810		render
 		p	1			blockEntity
@@ -665,12 +665,12 @@ c	net/minecraft/unmapped/C_4420677
 	m	()Lnet/minecraft/unmapped/C_2441996;	m_9077732	m_9077732	
 c	net/minecraft/unmapped/C_4558465
 	m	()Lnet/minecraft/unmapped/C_2441996;	m_9077732	m_9077732	
-	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_6707278;)I	m_4458719	getLevel	
-		c	Returns the level of this fluid. The first 3 bits encode the distance to a source\nfluid, while the 4th bit encodes whether this fluid is falling.	
+	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_6707278;)I	m_4458719	getLiquidState	
+		c	Returns the depth and falling state of the liquid at the given position, encoded in a 4 bit number,\nor {@code -1} if the given position is not occupied by this liquid.\n<p>\nThe 3 least significant bits encode the depth of this liquid - that is to say, how shallow it lies within this block.\nA value of {@code 0} denotes a source block, while the values {@code 1} to {@code 7} denote increasingly shallow depth values.\n<br>\nIf this liquid is falling, the depth applies not to this liquid, but to the liquid above it.\nIf the liquid above is also falling, the depth is always 0.\n<p>\nThe 4th least significant bit encodes whether the liquid is falling (i.e. there is liquid flowing in from above).	
 		p	1		world	
 		p	2		pos	
-	m	(Lnet/minecraft/unmapped/C_2627205;Lnet/minecraft/unmapped/C_6707278;)I	m_4458719		getLevel
-		c		Returns the level of this fluid. The first 3 bits encode the distance to a source\nfluid, while the 4th bit encodes whether this fluid is falling.
+	m	(Lnet/minecraft/unmapped/C_2627205;Lnet/minecraft/unmapped/C_6707278;)I	m_4458719		getLiquidState
+		c		Returns the depth and falling state of the liquid at the given position, encoded in a 4 bit number,\nor {@code -1} if the given position is not occupied by this liquid.\n<p>\nThe 3 least significant bits encode the depth of this liquid - that is to say, how shallow it lies within this block.\nA value of {@code 0} denotes a source block, while the values {@code 1} to {@code 7} denote increasingly shallow depth values.\n<br>\nIf this liquid is falling, the depth applies not to this liquid, but to the liquid above it.\nIf the liquid above is also falling, the depth is always 0.\n<p>\nThe 4th least significant bit encodes whether the liquid is falling (i.e. there is liquid flowing in from above).
 		p	1			world
 		p	2			pos
 c	net/minecraft/unmapped/C_4689925
@@ -977,9 +977,9 @@ c	net/minecraft/unmapped/C_7153081
 		p	2		tickDelta	
 	m	(Lnet/minecraft/unmapped/C_2074023;DDDF)V	m_1726036	render	
 		p	1		blockEntity	
-		p	2		x	
-		p	4		y	
-		p	6		z	
+		p	2		dx	
+		p	4		dy	
+		p	6		dz	
 		p	8		tickDelta	
 	m	(Lnet/minecraft/unmapped/C_2074023;FI)V	m_7219009		render
 		p	1			blockEntity
@@ -987,15 +987,15 @@ c	net/minecraft/unmapped/C_7153081
 		p	3			blockMiningProgress
 	m	(Lnet/minecraft/unmapped/C_2074023;DDDF)V	m_9869649		render
 		p	1			blockEntity
-		p	2			x
-		p	4			y
-		p	6			z
+		p	2			dx
+		p	4			dy
+		p	6			dz
 		p	8			tickDelta
 	m	(Lnet/minecraft/unmapped/C_2074023;DDDFI)V	m_1726036		render
 		p	1			blockEntity
-		p	2			x
-		p	4			y
-		p	6			z
+		p	2			dx
+		p	4			dy
+		p	6			dz
 		p	8			tickDelta
 		p	9			blockMiningProgress
 c	net/minecraft/unmapped/C_7184938
@@ -1277,10 +1277,10 @@ c	net/minecraft/unmapped/C_9751000
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_9764049
 	m	()Lnet/minecraft/unmapped/C_2441996;	m_9077732	m_9077732	
-	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_6707278;I)I	m_7941061	updateBurnChance	
+	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_6707278;I)I	m_7941061	getFlammability	
 		p	1		world	
 		p	2		pos	
-		p	3		chance	
+		p	3		min	
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_6707278;)Z	m_8348351		shouldExtinguish
 		p	1			world
 		p	2			pos

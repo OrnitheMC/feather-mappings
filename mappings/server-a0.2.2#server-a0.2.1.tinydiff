@@ -1,6 +1,6 @@
 tiny	2	0
 c	net/minecraft/unmapped/C_0258789
-	f	Lnet/minecraft/unmapped/C_2750078;	f_0795879	f_0795879	
+	f	Lnet/minecraft/unmapped/C_2750078;	f_0795879	BOW	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_0400468
 	m	()I	m_3977441		m_3977441
@@ -44,15 +44,15 @@ c	net/minecraft/unmapped/C_0611937
 		p	2		x	
 		p	4		z	
 c	net/minecraft/unmapped/C_0820158	net/minecraft/entity/FishingBobberEntity	
-	f	I	f_3221150	posX	
-	f	I	f_0588981	posY	
-	f	I	f_0755679	posZ	
-	f	I	f_3268047	catchTimer	
+	f	I	f_3221150	blockX	
+	f	I	f_0588981	blockY	
+	f	I	f_0755679	blockZ	
+	f	I	f_3268047	block	
 	f	Z	f_0460142	inGround	
-	f	I	f_5571922	HOOKED_ENTITY_ID	
-	f	Lnet/minecraft/unmapped/C_5009044;	f_7387845	player	
-	f	I	f_4655045	removalTimer	
-	f	I	f_1510309	ticksInAir	
+	f	I	f_5571922	shake	
+	f	Lnet/minecraft/unmapped/C_5009044;	f_7387845	thrower	
+	f	I	f_4655045	inBlockTicks	
+	f	I	f_1510309	inAirTicks	
 	f	I	f_5447474	fishTravelTimer	
 	f	Lnet/minecraft/unmapped/C_6385858;	f_5803629	hookedEntity	
 	m	(Lnet/minecraft/unmapped/C_3906126;)V	<init>	<init>	
@@ -152,23 +152,23 @@ c	net/minecraft/unmapped/C_2624096
 	m	()I	m_3977441		m_3977441
 c	net/minecraft/unmapped/C_2689622
 	m	()I	m_3977441		m_3977441
-c	net/minecraft/unmapped/C_2984832	net/minecraft/entity/living/mob/GhastEntity	
+c	net/minecraft/unmapped/C_2984832	net/minecraft/entity/mob/hostile/GhastEntity	
 	f	I	f_6172306	collisionCheckCooldown	
-	f	D	f_3368863	wanderTargetX	
-	f	D	f_1530599	wanderTargetY	
-	f	D	f_6127400	wanderTargetZ	
+	f	D	f_3368863	floatTargetX	
+	f	D	f_1530599	floatTargetY	
+	f	D	f_6127400	floatTargetZ	
 	f	Lnet/minecraft/unmapped/C_6385858;	f_4129132	target	
-	f	I	f_5618038	aggressiveCooldown	
-	f	I	f_5498320	attackCooldown	
-	f	I	f_2663354	shootingCooldown	
+	f	I	f_5618038	findTargetTimer	
+	f	I	f_5498320	lastChargeTicks	
+	f	I	f_2663354	chargeTicks	
 	m	(Lnet/minecraft/unmapped/C_3906126;)V	<init>	<init>	
 		p	1		p_1	
 	m	()V	m_6773208	m_6773208	
-	m	(DDDD)Z	m_5848632	willCollide	
-		p	1		x	
-		p	3		y	
-		p	5		z	
-		p	7		steps	
+	m	(DDDD)Z	m_5848632	canReachTarget	
+		p	1		targetX	
+		p	3		targetY	
+		p	5		targetZ	
+		p	7		distance	
 	m	()Ljava/lang/String;	m_9980999	m_9980999	
 	m	()Ljava/lang/String;	m_0628689	m_0628689	
 	m	()Ljava/lang/String;	m_6640029	m_6640029	
@@ -226,8 +226,8 @@ c	net/minecraft/unmapped/C_3874327
 c	net/minecraft/unmapped/C_3906126
 	f	Lnet/minecraft/unmapped/C_9219192;	f_6597519	dimension	
 	f	Ljava/io/File;	f_1707582	dir	
-	f	I	f_7370886	lightUpdateDepth	
-	f	I	f_0889426	checkLightDepth	
+	f	I	f_7370886	doLightUpdatesDepth	
+	f	I	f_0889426	updateLightDepth	
 	f	J	f_6767802		f_6767802
 	f	J	f_2492403		f_2492403
 	f	[F	f_3712609		f_3712609
@@ -264,7 +264,7 @@ c	net/minecraft/unmapped/C_4030632
 	f	Lnet/minecraft/unmapped/C_4030632;	f_8790046	COOKED_FISH	
 c	net/minecraft/unmapped/C_4078372
 	f	[Lnet/minecraft/unmapped/C_4636105;	f_5383852	biomes	
-	f	[D	f_9021032	f_9021032	
+	f	[D	f_9021032	temperatures	
 	m	(II[B[Lnet/minecraft/unmapped/C_4636105;[D)V	m_8884370	generate	
 		p	1		chunkX	
 		p	2		chunkZ	
@@ -296,20 +296,20 @@ c	net/minecraft/unmapped/C_4188659	net/minecraft/world/gen/chunk/NetherChunkGene
 	f	Ljava/util/Random;	f_8917276	random	
 	f	Lnet/minecraft/unmapped/C_6205974;	f_6088413	minLimitPerlinNoise	
 	f	Lnet/minecraft/unmapped/C_6205974;	f_6992788	maxLimitPerlinNoise	
-	f	Lnet/minecraft/unmapped/C_6205974;	f_2672865	mainPerlinNoise	
-	f	Lnet/minecraft/unmapped/C_6205974;	f_6658469	soulSandGravelNoise	
-	f	Lnet/minecraft/unmapped/C_6205974;	f_3589762	lavaLakeNoise	
+	f	Lnet/minecraft/unmapped/C_6205974;	f_2672865	perlinNoise1	
+	f	Lnet/minecraft/unmapped/C_6205974;	f_6658469	perlinNoise2	
+	f	Lnet/minecraft/unmapped/C_6205974;	f_3589762	perlinNoise3	
 	f	Lnet/minecraft/unmapped/C_6205974;	f_8288244	scaleNoise	
 	f	Lnet/minecraft/unmapped/C_6205974;	f_6892449	depthNoise	
 	f	Lnet/minecraft/unmapped/C_3906126;	f_4518483	world	
 	f	[D	f_2663077	heightMap	
-	f	[D	f_4866129	soulSandNoiseBuffer	
-	f	[D	f_0397422	gravelNoiseBuffer	
-	f	[D	f_5155724	lavaLakeNoiseBuffer	
+	f	[D	f_4866129	sandBuffer	
+	f	[D	f_0397422	gravelBuffer	
+	f	[D	f_5155724	depthBuffer	
 	f	Lnet/minecraft/unmapped/C_6329603;	f_6379507	cave	
-	f	[D	f_7690025	mainNoiseBuffer	
-	f	[D	f_2957130	minLimitNoiseBuffer	
-	f	[D	f_8027177	maxLimitNoiseBuffer	
+	f	[D	f_7690025	perlinNoiseBuffer	
+	f	[D	f_2957130	minLimitPerlinNoiseBuffer	
+	f	[D	f_8027177	maxLimitPerlinNoiseBuffer	
 	f	[D	f_9286606	scaleNoiseBuffer	
 	f	[D	f_4721075	depthNoiseBuffer	
 	m	(Lnet/minecraft/unmapped/C_3906126;J)V	<init>	<init>	
@@ -410,16 +410,16 @@ c	net/minecraft/unmapped/C_4636105	net/minecraft/world/biome/Biome
 		p	1		color	
 	m	(I)Lnet/minecraft/unmapped/C_4636105;	m_1454200	setBaseColor	
 		p	1		color	
-	m	(DD)Lnet/minecraft/unmapped/C_4636105;	m_0756365	m_0756365	
-		p	0		p_0	
-		p	2		p_2	
-	m	(FF)Lnet/minecraft/unmapped/C_4636105;	m_2003135	getBiome	
+	m	(DD)Lnet/minecraft/unmapped/C_4636105;	m_0756365	getBiome	
+		p	0		temperature	
+		p	2		downfall	
+	m	(FF)Lnet/minecraft/unmapped/C_4636105;	m_2003135	initBiome	
 		p	0		temperature	
 		p	1		downfall	
 	m	(Lnet/minecraft/unmapped/C_9466447;)[Ljava/lang/Class;	m_7461209	getSpawnEntries	
 		p	1		category	
 	m	()V	<clinit>	<clinit>	
-c	net/minecraft/unmapped/C_4948697	net/minecraft/entity/living/mob/hostile/ZombiePigmanEntity	
+c	net/minecraft/unmapped/C_4948697	net/minecraft/entity/mob/hostile/ZombiePigmanEntity	
 	f	Z	f_7742093	f_7742093	
 	f	I	f_5697420	angerSoundDelay	
 	f	Lnet/minecraft/unmapped/C_2750078;	f_6918503	f_6918503	
@@ -456,29 +456,29 @@ c	net/minecraft/unmapped/C_5164011	net/minecraft/world/gen/feature/FirePatchFeat
 		p	5		p_5	
 c	net/minecraft/unmapped/C_5178573
 	m	()I	m_3977441		m_3977441
-c	net/minecraft/unmapped/C_5587398	net/minecraft/unmapped/C_5587398	
-	f	[Lnet/minecraft/unmapped/C_6668603;	f_8552802	f_8552802	
-	f	I	f_3662090	f_3662090	
+c	net/minecraft/unmapped/C_5587398	net/minecraft/world/gen/noise/PerlinSimplexNoiseGenerator	
+	f	[Lnet/minecraft/unmapped/C_6668603;	f_8552802	noiseLevels	
+	f	I	f_3662090	levels	
 	m	(Ljava/util/Random;I)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-	m	([DDDIIDDD)[D	m_0409990	m_0409990	
-		p	1		p_1	
-		p	2		p_2	
-		p	4		p_4	
-		p	6		p_6	
-		p	7		p_7	
-		p	8		p_8	
-		p	10		p_10	
-		p	12		p_12	
-	m	([DDDIIDDDD)[D	m_8911618	m_8911618	
-		p	1		p_1	
-		p	2		p_2	
-		p	4		p_4	
-		p	6		p_6	
-		p	7		p_7	
-		p	8		p_8	
-		p	10		p_10	
+		p	1		random	
+		p	2		levels	
+	m	([DDDIIDDD)[D	m_0409990	getRegion	
+		p	1		values	
+		p	2		x	
+		p	4		z	
+		p	6		sizeX	
+		p	7		sizeZ	
+		p	8		scaleX	
+		p	10		scaleZ	
+		p	12		scaleExponent	
+	m	([DDDIIDDDD)[D	m_8911618	getRegion	
+		p	1		values	
+		p	2		x	
+		p	4		z	
+		p	6		sizeX	
+		p	7		sizeZ	
+		p	8		scaleX	
+		p	10		scaleZ	
 		p	12		p_12	
 		p	14		p_14	
 c	net/minecraft/unmapped/C_6041373	net/minecraft/world/gen/feature/RareGlowstoneClusterFeature	
@@ -514,11 +514,11 @@ c	net/minecraft/unmapped/C_6062736	net/minecraft/block/PumpkinBlock
 		p	4		p_4	
 		p	5		p_5	
 c	net/minecraft/unmapped/C_6205974
-	m	([DIIIIDDD)[D	m_0480685	getNoise	
-		p	1		noise	
+	m	([DIIIIDDD)[D	m_0480685	getRegion	
+		p	1		values	
 		p	2		x	
-		p	3		y	
-		p	4		z	
+		p	3		z	
+		p	4		sizeX	
 		p	5		sizeZ	
 		p	6		saleX	
 		p	8		scaleZ	
@@ -540,37 +540,37 @@ c	net/minecraft/unmapped/C_6368853
 	m	()I	m_3977441		m_3977441
 c	net/minecraft/unmapped/C_6385858
 	f	Z	f_0354071	immuneToFire	
-	m	()V	m_1031485	setOnFireFromLava	
-	m	()Lnet/minecraft/unmapped/C_0336319;	m_9819699	getCameraRotation	
-	m	()V	m_2698485	m_2698485	
+	m	()V	m_1031485	takeLavaDamage	
+	m	()Lnet/minecraft/unmapped/C_0336319;	m_9819699	getLookVector	
+	m	()V	m_2698485	onPortalCollision	
 c	net/minecraft/unmapped/C_6391166
 	m	()I	m_3977441		m_3977441
-c	net/minecraft/unmapped/C_6668603	net/minecraft/unmapped/C_6668603	
+c	net/minecraft/unmapped/C_6668603	net/minecraft/world/gen/noise/SimplexNoise	
 	f	[[I	f_8224262	f_8224262	
-	f	[I	f_7243905	f_7243905	
-	f	D	f_7649317	f_7649317	
-	f	D	f_2647257	f_2647257	
-	f	D	f_4945832	f_4945832	
-	f	D	f_5088452	f_5088452	
-	f	D	f_4045714	f_4045714	
+	f	[I	f_7243905	permutations	
+	f	D	f_7649317	x	
+	f	D	f_2647257	y	
+	f	D	f_4945832	z	
+	f	D	f_5088452	F2	
+	f	D	f_4045714	G2	
 	m	()V	<init>	<init>	
 	m	(Ljava/util/Random;)V	<init>	<init>	
-		p	1		p_1	
-	m	(D)I	m_6635210	m_6635210	
-		p	0		p_0	
-	m	([IDD)D	m_1516795	m_1516795	
-		p	0		p_0	
-		p	1		p_1	
-		p	3		p_3	
-	m	([DDDIIDDD)V	m_7268602	m_7268602	
-		p	1		p_1	
-		p	2		p_2	
-		p	4		p_4	
-		p	6		p_6	
-		p	7		p_7	
-		p	8		p_8	
-		p	10		p_10	
-		p	12		p_12	
+		p	1		random	
+	m	(D)I	m_6635210	floor	
+		p	0		x	
+	m	([IDD)D	m_1516795	dot	
+		p	0		a	
+		p	1		b1	
+		p	3		b2	
+	m	([DDDIIDDD)V	m_7268602	getValue	
+		p	1		values	
+		p	2		x	
+		p	4		z	
+		p	6		sizeX	
+		p	7		sizeZ	
+		p	8		scaleX	
+		p	10		scaleZ	
+		p	12		scaleExponent	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_6755599
 	m	()V	m_2789942	populateBlockLight	
@@ -665,40 +665,40 @@ c	net/minecraft/unmapped/C_8794786	net/minecraft/item/FishingRodItem
 	m	(I)V	<init>	<init>	
 		p	1		p_1	
 c	net/minecraft/unmapped/C_9143244	net/minecraft/world/biome/source/BiomeSource	
-	f	Lnet/minecraft/unmapped/C_5587398;	f_3729960	f_3729960	
-	f	Lnet/minecraft/unmapped/C_5587398;	f_2940416	f_2940416	
-	f	Lnet/minecraft/unmapped/C_5587398;	f_7187911	f_7187911	
-	f	[D	f_1290595	f_1290595	
-	f	[D	f_1988858	f_1988858	
-	f	[D	f_4870957	f_4870957	
-	f	[Lnet/minecraft/unmapped/C_4636105;	f_8855749	f_8855749	
+	f	Lnet/minecraft/unmapped/C_5587398;	f_3729960	temperatureNoise	
+	f	Lnet/minecraft/unmapped/C_5587398;	f_2940416	downfallNoise	
+	f	Lnet/minecraft/unmapped/C_5587398;	f_7187911	biomeNoise	
+	f	[D	f_1290595	temperatures	
+	f	[D	f_1988858	downfall	
+	f	[D	f_4870957	noise	
+	f	[Lnet/minecraft/unmapped/C_4636105;	f_8855749	biomes	
 	f	D	f_2459126	f_2459126	
 	f	D	f_6643239	f_6643239	
 	m	()V	<init>	<init>	
 	m	(Lnet/minecraft/unmapped/C_3906126;)V	<init>	<init>	
 		p	1		world	
-	m	(Lnet/minecraft/unmapped/C_9386942;)Lnet/minecraft/unmapped/C_4636105;	m_5731652	m_5731652	
-		p	1		p_1	
+	m	(Lnet/minecraft/unmapped/C_9386942;)Lnet/minecraft/unmapped/C_4636105;	m_5731652	getBiome	
+		p	1		pos	
 	m	(II)Lnet/minecraft/unmapped/C_4636105;	m_4232370	getBiome	
 		p	1		x	
 		p	2		z	
-	m	(IIII)[Lnet/minecraft/unmapped/C_4636105;	m_2836963	m_2836963	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-	m	([DIIII)[D	m_2137468	m_2137468	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
+	m	(IIII)[Lnet/minecraft/unmapped/C_4636105;	m_2836963	getBiomes	
+		p	1		x	
+		p	2		z	
+		p	3		sizeX	
+		p	4		sizeZ	
+	m	([DIIII)[D	m_2137468	getTemperatures	
+		p	1		temperatures	
+		p	2		x	
+		p	3		z	
+		p	4		sizeX	
+		p	5		sizeZ	
 	m	([Lnet/minecraft/unmapped/C_4636105;IIII)[Lnet/minecraft/unmapped/C_4636105;	m_6329777	getBiomes	
 		p	1		biomes	
 		p	2		x	
 		p	3		z	
-		p	4		width	
-		p	5		length	
+		p	4		sizeX	
+		p	5		sizeZ	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_9219192	net/minecraft/world/dimension/Dimension	
 	f	Lnet/minecraft/unmapped/C_3906126;	f_1257834	world	
@@ -732,7 +732,7 @@ c	net/minecraft/unmapped/C_9377562
 		p	0		world	
 		p	3			p_3
 	m	(Lnet/minecraft/unmapped/C_3906126;)I	m_2453784	tick	
-		p	0		p_0	
+		p	0		world	
 	m	()V	<clinit>	<clinit>	
 	m	(ILjava/lang/Class;[Ljava/lang/Class;)V	<init>		<init>
 		p	1			p_1
@@ -744,7 +744,7 @@ c	net/minecraft/unmapped/C_9377562
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/unmapped/C_9466447	net/minecraft/entity/living/mob/MobCategory	
+c	net/minecraft/unmapped/C_9466447	net/minecraft/entity/mob/MobCategory	
 	f	Lnet/minecraft/unmapped/C_9466447;	f_3783795	MONSTER	
 	f	Lnet/minecraft/unmapped/C_9466447;	f_5657214	CREATURE	
 	f	Ljava/lang/Class;	f_1383371	type	
@@ -756,12 +756,12 @@ c	net/minecraft/unmapped/C_9466447	net/minecraft/entity/living/mob/MobCategory
 	m	(Ljava/lang/String;ILjava/lang/Class;I)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
+		p	3		type	
+		p	4		cap	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_9532309
 	m	()I	m_3977441		m_3977441
-c	net/minecraft/unmapped/C_9579094	net/minecraft/entity/living/mob/FlyingEntity	
+c	net/minecraft/unmapped/C_9579094	net/minecraft/entity/mob/FlyingMobEntity	
 	m	(Lnet/minecraft/unmapped/C_3906126;)V	<init>	<init>	
 		p	1		p_1	
 	m	(F)V	m_8092679	m_8092679	
@@ -796,16 +796,16 @@ c	net/minecraft/unmapped/C_9614477
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/unmapped/C_9746149	net/minecraft/entity/projectile/ProjectileEntity	
+c	net/minecraft/unmapped/C_9746149	net/minecraft/entity/projectile/FireballEntity	
 	f	I	f_5261890	blockX	
 	f	I	f_8683119	blockY	
 	f	I	f_9025604	blockZ	
-	f	I	f_0779124	inBlock	
+	f	I	f_0779124	block	
 	f	Z	f_7939323	inGround	
-	f	I	f_3569898	f_3569898	
+	f	I	f_3569898	shake	
 	f	Lnet/minecraft/unmapped/C_1013763;	f_1876924	shooter	
-	f	I	f_0962297	ticksInBlock	
-	f	I	f_5534530	ticksInAir	
+	f	I	f_0962297	inBlockTicks	
+	f	I	f_5534530	inAirTicks	
 	f	D	f_0208208	accelerationX	
 	f	D	f_9351519	accelerationY	
 	f	D	f_0841978	accelerationZ	

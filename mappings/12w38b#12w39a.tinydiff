@@ -68,7 +68,7 @@ c	net/minecraft/unmapped/C_1793890
 		p	5			p_5
 		p	6			p_6
 c	net/minecraft/unmapped/C_3134254
-	m	(IIIZ)I	m_4682712	getLightLevel	
+	m	(IIIZ)I	m_4682712	getRawBrightness	
 		p	1		x	
 		p	2		y	
 		p	3		z	
@@ -78,19 +78,20 @@ c	net/minecraft/unmapped/C_3134254
 		p	2		x	
 		p	3		y	
 		p	4		z	
+	m	(Lnet/minecraft/unmapped/C_5863046;III)I	m_9271475	getBrightness	getLight
 c	net/minecraft/unmapped/C_3635204
 	f	[Z	f_9243973	USES_NEIGHBOR_LIGHT	
-	m	(III)Z	m_4844693		m_4844693
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(IIIIIZ)I	m_8537142		m_8537142
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
+	m	(III)Z	m_4844693		isDirectionallyOpaque
+		p	1			x
+		p	2			y
+		p	3			z
+	m	(IIIIIZ)I	m_8537142		getOpacity
+		p	1			x
+		p	2			y
+		p	3			z
+		p	4			face
+		p	5			metadata
+		p	6			lightSourcesNotOpaque
 	m	()Z	m_8387059		acceptsImmediateTicks
 		c		Returns whether this block accepts ticks when the world is executing them\nimmediately (i.e. without scheduling them first).
 c	net/minecraft/unmapped/C_3635204$3937074
@@ -98,7 +99,7 @@ c	net/minecraft/unmapped/C_3635204$3937074
 c	net/minecraft/unmapped/C_3635204$C_5846486
 	m	()Ljava/lang/String;	m_9659622		getSound
 c	net/minecraft/unmapped/C_3906126
-	f	Ljava/util/Set;	f_5782324		f_5782324
+	f	Ljava/util/Set;	f_5782324		scheduledLightUpdates
 	m	(III)I	m_9581065	getOpacity	
 		p	1		x	
 		p	2		y	
@@ -108,82 +109,82 @@ c	net/minecraft/unmapped/C_3906126
 		p	2		y	
 		p	3		z	
 		p	4		useNeighborLight	
-	m	(II)I	m_3971277	m_3971277	
-		p	1		p_1	
-		p	2		p_2	
+	m	(II)I	m_3971277	getLowestHeight	
+		p	1		x	
+		p	2		z	
 	m	(Lnet/minecraft/unmapped/C_5863046;III)I	m_0927403	getBrightness	
 		p	1		type	
 		p	2		x	
 		p	3		y	
 		p	4		z	
-	m	(IIIIII)I	m_0620850	updateSkyLight	
+	m	(IIIIII)I	m_0620850	findSkyLight	
 		p	1		light	
 		p	2		x	
 		p	3		y	
 		p	4		z	
 		p	5		block	
 		p	6		opacity	
-	m	(IIIIII)I	m_5192586	updateBlockLight	
+	m	(IIIIII)I	m_5192586	findBlockLight	
 		p	1		light	
 		p	2		x	
 		p	3		y	
 		p	4		z	
 		p	5		block	
 		p	6		opacity	
-	m	(Lnet/minecraft/unmapped/C_5863046;III)V	m_3108055	checkLight	
+	m	(Lnet/minecraft/unmapped/C_5863046;III)V	m_3108055	updateLight	
 		p	1		type	
 		p	2		x	
 		p	3		y	
 		p	4		z	
-	m	(III)Lnet/minecraft/unmapped/C_3635204;	m_3330537		m_3330537
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(III)V	m_3846894		m_3846894
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(IIILnet/minecraft/unmapped/C_5863046;)I	m_1614812		getRawBrightness
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_5863046;III)V	m_2846522		getRawBrightness
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_5863046;IIIZ)V	m_3108055		checkLight
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	()V	m_6343929		m_6343929
-	m	(IIIIZ)I	m_9812360		m_9812360
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	(IIIIZLnet/minecraft/unmapped/C_3635204;I)I	m_7653643		m_7653643
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-	m	(Lnet/minecraft/unmapped/C_3635204;III)Z	m_9344098		m_9344098
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_3635204;III)I	m_3433873		m_3433873
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(III)Lnet/minecraft/unmapped/C_3635204;	m_3330537		getBlockForLighting
+		p	1			x
+		p	2			y
+		p	3			z
+	m	(III)V	m_3846894		checkLightAround
+		p	1			x
+		p	2			y
+		p	3			z
+	m	(IIILnet/minecraft/unmapped/C_5863046;)I	m_1614812		findLight
+		p	1			x
+		p	2			y
+		p	3			z
+		p	4			type
+	m	(Lnet/minecraft/unmapped/C_5863046;III)V	m_2846522		updateLight
+		p	1			type
+		p	2			x
+		p	3			y
+		p	4			z
+	m	(Lnet/minecraft/unmapped/C_5863046;IIIZ)V	m_3108055		updateLight
+		p	1			type
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			force
+	m	()V	m_6343929		tickLighting
+	m	(IIIIZ)I	m_9812360		getOpacity
+		p	1			x
+		p	2			y
+		p	3			z
+		p	4			face
+		p	5			lightSourcesNotOpaque
+	m	(IIIIZLnet/minecraft/unmapped/C_3635204;I)I	m_7653643		getOpacity
+		p	1			x
+		p	2			y
+		p	3			z
+		p	4			face
+		p	5			lightSourcesNotOpaque
+		p	6			block
+		p	7			metadata
+	m	(Lnet/minecraft/unmapped/C_3635204;III)Z	m_9344098		isDirectionallyOpaque
+		p	1			block
+		p	2			x
+		p	3			y
+		p	4			z
+	m	(Lnet/minecraft/unmapped/C_3635204;III)I	m_3433873		getMetadataForLighting
+		p	1			block
+		p	2			x
+		p	3			y
+		p	4			z
 c	net/minecraft/unmapped/C_4806482
 	m	(IIIIIZ)I	m_8537142		m_8537142
 		p	1			p_1
@@ -217,12 +218,12 @@ c	net/minecraft/unmapped/C_6108840
 	f	I	f_9398895		maxNearbyEntities
 	f	I	f_5837528		requiredPlayerRange
 c	net/minecraft/unmapped/C_6755599
-	f	Z	f_6021987	recheckGap	
-	m	(II)V	m_5803793	queueLightUpdate	
+	f	Z	f_6021987	recheckGaps	
+	m	(II)V	m_5803793	recheckGap	
 		p	1		localX	
 		p	2		localZ	
-	m	()V	m_6558504	recheckGaps	
-	m	(IIII)V	m_4504933	checkSkylight	
+	m	()V	m_6558504	lightGaps	
+	m	(IIII)V	m_4504933	updateSkyLight	
 		p	1		x	
 		p	2		z	
 		p	3		minY	
@@ -232,22 +233,23 @@ c	net/minecraft/unmapped/C_6755599
 		p	2		y	
 		p	3		localZ	
 	m	()V	m_6733446	tick	
-	m	(III)Lnet/minecraft/unmapped/C_3635204;	m_9013669		m_9013669
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_3635204;III)I	m_4097324		m_4097324
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(IIIIZ)I	m_5163976		m_5163976
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	()V	m_3454828		m_3454828
+	m	(III)Lnet/minecraft/unmapped/C_3635204;	m_9013669		getBlockForLightingAt
+		p	1			localX
+		p	2			y
+		p	3			localZ
+	m	(Lnet/minecraft/unmapped/C_3635204;III)I	m_4097324		getBlockMetadataForLightingAt
+		p	1			block
+		p	2			localX
+		p	3			y
+		p	4			localZ
+	m	(IIIIZ)I	m_5163976		getOpacityAt
+		p	1			localX
+		p	2			y
+		p	3			localZ
+		p	4			face
+		p	5			lightSourcesNotOpaque
+	m	()V	m_3454828		updateSkyLight
+	m	(III)V	m_2063645	lightGap	checkLightAround
 c	net/minecraft/unmapped/C_6769461
 	m	(IIIIIZ)I	m_8537142		m_8537142
 		p	1			p_1

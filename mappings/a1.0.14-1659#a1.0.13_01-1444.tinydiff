@@ -7,8 +7,8 @@ c	net/minecraft/unmapped/C_0121370
 	m	(I)V	<init>		<init>
 		p	1			p_1
 c	net/minecraft/unmapped/C_1013763
-	m	()I	m_8620403	getSoundInterval	
-		c	How many ticks (at least) will the entity wait between producing sounds	
+	m	()I	m_8620403	getAmbientSoundInterval	
+		c	The number of ticks until this mob makes ambient sounds.	
 c	net/minecraft/unmapped/C_1044273
 	m	(Ljava/lang/String;III)V	m_2838989	m_2838989	
 		p	1		p_1	
@@ -45,14 +45,14 @@ c	net/minecraft/unmapped/C_1851525	net/minecraft/block/JukeboxBlock
 		p	4		p_4	
 		p	5		p_5	
 		p	6		p_6	
-c	net/minecraft/unmapped/C_2426381	net/minecraft/entity/living/mob/passive/animal/ChickenEntity	
-	f	Z	f_3610051	f_3610051	
+c	net/minecraft/unmapped/C_2426381	net/minecraft/entity/mob/animal/ChickenEntity	
+	f	Z	f_3610051	sheared	
 	f	F	f_4961533	flapProgress	
-	f	F	f_3179847	maxWingDeviation	
-	f	F	f_2689643	prevMaxWingDeviation	
-	f	F	f_1515647	prevFlapProgress	
-	f	F	f_5318520	flapSpeed	
-	f	I	f_4999110	eggLayTime	
+	f	F	f_3179847	flapSpeed	
+	f	F	f_2689643	lastFlapSpeed	
+	f	F	f_1515647	lastFlapProgress	
+	f	F	f_5318520	flapping	
+	f	I	f_4999110	layEggCooldown	
 	m	(Lnet/minecraft/unmapped/C_3906126;)V	<init>	<init>	
 		p	1		world	
 	m	()V	m_5818797	m_5818797	
@@ -65,7 +65,7 @@ c	net/minecraft/unmapped/C_2426381	net/minecraft/entity/living/mob/passive/anima
 	m	()Ljava/lang/String;	m_6640029	m_6640029	
 	m	()I	m_4601038	m_4601038	
 c	net/minecraft/unmapped/C_2782822
-	m	(Ljava/lang/String;III)V	m_2838989	onRecordRemoved	
+	m	(Ljava/lang/String;III)V	m_2838989	playRecordMusic	
 		p	1		record	
 		p	2		x	
 		p	3		y	
@@ -119,7 +119,7 @@ c	net/minecraft/unmapped/C_3635204
 	f	Lnet/minecraft/unmapped/C_3635204;	f_5190197	JUKEBOX	
 c	net/minecraft/unmapped/C_3699792
 	f	Ljava/lang/String;	f_1688945	overlayMessage	
-	f	I	f_7515158	overlayMessageTimer	
+	f	I	f_7515158	overlayMessageCooldown	
 	m	(Ljava/lang/String;)V	m_9430266	setRecordPlayingOverlay	
 		p	1		playerName	
 c	net/minecraft/unmapped/C_3874327
@@ -130,8 +130,8 @@ c	net/minecraft/unmapped/C_3874327
 		p	4		p_4	
 		p	5		p_5	
 c	net/minecraft/unmapped/C_3906126
-	m	(Ljava/lang/String;III)V	m_9197713	onRecordRemoved	
-		p	1		name	
+	m	(Ljava/lang/String;III)V	m_9197713	playRecordMusic	
+		p	1		record	
 		p	2		x	
 		p	3		y	
 		p	4		z	
@@ -167,9 +167,9 @@ c	net/minecraft/unmapped/C_4560329
 	f	Z	f_9349007	trimTrailingDigits	
 	m	()Lnet/minecraft/unmapped/C_0488196;	m_1653335	getRandom	
 c	net/minecraft/unmapped/C_6211737
-	f	Lnet/minecraft/unmapped/C_0289174;	f_7245088	f_7245088	
-	f	Lnet/minecraft/unmapped/C_0289174;	f_6866443	f_6866443	
-	f	Lnet/minecraft/unmapped/C_0289174;	f_5826972	f_5826972	
+	f	Lnet/minecraft/unmapped/C_0289174;	f_7245088	udder	
+	f	Lnet/minecraft/unmapped/C_0289174;	f_6866443	leftHorn	
+	f	Lnet/minecraft/unmapped/C_0289174;	f_5826972	rightHorn	
 	m	(FFFFFF)V	m_2324866	m_2324866	
 		p	1		p_1	
 		p	2		p_2	
@@ -185,10 +185,10 @@ c	net/minecraft/unmapped/C_6211737
 		p	5		p_5	
 		p	6		p_6	
 c	net/minecraft/unmapped/C_6240881	net/minecraft/item/MusicDiscItem	
-	f	Ljava/lang/String;	f_6711937	recordType	
+	f	Ljava/lang/String;	f_6711937	record	
 	m	(ILjava/lang/String;)V	<init>	<init>	
 		p	1		id	
-		p	2		p_2	
+		p	2		record	
 	m	(Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_5009044;Lnet/minecraft/unmapped/C_3906126;IIII)Z	m_9844872	m_9844872	
 		p	1		p_1	
 		p	2		p_2	
@@ -206,11 +206,11 @@ c	net/minecraft/unmapped/C_7256819
 	f	D	f_6857484	pushX	
 	f	D	f_2130559	pushZ	
 	m	(Lnet/minecraft/unmapped/C_3906126;DDDI)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	4		p_4	
-		p	6		p_6	
-		p	8		p_8	
+		p	1		world	
+		p	2		x	
+		p	4		y	
+		p	6		z	
+		p	8		type	
 	m	(Lnet/minecraft/unmapped/C_3906126;DDD)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -248,6 +248,6 @@ c	net/minecraft/unmapped/C_8078814	net/minecraft/client/render/entity/ChickenRen
 		p	8		p_8	
 		p	9		p_9	
 c	net/minecraft/unmapped/C_8191584
-	m	(Lnet/minecraft/unmapped/C_1013763;F)F	m_2840569	getEntityAge	
+	m	(Lnet/minecraft/unmapped/C_1013763;F)F	m_2840569	getBob	
 		p	1		entity	
 		p	2		tickDelta	

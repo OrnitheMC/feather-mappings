@@ -2,12 +2,12 @@ tiny	2	0
 c	net/minecraft/client/Minecraft
 	m	()Ljava/lang/String;	m_4199269		getChunkSourceDebugInfo
 c	net/minecraft/unmapped/C_0070166
-	f	I	f_9595077		spawnChunkX
-	f	I	f_8347114		spawnChunkZ
-	m	(II)V	m_7165193		setSpawnPoint
+	f	I	f_9595077		centerChunkX
+	f	I	f_8347114		centerChunkZ
+	m	(II)V	m_7165193		setCenter
 		p	1			chunkX
 		p	2			chunkZ
-	m	(II)Z	m_9180346		isSpawnChunk
+	m	(II)Z	m_9180346		isNearCenter
 		p	1			chunkX
 		p	2			chunkZ
 	m	()Ljava/lang/String;	m_9569946		m_9569946
@@ -49,8 +49,8 @@ c	net/minecraft/unmapped/C_0974371
 c	net/minecraft/unmapped/C_1013763
 	f	F	f_3976864	f_3976864	
 	m	()V	m_5855336		m_5855336
-	m	()V	m_5891931		dropLoot
-	m	()Z	m_1963248		isWaterCreature
+	m	()V	m_5891931		dropItems
+	m	()Z	m_1963248		isWaterMob
 c	net/minecraft/unmapped/C_1044273
 	f	J	f_9996554		f_9996554
 c	net/minecraft/unmapped/C_1196485
@@ -96,9 +96,10 @@ c	net/minecraft/unmapped/C_1826831
 		p	1		p_1	
 	m	()V	m_6773208	m_6773208	
 	m	()V	m_5855336		m_5855336
-	m	()I	m_8415008		getFuseSpeed
-	m	(I)V	m_9521487		setFuseSpeed
-		p	1			fuseSpeed
+	m	()I	m_8415008		getFuseDirection
+		c		Returns the direction of fuse movement, -1 for decreasing, 1 for increasing.
+	m	(I)V	m_9521487		setFuseDirection
+		p	1			dir
 c	net/minecraft/unmapped/C_1893966
 	m	(Lnet/minecraft/unmapped/C_2339776;I)Z	m_5415337	m_5415337	
 		p	1		p_1	
@@ -115,12 +116,12 @@ c	net/minecraft/unmapped/C_1893966
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/unmapped/C_2154975
-	m	([I)Lnet/minecraft/unmapped/C_2750078;	m_5439592	applyRecipe	
+	m	([I)Lnet/minecraft/unmapped/C_2750078;	m_5439592	getResult	
 		p	1		inventory	
 	m	(Lnet/minecraft/unmapped/C_2750078;[Ljava/lang/Object;)V	m_2889327		registerShapeless
 		p	1			result
 		p	2			args
-	m	(Lnet/minecraft/unmapped/C_2178068;)Lnet/minecraft/unmapped/C_2750078;	m_5439592		applyRecipe
+	m	(Lnet/minecraft/unmapped/C_2178068;)Lnet/minecraft/unmapped/C_2750078;	m_5439592		getResult
 		p	1			inventory
 c	net/minecraft/unmapped/C_2154975$7900111
 	m	(Lnet/minecraft/unmapped/C_7213435;Lnet/minecraft/unmapped/C_7213435;)I	m_4652900	m_4652900	
@@ -143,7 +144,7 @@ c	net/minecraft/unmapped/C_2339776
 	m	()Z	m_1721323		isSheared
 	m	(Z)V	m_9031447		setSheared
 		p	1			sheared
-	m	(Ljava/util/Random;)I	m_9834449		generateBasicRandomColor
+	m	(Ljava/util/Random;)I	m_9834449		getColor
 		p	0			random
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_2584919
@@ -220,11 +221,11 @@ c	net/minecraft/unmapped/C_3454805
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/unmapped/C_3466301
-	m	(Lnet/minecraft/unmapped/C_3635204;)V	m_6974549	render	
+	m	(Lnet/minecraft/unmapped/C_3635204;)V	m_6974549	tesselateItem	
 		p	1		block	
-	m	(Lnet/minecraft/unmapped/C_3635204;I)V	m_6974549		render
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/unmapped/C_3635204;I)V	m_6974549		tesselateItem
+		p	1			block
+		p	2			metadata
 c	net/minecraft/unmapped/C_3604011
 	m	(Lnet/minecraft/unmapped/C_5009044;I)Z	m_4566032	m_4566032	
 		p	1		p_1	
@@ -282,16 +283,16 @@ c	net/minecraft/unmapped/C_3906126
 		p	5			data
 c	net/minecraft/unmapped/C_3911481
 	m	(Lnet/minecraft/unmapped/C_3906126;DDD)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	4		p_4	
-		p	6		p_6	
+		p	1		world	
+		p	2		x	
+		p	4		y	
+		p	6		z	
 	m	(Lnet/minecraft/unmapped/C_3906126;DDDF)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	4		p_4	
-		p	6		p_6	
-		p	8		p_8	
+		p	1		world	
+		p	2		x	
+		p	4		y	
+		p	6		z	
+		p	8		scale	
 	m	(Lnet/minecraft/unmapped/C_3906126;DDDDDD)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -301,14 +302,14 @@ c	net/minecraft/unmapped/C_3911481
 		p	10			p_10
 		p	12			p_12
 	m	(Lnet/minecraft/unmapped/C_3906126;DDDDDDF)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
-		p	6			p_6
-		p	8			p_8
-		p	10			p_10
-		p	12			p_12
-		p	14			p_14
+		p	1			world
+		p	2			x
+		p	4			y
+		p	6			z
+		p	8			velocityX
+		p	10			velocityY
+		p	12			velocityZ
+		p	14			scale
 c	net/minecraft/unmapped/C_4030632
 	f	Lnet/minecraft/unmapped/C_4030632;	f_8260660		DYE
 	f	Lnet/minecraft/unmapped/C_4030632;	f_7522033		BONE
@@ -383,7 +384,7 @@ c	net/minecraft/unmapped/C_4443804
 	m	(Lnet/minecraft/unmapped/C_4288894;)V	m_4966276		handleBlockEvent
 		p	1			packet
 c	net/minecraft/unmapped/C_4561926
-	f	I	f_0474217		itemMetadata
+	f	I	f_0474217		metadata
 c	net/minecraft/unmapped/C_4636105
 	f	[Ljava/lang/Class;	f_4244926		waterEntries
 	m	(Ljava/util/Random;)Lnet/minecraft/unmapped/C_6618366;	m_0608438		getRandomTree
@@ -467,10 +468,10 @@ c	net/minecraft/unmapped/C_6385858
 	m	(IIF)Lnet/minecraft/unmapped/C_3050136;	m_4336212		dropItem
 		p	1			id
 		p	2			amount
-		p	3			yOffset
+		p	3			offsetY
 	m	(Lnet/minecraft/unmapped/C_2750078;F)Lnet/minecraft/unmapped/C_3050136;	m_4351561		dropItem
 		p	1			stack
-		p	2			yOffset
+		p	2			offsetY
 	m	(III)V	m_0129682		setEquipmentStack
 		p	1			armorSlot
 		p	2			itemId
@@ -541,21 +542,21 @@ c	net/minecraft/unmapped/C_7557064
 	m	()V	m_5855336		m_5855336
 c	net/minecraft/unmapped/C_8191584
 	m	(Lnet/minecraft/unmapped/C_1013763;I)Z	m_5098475	bindTexture	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		mob	
+		p	2		layer	
 	m	(Lnet/minecraft/unmapped/C_1013763;FFF)V	m_1739791		applyRotation
 		p	1			entity
-		p	2			yaw
+		p	2			bob
 		p	3			bodyYaw
 		p	4			tickDelta
 	m	(Lnet/minecraft/unmapped/C_1013763;IF)Z	m_5098475		bindTexture
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			mob
+		p	2			layer
+		p	3			tickDelta
 c	net/minecraft/unmapped/C_8554894
 	f	Lnet/minecraft/unmapped/C_8554894;	f_8067421		CAKE
 c	net/minecraft/unmapped/C_8565077
-	m	(Lnet/minecraft/unmapped/C_3906126;III)V	m_6223441		grow
+	m	(Lnet/minecraft/unmapped/C_3906126;III)V	m_6223441		growFully
 		p	1			world
 		p	2			x
 		p	3			y
@@ -614,7 +615,7 @@ c	net/minecraft/unmapped/C_9011699
 		p	2			material
 c	net/minecraft/unmapped/C_9377562
 	m	(Lnet/minecraft/unmapped/C_3906126;)I	m_2453784	tick	
-		p	0		p_0	
+		p	0		world	
 	m	(Lnet/minecraft/unmapped/C_3906126;ZZ)I	m_2453784		tick
 		p	0			world
 		p	1			spawnAnimals
@@ -638,15 +639,15 @@ c	net/minecraft/unmapped/C_9466447
 	m	(Ljava/lang/String;ILjava/lang/Class;I)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
+		p	3		type	
+		p	4		cap	
 	m	(Ljava/lang/String;ILjava/lang/Class;ILnet/minecraft/unmapped/C_8554894;Z)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
+		p	3			type
+		p	4			cap
+		p	5			spawnableMaterial
+		p	6			peaceful
 	m	()Ljava/lang/Class;	m_6944904		getType
 	m	()I	m_7290234		getCap
 	m	()Lnet/minecraft/unmapped/C_8554894;	m_4853882		getSpawnableMaterial
@@ -700,9 +701,9 @@ c	net/minecraft/unmapped/C_0872029		net/minecraft/block/ColoredBlock
 		p	2			p_2
 	m	(I)I	m_3974337		m_3974337
 		p	1			p_1
-	m	(I)I	m_9533312		getColor
+	m	(I)I	m_9533312		getBlockMetadataForItemMetadata
 		p	0			id
-	m	(I)I	m_9871292		getColorId
+	m	(I)I	m_9871292		getItemMetadataForBlockMetadata
 		p	0			id
 c	net/minecraft/unmapped/C_1139046		net/minecraft/block/NoteBlock
 	m	(I)V	<init>		<init>
@@ -761,7 +762,7 @@ c	net/minecraft/unmapped/C_1331878		net/minecraft/block/SandstoneBlock
 	m	(I)I	m_9597800		m_9597800
 		p	1			p_1
 c	net/minecraft/unmapped/C_1461754		net/minecraft/client/entity/particle/NoteParticle
-	f	F	f_4770129		baseScale
+	f	F	f_4770129		initialSize
 	m	(Lnet/minecraft/unmapped/C_3906126;DDDDDD)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -798,12 +799,12 @@ c	net/minecraft/unmapped/C_1522747		net/minecraft/crafting/recipe/ShapelessRecip
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_2178068;)Lnet/minecraft/unmapped/C_2750078;	m_6879194		m_6879194
 		p	1			p_1
-	m	()I	m_1008057		m_1008057
+	m	()I	m_1008057		size
 c	net/minecraft/unmapped/C_1825698		net/minecraft/world/biome/ForestBiome
 	m	()V	<init>		<init>
 	m	(Ljava/util/Random;)Lnet/minecraft/unmapped/C_6618366;	m_0608438		m_0608438
 		p	1			p_1
-c	net/minecraft/unmapped/C_1877543		net/minecraft/entity/living/mob/water/WaterMobEntity
+c	net/minecraft/unmapped/C_1877543		net/minecraft/entity/mob/water/WaterMobEntity
 	m	(Lnet/minecraft/unmapped/C_3906126;)V	<init>		<init>
 		p	1			p_1
 	m	()Z	m_1963248		m_1963248
@@ -936,7 +937,7 @@ c	net/minecraft/unmapped/C_3140924		net/minecraft/block/CakeBlock
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	(Lnet/minecraft/unmapped/C_3906126;IIILnet/minecraft/unmapped/C_5009044;)V	m_3425269		tryEatCake
+	m	(Lnet/minecraft/unmapped/C_3906126;IIILnet/minecraft/unmapped/C_5009044;)V	m_3425269		eat
 		p	1			world
 		p	2			x
 		p	3			y
@@ -1071,7 +1072,7 @@ c	net/minecraft/unmapped/C_5067501		net/minecraft/entity/data/DataTracker
 	f	Ljava/util/Map;	f_0885459		entries
 	f	Z	f_8601596		dirty
 	m	()V	<init>		<init>
-	m	(ILjava/lang/Object;)V	m_8761808		put
+	m	(ILjava/lang/Object;)V	m_8761808		register
 		p	1			id
 		p	2			value
 	m	(I)B	m_0742285		getByte
@@ -1120,18 +1121,18 @@ c	net/minecraft/unmapped/C_5287522		net/minecraft/item/LogItem
 		p	1			p_1
 	m	(I)I	m_4638052		m_4638052
 		p	1			p_1
-c	net/minecraft/unmapped/C_5475923		net/minecraft/entity/living/mob/water/SquidEntity
-	f	F	f_0820024		squidPitch
-	f	F	f_6480491		lastSquidPitch
-	f	F	f_3940086		squidYaw
-	f	F	f_0733684		lastSquisYaw
-	f	F	f_0511165		squidRotation
-	f	F	f_7214595		lastSquidRotation
+c	net/minecraft/unmapped/C_5475923		net/minecraft/entity/mob/water/SquidEntity
+	f	F	f_0820024		bodyPitch
+	f	F	f_6480491		lastBodyPitch
+	f	F	f_3940086		bodyRoll
+	f	F	f_0733684		lastBodyRoll
+	f	F	f_0511165		tentacleMovement
+	f	F	f_7214595		lastTentableMovement
 	f	F	f_4428222		tentacleRotation
 	f	F	f_8948535		lastTentacleRotation
-	f	F	f_8220613		constantVelocityRate
-	f	F	f_9107999		movementVelocity
-	f	F	f_2594883		rotationVelocity
+	f	F	f_8220613		speed
+	f	F	f_9107999		tentableSpeed
+	f	F	f_2594883		rotationSpeed
 	f	F	f_6105442		targetX
 	f	F	f_7423670		targetY
 	f	F	f_4149860		targetZ
@@ -1174,8 +1175,7 @@ c	net/minecraft/unmapped/C_7177762		net/minecraft/crafting/recipe/Recipe
 		p	1			inventory
 	m	(Lnet/minecraft/unmapped/C_2178068;)Lnet/minecraft/unmapped/C_2750078;	m_6879194		getResult
 		p	1			inventory
-	m	()I	m_1008057		getPriority
-		c		@return the priority used to sort recipes in the stats menu
+	m	()I	m_1008057		size
 c	net/minecraft/unmapped/C_7205496		net/minecraft/inventory/menu/DispenserMenu
 	f	Lnet/minecraft/unmapped/C_0356559;	f_4668383		dispenser
 	m	(Lnet/minecraft/unmapped/C_4390289;Lnet/minecraft/unmapped/C_0356559;)V	<init>		<init>
@@ -1218,7 +1218,7 @@ c	net/minecraft/unmapped/C_8447387		net/minecraft/crafting/SmeltingManager
 c	net/minecraft/unmapped/C_8670302		net/minecraft/network/packet/PlayerMovementActionPacket
 	f	I	f_1886004		id
 	f	I	f_5611275		action
-		c		The type of interaction. This can be one of the following:\n<br> 0: start sneaking\n<br> 1: stop sneaking\n<br> 2: stop sleeping\n<br> 3: start sprinting\n<br> 4: stop sprinting\n<br> 5: riding jump\n<br> 6: open horse inventory
+		c		The type of interaction. This can be one of the following:\n<br> 0: start sneaking\n<br> 1: stop sneaking
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_6385858;I)V	<init>		<init>
 		p	1			entity
@@ -1352,7 +1352,7 @@ c	net/minecraft/unmapped/C_9462692		net/minecraft/world/chunk/EmptyChunk
 	m	()Z	m_8915366		m_8915366
 c	net/minecraft/unmapped/C_9744213		net/minecraft/client/render/model/entity/SquidModel
 	f	Lnet/minecraft/unmapped/C_0289174;	f_3396695		body
-	f	[Lnet/minecraft/unmapped/C_0289174;	f_1044228		legs
+	f	[Lnet/minecraft/unmapped/C_0289174;	f_1044228		tentacles
 	m	()V	<init>		<init>
 	m	(FFFFFF)V	m_5805395		m_5805395
 		p	1			p_1

@@ -1,12 +1,12 @@
 tiny	2	0
 c	net/minecraft/unmapped/C_0043270
 	m	(IIIII)V	m_0538379	fill	
-		p	1		y1	
-		p	2		x2	
-		p	3		y2	
-		p	4		color	
-		p	5		p_5	
-c	net/minecraft/unmapped/C_0990852	net/minecraft/network/packet/MenuDataPacket	
+		p	1		x1	
+		p	2		y1	
+		p	3		x2	
+		p	4		y2	
+		p	5		color	
+c	net/minecraft/unmapped/C_0990852	net/minecraft/network/packet/InventoryMenuDataPacket	
 	f	I	f_5783324	menuId	
 	f	I	f_3235295	dataId	
 	f	I	f_9750040	value	
@@ -29,7 +29,7 @@ c	net/minecraft/unmapped/C_3699792
 		p	1		text	
 c	net/minecraft/unmapped/C_3906126
 	f	Z	f_5996800	isSearchingSpawnPoint	
-	m	(Lnet/minecraft/unmapped/C_5863046;IIIIII)V	m_0387766	checkLight	
+	m	(Lnet/minecraft/unmapped/C_5863046;IIIIII)V	m_0387766	updateLight	
 		p	1		type	
 		p	2		minX	
 		p	3		minY	
@@ -37,7 +37,7 @@ c	net/minecraft/unmapped/C_3906126
 		p	5		maxX	
 		p	6		maxY	
 		p	7		maxZ	
-	m	(Lnet/minecraft/unmapped/C_5863046;IIIIIIZ)V	m_3601007	checkLight	
+	m	(Lnet/minecraft/unmapped/C_5863046;IIIIIIZ)V	m_3601007	updateLight	
 		p	1		type	
 		p	2		minX	
 		p	3		minY	
@@ -46,22 +46,22 @@ c	net/minecraft/unmapped/C_3906126
 		p	6		maxY	
 		p	7		maxZ	
 		p	8		p_8	
-	m	(Lnet/minecraft/unmapped/C_5863046;IIIIII)V	m_3601007		checkLight
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-c	net/minecraft/unmapped/C_4331994	net/minecraft/client/gui/screen/DirectConnectScreen	
+	m	(Lnet/minecraft/unmapped/C_5863046;IIIIII)V	m_3601007		updateLight
+		p	1			type
+		p	2			minX
+		p	3			minY
+		p	4			minZ
+		p	5			maxX
+		p	6			maxY
+		p	7			maxZ
+c	net/minecraft/unmapped/C_4331994	net/minecraft/client/gui/screen/JoinMultiplayerScreen	
 	f	Lnet/minecraft/unmapped/C_0786431;	f_8377260	parent	
-	f	I	f_5282305	f_5282305	
-	f	Ljava/lang/String;	f_4784337	f_4784337	
+	f	I	f_5282305	ticks	
+	f	Ljava/lang/String;	f_4784337	address	
 	f	Ljava/lang/String;	f_0577866	f_0577866	
 	f	[B	f_8692384	f_8692384	
 	m	(Lnet/minecraft/unmapped/C_0786431;)V	<init>	<init>	
-		p	1		p_1	
+		p	1		parent	
 	m	()V	m_7135145	m_7135145	
 	m	()V	m_2060594	m_2060594	
 	m	(Lnet/minecraft/unmapped/C_2621421;)V	m_9403981	m_9403981	
@@ -95,7 +95,7 @@ c	net/minecraft/unmapped/C_4443804
 		p	1		packet	
 	m	(Lnet/minecraft/unmapped/C_9572077;)V	m_4655710	handleChatMessage	
 		p	1		packet	
-	m	(Lnet/minecraft/unmapped/C_0990852;)V	m_4099261	handleMenuData	
+	m	(Lnet/minecraft/unmapped/C_0990852;)V	m_4099261	handleInventoryMenuData	
 		p	1		packet	
 c	net/minecraft/unmapped/C_4766485
 	f	Ljava/lang/String;	f_8793838		f_8793838
@@ -108,16 +108,16 @@ c	net/minecraft/unmapped/C_4939758
 		p	1		p_1	
 c	net/minecraft/unmapped/C_5009044
 	m	()V	m_6773208	m_6773208	
-	m	(Lnet/minecraft/unmapped/C_3050136;)V	m_8347472	spawnDroppedItem	
+	m	(Lnet/minecraft/unmapped/C_3050136;)V	m_8347472	spawnItem	
 		p	1		item	
-	m	(Lnet/minecraft/unmapped/C_6385858;I)V	m_8950914	sendPickup	
+	m	(Lnet/minecraft/unmapped/C_6385858;I)V	m_8950914	pickUp	
 		p	1		item	
 		p	2		count	
-	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_8950914		sendPickup
+	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_8950914		pickUp
 		p	1			entity
 c	net/minecraft/unmapped/C_5324911	net/minecraft/client/gui/screen/ChatScreen	
 	f	Ljava/lang/String;	f_9286714	lastChatMessage	
-	f	I	f_1449132	messageHistorySize	
+	f	I	f_1449132	ticks	
 	m	()V	<init>	<init>	
 	m	()V	m_2060594	m_2060594	
 	m	()V	m_5056964	m_5056964	
@@ -142,7 +142,7 @@ c	net/minecraft/unmapped/C_5367636
 	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_8950914		m_8950914
 		p	1			p_1
 c	net/minecraft/unmapped/C_6755599
-	m	()V	m_6227764	populateHeightmap	
+	m	()V	m_6227764	populateHeightmapOnly	
 c	net/minecraft/unmapped/C_7688744
 	f	Lnet/minecraft/unmapped/C_5027199;	f_0128707		saveLocationKey
 	f	Lnet/minecraft/unmapped/C_5027199;	f_8974225		loadLocationKey

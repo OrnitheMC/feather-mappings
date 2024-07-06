@@ -1217,10 +1217,10 @@ c	net/minecraft/unmapped/C_3571139
 	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_3469388		m_3469388
 		p	1			p_1
 		p	2			p_2
-	m	(Z)Z	m_6309491		saveAll
+	m	(Z)Z	m_6309491		save
 		p	1			saveEntities
 	m	()V	m_1836040		flush
-	m	()Z	m_6876447		isSavingEnabled
+	m	()Z	m_6876447		shouldSave
 	m	()I	m_7720664		size
 	m	(II)Z	m_7591747		isChunkLoaded
 		c		@return whether the world chunk at the given chunk coordinates is loaded.
@@ -1271,7 +1271,7 @@ c	net/minecraft/unmapped/C_3635204
 		c	An opaque block is a full cube with no transparency.	
 	m	()I	m_5858756	getOpacity	
 	m	()Z	m_5115128	isTranslucent	
-	m	()I	m_2399533	getLightLevel	
+	m	()I	m_2399533	getLight	
 	m	()Z	m_3315086	usesNeighborLight	
 	m	()Lnet/minecraft/unmapped/C_8554894;	m_8228353	getMaterial	
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3635204$C_0480726;)Lnet/minecraft/unmapped/C_2441996;	m_6626229	rotate	
@@ -1281,9 +1281,8 @@ c	net/minecraft/unmapped/C_3635204
 		p	1		state	
 		p	2		mirror	
 	m	()Z	m_6763563	blocksAmbientLight	
-	m	()Z	m_5533517	isConductor	
-		c	Returns whether this block conducts redstone signals.	
-	m	()Z	m_1538589	isFullCube	
+	m	()Z	m_5533517	isSolid	
+	m	()Z	m_1538589	isCube	
 	m	()I	m_0839636	getRenderType	
 		c	Returns this block's render type. The possible values are as follows:\n<br>-1: none\n<br>1: liquid\n<br>2: animated block entity\n<br>3: block model	
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_6707278;)F	m_7976867	getMiningSpeed	
@@ -1317,7 +1316,7 @@ c	net/minecraft/unmapped/C_3635204
 		p	1		world	
 		p	2		pos	
 		p	3		state	
-	m	()Z	m_1944525	isOpaqueCube	
+	m	()Z	m_1944525	isSolidRender	
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_6707278;Lnet/minecraft/unmapped/C_2441996;Ljava/util/Random;)V	m_2144430	randomDisplayTick	
 		c	Performs a random display tick. Random display ticks are mostly used to spawn particles\naround a block. The client does 1000 random display tick attempts within a radius of\n16 blocks of the player each tick.	
 		p	1		world	
@@ -1334,12 +1333,12 @@ c	net/minecraft/unmapped/C_3635204
 		p	2		pos	
 		p	3		start	
 		p	4		end	
-	m	(Lnet/minecraft/unmapped/C_0336319;)Z	m_0588089	isWithinPlaneYZ	
-		p	1		vec	
-	m	(Lnet/minecraft/unmapped/C_0336319;)Z	m_0056167	isWithinPlaneXZ	
-		p	1		vec	
-	m	(Lnet/minecraft/unmapped/C_0336319;)Z	m_8050342	isWithinPlaneXY	
-		p	1		vec	
+	m	(Lnet/minecraft/unmapped/C_0336319;)Z	m_0588089	containsX	
+		p	1		pos	
+	m	(Lnet/minecraft/unmapped/C_0336319;)Z	m_0056167	containsY	
+		p	1		pos	
+	m	(Lnet/minecraft/unmapped/C_0336319;)Z	m_8050342	containsZ	
+		p	1		pos	
 	m	()D	m_7165542	getMinX	
 	m	()D	m_5770396	getMaxX	
 	m	()D	m_0754446	getMinY	
@@ -1376,7 +1375,7 @@ c	net/minecraft/unmapped/C_3635204
 		p	1			state
 	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_5115128		isTranslucent
 		p	1			state
-	m	(Lnet/minecraft/unmapped/C_2441996;)I	m_2399533		getLightLevel
+	m	(Lnet/minecraft/unmapped/C_2441996;)I	m_2399533		getLight
 		p	1			state
 	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_3315086		usesNeighborLight
 		p	1			state
@@ -1390,10 +1389,9 @@ c	net/minecraft/unmapped/C_3635204
 		p	2			mirror
 	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_6763563		blocksAmbientLight
 		p	1			state
-	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_5533517		isConductor
-		c		Returns whether this block conducts redstone signals.
+	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_5533517		isSolid
 		p	1			state
-	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_1538589		isFullCube
+	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_1538589		isCube
 		p	1			state
 	m	(Lnet/minecraft/unmapped/C_2441996;)Lnet/minecraft/unmapped/C_4345966;	m_0839636		getRenderType
 		p	1			state
@@ -1429,7 +1427,7 @@ c	net/minecraft/unmapped/C_3635204
 		p	1			state
 		p	2			world
 		p	3			pos
-	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_1944525		isOpaqueCube
+	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_1944525		isSolidRender
 		p	1			state
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_6707278;Ljava/util/Random;)V	m_2144430		randomDisplayTick
 		c		Performs a random display tick. Random display ticks are mostly used to spawn particles\naround a block. The client does 1000 random display tick attempts within a radius of\n16 blocks of the player each tick.
@@ -2147,7 +2145,7 @@ c	net/minecraft/unmapped/C_5009044
 	m	(Lnet/minecraft/unmapped/C_3635204;)F	m_0404633	getMiningSpeed	
 		p	1		block	
 	m	(Lnet/minecraft/unmapped/C_2441996;)F	m_0404633		getMiningSpeed
-		p	1			p_1
+		p	1			state
 c	net/minecraft/unmapped/C_5027199
 	m	()V	m_2568144		setAll
 c	net/minecraft/unmapped/C_5065131
@@ -3809,11 +3807,11 @@ c	net/minecraft/unmapped/C_9302567
 		p	4		dy	
 		p	6		dz	
 		p	8		pos	
-		p	9		dyBlock	
-		p	10		dzBlock	
-		p	11		offsetX	
-		p	13		offsetY	
-		p	15		offsetZ	
+		p	9		yaw	
+		p	10		shadowSize	
+		p	11		cx	
+		p	13		cy	
+		p	15		cz	
 	m	(Lnet/minecraft/unmapped/C_2441996;DDDLnet/minecraft/unmapped/C_6707278;FFDDD)V	m_2975447		renderShadowOnBlock
 		p	1			state
 		p	2			dx
@@ -3822,9 +3820,9 @@ c	net/minecraft/unmapped/C_9302567
 		p	8			pos
 		p	9			yaw
 		p	10			shadowSize
-		p	11			shadowX
-		p	13			shadowY
-		p	15			shadowZ
+		p	11			cx
+		p	13			cy
+		p	15			cz
 c	net/minecraft/unmapped/C_9462692
 	m	(Lnet/minecraft/unmapped/C_6707278;)Lnet/minecraft/unmapped/C_3635204;	m_2661127	m_2661127	
 		p	1		p_1	
@@ -3851,11 +3849,11 @@ c	net/minecraft/unmapped/C_9484672
 		p	2		chunk	
 		p	3		chunkX	
 		p	4		chunkZ	
-	m	(ZLnet/minecraft/unmapped/C_7918626;)Z	m_8231616	saveAll	
+	m	(ZLnet/minecraft/unmapped/C_7918626;)Z	m_8231616	save	
 		c	Saves all loaded world chunks to storage.	
 		p	1		saveEntities	
 		p	2		listener	
-	m	()Z	m_2288809	isSavingEnabled	
+	m	()Z	m_2288809	shouldSave	
 	m	(Lnet/minecraft/unmapped/C_9466447;Lnet/minecraft/unmapped/C_6707278;)Ljava/util/List;	m_0621452	getSpawnEntries	
 		p	1		category	
 		p	2		pos	
@@ -4074,7 +4072,7 @@ c	net/minecraft/unmapped/C_1713479		net/minecraft/block/state/BlockProperties
 	m	()Lnet/minecraft/unmapped/C_8554894;	m_7228786		getMaterial
 	m	()Z	m_3498998		isOpaque
 	m	()I	m_2425426		getOpacity
-	m	()I	m_8514269		getLightLevel
+	m	()I	m_8514269		getLight
 	m	()Z	m_2248102		isTranslucent
 	m	()Z	m_6388929		usesNeighborLight
 	m	()Lnet/minecraft/unmapped/C_1160655;	m_7777784		getMapColor
@@ -4082,14 +4080,14 @@ c	net/minecraft/unmapped/C_1713479		net/minecraft/block/state/BlockProperties
 		p	1			rotation
 	m	(Lnet/minecraft/unmapped/C_4039788;)Lnet/minecraft/unmapped/C_2441996;	m_4829162		mirror
 		p	1			mirror
-	m	()Z	m_2095894		isFullCube
+	m	()Z	m_2095894		isCube
 	m	()Lnet/minecraft/unmapped/C_4345966;	m_4101275		getRenderType
 	m	(Lnet/minecraft/unmapped/C_2627205;Lnet/minecraft/unmapped/C_6707278;)I	m_2368263		getLightColor
 		p	1			world
 		p	2			pos
 	m	()F	m_1964234		getAmbientOcclusionLight
 	m	()Z	m_0810303		blocksAmbientLight
-	m	()Z	m_1581837		isConductor
+	m	()Z	m_1581837		isSolid
 	m	()Z	m_4954044		isSignalSource
 	m	(Lnet/minecraft/unmapped/C_2627205;Lnet/minecraft/unmapped/C_6707278;Lnet/minecraft/unmapped/C_3544601;)I	m_2469366		getSignal
 		p	1			world
@@ -4121,7 +4119,7 @@ c	net/minecraft/unmapped/C_1713479		net/minecraft/block/state/BlockProperties
 		p	1			world
 		p	2			pos
 		p	3			face
-	m	()Z	m_5236187		isOpaqueCube
+	m	()Z	m_5236187		isSolidRender
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_6707278;)Lnet/minecraft/unmapped/C_1414550;	m_5141151		getCollisionShape
 		p	1			world
 		p	2			pos

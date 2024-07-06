@@ -115,9 +115,9 @@ c	net/minecraft/unmapped/C_0994230
 		p	3			name
 		p	4			item
 c	net/minecraft/unmapped/C_1013763
-	f	I	f_9268217	attackTime	
+	f	I	f_9268217	attackTimer	
 	m	()Z	m_4680808	aiEnabled	
-	m	()V	m_6773208	tickDespawn	
+	m	()V	m_6773208	aiTick	
 	m	()F	m_9119163	m_9119163	
 	m	()V	m_0992030		aiEnabled
 	m	()V	m_3525047		m_3525047
@@ -403,19 +403,19 @@ c	net/minecraft/unmapped/C_2923961$C_6908992		SpiderAttackGoal
 		p	1			p_1
 c	net/minecraft/unmapped/C_2984832
 	f	I	f_6172306	collisionCheckCooldown	
-	f	D	f_3368863	wanderTargetX	
-	f	D	f_1530599	wanderTargetY	
-	f	D	f_6127400	wanderTargetZ	
+	f	D	f_3368863	floatTargetX	
+	f	D	f_1530599	floatTargetY	
+	f	D	f_6127400	floatTargetZ	
 	f	Lnet/minecraft/unmapped/C_6385858;	f_4129132	target	
-	f	I	f_5618038	aggressiveCooldown	
-	f	I	f_5498320	attackCooldown	
-	f	I	f_2663354	shootingCooldown	
+	f	I	f_5618038	findTargetTimer	
+	f	I	f_5498320	lastChargeTicks	
+	f	I	f_2663354	chargeTicks	
 	m	()V	m_6773208	m_6773208	
-	m	(DDDD)Z	m_5848632	willCollide	
-		p	1		x	
-		p	3		y	
-		p	5		z	
-		p	7		steps	
+	m	(DDDD)Z	m_5848632	canReachTarget	
+		p	1		targetX	
+		p	3		targetY	
+		p	5		targetZ	
+		p	7		distance	
 	m	(Z)V	m_1502889		setCharging
 		p	1			charging
 	m	()I	m_2353420		getFireballStrength
@@ -479,16 +479,16 @@ c	net/minecraft/unmapped/C_3235984
 c	net/minecraft/unmapped/C_3324249
 	m	()F	m_6131251		m_6131251
 c	net/minecraft/unmapped/C_3419581
-	f	Lnet/minecraft/unmapped/C_6385858;	f_8101227	target	
+	f	Lnet/minecraft/unmapped/C_6385858;	f_8101227	attackTarget	
 	f	Z	f_3611045	wasAttacking	
 	f	I	f_0864517	fastMovementCooldown	
 	m	()Z	m_9931077	wasAttacking	
 	m	()V	m_6773208	m_6773208	
 	m	()V	m_5345939	setNewWanderingPath	
-	m	(Lnet/minecraft/unmapped/C_6385858;F)V	m_4604691	attack	
+	m	(Lnet/minecraft/unmapped/C_6385858;F)V	m_4604691	checkDamageTarget	
 		p	1		target	
-		p	2		power	
-	m	()Lnet/minecraft/unmapped/C_6385858;	m_3715716	findClosestAttackablePlayer	
+		p	2		distance	
+	m	()Lnet/minecraft/unmapped/C_6385858;	m_3715716	findAttackTarget	
 	m	()Lnet/minecraft/unmapped/C_6385858;	m_1767552	getTarget	
 	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_3711704	setTarget	
 		p	1		target	
@@ -661,9 +661,9 @@ c	net/minecraft/unmapped/C_3544601
 		p	0			key
 	m	()Lnet/minecraft/unmapped/C_7282479;	m_1692555		getNormal
 c	net/minecraft/unmapped/C_3604011
-	m	(Lnet/minecraft/unmapped/C_5009044;)V	m_8078064	renderPlayerRightHandModel	
+	m	(Lnet/minecraft/unmapped/C_5009044;)V	m_8078064	renderRightHand	
 		p	1		player	
-	m	(Lnet/minecraft/unmapped/C_7106153;)V	m_8078064		renderPlayerRightHandModel
+	m	(Lnet/minecraft/unmapped/C_7106153;)V	m_8078064		renderRightHand
 		p	1			player
 c	net/minecraft/unmapped/C_3635204
 	m	()I	m_1863884		getMetadataForRendering
@@ -822,7 +822,7 @@ c	net/minecraft/unmapped/C_5369865	net/minecraft/client/render/block/PlantRender
 		p	2		p_2	
 		p	3		p_3	
 c	net/minecraft/unmapped/C_5371184
-	f	I	f_1856136	ticksUntilNextJump	
+	f	I	f_1856136	jumpTimer	
 	m	()V	m_6773208	m_6773208	
 	m	(I)V	m_8901560		m_8901560
 		p	1			p_1
@@ -932,7 +932,7 @@ c	net/minecraft/unmapped/C_6385858
 	f	F	f_6392472	eyeHeightSneakOffset	
 	f	Lnet/minecraft/unmapped/C_6385858$C_6577014;	f_1248714	size	
 	m	()F	m_9119163	getEyeHeight	
-	m	()F	m_3413954	yShadowOrigin	
+	m	()F	m_3413954	getShadowHeightOffset	
 	m	()V	m_5135469		doSplashEffect
 	m	()Lnet/minecraft/unmapped/C_1414550;	m_8022439		getShape
 	m	(Lnet/minecraft/unmapped/C_1414550;)V	m_9162011		setShape

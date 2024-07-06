@@ -1,12 +1,12 @@
 tiny	2	0
 c	net/minecraft/client/Minecraft
-	f	Ljava/io/File;	f_4819882	runDirectory	
-	m	()Ljava/io/File;	m_7433889	getRunDirectory	
+	f	Ljava/io/File;	f_4819882	gameDirectory	
+	m	()Ljava/io/File;	m_7433889	getGameDirectory	
 	m	(Ljava/lang/String;)V	m_2139624	startGame	
 		p	1		saveName	
-	m	(Ljava/lang/String;)V	m_4743605	loadWorld	
+	m	(Ljava/lang/String;)V	m_4743605	prepareWorld	
 		p	1		saveName	
-	m	()V	m_6862388	m_6862388	
+	m	()V	m_6862388	respawnPlayer	
 c	net/minecraft/unmapped/C_0043270
 	m	(IIIII)V	m_5774577		m_5774577
 		p	0			p_0
@@ -250,17 +250,17 @@ c	net/minecraft/unmapped/C_3688914
 	m	()Ljava/lang/String;	m_1061793	m_1061793	
 c	net/minecraft/unmapped/C_3906126
 	f	J	f_1618367	ticks	
-	f	I	f_6988360	spawnpointX	
-	f	I	f_9398901	spawnpointY	
-	f	I	f_7237409	spawnpointZ	
+	f	I	f_6988360	spawnPointX	
+	f	I	f_9398901	spawnPointY	
+	f	I	f_7237409	spawnPointZ	
 	f	Ljava/io/File;	f_2537859	saveDir	
 	f	J	f_1783857	seed	
 	f	Lnet/minecraft/unmapped/C_2800860;	f_0762360	playerData	
 	f	J	f_8535327	sizeOnDisk	
 	f	I	f_1618367		ticks
-	f	F	f_6988360		spawnpointX
-	f	F	f_9398901		spawnpointY
-	f	F	f_7237409		spawnpointZ
+	f	F	f_6988360		spawnPointX
+	f	F	f_9398901		spawnPointY
+	f	F	f_7237409		spawnPointZ
 	m	(Ljava/io/File;Ljava/lang/String;)Lnet/minecraft/unmapped/C_2800860;	m_9312594	getWorldData	
 		p	0		gameDir	
 		p	1		saveName	
@@ -272,10 +272,10 @@ c	net/minecraft/unmapped/C_3906126
 	m	(Ljava/io/File;Ljava/lang/String;)V	<init>	<init>	
 		p	1		dir	
 		p	2		saveName	
-	m	()V	m_0762970	addPlayer	
-	m	(Z)V	m_4418114	saveAll	
-		p	1		p_1	
-	m	()V	m_5794371	waitIfSaving	
+	m	()V	m_0762970	loadPlayer	
+	m	(Z)V	m_4418114	save	
+		p	1		saveEntities	
+	m	()V	m_5794371	forceSave	
 	m	()V	<init>		<init>
 c	net/minecraft/unmapped/C_3984704	net/minecraft/nbt/NbtElement	
 	f	Ljava/lang/String;	f_3543739	name	
@@ -350,10 +350,10 @@ c	net/minecraft/unmapped/C_5441464	net/minecraft/client/gui/screen/ConfirmScreen
 	f	Ljava/lang/String;	f_9395337	description	
 	f	I	f_5708195	id	
 	m	(Lnet/minecraft/unmapped/C_0786431;Ljava/lang/String;Ljava/lang/String;I)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
+		p	1		parent	
+		p	2		title	
+		p	3		description	
+		p	4		id	
 	m	()V	m_2060594	m_2060594	
 	m	(Lnet/minecraft/unmapped/C_2621421;)V	m_9403981	m_9403981	
 		p	1		p_1	
@@ -371,9 +371,9 @@ c	net/minecraft/unmapped/C_6205974
 	m	(I)V	<init>		<init>
 		p	1			p_1
 c	net/minecraft/unmapped/C_6385858
-	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_6319588	writeEntityNbt	
+	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_6319588	writeNbtWithoutId	
 		p	1		nbt	
-	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_4469361	readEntityNbt	
+	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_4469361	readNbt	
 		p	1		nbt	
 	m	()Ljava/lang/String;	m_1061793	m_1061793	
 	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_9618795	readCustomNbt	
@@ -401,7 +401,7 @@ c	net/minecraft/unmapped/C_6698663	net/minecraft/client/gui/screen/world/SelectW
 	m	()V	m_7766669	addButtons	
 	m	(Lnet/minecraft/unmapped/C_2621421;)V	m_9403981	m_9403981	
 		p	1		p_1	
-	m	(I)V	m_1496597	loadWorld	
+	m	(I)V	m_1496597	selectWorld	
 		p	1		id	
 	m	(IIF)V	m_3426670	m_3426670	
 		p	1		p_1	
@@ -421,17 +421,17 @@ c	net/minecraft/unmapped/C_6755599
 c	net/minecraft/unmapped/C_8345828
 	m	()Ljava/lang/String;	m_1061793	m_1061793	
 c	net/minecraft/unmapped/C_8425960
-	m	(Ljava/lang/String;)V	m_5570081	m_5570081	
-		p	1		p_1	
-	m	(I)V	m_3915830	m_3915830	
-		p	1		p_1	
+	m	(Ljava/lang/String;)V	m_5570081	progressStage	
+		p	1		stage	
+	m	(I)V	m_3915830	progressPercentage	
+		p	1		percentage	
 	m	()V	<init>	<init>	
 	m	(Ljava/io/InputStream;)Lnet/minecraft/unmapped/C_2800860;	m_1070817	m_1070817	
 		p	0		p_0	
 	m	(Lnet/minecraft/unmapped/C_2800860;Ljava/io/OutputStream;)V	m_5551645	m_5551645	
 		p	0		p_0	
 		p	1		p_1	
-	m	(Ljava/lang/String;)V	m_3915830		m_3915830
+	m	(Ljava/lang/String;)V	m_3915830		progressPercentage
 		p	1			p_1
 c	net/minecraft/unmapped/C_8905061
 	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_4059289	m_4059289	
@@ -488,8 +488,8 @@ c	net/minecraft/unmapped/C_9432227	net/minecraft/nbt/NbtByteArray
 	m	()B	m_0326927	m_0326927	
 	m	()Ljava/lang/String;	toString	toString	
 c	net/minecraft/unmapped/C_9484672
-	m	(Z)V	m_8231616	saveAll	
-		p	1		p_1	
+	m	(Z)V	m_8231616	save	
+		p	1		saveEntities	
 c	net/minecraft/unmapped/C_0388903		net/minecraft/unmapped/C_0388903
 	m	(Lnet/minecraft/unmapped/C_0786431;)V	<init>		<init>
 		p	1			p_1

@@ -1,7 +1,7 @@
 tiny	2	0
 c	net/minecraft/client/Minecraft
-	f	Ljava/lang/String;	f_4031610	f_4031610	
-	f	I	f_3447210	f_3447210	
+	f	Ljava/lang/String;	f_4031610	loadmapUser	
+	f	I	f_3447210	loadmapId	
 	f	Lnet/minecraft/client/Minecraft;	f_8052050		INSTANCE
 	f	Lnet/minecraft/unmapped/C_1013763;	f_6974776		camera
 	f	Lnet/minecraft/unmapped/C_3113421;	f_9265499		worldStorageSource
@@ -9,9 +9,9 @@ c	net/minecraft/client/Minecraft
 		p	1		saveName	
 	m	()Lnet/minecraft/unmapped/C_3113421;	m_2918157		getWorldStorageSource
 	m	(Ljava/lang/String;Ljava/lang/String;J)V	m_2139624		startGame
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			saveName
+		p	2			name
+		p	3			seed
 	m	(Ljava/lang/String;Ljava/lang/String;)V	m_0984194		convertWorld
 		p	1			saveName
 		p	2			name
@@ -23,16 +23,16 @@ c	net/minecraft/client/Minecraft
 		p	1			message
 c	net/minecraft/unmapped/C_0141705
 	m	(Lnet/minecraft/unmapped/C_3906126;DDD)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	4		p_4	
-		p	6		p_6	
+		p	1		world	
+		p	2		x	
+		p	4		y	
+		p	6		z	
 	m	(Lnet/minecraft/unmapped/C_3906126;DDDF)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	4		p_4	
-		p	6		p_6	
-		p	8		p_8	
+		p	1		world	
+		p	2		x	
+		p	4		y	
+		p	6		z	
+		p	8		scale	
 	m	(Lnet/minecraft/unmapped/C_3906126;DDDFFF)V	<init>		<init>
 		p	1			world
 		p	2			x
@@ -46,11 +46,11 @@ c	net/minecraft/unmapped/C_0141705
 		p	2			x
 		p	4			y
 		p	6			z
-		p	8			scaleFactor
+		p	8			scale
 		p	9			r
 		p	10			g
 		p	11			b
-c	net/minecraft/unmapped/C_0932780	net/minecraft/world/chunk/ChunkPos	
+c	net/minecraft/unmapped/C_0932780	net/minecraft/client/world/chunk/MultiplayerChunkCache__ChunkPos	
 	f	I	f_7177981	x	
 	f	I	f_0809651	z	
 	m	(II)V	<init>	<init>	
@@ -65,19 +65,19 @@ c	net/minecraft/unmapped/C_1013763
 	m	()Z	m_0751745		isSleeping
 c	net/minecraft/unmapped/C_1044273
 	m	(Lnet/minecraft/unmapped/C_5009044;ID)I	m_8682700	render	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+		p	1		camera	
+		p	2		layer	
+		p	3		tickDelta	
 	m	(Lnet/minecraft/unmapped/C_5009044;Z)Z	m_7785939	compileChunks	
 		p	1		camera	
-		p	2		p_2	
+		p	2		force	
 	m	(Lnet/minecraft/unmapped/C_1013763;ID)I	m_8682700		render
 		p	1			camera
 		p	2			type
 		p	3			tickDelta
 	m	(Lnet/minecraft/unmapped/C_1013763;Z)Z	m_7785939		compileChunks
 		p	1			camera
-		p	2			dontDoExtraLogic
+		p	2			force
 c	net/minecraft/unmapped/C_1309851
 	m	()V	m_9057354		m_9057354
 	m	()V	m_1100625		m_1100625
@@ -204,9 +204,9 @@ c	net/minecraft/unmapped/C_3777975
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_3906126
 	f	J	f_1618367	ticks	
-	f	I	f_6988360	spawnpointX	
-	f	I	f_9398901	spawnpointY	
-	f	I	f_7237409	spawnpointZ	
+	f	I	f_6988360	spawnPointX	
+	f	I	f_9398901	spawnPointY	
+	f	I	f_7237409	spawnPointZ	
 	f	Ljava/io/File;	f_1707582	dir	
 	f	Ljava/io/File;	f_2537859	saveDir	
 	f	J	f_1783857	seed	
@@ -281,8 +281,8 @@ c	net/minecraft/unmapped/C_4030632
 	f	Lnet/minecraft/unmapped/C_4030632;	f_9529137		BED
 	f	Lnet/minecraft/unmapped/C_4030632;	f_5448092		REPEATER
 c	net/minecraft/unmapped/C_4331994
-	f	I	f_5282305	f_5282305	
-	f	Ljava/lang/String;	f_4784337	f_4784337	
+	f	I	f_5282305	ticks	
+	f	Ljava/lang/String;	f_4784337	address	
 	f	Lnet/minecraft/unmapped/C_5902150;	f_9043799		serverField
 	m	(III)V	m_9746540		m_9746540
 		p	1			p_1
@@ -295,17 +295,17 @@ c	net/minecraft/unmapped/C_4443804
 		p	1			packet
 c	net/minecraft/unmapped/C_4784123
 	f	I	f_6937333	f_6937333	
-	f	I	f_6660084	f_6660084	
-	f	I	f_4427564	f_4427564	
-	f	I	f_1385039	f_1385039	
-	f	I	f_4064823	f_4064823	
+	f	I	f_6660084	maxY	
+	f	I	f_4427564	minY	
+	f	I	f_1385039	minX	
+	f	I	f_4064823	maxX	
 	f	I	f_2912781	f_2912781	
 	f	Lnet/minecraft/unmapped/C_4784123$C_5163334;	f_3846431		texturePacks
-	m	(IIII)V	m_9591241	m_9591241	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
+	m	(IIII)V	m_9591241	renderHoleBackground	
+		p	1		minY	
+		p	2		maxY	
+		p	3		bottomAlpha	
+		p	4		topAlpha	
 	m	(Lnet/minecraft/unmapped/C_4784123;)Lnet/minecraft/client/Minecraft;	m_4899539		m_4899539
 		p	0			p_0
 	m	(Lnet/minecraft/unmapped/C_4784123;)Lnet/minecraft/client/Minecraft;	m_6087456		m_6087456
@@ -412,7 +412,7 @@ c	net/minecraft/unmapped/C_5367636
 	f	Lnet/minecraft/unmapped/C_8591017;	f_8131949		f_8131949
 	f	Lnet/minecraft/unmapped/C_8591017;	f_8505607		f_8505607
 	f	Lnet/minecraft/unmapped/C_8591017;	f_1922693		f_1922693
-	m	()V	m_3456363	m_3456363	
+	m	()V	m_3456363	beforeTick	
 	m	(DDD)V	m_2801634		m_2801634
 		p	1			p_1
 		p	3			p_3
@@ -424,10 +424,10 @@ c	net/minecraft/unmapped/C_5441464
 	f	Ljava/lang/String;	f_0914160		confirmText
 	f	Ljava/lang/String;	f_2139793		abortText
 	m	(Lnet/minecraft/unmapped/C_0786431;Ljava/lang/String;Ljava/lang/String;I)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
+		p	1		parent	
+		p	2		title	
+		p	3		description	
+		p	4		id	
 	m	(Lnet/minecraft/unmapped/C_0786431;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V	<init>		<init>
 		p	1			parent
 		p	2			title
@@ -527,11 +527,11 @@ c	net/minecraft/unmapped/C_7153081
 	f	Lnet/minecraft/unmapped/C_5009044;	f_7665064	camera	
 	f	Lnet/minecraft/unmapped/C_1013763;	f_7665064		camera
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_3385278;Lnet/minecraft/unmapped/C_4766485;Lnet/minecraft/unmapped/C_5009044;F)V	m_6301959	prepare	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
+		p	1		world	
+		p	2		textureManager	
+		p	3		textRenderer	
+		p	4		camera	
+		p	5		tickDelta	
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_3385278;Lnet/minecraft/unmapped/C_4766485;Lnet/minecraft/unmapped/C_1013763;F)V	m_6301959		prepare
 		p	1			world
 		p	2			textureManager
@@ -618,7 +618,7 @@ c	net/minecraft/unmapped/C_8688622
 	f	Lnet/minecraft/unmapped/C_5009044;	f_9491045	camera	
 	f	Lnet/minecraft/unmapped/C_1013763;	f_9491045		camera
 	m	(Lnet/minecraft/unmapped/C_5009044;)V	<init>	<init>	
-		p	1		p_1	
+		p	1		camera	
 	m	(Lnet/minecraft/unmapped/C_1013763;)V	<init>		<init>
 		p	1			camera
 c	net/minecraft/unmapped/C_8817873
@@ -686,19 +686,19 @@ c	net/minecraft/unmapped/C_9610577
 	f	Lnet/minecraft/unmapped/C_5009044;	f_5436365	camera	
 	f	Lnet/minecraft/unmapped/C_1013763;	f_5436365		camera
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_3385278;Lnet/minecraft/unmapped/C_4766485;Lnet/minecraft/unmapped/C_5009044;Lnet/minecraft/unmapped/C_7688744;F)V	m_3414008	prepare	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
+		p	1		world	
+		p	2		textureManager	
+		p	3		textRenderer	
+		p	4		camera	
+		p	5		options	
+		p	6		tickDelta	
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_3385278;Lnet/minecraft/unmapped/C_4766485;Lnet/minecraft/unmapped/C_1013763;Lnet/minecraft/unmapped/C_7688744;F)V	m_3414008		prepare
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
+		p	1			world
+		p	2			textureManager
+		p	3			textRenderer
+		p	4			camera
+		p	5			options
+		p	6			tickDelta
 c	net/minecraft/unmapped/C_0206282		net/minecraft/world/chunk/storage/RegionIo
 	f	Ljava/util/Map;	f_0857039		REGION_FILES
 	m	()V	<init>		<init>

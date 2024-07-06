@@ -18,10 +18,10 @@ c	net/minecraft/unmapped/C_0526782	net/minecraft/item/FoodItem
 		p	1		p_1	
 		p	2		p_2	
 c	net/minecraft/unmapped/C_0756314	net/minecraft/client/render/texture/WaterSprite	
-	f	[F	f_8838591	image0	
-	f	[F	f_2397408	image1	
-	f	[F	f_4215758	f_4215758	
-	f	[F	f_1985147	f_1985147	
+	f	[F	f_8838591	current	
+	f	[F	f_2397408	next	
+	f	[F	f_4215758	heat	
+	f	[F	f_1985147	heatDelta	
 	f	I	f_4632629	ticks	
 	m	()V	<init>	<init>	
 	m	()V	m_4399705	m_4399705	
@@ -77,7 +77,7 @@ c	net/minecraft/unmapped/C_3466301
 		p	4			p_4
 		p	5			p_5
 c	net/minecraft/unmapped/C_3544790
-	f	I	f_4805264	f_4805264	
+	f	I	f_4805264	copyTo	
 c	net/minecraft/unmapped/C_3624347
 	f	Lnet/minecraft/unmapped/C_7688744;	f_3018825	options	
 	m	(Lnet/minecraft/unmapped/C_7688744;)V	m_8643571	m_8643571	
@@ -88,7 +88,7 @@ c	net/minecraft/unmapped/C_3635204
 	f	Lnet/minecraft/unmapped/C_9764049;	f_1524897	FIRE	
 	f	F	f_2859729	miningSpeed	
 	f	I	f_2859729		miningSpeed
-	m	()Z	m_5385494	hasCollision	
+	m	()Z	m_5385494	canRayTrace	
 	m	(Lnet/minecraft/unmapped/C_5009044;)I	m_5044046	getMiningSpeed	
 		p	1		p_1	
 	m	(F)Lnet/minecraft/unmapped/C_3635204;	m_5406685		m_5406685
@@ -243,7 +243,8 @@ c	net/minecraft/unmapped/C_5897181
 		p	1		p_1	
 	m	()V	<init>		<init>
 c	net/minecraft/unmapped/C_6385858
-	f	I	f_4418656	fireResistance	
+	f	I	f_4418656	safeOnFireTime	
+		c	The number of ticks an entity can stay in a fire and step out without staying on fire.	
 	f	I	f_6123985	onFireTimer	
 		c	The number of ticks left for which this entity will be on fire.	
 c	net/minecraft/unmapped/C_6768539	net/minecraft/item/FlintAndSteelItem	
@@ -265,15 +266,17 @@ c	net/minecraft/unmapped/C_8906619	net/minecraft/item/ToolItem
 	m	(Lnet/minecraft/unmapped/C_3635204;)F	m_3907516	m_3907516	
 		p	1		p_1	
 c	net/minecraft/unmapped/C_9764049	net/minecraft/block/FireBlock	
-	f	[I	f_0145539	burnChance	
-	f	[I	f_9889210	spreadChance	
+	f	[I	f_0145539	flammability	
+		c	How quickly the a block catches fire.	
+	f	[I	f_9889210	burnChance	
+		c	How quickly a block burns up and gets destroyed.	
 	m	(II)V	<init>	<init>	
 		p	1		id	
 		p	2		sprite	
-	m	(III)V	m_9497712	registerBurnProperties	
-		p	1		blockId	
-		p	2		burnChance	
-		p	3		spreadChance	
+	m	(III)V	m_9497712	setFlammable	
+		p	1		block	
+		p	2		flammability	
+		p	3		burnChance	
 	m	(III)Lnet/minecraft/unmapped/C_1414550;	m_9650578	m_9650578	
 		p	1		p_1	
 		p	2		p_2	
@@ -302,7 +305,7 @@ c	net/minecraft/unmapped/C_9764049	net/minecraft/block/FireBlock
 		p	3		p_3	
 		p	4		p_4	
 	m	()Z	m_5385494	m_5385494	
-	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_8454404	canBurn	
+	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_8454404	isFlammable	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	

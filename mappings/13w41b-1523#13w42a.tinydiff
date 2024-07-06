@@ -3,17 +3,17 @@ c	net/minecraft/client/Minecraft
 	f	Lnet/minecraft/unmapped/C_3624347;	f_7545235	soundSystem	
 	f	Lnet/minecraft/unmapped/C_5819357;	f_7545235		soundManager
 	m	()Lnet/minecraft/unmapped/C_5819357;	m_7555106		getSoundManager
-c	net/minecraft/unmapped/C_0488196	net/minecraft/client/sound/system/SoundFile	
+c	net/minecraft/unmapped/C_0488196	net/minecraft/client/sound/Sound	
 	f	Ljava/lang/String;	f_6483398	path	
 	f	Ljava/net/URL;	f_4253640	url	
-	f	Ljava/lang/String;	f_2934859	f_2934859	
+	f	Ljava/lang/String;	f_2934859	id	
 	m	(Ljava/lang/String;Ljava/net/URL;Ljava/lang/String;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+		p	1		path	
+		p	2		url	
+		p	3		id	
 	m	()Ljava/lang/String;	m_1157052	getPath	
 	m	()Ljava/net/URL;	m_8930599	getUrl	
-	m	()Ljava/lang/String;	m_9721338	m_9721338	
+	m	()Ljava/lang/String;	m_9721338	getId	
 c	net/minecraft/unmapped/C_0693747
 	f	Lnet/minecraft/unmapped/C_2787601;	f_4991196	category	
 	m	(Ljava/lang/String;DDDFFLnet/minecraft/unmapped/C_2787601;)V	<init>	<init>	
@@ -160,8 +160,8 @@ c	net/minecraft/unmapped/C_2782822
 		p	10			volume
 c	net/minecraft/unmapped/C_2787601
 	f	Lnet/minecraft/unmapped/C_2787601;	f_0044932		AMBIENT
-	m	(I)Lnet/minecraft/unmapped/C_2787601;	m_5992175	byName	
-		p	0		p_0	
+	m	(I)Lnet/minecraft/unmapped/C_2787601;	m_5992175	byId	
+		p	0		id	
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_2787601;	m_5992175		byName
 		p	0			name
 c	net/minecraft/unmapped/C_3310814
@@ -193,7 +193,7 @@ c	net/minecraft/unmapped/C_3414480	net/minecraft/block/MineralBlock
 	m	()V	<init>	<init>	
 c	net/minecraft/unmapped/C_3419581
 	m	()Lnet/minecraft/unmapped/C_2787601;	m_9806392	m_9806392	
-c	net/minecraft/unmapped/C_3624347
+c	net/minecraft/unmapped/C_3624347	net/minecraft/client/sound/SoundEngine	net/minecraft/client/sound/system/SoundEngine
 	f	[Ljava/lang/String;	f_4840163	SOUND_FILE_EXTENSIONS	
 	f	Lpaulscode/sound/SoundSystem;	f_2233981	system	
 	f	Lnet/minecraft/unmapped/C_4560329;	f_0802089	sounds	
@@ -213,7 +213,7 @@ c	net/minecraft/unmapped/C_3624347
 	f	Ljava/util/Map;	f_6334510		sources
 	f	Lcom/google/common/collect/Multimap;	f_7358116		channelsByCategory
 	f	Ljava/util/List;	f_5702267		tickableEvents
-	f	Ljava/util/Map;	f_3107780		soundQueue
+	f	Ljava/util/Map;	f_3107780		delayedEvents
 	m	(Lnet/minecraft/unmapped/C_6577431;Lnet/minecraft/unmapped/C_7688744;Ljava/io/File;)V	<init>	<init>	
 		p	1		resourceManager	
 		p	2		options	
@@ -231,7 +231,7 @@ c	net/minecraft/unmapped/C_3624347
 	m	(Ljava/lang/String;)V	m_0128226	loadMusic	
 		p	1		path	
 	m	()V	m_5010408	tickMusic	
-	m	(Lnet/minecraft/unmapped/C_1013763;F)V	m_8245980	tickListener	
+	m	(Lnet/minecraft/unmapped/C_1013763;F)V	m_8245980	update	
 		p	1		listener	
 		p	2		tickDelta	
 	m	()V	m_1580178	stop	
@@ -262,28 +262,28 @@ c	net/minecraft/unmapped/C_3624347
 		p	4		pitch	
 		p	5		priority	
 	m	(Ljava/lang/String;FFFFFLnet/minecraft/unmapped/C_2787601;)V	m_6358286	play	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
-		p	7		p_7	
+		p	1		id	
+		p	2		x	
+		p	3		y	
+		p	4		z	
+		p	5		volume	
+		p	6		pitch	
+		p	7		category	
 	m	(Ljava/lang/String;FF)V	m_2080717	play	
 		p	1		id	
 		p	2		volume	
 		p	3		pitch	
-	m	()V	m_1289471	m_1289471	
+	m	()V	m_1289471	playRandom	
 	m	()V	m_0535471	tickDelayedEvents	
-	m	(Ljava/lang/String;FFFFFILnet/minecraft/unmapped/C_2787601;)V	m_9527440	play	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
-		p	7		p_7	
-		p	8		p_8	
+	m	(Ljava/lang/String;FFFFFILnet/minecraft/unmapped/C_2787601;)V	m_9527440	playLater	
+		p	1		id	
+		p	2		x	
+		p	3		y	
+		p	4		z	
+		p	5		volume	
+		p	6		pitch	
+		p	7		delay	
+		p	8		category	
 	m	(Lnet/minecraft/unmapped/C_3624347;Lpaulscode/sound/SoundSystem;)Lpaulscode/sound/SoundSystem;	m_6695760	m_6695760	
 		p	0		p_0	
 		p	1		p_1	
@@ -307,13 +307,13 @@ c	net/minecraft/unmapped/C_3624347
 		p	1			instance
 		p	2			sound
 		p	3			category
-	m	(Lnet/minecraft/unmapped/C_9588086;I)V	m_5911109		play
+	m	(Lnet/minecraft/unmapped/C_9588086;I)V	m_5911109		playLater
 		p	1			sound
 		p	2			delay
 	m	(Lnet/minecraft/unmapped/C_0561170;)Ljava/net/URL;	m_8769709		getSoundUrl
 		p	0			location
-	m	(Lnet/minecraft/unmapped/C_5009044;F)V	m_8245980		updateListener
-		p	1			player
+	m	(Lnet/minecraft/unmapped/C_5009044;F)V	m_8245980		update
+		p	1			listener
 		p	2			tickDelta
 	m	(Lnet/minecraft/unmapped/C_3624347;Lnet/minecraft/unmapped/C_3624347$C_8871607;)Lnet/minecraft/unmapped/C_3624347$C_8871607;	m_4360244		m_4360244
 		p	0			p_0
@@ -326,16 +326,16 @@ c	net/minecraft/unmapped/C_3624347$C_9597328	DelayedEvent
 	f	F	f_8643686	volume	
 	f	F	f_5576298	pitch	
 	f	I	f_9437574	delay	
-	f	Lnet/minecraft/unmapped/C_2787601;	f_3380684	f_3380684	
+	f	Lnet/minecraft/unmapped/C_2787601;	f_3380684	category	
 	m	(Ljava/lang/String;FFFFFILnet/minecraft/unmapped/C_2787601;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
-		p	7		p_7	
-		p	8		p_8	
+		p	1		id	
+		p	2		x	
+		p	3		y	
+		p	4		z	
+		p	5		volume	
+		p	6		pitch	
+		p	7		delay	
+		p	8		category	
 c	net/minecraft/unmapped/C_3624347$5160525		5160525
 	f	Lnet/minecraft/unmapped/C_0561170;	f_9887617		id
 	m	(Lnet/minecraft/unmapped/C_0561170;)V	<init>		<init>
@@ -432,7 +432,7 @@ c	net/minecraft/unmapped/C_4177687
 		p	3			generatorType
 		p	4			gameMode
 	m	()Lnet/minecraft/unmapped/C_3997653;	m_3345593		getGeneratorType
-c	net/minecraft/unmapped/C_4560329	net/minecraft/client/sound/system/Sounds	
+c	net/minecraft/unmapped/C_4560329	net/minecraft/client/sound/Sounds	
 	f	Ljava/util/Random;	f_5028637	random	
 	f	Ljava/util/Map;	f_4841160	sounds	
 	f	Lnet/minecraft/unmapped/C_6577431;	f_0574836	resourceManager	

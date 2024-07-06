@@ -1,12 +1,12 @@
 tiny	2	0
 c	net/minecraft/unmapped/C_0139979
-	m	(Ljava/net/URL;Ljava/lang/String;I)V	m_1914282	m_1914282	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-	m	(Ljava/net/URL;Ljava/lang/String;)V	m_1914282		m_1914282
-		p	1			p_1
-		p	2			p_2
+	m	(Ljava/net/URL;Ljava/lang/String;I)V	m_1914282	download	
+		p	1		url	
+		p	2		name	
+		p	3		pass	
+	m	(Ljava/net/URL;Ljava/lang/String;)V	m_1914282		download
+		p	1			url
+		p	2			name
 c	net/minecraft/unmapped/C_0732654
 	m	()I	m_0079091	m_0079091	
 c	net/minecraft/unmapped/C_0786431
@@ -14,14 +14,14 @@ c	net/minecraft/unmapped/C_0786431
 c	net/minecraft/unmapped/C_0990852
 	m	()I	m_0079091	m_0079091	
 c	net/minecraft/unmapped/C_1013763
-	f	F	f_0160615	lastHandSwingProgress	
-	f	F	f_8355779	handSwingProgress	
-	m	(F)F	m_4248136	getHandSwingProcess	
+	f	F	f_0160615	lastAttackAnimationProgress	
+	f	F	f_8355779	attackAnimationProgress	
+	m	(F)F	m_4248136	getAttackAnimationProgress	
 		p	1		tickDelta	
-	m	(F)Lnet/minecraft/unmapped/C_0336319;	m_4755429	lerpPosition	
+	m	(F)Lnet/minecraft/unmapped/C_0336319;	m_4755429	getPosition	
 		p	1		tickDelta	
-	m	(F)Lnet/minecraft/unmapped/C_0336319;	m_7678494	getCameraRotation	
-		p	1		modifier	
+	m	(F)Lnet/minecraft/unmapped/C_0336319;	m_7678494	getLookVector	
+		p	1		tickDelta	
 	m	(DF)Lnet/minecraft/unmapped/C_5853518;	m_4926853	rayTrace	
 		p	1		distance	
 		p	3		tickDelta	
@@ -42,9 +42,9 @@ c	net/minecraft/unmapped/C_1019530	net/minecraft/network/packet/AddEntityPacket
 c	net/minecraft/unmapped/C_1111347
 	m	()I	m_0079091	m_0079091	
 c	net/minecraft/unmapped/C_1388208
-	f	D	f_9332058	lastZ	
+	f	D	f_9332058	sentZ	
 	m	()V	m_3456363	m_3456363	
-	m	()V	m_3495192	updateMovement	
+	m	()V	m_3495192	sendMovement	
 	m	()V	m_2752266	m_2752266	
 c	net/minecraft/unmapped/C_2012603
 	m	()I	m_0079091	m_0079091	
@@ -100,7 +100,7 @@ c	net/minecraft/unmapped/C_3906126
 	m	(Lnet/minecraft/unmapped/C_6385858;)Z	m_0503999	addEntity	
 		p	1		entity	
 	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_0503999		addEntity
-		p	1			p_1
+		p	1			entity
 c	net/minecraft/unmapped/C_4004004
 	m	(DDDDZ)V	<init>	<init>	
 		p	1		x	
@@ -122,7 +122,7 @@ c	net/minecraft/unmapped/C_4136842
 c	net/minecraft/unmapped/C_4137949
 	m	()I	m_0079091	m_0079091	
 c	net/minecraft/unmapped/C_4237166
-	m	(IIII)V	m_5386984	mineBlockInCreative	
+	m	(IIII)V	m_5386984	startMiningBlock	
 		p	1		x	
 		p	2		y	
 		p	3		z	
@@ -132,7 +132,7 @@ c	net/minecraft/unmapped/C_4237166
 		p	2		y	
 		p	3		z	
 		p	4		face	
-	m	(III)V	m_5386984		mineBlockInCreative
+	m	(III)V	m_5386984		startMiningBlock
 		p	1			x
 		p	2			y
 		p	3			z
@@ -184,13 +184,13 @@ c	net/minecraft/unmapped/C_4939758
 	m	(Lnet/minecraft/unmapped/C_7964332;)V	m_8028679	m_8028679	
 		p	1		p_1	
 c	net/minecraft/unmapped/C_5009044
-	f	Z	f_7373843	f_7373843	
-	f	I	f_3906653	f_3906653	
-	m	()V	m_2752266	m_2752266	
+	f	Z	f_7373843	swingArm	
+	f	I	f_3906653	swingArmTicks	
+	m	()V	m_2752266	swingArm	
 c	net/minecraft/unmapped/C_5314135
 	m	()I	m_0079091	m_0079091	
 c	net/minecraft/unmapped/C_5367636
-	m	()V	m_3456363	m_3456363	
+	m	()V	m_3456363	beforeTick	
 c	net/minecraft/unmapped/C_5515943
 	m	()I	m_0079091	m_0079091	
 c	net/minecraft/unmapped/C_6794191
@@ -222,12 +222,12 @@ c	net/minecraft/unmapped/C_6923352
 c	net/minecraft/unmapped/C_7170474
 	m	()I	m_0079091	m_0079091	
 c	net/minecraft/unmapped/C_7256819
-	f	I	f_3954520	clientInterpolationSteps	
-	f	D	f_4751392	clientX	
-	f	D	f_3243069	clientY	
-	f	D	f_8513357	clientZ	
-	f	D	f_8117971	clientYaw	
-	f	D	f_7089388	clientPitch	
+	f	I	f_3954520	lerpSteps	
+	f	D	f_4751392	lerpX	
+	f	D	f_3243069	lerpY	
+	f	D	f_8513357	lerpZ	
+	f	D	f_8117971	lerpYaw	
+	f	D	f_7089388	lerpPitch	
 	m	(DDDFFI)V	m_2834985	m_2834985	
 		p	1		p_1	
 		p	3		p_3	
@@ -271,7 +271,7 @@ c	net/minecraft/unmapped/C_8094787
 		p	8			p_8
 		p	9			p_9
 c	net/minecraft/unmapped/C_8191584
-	m	(Lnet/minecraft/unmapped/C_1013763;F)F	m_6990398	getHandSwingProgress	
+	m	(Lnet/minecraft/unmapped/C_1013763;F)F	m_6990398	getAttackAnimationProgress	
 		p	1		entity	
 		p	2		tickDelta	
 c	net/minecraft/unmapped/C_8423495

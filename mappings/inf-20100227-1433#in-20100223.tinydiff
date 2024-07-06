@@ -87,10 +87,10 @@ c	net/minecraft/unmapped/C_0611937
 		p	1		p_1	
 		p	3		p_3	
 		p	5		p_5	
-	m	(DDD)D	m_9172372	m_9172372	
-		p	1		p_1	
-		p	3		p_3	
-		p	5		p_5	
+	m	(DDD)D	m_9172372	noise	
+		p	1		x	
+		p	3		y	
+		p	5		z	
 c	net/minecraft/unmapped/C_0823197
 	m	(Lnet/minecraft/unmapped/C_3906126;DDDDDD)V	<init>	<init>	
 		p	1		p_1	
@@ -128,11 +128,11 @@ c	net/minecraft/unmapped/C_1013763
 		p	3			p_3
 c	net/minecraft/unmapped/C_1044273
 	f	I	f_7010084	lightSkyGlList	
-	f	I	f_6271537	chunkGridMinX	
-	f	I	f_0695005	chunkGridMinY	
-	f	I	f_3013122	chunkGridMinZ	
-	f	I	f_7844112	chunkGridMaxX	
-	f	I	f_2778982	chunkGridMaxZ	
+	f	I	f_6271537	minChunkX	
+	f	I	f_0695005	minChunkY	
+	f	I	f_3013122	minChunkZ	
+	f	I	f_7844112	maxChunkX	
+	f	I	f_2778982	maxChunkZ	
 	f	D	f_3320356	prevCameraX	
 	f	D	f_1619923	prevCameraY	
 	f	D	f_4269846	prevCameraZ	
@@ -143,7 +143,7 @@ c	net/minecraft/unmapped/C_1044273
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(Lnet/minecraft/unmapped/C_6516244;)V	m_4361284	updateFrustums	
+	m	(Lnet/minecraft/unmapped/C_6516244;)V	m_4361284	cullChunks	
 		p	1		p_1	
 	m	(Ljava/lang/String;DDDFF)V	m_2244237	m_2244237	
 		p	1		p_1	
@@ -176,7 +176,7 @@ c	net/minecraft/unmapped/C_1044273
 		p	4			p_4
 		p	5			p_5
 		p	6			p_6
-	m	(Lnet/minecraft/unmapped/C_9265122;)V	m_4361284		updateFrustums
+	m	(Lnet/minecraft/unmapped/C_9265122;)V	m_4361284		cullChunks
 		p	1			p_1
 	m	(Ljava/lang/String;FFFFF)V	m_2244237		m_2244237
 		p	1			p_1
@@ -265,13 +265,13 @@ c	net/minecraft/unmapped/C_1414550
 		p	7		maxX	
 		p	9		maxY	
 		p	11		maxZ	
-	m	(DDD)Lnet/minecraft/unmapped/C_1414550;	m_3310866	grow	
-		c	Create a new {@code Box} that grows by the given amounts. Positive amounts lead to\nincreases in the maximum values, while negative amounts lead to decreases in the\nminimum values. This ensures the new {@code Box} is always bigger (unless the amounts\ngiven are all {@code 0}).	
+	m	(DDD)Lnet/minecraft/unmapped/C_1414550;	m_3310866	expanded	
+		c	Create a new {@code Box} that expands by the given amounts. Positive amounts lead to\nincreases in the maximum values, while negative amounts lead to decreases in the\nminimum values. This ensures the new {@code Box} is always bigger (unless the amounts\ngiven are all {@code 0}).	
 		p	1		dx	
 		p	3		dy	
 		p	5		dz	
-	m	(DDD)Lnet/minecraft/unmapped/C_1414550;	m_6186501	expand	
-		c	Create a new {@code Box} that is expanded by the given amounts. The minimum and maximum\nvalues are decreased and increased respectively by the amounts given. This means the\nnew {@code Box} will be bigger by twice the amounts given on each axis.	
+	m	(DDD)Lnet/minecraft/unmapped/C_1414550;	m_6186501	grown	
+		c	Create a new {@code Box} that grows by the given amounts. The minimum and maximum\nvalues are decreased and increased respectively by the amounts given. This means the\nnew {@code Box} will be bigger by twice the amounts given on each axis.	
 		p	1		dx	
 		p	3		dy	
 		p	5		dz	
@@ -284,7 +284,7 @@ c	net/minecraft/unmapped/C_1414550
 	m	(Lnet/minecraft/unmapped/C_1414550;D)D	m_4691507	intersectZ	
 		p	1		box	
 		p	2		limit	
-	m	(DDD)V	m_6640618	setMoved	
+	m	(DDD)V	m_6640618	move	
 		p	1		p_1	
 		p	3		p_3	
 		p	5		p_5	
@@ -295,11 +295,11 @@ c	net/minecraft/unmapped/C_1414550
 		p	4			p_4
 		p	5			p_5
 		p	6			p_6
-	m	(FFF)Lnet/minecraft/unmapped/C_1414550;	m_3310866		grow
+	m	(FFF)Lnet/minecraft/unmapped/C_1414550;	m_3310866		expanded
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(FFF)Lnet/minecraft/unmapped/C_1414550;	m_6186501		expand
+	m	(FFF)Lnet/minecraft/unmapped/C_1414550;	m_6186501		grown
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -314,7 +314,7 @@ c	net/minecraft/unmapped/C_1414550
 		p	2			p_2
 	m	(Lnet/minecraft/unmapped/C_1414550;)Z	m_9840312		m_9840312
 		p	1			p_1
-	m	(FFF)V	m_6640618		setMoved
+	m	(FFF)V	m_6640618		move
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -517,8 +517,8 @@ c	net/minecraft/unmapped/C_3385278
 	m	(Ljava/lang/String;)V	m_0137573		m_0137573
 		p	1			p_1
 c	net/minecraft/unmapped/C_3419581
-	m	(Lnet/minecraft/unmapped/C_6385858;)Z	m_4955853	m_4955853	
-		p	1		p_1	
+	m	(Lnet/minecraft/unmapped/C_6385858;)Z	m_4955853	cannotSee	
+		p	1		target	
 	m	(FFF)Z	m_2527158		m_2527158
 		p	1			p_1
 		p	2			p_2
@@ -624,13 +624,13 @@ c	net/minecraft/unmapped/C_3635204
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/unmapped/C_3688914
-	m	(DDDFF)V	m_8813677	m_8813677	
-		p	1		p_1	
-		p	3		p_3	
-		p	5		p_5	
-		p	7		p_7	
-		p	8		p_8	
-	m	(FFFFF)V	m_8813677		m_8813677
+	m	(DDDFF)V	m_8813677	shoot	
+		p	1		velocityX	
+		p	3		velocityY	
+		p	5		velocityZ	
+		p	7		power	
+		p	8		variance	
+	m	(FFFFF)V	m_8813677		shoot
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -673,10 +673,10 @@ c	net/minecraft/unmapped/C_3724278
 		p	4			p_4
 c	net/minecraft/unmapped/C_3906126
 	f	Lnet/minecraft/unmapped/C_4838406;	f_6886584	f_6886584	
-	f	Lnet/minecraft/unmapped/C_6385858;	f_6053391	f_6053391	
-	f	F	f_6988360	spawnpointX	
-	f	F	f_9398901	spawnpointY	
-	f	F	f_7237409	spawnpointZ	
+	f	Lnet/minecraft/unmapped/C_6385858;	f_6053391	player	
+	f	F	f_6988360	spawnPointX	
+	f	F	f_9398901	spawnPointY	
+	f	F	f_7237409	spawnPointZ	
 	f	Lnet/minecraft/unmapped/C_4078372;	f_7089801	f_7089801	
 	f	I	f_3061106		f_3061106
 	f	I	f_8212213		f_8212213
@@ -716,10 +716,10 @@ c	net/minecraft/unmapped/C_3906126
 	f	[S	f_6243074		f_6243074
 	f	[I	f_1752025		f_1752025
 	f	[I	f_9254905		f_9254905
-	m	(III)I	m_9052708	m_9052708	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+	m	(III)I	m_9052708	getBlock	
+		p	1		x	
+		p	2		y	
+		p	3		z	
 	m	(IIII)Z	m_6927039	setBlock	
 		p	1		x	
 		p	2		y	
@@ -741,7 +741,7 @@ c	net/minecraft/unmapped/C_3906126
 		p	10		velocityY	
 		p	12		velocityZ	
 	m	(Lnet/minecraft/unmapped/C_1414550;)Ljava/util/List;	m_1845335	getCollisions	
-		p	1		p_1	
+		p	1		bounds	
 	m	()Lnet/minecraft/unmapped/C_0336319;	m_2613927	getSkyColor	
 	m	()Lnet/minecraft/unmapped/C_0336319;	m_4256689	getCloudColor	
 	m	()Lnet/minecraft/unmapped/C_0336319;	m_2510182	getFogColor	
@@ -940,16 +940,16 @@ c	net/minecraft/unmapped/C_3906126
 		p	3			p_3
 c	net/minecraft/unmapped/C_3911481
 	m	(Lnet/minecraft/unmapped/C_3906126;DDD)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	4		p_4	
-		p	6		p_6	
+		p	1		world	
+		p	2		x	
+		p	4		y	
+		p	6		z	
 	m	(Lnet/minecraft/unmapped/C_3906126;DDDF)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	4		p_4	
-		p	6		p_6	
-		p	8		p_8	
+		p	1		world	
+		p	2		x	
+		p	4		y	
+		p	6		z	
+		p	8		scale	
 	m	(Lnet/minecraft/unmapped/C_3906126;FFF)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -982,7 +982,7 @@ c	net/minecraft/unmapped/C_4078372	net/minecraft/world/gen/chunk/OverworldChunkG
 	f	Ljava/util/Random;	f_3952515	f_3952515	
 	f	Lnet/minecraft/unmapped/C_6205974;	f_6281590	minLimitPerlinNoise	
 	f	Lnet/minecraft/unmapped/C_6205974;	f_7885619	maxLimitPerlinNoise	
-	f	Lnet/minecraft/unmapped/C_6205974;	f_5435487	mainPerlinNoise	
+	f	Lnet/minecraft/unmapped/C_6205974;	f_5435487	perlinNoise1	
 	f	Lnet/minecraft/unmapped/C_6205974;	f_4682337	f_4682337	
 	f	Lnet/minecraft/unmapped/C_6205974;	f_8421429	f_8421429	
 	f	Lnet/minecraft/unmapped/C_6205974;	f_1600301	f_1600301	
@@ -1171,10 +1171,10 @@ c	net/minecraft/unmapped/C_5283200
 		p	1		x	
 		p	2		y	
 		p	3		z	
-	m	(Lnet/minecraft/unmapped/C_6516244;)V	m_5092852	updateVisibility	
+	m	(Lnet/minecraft/unmapped/C_6516244;)V	m_5092852	cull	
 		p	1		p_1	
 	m	()Z	m_0524223	isEmpty	
-	m	(Lnet/minecraft/unmapped/C_9265122;)V	m_5092852		updateVisibility
+	m	(Lnet/minecraft/unmapped/C_9265122;)V	m_5092852		cull
 		p	1			p_1
 c	net/minecraft/unmapped/C_5299152
 	m	()Z	m_5256523		m_5256523
@@ -1254,9 +1254,9 @@ c	net/minecraft/unmapped/C_6007430
 c	net/minecraft/unmapped/C_6205974
 	m	(I)V	<init>	<init>	
 		p	1		p_1	
-	m	(DD)D	m_1189144	m_1189144	
-		p	1		p_1	
-		p	3		p_3	
+	m	(DD)D	m_1189144	getValue	
+		p	1		x	
+		p	3		z	
 	m	(DDD)D	m_1502652	m_1502652	
 		p	1		p_1	
 		p	3		p_3	
@@ -1294,31 +1294,31 @@ c	net/minecraft/unmapped/C_6368853
 		p	4			p_4
 		p	5			p_5
 c	net/minecraft/unmapped/C_6385858
-	f	D	f_7030235	prevX	
-	f	D	f_0785216	prevY	
-	f	D	f_0921820	prevZ	
+	f	D	f_7030235	lastX	
+	f	D	f_0785216	lastY	
+	f	D	f_0921820	lastZ	
 	f	D	f_1958235	x	
 	f	D	f_2469136	y	
 	f	D	f_2243525	z	
 	f	D	f_6075053	velocityX	
 	f	D	f_4622616	velocityY	
 	f	D	f_9116444	velocityZ	
-	f	D	f_2452937	prevTickX	
-	f	D	f_0546174	prevTickY	
-	f	D	f_9586137	prevTickZ	
+	f	D	f_2452937	prevX	
+	f	D	f_0546174	prevY	
+	f	D	f_9586137	prevZ	
 	f	Z	f_0993166		f_0993166
-	f	F	f_7030235		prevX
-	f	F	f_0785216		prevY
-	f	F	f_0921820		prevZ
+	f	F	f_7030235		lastX
+	f	F	f_0785216		lastY
+	f	F	f_0921820		lastZ
 	f	F	f_1958235		x
 	f	F	f_2469136		y
 	f	F	f_2243525		z
 	f	F	f_6075053		velocityX
 	f	F	f_4622616		velocityY
 	f	F	f_9116444		velocityZ
-	f	F	f_2452937		prevTickX
-	f	F	f_0546174		prevTickY
-	f	F	f_9586137		prevTickZ
+	f	F	f_2452937		prevX
+	f	F	f_0546174		prevY
+	f	F	f_9586137		prevZ
 	m	(DDD)V	m_2141747	setPosition	
 		p	1		x	
 		p	3		y	
@@ -1331,13 +1331,13 @@ c	net/minecraft/unmapped/C_6385858
 		p	1		dx	
 		p	3		dy	
 		p	5		dz	
-	m	(DDDFF)V	m_0917900	refreshPositionAndAngles	
+	m	(DDDFF)V	m_0917900	setPositionAndAngles	
 		p	1		x	
 		p	3		y	
 		p	5		z	
 		p	7		yaw	
 		p	8		pitch	
-	m	(Lnet/minecraft/unmapped/C_6385858;)D	m_1103396	getSquaredDistanceTo	
+	m	(Lnet/minecraft/unmapped/C_6385858;)D	m_1103396	squaredDistanceTo	
 		p	1		entity	
 	m	(FFF)V	m_2141747		setPosition
 		p	1			p_1
@@ -1353,13 +1353,13 @@ c	net/minecraft/unmapped/C_6385858
 		p	3			p_3
 	m	(Lnet/minecraft/unmapped/C_3906126;)V	m_7680946		m_7680946
 		p	1			p_1
-	m	(FFFFF)V	m_0917900		refreshPositionAndAngles
+	m	(FFFFF)V	m_0917900		setPositionAndAngles
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	(Lnet/minecraft/unmapped/C_6385858;)F	m_1103396		getSquaredDistanceTo
+	m	(Lnet/minecraft/unmapped/C_6385858;)F	m_1103396		squaredDistanceTo
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_5009044;)V	m_2248046		m_2248046
 		p	1			p_1
@@ -1649,21 +1649,21 @@ c	net/minecraft/unmapped/C_9072802
 c	net/minecraft/unmapped/C_9087319	net/minecraft/unmapped/C_9087319	
 	m	()V	<init>	<init>	
 c	net/minecraft/unmapped/C_9232749
-	m	(Ljava/lang/String;DDDFF)V	m_2244237	m_2244237	
-		p	1		p_1	
-		p	2		p_2	
-		p	4		p_4	
-		p	6		p_6	
-		p	8		p_8	
-		p	9		p_9	
-	m	(Ljava/lang/String;DDDDDD)V	m_5421083	m_5421083	
-		p	1		p_1	
-		p	2		p_2	
-		p	4		p_4	
-		p	6		p_6	
-		p	8		p_8	
-		p	10		p_10	
-		p	12		p_12	
+	m	(Ljava/lang/String;DDDFF)V	m_2244237	playSound	
+		p	1		sound	
+		p	2		x	
+		p	4		y	
+		p	6		z	
+		p	8		pitch	
+		p	9		volume	
+	m	(Ljava/lang/String;DDDDDD)V	m_5421083	addParticle	
+		p	1		particle	
+		p	2		x	
+		p	4		y	
+		p	6		z	
+		p	8		velocityX	
+		p	10		velocityY	
+		p	12		velocityZ	
 	m	(IIIIII)V	m_7332861		m_7332861
 		p	1			p_1
 		p	2			p_2
@@ -1672,14 +1672,14 @@ c	net/minecraft/unmapped/C_9232749
 		p	5			p_5
 		p	6			p_6
 	m	()V	m_8889498		m_8889498
-	m	(Ljava/lang/String;FFFFF)V	m_2244237		m_2244237
+	m	(Ljava/lang/String;FFFFF)V	m_2244237		playSound
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
 		p	6			p_6
-	m	(Ljava/lang/String;FFFFFF)V	m_5421083		m_5421083
+	m	(Ljava/lang/String;FFFFFF)V	m_5421083		addParticle
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -1761,7 +1761,7 @@ c	net/minecraft/unmapped/C_9610577
 		p	6		dz	
 		p	8		yaw	
 		p	9		tickDelta	
-	m	(DDD)D	m_4834975	getSquaredDistanceToCamera	
+	m	(DDD)D	m_4834975	squaredDistanceToCamera	
 		p	1		x	
 		p	3		y	
 		p	5		z	
@@ -1772,7 +1772,7 @@ c	net/minecraft/unmapped/C_9610577
 		p	4			p_4
 		p	5			p_5
 		p	6			p_6
-	m	(FFF)F	m_4834975		getSquaredDistanceToCamera
+	m	(FFF)F	m_4834975		squaredDistanceToCamera
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3

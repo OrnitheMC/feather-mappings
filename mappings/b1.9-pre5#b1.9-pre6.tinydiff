@@ -1,12 +1,12 @@
 tiny	2	0
 c	net/minecraft/client/Minecraft
-	m	(ZI)V	m_6862388	m_6862388	
-		p	1		p_1	
-		p	2		p_2	
-	m	(ZIZ)V	m_6862388		m_6862388
-		p	1			p_1
-		p	2			dimensionId
-		p	3			p_3
+	m	(ZI)V	m_6862388	respawnPlayer	
+		p	1		worldSpawn	
+		p	2		dimension	
+	m	(ZIZ)V	m_6862388		respawnPlayer
+		p	1			worldSpawn
+		p	2			dimension
+		p	3			keepInventory
 c	net/minecraft/unmapped/C_0019534
 	m	(Lnet/minecraft/unmapped/C_0324512;I)Lnet/minecraft/unmapped/C_0324512;	m_2787279	respawn	
 		p	1		player	
@@ -95,7 +95,7 @@ c	net/minecraft/unmapped/C_3906126
 		p	3			z
 		p	4			blockId
 		p	5			delay
-	m	(IIIZ)Z	m_1649682		isOpaqueFullCube
+	m	(IIIZ)Z	m_1649682		isSolidBlockingCube
 		p	1			x
 		p	2			y
 		p	3			z
@@ -154,8 +154,8 @@ c	net/minecraft/unmapped/C_6160704
 	m	(Z)V	<init>		<init>
 		p	1			p_1
 c	net/minecraft/unmapped/C_6385858
-	f	I	f_2474245	f_2474245	
-	f	I	f_1258318	f_1258318	
+	f	I	f_2474245	breathCapacity	
+	f	I	f_1258318	breath	
 	m	()I	m_2064128		getBreath
 	m	(I)V	m_8246185		setBreath
 		p	1			breath
@@ -188,21 +188,21 @@ c	net/minecraft/unmapped/C_7185906
 		p	1			min
 		p	2			max
 c	net/minecraft/unmapped/C_7256819
-	f	I	f_7374961	f_7374961	
-	f	I	f_0909332	f_0909332	
-	f	I	f_4325208	f_4325208	
+	f	I	f_7374961	damage	
+	f	I	f_0909332	damagedTimer	
+	f	I	f_4325208	damagedSwingDir	
 	m	()Z	m_5067021		hasFuel
 	m	(Z)V	m_8632231		setHasFuel
 		p	1			hasFuel
-	m	(I)V	m_5546072		setDamageWobbleStrength
-		p	1			strength
-	m	()I	m_9789795		getDamageWobbleStrength
-	m	(I)V	m_1295672		setDamageWobbleTicks
+	m	(I)V	m_5546072		setDamage
+		p	1			damage
+	m	()I	m_9789795		getDamage
+	m	(I)V	m_1295672		setDamagedTimer
 		p	1			ticks
-	m	()I	m_4540661		getDamageWobbleTicks
-	m	(I)V	m_6791091		setDamageWobbleSide
-		p	1			ticks
-	m	()I	m_9247388		getDamageWobbleSide
+	m	()I	m_4540661		getDamagedTimer
+	m	(I)V	m_6791091		setDamagedSwingDirection
+		p	1			dir
+	m	()I	m_9247388		getDamagedSwingDirection
 c	net/minecraft/unmapped/C_7261559
 	m	(ILjava/util/Random;I)I	m_6894859	m_6894859	
 		p	1		p_1	
@@ -267,9 +267,9 @@ c	net/minecraft/unmapped/C_9832438
 	m	()V	m_2439117		tickEndCrystalInteraction
 		c		End crystal related actions that should be performed every tick.\n    - Disconnect from the crystal if it is removed\n    - If connected to a crystal, heal with a 1/10 chance each tick\n      (on average this means it heals every 10 ticks)\n    - Search for the nearest crystal and connect to it if valid
 	m	()V	m_7133652		m_7133652
-	m	(Ljava/util/List;)V	m_2391087		flingLivingEntities
+	m	(Ljava/util/List;)V	m_2391087		flingMobs
 		p	1			entities
-	m	(Ljava/util/List;)V	m_3800990		damageLivingEntities
+	m	(Ljava/util/List;)V	m_3800990		damageMobs
 		p	1			entities
 	m	()V	m_4159312		chooseTarget
 	m	(II)V	m_8591913		createPortal
@@ -278,21 +278,21 @@ c	net/minecraft/unmapped/C_9832438
 		p	2			z
 	m	()I	m_9161906		m_9161906
 c	net/minecraft/unmapped/C_9958683
-	f	I	f_3318676	f_3318676	
-	f	I	f_4105400	f_4105400	
-	f	I	f_6372840	f_6372840	
+	f	I	f_3318676	damage	
+	f	I	f_4105400	damagedTimer	
+	f	I	f_6372840	damagedSwingDir	
 	m	(I)V	m_7512687		setDamage
 		p	1			damage
 	m	()I	m_2203772		getDamage
-	m	(I)V	m_2333674		setBreakingWindow
+	m	(I)V	m_2333674		setDamagedTimer
 		c		When a boat is hit it starts wiggling. You need to consequitively hit it in that window to be able to do\nenough damage until the boat breaks. This method sets that value in the datatracker.\nThe value is initially set to 10 when hit and decreases by one each tick when the boat is not hit.
-		p	1			value
-	m	()I	m_3113682		getBreakingWindow
+		p	1			ticks
+	m	()I	m_3113682		getDamagedTimer
 		c		When a boat is hit it starts wiggling. You need to consequitively hit it in that window to be able to do\nenough damage until the boat breaks. This method gets that value in the datatracker.\nThe value is initially set to 10 when hit and decreases by one each tick when the boat is not hit.
-	m	(I)V	m_8405533		setAnitmationSide
+	m	(I)V	m_8405533		setDamagedSwingDirection
 		c		This value determines on which side the wiggle animation starts.\nSee {@link net.minecraft.client.render.entity.BoatRenderer#render}}\n    -1:     start to the right\n     1:     start to the left\nDefault: 1
 		p	1			value
-	m	()I	m_1635139		getAnimationSide
+	m	()I	m_1635139		getDamagedSwingDirection
 c	net/minecraft/unmapped/C_1339969		net/minecraft/entity/EnderCrystalEntity
 	f	I	f_5813219		age
 	f	I	f_8751064		explosionCountdown

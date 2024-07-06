@@ -1,9 +1,9 @@
 tiny	2	0
 c	net/minecraft/client/Minecraft
-	f	[J	f_4898713	f_4898713	
-	f	I	f_9040180	f_9040180	
+	f	[J	f_4898713	frameTimes	
+	f	I	f_9040180	frameTimeIndex	
 	f	J	f_4786763	timeAfterLastTick	
-	m	(Lnet/minecraft/unmapped/C_8135468;)V	m_8906868	printCrashReport	
+	m	(Lnet/minecraft/unmapped/C_8135468;)V	m_8906868	handleCrash	
 		p	1		p_1	
 	m	()V	m_8779594	renderProfilerChart	
 c	net/minecraft/unmapped/C_0070166
@@ -66,17 +66,17 @@ c	net/minecraft/unmapped/C_0459721
 	m	(Lnet/minecraft/unmapped/C_2627205;)V	<init>	<init>	
 		p	1		world	
 	m	(Lnet/minecraft/unmapped/C_3906126;)V	<init>		<init>
-		p	1			p_1
+		p	1			world
 c	net/minecraft/unmapped/C_1013763
 	m	()V	m_0464956	m_0464956	
 	m	()V	m_4691206	m_4691206	
 c	net/minecraft/unmapped/C_1044273
-	f	I	f_6504228	solidChunkCount	
-	f	[Lnet/minecraft/unmapped/C_2433962;	f_1596986	renderStages	
-	f	I	f_5393198	frustumUpdateIndex	
+	f	I	f_6504228	emptyChunkCount	
+	f	[Lnet/minecraft/unmapped/C_2433962;	f_1596986	chunkRenderers	
+	f	I	f_5393198	cullStep	
 	f	Ljava/nio/FloatBuffer;	f_1273947		f_1273947
 	m	()V	m_4170973	renderStars	
-	m	()V	m_6291103	render	
+	m	()V	m_6291103	renderLastChunks	
 	m	(ID)V	m_0907931		m_0907931
 		p	1			p_1
 		p	2			p_2
@@ -126,16 +126,16 @@ c	net/minecraft/unmapped/C_2334550
 	m	(I)V	<init>	<init>	
 		p	1		size	
 	m	()V	<init>		<init>
-c	net/minecraft/unmapped/C_2433962	net/minecraft/client/render/world/RenderChunkStorage	
-	f	I	f_5347755	regionX	
-	f	I	f_5133825	regionY	
-	f	I	f_3916489	regionZ	
-	f	F	f_8769167	cameraX	
-	f	F	f_1250686	cameraY	
-	f	F	f_0219798	cameraZ	
-	f	Ljava/nio/IntBuffer;	f_1544849	glList	
-	f	Z	f_9001135	renderingLeft	
-	f	Z	f_1491802	doNotFlipGlList	
+c	net/minecraft/unmapped/C_2433962	net/minecraft/client/render/world/ChunkRenderer	
+	f	I	f_5347755	x	
+	f	I	f_5133825	y	
+	f	I	f_3916489	z	
+	f	F	f_8769167	offsetX	
+	f	F	f_1250686	offsetY	
+	f	F	f_0219798	offsetZ	
+	f	Ljava/nio/IntBuffer;	f_1544849	glListBuffer	
+	f	Z	f_9001135	initialized	
+	f	Z	f_1491802	rendered	
 	m	()V	<init>	<init>	
 	m	(IIIDDD)V	m_9604465	m_9604465	
 		p	1		p_1	
@@ -199,8 +199,7 @@ c	net/minecraft/unmapped/C_2627205	net/minecraft/world/WorldView
 		p	1		x	
 		p	2		y	
 		p	3		z	
-	m	(III)Z	m_3624759	isRedstoneConductor	
-		c	Returns whether the block at the given position conducts redstone signals.	
+	m	(III)Z	m_3624759	isSolidBlock	
 		p	1		x	
 		p	2		y	
 		p	3		z	
@@ -255,7 +254,7 @@ c	net/minecraft/unmapped/C_3134254	net/minecraft/world/WorldRegion
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(IIIZ)I	m_4682712	getLightLevel	
+	m	(IIIZ)I	m_4682712	getRawBrightness	
 		p	1		x	
 		p	2		y	
 		p	3		z	
@@ -307,7 +306,7 @@ c	net/minecraft/unmapped/C_3635204
 	f	Lnet/minecraft/unmapped/C_3635204;	f_1605453		f_1605453
 	f	Lnet/minecraft/unmapped/C_3635204;	f_4533105		f_4533105
 	f	Lnet/minecraft/unmapped/C_3635204;	f_2031679		f_2031679
-	m	(Lnet/minecraft/unmapped/C_2627205;III)F	m_1598263	getLightLevel	
+	m	(Lnet/minecraft/unmapped/C_2627205;III)F	m_1598263	getBrightness	
 		p	1		world	
 		p	2		x	
 		p	3		y	
@@ -329,7 +328,7 @@ c	net/minecraft/unmapped/C_3635204
 		p	2		x	
 		p	3		y	
 		p	4		z	
-	m	(Lnet/minecraft/unmapped/C_3906126;III)F	m_1598263		getLightLevel
+	m	(Lnet/minecraft/unmapped/C_3906126;III)F	m_1598263		getBrightness
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -358,8 +357,8 @@ c	net/minecraft/unmapped/C_3724278
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_3906126
 	f	Ljava/util/List;	f_8245938	entitiesToRemove	
-	f	Lnet/minecraft/unmapped/C_0459721;	f_3696186		f_3696186
-	m	(ZLnet/minecraft/unmapped/C_5902900;)V	m_4418114	saveAll	
+	f	Lnet/minecraft/unmapped/C_0459721;	f_3696186		pathFinder
+	m	(ZLnet/minecraft/unmapped/C_5902900;)V	m_4418114	save	
 		p	1		p_1	
 		p	2		p_2	
 	m	(Lnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_1414550;)Ljava/util/List;	m_1845335	getCollisions	
@@ -367,7 +366,7 @@ c	net/minecraft/unmapped/C_3906126
 		p	2		shape	
 	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_3502009	updateEntity	
 		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_5902900;)V	m_5794371	waitIfSaving	
+	m	(Lnet/minecraft/unmapped/C_5902900;)V	m_5794371	forceSave	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_6385858;F)Lnet/minecraft/unmapped/C_7641996;	m_7084862	findPath	
 		p	1		entity	
@@ -379,12 +378,12 @@ c	net/minecraft/unmapped/C_3906126
 		p	3		y	
 		p	4		z	
 		p	5		range	
-	m	(Z)V	m_4418114		saveAll
-		p	1			p_1
+	m	(Z)V	m_4418114		save
+		p	1			saveEntities
 	m	(Lnet/minecraft/unmapped/C_1414550;)Ljava/util/List;	m_1845335		getCollisions
-		p	1			p_1
-	m	()V	m_5794371		waitIfSaving
-	m	()I	m_3113518		m_3113518
+		p	1			bounds
+	m	()V	m_5794371		forceSave
+	m	()I	m_3113518		getLightUpdateCount
 	m	(III)F	m_6019688	m_6019688	getBrightness
 		p	1		p_1	x
 		p	2		p_2	y
@@ -393,12 +392,28 @@ c	net/minecraft/unmapped/C_3906126
 		p	1		p_1	x
 		p	2		p_2	y
 		p	3		p_3	z
-c	net/minecraft/unmapped/C_4007811	net/minecraft/unmapped/C_4007811	
+	m	(III)I	m_9052708	m_9052708	getBlock
+		p	1		p_1	x
+		p	2		p_2	y
+		p	3		p_3	z
+	m	(III)Lnet/minecraft/unmapped/C_8554894;	m_7904701	m_7904701	getMaterial
+		p	1		p_1	x
+		p	2		p_2	y
+		p	3		p_3	z
+	m	(III)I	m_8183909	m_8183909	getBlockMetadata
+		p	1		p_1	x
+		p	2		p_2	y
+		p	3		p_3	z
+	m	(III)Z	m_3624759	m_3624759	isSolidBlock
+		p	1		p_1	x
+		p	2		p_2	y
+		p	3		p_3	z
+c	net/minecraft/unmapped/C_4007811	net/minecraft/world/HostileMobSpawner	
 	m	(Lnet/minecraft/unmapped/C_3271339;ILjava/lang/Class;[Ljava/lang/Class;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
+		p	1		interactionManager	
+		p	2		cap	
+		p	3		baseType	
+		p	4		types	
 	m	(Lnet/minecraft/unmapped/C_3906126;II)Lnet/minecraft/unmapped/C_8032589;	m_0572155	m_0572155	
 		p	1		p_1	
 		p	2		p_2	
@@ -410,8 +425,8 @@ c	net/minecraft/unmapped/C_4078372
 	m	(Z)V	m_8231616		m_8231616
 		p	1			p_1
 c	net/minecraft/unmapped/C_4558465
-	m	(Lnet/minecraft/unmapped/C_2627205;III)I	m_6035549	getDistanceToSource	
-		c	Returns the distance to a source fluid. A falling fluid acts as a source.	
+	m	(Lnet/minecraft/unmapped/C_2627205;III)I	m_6035549	getLiquidDepth	
+		c	@return the depth of the liquid at the given position - that is to say, how shallow it lies within this block -\nor {@code -1} if the given position is not occupied by this liquid.	
 		p	1		world	
 		p	2		x	
 		p	3		y	
@@ -423,6 +438,7 @@ c	net/minecraft/unmapped/C_4558465
 		p	4		p_4	
 		p	5		p_5	
 	m	(Lnet/minecraft/unmapped/C_2627205;III)Lnet/minecraft/unmapped/C_0336319;	m_1574930	getFlow	
+		c	@return a vector representing the flow direction of this liquid.	
 		p	1		world	
 		p	2		x	
 		p	3		y	
@@ -438,12 +454,13 @@ c	net/minecraft/unmapped/C_4558465
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
-	m	(Lnet/minecraft/unmapped/C_3906126;III)V	m_5713257	playFizzSound	
+	m	(Lnet/minecraft/unmapped/C_3906126;III)V	m_5713257	fizz	
+		c	Plays sound and particle effects for 'fizzing' lava.	
 		p	0		p_0	
 		p	1		world	
 		p	2		x	
 		p	3		y	
-	m	(Lnet/minecraft/unmapped/C_3906126;III)I	m_6035549		getDistanceToSource
+	m	(Lnet/minecraft/unmapped/C_3906126;III)I	m_6035549		getLiquidDepth
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -495,11 +512,11 @@ c	net/minecraft/unmapped/C_5283200
 c	net/minecraft/unmapped/C_5367636
 	m	()V	m_0718337	m_0718337	
 c	net/minecraft/unmapped/C_5902900
-	m	()V	m_5266201	m_5266201	
-	m	(Ljava/lang/String;)V	m_5570081	m_5570081	
-		p	1		p_1	
-	m	(I)V	m_3915830	m_3915830	
-		p	1		p_1	
+	m	()V	m_5266201	progressStartNoAbort	
+	m	(Ljava/lang/String;)V	m_5570081	progressStage	
+		p	1		stage	
+	m	(I)V	m_3915830	progressPercentage	
+		p	1		percentage	
 c	net/minecraft/unmapped/C_6385858
 	f	Lnet/minecraft/unmapped/C_6385858;	f_5736304	rider	
 	f	Lnet/minecraft/unmapped/C_6385858;	f_4481416	vehicle	
@@ -508,7 +525,7 @@ c	net/minecraft/unmapped/C_6385858
 	m	()Lnet/minecraft/unmapped/C_1414550;	m_8299246	getCollisionShape	
 	m	(Lnet/minecraft/unmapped/C_6385858;)Lnet/minecraft/unmapped/C_1414550;	m_8446175	getCollisionAgainstShape	
 		p	1		other	
-	m	()V	m_4691206	tickRiding	
+	m	()V	m_4691206	rideTick	
 	m	(Lnet/minecraft/unmapped/C_5009044;)V	m_6033607		m_6033607
 		p	1			p_1
 c	net/minecraft/unmapped/C_6469655	net/minecraft/block/RailBlock__RailNode	
@@ -546,35 +563,35 @@ c	net/minecraft/unmapped/C_6755599
 	m	(Lnet/minecraft/unmapped/C_2074023;)V	m_0612835	m_0612835	
 		p	1		p_1	
 	m	()Z	m_6390671	shouldSave	
-	m	(IIII)V	m_3875116		m_3875116
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_5863046;III)I	m_1286838		m_1286838
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_5863046;IIII)V	m_3334061		m_3334061
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+	m	(IIII)V	m_3875116		setBlockMetadata
+		p	1			localX
+		p	2			y
+		p	3			localZ
+		p	4			metadata
+	m	(Lnet/minecraft/unmapped/C_5863046;III)I	m_1286838		getLight
+		p	1			type
+		p	2			localX
+		p	3			y
+		p	4			localZ
+	m	(Lnet/minecraft/unmapped/C_5863046;IIII)V	m_3334061		setLight
+		p	1			type
+		p	2			localX
+		p	3			y
+		p	4			localZ
+		p	5			light
 	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_8402936		m_8402936
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_2800860;)Lnet/minecraft/unmapped/C_6755599;	m_2208916		m_2208916
 		p	0			p_0
 		p	1			p_1
-	m	(III)V	m_3088960		m_3088960
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	()V	m_6736297		m_6736297
-	m	()V	m_1033437		m_1033437
-	m	(Z)Z	m_0432779		m_0432779
-		p	1			p_1
+	m	(III)V	m_3088960		removeBlockEntity
+		p	1			localX
+		p	2			y
+		p	3			localZ
+	m	()V	m_6736297		load
+	m	()V	m_1033437		unload
+	m	(Z)Z	m_0432779		shouldSave
+		p	1			saveEntities
 c	net/minecraft/unmapped/C_6894171	net/minecraft/unmapped/C_6894171	
 	f	Ljava/nio/channels/FileChannel;	f_8320607	f_8320607	
 	f	J	f_7994854	f_7994854	
@@ -610,9 +627,9 @@ c	net/minecraft/unmapped/C_7226165	net/minecraft/unmapped/C_7226165
 	m	(Lnet/minecraft/unmapped/C_8135468;)V	m_8906868	m_8906868	
 		p	1		p_1	
 c	net/minecraft/unmapped/C_7256819
-	f	I	f_7374961	f_7374961	
-	f	I	f_0909332	f_0909332	
-	f	I	f_4325208	f_4325208	
+	f	I	f_7374961	damage	
+	f	I	f_0909332	damagedTimer	
+	f	I	f_4325208	damagedSwingDir	
 	m	(Lnet/minecraft/unmapped/C_6385858;)Lnet/minecraft/unmapped/C_1414550;	m_8446175	m_8446175	
 		p	1		p_1	
 	m	()Lnet/minecraft/unmapped/C_1414550;	m_8299246	m_8299246	
@@ -634,7 +651,7 @@ c	net/minecraft/unmapped/C_7693268
 		p	2		x	
 		p	3		y	
 		p	4		z	
-		p	5		level	
+		p	5		depth	
 c	net/minecraft/unmapped/C_7837239	net/minecraft/unmapped/C_7837239	
 	f	Lnet/minecraft/unmapped/C_2286002;	f_4997034	f_4997034	
 	f	Lnet/minecraft/unmapped/C_2286002;	f_7239286	f_7239286	
@@ -689,8 +706,8 @@ c	net/minecraft/unmapped/C_8135468	net/minecraft/nbt/NbtIo
 	m	(Ljava/io/DataInput;)Lnet/minecraft/unmapped/C_2800860;	m_3407981	m_3407981	
 		p	0		p_0	
 c	net/minecraft/unmapped/C_8425960
-	f	Z	f_6911213	updated	
-	m	(Ljava/lang/String;)V	m_6435809	setInitialTitle	
+	f	Z	f_6911213	noAbort	
+	m	(Ljava/lang/String;)V	m_6435809	progressStart	
 		p	1		title	
 	m	()V	m_5266201	m_5266201	
 	m	()V	<init>		<init>
@@ -699,6 +716,11 @@ c	net/minecraft/unmapped/C_8425960
 	m	(Lnet/minecraft/unmapped/C_2800860;Ljava/io/OutputStream;)V	m_5551645		m_5551645
 		p	0			p_0
 		p	1			p_1
+	m	(Ljava/lang/String;)V	m_5570081	m_5570081	progressStage
+		p	1		p_1	stage
+	m	(I)V	m_3915830	m_3915830	progressPercentage
+		p	1		p_1	percentage
+	m	(Ljava/lang/String;)V	m_4655768	start	progressStart
 c	net/minecraft/unmapped/C_8443484
 	m	(Lnet/minecraft/unmapped/C_2627205;IIII)Z	m_8199947	m_8199947	
 		p	1		p_1	
@@ -784,32 +806,32 @@ c	net/minecraft/unmapped/C_9331929
 		p	4			p_4
 		p	5			p_5
 c	net/minecraft/unmapped/C_9377562
-	f	Ljava/util/Random;	f_7485346		f_7485346
+	f	Ljava/util/Random;	f_7485346		random
 	m	(Lnet/minecraft/unmapped/C_3906126;II)Lnet/minecraft/unmapped/C_8032589;	m_0572155	getRandomPosInChunk	
-		p	1		chunkX	
-		p	2		chunkZ	
-		p	3		p_3	
-	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_6385858;)I	m_2453784	tick	
-		p	1		p_1	
-		p	2		p_2	
-	m	(Lnet/minecraft/unmapped/C_3906126;ILnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_5902900;)I	m_2453784		tick
-		p	1			p_1
+		p	1		world	
+		p	2		chunkX	
+		p	3		chunkZ	
+	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_6385858;)I	m_2453784	run	
+		p	1		world	
+		p	2		around	
+	m	(Lnet/minecraft/unmapped/C_3906126;ILnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_5902900;)I	m_2453784		run
+		p	1			world
 		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	3			around
+		p	4			listener
 c	net/minecraft/unmapped/C_9484672
-	m	(ZLnet/minecraft/unmapped/C_5902900;)Z	m_8231616	saveAll	
+	m	(ZLnet/minecraft/unmapped/C_5902900;)Z	m_8231616	save	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Z)V	m_8231616		saveAll
-		p	1			p_1
+	m	(Z)V	m_8231616		save
+		p	1			saveEntities
 c	net/minecraft/unmapped/C_9764049
-	m	(Lnet/minecraft/unmapped/C_2627205;III)Z	m_8454404	canBurn	
+	m	(Lnet/minecraft/unmapped/C_2627205;III)Z	m_8454404	isFlammable	
 		p	1		world	
 		p	2		x	
 		p	3		y	
 		p	4		z	
-	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_8454404		canBurn
+	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_8454404		isFlammable
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3

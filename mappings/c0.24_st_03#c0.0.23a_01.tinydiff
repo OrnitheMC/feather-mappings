@@ -11,14 +11,14 @@ c	net/minecraft/client/Minecraft
 		p	3		p_3	
 		p	4		p_4	
 		p	5		p_5	
-	m	(I)V	m_5678101	doUse	
-		p	1		p_1	
+	m	(I)V	m_5678101	handleMouseClick	
+		p	1		button	
 	m	(Ljava/awt/Canvas;IIZ)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	()V	m_5678101		doUse
+	m	()V	m_5678101		handleMouseClick
 c	net/minecraft/unmapped/C_0289174
 	f	Z	f_2994085	flipped	
 	f	Z	f_2797670	f_2797670	
@@ -99,7 +99,7 @@ c	net/minecraft/unmapped/C_1022696	net/minecraft/unmapped/C_1022696
 c	net/minecraft/unmapped/C_1044273
 	f	Lnet/minecraft/client/Minecraft;	f_5470803	minecraft	
 	f	[I	f_6069347	f_6069347	
-	f	F	f_6975940	f_6975940	
+	f	F	f_6975940	miningProgress	
 	m	(Lnet/minecraft/client/Minecraft;Lnet/minecraft/unmapped/C_3385278;)V	<init>	<init>	
 		p	1		minecraft	
 		p	2		textureManager	
@@ -261,17 +261,17 @@ c	net/minecraft/unmapped/C_3354938
 	m	(Lnet/minecraft/unmapped/C_3635204;)V	m_0226182		m_0226182
 		p	1			p_1
 c	net/minecraft/unmapped/C_3385278
-	f	Ljava/util/HashMap;	f_2107354	boundTextures	
+	f	Ljava/util/HashMap;	f_2107354	textureImages	
 	f	Lnet/minecraft/unmapped/C_7688744;	f_9630201	options	
 	m	(Lnet/minecraft/unmapped/C_7688744;)V	<init>	<init>	
 		p	1		p_1	
 	m	(Ljava/awt/image/BufferedImage;)Ljava/awt/image/BufferedImage;	m_5060881	rescale	
 		p	0		p_0	
-	m	(Ljava/awt/image/BufferedImage;I)V	m_5303716	bind	
+	m	(Ljava/awt/image/BufferedImage;I)V	m_5303716	load	
 		p	1		image	
-		p	2		texture	
+		p	2		id	
 	m	()V	<init>		<init>
-	m	(Ljava/awt/image/BufferedImage;)I	m_5303716		bind
+	m	(Ljava/awt/image/BufferedImage;)I	m_5303716		load
 		p	1			p_1
 c	net/minecraft/unmapped/C_3464647
 	m	()Ljava/util/List;	m_8518413	m_8518413	
@@ -297,7 +297,7 @@ c	net/minecraft/unmapped/C_3635204
 	f	[Z	f_5383163	f_5383163	
 	f	[Z	f_1548894	IS_TRANSLUCENT	
 	f	I	f_2859729	miningSpeed	
-	m	()Z	m_1538589	isFullCube	
+	m	()Z	m_1538589	isCube	
 	m	(Lnet/minecraft/unmapped/C_7120212;FFF)Lnet/minecraft/unmapped/C_3635204;	m_7659331	m_7659331	
 		p	1		p_1	
 		p	2		p_2	
@@ -411,15 +411,15 @@ c	net/minecraft/unmapped/C_3906126
 	m	(Lnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_1414550;)Ljava/util/List;	m_7403447	m_7403447	
 		p	1		p_1	
 		p	2		p_2	
-	m	(III)Lnet/minecraft/unmapped/C_8554894;	m_7904701	m_7904701	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+	m	(III)Lnet/minecraft/unmapped/C_8554894;	m_7904701	getMaterial	
+		p	1		x	
+		p	2		y	
+		p	3		z	
 	m	(III)Z	m_0220816	m_0220816	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	()Lnet/minecraft/unmapped/C_6385858;	m_0519267	m_0519267	
+	m	()Lnet/minecraft/unmapped/C_6385858;	m_0519267	getPlayers	
 	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_8605740	m_8605740	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_0926883	m_0926883	
@@ -498,7 +498,7 @@ c	net/minecraft/unmapped/C_4692295	net/minecraft/unmapped/C_4692295
 		p	1		p_1	
 		p	2		p_2	
 c	net/minecraft/unmapped/C_4824661
-	f	Lnet/minecraft/unmapped/C_1022696;	f_1035939	heldItemRenderer	
+	f	Lnet/minecraft/unmapped/C_1022696;	f_1035939	itemInHandRenderer	
 	m	(F)V	m_3843665	applyHurtCam	
 		p	1		tickDelta	
 	m	(F)V	m_3610985	applyViewBobbing	
@@ -534,8 +534,8 @@ c	net/minecraft/unmapped/C_4838406	net/minecraft/unmapped/C_4838406
 		p	3		p_3	
 c	net/minecraft/unmapped/C_5009044
 	f	I	f_1640230	f_1640230	
-	f	F	f_6287347	prevStrideDistance	
-	f	F	f_6789338	strideDistance	
+	f	F	f_6287347	lastBob	
+	f	F	f_6789338	bob	
 	f	I	f_5312467	f_5312467	
 	m	()V	m_4306841	m_4306841	
 	m	()V	m_5818797	m_5818797	
@@ -647,14 +647,14 @@ c	net/minecraft/unmapped/C_5853518
 c	net/minecraft/unmapped/C_6385858
 	f	Z	f_7363959	collidingHorizontally	
 	f	Z	f_5443635	f_5443635	
-	f	F	f_7773566	prevHorizontalSpeed	
-	f	F	f_1280697	horizontalVelocity	
-	f	I	f_3523765	distanceOnNextBlock	
+	f	F	f_7773566	lastWalkDistance	
+	f	F	f_1280697	walkDistance	
+	f	I	f_3523765	blocksWalkedOn	
 	f	Lnet/minecraft/unmapped/C_4838406;	f_3845946	f_3845946	
 	f	F	f_1579551	f_1579551	
 	f	F	f_7329711	f_7329711	
 	f	F	f_9809857	f_9809857	
-	m	(F)V	m_8092679	applyFallDamage	
+	m	(F)V	m_8092679	takeFallDamage	
 		p	1		distance	
 	m	()Z	m_1335960	isSubmergedIn	
 	m	(F)F	m_0062748	m_0062748	
@@ -669,7 +669,7 @@ c	net/minecraft/unmapped/C_6385858
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(Lnet/minecraft/unmapped/C_6385858;I)V	m_3238154	damage	
+	m	(Lnet/minecraft/unmapped/C_6385858;I)V	m_3238154	takeDamage	
 		p	1		p_1	
 		p	2		p_2	
 	m	(FFFFFF)Z	m_2022315	m_2022315	
@@ -880,7 +880,7 @@ c	net/minecraft/unmapped/C_8618448	net/minecraft/unmapped/C_8618448
 c	net/minecraft/unmapped/C_8905061
 	m	(F)Lnet/minecraft/unmapped/C_8905061;	m_3489622	m_3489622	
 		p	1		p_1	
-	m	(F)Lnet/minecraft/unmapped/C_8905061;	m_6408979	multiplyScale	
+	m	(F)Lnet/minecraft/unmapped/C_8905061;	m_6408979	multiplySize	
 		p	1		value	
 c	net/minecraft/unmapped/C_9665058
 	m	(Ljava/io/InputStream;)Lnet/minecraft/unmapped/C_3906126;	m_2718498		m_2718498

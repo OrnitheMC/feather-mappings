@@ -95,7 +95,7 @@ c	net/minecraft/unmapped/C_0974371
 	m	(I)Lnet/minecraft/unmapped/C_5307437;	m_4296123		m_4296123
 		p	1			p_1
 c	net/minecraft/unmapped/C_0979881
-	m	(I)V	m_1616265	m_1616265	
+	m	(I)V	m_1616265	glDeleteTextures	
 		p	0		p_0	
 	m	(Lnet/minecraft/unmapped/C_6577431;Ljava/lang/String;)[I	m_0899679	getPixels	
 		p	0		manager	
@@ -139,16 +139,16 @@ c	net/minecraft/unmapped/C_1119018
 c	net/minecraft/unmapped/C_1168245
 	m	()Ljava/lang/String;	m_4351874	m_4351874	
 c	net/minecraft/unmapped/C_1368426	net/minecraft/client/resource/pack/TexturePacks	
-	f	Lnet/minecraft/unmapped/C_7378130;	f_8696750	DEFAULT_TEXTURE_PACK	
+	f	Lnet/minecraft/unmapped/C_7378130;	f_8696750	DEFAULT_PACK	
 	f	Lnet/minecraft/client/Minecraft;	f_9562788	minecraft	
-	f	Ljava/io/File;	f_3047350	texturePacksDir	
-	f	Ljava/io/File;	f_5549673	texturePacksMpCacheDir	
+	f	Ljava/io/File;	f_3047350	dir	
+	f	Ljava/io/File;	f_5549673	multiplayerDir	
 	f	Ljava/util/List;	f_2540367	availablePacks	
 	f	Ljava/util/Map;	f_5654716	availablePacksByKey	
 	f	Lnet/minecraft/unmapped/C_7378130;	f_6507773	selected	
 	f	Z	f_8515075	hasServerTextures	
 	m	(Ljava/io/File;Lnet/minecraft/client/Minecraft;)V	<init>	<init>	
-		p	1		dir	
+		p	1		gameDir	
 		p	2		minecraft	
 	m	()V	m_1502044	mkdirs	
 	m	(Lnet/minecraft/unmapped/C_7378130;)Z	m_6553918	select	
@@ -157,7 +157,7 @@ c	net/minecraft/unmapped/C_1368426	net/minecraft/client/resource/pack/TexturePac
 		p	1		url	
 	m	(Ljava/lang/String;Ljava/io/File;)V	m_5658014	downloadServerPack	
 		p	1		url	
-		p	2		f	
+		p	2		dst	
 	m	()Z	m_2391968	hasServerTextures	
 	m	()V	m_0740180	removeServerTextures	
 	m	()V	m_7822048	reload	
@@ -629,7 +629,7 @@ c	net/minecraft/unmapped/C_4766485
 	m	(I)Lnet/minecraft/unmapped/C_0561170;	m_6912322		getFontPage
 		p	1			page
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_4784123	net/minecraft/client/gui/screen/TexturePackScreen	net/minecraft/client/gui/screen/ResourcePackScreen
+c	net/minecraft/unmapped/C_4784123	net/minecraft/client/gui/screen/TexturePacksScreen	net/minecraft/client/gui/screen/ResourcePacksScreen
 	f	Ljava/lang/String;	f_5553006	texturePacksDir	
 	f	Lnet/minecraft/unmapped/C_4784123$C_1067325;	f_8810194	texturePacks	resourcePacks
 	m	(Lnet/minecraft/unmapped/C_4784123;)Lnet/minecraft/client/Minecraft;	m_1288047	m_1288047	
@@ -954,7 +954,7 @@ c	net/minecraft/unmapped/C_7338567
 c	net/minecraft/unmapped/C_7372145
 	m	()I	m_6719276	getVersion	
 c	net/minecraft/unmapped/C_7378130	net/minecraft/client/resource/pack/TexturePack	
-	m	(Lnet/minecraft/unmapped/C_3385278;)V	m_9830297	removeIcon	
+	m	(Lnet/minecraft/unmapped/C_3385278;)V	m_9830297	unload	
 		p	1		manager	
 	m	(Lnet/minecraft/unmapped/C_3385278;)V	m_5337323	bindIcon	
 		p	1		manager	
@@ -973,7 +973,7 @@ c	net/minecraft/unmapped/C_7378130	net/minecraft/client/resource/pack/TexturePac
 	m	()Z	m_9415399	isCompatible	
 c	net/minecraft/unmapped/C_7532262
 	m	(Lnet/minecraft/unmapped/C_1296613;)Lnet/minecraft/unmapped/C_9632344;	m_7748239		getMetadataSection
-		p	1			p_1
+		p	1			metadataSerializers
 	m	()Ljava/awt/image/BufferedImage;	m_3372708		getIcon
 c	net/minecraft/unmapped/C_7542541
 	f	Lnet/minecraft/unmapped/C_0561170;	f_8035937		MENU_LOCATION
@@ -1327,7 +1327,7 @@ c	net/minecraft/unmapped/C_2126928		net/minecraft/client/resource/pack/ZippedRes
 	m	()V	close		close
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_2983776		net/minecraft/client/resource/pack/ResourcePacks
-	f	Ljava/io/FileFilter;	f_3329323		RESOURCE_PACK_FILTER
+	f	Ljava/io/FileFilter;	f_3329323		FILE_FILTER
 	f	Ljava/io/File;	f_8402787		dir
 	f	Lnet/minecraft/unmapped/C_7532262;	f_6120754		defaultPack
 	f	Lnet/minecraft/unmapped/C_1296613;	f_1943001		metadataSerializers
@@ -1335,7 +1335,7 @@ c	net/minecraft/unmapped/C_2983776		net/minecraft/client/resource/pack/ResourceP
 	f	Ljava/util/List;	f_2374268		appliedPacks
 	m	(Ljava/io/File;Lnet/minecraft/unmapped/C_7532262;Lnet/minecraft/unmapped/C_1296613;Lnet/minecraft/unmapped/C_7688744;)V	<init>		<init>
 		p	1			dir
-		p	2			defaultResourcePack
+		p	2			defaultPack
 		p	3			metadataSerializers
 		p	4			options
 	m	()V	m_0411631		mkdirs

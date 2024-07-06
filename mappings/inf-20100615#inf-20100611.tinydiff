@@ -35,7 +35,7 @@ c	net/minecraft/unmapped/C_3466301
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/unmapped/C_3635204
-	m	(Z)Z	m_6275112	hasCollision	
+	m	(Z)Z	m_6275112	canRayTrace	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_3906126;IIILnet/minecraft/unmapped/C_0336319;)V	m_3087004	applyMaterialDrag	
 		p	1		p_1	
@@ -78,9 +78,9 @@ c	net/minecraft/unmapped/C_3906126
 		p	1		from	
 		p	2		to	
 	m	(Lnet/minecraft/unmapped/C_0336319;Lnet/minecraft/unmapped/C_0336319;Z)Lnet/minecraft/unmapped/C_5853518;	m_1107910	rayTrace	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+		p	1		from	
+		p	2		to	
+		p	3		allowLiquids	
 	m	(Lnet/minecraft/unmapped/C_1414550;Lnet/minecraft/unmapped/C_8554894;Lnet/minecraft/unmapped/C_6385858;)Z	m_6722421	applyLiquidDrag	
 		p	1		bounds	
 		p	2		material	
@@ -96,14 +96,15 @@ c	net/minecraft/unmapped/C_4558465
 	f	I	f_9509159		f_9509159
 	f	I	f_9203262		f_9203262
 	m	(I)F	m_8965794	getHeightLoss	
-		p	0		level	
-	m	(Lnet/minecraft/unmapped/C_3906126;III)I	m_4458719	getLevel	
-		c	Returns the level of this fluid. The first 3 bits encode the distance to a source\nfluid, while the 4th bit encodes whether this fluid is falling.	
+		c	@return the height loss of a liquid with the given state compared to a full block.	
+		p	0		state	
+	m	(Lnet/minecraft/unmapped/C_3906126;III)I	m_4458719	getLiquidState	
+		c	Returns the depth and falling state of the liquid at the given position, encoded in a 4 bit number,\nor {@code -1} if the given position is not occupied by this liquid.\n<p>\nThe 3 least significant bits encode the depth of this liquid - that is to say, how shallow it lies within this block.\nA value of {@code 0} denotes a source block, while the values {@code 1} to {@code 7} denote increasingly shallow depth values.\n<br>\nIf this liquid is falling, the depth applies not to this liquid, but to the liquid above it.\nIf the liquid above is also falling, the depth is always 0.\n<p>\nThe 4th least significant bit encodes whether the liquid is falling (i.e. there is liquid flowing in from above).	
 		p	1		world	
 		p	2		x	
 		p	3		y	
 		p	4		z	
-	m	(Lnet/minecraft/unmapped/C_3906126;III)I	m_6035549	getDistanceToSource	
+	m	(Lnet/minecraft/unmapped/C_3906126;III)I	m_6035549	getLiquidDepth	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
@@ -171,10 +172,10 @@ c	net/minecraft/unmapped/C_6385858
 c	net/minecraft/unmapped/C_7688744
 	f	Z	f_8023209	fancyGraphics	
 c	net/minecraft/unmapped/C_7693268
-	f	[Z	f_0155341	spreadDirections	
-		c	Whether this liquid should flow in each direction.\n<br>\n@see net.minecraft.util.math.Facings	
+	f	[Z	f_0155341	spread	
+		c	For each direction, whether this liquid should spread in that direction.	
 	f	[I	f_7002178	distanceToGap	
-		c	The distance to the nearest gap to flow into for each horizontal direction.\n<br>\n@see net.minecraft.util.math.Facings	
+		c	For each direction, the distance to the nearest gap to flow down into.	
 	f	I	f_2995398		f_2995398
 	m	(Lnet/minecraft/unmapped/C_3906126;III)V	m_4788827	convertToSource	
 		p	1		world	
@@ -187,18 +188,21 @@ c	net/minecraft/unmapped/C_7693268
 		p	3		p_3	
 		p	4		p_4	
 		p	5		p_5	
-	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_0428684	blocksSpreading	
+	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_0428684	isLiquidBlocking	
+		c	@return whether the block at the given position blocks liquids from flowing.	
 		p	0		p_0	
 		p	1		world	
 		p	2		x	
 		p	3		y	
-	m	(Lnet/minecraft/unmapped/C_3906126;IIII)I	m_9103240	decreaseLevel	
+	m	(Lnet/minecraft/unmapped/C_3906126;IIII)I	m_9103240	getLowestDepth	
+		c	@return the lowest depth between the given value and that of an adjacent liquid.	
 		p	1		world	
 		p	2		x	
 		p	3		y	
 		p	4		z	
-		p	5		level	
+		p	5		depth	
 	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_8660764	canSpreadTo	
+		c	@return whether this liquid can spread to the given position.	
 		p	0		p_0	
 		p	1		world	
 		p	2		x	
@@ -237,12 +241,12 @@ c	net/minecraft/unmapped/C_8554894
 c	net/minecraft/unmapped/C_9610577
 	f	Lnet/minecraft/unmapped/C_7688744;	f_8098368	options	
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_3385278;Lnet/minecraft/unmapped/C_4766485;Lnet/minecraft/unmapped/C_5009044;Lnet/minecraft/unmapped/C_7688744;F)V	m_3414008	prepare	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
+		p	1		world	
+		p	2		textureManager	
+		p	3		textRenderer	
+		p	4		camera	
+		p	5		options	
+		p	6		tickDelta	
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_3385278;Lnet/minecraft/unmapped/C_4766485;Lnet/minecraft/unmapped/C_5009044;F)V	m_3414008		prepare
 		p	1			p_1
 		p	2			p_2

@@ -23,9 +23,9 @@ c	net/minecraft/unmapped/C_0956869
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/unmapped/C_1013763
-	f	Lnet/minecraft/unmapped/C_1279860;	f_4647937	pathNavigation	
+	f	Lnet/minecraft/unmapped/C_1279860;	f_4647937	navigation	
 	f	I	f_2002201		lastAttackedTime
-	f	Lnet/minecraft/unmapped/C_1611709;	f_4647937		pathNavigation
+	f	Lnet/minecraft/unmapped/C_1611709;	f_4647937		navigation
 	f	Lnet/minecraft/unmapped/C_6707278;	f_1750519		housePosition
 	f	F	f_7384626		maxHouseDistance
 	m	()Lnet/minecraft/unmapped/C_1279860;	m_1724752	getPathNavigation	
@@ -51,12 +51,12 @@ c	net/minecraft/unmapped/C_1044273
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/unmapped/C_1111347
-	f	I	f_2800214	minX	
-	f	I	f_5206650	minY	
-	f	I	f_1261934	minZ	
-	f	I	f_4305062	widthX	
-	f	I	f_8610533	height	
-	f	I	f_5179910	widthZ	
+	f	I	f_2800214	x	
+	f	I	f_5206650	y	
+	f	I	f_1261934	z	
+	f	I	f_4305062	sizeX	
+	f	I	f_8610533	sizeY	
+	f	I	f_5179910	sizeZ	
 	f	I	f_1555014		chunkX
 	f	I	f_1119058		chunkZ
 	f	I	f_5310742		sectionsWithData
@@ -116,9 +116,9 @@ c	net/minecraft/unmapped/C_1279860	net/minecraft/entity/ai/pathing/Navigation
 	m	()V	m_2299203	stop	
 c	net/minecraft/unmapped/C_1415320
 	m	()V	m_5855336	m_5855336	
-	m	()I	m_7473390	m_7473390	
-	m	(I)V	m_1272880	m_1272880	
-		p	1		p_1	
+	m	()I	m_7473390	getAge	
+	m	(I)V	m_1272880	setAge	
+		p	1		age	
 	m	()Z	m_4250795	m_4250795	
 c	net/minecraft/unmapped/C_1441870
 	f	I	f_2303001		itemId
@@ -213,7 +213,7 @@ c	net/minecraft/unmapped/C_2758065
 	m	(I)V	m_5549591		m_5549591
 		p	1			p_1
 c	net/minecraft/unmapped/C_2780666
-	f	I	f_8146253		ticksOfLastDoorAdded
+	f	I	f_8146253		lastDoorAddedTicks
 	f	I	f_4987368		ticks
 	f	I	f_6760331		populationSize
 	m	(III)Z	m_6936906	getDoor	
@@ -222,7 +222,7 @@ c	net/minecraft/unmapped/C_2780666
 		p	3		p_3	
 	m	()V	m_5632861		updatePopulationSize
 	m	()I	m_7196341		getDoorCount
-	m	()I	m_2186475		getTimeSinceLastDoorAdded
+	m	()I	m_2186475		getTicksSinceDoorAdded
 	m	()I	m_3734191		getPopulationSize
 	m	(III)Z	m_1111003		contains
 		p	1			x
@@ -360,7 +360,7 @@ c	net/minecraft/unmapped/C_3906126
 		p	4		widthX	
 		p	5		height	
 		p	6		widthZ	
-	m	(Lnet/minecraft/unmapped/C_5863046;IIIIII)V	m_0387766	checkLight	
+	m	(Lnet/minecraft/unmapped/C_5863046;IIIIII)V	m_0387766	updateLight	
 		p	1		type	
 		p	2		minX	
 		p	3		minY	
@@ -515,18 +515,18 @@ c	net/minecraft/unmapped/C_4636105
 	m	()I	m_0948972		getGrassColor
 	m	()I	m_0960641		getFoliageColor
 c	net/minecraft/unmapped/C_5283200
-	f	I	f_2412601	f_2412601	
-	f	I	f_5060052	f_5060052	
-	f	I	f_2483070	f_2483070	
-	f	F	f_4136253	f_4136253	
+	f	I	f_2412601	sizeX	
+	f	I	f_5060052	sizeY	
+	f	I	f_2483070	sizeZ	
+	f	F	f_4136253	radius	
 	m	(Lnet/minecraft/unmapped/C_3906126;Ljava/util/List;IIIII)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
-		p	7		p_7	
+		p	1		world	
+		p	2		globalBlockEntities	
+		p	3		originX	
+		p	4		originY	
+		p	5		originZ	
+		p	6		size	
+		p	7		glList	
 	m	(Lnet/minecraft/unmapped/C_3906126;Ljava/util/List;IIII)V	<init>		<init>
 		p	1			world
 		p	2			globalBlockEntities
@@ -640,9 +640,9 @@ c	net/minecraft/unmapped/C_8958653
 	m	()Z	m_4680808		m_4680808
 c	net/minecraft/unmapped/C_9143244
 	f	Lnet/minecraft/unmapped/C_6297854;	f_5073996	f_5073996	
-	f	Lnet/minecraft/unmapped/C_6297854;	f_5401900	f_5401900	
-	m	(Lnet/minecraft/unmapped/C_9386942;)Lnet/minecraft/unmapped/C_4636105;	m_5731652	m_5731652	
-		p	1		p_1	
+	f	Lnet/minecraft/unmapped/C_6297854;	f_5401900	temperatures	
+	m	(Lnet/minecraft/unmapped/C_9386942;)Lnet/minecraft/unmapped/C_4636105;	m_5731652	getBiome	
+		p	1		pos	
 	m	(II)F	m_8247716	getDownfall	
 		p	1		x	
 		p	2		z	
@@ -937,7 +937,7 @@ c	net/minecraft/unmapped/C_6769461		net/minecraft/block/RedstoneLampBlock
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-c	net/minecraft/unmapped/C_6790978		net/minecraft/entity/living/mob/passive/PassiveEntity
+c	net/minecraft/unmapped/C_6790978		net/minecraft/entity/mob/passive/PassiveEntity
 	m	(Lnet/minecraft/unmapped/C_3906126;)V	<init>		<init>
 		p	1			p_1
 	m	()V	m_5855336		m_5855336

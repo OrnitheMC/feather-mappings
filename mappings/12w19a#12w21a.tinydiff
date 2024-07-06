@@ -179,7 +179,7 @@ c	net/minecraft/unmapped/C_0154218
 		p	6			p_6
 		p	7			p_7
 c	net/minecraft/unmapped/C_0182523
-	f	[Ljava/lang/Object;	f_4018979		f_4018979
+	f	[Ljava/lang/Object;	f_4018979		reasonArgs
 	f	Ljava/util/List;	f_4628242		textLines
 c	net/minecraft/unmapped/C_0267988
 	m	(Lnet/minecraft/unmapped/C_3906126;DDDIII)Z	m_4423472		place
@@ -197,10 +197,11 @@ c	net/minecraft/unmapped/C_0324512
 	m	(Lnet/minecraft/unmapped/C_7834269;)V	m_0106901		m_0106901
 		p	1			p_1
 c	net/minecraft/unmapped/C_0336319
-	f	Ljava/util/List;	f_6042173	CACHE	
-	f	I	f_8688668	nextCacheIndex	
-	f	Ljava/lang/ThreadLocal;	f_6042173		CACHE
-	f	Ljava/lang/ThreadLocal;	f_8688668		nextCacheIndex
+	f	Ljava/util/List;	f_6042173	POOL	
+	f	I	f_8688668	poolIndex	
+	f	Ljava/lang/ThreadLocal;	f_6042173		POOL
+	f	Ljava/lang/ThreadLocal;	f_8688668		POOL_INDEX
+	m	()V	m_8241350	clearCache	clearPool
 c	net/minecraft/unmapped/C_0336319$1190200		1190200
 	m	()V	<init>		<init>
 	m	()Ljava/lang/Integer;	m_4928075		m_4928075
@@ -337,10 +338,11 @@ c	net/minecraft/unmapped/C_1350281
 	m	(Lnet/minecraft/unmapped/C_2182707;)Z	m_2772006		m_2772006
 		p	1			p_1
 c	net/minecraft/unmapped/C_1414550
-	f	Ljava/util/List;	f_0724943	CACHE	
-	f	I	f_5073000	nextCacheIndex	
-	f	Ljava/lang/ThreadLocal;	f_0724943		CACHE
-	f	Ljava/lang/ThreadLocal;	f_5073000		nextCacheIndex
+	f	Ljava/util/List;	f_0724943	POOL	
+	f	I	f_5073000	poolIndex	
+	f	Ljava/lang/ThreadLocal;	f_0724943		POOL
+	f	Ljava/lang/ThreadLocal;	f_5073000		POOL_INDEX
+	m	()V	m_8023513	clearCache	clearPool
 c	net/minecraft/unmapped/C_1414550$6229170		6229170
 	m	()V	<init>		<init>
 	m	()Ljava/util/List;	m_1400807		m_1400807
@@ -655,12 +657,12 @@ c	net/minecraft/unmapped/C_6015078
 c	net/minecraft/unmapped/C_6142023
 	f	Lnet/minecraft/unmapped/C_8768220;	f_2019530		enderChest
 c	net/minecraft/unmapped/C_6378766
-	m	(Ljava/lang/String;ILnet/minecraft/unmapped/C_4413269;)V	m_5740047	m_5740047	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+	m	(Ljava/lang/String;ILnet/minecraft/unmapped/C_4413269;)V	m_5740047	startLocalServer	
+		p	1		worldSaveName	
+		p	2		port	
+		p	3		settings	
 	m	()V	m_2730587	m_2730587	
-	m	()I	m_1660762	m_1660762	
+	m	()I	m_1660762	getLocalPort	
 c	net/minecraft/unmapped/C_6378766$1576203	1576203	
 	f	Lnet/minecraft/unmapped/C_6378766;	f_7289634	f_7289634	
 	m	(Lnet/minecraft/unmapped/C_6378766;)V	<init>	<init>	
@@ -729,17 +731,17 @@ c	net/minecraft/unmapped/C_7542541
 		p	6			mouseY
 c	net/minecraft/unmapped/C_7940645
 	m	()Z	m_6957805	m_6957805	
-c	net/minecraft/unmapped/C_8036756	net/minecraft/unmapped/C_8036756	
+c	net/minecraft/unmapped/C_8036756	net/minecraft/client/JavaProcessLauncher	
 	f	Ljava/lang/String;	f_4359139	f_4359139	
-	f	Ljava/lang/String;	f_5065271	f_5065271	
-	f	Ljava/util/List;	f_7083346	f_7083346	
+	f	Ljava/lang/String;	f_5065271	JAVA	
+	f	Ljava/util/List;	f_7083346	commands	
 	f	Ljava/io/File;	f_4563470	f_4563470	
 	m	([Ljava/lang/String;)V	<init>	<init>	
 		p	1		p_1	
 	m	()Lnet/minecraft/unmapped/C_4718193;	m_4579880	m_4579880	
 	m	()Ljava/util/List;	m_4201006	m_4201006	
-	m	([Ljava/lang/String;)V	m_6718652	m_6718652	
-		p	1		p_1	
+	m	([Ljava/lang/String;)V	m_6718652	addCommands	
+		p	1		commands	
 	m	(Ljava/io/File;)Lnet/minecraft/unmapped/C_8036756;	m_1968332	m_1968332	
 		p	1		p_1	
 	m	()Ljava/lang/String;	toString	toString	
@@ -1965,7 +1967,7 @@ c	net/minecraft/unmapped/C_2354122	net/minecraft/network/Connection	net/minecraf
 		p	1		listener	p_1
 	m	(Lnet/minecraft/unmapped/C_4844124;)V	m_5183790	send	m_5183790
 		p	1		packet	p_1
-	m	(Ljava/lang/String;[Ljava/lang/Object;)V	m_1282084	disconnect	m_1282084
+	m	(Ljava/lang/String;[Ljava/lang/Object;)V	m_1282084	close	m_1282084
 		p	1		reason	p_1
 		p	2		args	p_2
 	m	()V	m_3757750	tick	m_3757750

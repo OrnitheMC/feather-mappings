@@ -104,6 +104,7 @@ c	net/minecraft/unmapped/C_3906126
 	m	(III)Z	m_6808962
 		p	1		p_1	x
 		p	2		p_2	y
+	m	(Lnet/minecraft/unmapped/C_5863046;III)V	m_3108055	checkLight	updateLight
 c	net/minecraft/unmapped/C_4030632
 	m	()Z	m_2422629		isNetworkSynced
 c	net/minecraft/unmapped/C_4136842
@@ -360,6 +361,9 @@ c	net/minecraft/unmapped/C_6755599
 		p	6			maxY
 		p	7			maxZ
 		p	8			size
+	m	(II)V	m_5803793	lightGaps	recheckGap
+	m	()V	m_6558504	recheckGaps	lightGaps
+	m	(IIII)V	m_4504933	checkSkylight	updateSkyLight
 c	net/minecraft/unmapped/C_6786653
 	m	(Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_5009044;)Lnet/minecraft/unmapped/C_4844124;	m_4104674		m_4104674
 		p	1			p_1
@@ -582,7 +586,7 @@ c	net/minecraft/unmapped/C_9055414
 		p	5			p_5
 c	net/minecraft/unmapped/C_9147018
 	m	()Lnet/minecraft/unmapped/C_2260875;	m_2831732		getPlayerDataStorage
-	m	()V	m_6528281		waitIfSaving
+	m	()V	m_6528281		forceSave
 c	net/minecraft/unmapped/C_9381557
 	m	(IILnet/minecraft/unmapped/C_2750078;)V	<init>		<init>
 		p	1			menuId
@@ -831,7 +835,7 @@ c	net/minecraft/unmapped/C_0019534		net/minecraft/server/PlayerManager
 	m	()I	m_3408806		getCount
 	m	()I	m_4876951		getMaxCount
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_0324512		net/minecraft/server/entity/living/player/ServerPlayerEntity
+c	net/minecraft/unmapped/C_0324512		net/minecraft/server/entity/mob/player/ServerPlayerEntity
 	f	Lnet/minecraft/unmapped/C_8752044;	f_3231607		networkHandler
 	f	Lnet/minecraft/server/MinecraftServer;	f_7284268		server
 	f	Lnet/minecraft/unmapped/C_7897127;	f_7088670		interactionManager
@@ -1192,7 +1196,8 @@ c	net/minecraft/unmapped/C_2260875		net/minecraft/world/storage/PlayerDataStorag
 		p	1			player
 	m	(Lnet/minecraft/unmapped/C_5009044;)V	m_2233467		loadPlayerData
 		p	1			player
-c	net/minecraft/unmapped/C_3146305		net/minecraft/entity/EntityCategoryProvider
+c	net/minecraft/unmapped/C_3146305		net/minecraft/entity/SpawnableEntity
+	c		An entity that spawns naturally.
 c	net/minecraft/unmapped/C_3571139		net/minecraft/server/world/chunk/ServerChunkCache
 	f	Ljava/util/Set;	f_6557144		chunksToUnload
 		c		Queue for chunks to unload.
@@ -1403,7 +1408,7 @@ c	net/minecraft/unmapped/C_7366354		net/minecraft/server/world/ServerWorld
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	()V	m_8548701		waitIfSaving
+	m	()V	m_8548701		forceSave
 	m	()V	m_2820988		m_2820988
 c	net/minecraft/unmapped/C_7897127		net/minecraft/server/ServerPlayerInteractionManager
 	f	Lnet/minecraft/unmapped/C_3906126;	f_7087740		world

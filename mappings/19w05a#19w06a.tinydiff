@@ -3,21 +3,21 @@ c	net/minecraft/client/Minecraft
 	f	I	f_4695611	joinPlayerCounter	
 	f	Lnet/minecraft/unmapped/C_0948943;	f_9111067		f_9111067
 	m	()V	m_4393690	m_4393690	
-	m	(IIIIIIIIII)V	m_3108915	renderMojangLogo	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
-		p	7		p_7	
-		p	8		p_8	
-		p	9		p_9	
-		p	10		p_10	
+	m	(IIIIIIIIII)V	m_3108915	draw	
+		p	1		x	
+		p	2		y	
+		p	3		u	
+		p	4		v	
+		p	5		width	
+		p	6		height	
+		p	7		r	
+		p	8		g	
+		p	9		b	
+		p	10		a	
 	m	(Lnet/minecraft/unmapped/C_8817873;Lnet/minecraft/unmapped/C_0786431;)V	m_3501995	setWorld	
 		p	1		world	
 		p	2		screen	
-	m	(Lnet/minecraft/unmapped/C_0013174;)V	m_8218202	teleportToDimension	
+	m	(Lnet/minecraft/unmapped/C_0013174;)V	m_8218202	respawnPlayer	
 		p	1		p_1	
 	m	()V	m_7845933		m_7845933
 	m	(Lnet/minecraft/unmapped/C_0786431;)V	m_5835499		m_5835499
@@ -81,7 +81,7 @@ c	net/minecraft/unmapped/C_0124228$C_3028822		C_3028822
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/unmapped/C_0141705
-	f	F	f_2479152	baseScale	
+	f	F	f_2479152	initialSize	
 	f	Lnet/minecraft/unmapped/C_9875924;	f_4488065		f_4488065
 	m	(Lnet/minecraft/unmapped/C_3906126;DDDDDDLnet/minecraft/unmapped/C_4181231;)V	<init>	<init>	
 		p	1		p_1	
@@ -181,7 +181,7 @@ c	net/minecraft/unmapped/C_0202769$C_2171076
 c	net/minecraft/unmapped/C_0202769$2066463		2066463
 c	net/minecraft/unmapped/C_0309511
 	f	Ljava/util/Random;	f_4988594	RANDOM	
-	f	F	f_2312947	randomFloat	
+	f	F	f_2312947	ticks	
 	f	Lnet/minecraft/unmapped/C_0561170;	f_7185695	SPLASHES_LOCATION	
 	f	Lnet/minecraft/unmapped/C_9169016;	f_3637898		f_3637898
 	f	Lnet/minecraft/unmapped/C_0561170;	f_7357553		f_7357553
@@ -248,14 +248,14 @@ c	net/minecraft/unmapped/C_0820158
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_5009044;)V	<init>	<init>	
 		p	1		world	
-		p	2		player	
+		p	2		thrower	
 	m	(Lnet/minecraft/unmapped/C_5009044;)V	m_2781397	setOwner	
 		p	1		player	
 	m	(I)V	m_5058571	setLureSpeed	
 		p	1		lureSpeed	
 	m	(I)V	m_3966189	setLuck	
 		p	1		luck	
-	m	()V	m_5213498	setVelocity	
+	m	()V	m_5213498	thrown	
 	m	(Lnet/minecraft/unmapped/C_6385858;)Z	m_0953943	canHitEntity	
 		p	1		entity	
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_5009044;II)V	<init>		<init>
@@ -469,7 +469,7 @@ c	net/minecraft/unmapped/C_1309851
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/unmapped/C_1461754
-	f	F	f_4770129	baseScale	
+	f	F	f_4770129	initialSize	
 	m	(Lnet/minecraft/unmapped/C_3906126;DDDDDD)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
@@ -607,7 +607,7 @@ c	net/minecraft/unmapped/C_2454294
 		p	1		renderType	
 	m	(Ljava/util/Queue;)V	m_0600002	tickParticles	
 		p	1		particles	
-	m	(Lnet/minecraft/unmapped/C_6385858;F)V	m_7512222	renderLitParticles	
+	m	(Lnet/minecraft/unmapped/C_6385858;F)V	m_7512222	renderLit	
 		p	1		camera	
 		p	2		tickDelta	
 	m	(I)Ljava/lang/String;	m_3137276	m_3137276	
@@ -1151,7 +1151,7 @@ c	net/minecraft/unmapped/C_3906126
 		c	Attempts to tick the given entity and updates chunk management for this entity.\n\n<br>\nIf {@code requireLoaded} is {@code true}, then the entire area within a range of 32 blocks\nof the entity must be loaded, or the method will exit early. This effectively means an area\nof 5x5 chunks around the entity must be loaded.	
 		p	1		entity	
 		p	2		requireLoaded	
-	m	()Ljava/lang/String;	m_9392586	getEntitiesDebugInfo	
+	m	()Ljava/lang/String;	m_9392586	getDebugInfo	
 	m	(Lnet/minecraft/unmapped/C_2074023;)V	m_4263679	unloadBlockEntity	
 		p	1		pos	
 	m	(Lnet/minecraft/unmapped/C_6755599;I)V	m_5999736	m_5999736	
@@ -1194,7 +1194,7 @@ c	net/minecraft/unmapped/C_3906126
 	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_2810843		m_2810843
 		p	1			p_1
 c	net/minecraft/unmapped/C_3911481
-	f	F	f_4941827	baseScale	
+	f	F	f_4941827	initialSize	
 	f	Lnet/minecraft/unmapped/C_9875924;	f_4404362		f_4404362
 	m	(Lnet/minecraft/unmapped/C_3906126;DDDDDD)V	<init>	<init>	
 		p	1		p_1	
@@ -1205,14 +1205,14 @@ c	net/minecraft/unmapped/C_3911481
 		p	10		p_10	
 		p	12		p_12	
 	m	(Lnet/minecraft/unmapped/C_3906126;DDDDDDF)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	4		p_4	
-		p	6		p_6	
-		p	8		p_8	
-		p	10		p_10	
-		p	12		p_12	
-		p	14		p_14	
+		p	1		world	
+		p	2		x	
+		p	4		y	
+		p	6		z	
+		p	8		velocityX	
+		p	10		velocityY	
+		p	12		velocityZ	
+		p	14		scale	
 	m	(Lnet/minecraft/unmapped/C_8373595;Lnet/minecraft/unmapped/C_6385858;FFFFFF)V	m_7521183	m_7521183	
 		p	1		p_1	
 		p	2		p_2	
@@ -1301,7 +1301,7 @@ c	net/minecraft/unmapped/C_4166334$C_1826172
 		p	1			p_1
 c	net/minecraft/unmapped/C_4166334$4897456		4897456
 c	net/minecraft/unmapped/C_4237166
-	m	(Lnet/minecraft/unmapped/C_5009044;)V	m_7531392	setFacingSouth	
+	m	(Lnet/minecraft/unmapped/C_5009044;)V	m_7531392	initPlayer	
 		p	1		player	
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_7974592;Lnet/minecraft/unmapped/C_4693257;)Lnet/minecraft/unmapped/C_5367636;	m_8774636	createPlayer	
 		p	1		p_1	
@@ -1571,7 +1571,7 @@ c	net/minecraft/unmapped/C_5001493$C_8471039		C_8471039
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/unmapped/C_5009044
-	m	(Lnet/minecraft/unmapped/C_3050136;)Lnet/minecraft/unmapped/C_2750078;	m_8347472	spawnDroppedItem	
+	m	(Lnet/minecraft/unmapped/C_3050136;)Lnet/minecraft/unmapped/C_2750078;	m_8347472	spawnItem	
 		p	1		stack	
 	m	()Z	m_1239958	isSpectator	m_1239958
 c	net/minecraft/unmapped/C_5102005
@@ -2139,7 +2139,7 @@ c	net/minecraft/unmapped/C_7106153
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/unmapped/C_7132859
-	f	F	f_2124656	baseScale	
+	f	F	f_2124656	initialSize	
 	m	(Lnet/minecraft/unmapped/C_8373595;Lnet/minecraft/unmapped/C_6385858;FFFFFF)V	m_7521183	m_7521183	
 		p	1		p_1	
 		p	2		p_2	
@@ -2435,7 +2435,7 @@ c	net/minecraft/unmapped/C_7960165
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/unmapped/C_7966473
-	f	F	f_0181346	baseScale	
+	f	F	f_0181346	initialSize	
 	m	(Lnet/minecraft/unmapped/C_8373595;Lnet/minecraft/unmapped/C_6385858;FFFFFF)V	m_7521183	m_7521183	
 		p	1		p_1	
 		p	2		p_2	
@@ -2622,7 +2622,7 @@ c	net/minecraft/unmapped/C_8528326
 c	net/minecraft/unmapped/C_8706962
 	m	()Ljava/lang/String;	m_0734266		m_0734266
 c	net/minecraft/unmapped/C_8783002
-	f	F	f_2089209	baseScale	
+	f	F	f_2089209	initialSize	
 	m	(Lnet/minecraft/unmapped/C_8373595;Lnet/minecraft/unmapped/C_6385858;FFFFFF)V	m_7521183	m_7521183	
 		p	1		p_1	
 		p	2		p_2	
@@ -2770,16 +2770,16 @@ c	net/minecraft/unmapped/C_8817873
 		p	0			p_0
 c	net/minecraft/unmapped/C_8905061
 	f	I	f_0079630	miscTexRow	
-	f	I	f_8606041	miscTexColumn	
-	f	F	f_4159616	randomUOffset	
-	f	F	f_8149664	randomVOffset	
-	f	F	f_1296427	scale	
+	f	I	f_8606041	sprite	
+	f	F	f_4159616	offsetU	
+	f	F	f_8149664	offsetV	
+	f	F	f_1296427	size	
 	f	Lnet/minecraft/unmapped/C_3374628;	f_9473092	sprite	
 	m	()Z	m_5560969	hasNoDepth	
 	m	()F	m_9088161	getRed	
 	m	()F	m_5288592	getGreen	
 	m	()F	m_0569651	getBlue	
-	m	()I	m_5603541	getTextureType	
+	m	()I	m_5603541	getTextureAtlas	
 	m	(Lnet/minecraft/unmapped/C_3374628;)V	m_2395938	setTexture	
 		p	1		sprite	
 	m	(I)V	m_3073800	setMiscTexture	

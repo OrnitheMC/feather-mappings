@@ -1,13 +1,13 @@
 tiny	2	0
 c	net/minecraft/client/Minecraft
-	f	Ljava/lang/String;	f_0410772	serverAddress	
-	f	I	f_1416769	serverPort	
+	f	Ljava/lang/String;	f_0410772	startupServerAddress	
+	f	I	f_1416769	startupServerPort	
 c	net/minecraft/unmapped/C_0182523	net/minecraft/client/gui/screen/DisconnectedScreen	
-	f	Ljava/lang/String;	f_4276523	name	
-	f	Ljava/lang/String;	f_0885487	f_0885487	
+	f	Ljava/lang/String;	f_4276523	title	
+	f	Ljava/lang/String;	f_0885487	reason	
 	m	(Ljava/lang/String;Ljava/lang/String;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		title	
+		p	2		reason	
 	m	()V	m_7135145	m_7135145	
 	m	(CI)V	m_2815482	m_2815482	
 		p	1		p_1	
@@ -57,7 +57,7 @@ c	net/minecraft/unmapped/C_0806362	net/minecraft/client/entity/particle/ItemPart
 		p	5		p_5	
 		p	6		p_6	
 		p	7		p_7	
-c	net/minecraft/unmapped/C_0932780	net/minecraft/world/chunk/ChunkPos	
+c	net/minecraft/unmapped/C_0932780	net/minecraft/client/world/chunk/MultiplayerChunkCache__ChunkPos	
 	f	I	f_7177981	x	
 	f	I	f_0809651	z	
 	m	(II)V	<init>	<init>	
@@ -67,12 +67,12 @@ c	net/minecraft/unmapped/C_0932780	net/minecraft/world/chunk/ChunkPos
 		p	1		p_1	
 	m	()I	hashCode	hashCode	
 c	net/minecraft/unmapped/C_1111347	net/minecraft/network/packet/WorldChunkPacket	
-	f	I	f_2800214	minX	
-	f	I	f_5206650	minY	
-	f	I	f_1261934	minZ	
-	f	I	f_4305062	widthX	
-	f	I	f_8610533	height	
-	f	I	f_5179910	widthZ	
+	f	I	f_2800214	x	
+	f	I	f_5206650	y	
+	f	I	f_1261934	z	
+	f	I	f_4305062	sizeX	
+	f	I	f_8610533	sizeY	
+	f	I	f_5179910	sizeZ	
 	f	[B	f_7758712	data	
 	f	I	f_3848686	compressedSize	
 	m	()V	<init>	<init>	
@@ -112,16 +112,16 @@ c	net/minecraft/unmapped/C_2354122	net/minecraft/network/Connection
 	f	Z	f_8380807	open	
 	f	Ljava/util/List;	f_2922837	readQueue	
 	f	Ljava/util/List;	f_6158504	sendQueue	
-	f	Ljava/util/List;	f_3167608	blockDataSendQueue	
-		c	The send queue for packets containing block (entity) data.\n<br>\nNote: this queue is unused since 1.4.3.	
+	f	Ljava/util/List;	f_3167608	delayedSendQueue	
+		c	The send queue for delayed packets, mostly used for those containing block (entity) data.\n<br>\nNote: this queue is unused since 1.4.3.	
 	f	Lnet/minecraft/unmapped/C_4443804;	f_5087504	listener	
 	f	Z	f_9101341	closed	
 	f	Ljava/lang/Thread;	f_2374678	writer	
 	f	Ljava/lang/Thread;	f_0566420	reader	
 	f	Z	f_6479725	disconnected	
 	f	Ljava/lang/String;	f_5422241	disconnectReason	
-	f	I	f_8851260	blockDataDelay	
-		c	Delay before this connection can send block data packets.	
+	f	I	f_8851260	delay	
+		c	Time in milliseconds before a delayed packet is sent.	
 	m	(Ljava/net/Socket;Ljava/lang/String;Lnet/minecraft/unmapped/C_4443804;)V	<init>	<init>	
 		p	1		socket	
 		p	2		name	
@@ -130,10 +130,10 @@ c	net/minecraft/unmapped/C_2354122	net/minecraft/network/Connection
 		p	1		packet	
 	m	()V	m_6416101	write	
 	m	()V	m_9328634	read	
-	m	(Ljava/lang/Exception;)V	m_9503844	onConnectionCrashed	
+	m	(Ljava/lang/Exception;)V	m_9503844	handleException	
 		p	1		exception	
-	m	(Ljava/lang/String;)V	m_1282084	disconnect	
-		p	1		p_1	
+	m	(Ljava/lang/String;)V	m_1282084	close	
+		p	1		reason	
 	m	()V	m_3757750	tick	
 	m	(Lnet/minecraft/unmapped/C_2354122;)Z	m_1362279	m_1362279	
 		p	0		p_0	
@@ -241,7 +241,7 @@ c	net/minecraft/unmapped/C_4443804	net/minecraft/network/PacketHandler
 	m	(Lnet/minecraft/unmapped/C_4844124;)V	m_9070467	handleUnknownPacket	
 		p	1		packet	
 	m	(Ljava/lang/String;)V	m_4990967	onDisconnect	
-		p	1		p_1	
+		p	1		reason	
 	m	(Lnet/minecraft/unmapped/C_5515943;)V	m_9447373	handleDisconnect	
 		p	1		packet	
 	m	(Lnet/minecraft/unmapped/C_9595287;)V	m_1349212	handleLogin	
@@ -270,7 +270,7 @@ c	net/minecraft/unmapped/C_4844124	net/minecraft/network/packet/Packet
 c	net/minecraft/unmapped/C_4939758	net/minecraft/client/network/handler/ClientNetworkHandler	
 	f	Z	f_2460848	disconnected	
 	f	Lnet/minecraft/unmapped/C_2354122;	f_5760561	connection	
-	f	Ljava/lang/String;	f_4434955	f_4434955	
+	f	Ljava/lang/String;	f_4434955	message	
 	f	Lnet/minecraft/client/Minecraft;	f_2729847	minecraft	
 	f	Lnet/minecraft/unmapped/C_8817873;	f_8688599	world	
 	m	(Lnet/minecraft/client/Minecraft;Ljava/lang/String;I)V	<init>	<init>	
@@ -306,7 +306,7 @@ c	net/minecraft/unmapped/C_5687818	net/minecraft/entity/projectile/SnowballEntit
 	f	I	f_9492341	blockX	
 	f	I	f_9929462	blockY	
 	f	I	f_0294932	blockZ	
-	f	I	f_9873827	blockId	
+	f	I	f_9873827	block	
 	f	Z	f_0115303	inGround	
 	f	I	f_0701008	shake	
 	f	Lnet/minecraft/unmapped/C_1013763;	f_4255286	thrower	
@@ -315,14 +315,14 @@ c	net/minecraft/unmapped/C_5687818	net/minecraft/entity/projectile/SnowballEntit
 	m	(Lnet/minecraft/unmapped/C_3906126;)V	<init>	<init>	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_1013763;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-	m	(DDDFF)V	m_0060836	setVelocity	
+		p	1		world	
+		p	2		thrower	
+	m	(DDDFF)V	m_0060836	shoot	
 		p	1		velocityX	
 		p	3		velocityY	
 		p	5		velocityZ	
-		p	7		scale	
-		p	8		noise	
+		p	7		power	
+		p	8		variance	
 	m	()V	m_0718337	m_0718337	
 	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_4059289	m_4059289	
 		p	1		p_1	
@@ -377,7 +377,7 @@ c	net/minecraft/unmapped/C_6794191	net/minecraft/client/MultiplayerInteractionMa
 	f	I	f_6658859	targetBlockZ	
 	f	F	f_8859176	miningProgress	
 	f	F	f_0036702	lastMiningProgress	
-	f	F	f_0963205	miningSoundTimer	
+	f	F	f_0963205	miningTicks	
 	f	I	f_2954349	miningCooldown	
 	m	(Lnet/minecraft/client/Minecraft;)V	<init>	<init>	
 		p	1		p_1	
@@ -490,15 +490,15 @@ c	net/minecraft/unmapped/C_9315553	net/minecraft/client/render/entity/FireballRe
 		p	6		p_6	
 		p	8		p_8	
 		p	9		p_9	
-c	net/minecraft/unmapped/C_9595287	net/minecraft/network/packet/HandshakePacket	
-	f	I	f_5525895	f_5525895	
-	f	Ljava/lang/String;	f_1581004	key	
-	f	Ljava/lang/String;	f_8985144	f_8985144	
+c	net/minecraft/unmapped/C_9595287	net/minecraft/network/packet/LoginPacket	
+	f	I	f_5525895	gameVersion	
+	f	Ljava/lang/String;	f_1581004	username	
+	f	Ljava/lang/String;	f_8985144	password	
 	m	()V	<init>	<init>	
 	m	(Ljava/lang/String;Ljava/lang/String;I)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+		p	1		username	
+		p	2		password	
+		p	3		gameVersion	
 	m	()I	m_3019759	m_3019759	
 	m	(Ljava/io/DataInputStream;)V	m_8784008	m_8784008	
 		p	1		p_1	

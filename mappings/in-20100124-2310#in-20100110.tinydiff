@@ -1,11 +1,11 @@
 tiny	2	0
 c	net/minecraft/client/Minecraft
-	f	I	f_9809778	tempWidth	
-	f	I	f_7024555	tempHeight	
+	f	I	f_9809778	initWidth	
+	f	I	f_7024555	initHeight	
 	f	Lnet/minecraft/client/MinecraftApplet;	f_4537343	f_4537343	
-	m	()V	m_9146323	grabMouse	
+	m	()V	m_9146323	unlockMouse	
 	m	()V	m_4187290	toggleFullscreen	
-	m	(II)V	m_2180115	onResolutionChanged	
+	m	(II)V	m_2180115	resize	
 		p	1		width	
 		p	2		height	
 	m	(Ljava/lang/String;)V	m_0572353		m_0572353
@@ -199,7 +199,7 @@ c	net/minecraft/unmapped/C_2800860	net/minecraft/nbt/NbtCompound
 	m	()Z	m_8789835	m_8789835	
 c	net/minecraft/unmapped/C_3050136
 	f	I	f_0439670	health	
-	f	F	f_7044070	hoverHeight	
+	f	F	f_7044070	bobOffset	
 	f	F	f_7876942		f_7876942
 	f	F	f_5120121		f_5120121
 	f	F	f_2029735		f_2029735
@@ -226,13 +226,13 @@ c	net/minecraft/unmapped/C_3635204
 	f	Lnet/minecraft/unmapped/C_3635204;	f_4604991	f_4604991	
 	f	Lnet/minecraft/unmapped/C_3635204;	f_2912279	f_2912279	
 	f	Lnet/minecraft/unmapped/C_3635204;	f_4430665	CHEST	
-	f	F	f_0979704	resistance	
+	f	F	f_0979704	blastResistance	
 	f	Z	f_7639747		f_7639747
-	m	(F)Lnet/minecraft/unmapped/C_3635204;	m_8795806	setResistance	
+	m	(F)Lnet/minecraft/unmapped/C_3635204;	m_8795806	setBlastResistance	
 		c	Sets this block's resistance.\n\n<p>\nNOTE: this method should only be used during the block's creation before it is registered.	
-		p	1		resistance	
+		p	1		blastResistance	
 	m	(F)Lnet/minecraft/unmapped/C_3635204;	m_2068904	setStrength	
-		c	Sets this block's mining speed and updates its resistance if needed.\nA block's resistance cannot be less than 5 times its mining speed.\n\n<p>\nNOTE: this method should only be used during the block's creation before it is registered.	
+		c	Sets this block's mining speed and updates its blast resistance if needed.\nA block's blast resistance cannot be less than 5 times its mining speed.\n\n<p>\nNOTE: this method should only be used during the block's creation before it is registered.	
 		p	1		strength	
 	m	(Lnet/minecraft/unmapped/C_3906126;IIII)I	m_6954536	getSprite	
 		p	1		p_1	
@@ -246,9 +246,9 @@ c	net/minecraft/unmapped/C_3635204
 		p	2		x	
 		p	3		y	
 		p	4		z	
-		p	5		start	
-		p	6		end	
-	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_0351269	canSurvive	
+		p	5		from	
+		p	6		to	
+	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_0351269	canBePlaced	
 		p	1		world	
 		p	2		x	
 		p	3		y	
@@ -275,8 +275,8 @@ c	net/minecraft/unmapped/C_3688914	net/minecraft/entity/projectile/ArrowEntity
 	f	I	f_8538462	shake	
 	f	Lnet/minecraft/unmapped/C_1013763;	f_5166309	shooter	
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_1013763;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		world	
+		p	2		shooter	
 	m	()V	m_0718337	m_0718337	
 	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_0758434	m_0758434	
 		p	1		p_1	
@@ -449,7 +449,7 @@ c	net/minecraft/unmapped/C_4558465
 		p	3		p_3	
 		p	4		p_4	
 		p	5		p_5	
-c	net/minecraft/unmapped/C_4917405	net/minecraft/client/render/item/ItemRenderer	
+c	net/minecraft/unmapped/C_4917405	net/minecraft/client/render/entity/ItemRenderer	
 	f	Lnet/minecraft/unmapped/C_3466301;	f_6039414	blockRenderer	
 	f	Ljava/util/Random;	f_1551752	random	
 	m	()V	<init>	<init>	
@@ -467,7 +467,7 @@ c	net/minecraft/unmapped/C_5009044
 	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_0758434	m_0758434	
 		p	1		p_1	
 	m	()Ljava/lang/String;	m_3588390	m_3588390	
-	m	(Lnet/minecraft/unmapped/C_4390289;)V	m_0732230	openInventoryMenu	
+	m	(Lnet/minecraft/unmapped/C_4390289;)V	m_0732230	openChestMenu	
 		p	1		inventory	
 	m	(I)V	m_1776845		dropItem
 		p	1			p_1
@@ -528,12 +528,12 @@ c	net/minecraft/unmapped/C_5612112	net/minecraft/unmapped/C_5612112
 		p	1		p_1	
 		p	2		p_2	
 c	net/minecraft/unmapped/C_5752680	net/minecraft/client/gui/screen/inventory/menu/ChestScreen	
-	f	Lnet/minecraft/unmapped/C_4390289;	f_3299281	bottom	
-	f	Lnet/minecraft/unmapped/C_4390289;	f_7136534	top	
+	f	Lnet/minecraft/unmapped/C_4390289;	f_3299281	playerInventory	
+	f	Lnet/minecraft/unmapped/C_4390289;	f_7136534	inventory	
 	f	I	f_3228866	rows	
 	m	(Lnet/minecraft/unmapped/C_4390289;Lnet/minecraft/unmapped/C_4390289;)V	<init>	<init>	
-		p	1		bottom	
-		p	2		top	
+		p	1		playerInventory	
+		p	2		inventory	
 	m	()V	m_5630231	m_5630231	
 	m	()V	m_3483387	m_3483387	
 c	net/minecraft/unmapped/C_6007430	net/minecraft/client/render/entity/DefaultRenderer	
@@ -583,11 +583,10 @@ c	net/minecraft/unmapped/C_6372142	net/minecraft/unmapped/C_6372142
 		p	2		p_2	
 c	net/minecraft/unmapped/C_6385858
 	f	Z	f_0993166	f_0993166	
-	f	I	f_2474245	f_2474245	
+	f	I	f_2474245	breathCapacity	
 	f	Z	f_8982142	inWater	
-		c	True if this entity's hitbox is colliding with any water fluid blocks.	
-	f	I	f_9251059	maxHealth	
-	f	I	f_1258318	f_1258318	
+	f	I	f_9251059	invulnerableTimer	
+	f	I	f_1258318	breath	
 	m	(Lnet/minecraft/unmapped/C_5009044;)V	m_2248046	m_2248046	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_1985394	m_1985394	
@@ -660,11 +659,11 @@ c	net/minecraft/unmapped/C_7185906
 c	net/minecraft/unmapped/C_7192378
 	f	Lnet/minecraft/unmapped/C_4390289;	f_8999101	inventory	
 	m	(Lnet/minecraft/unmapped/C_7542541;Lnet/minecraft/unmapped/C_4390289;III)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
+		p	1		screen	
+		p	2		inventory	
+		p	3		id	
+		p	4		x	
+		p	5		y	
 	m	(Lnet/minecraft/unmapped/C_7192378;)V	m_6342010	setStack	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_7192378;)Lnet/minecraft/unmapped/C_4390289;	m_0357715	m_0357715	
@@ -675,14 +674,14 @@ c	net/minecraft/unmapped/C_7192378
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/unmapped/C_7542541
-	f	Lnet/minecraft/unmapped/C_7192378;	f_1617315	f_1617315	
+	f	Lnet/minecraft/unmapped/C_7192378;	f_1617315	cursorItem	
 	f	I	f_8214973	backgroundWidth	
 	f	I	f_2381230	backgroundHeight	
 	f	I	f_8475877		f_8475877
 	m	(Lnet/minecraft/unmapped/C_4390289;)V	<init>	<init>	
 		p	1		p_1	
-	m	()V	m_5630231	drawForeground	
-	m	()V	m_3483387	drawBackground	
+	m	()V	m_5630231	renderLabels	
+	m	()V	m_3483387	renderBackground	
 	m	(Lnet/minecraft/unmapped/C_4390289;III)V	m_6666177	m_6666177	
 		p	1		p_1	
 		p	2		p_2	
@@ -706,7 +705,7 @@ c	net/minecraft/unmapped/C_7667301	net/minecraft/unmapped/C_7667301
 c	net/minecraft/unmapped/C_7693268	net/minecraft/block/FlowingLiquidBlock	
 	f	Lnet/minecraft/unmapped/C_8554894;	f_7706941	f_7706941	
 	f	I	f_9279837	adjacentSources	
-		c	A counter that stores the amount of adjacent source liquids along the X and Z axes.	
+		c	The number of adjacent source liquids.	
 	f	I	f_2995398	f_2995398	
 	f	Ljava/util/Random;	f_6985556	f_6985556	
 	f	[I	f_0004623	f_0004623	
@@ -785,7 +784,7 @@ c	net/minecraft/unmapped/C_7693268	net/minecraft/block/FlowingLiquidBlock
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-c	net/minecraft/unmapped/C_8191584	net/minecraft/client/render/entity/LivingEntityRenderer	
+c	net/minecraft/unmapped/C_8191584	net/minecraft/client/render/entity/MobRenderer	
 	f	[Lnet/minecraft/unmapped/C_6942422;	f_9288344	f_9288344	
 	m	()V	<init>	<init>	
 	m	(Lnet/minecraft/unmapped/C_6385858;FFFFF)V	m_5501825	m_5501825	
@@ -851,7 +850,7 @@ c	net/minecraft/unmapped/C_9072802	net/minecraft/block/ChestBlock
 		p	5		p_5	
 	m	()Lnet/minecraft/unmapped/C_2074023;	m_2470522	m_2470522	
 c	net/minecraft/unmapped/C_9232749
-	m	(Ljava/lang/String;FFFFFF)V	m_5421083	m_5421083	
+	m	(Ljava/lang/String;FFFFFF)V	m_5421083	addParticle	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
@@ -878,7 +877,7 @@ c	net/minecraft/unmapped/C_9302567
 		p	6		p_6	
 	m	(Ljava/lang/String;)V	m_8417273	bindTexture	
 		p	1		path	
-	m	(Lnet/minecraft/unmapped/C_9610577;)V	m_9978873	setEntityRenderDispatcher	
+	m	(Lnet/minecraft/unmapped/C_9610577;)V	m_9978873	init	
 		p	1		dispatcher	
 	m	(Lnet/minecraft/unmapped/C_6385858;FFFF)V	m_3685532	renderShadow	
 		p	1		p_1	
@@ -898,7 +897,7 @@ c	net/minecraft/unmapped/C_9302567
 		p	5			p_5
 		p	6			p_6
 		p	7			p_7
-	m	(Lnet/minecraft/unmapped/C_3906126;)V	m_9978873		setEntityRenderDispatcher
+	m	(Lnet/minecraft/unmapped/C_3906126;)V	m_9978873		init
 		p	1			p_1
 	m	(F)V	m_3899692		m_3899692
 		p	1			p_1

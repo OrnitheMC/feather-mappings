@@ -49,34 +49,34 @@ c	net/minecraft/unmapped/C_1011144
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_1044273
 	f	Ljava/util/List;	f_7404452	globalBlockEntities	
-	f	Ljava/util/List;	f_5607847	pendingChunks	
-	f	[Lnet/minecraft/unmapped/C_5283200;	f_9451185	compiledChunks	
-	f	[Lnet/minecraft/unmapped/C_5283200;	f_6979547	chunkStorage	
-	f	I	f_0904057	chunkGridSizeX	
-	f	I	f_3933893	chunkGridSizeY	
-	f	I	f_4898986	chunkGridSizeZ	
-	f	I	f_2783901	translucentGlList	
+	f	Ljava/util/List;	f_5607847	dirtyChunks	
+	f	[Lnet/minecraft/unmapped/C_5283200;	f_9451185	sortedChunks	
+	f	[Lnet/minecraft/unmapped/C_5283200;	f_6979547	chunks	
+	f	I	f_0904057	chunkCountX	
+	f	I	f_3933893	chunkCountY	
+	f	I	f_4898986	chunkCountZ	
+	f	I	f_2783901	chunksGlList	
 	f	I	f_9589198	chunkBoundsGlList	
-	f	Ljava/nio/IntBuffer;	f_1119205	arbOcclusionBuffer	
-	f	Z	f_4416184	glArbOcclusion	
-	f	I	f_6271537	chunkGridMinX	
-	f	I	f_0695005	chunkGridMinY	
-	f	I	f_3013122	chunkGridMinZ	
-	f	I	f_7844112	chunkGridMaxX	
-	f	I	f_2346662	chunkGridMaxY	
-	f	I	f_2778982	chunkGridMaxZ	
+	f	Ljava/nio/IntBuffer;	f_1119205	occlusionBuffer	
+	f	Z	f_4416184	occlusion	
+	f	I	f_6271537	minChunkX	
+	f	I	f_0695005	minChunkY	
+	f	I	f_3013122	minChunkZ	
+	f	I	f_7844112	maxChunkX	
+	f	I	f_2346662	maxChunkY	
+	f	I	f_2778982	maxChunkZ	
 	f	Z	f_7868031	shouldRebuildStaticEntities	
-	f	Ljava/nio/IntBuffer;	f_9555474	occlusionBuffer	
+	f	Ljava/nio/IntBuffer;	f_9555474	occlusionQueryBuffer	
 	f	I	f_9658682	chunkCount	
 	f	I	f_8636472	invisibleChunkCount	
-	f	I	f_8633296	glArbOccludedChunkCount	
+	f	I	f_8633296	occludedChunkCount	
 	f	I	f_0985532	compiledChunkCount	
-	f	I	f_0674195	chunkSortIndex	
-	f	Ljava/util/List;	f_0391517	renderList	
-	f	[Lnet/minecraft/unmapped/C_2433962;	f_1596986	renderStages	
-	f	I	f_5393198	frustumUpdateIndex	
+	f	I	f_0674195	f_0674195	
+	f	Ljava/util/List;	f_0391517	chunksInCurrentLayer	
+	f	[Lnet/minecraft/unmapped/C_2433962;	f_1596986	chunkRenderers	
+	f	I	f_5393198	cullStep	
 	f	Ljava/util/Set;	f_7404452		globalBlockEntities
-	f	Ljava/util/Set;	f_5607847		pendingChunks
+	f	Ljava/util/Set;	f_5607847		dirtyChunks
 	f	Ljava/util/List;	f_1996236		compiledChunks
 	f	Lnet/minecraft/unmapped/C_2528546;	f_2150000		chunkStorage
 	f	Lnet/minecraft/unmapped/C_2713005;	f_0846544		skyVertexFormat
@@ -100,7 +100,7 @@ c	net/minecraft/unmapped/C_1044273
 		p	1		wasEnabled	
 	m	()V	m_4170973	renderStars	
 	m	()V	m_9738936	m_9738936	
-	m	(III)V	m_9346630	updateRenderBoundaries	
+	m	(III)V	m_9346630	sortChunks	
 		p	1		cameraX	
 		p	2		cameraY	
 		p	3		cameraZ	
@@ -109,10 +109,10 @@ c	net/minecraft/unmapped/C_1044273
 		p	2		layer	
 		p	3		tickDelta	
 		p	5		anaglyphRenderPass	
-	m	(II)V	m_2198590	queryGlArbOcclusion	
+	m	(II)V	m_2198590	checkOcclusionQueries	
 		p	1		from	
 		p	2		to	
-	m	(IILnet/minecraft/unmapped/C_3333682;D)I	m_9251865	render	
+	m	(IILnet/minecraft/unmapped/C_3333682;D)I	m_9251865	renderChunks	
 		p	1		from	
 		p	2		to	
 		p	3		layer	
@@ -120,7 +120,7 @@ c	net/minecraft/unmapped/C_1044273
 	m	(JLnet/minecraft/unmapped/C_6385858;)V	m_4101174	compileChunksUntil	
 		p	1		time	
 		p	3		camera	
-	m	(Lnet/minecraft/unmapped/C_1633510;F)V	m_4361284	updateFrustums	
+	m	(Lnet/minecraft/unmapped/C_1633510;F)V	m_4361284	cullChunks	
 		p	1		culler	
 		p	2		tickDelta	
 	m	()V	m_9342876		renderDarkSky
@@ -132,7 +132,7 @@ c	net/minecraft/unmapped/C_1044273
 	m	()V	m_0537528		renderStars
 	m	(Lnet/minecraft/unmapped/C_8373595;)V	m_4170973		renderStars
 		p	1			bufferBuilder
-	m	()V	m_8143425		resetPendingChunks
+	m	()V	m_8143425		resetDirtyChunks
 	m	(Lnet/minecraft/unmapped/C_6385858;DLnet/minecraft/unmapped/C_1633510;I)V	m_8682700		setupRender
 		p	1			camera
 		p	2			tickDelta
@@ -147,8 +147,8 @@ c	net/minecraft/unmapped/C_1044273
 		p	3			y
 		p	5			z
 	m	(Lnet/minecraft/unmapped/C_6385858;D)Ljavax/vecmath/Vector3f;	m_1662587		getLookVector
-		p	1			p_1
-		p	2			p_2
+		p	1			camera
+		p	2			tickDelta
 	m	(Lnet/minecraft/unmapped/C_3333682;DILnet/minecraft/unmapped/C_6385858;)I	m_4364373		render
 		p	1			layer
 		p	2			tickDelta
@@ -211,36 +211,36 @@ c	net/minecraft/unmapped/C_2326439$8328177
 	m	(Lnet/minecraft/unmapped/C_3544601;Lnet/minecraft/unmapped/C_3544601;)Z	m_4699609		m_4699609
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_2433962	net/minecraft/client/render/world/RenderChunkStorage	
+c	net/minecraft/unmapped/C_2433962	net/minecraft/client/render/world/ChunkRenderer	
 	f	Lnet/minecraft/unmapped/C_6707278;	f_6879913	origin	
-	f	D	f_8769167	cameraX	
-	f	D	f_1250686	cameraY	
-	f	D	f_0219798	cameraZ	
-	f	Ljava/nio/IntBuffer;	f_1544849	glList	
+	f	D	f_8769167	offsetX	
+	f	D	f_1250686	offsetY	
+	f	D	f_0219798	offsetZ	
+	f	Ljava/nio/IntBuffer;	f_1544849	glListBuffer	
 	f	Ljava/util/List;	f_4890429	chunks	
-	f	Z	f_9001135	renderingLeft	
-	f	Z	f_1491802	doNotFlipGlList	
+	f	Z	f_9001135	initialized	
+	f	Z	f_1491802	rendered	
 	m	()V	<init>	<init>	
-	m	(Lnet/minecraft/unmapped/C_6707278;DDD)V	m_8085530	m_8085530	
+	m	(Lnet/minecraft/unmapped/C_6707278;DDD)V	m_8085530	init	
 		p	1		origin	
 		p	2		cameraX	
 		p	4		cameraY	
 		p	6		cameraZ	
-	m	(Lnet/minecraft/unmapped/C_6707278;)Z	m_4442056	m_4442056	
-		p	1		p_1	
+	m	(Lnet/minecraft/unmapped/C_6707278;)Z	m_4442056	isAt	
+		p	1		pos	
 	m	()Lnet/minecraft/unmapped/C_6707278;	m_1365242	getOrigin	
-	m	(I)V	m_5569765	addNewIdToGlList	
-		p	1		id	
+	m	(I)V	m_5569765	addGlList	
+		p	1		glList	
 	m	(Lnet/minecraft/unmapped/C_5283200;)V	m_3077641	addChunk	
 		p	1		chunk	
 	m	(Lnet/minecraft/unmapped/C_3333682;)V	m_4389031	renderLayer	
 		p	1		layer	
 	m	()V	m_0708392	render	
 	m	()V	m_9825814	glTranslatef	
-	m	(Lnet/minecraft/unmapped/C_3333682;)V	m_8923851	m_8923851	
+	m	(Lnet/minecraft/unmapped/C_3333682;)V	m_8923851	renderWithVbo	
 		p	1		layer	
 	m	()V	m_9137168	m_9137168	
-	m	()V	m_6793448	reset	
+	m	()V	m_6793448	clear	
 c	net/minecraft/unmapped/C_2454294
 	m	(Lnet/minecraft/unmapped/C_6385858;I)V	m_6322299	addEmitter	
 		p	1		target	
@@ -248,12 +248,12 @@ c	net/minecraft/unmapped/C_2454294
 	m	(Lnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_4701530;)V	m_6322299		addEmitter
 		p	1			entity
 		p	2			type
-c	net/minecraft/unmapped/C_2728826	net/minecraft/client/util/RenderDistanceSortingFilter	
-	f	I	f_7428435	offsetX	
-	f	I	f_6586148	offsetZ	
+c	net/minecraft/unmapped/C_2728826	net/minecraft/client/render/world/DistanceChunkRendererSorter	
+	f	I	f_7428435	cameraX	
+	f	I	f_6586148	cameraZ	
 	m	(II)V	<init>	<init>	
-		p	1		offsetX	
-		p	2		offsetZ	
+		p	1		cameraX	
+		p	2		cameraZ	
 	m	(Lnet/minecraft/unmapped/C_2433962;Lnet/minecraft/unmapped/C_2433962;)I	m_2999159	m_2999159	
 		p	1		p_1	
 		p	2		p_2	
@@ -269,7 +269,7 @@ c	net/minecraft/unmapped/C_2782822
 c	net/minecraft/unmapped/C_2800860
 	m	()Z	m_8686998	isEmpty	
 	m	()Z	m_6319368		m_6319368
-c	net/minecraft/unmapped/C_2813741	net/minecraft/client/render/CompiledChunkComparator	
+c	net/minecraft/unmapped/C_2813741	net/minecraft/client/render/world/DistanceChunkSorter	
 	f	D	f_2795955	cameraX	
 	f	D	f_6932661	cameraY	
 	f	D	f_0971206	cameraZ	
@@ -353,7 +353,7 @@ c	net/minecraft/unmapped/C_3961659
 		p	1		p_1	
 c	net/minecraft/unmapped/C_3984704
 	m	()Z	m_6319368		isEmpty
-c	net/minecraft/unmapped/C_4076851	net/minecraft/client/render/ArbOcclusionCapabilities	
+c	net/minecraft/unmapped/C_4076851	net/minecraft/client/render/OpenGlCapabilities	
 	m	()Z	m_0600846	glArbOcclusionQuery	
 c	net/minecraft/unmapped/C_4176306
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_5009044;Lnet/minecraft/unmapped/C_6707278;Lnet/minecraft/unmapped/C_2441996;)V	m_7011942	m_7011942	
@@ -448,7 +448,7 @@ c	net/minecraft/unmapped/C_5283200
 	m	(Lnet/minecraft/unmapped/C_3333682;Lnet/minecraft/unmapped/C_2326439;)I	m_1829228	getGlList	
 		p	1		layer	
 		p	2		compiled	
-	m	(Lnet/minecraft/unmapped/C_1633510;)V	m_5092852	updateVisibility	
+	m	(Lnet/minecraft/unmapped/C_1633510;)V	m_5092852	cull	
 		p	1		culler	
 	m	()Z	m_8263433	isEmpty	
 	m	()Lnet/minecraft/unmapped/C_6707278;	m_4170504	getCenter	
@@ -510,7 +510,7 @@ c	net/minecraft/unmapped/C_6142023
 c	net/minecraft/unmapped/C_6385858
 	m	()Z	m_1078910		isSilent
 	m	(Z)V	m_4587013		setSilent
-		p	1			p_1
+		p	1			silent
 c	net/minecraft/unmapped/C_6516244
 	m	(Lnet/minecraft/unmapped/C_4712589;)V	<init>		<init>
 		p	1			frustum
@@ -617,7 +617,7 @@ c	net/minecraft/unmapped/C_8479751
 	m	()V	m_9738936	m_9738936	
 c	net/minecraft/unmapped/C_8675191
 	m	()Z	m_1016708		isCustomRenderer
-c	net/minecraft/unmapped/C_8688622	net/minecraft/client/render/world/PendingChunkComparator	
+c	net/minecraft/unmapped/C_8688622	net/minecraft/client/render/world/DirtyChunkSorter	
 	f	Lnet/minecraft/unmapped/C_6385858;	f_9491045	camera	
 	m	(Lnet/minecraft/unmapped/C_6385858;)V	<init>	<init>	
 		p	1		camera	
@@ -628,8 +628,8 @@ c	net/minecraft/unmapped/C_8688622	net/minecraft/client/render/world/PendingChun
 		p	1		p_1	
 		p	2		p_2	
 c	net/minecraft/unmapped/C_9302567
-	m	(Lnet/minecraft/unmapped/C_1414550;)V	m_9420745	drawBox	
-		p	0		box	
+	m	(Lnet/minecraft/unmapped/C_1414550;)V	m_9420745	renderShapeFlat	
+		p	0		shape	
 c	net/minecraft/unmapped/C_9450178	net/minecraft/client/render/world/ChunkBoundsRenderer	
 	f	Z	f_6904404	occluded	
 	f	Z	f_4430713	pending	

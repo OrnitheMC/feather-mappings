@@ -1,12 +1,12 @@
 tiny	2	0
 c	net/minecraft/client/Minecraft
-	f	Ljava/lang/String;	f_1371651	f_1371651	
+	f	Ljava/lang/String;	f_1371651	hostAddress	
 	f	Ljava/awt/Canvas;	f_2875400	canvas	
 	f	Z	f_3525124	appletMode	
 	f	Lnet/minecraft/unmapped/C_0139979;	f_3881621	resourceDownloader	
 	f	Lnet/minecraft/client/MinecraftApplet;	f_2677529	applet	
 	f	Z	f_7926619	demo	
-	f	Ljava/io/File;	f_4819882	runDirectory	
+	f	Ljava/io/File;	f_4819882	gameDirectory	
 	f	Ljava/net/Proxy;	f_8620159		proxy
 	f	Z	f_4819882		demo
 	f	I	f_8046155
@@ -17,10 +17,10 @@ c	net/minecraft/client/Minecraft
 		p	3		width	
 		p	4		height	
 		p	5		fullscreen	
-	m	(Lnet/minecraft/unmapped/C_5269767;)V	m_8906868	printCrashReport	
+	m	(Lnet/minecraft/unmapped/C_5269767;)V	m_8906868	handleCrash	
 		p	1		report	
-	m	()Ljava/io/File;	m_7433889	getRunDirectory	
-	m	(Ljava/lang/String;)Ljava/io/File;	m_4955305	createRunDirectory	
+	m	()Ljava/io/File;	m_7433889	getGameDirectory	
+	m	(Ljava/lang/String;)Ljava/io/File;	m_4955305	getGameDirectory	
 		p	0		name	
 	m	()Lnet/minecraft/unmapped/C_1774538;	m_3910209	getOs	
 	m	()V	run	run	
@@ -134,7 +134,7 @@ c	net/minecraft/unmapped/C_0037305
 		p	2			targetType
 		p	3			range
 		p	4			chance
-c	net/minecraft/unmapped/C_0043375
+c	net/minecraft/unmapped/C_0043375	net/minecraft/entity/mob/SnowGolemEntity	net/minecraft/entity/living/mob/SnowGolemEntity
 	m	()I	m_8512153	m_8512153	
 	m	()I	m_4601038	m_4601038	
 	m	()V	m_1987632		m_1987632
@@ -149,34 +149,34 @@ c	net/minecraft/unmapped/C_0089468
 	m	(Ljava/io/DataOutput;)V	m_4625396		m_4625396
 		p	1			p_1
 c	net/minecraft/unmapped/C_0107199	org/bouncycastle/jcajce/provider/config/ProviderConfiguration	
-c	net/minecraft/unmapped/C_0118999
+c	net/minecraft/unmapped/C_0118999	net/minecraft/entity/mob/hostile/boss/Boss	net/minecraft/entity/living/mob/hostile/boss/Boss
 	m	()I	m_8512153	getMaxHealth	
 	m	()I	m_9161906	getDisplayHealth	
 	m	()F	m_8512153		getMaxHealth
 	m	()F	m_4971784		getHealth
-c	net/minecraft/unmapped/C_0139979	net/minecraft/client/resource/ResourceDownloadThread	
-	f	Ljava/io/File;	f_4560197	workingDirectory	
+c	net/minecraft/unmapped/C_0139979	net/minecraft/client/resource/ResourceDownloader	
+	f	Ljava/io/File;	f_4560197	resourcesDir	
 	f	Lnet/minecraft/client/Minecraft;	f_3817644	minecraft	
-	f	Z	f_8021028	cancelled	
+	f	Z	f_8021028	stopped	
 	m	(Ljava/io/File;Lnet/minecraft/client/Minecraft;)V	<init>	<init>	
-		p	1		parentDirectory	
+		p	1		gameDir	
 		p	2		minecraft	
 	m	()V	run	run	
-	m	()V	m_3952720	m_3952720	
-	m	(Ljava/io/File;Ljava/lang/String;)V	m_4894155	m_4894155	
-		p	1		p_1	
-		p	2		p_2	
-	m	(Ljava/net/URL;Ljava/lang/String;JI)V	m_1914282	m_1914282	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	5		p_5	
-	m	(Ljava/net/URL;Ljava/io/File;J)V	m_2535201	readToFile	
-		p	1		fileUrl	
-		p	2		output	
-		p	3		p_3	
-	m	()V	m_4359826	cancel	
-c	net/minecraft/unmapped/C_0258789
+	m	()V	m_3952720	forceReload	
+	m	(Ljava/io/File;Ljava/lang/String;)V	m_4894155	loadResources	
+		p	1		dir	
+		p	2		prefix	
+	m	(Ljava/net/URL;Ljava/lang/String;JI)V	m_1914282	download	
+		p	1		url	
+		p	2		name	
+		p	3		size	
+		p	5		pass	
+	m	(Ljava/net/URL;Ljava/io/File;J)V	m_2535201	download	
+		p	1		url	
+		p	2		dst	
+		p	3		size	
+	m	()V	m_4359826	stop	
+c	net/minecraft/unmapped/C_0258789	net/minecraft/entity/mob/hostile/SkeletonEntity	net/minecraft/entity/living/mob/hostile/SkeletonEntity
 	m	()I	m_8512153	m_8512153	
 	m	()Ljava/lang/String;	m_9980999	m_9980999	
 	m	()I	m_4601038	m_4601038	
@@ -275,7 +275,7 @@ c	net/minecraft/unmapped/C_0309511$3031773		3031773
 	m	(Lnet/minecraft/unmapped/C_0309511;)V	<init>		<init>
 		p	1			p_1
 	m	()V	run		run
-c	net/minecraft/unmapped/C_0324512
+c	net/minecraft/unmapped/C_0324512	net/minecraft/server/entity/mob/player/ServerPlayerEntity	net/minecraft/server/entity/living/player/ServerPlayerEntity
 	f	I	f_5431237	lastHealth	
 	f	F	f_5431237		lastHealth
 	m	(I)V	m_8195933	m_8195933	
@@ -297,7 +297,7 @@ c	net/minecraft/unmapped/C_0324512
 		p	6			p_6
 c	net/minecraft/unmapped/C_0380326	argo/jdom/JsonNodeBuilder	
 	m	()Lnet/minecraft/unmapped/C_4866584;	m_8541423	build	
-c	net/minecraft/unmapped/C_0380387
+c	net/minecraft/unmapped/C_0380387	net/minecraft/entity/mob/passive/animal/tamable/OcelotEntity	net/minecraft/entity/living/mob/passive/animal/tamable/OcelotEntity
 	m	()Z	m_2924409	m_2924409	
 	m	()I	m_8512153	m_8512153	
 	m	()Ljava/lang/String;	m_9980999	m_9980999	
@@ -320,11 +320,11 @@ c	net/minecraft/unmapped/C_0380387
 		p	1			p_1
 	m	()Z	m_1733837		m_1733837
 	m	()V	m_0405912		m_0405912
-c	net/minecraft/unmapped/C_0425827
+c	net/minecraft/unmapped/C_0425827	net/minecraft/entity/mob/MobVisibilityCache	net/minecraft/entity/living/mob/MobVisibilityCache
 	f	Lnet/minecraft/unmapped/C_1013763;	f_6224698	mob	
 	f	Lnet/minecraft/unmapped/C_2587956;	f_6224698		mob
 	m	(Lnet/minecraft/unmapped/C_1013763;)V	<init>	<init>	
-		p	1		p_1	
+		p	1		mob	
 	m	(Lnet/minecraft/unmapped/C_2587956;)V	<init>		<init>
 		p	1			mob
 c	net/minecraft/unmapped/C_0446064	argo/jdom/JsonNodeSelectors	
@@ -493,7 +493,7 @@ c	net/minecraft/unmapped/C_0492953
 		p	3			distance
 		p	4			slowSpeed
 		p	6			fastSpeed
-c	net/minecraft/unmapped/C_0509876
+c	net/minecraft/unmapped/C_0509876	net/minecraft/entity/mob/hostile/SilverfishEntity	net/minecraft/entity/living/mob/hostile/SilverfishEntity
 	m	()I	m_8512153	m_8512153	
 	m	()Ljava/lang/String;	m_9980999	m_9980999	
 	m	(Lnet/minecraft/unmapped/C_6907923;I)Z	m_3238154	m_3238154	
@@ -508,7 +508,7 @@ c	net/minecraft/unmapped/C_0509876
 		p	2			p_2
 	m	()I	m_2225185		m_2225185
 	m	()Z	m_1733837		m_1733837
-c	net/minecraft/unmapped/C_0564302
+c	net/minecraft/unmapped/C_0564302	net/minecraft/entity/mob/GolemEntity	net/minecraft/entity/living/mob/GolemEntity
 	m	()Ljava/lang/String;	m_9980999	m_9980999	
 	m	()I	m_8620403	m_8620403	
 	m	()Z	m_2924409	m_2924409	
@@ -600,7 +600,7 @@ c	net/minecraft/unmapped/C_0778972
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_5009044;)Z	m_7097998		m_7097998
 		p	1			p_1
-c	net/minecraft/unmapped/C_0826304
+c	net/minecraft/unmapped/C_0826304	net/minecraft/entity/mob/hostile/CaveSpiderEntity	net/minecraft/entity/living/mob/hostile/CaveSpiderEntity
 	m	()I	m_8512153	m_8512153	
 	m	()V	m_6896447	m_6896447	
 	m	()V	m_1987632		m_1987632
@@ -681,7 +681,7 @@ c	net/minecraft/unmapped/C_0990852
 		p	1			p_1
 	m	(Ljava/io/DataOutput;)V	m_4625396		m_4625396
 		p	1			p_1
-c	net/minecraft/unmapped/C_1013763
+c	net/minecraft/unmapped/C_1013763	net/minecraft/entity/mob/MobEntity	net/minecraft/entity/living/LivingEntity
 	f	[F	f_1981909	WEAPON_ENCHANTMENT_CHANCE	
 		c	An array containing the probability for the weapon of a mob to be enchanted. These are sorted by increasing probability with item[0] being difficulty easy and item[3] being difficulty hard.	
 	f	[F	f_4169938	ARMOR_ENCHANTMENT_CHANCE	
@@ -692,16 +692,16 @@ c	net/minecraft/unmapped/C_1013763
 		c	An array containing the probability of a mob dropping their inventory. These are sorted by increasing probability with item[0] being difficulty easy and item[3] being difficulty hard.	
 	f	Z	f_8232145	f_8232145	
 	f	Z	f_5810048	f_5810048	
-	f	Ljava/lang/String;	f_0526150	livingEntityType	
+	f	Ljava/lang/String;	f_0526150	modeName	
 		c	Is only set not to null if living entity is humanoid	
 	f	F	f_2730594	f_2730594	
 	f	I	f_9406435	health	
-	f	I	f_6681712	prevHealth	
+	f	I	f_6681712	lastHealth	
 	f	I	f_8438712	residualDamage	
 		c	The minecraft health bar only displays in chunks of half hearts. The damage calculations often results in values not being exactly this (e.g. 1.25 hears of damge). If this is the case, 1 heart of damge is being dealt and .25 hears of damge is being stored and is then used in the next step or next damage calculation.	
-	f	I	f_5887688	produceSoundProbability	
+	f	I	f_5887688	ambientSoundTimer	
 		c	The number is initially set to -soundInterval, after this interval each tick the probability of making a sound will go up with 1 promille	
-	f	Z	f_8161233	killed	
+	f	Z	f_8161233	dead	
 	f	I	f_3946859	experienceDroppe	
 		c	The amount of experience points (XP) the LivingEntity drops	
 	f	I	f_7405401	f_7405401	
@@ -712,7 +712,7 @@ c	net/minecraft/unmapped/C_1013763
 	f	Lnet/minecraft/unmapped/C_5640967;	f_6730740	movementControl	
 	f	Lnet/minecraft/unmapped/C_3106558;	f_9695069	jumpControl	
 	f	Lnet/minecraft/unmapped/C_4878230;	f_4138559	bodyControl	
-	f	Lnet/minecraft/unmapped/C_1611709;	f_4647937	pathNavigation	
+	f	Lnet/minecraft/unmapped/C_1611709;	f_4647937	navigation	
 	f	Lnet/minecraft/unmapped/C_6285024;	f_2640019	goals	
 	f	Lnet/minecraft/unmapped/C_6285024;	f_8649839	targetGoals	
 	f	Lnet/minecraft/unmapped/C_1013763;	f_4746125	target	
@@ -726,14 +726,12 @@ c	net/minecraft/unmapped/C_1013763
 	f	Z	f_9177400	capPickUpLoot	
 	f	Z	f_7041576	persistenceRequired	
 	f	F	f_1504584	f_1504584	
-	f	I	f_9483719	lastDamage	
+	f	I	f_9483719	prevHealth	
 	f	F	f_2281696	sidewaysSpeed	
-	f	F	f_1337476	initialPitch	
-	f	F	f_0531186	targetSpeed	
-	f	Lnet/minecraft/unmapped/C_6385858;	f_2937920	target	
-		c	The entity that is currently being targetted by the LivingEntity	
-	f	I	f_3169143	targetTime	
-		c	How many ticks should an entity be targetted for	
+	f	F	f_1337476	defaultPitch	
+	f	F	f_0531186	walkSpeed	
+	f	Lnet/minecraft/unmapped/C_6385858;	f_2937920	lookTarget	
+	f	I	f_3169143	lookTimer	
 	f	Lnet/minecraft/unmapped/C_9549387;	f_0217020		attributes
 	f	F	f_3084778		lastHealth
 	f	Z	f_9066731		dead
@@ -771,10 +769,10 @@ c	net/minecraft/unmapped/C_1013763
 	m	()F	m_4806275	getMaxHouseDistance	
 	m	()V	m_7319071	removeHouse	
 	m	()Z	m_0993768	hasHouse	
-	m	()I	m_8620403	getSoundInterval	
-		c	How many ticks (at least) will the entity wait between producing sounds	
+	m	()I	m_8620403	getAmbientSoundInterval	
+		c	The number of ticks until this mob makes ambient sounds.	
 	m	()V	m_6827055	makeSound	
-	m	()V	m_6671400	doSpawnEffects	
+	m	()V	m_6671400	animateSpawn	
 	m	(I)V	m_6031420	heal	
 		p	1		amount	
 	m	()I	m_8512153	getMaxHealth	
@@ -795,30 +793,28 @@ c	net/minecraft/unmapped/C_1013763
 	m	(Lnet/minecraft/unmapped/C_6907923;I)V	m_0677528	applyDamage	
 		p	1		source	
 		p	2		amount	
-	m	()Ljava/lang/String;	m_9980999	getSound	
+	m	()Ljava/lang/String;	m_9980999	getAmbientSound	
 	m	(Lnet/minecraft/unmapped/C_6385858;IDD)V	m_5038246	applyKnockback	
 		p	1		attacker	
 		p	2		amount	
 		p	3		dx	
 		p	5		dz	
-	m	()I	m_4601038	getDroppedItem	
+	m	()I	m_4601038	getDropItem	
 	m	(F)V	m_6420337	setForwardSpeed	
 		p	1		forwardSpeed	
 	m	()Z	m_2924409	isHostile	
 	m	()V	m_2703843	tryDespawn	
 		c	Checks if the entity can despawn and should despawn.	
 	m	()I	m_8524049	verticleLookSpeed	
-	m	(Lnet/minecraft/unmapped/C_6385858;FF)V	m_0544398	turnHeadAtEntity	
-		p	1		entity	
+	m	(Lnet/minecraft/unmapped/C_6385858;FF)V	m_0544398	lookAt	
+		p	1		target	
 		p	2		maxPitch	
 		p	3		maxYaw	
-	m	(FFF)F	m_8768955	getRotation	
-		c	gets the new rotation. This uses current position and next position along with a max rotation to not get any funcky effects.	
-		p	1		currentRotation	
-		p	2		nextRotation	
-		p	3		maxIncrement	
-	m	()Z	m_6814594	isValidSpawnPosition	
-		c	Checks collision and spawn enviroment to see if a position is a valid spawn point.	
+	m	(FFF)F	m_8768955	lerpRotation	
+		p	1		from	
+		p	2		to	
+		p	3		maxChange	
+	m	()Z	m_6814594	canSpawn	
 	m	()F	m_4074219	getShadowSizeModifier	
 	m	(DF)Lnet/minecraft/unmapped/C_5853518;	m_4926853	rayTrace	
 		p	1		distance	
@@ -1017,7 +1013,7 @@ c	net/minecraft/unmapped/C_1165198	net/minecraft/unmapped/C_1165198
 		p	2		p_2	
 	m	()Ljava/security/SecureRandom;	m_4214211	m_4214211	
 	m	()I	m_0436118	m_0436118	
-c	net/minecraft/unmapped/C_1168245
+c	net/minecraft/unmapped/C_1168245	net/minecraft/entity/mob/passive/VillagerEntity	net/minecraft/entity/living/mob/passive/VillagerEntity
 	m	(Lnet/minecraft/unmapped/C_5009044;)Z	m_7287105	m_7287105	
 		p	1		p_1	
 	m	()I	m_8512153	m_8512153	
@@ -1058,7 +1054,7 @@ c	net/minecraft/unmapped/C_1249120
 		p	1			p_1
 c	net/minecraft/unmapped/C_1283912
 	m	()Z	m_2206171	m_2206171	
-c	net/minecraft/unmapped/C_1309851
+c	net/minecraft/unmapped/C_1309851	net/minecraft/client/entity/mob/player/RemoteClientPlayerEntity	net/minecraft/client/entity/living/player/RemoteClientPlayerEntity
 	m	(Lnet/minecraft/unmapped/C_6907923;I)Z	m_3238154	m_3238154	
 		p	1		p_1	
 		p	2		p_2	
@@ -1072,7 +1068,7 @@ c	net/minecraft/unmapped/C_1339969
 	m	(Lnet/minecraft/unmapped/C_6907923;F)Z	m_3238154		m_3238154
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_1388208
+c	net/minecraft/unmapped/C_1388208	net/minecraft/client/entity/mob/player/LocalClientPlayerEntity	net/minecraft/client/entity/living/player/LocalClientPlayerEntity
 	m	(Lnet/minecraft/unmapped/C_6907923;I)Z	m_3238154	m_3238154	
 		p	1		p_1	
 		p	2		p_2	
@@ -1109,7 +1105,7 @@ c	net/minecraft/unmapped/C_1414550
 	m	(Lnet/minecraft/unmapped/C_0336319;Lnet/minecraft/unmapped/C_0336319;)Lnet/minecraft/unmapped/C_0336319;	m_0426309		m_0426309
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_1415320
+c	net/minecraft/unmapped/C_1415320	net/minecraft/entity/mob/animal/AnimalEntity	net/minecraft/entity/living/mob/animal/AnimalEntity
 	m	(Lnet/minecraft/unmapped/C_6907923;I)Z	m_3238154	m_3238154	
 		p	1		p_1	
 		p	2		p_2	
@@ -1142,7 +1138,7 @@ c	net/minecraft/unmapped/C_1441870
 		p	2			p_2
 		p	4			p_4
 		p	5			p_5
-c	net/minecraft/unmapped/C_1444189
+c	net/minecraft/unmapped/C_1444189	net/minecraft/entity/mob/hostile/boss/WitherEntity	net/minecraft/entity/living/mob/hostile/boss/WitherEntity
 	m	()Ljava/lang/String;	m_9980999	m_9980999	
 	m	(Lnet/minecraft/unmapped/C_6907923;I)Z	m_3238154	m_3238154	
 		p	1		p_1	
@@ -1162,7 +1158,7 @@ c	net/minecraft/unmapped/C_1462582	org/bouncycastle/asn1/ASN1Object
 	m	(Ljava/lang/Object;)Z	equals	equals	
 		p	1		p_1	
 	m	()Lnet/minecraft/unmapped/C_0984003;	m_9476083	m_9476083	
-c	net/minecraft/unmapped/C_1481722
+c	net/minecraft/unmapped/C_1481722	net/minecraft/entity/mob/hostile/EndermanEntity	net/minecraft/entity/living/mob/hostile/EndermanEntity
 	f	Z	f_3419465		angry
 	m	()I	m_8512153	m_8512153	
 	m	()Ljava/lang/String;	m_9980999	m_9980999	
@@ -1289,12 +1285,12 @@ c	net/minecraft/unmapped/C_1655129	argo/saj/SajParser
 		p	1		pushbackReader	
 	m	(Lnet/minecraft/unmapped/C_3459249;)I	m_7781783	readNextNonWhitespaceChar	
 		p	1		pushbackReader	
-c	net/minecraft/unmapped/C_1756552
+c	net/minecraft/unmapped/C_1756552	net/minecraft/entity/mob/hostile/MagmaCubeEntity	net/minecraft/entity/living/mob/hostile/MagmaCubeEntity
 	m	()Z	m_6814594	m_6814594	
 	m	()I	m_4601038	m_4601038	
 	m	()Z	m_1733837		m_1733837
 	m	()I	m_2225185		m_2225185
-c	net/minecraft/unmapped/C_1774538	net/minecraft/util/OS	
+c	net/minecraft/unmapped/C_1774538	net/minecraft/client/Minecraft__OS	
 	f	Lnet/minecraft/unmapped/C_1774538;	f_4626673	LINUX	
 	f	Lnet/minecraft/unmapped/C_1774538;	f_0646261	SOLARIS	
 	f	Lnet/minecraft/unmapped/C_1774538;	f_7845959	WINDOWS	
@@ -1360,11 +1356,11 @@ c	net/minecraft/unmapped/C_1812555
 		p	5			p_5
 		p	6			p_6
 		p	7			p_7
-c	net/minecraft/unmapped/C_1826831
+c	net/minecraft/unmapped/C_1826831	net/minecraft/entity/mob/hostile/CreeperEntity	net/minecraft/entity/living/mob/hostile/CreeperEntity
 	m	()I	m_8512153	m_8512153	
 	m	()I	m_4601038	m_4601038	
 	m	()I	m_2225185		m_2225185
-c	net/minecraft/unmapped/C_1877543
+c	net/minecraft/unmapped/C_1877543	net/minecraft/entity/mob/water/WaterMobEntity	net/minecraft/entity/living/mob/water/WaterMobEntity
 	m	()Z	m_6814594	m_6814594	
 	m	()I	m_8620403	m_8620403	
 	m	()Z	m_2924409	m_2924409	
@@ -1551,7 +1547,7 @@ c	net/minecraft/unmapped/C_2285094
 		p	6			p_6
 		p	8			p_8
 		p	9			p_9
-c	net/minecraft/unmapped/C_2339776
+c	net/minecraft/unmapped/C_2339776	net/minecraft/entity/mob/animal/SheepEntity	net/minecraft/entity/living/mob/animal/SheepEntity
 	m	()I	m_8512153	m_8512153	
 	m	()I	m_4601038	m_4601038	
 	m	(Lnet/minecraft/unmapped/C_5009044;)Z	m_7287105	m_7287105	
@@ -1575,19 +1571,19 @@ c	net/minecraft/unmapped/C_2422346
 		p	1			p_1
 	m	(Ljava/io/DataOutput;)V	m_4625396		m_4625396
 		p	1			p_1
-c	net/minecraft/unmapped/C_2426381
+c	net/minecraft/unmapped/C_2426381	net/minecraft/entity/mob/animal/ChickenEntity	net/minecraft/entity/living/mob/animal/ChickenEntity
 	m	()I	m_8512153	m_8512153	
 	m	()Ljava/lang/String;	m_9980999	m_9980999	
 	m	()I	m_4601038	m_4601038	
 	m	()V	m_1987632		m_1987632
 	m	()Ljava/lang/String;	m_7781112		m_7781112
 	m	()I	m_2225185		m_2225185
-c	net/minecraft/unmapped/C_2459497
+c	net/minecraft/unmapped/C_2459497	net/minecraft/entity/mob/passive/animal/MooshroomEntity	net/minecraft/entity/living/mob/passive/animal/MooshroomEntity
 	m	(Lnet/minecraft/unmapped/C_5009044;)Z	m_7287105	m_7287105	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_5009044;)Z	m_8048017		m_8048017
 		p	1			p_1
-c	net/minecraft/unmapped/C_2584919
+c	net/minecraft/unmapped/C_2584919	net/minecraft/entity/mob/animal/CowEntity	net/minecraft/entity/living/mob/animal/CowEntity
 	m	()I	m_8512153	m_8512153	
 	m	()Ljava/lang/String;	m_9980999	m_9980999	
 	m	()I	m_4601038	m_4601038	
@@ -1662,7 +1658,7 @@ c	net/minecraft/unmapped/C_2851764	argo/jdom/Functor
 	m	(Ljava/lang/Object;)Ljava/lang/Object;	m_2828321	applyTo	
 		p	1		jsonNode	
 	m	()Ljava/lang/String;	m_7185754	shortForm	
-c	net/minecraft/unmapped/C_2923961
+c	net/minecraft/unmapped/C_2923961	net/minecraft/entity/mob/hostile/SpiderEntity	net/minecraft/entity/living/mob/hostile/SpiderEntity
 	m	()I	m_8512153	m_8512153	
 	m	()D	m_7560901	m_7560901	
 	m	()Ljava/lang/String;	m_9980999	m_9980999	
@@ -1681,7 +1677,7 @@ c	net/minecraft/unmapped/C_2926512
 		p	1			p_1
 	m	(Ljava/io/DataOutput;)V	m_4625396		m_4625396
 		p	1			p_1
-c	net/minecraft/unmapped/C_2984832
+c	net/minecraft/unmapped/C_2984832	net/minecraft/entity/mob/hostile/GhastEntity	net/minecraft/entity/living/mob/hostile/GhastEntity
 	m	(Lnet/minecraft/unmapped/C_6907923;I)Z	m_3238154	m_3238154	
 		p	1		p_1	
 		p	2		p_2	
@@ -1786,7 +1782,7 @@ c	net/minecraft/unmapped/C_3298564
 		p	1			p_1
 	m	(Ljava/io/DataOutput;)V	m_4625396		m_4625396
 		p	1			p_1
-c	net/minecraft/unmapped/C_3310814
+c	net/minecraft/unmapped/C_3310814	net/minecraft/entity/mob/ambient/AmbientMobEntity	net/minecraft/entity/living/mob/ambient/AmbientMobEntity
 	m	()Z	m_2297385		m_2297385
 	m	(Lnet/minecraft/unmapped/C_5009044;)Z	m_8048017		m_8048017
 		p	1			p_1
@@ -1809,7 +1805,7 @@ c	net/minecraft/unmapped/C_3317638
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_2587956;)V	<init>		<init>
 		p	1			mob
-c	net/minecraft/unmapped/C_3324249
+c	net/minecraft/unmapped/C_3324249	net/minecraft/entity/mob/hostile/GiantEntity	net/minecraft/entity/living/mob/hostile/GiantEntity
 	m	()I	m_8512153	m_8512153	
 	m	()V	m_1987632		m_1987632
 c	net/minecraft/unmapped/C_3385278
@@ -1846,7 +1842,7 @@ c	net/minecraft/unmapped/C_3418531
 		p	6			p_6
 		p	8			p_8
 		p	9			p_9
-c	net/minecraft/unmapped/C_3419581
+c	net/minecraft/unmapped/C_3419581	net/minecraft/entity/mob/PathAwareMobEntity	net/minecraft/entity/living/mob/PathAwareMobEntity
 	f	Lnet/minecraft/unmapped/C_6707278;	f_3537258		pos
 	f	F	f_3606617		villageRadius
 	f	Lnet/minecraft/unmapped/C_6273786;	f_0260797		goToWalkTargetGoal
@@ -1937,7 +1933,7 @@ c	net/minecraft/unmapped/C_3601640
 c	net/minecraft/unmapped/C_3635204
 	f	Lnet/minecraft/unmapped/C_3635204;	f_8885660		HAY
 	f	Lnet/minecraft/unmapped/C_3635204;	f_3191424		CARPET
-c	net/minecraft/unmapped/C_3695747
+c	net/minecraft/unmapped/C_3695747	net/minecraft/entity/mob/hostile/BlazeEntity	net/minecraft/entity/living/mob/hostile/BlazeEntity
 	m	()I	m_8512153	m_8512153	
 	m	()Ljava/lang/String;	m_9980999	m_9980999	
 	m	()I	m_4601038	m_4601038	
@@ -2139,7 +2135,7 @@ c	net/minecraft/unmapped/C_4238496
 		p	6			p_6
 		p	8			p_8
 		p	9			p_9
-c	net/minecraft/unmapped/C_4286596
+c	net/minecraft/unmapped/C_4286596	net/minecraft/entity/mob/player/PlayerInventory	net/minecraft/entity/living/player/PlayerInventory
 	m	(Lnet/minecraft/unmapped/C_6385858;)I	m_0415661	getAttackDamage	
 		p	1		target	
 	m	(I)V	m_8132622	damageArmor	
@@ -2173,7 +2169,7 @@ c	net/minecraft/unmapped/C_4384798
 		p	2		p_2	
 	m	(Ljava/net/URL;)Ljava/lang/String;	m_7080550		m_7080550
 		p	0			p_0
-c	net/minecraft/unmapped/C_4389375
+c	net/minecraft/unmapped/C_4389375	net/minecraft/entity/mob/IronGolemEntity	net/minecraft/entity/living/mob/IronGolemEntity
 	m	()I	m_8512153	m_8512153	
 	m	(Ljava/lang/Class;)Z	m_9962192	m_9962192	
 		p	1		p_1	
@@ -2185,6 +2181,7 @@ c	net/minecraft/unmapped/C_4389375
 c	net/minecraft/unmapped/C_4443804
 	m	(Lnet/minecraft/unmapped/C_2236455;)V	m_5907400		handlePlayerInput
 		p	1			packet
+	m	(Lnet/minecraft/unmapped/C_8321936;)V	m_9367334	handleRideEntity	handleAttachEntity
 c	net/minecraft/unmapped/C_4477713
 	m	(Lnet/minecraft/unmapped/C_2587956;DDDFF)V	m_9727707		m_9727707
 		p	1			p_1
@@ -2221,7 +2218,7 @@ c	net/minecraft/unmapped/C_4570015
 		p	9			p_9
 c	net/minecraft/unmapped/C_4707822
 	m	()Ljava/lang/String;	m_4105859		getServerState
-c	net/minecraft/unmapped/C_4718187
+c	net/minecraft/unmapped/C_4718187	net/minecraft/entity/mob/hostile/HostileMobEntity	net/minecraft/entity/living/mob/hostile/HostileMobEntity
 	m	(Lnet/minecraft/unmapped/C_6907923;I)Z	m_3238154	m_3238154	
 		p	1		p_1	
 		p	2		p_2	
@@ -2396,7 +2393,7 @@ c	net/minecraft/unmapped/C_4946369
 		p	1			p_1
 	m	(Ljava/io/DataOutput;)V	m_4625396		m_4625396
 		p	1			p_1
-c	net/minecraft/unmapped/C_4948697
+c	net/minecraft/unmapped/C_4948697	net/minecraft/entity/mob/hostile/ZombiePigmanEntity	net/minecraft/entity/living/mob/hostile/ZombiePigmanEntity
 	m	()Z	m_6814594	m_6814594	
 	m	(Lnet/minecraft/unmapped/C_6907923;I)Z	m_3238154	m_3238154	
 		p	1		p_1	
@@ -2422,7 +2419,7 @@ c	net/minecraft/unmapped/C_4992837
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_2587956;)V	<init>		<init>
 		p	1			p_1
-c	net/minecraft/unmapped/C_5009044
+c	net/minecraft/unmapped/C_5009044	net/minecraft/entity/mob/player/PlayerEntity	net/minecraft/entity/living/player/PlayerEntity
 	m	()I	m_8512153	m_8512153	
 	m	(Lnet/minecraft/unmapped/C_6907923;I)Z	m_3238154	m_3238154	
 		p	1		p_1	
@@ -2575,21 +2572,21 @@ c	net/minecraft/unmapped/C_5353417
 		p	1			p_1
 	m	(Ljava/io/DataOutput;)V	m_4625396		m_4625396
 		p	1			p_1
-c	net/minecraft/unmapped/C_5367636
+c	net/minecraft/unmapped/C_5367636	net/minecraft/client/entity/mob/player/InputClientPlayerEntity	net/minecraft/client/entity/living/player/InputClientPlayerEntity
 	f	I	f_0326408		horseJumpTimer
 	f	F	f_9299141		horseJumpSize
 	m	(DDD)V	m_2801634	m_2801634	
 		p	1		p_1	
 		p	3		p_3	
 		p	5		p_5	
-	m	(I)V	m_4561784	setPlayerHealth	
+	m	(I)V	m_4561784	damgeTo	
 		p	1		health	
-	m	(F)V	m_4561784		setPlayerHealth
+	m	(F)V	m_4561784		damgeTo
 		p	1			health
 	m	()Z	m_6234479		isRidingRideableMob
 	m	()F	m_0064923		getRidingJumpProgress
 	m	()V	m_9030471		jumpWithHorse
-c	net/minecraft/unmapped/C_5371184
+c	net/minecraft/unmapped/C_5371184	net/minecraft/entity/mob/hostile/SlimeEntity	net/minecraft/entity/living/mob/hostile/SlimeEntity
 	f	[F	f_0464084	MOON_PHASE_SPAWN_CHANCES	
 	m	()I	m_8512153	m_8512153	
 	m	()I	m_4601038	m_4601038	
@@ -2608,14 +2605,14 @@ c	net/minecraft/unmapped/C_5434245
 	m	()F	m_6901817		getAttackDamage
 	m	(Lnet/minecraft/unmapped/C_6385858;)F	m_1072215		m_1072215
 		p	1			p_1
-c	net/minecraft/unmapped/C_5439084
+c	net/minecraft/unmapped/C_5439084	net/minecraft/entity/mob/hostile/boss/EnderDragonPart	net/minecraft/entity/living/mob/hostile/boss/EnderDragonPart
 	m	(Lnet/minecraft/unmapped/C_6907923;I)Z	m_3238154	m_3238154	
 		p	1		p_1	
 		p	2		p_2	
 	m	(Lnet/minecraft/unmapped/C_6907923;F)Z	m_3238154		m_3238154
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_5475923
+c	net/minecraft/unmapped/C_5475923	net/minecraft/entity/mob/water/SquidEntity	net/minecraft/entity/living/mob/water/SquidEntity
 	m	()I	m_8512153	m_8512153	
 	m	()Ljava/lang/String;	m_9980999	m_9980999	
 	m	()I	m_4601038	m_4601038	
@@ -2998,7 +2995,7 @@ c	net/minecraft/unmapped/C_6134274
 		p	1			p_1
 	m	(Ljava/io/DataOutput;)V	m_4625396		m_4625396
 		p	1			p_1
-c	net/minecraft/unmapped/C_6182204
+c	net/minecraft/unmapped/C_6182204	net/minecraft/entity/mob/ambient/BatEntity	net/minecraft/entity/living/mob/ambient/BatEntity
 	m	()Ljava/lang/String;	m_9980999	m_9980999	
 	m	()I	m_8512153	m_8512153	
 	m	(Lnet/minecraft/unmapped/C_6907923;I)Z	m_3238154	m_3238154	
@@ -3017,9 +3014,9 @@ c	net/minecraft/unmapped/C_6184436	org/bouncycastle/asn1/ASN1ObjectIdentifier
 		p	1		p_1	
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_6184436;	m_7990215	m_7990215	
 		p	1		p_1	
-c	net/minecraft/unmapped/C_6264072
+c	net/minecraft/unmapped/C_6264072	net/minecraft/entity/mob/hostile/boss/EnderDragon	net/minecraft/entity/living/mob/hostile/boss/EnderDragon
 	m	(Lnet/minecraft/unmapped/C_5439084;Lnet/minecraft/unmapped/C_6907923;I)Z	m_4167577	damage	
-		p	1		enderDragonPart	
+		p	1		part	
 		p	2		damageSourde	
 		p	3		amount	
 	m	(Lnet/minecraft/unmapped/C_5439084;Lnet/minecraft/unmapped/C_6907923;F)Z	m_4167577		damage
@@ -3040,7 +3037,7 @@ c	net/minecraft/unmapped/C_6385858
 		p	1		dx	
 		p	3		dy	
 		p	5		dz	
-	m	(Lnet/minecraft/unmapped/C_6907923;I)Z	m_3238154	damage	
+	m	(Lnet/minecraft/unmapped/C_6907923;I)Z	m_3238154	takeDamage	
 		p	1		source	
 		p	2		amount	
 	m	(Lnet/minecraft/unmapped/C_5009044;)Z	m_7287105	interact	
@@ -3051,7 +3048,7 @@ c	net/minecraft/unmapped/C_6385858
 		p	1			dx
 		p	3			dy
 		p	5			dz
-	m	(Lnet/minecraft/unmapped/C_6907923;F)Z	m_3238154		damage
+	m	(Lnet/minecraft/unmapped/C_6907923;F)Z	m_3238154		takeDamage
 		p	1			source
 		p	2			amount
 	m	()V	m_5445586		load
@@ -3178,7 +3175,7 @@ c	net/minecraft/unmapped/C_6737013	org/bouncycastle/asn1/ASN1Encodable
 c	net/minecraft/unmapped/C_6755599
 	f	J	f_9726680		inhabitedTime
 		c		The number of ticks for which players have been present in this chunk - used for local difficulty.
-c	net/minecraft/unmapped/C_6790978
+c	net/minecraft/unmapped/C_6790978	net/minecraft/entity/mob/passive/PassiveEntity	net/minecraft/entity/living/mob/passive/PassiveEntity
 	m	(Lnet/minecraft/unmapped/C_5009044;)Z	m_7287105	m_7287105	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_5009044;)Z	m_8048017		m_8048017
@@ -3246,15 +3243,15 @@ c	net/minecraft/unmapped/C_7256819
 	m	(Lnet/minecraft/unmapped/C_6907923;I)Z	m_3238154	m_3238154	
 		p	1		p_1	
 		p	2		p_2	
-	m	(I)V	m_5546072	setDamageWobbleStrength	
-		p	1		strength	
-	m	()I	m_9789795	getDamageWobbleStrength	
+	m	(I)V	m_5546072	setDamage	
+		p	1		damage	
+	m	()I	m_9789795	getDamage	
 	m	(Lnet/minecraft/unmapped/C_6907923;F)Z	m_3238154		m_3238154
 		p	1			p_1
 		p	2			p_2
-	m	(F)V	m_5546072		setDamageWobbleStrength
-		p	1			strength
-	m	()F	m_9789795		getDamageWobbleStrength
+	m	(F)V	m_5546072		setDamage
+		p	1			daamage
+	m	()F	m_9789795		getDamage
 c	net/minecraft/unmapped/C_7275075
 	f	F	f_3434541	speed	
 	f	D	f_3434541		speed
@@ -3280,7 +3277,7 @@ c	net/minecraft/unmapped/C_7282142	argo/jdom/JsonNumberNode
 	m	()I	hashCode	hashCode	
 	m	()Ljava/lang/String;	toString	toString	
 	m	()V	<clinit>	<clinit>	
-c	net/minecraft/unmapped/C_7338567
+c	net/minecraft/unmapped/C_7338567	net/minecraft/entity/mob/passive/animal/tamable/WolfEntity	net/minecraft/entity/living/mob/passive/animal/tamable/WolfEntity
 	m	(Lnet/minecraft/unmapped/C_1013763;)V	m_9085174	m_9085174	
 		p	1		p_1	
 	m	()I	m_8512153	m_8512153	
@@ -3572,7 +3569,7 @@ c	net/minecraft/unmapped/C_8145659$9939819	9939819
 	f	Lnet/minecraft/unmapped/C_8145659;	f_3029589	f_3029589	
 	m	(Lnet/minecraft/unmapped/C_8145659;)V	<init>	<init>	
 		p	1		p_1	
-c	net/minecraft/unmapped/C_8191584
+c	net/minecraft/unmapped/C_8191584	net/minecraft/client/render/entity/MobRenderer	net/minecraft/client/render/entity/LivingEntityRenderer
 	m	(Lnet/minecraft/unmapped/C_1013763;)Z	m_3933648		shouldRenderNameTag
 		p	1			entity
 c	net/minecraft/unmapped/C_8213093	org/bouncycastle/jcajce/provider/util/AlgorithmProvider	
@@ -3597,9 +3594,10 @@ c	net/minecraft/unmapped/C_8318064
 		p	1			p_1
 	m	(Ljava/io/DataOutput;)V	m_4625396		m_4625396
 		p	1			p_1
-c	net/minecraft/unmapped/C_8321936
+c	net/minecraft/unmapped/C_8321936	net/minecraft/network/packet/RideEntityPacket	net/minecraft/network/packet/AttachEntityPacket
 	f	I	f_3095172		type
-		c		The type of attachment. The possible values are:\n<br>0: mounting on e.g. a minecart or a boat\n<br>1: attaching a leash on an entity
+		c		The type of attachment. The possible values are:\n<br>0: mounting on e.g. a minecart, boat, or horse\n<br>1: attaching a leash on an entity
+	f	I	f_6278313	mountId	attachedId
 	m	(Lnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_6385858;)V	<init>	<init>	
 		p	1		entity	
 		p	2		holder	
@@ -3610,7 +3608,7 @@ c	net/minecraft/unmapped/C_8321936
 	m	(ILnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_6385858;)V	<init>		<init>
 		p	1			type
 		p	2			entity
-		p	3			holder
+		p	3			attached
 	m	(Ljava/io/DataInput;)V	m_8784008		m_8784008
 		p	1			p_1
 	m	(Ljava/io/DataOutput;)V	m_4625396		m_4625396
@@ -3624,7 +3622,7 @@ c	net/minecraft/unmapped/C_8329233
 		p	1			p_1
 	m	(Ljava/io/DataOutput;)V	m_4625396		m_4625396
 		p	1			p_1
-c	net/minecraft/unmapped/C_8345828
+c	net/minecraft/unmapped/C_8345828	net/minecraft/entity/mob/hostile/ZombieEntity	net/minecraft/entity/living/mob/hostile/ZombieEntity
 	m	()I	m_5549779	m_5549779	
 	m	()I	m_8512153	m_8512153	
 	m	()Ljava/lang/String;	m_9980999	m_9980999	
@@ -3846,7 +3844,7 @@ c	net/minecraft/unmapped/C_8906619
 		p	4			p_4
 	m	(Lnet/minecraft/unmapped/C_6385858;)F	m_1072215		m_1072215
 		p	1			p_1
-c	net/minecraft/unmapped/C_8935931
+c	net/minecraft/unmapped/C_8935931	net/minecraft/entity/mob/hostile/WitchEntity	net/minecraft/entity/living/mob/hostile/WitchEntity
 	m	()Ljava/lang/String;	m_9980999	m_9980999	
 	m	()I	m_8512153	m_8512153	
 	m	(Lnet/minecraft/unmapped/C_6907923;I)I	m_8106508	m_8106508	
@@ -3857,7 +3855,7 @@ c	net/minecraft/unmapped/C_8935931
 	m	(Lnet/minecraft/unmapped/C_6907923;F)F	m_4538025		m_4538025
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_8958653
+c	net/minecraft/unmapped/C_8958653	net/minecraft/entity/mob/animal/PigEntity	net/minecraft/entity/living/mob/animal/PigEntity
 	m	()I	m_8512153	m_8512153	
 	m	()Z	m_8119946	m_8119946	
 	m	()Ljava/lang/String;	m_9980999	m_9980999	
@@ -4089,7 +4087,7 @@ c	net/minecraft/unmapped/C_9814383
 		p	1			p_1
 	m	(Ljava/io/DataOutput;)V	m_4625396		m_4625396
 		p	1			p_1
-c	net/minecraft/unmapped/C_9832438
+c	net/minecraft/unmapped/C_9832438	net/minecraft/entity/mob/hostile/boss/EnderDragonEntity	net/minecraft/entity/living/mob/hostile/boss/EnderDragonEntity
 	m	()I	m_8512153	m_8512153	
 	m	(Lnet/minecraft/unmapped/C_5439084;Lnet/minecraft/unmapped/C_6907923;I)Z	m_4167577	m_4167577	
 		p	1		p_1	
@@ -4621,7 +4619,7 @@ c	net/minecraft/unmapped/C_2587956		net/minecraft/entity/living/mob/MobEntity
 	f	I	f_5671183		angryCountdown
 		c		The countdown that decids how long it should keep attacking the same target
 	f	Z	f_4640679		isLeashed
-	f	Lnet/minecraft/unmapped/C_6385858;	f_6291580		holdingEntity
+	f	Lnet/minecraft/unmapped/C_6385858;	f_6291580		leashHolder
 	f	Lnet/minecraft/unmapped/C_2800860;	f_2068123		leashNbt
 	m	(Lnet/minecraft/unmapped/C_3906126;)V	<init>		<init>
 		p	1			p_1
@@ -4643,7 +4641,7 @@ c	net/minecraft/unmapped/C_2587956		net/minecraft/entity/living/mob/MobEntity
 	m	()V	m_0464956		m_0464956
 	m	(Lnet/minecraft/unmapped/C_5009044;)I	m_4502663		m_4502663
 		p	1			p_1
-	m	()V	m_2006935		doSpawnEffects
+	m	()V	m_2006935		animateSpawn
 	m	()V	m_0718337		m_0718337
 	m	(FF)F	m_9493577		m_9493577
 		p	1			p_1
@@ -4726,9 +4724,9 @@ c	net/minecraft/unmapped/C_2587956		net/minecraft/entity/living/mob/MobEntity
 		p	1			p_1
 	m	()Z	m_2297385		isTameable
 	m	()Z	m_0952535		isLeashed
-	m	()Lnet/minecraft/unmapped/C_6385858;	m_9578359		getHoldingEntity
+	m	()Lnet/minecraft/unmapped/C_6385858;	m_9578359		getLeashHolder
 	m	(Lnet/minecraft/unmapped/C_6385858;Z)V	m_1016044		attachLeash
-		p	1			entity
+		p	1			leashHolder
 		p	2			sendPacket
 	m	()V	m_8433936		readLeashNbt
 c	net/minecraft/unmapped/C_2677386		net/minecraft/client/realms/gui/screen/RealmsListWidget
@@ -5110,3 +5108,14 @@ c	net/minecraft/unmapped/C_9549387		net/minecraft/entity/living/attribute/Abstra
 	m	(Lnet/minecraft/unmapped/C_3731908;)Lnet/minecraft/unmapped/C_5801153;	m_1621097		m_1621097
 		p	1			p_1
 	m	()Ljava/util/Collection;	m_1606856		getAll
+c	net/minecraft/unmapped/C_9244736	net/minecraft/entity/mob/hostile/Monster	net/minecraft/entity/living/mob/hostile/Monster
+c	net/minecraft/unmapped/C_9466447	net/minecraft/entity/mob/MobCategory	net/minecraft/entity/living/mob/MobCategory
+c	net/minecraft/unmapped/C_9579094	net/minecraft/entity/mob/FlyingMobEntity	net/minecraft/entity/living/mob/FlyingMobEntity
+c	net/minecraft/unmapped/C_3150967	net/minecraft/entity/mob/player/PlayerAbilities	net/minecraft/entity/living/player/PlayerAbilities
+c	net/minecraft/unmapped/C_7324071	net/minecraft/entity/mob/player/HungerManager	net/minecraft/entity/living/player/HungerManager
+c	net/minecraft/unmapped/C_8088383	net/minecraft/entity/mob/passive/Npc	net/minecraft/entity/living/mob/passive/Npc
+c	net/minecraft/unmapped/C_0219847	net/minecraft/entity/mob/passive/animal/tamable/TameableEntity	net/minecraft/entity/living/mob/passive/animal/tamable/TameableEntity
+c	net/minecraft/unmapped/C_4886193	net/minecraft/entity/mob/hostile/RangedAttackMob	net/minecraft/entity/living/mob/hostile/RangedAttackMob
+c	net/minecraft/unmapped/C_7248549	net/minecraft/entity/mob/hostile/boss/BossBar	net/minecraft/entity/living/mob/hostile/boss/BossBar
+c	net/minecraft/unmapped/C_0639491	net/minecraft/client/entity/mob/player/KeyboardInput	net/minecraft/client/entity/living/player/KeyboardInput
+c	net/minecraft/unmapped/C_4045198	net/minecraft/client/entity/mob/player/Input	net/minecraft/client/entity/living/player/Input

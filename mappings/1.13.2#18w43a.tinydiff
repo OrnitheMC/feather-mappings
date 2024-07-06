@@ -2595,7 +2595,7 @@ c	net/minecraft/unmapped/C_2750078
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-c	net/minecraft/unmapped/C_2753595	net/minecraft/world/light/BlockLightEngine	
+c	net/minecraft/unmapped/C_2753595	net/minecraft/world/gen/chunk/ChunkBlockLighting	
 	m	()V	<init>	<init>	
 	m	()Lnet/minecraft/unmapped/C_5863046;	m_9998287	m_9998287	
 	m	(Lnet/minecraft/unmapped/C_3820473;Lnet/minecraft/unmapped/C_0636026;)V	m_8130422	lightChunk	
@@ -3010,7 +3010,7 @@ c	net/minecraft/unmapped/C_3080471
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
-c	net/minecraft/unmapped/C_3091078	net/minecraft/world/light/LightEngine	
+c	net/minecraft/unmapped/C_3091078	net/minecraft/world/gen/chunk/Lighting	
 	m	()Lnet/minecraft/unmapped/C_5863046;	m_9998287	getType	
 c	net/minecraft/unmapped/C_3091627
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_5009044;Lnet/minecraft/unmapped/C_6707278;Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_2074023;Lnet/minecraft/unmapped/C_2750078;)V	m_7011942	m_7011942	
@@ -3673,12 +3673,12 @@ c	net/minecraft/unmapped/C_3571139
 		p	1		chunk	
 	m	(Lnet/minecraft/unmapped/C_0636026;)V	m_6583950	saveChunk	
 		p	1		chunk	
-	m	(Z)Z	m_6309491	saveAll	
+	m	(Z)Z	m_6309491	save	
 		p	1		saveEntities	
 	m	()V	m_1836040	flush	
 	m	(Ljava/util/function/BooleanSupplier;)Z	m_1591842	m_1591842	
 		p	1		p_1	
-	m	()Z	m_6876447	isSavingEnabled	
+	m	()Z	m_6876447	shouldSave	
 	m	(Lnet/minecraft/unmapped/C_9466447;Lnet/minecraft/unmapped/C_6707278;)Ljava/util/List;	m_0621452	getSpawnEntries	
 		p	1		category	
 		p	2		pos	
@@ -3783,7 +3783,7 @@ c	net/minecraft/unmapped/C_3571139
 	m	(Lnet/minecraft/unmapped/C_0636026;Z)V	m_6583950		saveChunk
 		p	1			p_1
 		p	2			p_2
-	m	(Z)V	m_6309491		saveAll
+	m	(Z)V	m_6309491		save
 		p	1			p_1
 	m	(Ljava/util/function/BooleanSupplier;)V	m_1591842		m_1591842
 		p	1			p_1
@@ -4444,7 +4444,7 @@ c	net/minecraft/unmapped/C_3862529$C_4013422
 c	net/minecraft/unmapped/C_3906126
 	f	Z	f_8148769	spawnAnimals	
 	f	Z	f_1006387	spawnMonsters	
-	f	[I	f_5480375	scheduledLightUpdates	
+	f	[I	f_5480375	lightPropagation	
 	m	(Lnet/minecraft/unmapped/C_9147018;Lnet/minecraft/unmapped/C_8054043;Lnet/minecraft/unmapped/C_3473914;Lnet/minecraft/unmapped/C_9219192;Lnet/minecraft/unmapped/C_1392594;Z)V	<init>	<init>	
 		p	1		storage	
 		p	2		dimensionDataStorage	
@@ -4453,11 +4453,11 @@ c	net/minecraft/unmapped/C_3906126
 		p	5		profiler	
 		p	6		isClient	
 	m	()Lnet/minecraft/unmapped/C_9484672;	m_7447312	createChunkCache	
-	m	(IIII)V	m_5453024	checkLight	
+	m	(IIII)V	m_5453024	onHeightmapChanged	
 		p	1		x	
 		p	2		z	
-		p	3		minY	
-		p	4		maxY	
+		p	3		newHeight	
+		p	4		oldHeight	
 	m	(Lnet/minecraft/unmapped/C_6707278;)Z	m_5208817	m_5208817	
 		p	1		p_1	
 	m	(II)I	m_3610076	getLowestHeight	
@@ -4487,10 +4487,10 @@ c	net/minecraft/unmapped/C_3906126
 	m	()V	m_6100908	tickChunks	
 	m	(Lnet/minecraft/unmapped/C_6707278;)Z	m_6644745	checkLight	
 		p	1		pos	
-	m	(Lnet/minecraft/unmapped/C_6707278;Lnet/minecraft/unmapped/C_5863046;)I	m_4227169	getRawLight	
+	m	(Lnet/minecraft/unmapped/C_6707278;Lnet/minecraft/unmapped/C_5863046;)I	m_4227169	findLight	
 		p	1		pos	
 		p	2		type	
-	m	(Lnet/minecraft/unmapped/C_5863046;Lnet/minecraft/unmapped/C_6707278;)Z	m_3108055	checkLight	
+	m	(Lnet/minecraft/unmapped/C_5863046;Lnet/minecraft/unmapped/C_6707278;)Z	m_3108055	updateLight	
 		p	1		type	
 		p	2		pos	
 	m	(Ljava/lang/Class;Lnet/minecraft/unmapped/C_1414550;)Ljava/util/List;	m_9014160	getEntities	
@@ -7254,12 +7254,12 @@ c	net/minecraft/unmapped/C_6729817
 	m	(Ljava/util/function/Function;)V	<init>		<init>
 		p	1			p_1
 c	net/minecraft/unmapped/C_6755599
-	f	[Z	f_8581514	needsLightUpdate	
+	f	[Z	f_8581514	recheckGap	
 		c	Stores whether each column in this chunk needs a light update.	
-	f	Z	f_8715442	recheckGap	
+	f	Z	f_8715442	recheckGaps	
 	f	I	f_6042239	lowestHeight	
 		c	The lowest height among all columns of this chunk.	
-	f	I	f_0039238	queuedLightChecks	
+	f	I	f_0039238	nextBorderLightCheck	
 	f	Ljava/util/concurrent/ConcurrentLinkedQueue;	f_3294402	blockEntitiesToCreate	
 	f	Lnet/minecraft/unmapped/C_3331146;	f_7959769	status	
 	f	I	f_0719588	neighbors	
@@ -7279,23 +7279,23 @@ c	net/minecraft/unmapped/C_6755599
 	m	(II)Z	m_2487825	isAt	
 		p	1		chunkX	
 		p	2		chunkZ	
-	m	()V	m_6227764	populateHeightmap	
-	m	()V	m_8266290	populateSkylight	
-	m	(II)V	m_8776101	queueLightUpdate	
+	m	()V	m_6227764	populateHeightmapOnly	
+	m	()V	m_8266290	populateHeightmap	
+	m	(II)V	m_8776101	recheckGap	
 		p	1		localX	
 		p	2		localZ	
-	m	(Z)V	m_9994958	recheckGaps	
+	m	(Z)V	m_9994958	lightGaps	
 		p	1		checkOne	
-	m	(III)V	m_2063645	checkSkylight	
+	m	(III)V	m_2063645	lightGap	
 		p	1		x	
 		p	2		z	
-		p	3		maxY	
-	m	(IIII)V	m_1175768	checkSkylight	
+		p	3		y	
+	m	(IIII)V	m_1175768	updateSkyLight	
 		p	1		x	
 		p	2		z	
 		p	3		minY	
 		p	4		maxY	
-	m	(IIILnet/minecraft/unmapped/C_2441996;)V	m_1311537	resetLightAt	
+	m	(IIILnet/minecraft/unmapped/C_2441996;)V	m_1311537	updateHeightmap	
 		p	1		x	
 		p	2		y	
 		p	3		z	
@@ -7331,12 +7331,12 @@ c	net/minecraft/unmapped/C_6755599
 	m	(Z)Z	m_6390671	shouldSave	
 		p	1		saveEntities	
 	m	(Z)V	m_8729732	tick	
-		p	1		skipRecheckGaps	
+		p	1		skipCheckGaps	
 	m	()Z	m_3595593	isPopulated	
 	m	([Lnet/minecraft/unmapped/C_3710347;)V	m_5968350	setSections	
 		p	1		sections	
-	m	()V	m_5232951	clearLightChecks	
-	m	()V	m_0640022	checkLight	
+	m	()V	m_5232951	resetBorderLightChecks	
+	m	()V	m_0640022	checkBorderLight	
 	m	(Lnet/minecraft/unmapped/C_8600487$C_7565555;)Ljava/util/BitSet;	m_4478090	m_4478090	
 		p	1		p_1	
 	m	()I	m_5579494	getLowestHeight	
@@ -7902,9 +7902,9 @@ c	net/minecraft/unmapped/C_7366354
 	m	(Lnet/minecraft/unmapped/C_6707278;)Lnet/minecraft/unmapped/C_6707278;	m_0744507	findLightningTarget	
 		p	1		pos	
 	m	()Lnet/minecraft/unmapped/C_9484672;	m_7447312	m_7447312	
-	m	(ZLnet/minecraft/unmapped/C_7918626;)V	m_5918996	saveAll	
+	m	(ZLnet/minecraft/unmapped/C_7918626;)V	m_5918996	save	
 		p	1		saveEntities	
-		p	2		progressListener	
+		p	2		listener	
 	m	()V	m_4405730	flush	
 	m	()Lnet/minecraft/unmapped/C_1896634;	m_0785347	getChunkMap	
 	m	(Ljava/lang/Runnable;)Lcom/google/common/util/concurrent/ListenableFuture;	m_2167033	m_2167033	
@@ -7912,7 +7912,7 @@ c	net/minecraft/unmapped/C_7366354
 	m	()Z	m_7691568	m_7691568	
 	m	(Lnet/minecraft/unmapped/C_1013763;)Z	m_4038442	m_4038442	
 		p	1		entity	
-	m	(Lnet/minecraft/unmapped/C_7918626;Z)V	m_5918996		saveAll
+	m	(Lnet/minecraft/unmapped/C_7918626;Z)V	m_5918996		save
 		p	1			p_1
 		p	2			p_2
 	m	(J)V	m_6612657		m_6612657
@@ -7980,7 +7980,7 @@ c	net/minecraft/unmapped/C_7464728
 		p	3			p_3
 c	net/minecraft/unmapped/C_7491477
 	m	()Lnet/minecraft/unmapped/C_9550253;	m_7744478	m_7744478	
-c	net/minecraft/unmapped/C_7498206	net/minecraft/world/light/SkyLightEngine	
+c	net/minecraft/unmapped/C_7498206	net/minecraft/world/gen/chunk/ChunkSkyLighting	
 	f	[Lnet/minecraft/unmapped/C_3544601;	f_5662426	CARDINAL_DIRECTIONS	
 	m	()V	<init>	<init>	
 	m	()Lnet/minecraft/unmapped/C_5863046;	m_9998287	m_9998287	
@@ -10559,7 +10559,7 @@ c	net/minecraft/unmapped/C_9146344$C_7318955		C_7318955
 		p	1			p_1
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_9147018
-	m	()V	m_6528281	waitIfSaving	
+	m	()V	m_6528281	forceSave	
 c	net/minecraft/unmapped/C_9151514
 	f	Lnet/minecraft/unmapped/C_9151514;	f_0340796		f_0340796
 	f	Lnet/minecraft/unmapped/C_9151514;	f_9797737		f_9797737
@@ -11123,7 +11123,7 @@ c	net/minecraft/unmapped/C_9484672
 		p	2			p_2
 	m	(Lnet/minecraft/unmapped/C_6385858;)Z	m_9814056		m_9814056
 		p	1			p_1
-c	net/minecraft/unmapped/C_9511145	net/minecraft/world/light/AbstractLightEngine	
+c	net/minecraft/unmapped/C_9511145	net/minecraft/world/gen/chunk/ChunkLighting	
 	f	Lorg/apache/logging/log4j/Logger;	f_1504868	LOGGER	
 	f	[Lnet/minecraft/unmapped/C_3544601;	f_8797103	DIRECTIONS	
 	f	Lit/unimi/dsi/fastutil/ints/IntPriorityQueue;	f_0753054	queue	
@@ -11135,10 +11135,10 @@ c	net/minecraft/unmapped/C_9511145	net/minecraft/world/light/AbstractLightEngine
 		p	1		world	
 		p	2		pos	
 		p	3		light	
-	m	(Lnet/minecraft/unmapped/C_5250955;Lnet/minecraft/unmapped/C_6707278;)I	m_6642627	getOpacity	
+	m	(Lnet/minecraft/unmapped/C_5250955;Lnet/minecraft/unmapped/C_6707278;)I	m_6642627	getBlockOpacity	
 		p	1		world	
 		p	2		pos	
-	m	(Lnet/minecraft/unmapped/C_5250955;Lnet/minecraft/unmapped/C_6707278;)I	m_1546230	getLightLevel	
+	m	(Lnet/minecraft/unmapped/C_5250955;Lnet/minecraft/unmapped/C_6707278;)I	m_1546230	getBlockLight	
 		p	1		world	
 		p	2		pos	
 	m	(Lnet/minecraft/unmapped/C_3544601;IIII)I	m_9012195	m_9012195	

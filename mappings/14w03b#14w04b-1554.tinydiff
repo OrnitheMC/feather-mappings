@@ -170,16 +170,16 @@ c	net/minecraft/unmapped/C_1233611
 c	net/minecraft/unmapped/C_1388208	net/minecraft/client/entity/living/player/LocalClientPlayerEntity	
 	f	Lnet/minecraft/unmapped/C_4939758;	f_3595738	networkHandler	
 	f	Lnet/minecraft/unmapped/C_7974592;	f_9857802	stats	
-	f	D	f_2013067	lastX	
-	f	D	f_3268934	lastMinY	
-	f	D	f_0402895	lastY	
-	f	D	f_9332058	lastZ	
-	f	F	f_8615502	lastYaw	
-	f	F	f_3188362	lastPitch	
-	f	Z	f_7188414	wasOnGround	
-	f	Z	f_1663769	wasSneaking	
-	f	Z	f_0356288	wasSprinting	
-	f	I	f_4618680	movementUpdateTimer	
+	f	D	f_2013067	sentX	
+	f	D	f_3268934	sentMinY	
+	f	D	f_0402895	sentY	
+	f	D	f_9332058	sentZ	
+	f	F	f_8615502	sentYaw	
+	f	F	f_3188362	sentPitch	
+	f	Z	f_7188414	sentOnGround	
+	f	Z	f_1663769	sentSneaking	
+	f	Z	f_0356288	sentSprinting	
+	f	I	f_4618680	ticksSinceSentPosition	
 	f	Z	f_4531733	healthInitialized	
 	f	Ljava/lang/String;	f_7879445	serverBrand	
 	m	(Lnet/minecraft/client/Minecraft;Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_3172064;Lnet/minecraft/unmapped/C_4939758;Lnet/minecraft/unmapped/C_7974592;)V	<init>	<init>	
@@ -196,7 +196,7 @@ c	net/minecraft/unmapped/C_1388208	net/minecraft/client/entity/living/player/Loc
 	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_5966517	m_5966517	
 		p	1		p_1	
 	m	()V	m_0718337	m_0718337	
-	m	()V	m_3495192	updateMovement	
+	m	()V	m_3495192	sendMovement	
 	m	(Z)Lnet/minecraft/unmapped/C_3050136;	m_7604701	m_7604701	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_3050136;)V	m_8347472	m_8347472	
@@ -369,7 +369,7 @@ c	net/minecraft/unmapped/C_3140555
 		p	1			pos
 		p	2			dir
 		p	3			limit
-c	net/minecraft/unmapped/C_3466301	net/minecraft/client/render/BlockRenderer	net/minecraft/client/render/block/BlockRenderer
+c	net/minecraft/unmapped/C_3466301
 	f	F	f_9582650	bottomNorthWestVertexAmbientOcclusionLight	
 	f	F	f_7288340	bottomWestEdgeAmbientOcclusionLight	
 	f	F	f_1867028	bottomSouthWestVertexAmbientOcclusionLight	
@@ -416,7 +416,7 @@ c	net/minecraft/unmapped/C_3466301	net/minecraft/client/render/BlockRenderer	net
 		p	1		flipDepth	
 	m	(Z)V	m_3172791	setRenderFaceAlways	
 		p	1		renderFaceAlways	
-	m	(Lnet/minecraft/unmapped/C_3635204;Lnet/minecraft/unmapped/C_6707278;Lnet/minecraft/unmapped/C_5307437;)V	m_9940762	tesselateBlock	
+	m	(Lnet/minecraft/unmapped/C_3635204;Lnet/minecraft/unmapped/C_6707278;Lnet/minecraft/unmapped/C_5307437;)V	m_9940762	tesselateInWorld	
 		p	1		block	
 		p	2		pos	
 		p	3		sprite	
@@ -618,7 +618,7 @@ c	net/minecraft/unmapped/C_3466301	net/minecraft/client/render/BlockRenderer	net
 	m	(Lnet/minecraft/unmapped/C_3635204;Lnet/minecraft/unmapped/C_6707278;)Z	m_9382012	tesselateCactus	
 		p	1		block	
 		p	2		pos	
-	m	(Lnet/minecraft/unmapped/C_3635204;Lnet/minecraft/unmapped/C_6707278;FFF)Z	m_7121100	renderCactus	
+	m	(Lnet/minecraft/unmapped/C_3635204;Lnet/minecraft/unmapped/C_6707278;FFF)Z	m_7121100	tesselateCactus	
 		p	1		block	
 		p	2		pos	
 		p	3		r	
@@ -762,9 +762,9 @@ c	net/minecraft/unmapped/C_3910017
 c	net/minecraft/unmapped/C_3945099
 	f	Lnet/minecraft/unmapped/C_3466301;	f_9424655	blockRenderer	
 c	net/minecraft/unmapped/C_3961659
-	f	I	f_2967996	x	
-	f	I	f_5606221	y	
-	f	I	f_8886563	z	
+	f	I	f_2967996	blockX	
+	f	I	f_5606221	blockY	
+	f	I	f_8886563	blockZ	
 	f	Lnet/minecraft/unmapped/C_6707278;	f_4008121		pos
 	m	(Lnet/minecraft/unmapped/C_3906126;III)V	<init>	<init>	
 		p	1		world	
@@ -875,18 +875,18 @@ c	net/minecraft/unmapped/C_5367636	net/minecraft/client/entity/living/player/Inp
 	f	Lnet/minecraft/unmapped/C_1115384;	f_5533352	f_5533352	
 	f	Lnet/minecraft/unmapped/C_4939758;	f_9952526		networkHandler
 	f	Lnet/minecraft/unmapped/C_7974592;	f_5065808		stats
-	f	D	f_7800711		serverX
+	f	D	f_7800711		sentX
 		c		The last position sent to the server.\nA new PlayerMoveC2SPacket.Position is sent when the current player position differs from the last position sent to the server by 0.03 blocks or more, or every 20 ticks.\n@see #sendMovementToServer()
-	f	D	f_3553714		serverY
-	f	D	f_8094589		serverZ
-	f	F	f_8752613		serverYaw
+	f	D	f_3553714		sentY
+	f	D	f_8094589		sentZ
+	f	F	f_8752613		sentYaw
 		c		The last rotation sent to the server.\nA new PlayerMoveC2SPacket.Angles is sent when the current player rotation differs from the last rotation sent to the server.\n@see #sendMovementToServer
-	f	F	f_8120385		serverPitch
-	f	Z	f_9257527		serverSneaking
+	f	F	f_8120385		sentPitch
+	f	Z	f_9257527		sentSneaking
 		c		The last sneaking status sent to the server.\n@see #sendMovementToServer
-	f	Z	f_4548634		serverSprinting
+	f	Z	f_4548634		sentSprinting
 		c		The last sprinting status sent to the server.\nThis can easily desync with the serverside sprinting status.\n@see #sendMovementToServer
-	f	I	f_4981384		movementUpdateTimer
+	f	I	f_4981384		ticksSinceSentPosition
 	f	Z	f_5881333		healthInitialized
 	f	Ljava/lang/String;	f_3528409		serverBrand
 	m	(Lnet/minecraft/client/Minecraft;Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_3172064;I)V	<init>	<init>	
@@ -1130,7 +1130,7 @@ c	net/minecraft/unmapped/C_7423695$3730387		3730387
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_7790186
 	f	I	f_3053181	action	
-		c	The type of interaction. This can be one of the following:\n<br> 0: start mining block\n<br> 1: stop mining block\n<br> 2: finish mining block\n<br> 3: drop stack\n<br> 4: drop item\n<br> 5: stop using item	
+		c	The type of interaction. This can be one of the following:\n<br> 0: start mining block\n<br> 1: continue mining block\n<br> 2: stop mining block\n<br> 3: finish mining block\n<br> 4: drop item	
 	f	Lnet/minecraft/unmapped/C_7790186$C_5722755;	f_3053181		action
 	m	(ILnet/minecraft/unmapped/C_6707278;Lnet/minecraft/unmapped/C_3544601;)V	<init>	<init>	
 		p	1		action	
@@ -1276,7 +1276,7 @@ c	net/minecraft/unmapped/C_8412059
 		p	1			p_1
 c	net/minecraft/unmapped/C_8670302
 	f	I	f_5611275	action	
-		c	The type of interaction. This can be one of the following:\n<br> 0: start sneaking\n<br> 1: stop sneaking\n<br> 2: stop sleeping\n<br> 3: start sprinting\n<br> 4: stop sprinting\n<br> 5: riding jump\n<br> 6: open horse inventory	
+		c	The type of interaction. This can be one of the following:\n<br> 0: start sneaking\n<br> 1: stop sneaking	
 	f	Lnet/minecraft/unmapped/C_8670302$C_2476618;	f_5611275		action
 	m	(Lnet/minecraft/unmapped/C_6385858;I)V	<init>	<init>	
 		p	1		entity	

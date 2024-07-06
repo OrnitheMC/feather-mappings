@@ -311,7 +311,7 @@ c	net/minecraft/unmapped/C_0564302
 	m	()Z	m_5659178	m_5659178	
 	m	(D)Z	m_5659178		m_5659178
 		p	1			p_1
-c	net/minecraft/unmapped/C_0611937	net/minecraft/world/gen/noise/SimplexNoiseGenerator	
+c	net/minecraft/unmapped/C_0611937	net/minecraft/world/gen/noise/ImprovedNoiseGenerator	
 	f	[I	f_3721058	permutations	
 	f	D	f_9098504	x	
 	f	D	f_6604140	y	
@@ -347,8 +347,8 @@ c	net/minecraft/unmapped/C_0611937	net/minecraft/world/gen/noise/SimplexNoiseGen
 		p	1		p_1	
 		p	3		p_3	
 		p	5		p_5	
-	m	([DDDDIIIDDDD)V	m_8499841	getNoise	
-		p	1		noise	
+	m	([DDDDIIIDDDD)V	m_8499841	add	
+		p	1		values	
 		p	2		x	
 		p	4		y	
 		p	6		z	
@@ -1169,10 +1169,10 @@ c	net/minecraft/unmapped/C_2441996
 	f	Lnet/minecraft/unmapped/C_2441996$C_1470089;	f_0343748		f_0343748
 	f	I	f_1199729		f_1199729
 	f	Z	f_9316971		f_9316971
-	m	()Z	m_5257804	isFullCube	
+	m	()Z	m_5257804	isCube	
 	m	()F	m_1857448	getAmbientOcclusionLightLevel	
 	m	()Z	m_7776716	blocksAmbientLight	
-	m	()Z	m_8035807	isConductor	
+	m	()Z	m_8035807	isSolid	
 	m	()Z	m_9385155	isFullBlock	
 	m	()Z	m_5558492	isViewBlocking	
 	m	(Lnet/minecraft/unmapped/C_5250955;Lnet/minecraft/unmapped/C_6707278;Lnet/minecraft/unmapped/C_3544601;)Lnet/minecraft/unmapped/C_7345216;	m_3883488		m_3883488
@@ -1186,7 +1186,7 @@ c	net/minecraft/unmapped/C_2441996
 		p	4			p_4
 		p	5			p_5
 	m	()Z	m_5284400		m_5284400
-	m	(Lnet/minecraft/unmapped/C_5250955;Lnet/minecraft/unmapped/C_6707278;)Z	m_5257804		isFullCube
+	m	(Lnet/minecraft/unmapped/C_5250955;Lnet/minecraft/unmapped/C_6707278;)Z	m_5257804		isCube
 		p	1			p_1
 		p	2			p_2
 	m	(Lnet/minecraft/unmapped/C_5250955;Lnet/minecraft/unmapped/C_6707278;)F	m_1857448		getAmbientOcclusionLightLevel
@@ -1195,7 +1195,7 @@ c	net/minecraft/unmapped/C_2441996
 	m	(Lnet/minecraft/unmapped/C_5250955;Lnet/minecraft/unmapped/C_6707278;)Z	m_7776716		blocksAmbientLight
 		p	1			p_1
 		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_5250955;Lnet/minecraft/unmapped/C_6707278;)Z	m_8035807		isConductor
+	m	(Lnet/minecraft/unmapped/C_5250955;Lnet/minecraft/unmapped/C_6707278;)Z	m_8035807		isSolid
 		p	1			p_1
 		p	2			p_2
 	m	(Lnet/minecraft/unmapped/C_5250955;Lnet/minecraft/unmapped/C_6707278;)Z	m_9385155		isFullBlock
@@ -1980,8 +1980,7 @@ c	net/minecraft/unmapped/C_3604011
 c	net/minecraft/unmapped/C_3635204
 	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_6763563	blocksAmbientLight	
 		p	1		state	
-	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_5533517	isConductor	
-		c	Returns whether this block conducts redstone signals.	
+	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_5533517	isSolid	
 		p	1		state	
 	m	(Lnet/minecraft/unmapped/C_2441996;)Z	m_8740684	isViewBlocking	
 		p	1		state	
@@ -1993,7 +1992,7 @@ c	net/minecraft/unmapped/C_3635204
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_5250955;Lnet/minecraft/unmapped/C_6707278;)Z	m_5533517		isConductor
+	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_5250955;Lnet/minecraft/unmapped/C_6707278;)Z	m_5533517		isSolid
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -2213,11 +2212,11 @@ c	net/minecraft/unmapped/C_4078372
 	f	Lorg/apache/logging/log4j/Logger;	f_7512156	LOGGER	
 	f	Lnet/minecraft/unmapped/C_6205974;	f_6281590	minLimitPerlinNoise	
 	f	Lnet/minecraft/unmapped/C_6205974;	f_7885619	maxLimitPerlinNoise	
-	f	Lnet/minecraft/unmapped/C_6205974;	f_5435487	mainPerlinNoise	
-	f	Lnet/minecraft/unmapped/C_9070784;	f_4543428	surfaceNoise	
+	f	Lnet/minecraft/unmapped/C_6205974;	f_5435487	perlinNoise1	
+	f	Lnet/minecraft/unmapped/C_9070784;	f_4543428	perlinNoise3	
 	f	Lnet/minecraft/unmapped/C_3369986;	f_6915977	settings	
-	f	Lnet/minecraft/unmapped/C_6205974;	f_6725025	scaleNoise	
-	f	Lnet/minecraft/unmapped/C_6205974;	f_2236408	depthNoise	
+	f	Lnet/minecraft/unmapped/C_6205974;	f_6725025	floatingIslandScale	
+	f	Lnet/minecraft/unmapped/C_6205974;	f_2236408	floatingIslandNoise	
 	f	Lnet/minecraft/unmapped/C_3997653;	f_5843321	type	
 	f	Lnet/minecraft/unmapped/C_2441996;	f_7307125	defaultBlock	
 	f	Lnet/minecraft/unmapped/C_2441996;	f_3633382	defaultLiquid	
@@ -2395,7 +2394,7 @@ c	net/minecraft/unmapped/C_4188659
 	f	Lnet/minecraft/unmapped/C_2441996;	f_4140378	LAVA	
 	f	Lnet/minecraft/unmapped/C_6205974;	f_6992788	maxLimitPerlinNoise	
 	f	Lnet/minecraft/unmapped/C_6205974;	f_6088413	minLimitPerlinNoise	
-	f	Lnet/minecraft/unmapped/C_6205974;	f_2672865	mainPerlinNoise	
+	f	Lnet/minecraft/unmapped/C_6205974;	f_2672865	perlinNoise1	
 	f	Lnet/minecraft/unmapped/C_6205974;	f_8783076	lavaLakeNoise	
 	f	Lnet/minecraft/unmapped/C_2397450;	f_1255287	settings	
 	f	Lnet/minecraft/unmapped/C_2441996;	f_1526333	defaultBlock	
@@ -3681,9 +3680,9 @@ c	net/minecraft/unmapped/C_6189873
 		p	4			p_4
 		p	5			p_5
 c	net/minecraft/unmapped/C_6205974
-	f	[Lnet/minecraft/unmapped/C_0611937;	f_4448671	samplers	
-	f	[Lnet/minecraft/unmapped/C_5077341;	f_4448671		samplers
-	m	(IIIIIIDDD)[D	m_2945258	getNoise	
+	f	[Lnet/minecraft/unmapped/C_0611937;	f_4448671	noiseLevels	
+	f	[Lnet/minecraft/unmapped/C_5077341;	f_4448671		noiseLevels
+	m	(IIIIIIDDD)[D	m_2945258	getRegion	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
@@ -3693,7 +3692,7 @@ c	net/minecraft/unmapped/C_6205974
 		p	7		p_7	
 		p	9		p_9	
 		p	11		p_11	
-	m	(IIIIDDD)[D	m_0480685	getNoise	
+	m	(IIIIDDD)[D	m_0480685	getRegion	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
@@ -5035,7 +5034,7 @@ c	net/minecraft/unmapped/C_9006197
 		p	4			p_4
 		p	5			p_5
 c	net/minecraft/unmapped/C_9070784
-	m	(DDIIDDD)[D	m_6472130	getNoise	
+	m	(DDIIDDD)[D	m_6472130	getRegion	
 		p	1		p_1	
 		p	3		p_3	
 		p	5		p_5	
@@ -5043,7 +5042,7 @@ c	net/minecraft/unmapped/C_9070784
 		p	7		p_7	
 		p	9		p_9	
 		p	11		p_11	
-	m	(DDIIDDDD)[D	m_5581270	getNoise	
+	m	(DDIIDDDD)[D	m_5581270	getRegion	
 		p	1		p_1	
 		p	3		p_3	
 		p	5		p_5	
@@ -5215,9 +5214,9 @@ c	net/minecraft/unmapped/C_9302567
 		p	8		pos	
 		p	9		yaw	
 		p	10		shadowSize	
-		p	11		shadowX	
-		p	13		shadowY	
-		p	15		shadowZ	
+		p	11		cx	
+		p	13		cy	
+		p	15		cz	
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_2627205;Lnet/minecraft/unmapped/C_6707278;DDDLnet/minecraft/unmapped/C_6707278;FFDDD)V	m_2975447		renderShadowOnBlock
 		p	1			p_1
 		p	2			p_2

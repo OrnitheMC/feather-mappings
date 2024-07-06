@@ -171,15 +171,15 @@ c	net/minecraft/unmapped/C_6006943
 		p	2			p_2
 c	net/minecraft/unmapped/C_6385858
 	f	Ljava/util/Set;	f_6582421		commandTags
-	m	(Lnet/minecraft/unmapped/C_2800860;)Z	m_6188111	writeNbtNoRider	
+	m	(Lnet/minecraft/unmapped/C_2800860;)Z	m_6188111	writeNbtIfNotMount	
 		p	1		nbt	
 	m	()Ljava/util/Set;	m_5353676		getCommandTags
-	m	(Lnet/minecraft/unmapped/C_2800860;Z)Z	m_6188111		writeNbtNoPassenger
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/unmapped/C_2800860;Z)Z	m_6188111		writeNbtIfNotMount
+		p	1			nbt
+		p	2			mustBeInChunk
 c	net/minecraft/unmapped/C_6698663
 	f	Ljava/text/DateFormat;	f_8133981	dateFormat	
-	f	Z	f_3795372	worldLoaded	
+	f	Z	f_3795372	selected	
 	f	I	f_8364232	selectedWorldId	
 	f	Ljava/util/List;	f_6247433	saves	
 	f	Lnet/minecraft/unmapped/C_6698663$C_4167019;	f_3122384	worldList	
@@ -187,7 +187,7 @@ c	net/minecraft/unmapped/C_6698663
 	f	Ljava/lang/String;	f_3469785	conversionText	
 		c	The text to display when a world needs to be converted (e.g. when it needs to be converted from a lower version)	
 	f	[Ljava/lang/String;	f_3791766	gameModeTexts	
-	f	Z	f_1299933	f_1299933	
+	f	Z	f_1299933	delete	
 	f	Z	f_6860306	isInChildScreen	
 		c	Is true if the player is in a child screen (e.g. a confirmation screen).\nIs set to false again when the selectWorldScreen gets displayed again.	
 	f	Lnet/minecraft/unmapped/C_6043691;	f_3122384		worldList
@@ -197,9 +197,9 @@ c	net/minecraft/unmapped/C_6698663
 		p	1		index	
 	m	(I)Ljava/lang/String;	m_4884417	getWorldName	
 		p	1		index	
-	m	(I)V	m_5499169	m_5499169	
-		p	1		p_1	
-	m	(I)V	m_1496597	loadWorld	
+	m	(I)V	m_5499169	selectWorld	
+		p	1		id	
+	m	(I)V	m_1496597	joinWorld	
 		p	1		id	
 	m	(ZI)V	m_0021523	m_0021523	
 		p	1		p_1	
@@ -208,10 +208,10 @@ c	net/minecraft/unmapped/C_6698663
 		p	0		screen	
 		p	1		worldName	
 		p	2		id	
-	m	(Lnet/minecraft/unmapped/C_3268052;Ljava/lang/String;I)Lnet/minecraft/unmapped/C_5441464;	m_1674033	m_1674033	
-		p	0		p_0	
-		p	1		p_1	
-		p	2		p_2	
+	m	(Lnet/minecraft/unmapped/C_3268052;Ljava/lang/String;I)Lnet/minecraft/unmapped/C_5441464;	m_1674033	getUpgradeWarningPrompt	
+		p	0		screen	
+		p	1		worldName	
+		p	2		id	
 	m	(Lnet/minecraft/unmapped/C_6698663;)Ljava/util/List;	m_9571224	getSaves	
 		p	0		selectWorldScreen	
 	m	(Lnet/minecraft/unmapped/C_6698663;I)I	m_0714734	setSelectedWorldId	
@@ -252,7 +252,7 @@ c	net/minecraft/unmapped/C_6698663$C_4167019	WorldListWidget
 	f	Lnet/minecraft/unmapped/C_6698663;	f_9765008	parent	
 	m	(Lnet/minecraft/unmapped/C_6698663;Lnet/minecraft/client/Minecraft;)V	<init>	<init>	
 		p	1		p_1	
-		p	2		p_2	
+		p	2		minecraft	
 	m	()I	m_3070894	m_3070894	
 	m	(IZII)V	m_7921537	m_7921537	
 		p	1		p_1	
@@ -354,11 +354,11 @@ c	net/minecraft/unmapped/C_2211410		net/minecraft/client/gui/screen/world/WorldS
 		p	4			p_4
 		p	5			p_5
 		p	6			p_6
-	m	()V	m_0607707		join
+	m	()V	m_0607707		select
 	m	()V	m_6714061		delete
 	m	()V	m_1525190		edit
 	m	()V	m_9047887		recreate
-	m	()V	m_4692379		load
+	m	()V	m_4692379		join
 	m	()V	m_3823971		loadIcon
 	m	(IIIIII)V	m_4703785		m_4703785
 		p	1			p_1

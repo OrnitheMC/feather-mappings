@@ -14,16 +14,16 @@ c	net/minecraft/unmapped/C_0070166
 c	net/minecraft/unmapped/C_0139979
 	m	()V	m_1418303		cancel
 c	net/minecraft/unmapped/C_0459721
-	m	(Lnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_6385858;F)Lnet/minecraft/unmapped/C_7641996;	m_9330957		m_9330957
-		p	1			p_1
-		p	2			p_2
+	m	(Lnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_6385858;F)Lnet/minecraft/unmapped/C_7641996;	m_9330957		findPath
+		p	1			entity
+		p	2			target
 		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_6385858;IIIF)Lnet/minecraft/unmapped/C_7641996;	m_9219430		m_9219430
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+	m	(Lnet/minecraft/unmapped/C_6385858;IIIF)Lnet/minecraft/unmapped/C_7641996;	m_9219430		findPath
+		p	1			entity
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			range
 c	net/minecraft/unmapped/C_0611937
 	m	(DDD)D	m_0689792		m_0689792
 		p	1			p_1
@@ -69,8 +69,8 @@ c	net/minecraft/unmapped/C_1196485
 	m	(I)I	m_8770448		m_8770448
 		p	1			p_1
 c	net/minecraft/unmapped/C_2293006
-	m	()I	m_2112110		m_2112110
-	m	()I	m_3634999		m_3634999
+	m	()I	m_2112110		getWidth
+	m	()I	m_3634999		getHeight
 c	net/minecraft/unmapped/C_2334550
 	f	Ljava/nio/IntBuffer;	f_3818975	intBuffer	
 	f	Ljava/nio/FloatBuffer;	f_0731382	floatBuffer	
@@ -149,23 +149,23 @@ c	net/minecraft/unmapped/C_3624347
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/unmapped/C_3906126
-	m	(ZLnet/minecraft/unmapped/C_8425960;)V	m_4418114	saveAll	
+	m	(ZLnet/minecraft/unmapped/C_8425960;)V	m_4418114	save	
 		p	1		p_1	
 		p	2		p_2	
 	m	(Lnet/minecraft/unmapped/C_1044273;)V	m_1367228	addEventListener	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_1044273;)V	m_1985242	removeEventListener	
 		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_8425960;)V	m_5794371	waitIfSaving	
+	m	(Lnet/minecraft/unmapped/C_8425960;)V	m_5794371	forceSave	
 		p	1		p_1	
-	m	(ZLnet/minecraft/unmapped/C_5902900;)V	m_4418114		saveAll
+	m	(ZLnet/minecraft/unmapped/C_5902900;)V	m_4418114		save
 		p	1			p_1
 		p	2			p_2
 	m	(Lnet/minecraft/unmapped/C_9232749;)V	m_1367228		addEventListener
-		p	1			p_1
+		p	1			listener
 	m	(Lnet/minecraft/unmapped/C_9232749;)V	m_1985242		removeEventListener
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_5902900;)V	m_5794371		waitIfSaving
+		p	1			listener
+	m	(Lnet/minecraft/unmapped/C_5902900;)V	m_5794371		forceSave
 		p	1			p_1
 c	net/minecraft/unmapped/C_3984704
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_3984704;	m_4457344		m_4457344
@@ -197,13 +197,13 @@ c	net/minecraft/unmapped/C_4824661
 c	net/minecraft/unmapped/C_5283200
 	f	Ljava/util/List;	f_1904622	globalBlockEntities	
 	m	(Lnet/minecraft/unmapped/C_3906126;Ljava/util/List;IIIII)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
-		p	7		p_7	
+		p	1		world	
+		p	2		globalBlockEntities	
+		p	3		originX	
+		p	4		originY	
+		p	5		originZ	
+		p	6		size	
+		p	7		glList	
 	m	(Lnet/minecraft/unmapped/C_3906126;IIIII)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -222,17 +222,17 @@ c	net/minecraft/unmapped/C_6726911
 	m	(Lnet/minecraft/unmapped/C_2941751;)V	m_4513531		m_4513531
 		p	1			p_1
 c	net/minecraft/unmapped/C_6755599
-	m	(IIIII)Z	m_5827966		m_5827966
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	(IIII)Z	m_4332228		m_4332228
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(IIIII)Z	m_5827966		setBlockWithMetadata
+		p	1			localX
+		p	2			y
+		p	3			localZ
+		p	4			block
+		p	5			metadata
+	m	(IIII)Z	m_4332228		setBlock
+		p	1			localX
+		p	2			y
+		p	3			localZ
+		p	4			block
 c	net/minecraft/unmapped/C_7213435
 	m	([I)Z	m_8038378		m_8038378
 		p	1			p_1
@@ -255,49 +255,49 @@ c	net/minecraft/unmapped/C_8998310
 		p	2			p_2
 	m	()Z	m_9589748		m_9589748
 c	net/minecraft/unmapped/C_9484672
-	m	(ZLnet/minecraft/unmapped/C_8425960;)Z	m_8231616	saveAll	
+	m	(ZLnet/minecraft/unmapped/C_8425960;)Z	m_8231616	save	
 		p	1		p_1	
 		p	2		p_2	
-	m	(ZLnet/minecraft/unmapped/C_5902900;)Z	m_8231616		saveAll
+	m	(ZLnet/minecraft/unmapped/C_5902900;)Z	m_8231616		save
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/unmapped/C_9846877
 	m	()V	m_7285859		m_7285859
-c	net/minecraft/unmapped/C_5902900		net/minecraft/unmapped/C_5902900
-	m	()V	m_5266201		m_5266201
-	m	(Ljava/lang/String;)V	m_5570081		m_5570081
-		p	1			p_1
-	m	(I)V	m_3915830		m_3915830
-		p	1			p_1
-c	net/minecraft/unmapped/C_9232749		net/minecraft/unmapped/C_9232749
-	m	(III)V	m_7307167		m_7307167
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(IIIIII)V	m_0171092		m_0171092
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-	m	(Ljava/lang/String;DDDFF)V	m_2244237		m_2244237
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
-		p	6			p_6
-		p	8			p_8
-		p	9			p_9
-	m	(Ljava/lang/String;DDDDDD)V	m_5421083		m_5421083
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
-		p	6			p_6
-		p	8			p_8
-		p	10			p_10
-		p	12			p_12
-	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_0519413		m_0519413
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_3338259		m_3338259
-		p	1			p_1
-	m	()V	m_0340972		m_0340972
+c	net/minecraft/unmapped/C_5902900		net/minecraft/util/ProgressListener
+	m	()V	m_5266201		progressStartNoAbort
+	m	(Ljava/lang/String;)V	m_5570081		progressStage
+		p	1			stage
+	m	(I)V	m_3915830		progressPercentage
+		p	1			percentage
+c	net/minecraft/unmapped/C_9232749		net/minecraft/world/WorldEventListener
+	m	(III)V	m_7307167		notifyBlockChanged
+		p	1			x
+		p	2			y
+		p	3			z
+	m	(IIIIII)V	m_0171092		notifyRegionChanged
+		p	1			minX
+		p	2			minY
+		p	3			minZ
+		p	4			maxX
+		p	5			maxY
+		p	6			maxZ
+	m	(Ljava/lang/String;DDDFF)V	m_2244237		playSound
+		p	1			sound
+		p	2			x
+		p	4			y
+		p	6			z
+		p	8			pitch
+		p	9			volume
+	m	(Ljava/lang/String;DDDDDD)V	m_5421083		addParticle
+		p	1			particle
+		p	2			x
+		p	4			y
+		p	6			z
+		p	8			velocityX
+		p	10			velocityY
+		p	12			velocityZ
+	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_0519413		notifyEntityAdded
+		p	1			entity
+	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_3338259		notifyEntityRemoved
+		p	1			entity
+	m	()V	m_0340972		notifyAmbientDarknessChanged

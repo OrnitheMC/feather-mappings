@@ -26,7 +26,7 @@ c	net/minecraft/unmapped/C_1044273
 	m	()V	m_5654325	m_5654325	
 	m	(Lnet/minecraft/unmapped/C_5009044;)V	m_8580944	m_8580944	
 		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_0669153;)V	m_4361284	updateFrustums	
+	m	(Lnet/minecraft/unmapped/C_0669153;)V	m_4361284	cullChunks	
 		p	1		p_1	
 c	net/minecraft/unmapped/C_2454294
 	m	()V	m_4677744	m_4677744	
@@ -49,7 +49,7 @@ c	net/minecraft/unmapped/C_3050136	net/minecraft/entity/ItemEntity
 	f	F	f_5120121	f_5120121	
 	f	F	f_2029735	f_2029735	
 	f	Lnet/minecraft/unmapped/C_2750078;	f_2557598	item	
-	f	I	f_9180960	f_9180960	
+	f	I	f_9180960	ticks	
 	f	I	f_3330863	age	
 	f	I	f_2600109	pickUpDelay	
 	m	(Lnet/minecraft/unmapped/C_3906126;FFFLnet/minecraft/unmapped/C_2750078;)V	<init>	<init>	
@@ -120,12 +120,12 @@ c	net/minecraft/unmapped/C_4286596
 	f	[I	f_3513265		inventorySlots
 	f	[I	f_7338809		f_7338809
 	f	[I	f_7226911		f_7226911
-	m	()Lnet/minecraft/unmapped/C_2750078;	m_1328672	getMainHandStack	
+	m	()Lnet/minecraft/unmapped/C_2750078;	m_1328672	getSelectedStack	
 	m	()I	m_2420174	m_2420174	
 	m	(II)V	m_0873049	m_0873049	
 		p	1		p_1	
 		p	2		p_2	
-	m	()I	m_1328672		getMainHandStack
+	m	()I	m_1328672		getSelectedStack
 	m	(Lnet/minecraft/unmapped/C_3635204;)V	m_3407988		m_3407988
 		p	1			p_1
 	m	(I)Z	m_8673786		m_8673786
@@ -156,8 +156,8 @@ c	net/minecraft/unmapped/C_4766485
 c	net/minecraft/unmapped/C_4824661
 	f	Ljava/nio/ByteBuffer;	f_1776972	f_1776972	
 	f	Ljava/nio/FloatBuffer;	f_7066741	f_7066741	
-	f	F	f_9824963	newFogGrayScale	
-	f	F	f_6791677	oldFogGrayScale	
+	f	F	f_9824963	lastFogBrightness	
+	f	F	f_6791677	fogBrightness	
 	m	(Ljava/nio/ByteBuffer;II)Ljava/awt/image/BufferedImage;	m_2576693	m_2576693	
 		p	0		p_0	
 		p	1		p_1	
@@ -199,7 +199,7 @@ c	net/minecraft/unmapped/C_5283200
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_5009044;)F	m_9608130		m_9608130
 		p	1			camera
-c	net/minecraft/unmapped/C_5367636	net/minecraft/client/entity/living/player/LocalClientPlayerEntity	
+c	net/minecraft/unmapped/C_5367636	net/minecraft/client/entity/mob/player/LocalClientPlayerEntity	
 	f	Lnet/minecraft/unmapped/C_4045198;	f_3990690	input	
 	m	(Lnet/minecraft/unmapped/C_3906126;)V	<init>	<init>	
 		p	1		p_1	
@@ -210,10 +210,10 @@ c	net/minecraft/unmapped/C_5584362	net/minecraft/entity/PrimedTntEntity
 	f	F	f_8015653	f_8015653	
 	f	I	f_2228310	fuseTimer	
 	m	(Lnet/minecraft/unmapped/C_3906126;FFF)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
+		p	1		world	
+		p	2		x	
+		p	3		y	
+		p	4		z	
 	m	()Z	m_7828889	m_7828889	
 	m	()V	m_0718337	m_0718337	
 c	net/minecraft/unmapped/C_6151866
@@ -226,19 +226,19 @@ c	net/minecraft/unmapped/C_6942422
 		p	2			p_2
 		p	3			p_3
 c	net/minecraft/unmapped/C_7192378	net/minecraft/inventory/slot/InventorySlot	
-	f	I	f_2513672	slot	
+	f	I	f_2513672	id	
 		c	The slot's index in its inventory	
-	f	I	f_9310430	f_9310430	
-	f	I	f_4898200	f_4898200	
-	f	Lnet/minecraft/unmapped/C_7542541;	f_8525450	f_8525450	
+	f	I	f_9310430	x	
+	f	I	f_4898200	y	
+	f	Lnet/minecraft/unmapped/C_7542541;	f_8525450	screen	
 	m	(Lnet/minecraft/unmapped/C_7542541;III)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
-	m	(II)Z	m_1659482	m_1659482	
-		p	1		p_1	
-		p	2		p_2	
+	m	(II)Z	m_1659482	isMouseOver	
+		p	1		mouseX	
+		p	2		mouseY	
 c	net/minecraft/unmapped/C_7318150
 	m	(Lnet/minecraft/unmapped/C_3906126;III)V	m_7921663	m_7921663	
 		p	1		p_1	
@@ -266,8 +266,8 @@ c	net/minecraft/unmapped/C_7688744
 	f	Lnet/minecraft/unmapped/C_5027199;	f_8113385	dropKey	
 	f	Lnet/minecraft/unmapped/C_5027199;	f_7595807		f_7595807
 c	net/minecraft/unmapped/C_8425960
-	m	(Ljava/lang/String;)V	m_4655768	m_4655768	
-		p	1		p_1	
+	m	(Ljava/lang/String;)V	m_4655768	progressStart	
+		p	1		title	
 c	net/minecraft/unmapped/C_9302567
 	f	Lnet/minecraft/unmapped/C_3466301;	f_0998767	f_0998767	
 	f	F	f_7031829	shadowSize	

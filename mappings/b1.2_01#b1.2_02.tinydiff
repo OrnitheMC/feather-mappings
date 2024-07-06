@@ -1,11 +1,11 @@
 tiny	2	0
 c	net/minecraft/client/Minecraft
-	m	(Ljava/io/File;IIII)Ljava/lang/String;	m_0756011		m_0756011
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+	m	(Ljava/io/File;IIII)Ljava/lang/String;	m_0756011		takeHugeScreenshot
+		p	1			gameDir
+		p	2			columnWidth
+		p	3			rowHeight
+		p	4			width
+		p	5			height
 c	net/minecraft/server/MinecraftServer	net/minecraft/server/MinecraftServer	
 	f	Ljava/util/logging/Logger;	f_7446175	LOGGER	
 	f	Ljava/util/HashMap;	f_5715141	f_5715141	
@@ -156,7 +156,7 @@ c	net/minecraft/unmapped/C_0019534	net/minecraft/server/PlayerManager
 		p	3		z	
 		p	4		blockEntity	
 	m	()V	<clinit>	<clinit>	
-c	net/minecraft/unmapped/C_0324512	net/minecraft/server/entity/living/player/ServerPlayerEntity	
+c	net/minecraft/unmapped/C_0324512	net/minecraft/server/entity/mob/player/ServerPlayerEntity	
 	f	Lnet/minecraft/unmapped/C_8752044;	f_3231607	networkHandler	
 	f	Lnet/minecraft/server/MinecraftServer;	f_7284268	server	
 	f	Lnet/minecraft/unmapped/C_7897127;	f_7088670	interactionManager	
@@ -572,31 +572,32 @@ c	net/minecraft/unmapped/C_2842873
 	m	(ILnet/minecraft/unmapped/C_5067501;)V	<init>	<init>	
 		p	1		id	
 		p	2		dataTracker	
-c	net/minecraft/unmapped/C_3146305	net/minecraft/entity/EntityCategoryProvider	
+c	net/minecraft/unmapped/C_3146305	net/minecraft/entity/SpawnableEntity	
+	c	An entity that spawns naturally.	
 c	net/minecraft/unmapped/C_3157620
 	m	(J)V	<init>	<init>	
 		p	1		p_1	
 c	net/minecraft/unmapped/C_3187085
-	f	I	f_8438169		f_8438169
-	f	Ljava/io/DataOutputStream;	f_8858656		f_8858656
-	f	[B	f_4271363		f_4271363
-	f	I	f_7610117		f_7610117
-	f	I	f_3093601		f_3093601
-	f	Ljava/io/File;	f_9872106		f_9872106
+	f	I	f_8438169		rowHeight
+	f	Ljava/io/DataOutputStream;	f_8858656		output
+	f	[B	f_4271363		pixelsForRow
+	f	I	f_7610117		width
+	f	I	f_3093601		height
+	f	Ljava/io/File;	f_9872106		file
 	m	()V	<init>	<init>	
 	m	(Ljava/io/File;III)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Ljava/nio/ByteBuffer;IIII)V	m_6705572		m_6705572
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	()V	m_9812907		m_9812907
-	m	()Ljava/lang/String;	m_7745323		m_7745323
+		p	1			file
+		p	2			width
+		p	3			height
+		p	4			rowHeight
+	m	(Ljava/nio/ByteBuffer;IIII)V	m_6705572		addRegion
+		p	1			pixels
+		p	2			centerX
+		p	3			centerY
+		p	4			rangeX
+		p	5			rangeY
+	m	()V	m_9812907		saveRow
+	m	()Ljava/lang/String;	m_7745323		close
 c	net/minecraft/unmapped/C_3571139	net/minecraft/server/world/chunk/ServerChunkCache	
 	f	Ljava/util/Set;	f_6557144	chunksToUnload	
 		c	Queue for chunks to unload.	
@@ -715,11 +716,11 @@ c	net/minecraft/unmapped/C_4824661
 	f	D	f_6807291		zoom
 	f	D	f_9163834		zoomX
 	f	D	f_0069519		zoomY
-	m	(DDD)V	m_3044613		m_3044613
-		p	1			p_1
-		p	3			p_3
-		p	5			p_5
-	m	()V	m_8888188		m_8888188
+	m	(DDD)V	m_3044613		zoomIn
+		p	1			zoom
+		p	3			zoomX
+		p	5			zoomY
+	m	()V	m_8888188		zoomOut
 c	net/minecraft/unmapped/C_4978736	net/minecraft/server/dedicated/gui/PlayerListGui	
 	f	Lnet/minecraft/server/MinecraftServer;	f_3618267	server	
 	f	I	f_5586020	tick	

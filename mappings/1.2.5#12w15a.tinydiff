@@ -149,7 +149,7 @@ c	net/minecraft/unmapped/C_1013763
 	m	(FF)V	m_2788323	m_2788323	
 		p	1		p_1	
 		p	2		p_2	
-	m	()V	m_3748125	m_3748125	
+	m	()V	m_3748125	beforeRemove	
 c	net/minecraft/unmapped/C_1044273
 	m	(IIILnet/minecraft/unmapped/C_2074023;)V	m_7701030	m_7701030	
 		p	1		p_1	
@@ -198,16 +198,16 @@ c	net/minecraft/unmapped/C_1368426
 	f	Lnet/minecraft/unmapped/C_7378130;	f_3640473	defaultPack	
 	f	Lnet/minecraft/client/Minecraft;	f_0963297	minecraft	
 	f	Ljava/lang/String;	f_1241130	selectedName	
-	f	Lnet/minecraft/unmapped/C_7378130;	f_8696750		DEFAULT_TEXTURE_PACK
-	f	Lnet/minecraft/unmapped/C_7688744;	f_8192592		f_8192592
-	f	Lnet/minecraft/unmapped/C_3385278;	f_3640473		defaultPack
+	f	Lnet/minecraft/unmapped/C_7378130;	f_8696750		DEFAULT_PACK
+	f	Lnet/minecraft/unmapped/C_7688744;	f_8192592		options
+	f	Lnet/minecraft/unmapped/C_3385278;	f_3640473		textureManager
 	m	(Lnet/minecraft/client/Minecraft;Ljava/io/File;)V	<init>	<init>	
 		p	1		minecraft	
-		p	2		dir	
+		p	2		gameDir	
 	m	(Ljava/io/File;Lnet/minecraft/unmapped/C_7688744;Lnet/minecraft/unmapped/C_3385278;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			gameDir
+		p	2			options
+		p	3			textureManager
 	m	()V	m_1502044		mkdirs
 	m	(Ljava/io/File;)Ljava/lang/String;	m_2544377		getKey
 		p	1			f
@@ -263,7 +263,7 @@ c	net/minecraft/unmapped/C_2750078
 	m	(Lnet/minecraft/unmapped/C_5009044;)V	m_7941857	onRemoved	
 		p	1		player	
 c	net/minecraft/unmapped/C_2782822
-	m	(IIILnet/minecraft/unmapped/C_2074023;)V	m_7701030	onBlockEntityChanged	
+	m	(IIILnet/minecraft/unmapped/C_2074023;)V	m_7701030	notifyBlockEntityChanged	
 		p	1		x	
 		p	2		y	
 		p	3		z	
@@ -296,11 +296,11 @@ c	net/minecraft/unmapped/C_3271339
 	m	(Lnet/minecraft/unmapped/C_3906126;)Lnet/minecraft/unmapped/C_5009044;	m_8774636	m_8774636	
 		p	1		p_1	
 c	net/minecraft/unmapped/C_3385278
-	f	Z	f_4059799	f_4059799	
+	f	Z	f_4059799	MIPMAP	
 	f	I	f_5028391	f_5028391	
-	m	(II)I	m_8649798	m_8649798	
-		p	1		p_1	
-		p	2		p_2	
+	m	(II)I	m_8649798	crispBlend	
+		p	1		color1	
+		p	2		color2	
 	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_3418531
 	m	(Lnet/minecraft/unmapped/C_5475923;F)V	m_4155706	m_4155706	
@@ -405,7 +405,7 @@ c	net/minecraft/unmapped/C_3891497
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/unmapped/C_3906126
-	m	()V	m_8530625	m_8530625	
+	m	()V	m_8530625	clearPlayerData	
 	m	(Lnet/minecraft/unmapped/C_5269767;)Lnet/minecraft/unmapped/C_5269767;	m_1512890		populateCrashReport
 		p	1			report
 c	net/minecraft/unmapped/C_3906126$0602831		0602831
@@ -427,7 +427,7 @@ c	net/minecraft/unmapped/C_3906126$9920604		9920604
 	m	()Ljava/lang/String;	m_3657996		m_3657996
 	m	()Ljava/lang/Object;	call		call
 c	net/minecraft/unmapped/C_4237166
-	m	(Lnet/minecraft/unmapped/C_3906126;)V	m_1565789	setWorld	
+	m	(Lnet/minecraft/unmapped/C_3906126;)V	m_1565789	initWorld	
 		p	1		world	
 c	net/minecraft/unmapped/C_4389375
 	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_4059289	m_4059289	
@@ -521,8 +521,8 @@ c	net/minecraft/unmapped/C_4948697
 	m	()V	m_5818797	m_5818797	
 c	net/minecraft/unmapped/C_5009044
 	m	()V	m_1342999	m_1342999	
-	m	(Lnet/minecraft/unmapped/C_2750078;)V	m_3202550	m_3202550	
-		p	1		p_1	
+	m	(Lnet/minecraft/unmapped/C_2750078;)V	m_3202550	onCursorStackChanged	
+		p	1		stack	
 c	net/minecraft/unmapped/C_5067501
 	m	()Ljava/util/ArrayList;	m_9358483	collectDirty	
 	m	()Ljava/util/List;	m_9358483		collectDirty
@@ -663,8 +663,8 @@ c	net/minecraft/unmapped/C_6899601
 	f	Ljava/io/File;	f_9496271	file	
 	m	(Ljava/io/File;)V	<init>	<init>	
 		p	1		file	
-	m	(Ljava/lang/String;)Ljava/lang/String;	m_9079674	m_9079674	
-		p	1		p_1	
+	m	(Ljava/lang/String;)Ljava/lang/String;	m_9079674	trim	
+		p	1		line	
 	m	(Lnet/minecraft/client/Minecraft;)V	m_6768110	m_6768110	
 		p	1		p_1	
 	m	(Lnet/minecraft/client/Minecraft;)V	m_9830297	m_9830297	
@@ -770,13 +770,13 @@ c	net/minecraft/unmapped/C_7378130
 	m	()V	<init>	<init>	
 	m	()V	m_5917449	open	
 	m	()V	m_2269355	close	
-	m	(Lnet/minecraft/client/Minecraft;)V	m_6768110	readMetadata	
+	m	(Lnet/minecraft/client/Minecraft;)V	m_6768110	load	
 		p	1		minecraft	
-	m	(Lnet/minecraft/client/Minecraft;)V	m_9830297	removeIcon	
+	m	(Lnet/minecraft/client/Minecraft;)V	m_9830297	unload	
 		p	1		minecraft	
 	m	(Lnet/minecraft/client/Minecraft;)V	m_5337323	bindIcon	
 		p	1		minecraft	
-	m	(Lnet/minecraft/unmapped/C_3385278;)V	m_9830297		removeIcon
+	m	(Lnet/minecraft/unmapped/C_3385278;)V	m_9830297		unload
 		p	1			manager
 	m	(Lnet/minecraft/unmapped/C_3385278;)V	m_5337323		bindIcon
 		p	1			manager
@@ -810,10 +810,10 @@ c	net/minecraft/unmapped/C_7653691
 c	net/minecraft/unmapped/C_7699185
 	m	(Lnet/minecraft/unmapped/C_7192378;)V	m_6017734	addSlot	
 		p	1		slot	
-	m	(S)V	m_5947941	m_5947941	
-		p	1		p_1	
-	m	(S)V	m_9229725	m_9229725	
-		p	1		p_1	
+	m	(S)V	m_5947941	deleteBackup	
+		p	1		id	
+	m	(S)V	m_9229725	rollbackToBackup	
+		p	1		id	
 	m	(Lnet/minecraft/unmapped/C_7192378;)Lnet/minecraft/unmapped/C_7192378;	m_6017734		addSlot
 		p	1			invSlot
 c	net/minecraft/unmapped/C_7974592
