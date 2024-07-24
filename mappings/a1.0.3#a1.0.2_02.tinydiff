@@ -4,15 +4,15 @@ c	net/minecraft/unmapped/C_0258789
 	m	()Ljava/lang/String;	m_0628689	m_0628689	
 	m	()Ljava/lang/String;	m_6640029	m_6640029	
 c	net/minecraft/unmapped/C_1013763
-	f	Lnet/minecraft/unmapped/C_6385858;	f_2937920	f_2937920	
-	f	I	f_3169143	f_3169143	
-	m	(Lnet/minecraft/unmapped/C_6385858;F)V	m_0544398	m_0544398	
-		p	1		p_1	
-		p	2		p_2	
-	m	(FFF)F	m_8768955	m_8768955	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+	f	Lnet/minecraft/unmapped/C_6385858;	f_2937920	lookTarget	
+	f	I	f_3169143	lookTimer	
+	m	(Lnet/minecraft/unmapped/C_6385858;F)V	m_0544398	lookAt	
+		p	1		target	
+		p	2		maxRotationChange	
+	m	(FFF)F	m_8768955	lerpRotation	
+		p	1		from	
+		p	2		to	
+		p	3		maxChange	
 c	net/minecraft/unmapped/C_1826831
 	m	()Ljava/lang/String;	m_0628689	m_0628689	
 	m	()Ljava/lang/String;	m_6640029	m_6640029	
@@ -21,54 +21,55 @@ c	net/minecraft/unmapped/C_2923961
 	m	()Ljava/lang/String;	m_0628689	m_0628689	
 	m	()Ljava/lang/String;	m_6640029	m_6640029	
 c	net/minecraft/unmapped/C_3624347
-	f	Ljava/util/Random;	f_8579875	f_8579875	
-	f	I	f_8357654	f_8357654	
+	f	Ljava/util/Random;	f_8579875	random	
+	f	I	f_8357654	musicCooldown	
 c	net/minecraft/unmapped/C_3906126
-	f	Ljava/util/List;	f_2924408	f_2924408	
-	f	Ljava/util/Set;	f_8852672	f_8852672	
-	f	I	f_1902481	f_1902481	
-	f	Lnet/minecraft/unmapped/C_6385858;	f_6053391		f_6053391
-	m	(Lnet/minecraft/unmapped/C_5009044;)V	m_0762970	m_0762970	
-		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_6385858;D)Lnet/minecraft/unmapped/C_5009044;	m_8874150	m_8874150	
-		p	1		p_1	
-		p	2		p_2	
-	m	(DDDD)Lnet/minecraft/unmapped/C_5009044;	m_3078835	m_3078835	
-		p	1		p_1	
-		p	3		p_3	
-		p	5		p_5	
-		p	7		p_7	
-	m	()V	m_0762970		m_0762970
+	f	Ljava/util/List;	f_2924408	players	
+	f	Ljava/util/Set;	f_8852672	tickingChunks	
+	f	I	f_1902481	ambientSoundCooldown	
+	f	Lnet/minecraft/unmapped/C_6385858;	f_6053391		player
+	m	(Lnet/minecraft/unmapped/C_5009044;)V	m_0762970	loadPlayer	
+		p	1		player	
+	m	(Lnet/minecraft/unmapped/C_6385858;D)Lnet/minecraft/unmapped/C_5009044;	m_8874150	getClosestPlayer	
+		p	1		entity	
+		p	2		range	
+	m	(DDDD)Lnet/minecraft/unmapped/C_5009044;	m_3078835	getClosestPlayer	
+		p	1		x	
+		p	3		y	
+		p	5		z	
+		p	7		range	
+	m	()V	m_0762970		loadPlayer
 	m	(DDDLjava/lang/String;F)V	m_0876826		m_0876826
 		p	1			p_1
 		p	3			p_3
 		p	5			p_5
 		p	7			p_7
 		p	8			p_8
-	m	()Lnet/minecraft/unmapped/C_6385858;	m_0519267		m_0519267
+	m	()Lnet/minecraft/unmapped/C_6385858;	m_0519267		getPlayers
 c	net/minecraft/unmapped/C_4560329
-	f	Ljava/util/List;	f_7248081	f_7248081	
+	f	Ljava/util/List;	f_7248081	sounds	
 c	net/minecraft/unmapped/C_8345828
 	m	()Ljava/lang/String;	m_9980999	m_9980999	
 	m	()Ljava/lang/String;	m_0628689	m_0628689	
 	m	()Ljava/lang/String;	m_6640029	m_6640029	
 c	net/minecraft/unmapped/C_9377562
-	f	Ljava/util/Set;	f_1000049	f_1000049	
-	m	(Lnet/minecraft/unmapped/C_3906126;ILnet/minecraft/unmapped/C_7918626;)I	m_2453784	m_2453784	
-		p	1		p_1	
+	f	Ljava/util/Set;	f_1000049	mobSpawningChunks	
+		c	This set keeps track of chunks that allow mob spawning. Mob spawning can occur within\na 15x15 grid of chunks around players. The ring of chunks around that are lazy chunks,\nwhich do not allow mob spawning, but to contribute to the mob cap.	
+	m	(Lnet/minecraft/unmapped/C_3906126;ILnet/minecraft/unmapped/C_7918626;)I	m_2453784	run	
+		p	1		world	
 		p	2		p_2	
-		p	3		p_3	
-	m	(Lnet/minecraft/unmapped/C_3906126;ILnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_7918626;)I	m_2453784		m_2453784
-		p	1			p_1
+		p	3		listener	
+	m	(Lnet/minecraft/unmapped/C_3906126;ILnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_7918626;)I	m_2453784		run
+		p	1			world
 		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-c	net/minecraft/unmapped/C_9386942	net/minecraft/unmapped/C_9386942	
-	f	I	f_4417974	f_4417974	
-	f	I	f_1086643	f_1086643	
+		p	3			around
+		p	4			listener
+c	net/minecraft/unmapped/C_9386942	net/minecraft/util/math/ChunkPos	
+	f	I	f_4417974	x	
+	f	I	f_1086643	z	
 	m	(II)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		x	
+		p	2		z	
 	m	()I	hashCode	hashCode	
 	m	(Ljava/lang/Object;)Z	equals	equals	
 		p	1		p_1	

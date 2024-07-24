@@ -10,12 +10,12 @@ c	net/minecraft/unmapped/C_0559439
 		p	5			p_5
 		p	6			p_6
 c	net/minecraft/unmapped/C_1176458
-	f	[I	f_8357976		f_8357976
+	f	[I	f_8357976		COLORS
 c	net/minecraft/unmapped/C_2074023
-	f	Z	f_4877641		f_4877641
-	m	()Z	m_4457934		m_4457934
-	m	()V	m_7576918		m_7576918
-	m	()V	m_9708287		m_9708287
+	f	Z	f_4877641		removed
+	m	()Z	m_4457934		isRemoved
+	m	()V	m_7576918		markRemoved
+	m	()V	m_9708287		cancelRemoval
 c	net/minecraft/unmapped/C_2339776
 	m	()V	m_5891931		m_5891931
 	m	()I	m_4601038		m_4601038
@@ -24,138 +24,141 @@ c	net/minecraft/unmapped/C_2339776
 c	net/minecraft/unmapped/C_2624096
 	m	()I	m_4839406		m_4839406
 c	net/minecraft/unmapped/C_2689622
-	m	(Lnet/minecraft/unmapped/C_2627205;III)Z	m_1956077	m_1956077	
-		p	0		p_0	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-	m	(Lnet/minecraft/unmapped/C_2627205;IIII)Z	m_1956077		m_1956077
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(Lnet/minecraft/unmapped/C_2627205;III)Z	m_1956077	shouldConnectTo	
+		p	0		world	
+		p	1		x	
+		p	2		y	
+		p	3		z	
+	m	(Lnet/minecraft/unmapped/C_2627205;IIII)Z	m_1956077		shouldConnectTo
+		p	0			world
+		p	1			x
+		p	2			y
+		p	3			z
+		p	4			side
 c	net/minecraft/unmapped/C_2695821
-	m	()I	m_3547750		m_3547750
+	m	()I	m_3547750		getDefaultColor
 c	net/minecraft/unmapped/C_3419581
-	m	()V	m_5345939		m_5345939
+	m	()V	m_5345939		setNewWanderingPath
 c	net/minecraft/unmapped/C_3466301
-	f	Z	f_8112689		f_8112689
-	f	I	f_8030859		f_8030859
-	f	I	f_5589898		f_5589898
-	f	I	f_9481705		f_9481705
-	f	I	f_5966579		f_5966579
-	f	I	f_7460460		f_7460460
-	f	I	f_4644800		f_4644800
-	m	(Lnet/minecraft/unmapped/C_3635204;I)V	m_6974549	m_6974549	
-		p	1		p_1	
-		p	2		p_2	
-	m	(Lnet/minecraft/unmapped/C_3635204;III)V	m_3187906		m_3187906
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_3635204;III)V	m_1473358		m_1473358
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_3635204;IIIZ)Z	m_7855209		m_7855209
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	(DDDDDDFD)V	m_9948036		m_9948036
-		p	1			p_1
-		p	3			p_3
-		p	5			p_5
-		p	7			p_7
-		p	9			p_9
-		p	11			p_11
-		p	13			p_13
-		p	14			p_14
-	m	(DDDDDDFD)V	m_0095809		m_0095809
-		p	1			p_1
-		p	3			p_3
-		p	5			p_5
-		p	7			p_7
-		p	9			p_9
-		p	11			p_11
-		p	13			p_13
-		p	14			p_14
-	m	(DDDDDDFD)V	m_0710212		m_0710212
-		p	1			p_1
-		p	3			p_3
-		p	5			p_5
-		p	7			p_7
-		p	9			p_9
-		p	11			p_11
-		p	13			p_13
-		p	14			p_14
-	m	(Lnet/minecraft/unmapped/C_3635204;IIIZ)V	m_6460423		m_6460423
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	(Lnet/minecraft/unmapped/C_3635204;IIIZ)Z	m_2594790		m_2594790
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	(Lnet/minecraft/unmapped/C_3635204;IF)V	m_6974549		m_6974549
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	f	Z	f_8112689		updateColor
+		c		When set to {@code true} the block renderer will request the block's color information\nand update the appropriate GL properties.
+	f	I	f_8030859		northFaceRotation
+	f	I	f_5589898		southFaceRotation
+	f	I	f_9481705		westFaceRotation
+	f	I	f_5966579		eastFaceRotation
+	f	I	f_7460460		topFaceRotation
+	f	I	f_4644800		bottomFaceRotation
+	m	(Lnet/minecraft/unmapped/C_3635204;I)V	m_6974549	tesselateItem	
+		p	1		block	
+		p	2		metadata	
+	m	(Lnet/minecraft/unmapped/C_3635204;III)V	m_3187906		renderBlock
+		p	1			block
+		p	2			x
+		p	3			y
+		p	4			z
+	m	(Lnet/minecraft/unmapped/C_3635204;III)V	m_1473358		renderExtendedPistonBase
+		p	1			block
+		p	2			x
+		p	3			y
+		p	4			z
+	m	(Lnet/minecraft/unmapped/C_3635204;IIIZ)Z	m_7855209		tesselatePistonBase
+		p	1			block
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			extended
+	m	(DDDDDDFD)V	m_9948036		tesselatePistonSideX
+		p	1			minX
+		p	3			maxX
+		p	5			minY
+		p	7			maxY
+		p	9			minZ
+		p	11			maxZ
+		p	13			color
+		p	14			length
+	m	(DDDDDDFD)V	m_0095809		tesselatePistonSideY
+		p	1			minX
+		p	3			maxX
+		p	5			minY
+		p	7			maxY
+		p	9			minZ
+		p	11			maxZ
+		p	13			color
+		p	14			length
+	m	(DDDDDDFD)V	m_0710212		tesselatePistonSideZ
+		p	1			minX
+		p	3			maxX
+		p	5			minY
+		p	7			maxY
+		p	9			minZ
+		p	11			maxZ
+		p	13			color
+		p	14			length
+	m	(Lnet/minecraft/unmapped/C_3635204;IIIZ)V	m_6460423		renderPistonHead
+		p	1			block
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			isShort
+	m	(Lnet/minecraft/unmapped/C_3635204;IIIZ)Z	m_2594790		tesselatePistonHead
+		p	1			block
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			isShort
+	m	(Lnet/minecraft/unmapped/C_3635204;IF)V	m_6974549		tesselateItem
+		p	1			block
+		p	2			metadata
+		p	3			brightness
 c	net/minecraft/unmapped/C_3635204
-	f	Lnet/minecraft/unmapped/C_3635204;	f_1214063	f_1214063	
-	f	Lnet/minecraft/unmapped/C_3635204;	f_1998913	f_1998913	
-	f	Lnet/minecraft/unmapped/C_1272651;	f_1214063		f_1214063
-	f	Lnet/minecraft/unmapped/C_8621747;	f_1998913		f_1998913
-	m	()Lnet/minecraft/unmapped/C_3635204;	m_9657999		m_9657999
-	m	()F	m_7976867		m_7976867
-	m	(Lnet/minecraft/unmapped/C_3906126;IIILnet/minecraft/unmapped/C_2750078;)V	m_1243396		m_1243396
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	(I)I	m_8501302		m_8501302
-		p	1			p_1
-	m	()I	m_4839406		m_4839406
+	f	Lnet/minecraft/unmapped/C_3635204;	f_1214063	PISTON_HEAD	
+	f	Lnet/minecraft/unmapped/C_3635204;	f_1998913	MOVING_BLOCK	
+	f	Lnet/minecraft/unmapped/C_1272651;	f_1214063		PISTON_HEAD
+	f	Lnet/minecraft/unmapped/C_8621747;	f_1998913		MOVING_BLOCK
+	m	()Lnet/minecraft/unmapped/C_3635204;	m_9657999		setUnbreakable
+		c		Sets this block as unbreakable by setting its strength to -1. Note that this changes both\nthe block's mining speed and its blast resistance.\n\n<p>\nNOTE: this method should only be used during the block's creation before it is registered.
+	m	()F	m_7976867		getMiningSpeed
+	m	(Lnet/minecraft/unmapped/C_3906126;IIILnet/minecraft/unmapped/C_2750078;)V	m_1243396		dropItems
+		p	1			world
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			stack
+	m	(I)I	m_8501302		getColor
+		p	1			metadata
+	m	()I	m_4839406		getPistonMoveBehavior
+		c		Returns how this block interacts with pistons. The following values are accepted:\n<br>- 0: this block can be pushed and pulled by pistons.\n<br>- 1: this block is broken when pushed.\n<br>- 2: this block cannot be pushed or pulled by pistons.
 c	net/minecraft/unmapped/C_3794155
 	m	(Lnet/minecraft/unmapped/C_3906126;DDDDDDLnet/minecraft/unmapped/C_3635204;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	4		p_4	
-		p	6		p_6	
-		p	8		p_8	
-		p	10		p_10	
-		p	12		p_12	
-		p	14		p_14	
+		p	1		world	
+		p	2		x	
+		p	4		y	
+		p	6		z	
+		p	8		velocityX	
+		p	10		velocityY	
+		p	12		velocityZ	
+		p	14		block	
 	m	(Lnet/minecraft/unmapped/C_3906126;DDDDDDLnet/minecraft/unmapped/C_3635204;II)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
-		p	6			p_6
-		p	8			p_8
-		p	10			p_10
-		p	12			p_12
-		p	14			p_14
-		p	15			p_15
-		p	16			p_16
+		p	1			world
+		p	2			x
+		p	4			y
+		p	6			z
+		p	8			velocityX
+		p	10			velocityY
+		p	12			velocityZ
+		p	14			block
+		p	15			face
+		p	16			metadata
 c	net/minecraft/unmapped/C_3831356
-	m	(Lnet/minecraft/unmapped/C_3906126;)V	m_2476129		m_2476129
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_3906126;)V	m_2476129		setWorld
+		p	1			world
 c	net/minecraft/unmapped/C_3906126
-	f	Ljava/util/List;	f_5642880		f_5642880
-	f	Z	f_3645283		f_3645283
-	m	(Ljava/util/Collection;)V	m_8236512		m_8236512
-		p	1			p_1
+	f	Ljava/util/List;	f_5642880		pendingBlockEntities
+	f	Z	f_3645283		isTickingBlockEntities
+	m	(Ljava/util/Collection;)V	m_8236512		loadBlockEntities
+		p	1			blockEntities
 c	net/minecraft/unmapped/C_4030632
-	f	Lnet/minecraft/unmapped/C_7199020;	f_5055361		f_5055361
+	f	Lnet/minecraft/unmapped/C_7199020;	f_5055361		SHEARS
 c	net/minecraft/unmapped/C_4339477
 	m	()Z	m_1538589		m_1538589
 	m	(ILjava/util/Random;)I	m_6894859		m_6894859
@@ -165,16 +168,16 @@ c	net/minecraft/unmapped/C_5434245
 	m	(Lnet/minecraft/unmapped/C_3635204;)Z	m_8581178		m_8581178
 		p	1			p_1
 c	net/minecraft/unmapped/C_6368853
-	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_3755712		m_3755712
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_3755712		canSitOnTop
+		p	1			world
+		p	2			x
+		p	3			y
+		p	4			z
 c	net/minecraft/unmapped/C_6385858
 	f	F	f_2682000		f_2682000
 c	net/minecraft/unmapped/C_7153081
-	m	(Lnet/minecraft/unmapped/C_3906126;)V	m_0771282		m_0771282
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_3906126;)V	m_0771282		setWorld
+		p	1			world
 c	net/minecraft/unmapped/C_7261559
 	m	(Lnet/minecraft/unmapped/C_3906126;IIII)V	m_0033065	m_0033065	
 		p	1		p_1	
@@ -201,22 +204,22 @@ c	net/minecraft/unmapped/C_7318150
 		p	4			p_4
 		p	5			p_5
 c	net/minecraft/unmapped/C_8554894
-	f	Lnet/minecraft/unmapped/C_8554894;	f_2861479		f_2861479
-	f	Lnet/minecraft/unmapped/C_8554894;	f_9665082		f_9665082
-	f	Z	f_6519956		f_6519956
-	f	I	f_0620269		f_0620269
-	m	()Lnet/minecraft/unmapped/C_8554894;	m_8711225		m_8711225
-	m	()Z	m_9509085		m_9509085
-	m	()I	m_4445211		m_4445211
-	m	()Lnet/minecraft/unmapped/C_8554894;	m_1549109		m_1549109
-	m	()Lnet/minecraft/unmapped/C_8554894;	m_4919121		m_4919121
-c	net/minecraft/unmapped/C_0956869		net/minecraft/unmapped/C_0956869
-	f	Z	f_7069625		f_7069625
+	f	Lnet/minecraft/unmapped/C_8554894;	f_2861479		COBWEB
+	f	Lnet/minecraft/unmapped/C_8554894;	f_9665082		PISTON
+	f	Z	f_6519956		toolNotRequired
+	f	I	f_0620269		pistonMoveBehavior
+	m	()Lnet/minecraft/unmapped/C_8554894;	m_8711225		setRequiresTool
+	m	()Z	m_9509085		isToolNotRequired
+	m	()I	m_4445211		getPistonMoveBehavior
+	m	()Lnet/minecraft/unmapped/C_8554894;	m_1549109		setDestroyOnPistonMove
+	m	()Lnet/minecraft/unmapped/C_8554894;	m_4919121		setBlocksPistonMove
+c	net/minecraft/unmapped/C_0956869		net/minecraft/block/PistonBaseBlock
+	f	Z	f_7069625		sticky
 	m	(IIZ)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	()I	m_2846966		m_2846966
+		p	1			id
+		p	2			sprite
+		p	3			sticky
+	m	()I	m_2846966		getTopSprite
 	m	(II)I	m_5024410		m_5024410
 		p	1			p_1
 		p	2			p_2
@@ -245,17 +248,17 @@ c	net/minecraft/unmapped/C_0956869		net/minecraft/unmapped/C_0956869
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_3906126;III)V	m_2253782		m_2253782
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_3906126;IIII)Z	m_6510529		m_6510529
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+	m	(Lnet/minecraft/unmapped/C_3906126;III)V	m_2253782		checkExtended
+		p	1			world
+		p	2			x
+		p	3			y
+		p	4			z
+	m	(Lnet/minecraft/unmapped/C_3906126;IIII)Z	m_6510529		shouldExtend
+		p	1			world
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			facing
 	m	(Lnet/minecraft/unmapped/C_3906126;IIIII)V	m_5333460		m_5333460
 		p	1			p_1
 		p	2			p_2
@@ -277,42 +280,42 @@ c	net/minecraft/unmapped/C_0956869		net/minecraft/unmapped/C_0956869
 		p	5			p_5
 		p	6			p_6
 	m	()Z	m_1538589		m_1538589
-	m	(I)I	m_9692131		m_9692131
-		p	0			p_0
-	m	(I)Z	m_6402630		m_6402630
-		p	0			p_0
-	m	(Lnet/minecraft/unmapped/C_3906126;IIILnet/minecraft/unmapped/C_5009044;)I	m_6397120		m_6397120
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(ILnet/minecraft/unmapped/C_3906126;III)Z	m_8857890		m_8857890
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_3906126;IIII)Z	m_0629490		m_0629490
+	m	(I)I	m_9692131		getFacing
+		p	0			metadata
+	m	(I)Z	m_6402630		isExtended
+		p	0			metadata
+	m	(Lnet/minecraft/unmapped/C_3906126;IIILnet/minecraft/unmapped/C_5009044;)I	m_6397120		getFacingForPlacement
+		p	0			world
+		p	1			x
+		p	2			y
+		p	3			z
+		p	4			entity
+	m	(ILnet/minecraft/unmapped/C_3906126;III)Z	m_8857890		canMoveBlock
 		p	0			p_0
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_3906126;IIII)Z	m_6730031		m_6730031
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-c	net/minecraft/unmapped/C_1272651		net/minecraft/unmapped/C_1272651
-	f	I	f_1865783		f_1865783
+	m	(Lnet/minecraft/unmapped/C_3906126;IIII)Z	m_0629490		canExtend
+		p	0			world
+		p	1			x
+		p	2			y
+		p	3			z
+		p	4			dir
+	m	(Lnet/minecraft/unmapped/C_3906126;IIII)Z	m_6730031		push
+		p	1			world
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			dir
+c	net/minecraft/unmapped/C_1272651		net/minecraft/block/PistonHeadBlock
+	f	I	f_1865783		pistonHeadSprite
 	m	(II)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-	m	(I)V	m_0188735		m_0188735
-		p	1			p_1
-	m	()V	m_6825605		m_6825605
+		p	1			id
+		p	2			sprite
+	m	(I)V	m_0188735		setSprite
+		p	1			sprite
+	m	()V	m_6825605		clearSprite
 	m	(II)I	m_5024410		m_5024410
 		p	1			p_1
 		p	2			p_2
@@ -350,9 +353,9 @@ c	net/minecraft/unmapped/C_1272651		net/minecraft/unmapped/C_1272651
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	(I)I	m_8383379		m_8383379
-		p	0			p_0
-c	net/minecraft/unmapped/C_2467946		net/minecraft/unmapped/C_2467946
+	m	(I)I	m_8383379		getFacing
+		p	0			metadata
+c	net/minecraft/unmapped/C_2467946		net/minecraft/item/LeavesItem
 	m	(I)V	<init>		<init>
 		p	1			p_1
 	m	(I)I	m_4638052		m_4638052
@@ -361,8 +364,8 @@ c	net/minecraft/unmapped/C_2467946		net/minecraft/unmapped/C_2467946
 		p	1			p_1
 	m	(I)I	m_6327257		m_6327257
 		p	1			p_1
-c	net/minecraft/unmapped/C_2947887		net/minecraft/unmapped/C_2947887
-	f	Lnet/minecraft/unmapped/C_3466301;	f_8422592		f_8422592
+c	net/minecraft/unmapped/C_2947887		net/minecraft/client/render/block/entity/MovingBlockRenderer
+	f	Lnet/minecraft/unmapped/C_3466301;	f_8422592		blockRenderer
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_5812542;DDDF)V	m_6020530		m_6020530
 		p	1			p_1
@@ -378,51 +381,51 @@ c	net/minecraft/unmapped/C_2947887		net/minecraft/unmapped/C_2947887
 		p	4			p_4
 		p	6			p_6
 		p	8			p_8
-c	net/minecraft/unmapped/C_3882820		net/minecraft/unmapped/C_3882820
+c	net/minecraft/unmapped/C_3882820		net/minecraft/item/StickyPistonBlockItem
 	m	(I)V	<init>		<init>
 		p	1			p_1
 	m	(I)I	m_4638052		m_4638052
 		p	1			p_1
-c	net/minecraft/unmapped/C_5812542		net/minecraft/unmapped/C_5812542
-	f	I	f_2683823		f_2683823
-	f	I	f_1599172		f_1599172
-	f	I	f_1922926		f_1922926
-	f	Z	f_7342949		f_7342949
-	f	Z	f_0595341		f_0595341
-	f	F	f_5222539		f_5222539
-	f	F	f_3102838		f_3102838
-	f	Ljava/util/List;	f_2730628		f_2730628
+c	net/minecraft/unmapped/C_5812542		net/minecraft/block/entity/MovingBlockEntity
+	f	I	f_2683823		movedBlockId
+	f	I	f_1599172		movedMetadata
+	f	I	f_1922926		facing
+	f	Z	f_7342949		extending
+	f	Z	f_0595341		source
+	f	F	f_5222539		progress
+	f	F	f_3102838		lastProgress
+	f	Ljava/util/List;	f_2730628		movedEntities
 	m	()V	<init>		<init>
 	m	(IIIZZ)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	()I	m_3612565		m_3612565
+		p	1			movedBlockId
+		p	2			movedMetadata
+		p	3			facing
+		p	4			extending
+		p	5			source
+	m	()I	m_3612565		getMovedBlockId
 	m	()I	m_7180738		m_7180738
-	m	()Z	m_4719516		m_4719516
-	m	()I	m_4338246		m_4338246
-	m	()Z	m_8605822		m_8605822
-	m	(F)F	m_0429537		m_0429537
-		p	1			p_1
-	m	(F)F	m_8013516		m_8013516
-		p	1			p_1
-	m	(F)F	m_3057180		m_3057180
-		p	1			p_1
-	m	(F)F	m_7185507		m_7185507
-		p	1			p_1
-	m	(FF)V	m_7908329		m_7908329
-		p	1			p_1
-		p	2			p_2
-	m	()V	m_6450243		m_6450243
+	m	()Z	m_4719516		isExtending
+	m	()I	m_4338246		getFacing
+	m	()Z	m_8605822		isSource
+	m	(F)F	m_0429537		getProgress
+		p	1			tickDelta
+	m	(F)F	m_8013516		getRenderOffsetX
+		p	1			tickDelta
+	m	(F)F	m_3057180		getRenderOffsetY
+		p	1			tickDelta
+	m	(F)F	m_7185507		getRenderOffsetZ
+		p	1			tickDelta
+	m	(FF)V	m_7908329		moveEntities
+		p	1			progress
+		p	2			amount
+	m	()V	m_6450243		finish
 	m	()V	m_1420044		m_1420044
 	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_0576365		m_0576365
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_4175205		m_4175205
 		p	1			p_1
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_7199020		net/minecraft/unmapped/C_7199020
+c	net/minecraft/unmapped/C_7199020		net/minecraft/item/ShearsItem
 	m	(I)V	<init>		<init>
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_2750078;IIIILnet/minecraft/unmapped/C_1013763;)Z	m_5872189		m_5872189
@@ -437,9 +440,9 @@ c	net/minecraft/unmapped/C_7199020		net/minecraft/unmapped/C_7199020
 	m	(Lnet/minecraft/unmapped/C_2750078;Lnet/minecraft/unmapped/C_3635204;)F	m_3907516		m_3907516
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_8621747		net/minecraft/unmapped/C_8621747
+c	net/minecraft/unmapped/C_8621747		net/minecraft/block/MovingBlock
 	m	(I)V	<init>		<init>
-		p	1			p_1
+		p	1			id
 	m	()Lnet/minecraft/unmapped/C_2074023;	m_0502820		m_0502820
 	m	(Lnet/minecraft/unmapped/C_3906126;III)V	m_0767742		m_0767742
 		p	1			p_1
@@ -481,12 +484,12 @@ c	net/minecraft/unmapped/C_8621747		net/minecraft/unmapped/C_8621747
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	(IIIZZ)Lnet/minecraft/unmapped/C_2074023;	m_8979669		m_8979669
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(IIIZZ)Lnet/minecraft/unmapped/C_2074023;	m_8979669		createMovingBlockEntity
+		p	0			movedBlockId
+		p	1			movedMetadata
+		p	2			facing
+		p	3			extending
+		p	4			source
 	m	(Lnet/minecraft/unmapped/C_3906126;III)Lnet/minecraft/unmapped/C_1414550;	m_9650578		m_9650578
 		p	1			p_1
 		p	2			p_2
@@ -497,23 +500,23 @@ c	net/minecraft/unmapped/C_8621747		net/minecraft/unmapped/C_8621747
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_3906126;IIIIFI)Lnet/minecraft/unmapped/C_1414550;	m_9517935		m_9517935
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-	m	(Lnet/minecraft/unmapped/C_2627205;III)Lnet/minecraft/unmapped/C_5812542;	m_7960077		m_7960077
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-c	net/minecraft/unmapped/C_9476077		net/minecraft/unmapped/C_9476077
-	f	[I	f_2094170		f_2094170
-	f	[I	f_2254348		f_2254348
-	f	[I	f_0794843		f_0794843
-	f	[I	f_6159839		f_6159839
+	m	(Lnet/minecraft/unmapped/C_3906126;IIIIFI)Lnet/minecraft/unmapped/C_1414550;	m_9517935		getCollisionShape
+		p	1			world
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			movedBlockId
+		p	6			progress
+		p	7			facing
+	m	(Lnet/minecraft/unmapped/C_2627205;III)Lnet/minecraft/unmapped/C_5812542;	m_7960077		getMovingBlockEntity
+		p	1			world
+		p	2			x
+		p	3			y
+		p	4			z
+c	net/minecraft/unmapped/C_9476077		net/minecraft/util/math/Directions
+	f	[I	f_2094170		OPPOSITE
+	f	[I	f_2254348		X_OFFSET
+	f	[I	f_0794843		Y_OFFSET
+	f	[I	f_6159839		Z_OFFSET
 	m	()V	<init>		<init>
 	m	()V	<clinit>		<clinit>
