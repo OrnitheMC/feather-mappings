@@ -311,6 +311,18 @@ ROOT,
 ],
 [
 '1.5.1',
+'af-2013-blue'
+],
+[
+'1.5.1:af-2013-blue',
+'af-2013-red'
+],
+[
+'af-2013-blue:af-2013-red',
+'af-2013-purple'
+],
+[
+'1.5.1',
 '13w16a-04192037','13w16b-04232151',
 '13w17a',
 '13w18a','13w18b','13w18c',
@@ -561,25 +573,17 @@ def main():
 			generate(ROOT, VERSIONS)
 		else:
 			root = args[2]
-			versions = []
-			for i in range(3, len(args)):
-				versions.append(args[i])
+			versions = args[3:]
 			
 			generate(root, versions)
 	elif command == 'extend':
-		if len(args) == 4:
-			frm = args[2]
-			to = args[3]
+		if len(args) > 3:
+			frm = args[2:-1]
+			to = args[-1]
 			
-			extend(None, frm, to)
-		elif len(args) == 5:
-			frm_frm = args[2]
-			frm = args[3]
-			to = args[4]
-			
-			extend(frm_frm, frm, to)
+			extend(frm, to)
 		else:
-			raise Exception('too many arguments for extend command')
+			raise Exception('too few arguments for extend command')
 	else:
 		raise Exception('unknown command ' + command)
 
@@ -593,23 +597,10 @@ def generate(root, mc_versions):
 			to = versions[i]
 			
 			if ':' not in to:
-				if ':' in frm:
-					parts = frm.split(':', 2)
-					
-					os.environ['FROM_MC_VERSION'] = parts[0]
-					os.environ['FROM_FROM_MC_VERSION'] = parts[1]
-				else:
-					os.environ['FROM_MC_VERSION'] = frm
-					os.environ.pop('FROM_FROM_MC_VERSION', None)
-				
-				os.environ['MC_VERSION'] = to
-			
-				subprocess.run("./gradlew extendGraph --stacktrace", shell = True, check = True)
+				extend(frm.split(':'), to)
 
-def extend(frm_frm, frm, to):
-	if frm_frm is not None:
-		os.environ['FROM_FROM_MC_VERSION'] = frm_frm
-	os.environ['FROM_MC_VERSION'] = frm
+def extend(frm, to):
+	os.environ['FROM_MC_VERSIONS'] = ','.join(frm)
 	os.environ['MC_VERSION'] = to
 	
 	subprocess.run("./gradlew extendGraph --stacktrace", shell = True, check = True)
