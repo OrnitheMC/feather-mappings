@@ -4,7 +4,7 @@ import net.ornithemc.keratin.api.task.mapping.graph.ExtendGraphTask
 plugins {
 	id 'java'
 	id 'maven-publish'
-	id 'keratin' version '12.3'
+	id 'keratin' version '14.0'
 }
 
 def ENV = System.getenv()
@@ -21,8 +21,9 @@ keratin {
 }
 
 tasks.withType(ExtendGraphTask, {
-	it.fromMinecraftVersion = ENV.FROM_MC_VERSION
-	it.fromFromMinecraftVersion = ENV.FROM_FROM_MC_VERSION
+	if (ENV.FROM_MC_VERSIONS) {
+		fromMinecraftVersions ENV.FROM_MC_VERSIONS.split('[,]')
+	}
 })
 
 tasks.withType(Javadoc, {
