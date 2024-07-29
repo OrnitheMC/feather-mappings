@@ -2,8 +2,6 @@ tiny	2	0
 c	net/minecraft/unmapped/C_0070166	net/minecraft/world/chunk/ChunkCache	
 	f	Lnet/minecraft/unmapped/C_9484672;	f_4203155	generator	
 	f	[Lnet/minecraft/unmapped/C_6755599;	f_6510170	chunks	
-	m	(Lnet/minecraft/unmapped/C_9484672;)V	<init>	<init>	
-		p	1		p_1	
 	m	(II)Z	m_3469388	m_3469388	
 		p	1		p_1	
 		p	2		p_2	
@@ -11,6 +9,8 @@ c	net/minecraft/unmapped/C_0070166	net/minecraft/world/chunk/ChunkCache
 		c	@return the world chunk at the given chunk coordinates, loading or generating it if needed	
 		p	1		p_1	
 		p	2		p_2	
+	m	(Lnet/minecraft/unmapped/C_9484672;)V	<init>	<init>	
+		p	1		p_1	
 	m	()V	m_8749127	m_8749127	
 c	net/minecraft/unmapped/C_0870622	net/minecraft/world/LightUpdate	
 	f	Lnet/minecraft/unmapped/C_5863046;	f_3850348	type	
@@ -49,20 +49,12 @@ c	net/minecraft/unmapped/C_1044273
 		p	2		to	
 		p	3		layer	
 		p	4		tickDelta	
-	m	(ID)V	m_0907931	m_0907931	
-		p	1		p_1	
-		p	2		p_2	
 	m	(Lnet/minecraft/unmapped/C_5009044;Lnet/minecraft/unmapped/C_5853518;ILnet/minecraft/unmapped/C_2750078;F)V	m_6067428	renderMiningProgress	
 		p	1		camera	
 		p	2		hit	
 		p	3		p_3	
 		p	4		mainHandStack	
 		p	5		stack	
-	m	(Lnet/minecraft/unmapped/C_5009044;Lnet/minecraft/unmapped/C_5853518;IF)V	m_4049049	renderBlockOutline	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
 	m	(IIIIII)V	m_0171092	m_0171092	
 		p	1		p_1	
 		p	2		p_2	
@@ -70,6 +62,14 @@ c	net/minecraft/unmapped/C_1044273
 		p	4		p_4	
 		p	5		p_5	
 		p	6		p_6	
+	m	(Lnet/minecraft/unmapped/C_5009044;Lnet/minecraft/unmapped/C_5853518;IF)V	m_4049049	renderBlockOutline	
+		p	1		p_1	
+		p	2		p_2	
+		p	3		p_3	
+		p	4		p_4	
+	m	(ID)V	m_0907931	m_0907931	
+		p	1		p_1	
+		p	2		p_2	
 	m	(Lnet/minecraft/unmapped/C_5009044;I)I	m_8682700		render
 		p	1			p_1
 		p	2			p_2
@@ -250,16 +250,13 @@ c	net/minecraft/unmapped/C_3794155
 		p	8			p_8
 c	net/minecraft/unmapped/C_3906126
 	f	Ljava/util/List;	f_8409741	lightUpdates	
-	f	I	f_1618367	ticks	
-	f	J	f_1752861	f_1752861	
-	f	J	f_8363497	f_8363497	
 	f	J	f_1456809	cloudColor	
 	f	I	f_0967095	ambientDarkness	
 	f	Lnet/minecraft/unmapped/C_9484672;	f_5139049	chunkSource	
+	f	J	f_1752861	f_1752861	
+	f	J	f_8363497	f_8363497	
+	f	I	f_1618367	ticks	
 	f	Lnet/minecraft/unmapped/C_4078372;	f_7089801		f_7089801
-	m	(II)Z	m_2296533	isChunkLoaded	
-		p	1		p_1	
-		p	2		p_2	
 	m	(II)Z	m_2079321	isChunkLoadedAt	
 		p	1		chunkX	
 		p	2		chunkZ	
@@ -267,27 +264,6 @@ c	net/minecraft/unmapped/C_3906126
 		p	1		chunkX	
 		p	2		chunkZ	
 	m	(III)I	m_8183909	getBlockMetadata	
-		p	1		x	
-		p	2		y	
-		p	3		z	
-	m	(IIII)V	m_3304116	setBlockWithMetadataQuietly	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-	m	(IIII)V	m_7664607	onHeightmapChanged	
-		p	1		x	
-		p	2		z	
-		p	3		newHeight	
-		p	4		oldHeight	
-	m	(IIIIII)V	m_5453024	notifyRegionChanged	
-		p	1		minX	
-		p	2		minY	
-		p	3		mminZ	
-		p	4		maxX	
-		p	5		maxY	
-		p	6		maxZ	
-	m	(III)I	m_0113274	getRawBrightness	
 		p	1		x	
 		p	2		y	
 		p	3		z	
@@ -305,8 +281,6 @@ c	net/minecraft/unmapped/C_3906126
 		p	2		x	
 		p	3		y	
 		p	4		z	
-	m	(F)Lnet/minecraft/unmapped/C_0336319;	m_2613927	getSkyColor	
-		p	1		tickDelta	
 	m	(F)F	m_2275985	getTimeOfDay	
 		p	1		tickDelta	
 	m	(F)Lnet/minecraft/unmapped/C_0336319;	m_4256689	getCloudColor	
@@ -315,7 +289,8 @@ c	net/minecraft/unmapped/C_3906126
 		p	1		tickDelta	
 	m	(F)F	m_7334458	getStarBrightness	
 		p	1		tickDelta	
-	m	()V	m_7835334	doLightUpdates	
+	m	(F)Lnet/minecraft/unmapped/C_0336319;	m_2613927	getSkyColor	
+		p	1		tickDelta	
 	m	(Lnet/minecraft/unmapped/C_5863046;IIIIII)V	m_3601007	updateLight	
 		p	1		type	
 		p	2		minX	
@@ -324,20 +299,45 @@ c	net/minecraft/unmapped/C_3906126
 		p	5		maxX	
 		p	6		maxY	
 		p	7		maxZ	
+	m	(III)I	m_0113274	getRawBrightness	
+		p	1		x	
+		p	2		y	
+		p	3		z	
+	m	()V	m_7835334	doLightUpdates	
+	m	(II)Z	m_2296533	isChunkLoaded	
+		p	1		p_1	
+		p	2		p_2	
+	m	(IIII)V	m_3304116	setBlockWithMetadataQuietly	
+		p	1		p_1	
+		p	2		p_2	
+		p	3		p_3	
+		p	4		p_4	
+	m	(IIII)V	m_7664607	onHeightmapChanged	
+		p	1		x	
+		p	2		z	
+		p	3		newHeight	
+		p	4		oldHeight	
+	m	(IIIIII)V	m_5453024	notifyRegionChanged	
+		p	1		minX	
+		p	2		minY	
+		p	3		mminZ	
+		p	4		maxX	
+		p	5		maxY	
+		p	6		maxZ	
 	m	()Lnet/minecraft/unmapped/C_0336319;	m_2613927		getSkyColor
 	m	()Lnet/minecraft/unmapped/C_0336319;	m_4256689		getCloudColor
 	m	()Lnet/minecraft/unmapped/C_0336319;	m_2510182		getFogColor
 c	net/minecraft/unmapped/C_4078372
 	f	Lnet/minecraft/unmapped/C_3906126;	f_5278555	world	
 	f	Ljava/util/Map;	f_9885111		f_9885111
-	m	(Lnet/minecraft/unmapped/C_3906126;)V	<init>	<init>	
-		p	1		p_1	
 	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_8303908	m_8303908	
 		p	1		p_1	
 		p	2		p_2	
 	m	(II)Z	m_3469388	m_3469388	
 		p	1		p_1	
 		p	2		p_2	
+	m	(Lnet/minecraft/unmapped/C_3906126;)V	<init>	<init>	
+		p	1		p_1	
 	m	()V	m_8749127	m_8749127	
 	m	(III)I	m_3243526		m_3243526
 		p	1			p_1
@@ -378,10 +378,10 @@ c	net/minecraft/unmapped/C_5863046	net/minecraft/world/LightType
 	m	()[Lnet/minecraft/unmapped/C_5863046;	values	values	
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_5863046;	valueOf	valueOf	
 		p	0		p_0	
+	m	()V	<clinit>	<clinit>	
 	m	(Ljava/lang/String;I)V	<init>	<init>	
 		p	1		p_1	
 		p	2		p_2	
-	m	()V	<clinit>	<clinit>	
 c	net/minecraft/unmapped/C_6516244
 	f	D	f_1603874	offsetX	
 	f	D	f_4729980	offsetY	
@@ -417,9 +417,6 @@ c	net/minecraft/unmapped/C_6755599	net/minecraft/world/chunk/WorldChunk
 		p	2		blockIds	
 		p	3		chunkX	
 		p	4		chunkZ	
-	m	(II)Z	m_7184090	m_7184090	
-		p	1		p_1	
-		p	2		p_2	
 	m	(II)I	m_1133488	getHeight	
 		p	1		localX	
 		p	2		localZ	
@@ -435,12 +432,16 @@ c	net/minecraft/unmapped/C_6755599	net/minecraft/world/chunk/WorldChunk
 		p	1		localX	
 		p	2		y	
 		p	3		localZ	
-	m	(IIII)V	m_4332228	setBlock	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
 	m	(III)I	m_3471632	getBlockMetadataAt	
+		p	1		localX	
+		p	2		y	
+		p	3		localZ	
+	m	(IIII)I	m_0410825	getActualLightAt	
+		p	1		localX	
+		p	2		y	
+		p	3		localZ	
+		p	4		ambientDarkness	
+	m	(III)Z	m_2976456	hasSkyAccessAt	
 		p	1		localX	
 		p	2		y	
 		p	3		localZ	
@@ -460,28 +461,19 @@ c	net/minecraft/unmapped/C_6755599	net/minecraft/world/chunk/WorldChunk
 		p	3		y	
 		p	4		localZ	
 		p	5		light	
-	m	(IIII)I	m_0410825	getActualLightAt	
-		p	1		localX	
-		p	2		y	
-		p	3		localZ	
-		p	4		ambientDarkness	
-	m	(III)Z	m_2976456	hasSkyAccessAt	
-		p	1		localX	
-		p	2		y	
-		p	3		localZ	
+	m	(II)Z	m_7184090	m_7184090	
+		p	1		p_1	
+		p	2		p_2	
+	m	(IIII)V	m_4332228	setBlock	
+		p	1		p_1	
+		p	2		p_2	
+		p	3		p_3	
+		p	4		p_4	
 	m	()V	m_3072812	m_3072812	
 c	net/minecraft/unmapped/C_8905061
 	f	D	f_5244540	lerpCameraX	
 	f	D	f_1735994	lerpCameraY	
 	f	D	f_6449107	lerpCameraZ	
-c	net/minecraft/unmapped/C_9232749
-	m	(IIIIII)V	m_0171092	notifyRegionChanged	
-		p	1		minX	
-		p	2		minY	
-		p	3		minZ	
-		p	4		maxX	
-		p	5		maxY	
-		p	6		maxZ	
 c	net/minecraft/unmapped/C_9302567
 	m	(Lnet/minecraft/unmapped/C_1414550;)V	m_4654281		m_4654281
 		p	0			p_0
@@ -495,6 +487,14 @@ c	net/minecraft/unmapped/C_9484672	net/minecraft/world/chunk/ChunkSource
 		p	1		chunkX	
 		p	2		chunkZ	
 	m	()V	m_8749127	m_8749127	
+c	net/minecraft/unmapped/C_9232749
+	m	(IIIIII)V	m_0171092	notifyRegionChanged	
+		p	1		minX	
+		p	2		minY	
+		p	3		minZ	
+		p	4		maxX	
+		p	5		maxY	
+		p	6		maxZ	
 c	net/minecraft/unmapped/C_9392862		net/minecraft/unmapped/C_9392862
 	f	I	f_3598625		f_3598625
 	f	I	f_0254690		f_0254690
