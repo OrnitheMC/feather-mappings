@@ -265,22 +265,24 @@ c	net/minecraft/unmapped/C_4030632
 c	net/minecraft/unmapped/C_4078372
 	f	[Lnet/minecraft/unmapped/C_4636105;	f_5383852	biomes	
 	f	[D	f_9021032	temperatures	
-	m	(II[B[Lnet/minecraft/unmapped/C_4636105;[D)V	m_8884370	generate	
+	m	(II[B[Lnet/minecraft/unmapped/C_4636105;[D)V	m_8884370	buildTerrain	
+		c	Generates the heightmap and places the basic terrain shape of continents and oceans.	
 		p	1		chunkX	
 		p	2		chunkZ	
-		p	3		blockIds	
+		p	3		blocks	
 		p	4		biomes	
-		p	5		targetStretch	
-	m	(II[B[Lnet/minecraft/unmapped/C_4636105;)V	m_0713473	generateBiomes	
+		p	5		temperatures	
+	m	(II[B[Lnet/minecraft/unmapped/C_4636105;)V	m_0713473	buildSurfaces	
+		c	Places the bedrock layer, biome-dependent surface and subsurface blocks, and liquid bodies.	
 		p	1		chunkX	
 		p	2		chunkZ	
-		p	3		blockIds	
+		p	3		blocks	
 		p	4		biomes	
-	m	(II[B)V	m_8884370		generate
+	m	(II[B)V	m_8884370		buildTerrain
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(II[B)V	m_0713473		generateBiomes
+	m	(II[B)V	m_0713473		buildSurfaces
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -315,18 +317,20 @@ c	net/minecraft/unmapped/C_4188659	net/minecraft/world/gen/chunk/NetherChunkGene
 	m	(Lnet/minecraft/unmapped/C_3906126;J)V	<init>	<init>	
 		p	1		world	
 		p	2		seed	
-	m	(II[B)V	m_0874705	generate	
+	m	(II[B)V	m_0874705	buildTerrain	
+		c	Generates the heightmap and places the basic terrain shape of continents and oceans.	
 		p	1		chunkX	
 		p	2		chunkZ	
-		p	3		blockIds	
-	m	(II[B)V	m_0862933	generateSurfaces	
+		p	3		blocks	
+	m	(II[B)V	m_0862933	buildSurfaces	
+		c	Places the bedrock layers, biome-dependent surface and subsurface blocks, and liquid bodies.	
 		p	1		chunkX	
 		p	2		chunkZ	
-		p	3		blockIds	
+		p	3		blocks	
 	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_8303908	m_8303908	
 		p	1		p_1	
 		p	2		p_2	
-	m	([DIIIIII)[D	m_1056241	populateHeightMap	
+	m	([DIIIIII)[D	m_1056241	generateHeightMap	
 		p	1		heightMap	
 		p	2		x	
 		p	3		y	
@@ -356,22 +360,22 @@ c	net/minecraft/unmapped/C_4629588	net/minecraft/world/gen/carver/NetherCaveCarv
 	m	(II[BDDD)V	m_5956376	place	
 		p	1		chunkX	
 		p	2		chunkZ	
-		p	3		blockIds	
+		p	3		blocks	
 		p	4		x	
 		p	6		y	
 		p	8		z	
-	m	(II[BDDDFFFIID)V	m_7639184	placeBranch	
+	m	(II[BDDDFFFIID)V	m_7639184	placeTunnels	
 		p	1		chunkX	
 		p	2		chunkZ	
-		p	3		blockIds	
+		p	3		blocks	
 		p	4		x	
 		p	6		y	
 		p	8		z	
 		p	10		baseWidth	
 		p	11		yaw	
 		p	12		pitch	
-		p	13		branch	
-		p	14		branchCount	
+		p	13		tunnel	
+		p	14		tunnelCount	
 		p	15		widthHeightRatio	
 	m	(Lnet/minecraft/unmapped/C_3906126;IIII[B)V	m_6800431	m_6800431	
 		p	1		p_1	
@@ -479,8 +483,8 @@ c	net/minecraft/unmapped/C_5587398	net/minecraft/world/gen/noise/PerlinSimplexNo
 		p	7		sizeZ	
 		p	8		scaleX	
 		p	10		scaleZ	
-		p	12		p_12	
-		p	14		p_14	
+		p	12		scaleExponentX	
+		p	14		scaleExponentZ	
 c	net/minecraft/unmapped/C_6041373	net/minecraft/world/gen/feature/RareGlowstoneClusterFeature	
 	m	()V	<init>	<init>	
 	m	(Lnet/minecraft/unmapped/C_3906126;Ljava/util/Random;III)Z	m_2665009	m_2665009	
@@ -529,7 +533,7 @@ c	net/minecraft/unmapped/C_6329603
 		p	2		world	
 		p	3		chunkX	
 		p	4		chunkZ	
-		p	5		blockIds	
+		p	5		blocks	
 	m	(Lnet/minecraft/unmapped/C_4078372;Lnet/minecraft/unmapped/C_3906126;II[B)V	m_8752868		place
 		p	1			p_1
 		p	2			p_2
@@ -651,7 +655,7 @@ c	net/minecraft/unmapped/C_9143244	net/minecraft/world/biome/source/BiomeSource
 	f	[D	f_1290595	temperatures	
 	f	[D	f_1988858	downfall	
 	f	[D	f_4870957	noise	
-	f	[Lnet/minecraft/unmapped/C_4636105;	f_8855749	biomes	
+	f	[Lnet/minecraft/unmapped/C_4636105;	f_8855749	f_8855749	
 	f	D	f_2459126	f_2459126	
 	f	D	f_6643239	f_6643239	
 	m	()V	<init>	<init>	

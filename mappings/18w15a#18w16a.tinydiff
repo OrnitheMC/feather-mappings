@@ -652,8 +652,9 @@ c	net/minecraft/unmapped/C_4078372
 		p	1		world	
 		p	2		biomeSource	
 		p	3		settings	
-	m	(Lnet/minecraft/unmapped/C_0636026;[Lnet/minecraft/unmapped/C_4636105;Lnet/minecraft/unmapped/C_0163201;)V	m_0713473	generateBiomes	
-		p	1		chunks	
+	m	(Lnet/minecraft/unmapped/C_0636026;[Lnet/minecraft/unmapped/C_4636105;Lnet/minecraft/unmapped/C_0163201;)V	m_0713473	buildSurfaces	
+		c	Places the bedrock layer, biome-dependent surface and subsurface blocks, and liquid bodies.	
+		p	1		chunk	
 		p	2		biomes	
 		p	3		random	
 	m	(Lnet/minecraft/unmapped/C_9844932;Lnet/minecraft/unmapped/C_9143244;Lnet/minecraft/unmapped/C_3369986;)V	<init>		<init>
@@ -698,11 +699,12 @@ c	net/minecraft/unmapped/C_4188659
 	f	Lnet/minecraft/unmapped/C_6205974;	f_2173009	soulSandGravelNoise	
 	f	Lnet/minecraft/unmapped/C_2441996;	f_1526333		defaultBlock
 	f	Lnet/minecraft/unmapped/C_2441996;	f_5684033		defaultLiquid
-	m	(IILnet/minecraft/unmapped/C_0636026;Lnet/minecraft/unmapped/C_0163201;)V	m_0862933	generateSurfaces	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
+	m	(IILnet/minecraft/unmapped/C_0636026;Lnet/minecraft/unmapped/C_0163201;)V	m_0862933	buildSurfaces	
+		c	Places the bedrock layers, biome-dependent surface and subsurface blocks, and liquid bodies.	
+		p	1		chunkX	
+		p	2		chunkZ	
+		p	3		chunk	
+		p	4		random	
 	m	(Lnet/minecraft/unmapped/C_0636026;Ljava/util/Random;)V	m_2411571		m_2411571
 		p	1			p_1
 		p	2			p_2
@@ -789,7 +791,7 @@ c	net/minecraft/unmapped/C_4636105
 	f	Z	f_3227518	snowy	
 	f	Ljava/lang/String;	f_0193611	name	
 	f	Lnet/minecraft/unmapped/C_7338640;	f_9303631	surfaceBuilder	
-	f	Lnet/minecraft/unmapped/C_7626890;	f_7510309	f_7510309	
+	f	Lnet/minecraft/unmapped/C_7626890;	f_7510309	surfaceBuilderConfig	
 	f	Lnet/minecraft/unmapped/C_2441996;	f_9027052		AIR
 	f	Lnet/minecraft/unmapped/C_2441996;	f_4638830		NETHERRACK
 	f	Lnet/minecraft/unmapped/C_2441996;	f_9644739		END_STONE
@@ -801,7 +803,7 @@ c	net/minecraft/unmapped/C_4636105
 	f	Lnet/minecraft/unmapped/C_4421021;	f_9758329		surfaceBuilder
 	m	()Z	m_4952577	isSnowy	
 	m	()V	<init>	<init>	
-	m	()Lnet/minecraft/unmapped/C_7626890;	m_9006729	m_9006729	
+	m	()Lnet/minecraft/unmapped/C_7626890;	m_9006729	getSurfaceBuilderConfig	
 	m	(Lnet/minecraft/unmapped/C_7338640;Ljava/util/Random;Lnet/minecraft/unmapped/C_0636026;IIIDIJLnet/minecraft/unmapped/C_7626890;)V	m_0023027	m_0023027	
 		p	1		p_1	
 		p	2		p_2	
@@ -4656,8 +4658,8 @@ c	net/minecraft/unmapped/C_6537776
 c	net/minecraft/unmapped/C_6848079
 	f	Lnet/minecraft/unmapped/C_2441996;	f_0325907		defaultBlock
 	f	Lnet/minecraft/unmapped/C_2441996;	f_3774774		defaultFluid
-	m	()Lnet/minecraft/unmapped/C_2441996;	m_8039924		m_8039924
-	m	()Lnet/minecraft/unmapped/C_2441996;	m_3360543		m_3360543
+	m	()Lnet/minecraft/unmapped/C_2441996;	m_8039924		getDefaultBlock
+	m	()Lnet/minecraft/unmapped/C_2441996;	m_3360543		getDefaultFluid
 	m	(Lnet/minecraft/unmapped/C_2441996;)V	m_8547310		setDefaultBlock
 		p	1			block
 	m	(Lnet/minecraft/unmapped/C_2441996;)V	m_4448508		setDefaultFluid
@@ -4669,35 +4671,37 @@ c	net/minecraft/unmapped/C_7332071
 	f	Lnet/minecraft/unmapped/C_0611937;	f_9995529		f_9995529
 	m	()Lnet/minecraft/unmapped/C_0611937;	m_3867290		m_3867290
 c	net/minecraft/unmapped/C_7338640
-	m	(Ljava/util/Random;Lnet/minecraft/unmapped/C_0636026;Lnet/minecraft/unmapped/C_4636105;IIIDIJLnet/minecraft/unmapped/C_7626890;)V	m_9482658	place	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
-		p	7		p_7	
-		p	9		p_9	
-		p	10		p_10	
-		p	12		p_12	
-	m	(Ljava/util/Random;Lnet/minecraft/unmapped/C_0636026;Lnet/minecraft/unmapped/C_6707278$C_2165440;II)V	m_6636963	m_6636963	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-	m	(Ljava/util/Random;Lnet/minecraft/unmapped/C_0636026;Lnet/minecraft/unmapped/C_4636105;IIIDIJLnet/minecraft/unmapped/C_5124100;)V	m_9482658		place
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	9			p_9
-		p	10			p_10
-		p	12			p_12
-	m	(J)V	m_9080812		initNoise
+	m	(Ljava/util/Random;Lnet/minecraft/unmapped/C_0636026;Lnet/minecraft/unmapped/C_4636105;IIIDIJLnet/minecraft/unmapped/C_7626890;)V	m_9482658	build	
+		c	Places the bedrock layer, biome-dependent surface and subsurface blocks, and liquid bodies.	
+		p	1		random	
+		p	2		chunk	
+		p	3		biome	
+		p	4		x	
+		p	5		z	
+		p	6		y	
+		p	7		depth	
+		p	9		seaLevel	
+		p	10		seed	
+		p	12		config	
+	m	(Ljava/util/Random;Lnet/minecraft/unmapped/C_0636026;Lnet/minecraft/unmapped/C_6707278$C_2165440;II)V	m_6636963	placeBedrock	
+		p	1		random	
+		p	2		chunk	
+		p	3		pos	
+		p	4		x	
+		p	5		z	
+	m	(Ljava/util/Random;Lnet/minecraft/unmapped/C_0636026;Lnet/minecraft/unmapped/C_4636105;IIIDIJLnet/minecraft/unmapped/C_5124100;)V	m_9482658		build
+		c		Places biome-dependent surface and subsurface blocks, and liquid bodies.
+		p	1			random
+		p	2			chunk
+		p	3			biome
+		p	4			x
+		p	5			z
+		p	6			y
+		p	7			depth
+		p	9			seaLevel
+		p	10			seed
+		p	12			config
+	m	(J)V	m_9080812		prepare
 		p	1			seed
 c	net/minecraft/unmapped/C_8609675
 	f	Lnet/minecraft/unmapped/C_6707278;	f_0503572		f_0503572
@@ -4716,7 +4720,8 @@ c	net/minecraft/unmapped/C_8679709
 	m	(Lnet/minecraft/unmapped/C_0636026;Ljava/util/Random;)V	m_2411571		placeBedrock
 		p	1			chunk
 		p	2			random
-	m	(Lnet/minecraft/unmapped/C_0636026;[Lnet/minecraft/unmapped/C_4636105;Lnet/minecraft/unmapped/C_0163201;I)V	m_1476380		placeSurface
+	m	(Lnet/minecraft/unmapped/C_0636026;[Lnet/minecraft/unmapped/C_4636105;Lnet/minecraft/unmapped/C_0163201;I)V	m_1476380		buildSurfaces
+		c		Places the bedrock layer, biome-dependent surface and subsurface blocks, and liquid bodies.
 		p	1			chunk
 		p	2			biomes
 		p	3			random
@@ -6027,3 +6032,4 @@ c	net/minecraft/unmapped/C_9428686		net/minecraft/server/world/tick/ServerTickLi
 		p	2			type
 		p	3			delay
 		p	4			priority
+c	net/minecraft/unmapped/C_7626890	net/minecraft/world/gen/surface/SurfaceBuilderConfiguration	net/minecraft/world/gen/surface/BaseSurfaceBuilderConfiguration

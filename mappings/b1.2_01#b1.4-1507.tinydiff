@@ -1196,9 +1196,9 @@ c	net/minecraft/unmapped/C_9377562
 c	net/minecraft/unmapped/C_9386942
 	m	(Lnet/minecraft/unmapped/C_6385858;)D	m_4819229	squaredHorizontalDistanceToCenter	
 		p	1		entity	
-	m	(II)I	m_3278400		toLong
-		p	0			p_0
-		p	1			p_1
+	m	(II)I	m_3278400		toInt
+		p	0			chunkX
+		p	1			chunkZ
 c	net/minecraft/unmapped/C_9484672
 	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_1066391		loadChunk
 		c		Loads the world chunk at the given chunk coordinates.
@@ -1317,27 +1317,27 @@ c	net/minecraft/unmapped/C_0629296		net/minecraft/world/chunk/storage/RegionFile
 	f	J	f_0137081		lastModifiedTime
 	m	(Ljava/io/File;)V	<init>		<init>
 		p	1			file
-	m	()I	m_8765674		m_8765674
-	m	(Ljava/lang/String;)V	m_9215930		m_9215930
-		p	1			p_1
-	m	(Ljava/lang/String;)V	m_6190836		m_6190836
-		p	1			p_1
-	m	(Ljava/lang/String;IILjava/lang/String;)V	m_1593300		m_1593300
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Ljava/lang/String;IIILjava/lang/String;)V	m_2364063		m_2364063
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	(Ljava/lang/String;IILjava/lang/String;)V	m_6708912		m_6708912
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	()I	m_8765674		resetBytesWritten
+	m	(Ljava/lang/String;)V	m_9215930		print
+		p	1			s
+	m	(Ljava/lang/String;)V	m_6190836		println
+		p	1			s
+	m	(Ljava/lang/String;IILjava/lang/String;)V	m_1593300		print
+		p	1			action
+		p	2			chunkX
+		p	3			chunkZ
+		p	4			s
+	m	(Ljava/lang/String;IIILjava/lang/String;)V	m_2364063		print
+		p	1			action
+		p	2			chunkX
+		p	3			chunkZ
+		p	4			size
+		p	5			s
+	m	(Ljava/lang/String;IILjava/lang/String;)V	m_6708912		println
+		p	1			action
+		p	2			chunkX
+		p	3			chunkZ
+		p	4			s
 	m	(II)Ljava/io/DataInputStream;	m_3985611		getChunkInputStream
 		p	1			chunkX
 		p	2			chunkZ
@@ -1547,7 +1547,7 @@ c	net/minecraft/unmapped/C_2942118		net/minecraft/world/storage/WorldStorageSour
 		p	1			saveName
 		p	2			createPlayerDataDir
 	m	()Ljava/util/List;	m_0492547		getAll
-	m	()V	m_7166895		clearIo
+	m	()V	m_7166895		flush
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_3473914;	m_9827163		getData
 		p	1			saveName
 	m	(Ljava/lang/String;)V	m_0867803		delete
@@ -2446,12 +2446,12 @@ c	net/minecraft/unmapped/C_9833698		net/minecraft/world/chunk/storage/RegionIo
 			c		the absolute x-coordinate of the chunk
 		p	2			chunkZ
 			c		the absolute z-coordinate of the chunk
-	m	()V	m_0624223		clear
+	m	()V	m_0624223		flush
 		c		Closes every region file in the cache, flushing them to the file system.
-	m	(Ljava/io/File;II)I	m_0470438		m_0470438
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
+	m	(Ljava/io/File;II)I	m_0470438		getChunkSize
+		p	0			worldDir
+		p	1			chunkX
+		p	2			chunkZ
 	m	(Ljava/io/File;II)Ljava/io/DataInputStream;	m_9744953		getChunkInputStream
 		c		@return an input stream for the specified chunk.
 		p	0			worldDir

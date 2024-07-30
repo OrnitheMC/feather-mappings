@@ -795,46 +795,46 @@ c	net/minecraft/unmapped/C_1464460
 		p	1			p_1
 c	net/minecraft/unmapped/C_1518064
 	m	(II[BDDD)V	m_1871596	place	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	6		p_6	
-		p	8		p_8	
-	m	(II[BDDDFFFIID)V	m_1959732	placeBranch	
-		p	1		centerChunkX	
-		p	2		centerChunkZ	
+		p	1		chunkX	
+		p	2		chunkZ	
 		p	3		blocks	
 		p	4		x	
 		p	6		y	
 		p	8		z	
-		p	10		p_10	
-		p	11		p_11	
-		p	12		p_12	
-		p	13		p_13	
-		p	14		p_14	
-		p	15		p_15	
+	m	(II[BDDDFFFIID)V	m_1959732	placeTunnels	
+		p	1		chunkX	
+		p	2		chunkZ	
+		p	3		blocks	
+		p	4		x	
+		p	6		y	
+		p	8		z	
+		p	10		baseWidth	
+		p	11		yaw	
+		p	12		pitch	
+		p	13		tunnel	
+		p	14		tunnelCount	
+		p	15		widthHeightRatio	
 	m	(JII[BDDD)V	m_1871596		place
 		p	1			seed
 		p	3			chunkX
 		p	4			chunkZ
-		p	5			blockIds
+		p	5			blocks
 		p	6			x
 		p	8			y
 		p	10			z
-	m	(JII[BDDDFFFIID)V	m_1959732		placeBranch
+	m	(JII[BDDDFFFIID)V	m_1959732		placeTunnels
 		p	1			seed
 		p	3			chunkX
 		p	4			chunkZ
-		p	5			blockIds
+		p	5			blocks
 		p	6			x
 		p	8			y
 		p	10			z
 		p	12			baseWidth
 		p	13			yaw
 		p	14			pitch
-		p	15			branch
-		p	16			branchCount
+		p	15			tunnel
+		p	16			tunnelCount
 		p	17			widthHeightRatio
 c	net/minecraft/unmapped/C_1591456	net/minecraft/server/network/ConnectionListener	
 	f	Ljava/util/logging/Logger;	f_4712395	LOGGER	
@@ -1600,20 +1600,22 @@ c	net/minecraft/unmapped/C_4078372
 	m	(Lnet/minecraft/unmapped/C_3906126;J)V	<init>	<init>	
 		p	1		world	
 		p	2		seed	
-	m	(II[B[Lnet/minecraft/unmapped/C_4636105;[D)V	m_8884370	generate	
+	m	(II[B[Lnet/minecraft/unmapped/C_4636105;[D)V	m_8884370	buildTerrain	
+		c	Generates the heightmap and places the basic terrain shape of continents and oceans.	
 		p	1		chunkX	
 		p	2		chunkZ	
-		p	3		blockIds	
+		p	3		blocks	
 		p	4		biomes	
-		p	5		targetStretch	
+		p	5		temperatures	
 	m	(Lnet/minecraft/unmapped/C_3906126;JZ)V	<init>		<init>
 		p	1			world
 		p	2			seed
 		p	4			structures
-	m	(II[B)V	m_8884370		generate
+	m	(II[B)V	m_8884370		buildTerrain
+		c		Generates the heightmap and places the basic terrain shape of continents and oceans.
 		p	1			chunkX
 		p	2			chunkZ
-		p	3			blockIds
+		p	3			blocks
 c	net/minecraft/unmapped/C_4136842
 	m	(IIZ)V	<init>	<init>	
 		p	1		chunkX	
@@ -2024,8 +2026,8 @@ c	net/minecraft/unmapped/C_5587398	net/minecraft/world/gen/noise/PerlinSimplexNo
 		p	7		sizeZ	
 		p	8		scaleX	
 		p	10		scaleZ	
-		p	12		p_12	
-		p	14		p_14	
+		p	12		scaleExponentX	
+		p	14		scaleExponentZ	
 c	net/minecraft/unmapped/C_6020368
 	f	I	f_6714751		hunger
 	f	F	f_3717778		saturation
@@ -2322,7 +2324,7 @@ c	net/minecraft/unmapped/C_7261559
 		p	4			p_4
 c	net/minecraft/unmapped/C_7366354	net/minecraft/server/world/ServerWorld	
 	f	Lnet/minecraft/unmapped/C_3571139;	f_4355570	chunkCache	
-	f	Z	f_8250949	f_8250949	
+	f	Z	f_8250949	bypassSpawnProtection	
 	f	Z	f_8586684	savingDisabled	
 	f	Lnet/minecraft/server/MinecraftServer;	f_1177250	server	
 	f	Lnet/minecraft/unmapped/C_3837238;	f_3045964	entitiesById	
@@ -2779,7 +2781,7 @@ c	net/minecraft/unmapped/C_9143244
 	f	[D	f_1988858	downfall	
 	f	[D	f_4870957	noise	
 	f	Lnet/minecraft/unmapped/C_6297854;	f_4199003		biomes
-	f	Lnet/minecraft/unmapped/C_6297854;	f_5073996		f_5073996
+	f	Lnet/minecraft/unmapped/C_6297854;	f_5073996		biomes2
 	f	Lnet/minecraft/unmapped/C_6297854;	f_5401900		temperatures
 	f	Lnet/minecraft/unmapped/C_6297854;	f_6495071		downfalls
 	f	Lnet/minecraft/unmapped/C_8588387;	f_4544929		cache
@@ -2852,9 +2854,9 @@ c	net/minecraft/unmapped/C_9381557
 		p	2		slotId	
 		p	3		stack	
 c	net/minecraft/unmapped/C_9386942
-	m	(II)I	m_3278400	toLong	
-		p	0		p_0	
-		p	1		p_1	
+	m	(II)I	m_3278400	toInt	
+		p	0		chunkX	
+		p	1		chunkZ	
 	m	(II)J	m_5896116		toLong
 		p	0			x
 		p	1			y
@@ -3122,12 +3124,12 @@ c	net/minecraft/unmapped/C_6285226$C_2230951
 		p	1		stack	
 c	net/minecraft/unmapped/C_6377547	net/minecraft/server/world/ReadOnlyServerWorld	
 	m	(Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/unmapped/C_9147018;Ljava/lang/String;IJLnet/minecraft/unmapped/C_7366354;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	7		p_7	
+		p	1		server	
+		p	2		storage	
+		p	3		saveName	
+		p	4		dimension	
+		p	5		seed	
+		p	7		delegate	
 c	net/minecraft/unmapped/C_6588851
 	m	()I	m_8742290		m_8742290
 	m	(I)I	m_8501302		m_8501302
@@ -3145,17 +3147,19 @@ c	net/minecraft/unmapped/C_6786653
 		p	2		p_2	
 		p	3		p_3	
 c	net/minecraft/unmapped/C_8839702
-	f	[D	f_1093400	f_1093400	
-	m	(II[B[Lnet/minecraft/unmapped/C_4636105;[D)V	m_8431915	generate	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-	m	(II[B[Lnet/minecraft/unmapped/C_4636105;)V	m_8431915		generate
+	f	[D	f_1093400	temperatures	
+	m	(II[B[Lnet/minecraft/unmapped/C_4636105;[D)V	m_8431915	buildTerrain	
+		c	Generates the heightmap and places the basic terrain shape.	
+		p	1		chunkX	
+		p	2		chunkZ	
+		p	3		blocks	
+		p	4		biomes	
+		p	5		temperatures	
+	m	(II[B[Lnet/minecraft/unmapped/C_4636105;)V	m_8431915		buildTerrain
+		c		Generates the heightmap and places the basic terrain shape.
 		p	1			chunkX
 		p	2			chunkZ
-		p	3			blockIds
+		p	3			blocks
 		p	4			biomes
 c	net/minecraft/unmapped/C_9055414
 	m	(IIIII)V	<init>	<init>	
@@ -3686,19 +3690,19 @@ c	net/minecraft/unmapped/C_2210677		net/minecraft/world/biome/StoneBeachBiome
 c	net/minecraft/unmapped/C_2331584		net/minecraft/world/gen/carver/RavineWorldCarver
 	f	[F	f_8791445		buffer
 	m	()V	<init>		<init>
-	m	(JII[BDDDFFFIID)V	m_5562305		placeBranch
+	m	(JII[BDDDFFFIID)V	m_5562305		placeRavine
 		p	1			seed
 		p	3			chunkX
 		p	4			chunkZ
-		p	5			blockIds
+		p	5			blocks
 		p	6			x
 		p	8			y
 		p	10			z
 		p	12			baseWidth
 		p	13			yaw
 		p	14			pitch
-		p	15			branch
-		p	16			branchCount
+		p	15			tunnel
+		p	16			tunnelCount
 		p	17			widthHeightRatio
 	m	(Lnet/minecraft/unmapped/C_3906126;IIII[B)V	m_6800431		m_6800431
 		p	1			p_1

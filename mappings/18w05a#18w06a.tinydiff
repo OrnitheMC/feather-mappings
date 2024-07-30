@@ -399,7 +399,7 @@ c	net/minecraft/unmapped/C_1518064
 		p	6		x	
 		p	8		y	
 		p	10		z	
-	m	(JIILnet/minecraft/unmapped/C_7212317;DDDFFFIID)V	m_1959732	placeBranch	
+	m	(JIILnet/minecraft/unmapped/C_7212317;DDDFFFIID)V	m_1959732	placeTunnels	
 		p	1		seed	
 		p	3		chunkX	
 		p	4		chunkZ	
@@ -410,12 +410,12 @@ c	net/minecraft/unmapped/C_1518064
 		p	12		baseWidth	
 		p	13		yaw	
 		p	14		pitch	
-		p	15		branch	
-		p	16		branchCount	
+		p	15		tunnel	
+		p	16		tunnelCount	
 		p	17		widthHeightRatio	
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_2441996;)Z	m_3119328	canReplace	
 		p	1		state	
-		p	2		replacement	
+		p	2		with	
 	m	(Lnet/minecraft/unmapped/C_3906126;IIIILnet/minecraft/unmapped/C_7212317;)V	m_6800431	m_6800431	
 		p	1		p_1	
 		p	2		p_2	
@@ -443,7 +443,7 @@ c	net/minecraft/unmapped/C_1518064
 		p	10			p_10
 		p	11			p_11
 		p	13			p_13
-	m	(Lnet/minecraft/unmapped/C_9844932;JIIDDDFFFIIDLjava/util/BitSet;)V	m_1959732		placeBranch
+	m	(Lnet/minecraft/unmapped/C_9844932;JIIDDDFFFIIDLjava/util/BitSet;)V	m_1959732		placeTunnels
 		p	1			p_1
 		p	2			p_2
 		p	4			p_4
@@ -1105,7 +1105,7 @@ c	net/minecraft/unmapped/C_4078372
 	f	Ljava/util/Random;	f_9316266	random	
 	f	Lnet/minecraft/unmapped/C_6205974;	f_9290433	forestNoise	
 	f	Lnet/minecraft/unmapped/C_3906126;	f_5278555	world	
-	f	[D	f_5835085	heightmap	
+	f	[D	f_5835085	heightMap	
 	f	Lnet/minecraft/unmapped/C_6329603;	f_0546041	cave	
 	f	[Lnet/minecraft/unmapped/C_4636105;	f_5383852	biomes	
 	f	[D	f_6976031	perlinNoiseBuffer	
@@ -1127,7 +1127,7 @@ c	net/minecraft/unmapped/C_4078372
 	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_8303908	m_8303908	
 		p	1		p_1	
 		p	2		p_2	
-	m	(III)V	m_7836416	populateHeightMap	
+	m	(III)V	m_7836416	generateHeightMap	
 		p	1		x	
 		p	2		y	
 		p	3		z	
@@ -1136,11 +1136,13 @@ c	net/minecraft/unmapped/C_4078372
 		p	2		seed	
 		p	4		structures	
 		p	5		generatorOptions	
-	m	(IILnet/minecraft/unmapped/C_7212317;)V	m_8884370	generate	
+	m	(IILnet/minecraft/unmapped/C_7212317;)V	m_8884370	buildTerrain	
+		c	Generates the heightmap and places the basic terrain shape of continents and oceans.	
 		p	1		chunkX	
 		p	2		chunkZ	
 		p	3		blocks	
-	m	(IILnet/minecraft/unmapped/C_7212317;[Lnet/minecraft/unmapped/C_4636105;)V	m_0713473	generateBiomes	
+	m	(IILnet/minecraft/unmapped/C_7212317;[Lnet/minecraft/unmapped/C_4636105;)V	m_0713473	buildSurfaces	
+		c	Places the bedrock layer, biome-dependent surface and subsurface blocks, and liquid bodies.	
 		p	1		chunkX	
 		p	2		chunkZ	
 		p	3		blocks	
@@ -1175,18 +1177,20 @@ c	net/minecraft/unmapped/C_4078372
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_3820473;)V	m_3412382		m_3412382
 		p	1			p_1
-	m	(IILnet/minecraft/unmapped/C_0636026;)V	m_8884370		generate
+	m	(IILnet/minecraft/unmapped/C_0636026;)V	m_8884370		buildTerrain
+		c		Generates the heightmap and places the basic terrain shape of continents and oceans.
 		p	1			chunkX
 		p	2			chunkZ
 		p	3			chunk
-	m	([Lnet/minecraft/unmapped/C_4636105;III[D)V	m_7836416		populateHeightMap
+	m	([Lnet/minecraft/unmapped/C_4636105;III[D)V	m_7836416		generateHeightMap
 		p	1			biomes
 		p	2			x
 		p	3			y
 		p	4			z
 		p	5			heightMap
-	m	(Lnet/minecraft/unmapped/C_0636026;[Lnet/minecraft/unmapped/C_4636105;Lnet/minecraft/unmapped/C_0163201;)V	m_0713473		generateBiomes
-		p	1			chunks
+	m	(Lnet/minecraft/unmapped/C_0636026;[Lnet/minecraft/unmapped/C_4636105;Lnet/minecraft/unmapped/C_0163201;)V	m_0713473		buildSurfaces
+		c		Places the bedrock layer, biome-dependent surface and subsurface blocks, and liquid bodies.
+		p	1			chunk
 		p	2			biomes
 		p	3			random
 	m	()Lnet/minecraft/unmapped/C_3369986;	m_6578830		m_6578830
@@ -1279,7 +1283,7 @@ c	net/minecraft/unmapped/C_4188659
 	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_8303908	m_8303908	
 		p	1		p_1	
 		p	2		p_2	
-	m	([DIIIIII)[D	m_1056241	populateHeightMap	
+	m	([DIIIIII)[D	m_1056241	generateHeightMap	
 		p	1		heightMap	
 		p	2		x	
 		p	3		y	
@@ -1287,11 +1291,13 @@ c	net/minecraft/unmapped/C_4188659
 		p	5		sizeX	
 		p	6		sizeY	
 		p	7		sizeZ	
-	m	(IILnet/minecraft/unmapped/C_7212317;)V	m_0874705	generate	
+	m	(IILnet/minecraft/unmapped/C_7212317;)V	m_0874705	buildTerrain	
+		c	Generates the heightmap and places the basic terrain shape of continents and oceans.	
 		p	1		chunkX	
 		p	2		chunkZ	
 		p	3		blocks	
-	m	(IILnet/minecraft/unmapped/C_7212317;)V	m_0862933	generateSurfaces	
+	m	(IILnet/minecraft/unmapped/C_7212317;)V	m_0862933	buildSurfaces	
+		c	Places the bedrock layers, biome-dependent surface and subsurface blocks, and liquid bodies.	
 		p	1		chunkX	
 		p	2		chunkZ	
 		p	3		blocks	
@@ -1323,24 +1329,26 @@ c	net/minecraft/unmapped/C_4188659
 		p	1			world
 		p	2			biomeSource
 		p	3			settings
-	m	(IILnet/minecraft/unmapped/C_0636026;)V	m_0874705		generate
+	m	(IILnet/minecraft/unmapped/C_0636026;)V	m_0874705		buildTerrain
+		c		Generates the heightmap and places the basic terrain shape of continents and oceans.
 		p	1			chunkX
 		p	2			chunkZ
 		p	3			chunk
-	m	(IILnet/minecraft/unmapped/C_0636026;Lnet/minecraft/unmapped/C_0163201;)V	m_0862933		generateSurfaces
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(IILnet/minecraft/unmapped/C_0636026;Lnet/minecraft/unmapped/C_0163201;)V	m_0862933		buildSurfaces
+		c		Places the bedrock layers, biome-dependent surface and subsurface blocks, and liquid bodies.
+		p	1			chunkX
+		p	2			chunkZ
+		p	3			chunk
+		p	4			random
 	m	(Lnet/minecraft/unmapped/C_0636026;)V	m_8303908		m_8303908
 		p	1			p_1
-	m	(IIIIII)[D	m_1056241		populateHeightMap
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
+	m	(IIIIII)[D	m_1056241		generateHeightMap
+		p	1			x
+		p	2			y
+		p	3			z
+		p	4			sizeX
+		p	5			sizeY
+		p	6			sizeZ
 	m	(Lnet/minecraft/unmapped/C_3820473;)V	m_5495401		m_5495401
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_3820473;)V	m_3412382		m_3412382
@@ -1457,7 +1465,7 @@ c	net/minecraft/unmapped/C_4629588	net/minecraft/world/gen/carver/NetherCaveCarv
 		p	6		x	
 		p	8		y	
 		p	10		z	
-	m	(JIILnet/minecraft/unmapped/C_7212317;DDDFFFIID)V	m_7639184	placeBranch	
+	m	(JIILnet/minecraft/unmapped/C_7212317;DDDFFFIID)V	m_7639184	placeTunnels	
 		p	1		seed	
 		p	3		chunkX	
 		p	4		chunkZ	
@@ -1468,8 +1476,8 @@ c	net/minecraft/unmapped/C_4629588	net/minecraft/world/gen/carver/NetherCaveCarv
 		p	12		baseWidth	
 		p	13		yaw	
 		p	14		pitch	
-		p	15		branch	
-		p	16		branchCount	
+		p	15		tunnel	
+		p	16		tunnelCount	
 		p	17		widthHeightRatio	
 	m	(Lnet/minecraft/unmapped/C_3906126;IIIILnet/minecraft/unmapped/C_7212317;)V	m_6800431	m_6800431	
 		p	1		p_1	
@@ -1590,20 +1598,22 @@ c	net/minecraft/unmapped/C_4636105
 		p	1		world	
 		p	2		random	
 		p	3		pos	
-	m	(Lnet/minecraft/unmapped/C_3906126;Ljava/util/Random;Lnet/minecraft/unmapped/C_7212317;IID)V	m_6243230	populateChunk	
+	m	(Lnet/minecraft/unmapped/C_3906126;Ljava/util/Random;Lnet/minecraft/unmapped/C_7212317;IID)V	m_6243230	prepareAndBuildSurfaces	
+		c	Places the bedrock layer, biome-dependent surface and subsurface blocks, and liquid bodies.	
 		p	1		world	
 		p	2		random	
 		p	3		blocks	
 		p	4		x	
 		p	5		z	
-		p	6		noise	
-	m	(Lnet/minecraft/unmapped/C_3906126;Ljava/util/Random;Lnet/minecraft/unmapped/C_7212317;IID)V	m_5215422	populate	
+		p	6		depth	
+	m	(Lnet/minecraft/unmapped/C_3906126;Ljava/util/Random;Lnet/minecraft/unmapped/C_7212317;IID)V	m_5215422	buildSurfaces	
+		c	Places the bedrock layer, biome-dependent surface and subsurface blocks, and liquid bodies.	
 		p	1		world	
 		p	2		random	
 		p	3		blocks	
 		p	4		x	
 		p	5		z	
-		p	6		noise	
+		p	6		depth	
 	m	(Lnet/minecraft/unmapped/C_4636105$C_3036414;)V	<init>	<init>	
 		p	1		settings	
 	m	(Ljava/util/Random;Lnet/minecraft/unmapped/C_6707278;)Lnet/minecraft/unmapped/C_2441996;	m_4738004	getRandomFlower	
@@ -1649,20 +1659,21 @@ c	net/minecraft/unmapped/C_4636105
 	m	()Ljava/util/List;	m_2969943		getFlowers
 	m	(Lnet/minecraft/unmapped/C_7517683;)Ljava/util/List;	m_5410758		getFeatures
 		p	1			step
-	m	(Lnet/minecraft/unmapped/C_7517683;Lnet/minecraft/unmapped/C_0705111;Lnet/minecraft/unmapped/C_9844932;JLnet/minecraft/unmapped/C_0163201;Lnet/minecraft/unmapped/C_6707278;)V	m_5858282		generate
+	m	(Lnet/minecraft/unmapped/C_7517683;Lnet/minecraft/unmapped/C_0705111;Lnet/minecraft/unmapped/C_9844932;JLnet/minecraft/unmapped/C_0163201;Lnet/minecraft/unmapped/C_6707278;)V	m_5858282		placeFeatures
 		p	1			step
 		p	2			generator
 		p	3			world
 		p	4			seed
 		p	6			random
 		p	7			pos
-	m	(Ljava/util/Random;Lnet/minecraft/unmapped/C_0636026;IIIDIJ)V	m_7902474		placeSurface
+	m	(Ljava/util/Random;Lnet/minecraft/unmapped/C_0636026;IIIDIJ)V	m_7902474		buildSurfaces
+		c		Places the bedrock layer, biome-dependent surface and subsurface blocks, and liquid bodies.
 		p	1			random
 		p	2			chunk
-		p	3			chunkX
-		p	4			chunkZ
+		p	3			x
+		p	4			z
 		p	5			y
-		p	6			noise
+		p	6			depth
 		p	8			seaLevel
 		p	9			seed
 	m	()Lnet/minecraft/unmapped/C_2441996;	m_3636937		getSurfaceBlock
@@ -1996,10 +2007,10 @@ c	net/minecraft/unmapped/C_6329603	net/minecraft/world/gen/Generator
 	m	()V	<init>	<init>	
 	m	(Lnet/minecraft/unmapped/C_3906126;IIIILnet/minecraft/unmapped/C_7212317;)V	m_6800431	place	
 		p	1		world	
-		p	2		chunkX	
-		p	3		chunkZ	
-		p	4		centerChunkX	
-		p	5		centerChunkZ	
+		p	2		startChunkX	
+		p	3		startChunkZ	
+		p	4		chunkX	
+		p	5		chunkZ	
 		p	6		blocks	
 	m	(Lnet/minecraft/unmapped/C_3906126;IILnet/minecraft/unmapped/C_7212317;)V	m_8752868	place	
 		p	1		world	
@@ -2220,7 +2231,7 @@ c	net/minecraft/unmapped/C_6755599
 		p	1		world	
 		p	2		chunkX	
 		p	3		chunkZ	
-	m	(III)V	m_1311537	updateHeightmap	
+	m	(III)V	m_1311537	updateHeightMap	
 		p	1		localX	
 		p	2		y	
 		p	3		localZ	
@@ -2247,8 +2258,8 @@ c	net/minecraft/unmapped/C_6755599
 		p	1		pos	
 		p	2		source	
 	m	()[I	m_6941410	getHeightMap	
-	m	([I)V	m_3098180	setHeightmap	
-		p	1		heightmap	
+	m	([I)V	m_3098180	setHeightMap	
+		p	1		heightMap	
 	m	(Z)V	m_6857816	setTerrainPopulated	
 		p	1		populated	
 	m	()Z	m_3879019	isLightPopulated	
@@ -2290,7 +2301,7 @@ c	net/minecraft/unmapped/C_6755599
 		p	2			proto
 		p	3			chunkX
 		p	4			chunkZ
-	m	(IIILnet/minecraft/unmapped/C_2441996;)V	m_1311537		updateHeightmap
+	m	(IIILnet/minecraft/unmapped/C_2441996;)V	m_1311537		updateHeightMap
 		p	1			x
 		p	2			y
 		p	3			z
@@ -3384,9 +3395,9 @@ c	net/minecraft/unmapped/C_8839702
 	f	Lnet/minecraft/unmapped/C_3906126;	f_2835424	world	
 	f	[D	f_8086592	heightMap	
 	f	[Lnet/minecraft/unmapped/C_4636105;	f_7594969	biomes	
-	f	[D	f_4287680	mainNoiseBuffer	
-	f	[D	f_7392962	minLimitNoiseBuffer	
-	f	[D	f_6757613	maxLimitNoiseBuffer	
+	f	[D	f_4287680	perlinNoiseBuffer	
+	f	[D	f_7392962	minLimitPerlinNoiseBuffer	
+	f	[D	f_6757613	maxLimitPerlinNoiseBuffer	
 	f	Lnet/minecraft/unmapped/C_7975444;	f_5412447	endCity	
 	f	Lnet/minecraft/unmapped/C_3656644;	f_6775960	islandNoise	
 	f	Lnet/minecraft/unmapped/C_0210494;	f_3243933	endIsland	
@@ -3395,7 +3406,7 @@ c	net/minecraft/unmapped/C_8839702
 	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_8303908	m_8303908	
 		p	1		p_1	
 		p	2		p_2	
-	m	([DIIIIII)[D	m_7045496	populateHeightMap	
+	m	([DIIIIII)[D	m_7045496	generateHeightMap	
 		p	1		heightMap	
 		p	2		x	
 		p	3		y	
@@ -3403,11 +3414,13 @@ c	net/minecraft/unmapped/C_8839702
 		p	5		sizeX	
 		p	6		sizeY	
 		p	7		sizeZ	
-	m	(IILnet/minecraft/unmapped/C_7212317;)V	m_8431915	generate	
+	m	(IILnet/minecraft/unmapped/C_7212317;)V	m_8431915	buildTerrain	
+		c	Generates the heightmap and places the basic terrain shape.	
 		p	1		chunkX	
 		p	2		chunkZ	
 		p	3		blocks	
-	m	(Lnet/minecraft/unmapped/C_7212317;)V	m_0940566	generateSurfaces	
+	m	(Lnet/minecraft/unmapped/C_7212317;)V	m_0940566	buildSurfaces	
+		c	Places the biome-dependent surface and subsurface blocks.	
 		p	1		blocks	
 	m	(IIII)F	m_1900895	getIslandNoise	
 		p	1		chunkX	
@@ -3447,22 +3460,24 @@ c	net/minecraft/unmapped/C_8839702
 		p	2			biomeSource
 		p	3			settings
 		p	4			spawnPoint
-	m	(IILnet/minecraft/unmapped/C_0636026;)V	m_8431915		generate
+	m	(IILnet/minecraft/unmapped/C_0636026;)V	m_8431915		buildTerrain
+		c		Generates the heightmap and places the basic terrain shape.
 		p	1			chunkX
 		p	2			chunkZ
 		p	3			chunk
 	m	(Lnet/minecraft/unmapped/C_0636026;)V	m_8303908		m_8303908
 		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_0636026;[Lnet/minecraft/unmapped/C_4636105;)V	m_9422864		m_9422864
-		p	1			p_1
-		p	2			p_2
-	m	(IIIIII)[D	m_7045496		populateHeightMap
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
+	m	(Lnet/minecraft/unmapped/C_0636026;[Lnet/minecraft/unmapped/C_4636105;)V	m_9422864		buildSurfaces
+		c		Places the biome-dependent surface and subsurface blocks.
+		p	1			chunk
+		p	2			biomes
+	m	(IIIIII)[D	m_7045496		generateHeightMap
+		p	1			x
+		p	2			y
+		p	3			z
+		p	4			sizeX
+		p	5			sizeY
+		p	6			sizeZ
 	m	(Lnet/minecraft/unmapped/C_3820473;)V	m_5495401		m_5495401
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_3820473;)V	m_3412382		m_3412382
@@ -3800,7 +3815,7 @@ c	net/minecraft/unmapped/C_2210677
 c	net/minecraft/unmapped/C_2331584
 	f	Lnet/minecraft/unmapped/C_2441996;	f_8544509	FLOWING_LAVA	
 	f	Lnet/minecraft/unmapped/C_2441996;	f_9331690	AIR	
-	m	(JIILnet/minecraft/unmapped/C_7212317;DDDFFFIID)V	m_5562305	placeBranch	
+	m	(JIILnet/minecraft/unmapped/C_7212317;DDDFFFIID)V	m_5562305	placeRavine	
 		p	1		seed	
 		p	3		chunkX	
 		p	4		chunkZ	
@@ -3811,8 +3826,8 @@ c	net/minecraft/unmapped/C_2331584
 		p	12		baseWidth	
 		p	13		yaw	
 		p	14		pitch	
-		p	15		branch	
-		p	16		branchCount	
+		p	15		tunnel	
+		p	16		tunnelCount	
 		p	17		widthHeightRatio	
 	m	(Lnet/minecraft/unmapped/C_3906126;IIIILnet/minecraft/unmapped/C_7212317;)V	m_6800431	m_6800431	
 		p	1		p_1	
@@ -3831,7 +3846,7 @@ c	net/minecraft/unmapped/C_2331584
 		p	5			p_5
 		p	6			p_6
 		p	7			p_7
-	m	(Lnet/minecraft/unmapped/C_9844932;JIIDDDFFFIIDLjava/util/BitSet;)V	m_5562305		placeBranch
+	m	(Lnet/minecraft/unmapped/C_9844932;JIIDDDFFFIIDLjava/util/BitSet;)V	m_5562305		placeRavine
 		p	1			p_1
 		p	2			p_2
 		p	4			p_4
@@ -12428,7 +12443,7 @@ c	net/minecraft/unmapped/C_4683110		net/minecraft/world/gen/surface/DefaultSurfa
 		p	7			p_7
 		p	9			p_9
 		p	10			p_10
-	m	(Ljava/util/Random;Lnet/minecraft/unmapped/C_0636026;Lnet/minecraft/unmapped/C_4636105;IIIDLnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_2441996;I)V	m_7390270		apply
+	m	(Ljava/util/Random;Lnet/minecraft/unmapped/C_0636026;Lnet/minecraft/unmapped/C_4636105;IIIDLnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_2441996;I)V	m_7390270		build
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -12856,9 +12871,9 @@ c	net/minecraft/unmapped/C_5532430		net/minecraft/world/gen/carver/AbstractWorld
 	f	Lnet/minecraft/unmapped/C_2441996;	f_6380128		AIR
 	f	Lnet/minecraft/unmapped/C_2441996;	f_1457659		CAVE_AIR
 	f	Lnet/minecraft/unmapped/C_2441996;	f_2928028		WATER
-	f	Lnet/minecraft/unmapped/C_2441996;	f_6094595		f_6094595
+	f	Lnet/minecraft/unmapped/C_2441996;	f_6094595		FLOWING_WATER
 	f	Lnet/minecraft/unmapped/C_2441996;	f_5284425		LAVA
-	f	Lnet/minecraft/unmapped/C_2441996;	f_5338080		f_5338080
+	f	Lnet/minecraft/unmapped/C_2441996;	f_5338080		FLOWING_LAVA
 	f	Ljava/util/Set;	f_9672227		replaceable
 	f	Ljava/util/Set;	f_5604538		liquids
 	m	()V	<init>		<init>
@@ -13532,14 +13547,15 @@ c	net/minecraft/unmapped/C_7332071		net/minecraft/unmapped/C_7332071
 	m	([I)I	m_0888319		m_0888319
 		p	1			p_1
 c	net/minecraft/unmapped/C_7338640		net/minecraft/world/gen/surface/SurfaceBuilder
-	m	(Ljava/util/Random;Lnet/minecraft/unmapped/C_0636026;Lnet/minecraft/unmapped/C_4636105;IIIDIJ)V	m_9482658		place
+	m	(Ljava/util/Random;Lnet/minecraft/unmapped/C_0636026;Lnet/minecraft/unmapped/C_4636105;IIIDIJ)V	m_9482658		build
+		c		Places the bedrock layer, biome-dependent surface and subsurface blocks, and liquid bodies.
 		p	1			random
 		p	2			chunk
 		p	3			biome
 		p	4			chunkX
 		p	5			chunkZ
 		p	6			y
-		p	7			noise
+		p	7			depth
 		p	9			seaLevel
 		p	10			seed
 c	net/minecraft/unmapped/C_7498206		net/minecraft/world/gen/chunk/ChunkSkyLighting
@@ -13637,7 +13653,7 @@ c	net/minecraft/unmapped/C_7586786		net/minecraft/world/NotMotionBlockingPredica
 		p	2			p_2
 		p	3			p_3
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_7626890		net/minecraft/world/gen/surface/SurfaceBuilderBaseConfiguration
+c	net/minecraft/unmapped/C_7626890		net/minecraft/world/gen/surface/SurfaceBuilderConfiguration
 	f	Lnet/minecraft/unmapped/C_2441996;	f_0972463		topMaterial
 	f	Lnet/minecraft/unmapped/C_2441996;	f_6421615		underWaterMaterial
 	m	(Lnet/minecraft/unmapped/C_2441996;Lnet/minecraft/unmapped/C_2441996;)V	<init>		<init>
