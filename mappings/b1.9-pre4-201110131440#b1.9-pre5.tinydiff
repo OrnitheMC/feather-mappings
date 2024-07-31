@@ -1878,14 +1878,14 @@ c	net/minecraft/unmapped/C_0043270		net/minecraft/client/gui/GuiElement
 		p	4			v
 		p	5			width
 		p	6			height
-c	net/minecraft/unmapped/C_0053660		net/minecraft/unmapped/C_0053660
-	f	Ljava/util/List;	f_1259841		f_1259841
+c	net/minecraft/unmapped/C_0053660		net/minecraft/client/gui/ParticlesGui
+	f	Ljava/util/List;	f_1259841		particles
 	f	Lnet/minecraft/client/Minecraft;	f_4213091		minecraft
 	m	(Lnet/minecraft/client/Minecraft;)V	<init>		<init>
 		p	1			minecraft
-	m	()V	m_3754194		m_3754194
-	m	(F)V	m_2954937		m_2954937
-		p	1			p_1
+	m	()V	m_3754194		tick
+	m	(F)V	m_2954937		render
+		p	1			tickDelta
 c	net/minecraft/unmapped/C_0107205		net/minecraft/client/gui/screen/VideoOptionsScreen
 	f	Lnet/minecraft/unmapped/C_0786431;	f_7564663		parent
 	f	Ljava/lang/String;	f_3669843		title
@@ -2323,7 +2323,7 @@ c	net/minecraft/unmapped/C_0786431		net/minecraft/client/gui/screen/Screen
 	f	Ljava/util/List;	f_3767855		buttons
 	f	Z	f_5666652		passEvents
 	f	Lnet/minecraft/unmapped/C_4766485;	f_9384817		textRenderer
-	f	Lnet/minecraft/unmapped/C_0053660;	f_4063956		f_4063956
+	f	Lnet/minecraft/unmapped/C_0053660;	f_4063956		particlesGui
 	f	Lnet/minecraft/unmapped/C_2621421;	f_4311424		lastClickedButton
 	m	()V	<init>		<init>
 	m	(IIF)V	m_3426670		render
@@ -3017,30 +3017,30 @@ c	net/minecraft/unmapped/C_1461754		net/minecraft/client/entity/particle/NotePar
 		p	6			p_6
 		p	7			p_7
 	m	()V	m_0718337		m_0718337
-c	net/minecraft/unmapped/C_1599390		net/minecraft/unmapped/C_1599390
-	f	Ljava/util/Random;	f_2966325		f_2966325
-	f	D	f_8565428		f_8565428
-	f	D	f_7594224		f_7594224
-	f	D	f_9374084		f_9374084
-	f	D	f_0644994		f_0644994
-	f	D	f_2324875		f_2324875
-	f	D	f_4287510		f_4287510
-	f	D	f_7198917		f_7198917
-	f	Z	f_1405648		f_1405648
-	f	I	f_2761235		f_2761235
-	f	I	f_4400892		f_4400892
-	f	D	f_6404603		f_6404603
-	f	D	f_3424301		f_3424301
-	f	D	f_8664300		f_8664300
-	f	D	f_9136224		f_9136224
-	f	D	f_8518301		f_8518301
-	f	D	f_2240636		f_2240636
-	f	D	f_2429057		f_2429057
-	f	D	f_3681797		f_3681797
-	m	(Lnet/minecraft/unmapped/C_0053660;)V	m_1330940		m_1330940
-		p	1			p_1
-	m	()V	m_0166400		m_0166400
-	m	()V	m_2142065		m_2142065
+c	net/minecraft/unmapped/C_1599390		net/minecraft/client/gui/GuiParticle
+	f	Ljava/util/Random;	f_2966325		RANDOM
+	f	D	f_8565428		x
+	f	D	f_7594224		y
+	f	D	f_9374084		lastX
+	f	D	f_0644994		lastY
+	f	D	f_2324875		velocityX
+	f	D	f_4287510		velocityY
+	f	D	f_7198917		velocityChange
+	f	Z	f_1405648		removed
+	f	I	f_2761235		age
+	f	I	f_4400892		lifetime
+	f	D	f_6404603		r
+	f	D	f_3424301		g
+	f	D	f_8664300		b
+	f	D	f_9136224		a
+	f	D	f_8518301		lastR
+	f	D	f_2240636		lastG
+	f	D	f_2429057		lastB
+	f	D	f_3681797		lastA
+	m	(Lnet/minecraft/unmapped/C_0053660;)V	m_1330940		tickPosition
+		p	1			gui
+	m	()V	m_0166400		tickColor
+	m	()V	m_2142065		remove
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_1633510		net/minecraft/client/render/Culler
 	m	(Lnet/minecraft/unmapped/C_1414550;)Z	m_2658685		isVisible
@@ -5813,10 +5813,10 @@ c	net/minecraft/unmapped/C_4608907		net/minecraft/client/resource/pack/BuiltInTe
 		p	1			p_1
 c	net/minecraft/unmapped/C_4620696		net/minecraft/client/entity/particle/RainSplashParticle
 	m	(Lnet/minecraft/unmapped/C_3906126;DDD)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
-		p	6			p_6
+		p	1			world
+		p	2			x
+		p	4			y
+		p	6			z
 	m	(Lnet/minecraft/unmapped/C_2334550;FFFFFF)V	m_7521183		m_7521183
 		p	1			p_1
 		p	2			p_2
@@ -7299,10 +7299,10 @@ c	net/minecraft/unmapped/C_7100243		net/minecraft/client/entity/particle/WaterBu
 c	net/minecraft/unmapped/C_7132859		net/minecraft/client/entity/particle/LavaParticle
 	f	F	f_2124656		initialSize
 	m	(Lnet/minecraft/unmapped/C_3906126;DDD)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
-		p	6			p_6
+		p	1			world
+		p	2			x
+		p	4			y
+		p	6			z
 	m	(F)I	m_8582980		m_8582980
 		p	1			p_1
 	m	(F)F	m_3581619		m_3581619
