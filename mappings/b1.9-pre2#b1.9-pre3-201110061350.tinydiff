@@ -447,7 +447,7 @@ c	net/minecraft/unmapped/C_0509876
 	m	()Z	m_6814594		m_6814594
 c	net/minecraft/unmapped/C_0591668
 	f	Z	f_5581707		harmful
-	f	D	f_3850138		effectiveness
+	f	D	f_3850138		durationMultiplier
 	f	I	f_6393275		potionColor
 	m	(I)V	<init>	<init>	
 		p	1		p_1	
@@ -456,9 +456,9 @@ c	net/minecraft/unmapped/C_0591668
 		p	2			harmful
 		p	3			potionColor
 	m	()Z	m_2635556		isHarmful
-	m	(D)Lnet/minecraft/unmapped/C_0591668;	m_4943463		setEffectiveness
-		p	1			effectiveness
-	m	()D	m_2013813		getEffectiveness
+	m	(D)Lnet/minecraft/unmapped/C_0591668;	m_4943463		setDurationMultiplier
+		p	1			durationMultiplier
+	m	()D	m_2013813		getDurationMultiplier
 	m	()I	m_4973390		getPotionColor
 c	net/minecraft/unmapped/C_1283912
 	m	()Ljava/lang/String;	toString		toString
@@ -652,15 +652,15 @@ c	net/minecraft/unmapped/C_3327129
 	m	(Lnet/minecraft/unmapped/C_2750078;)Lnet/minecraft/unmapped/C_4515870;	m_9826068		m_9826068
 		p	1			p_1
 c	net/minecraft/unmapped/C_4696879
-	m	(I)Ljava/util/List;	m_6870379		getEffectsFromMetadata
+	m	(I)Ljava/util/List;	m_6870379		getPotionEffects
 		p	1			metadata
 	m	(Lnet/minecraft/unmapped/C_2750078;)Z	m_7497893		m_7497893
 		p	1			p_1
 c	net/minecraft/unmapped/C_6223866
-	f	Ljava/lang/String;	f_4771524		UNCRAFTABLE
+	f	Ljava/lang/String;	f_4771524		NONE
 	f	Ljava/lang/String;	f_5405333		SUGAR
 	f	Ljava/lang/String;	f_9390514		GHAST_TEAR
-	f	Ljava/lang/String;	f_6808118		POISON
+	f	Ljava/lang/String;	f_6808118		SPIDER_EYE
 	f	Ljava/lang/String;	f_5681449		FERMENTED_SPIDER_EYE
 	f	Ljava/lang/String;	f_6531522		BLAZE_POWDER
 	f	Ljava/lang/String;	f_6718085		MAGMA_CREAM
@@ -679,7 +679,7 @@ c	net/minecraft/unmapped/C_6223866
 		p	0		p_0	
 	m	(I)I	m_5803724	m_5803724	
 		p	0		p_0	
-	m	(IIZZ)I	m_2095494	updateMetadata	
+	m	(IIZZ)I	m_2095494	modifyMetadata	
 		p	0		p_0	
 		p	1		p_1	
 		p	2		p_2	
@@ -688,13 +688,13 @@ c	net/minecraft/unmapped/C_6223866
 		p	0			p_0
 	m	(IZ)Ljava/util/List;	m_1481056		getStatusEffects
 		p	0			metadata
-		p	1			ignoreUsability
-	m	(IIZZZ)I	m_2095494		updateMetadata
+		p	1			custom
+	m	(IIZZZ)I	m_2095494		modifyMetadata
 		p	0			metadata
 		p	1			flag
-		p	2			remove
+		p	2			disable
 		p	3			toggle
-		p	4			clear
+		p	4			require
 c	net/minecraft/unmapped/C_0564302		net/minecraft/entity/mob/GolemEntity
 	m	(Lnet/minecraft/unmapped/C_3906126;)V	<init>		<init>
 		p	1			p_1
@@ -870,11 +870,11 @@ c	net/minecraft/unmapped/C_3910017		net/minecraft/block/entity/BrewingStandBlock
 	m	()I	m_5322905		m_5322905
 	m	()V	m_1420044		m_1420044
 	m	()I	m_8625721		getTimer
-	m	()Z	m_4356325		canFinishBrewing
-	m	()V	m_5202545		finishBrewing
-	m	(ILnet/minecraft/unmapped/C_2750078;)I	m_7215960		updatePotion
+	m	()Z	m_4356325		canBrew
+	m	()V	m_5202545		brew
+	m	(ILnet/minecraft/unmapped/C_2750078;)I	m_7215960		applyIngredient
 		p	1			metadata
-		p	2			potion
+		p	2			ingredient
 	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_0576365		m_0576365
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_4175205		m_4175205
@@ -894,7 +894,7 @@ c	net/minecraft/unmapped/C_3910017		net/minecraft/block/entity/BrewingStandBlock
 	m	()V	m_1388832		m_1388832
 	m	(I)V	m_7334550		setTimer
 		p	1			timer
-	m	()I	m_2166002		findFilledInputs
+	m	()I	m_2166002		findHasInput
 c	net/minecraft/unmapped/C_4357260		net/minecraft/item/EnderEyeItem
 	m	(I)V	<init>		<init>
 		p	1			p_1
