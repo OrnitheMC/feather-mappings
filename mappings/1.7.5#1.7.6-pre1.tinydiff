@@ -1,16 +1,16 @@
 tiny	2	0
 c	net/minecraft/client/Minecraft
-	f	Lcom/mojang/authlib/minecraft/MinecraftSessionService;	f_3166854		f_3166854
-	f	Lnet/minecraft/unmapped/C_9024480;	f_3478403		f_3478403
-	f	Ljava/util/Queue;	f_1299372		f_1299372
-	f	Ljava/lang/Thread;	f_0098326		f_0098326
-	m	(Ljava/util/concurrent/Callable;)Lcom/google/common/util/concurrent/ListenableFuture;	m_5212308		m_5212308
-		p	1			p_1
-	m	(Ljava/lang/Runnable;)Lcom/google/common/util/concurrent/ListenableFuture;	m_6029165		m_6029165
-		p	1			p_1
-	m	()Z	m_3218880		m_3218880
-	m	()Lcom/mojang/authlib/minecraft/MinecraftSessionService;	m_8891329		m_8891329
-	m	()Lnet/minecraft/unmapped/C_9024480;	m_5547257		m_5547257
+	f	Lcom/mojang/authlib/minecraft/MinecraftSessionService;	f_3166854		sessionService
+	f	Lnet/minecraft/unmapped/C_9024480;	f_3478403		skinManager
+	f	Ljava/util/Queue;	f_1299372		tasks
+	f	Ljava/lang/Thread;	f_0098326		thread
+	m	(Ljava/util/concurrent/Callable;)Lcom/google/common/util/concurrent/ListenableFuture;	m_5212308		submit
+		p	1			event
+	m	(Ljava/lang/Runnable;)Lcom/google/common/util/concurrent/ListenableFuture;	m_6029165		submit
+		p	1			event
+	m	()Z	m_3218880		isOnSameThread
+	m	()Lcom/mojang/authlib/minecraft/MinecraftSessionService;	m_8891329		getSessionService
+	m	()Lnet/minecraft/unmapped/C_9024480;	m_5547257		getSkinManager
 c	net/minecraft/server/MinecraftServer
 	f	Ljava/io/File;	f_1219190		USER_CACHE_FILE
 	f	Lcom/mojang/authlib/yggdrasil/YggdrasilAuthenticationService;	f_3183314		authService
@@ -95,7 +95,7 @@ c	net/minecraft/unmapped/C_3906126
 	m	(Ljava/util/UUID;)Lnet/minecraft/unmapped/C_5009044;	m_9598250		m_9598250
 		p	1			p_1
 c	net/minecraft/unmapped/C_5556060
-	m	()V	m_7365521		m_7365521
+	m	()V	m_7365521		onTextureDownloaded
 c	net/minecraft/unmapped/C_7688744
 	f	Z	f_7870340	serverTextures	
 c	net/minecraft/unmapped/C_7688744$C_0457152
@@ -604,10 +604,10 @@ c	net/minecraft/unmapped/C_5300961		net/minecraft/server/IpBanEntry
 		p	0			json
 	m	(Lcom/google/gson/JsonObject;)V	m_2413061		m_2413061
 		p	1			p_1
-c	net/minecraft/unmapped/C_5316375		net/minecraft/unmapped/C_5316375
-	m	(Lcom/mojang/authlib/minecraft/MinecraftProfileTexture$Type;Lnet/minecraft/unmapped/C_0561170;)V	m_4174527		m_4174527
-		p	1			p_1
-		p	2			p_2
+c	net/minecraft/unmapped/C_5316375		net/minecraft/client/resource/skin/SkinTextureCallback
+	m	(Lcom/mojang/authlib/minecraft/MinecraftProfileTexture$Type;Lnet/minecraft/unmapped/C_0561170;)V	m_4174527		textureAvailable
+		p	1			type
+		p	2			location
 c	net/minecraft/unmapped/C_5512985		net/minecraft/unmapped/C_5512985
 	f	Ljava/util/Set;	f_0108466		f_0108466
 	m	()V	<init>		<init>
@@ -847,30 +847,30 @@ c	net/minecraft/unmapped/C_8717445		net/minecraft/server/PlayerBans
 		p	1			name
 	m	(Ljava/lang/Object;)Ljava/lang/String;	m_7784880		m_7784880
 		p	1			p_1
-c	net/minecraft/unmapped/C_9024480		net/minecraft/unmapped/C_9024480
-	f	Lnet/minecraft/unmapped/C_0561170;	f_9739517		f_9739517
-	f	Ljava/util/concurrent/ExecutorService;	f_7119363		f_7119363
-	f	Lnet/minecraft/unmapped/C_3385278;	f_7487646		f_7487646
-	f	Ljava/io/File;	f_0531895		f_0531895
-	f	Lcom/mojang/authlib/minecraft/MinecraftSessionService;	f_7024725		f_7024725
-	f	Lcom/google/common/cache/LoadingCache;	f_3479732		f_3479732
+c	net/minecraft/unmapped/C_9024480		net/minecraft/client/resource/skin/SkinManager
+	f	Lnet/minecraft/unmapped/C_0561170;	f_9739517		STEVE_LOCATION
+	f	Ljava/util/concurrent/ExecutorService;	f_7119363		EXECUTOR
+	f	Lnet/minecraft/unmapped/C_3385278;	f_7487646		textureManager
+	f	Ljava/io/File;	f_0531895		skinsDir
+	f	Lcom/mojang/authlib/minecraft/MinecraftSessionService;	f_7024725		sessionService
+	f	Lcom/google/common/cache/LoadingCache;	f_3479732		skinCache
 	m	(Lnet/minecraft/unmapped/C_3385278;Ljava/io/File;Lcom/mojang/authlib/minecraft/MinecraftSessionService;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lcom/mojang/authlib/minecraft/MinecraftProfileTexture;Lcom/mojang/authlib/minecraft/MinecraftProfileTexture$Type;)Lnet/minecraft/unmapped/C_0561170;	m_3046827		m_3046827
-		p	1			p_1
-		p	2			p_2
-	m	(Lcom/mojang/authlib/minecraft/MinecraftProfileTexture;Lcom/mojang/authlib/minecraft/MinecraftProfileTexture$Type;Lnet/minecraft/unmapped/C_5316375;)Lnet/minecraft/unmapped/C_0561170;	m_9483714		m_9483714
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lcom/mojang/authlib/GameProfile;Lnet/minecraft/unmapped/C_5316375;Z)V	m_0852058		m_0852058
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(Lcom/mojang/authlib/GameProfile;)Ljava/util/Map;	m_4745972		m_4745972
-		p	1			p_1
+		p	1			textureManager
+		p	2			skinsDir
+		p	3			sessionService
+	m	(Lcom/mojang/authlib/minecraft/MinecraftProfileTexture;Lcom/mojang/authlib/minecraft/MinecraftProfileTexture$Type;)Lnet/minecraft/unmapped/C_0561170;	m_3046827		register
+		p	1			texture
+		p	2			type
+	m	(Lcom/mojang/authlib/minecraft/MinecraftProfileTexture;Lcom/mojang/authlib/minecraft/MinecraftProfileTexture$Type;Lnet/minecraft/unmapped/C_5316375;)Lnet/minecraft/unmapped/C_0561170;	m_9483714		register
+		p	1			texture
+		p	2			type
+		p	3			callback
+	m	(Lcom/mojang/authlib/GameProfile;Lnet/minecraft/unmapped/C_5316375;Z)V	m_0852058		register
+		p	1			profile
+		p	2			callback
+		p	3			requireSecure
+	m	(Lcom/mojang/authlib/GameProfile;)Ljava/util/Map;	m_4745972		getTextures
+		p	1			profile
 	m	(Lnet/minecraft/unmapped/C_9024480;)Lcom/mojang/authlib/minecraft/MinecraftSessionService;	m_9359306		m_9359306
 		p	0			p_0
 	m	()V	<clinit>		<clinit>
