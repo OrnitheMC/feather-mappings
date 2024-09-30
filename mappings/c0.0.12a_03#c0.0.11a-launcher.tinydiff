@@ -164,6 +164,7 @@ c	net/minecraft/unmapped/C_3635204
 	f	Lnet/minecraft/unmapped/C_3635204;	f_0374553		f_0374553
 	f	Lnet/minecraft/unmapped/C_3635204;	f_2157077		f_2157077
 	m	(Z)V	m_3405751	setTicksRandomly	
+		c	Sets whether this block accepts random ticks. Random ticks are mostly used by plants\nand crops to update growth, but some other blocks are affected by random ticks as well,\nlike e.g. leaves (to update decay).\nNote that while this field might be set to true the block might not do anything with the random tick.\n\n<p>\nNOTE: this method should only be used during the block's creation before it is registered.	
 		p	1		ticksRandomly	
 	m	(FFFFFF)V	m_3006888	setShape	
 		p	1		minX	
@@ -172,13 +173,14 @@ c	net/minecraft/unmapped/C_3635204
 		p	4		maxX	
 		p	5		maxY	
 		p	6		maxZ	
-	m	(Lnet/minecraft/unmapped/C_3906126;IIII)V	m_9130741	m_9130741	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-	m	()I	m_9474325	m_9474325	
+	m	(Lnet/minecraft/unmapped/C_3906126;IIII)V	m_9130741	neighborChanged	
+		c	Performs a block update. This method is called when a neighboring block has updated\n(i.e. placed, broken, or otherwise changed state).	
+		p	1		world	
+		p	2		x	
+		p	3		y	
+		p	4		z	
+		p	5		neighborBlock	
+	m	()I	m_9474325	getTickRate	
 	m	(Lnet/minecraft/unmapped/C_2334550;IIII)V	m_8901536	m_8901536	
 		p	1		p_1	
 		p	2		p_2	
@@ -252,8 +254,8 @@ c	net/minecraft/unmapped/C_3906126
 		p	3			p_3
 	m	()V	m_1544961		m_1544961
 c	net/minecraft/unmapped/C_4558465	net/minecraft/block/LiquidBlock	
-	f	I	f_9509159	f_9509159	
-	f	I	f_9203262	f_9203262	
+	f	I	f_9509159	sourceBlock	
+	f	I	f_9203262	flowingBlock	
 	f	I	f_4252258	f_4252258	
 	f	I	f_7305690	f_7305690	
 	m	()Z	m_1944525	m_1944525	
