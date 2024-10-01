@@ -217,16 +217,16 @@ c	net/minecraft/unmapped/C_1124552
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	(Lnet/minecraft/unmapped/C_3906126;III)V	m_6712308		m_6712308
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_6532724		m_6532724
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(Lnet/minecraft/unmapped/C_3906126;III)V	m_6712308		canSurviveOrBreak
+		p	1			world
+		p	2			x
+		p	3			y
+		p	4			z
+	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_6532724		canSurvive
+		p	1			world
+		p	2			x
+		p	3			y
+		p	4			z
 c	net/minecraft/unmapped/C_1196485
 	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_6074973		m_6074973
 		p	1			p_1
@@ -562,7 +562,7 @@ c	net/minecraft/unmapped/C_3624347
 c	net/minecraft/unmapped/C_3635204
 	f	Lnet/minecraft/unmapped/C_3635204;	f_4604991		f_4604991
 	f	Lnet/minecraft/unmapped/C_3635204;	f_2912279		f_2912279
-	f	Lnet/minecraft/unmapped/C_3635204;	f_6179977		f_6179977
+	f	Lnet/minecraft/unmapped/C_3635204;	f_6179977		LIT_FURNACE
 	m	(Lnet/minecraft/unmapped/C_3906126;IIILjava/util/Random;)V	m_3941370		tick
 		c		Performs a scheduled tick. Blocks that want to perform some action after a delay can\ntell the world to schedule the update, which is then executed by calling this method.
 		p	1			world
@@ -678,7 +678,7 @@ c	net/minecraft/unmapped/C_3906126
 	f	Ljava/util/List;	f_9572477		eventListeners
 	f	Ljava/util/List;	f_1161172		scheduledTicks
 	f	Ljava/util/Map;	f_0625697		blockEntitiesByPos
-	f	[I	f_6234407		f_6234407
+	f	[I	f_6234407		heightMap
 	f	Ljava/util/Random;	f_3522738		f_3522738
 	f	I	f_5915199		f_5915199
 	f	Lnet/minecraft/unmapped/C_4838406;	f_7148360		entityTracker
@@ -693,8 +693,8 @@ c	net/minecraft/unmapped/C_3906126
 	f	Lnet/minecraft/unmapped/C_1013763;	f_2176096		player
 	f	Z	f_6452769		f_6452769
 	f	I	f_6732352		skyBrightness
-	f	I	f_5627840		f_5627840
-	f	Lnet/minecraft/unmapped/C_7079324;	f_4330482		f_4330482
+	f	I	f_5627840		sunLight
+	f	Lnet/minecraft/unmapped/C_7079324;	f_4330482		lightEngine
 	f	I	f_6512025		timeOfDay
 	f	S	f_8692135		f_8692135
 	f	[S	f_6243074		f_6243074
@@ -732,7 +732,7 @@ c	net/minecraft/unmapped/C_3906126
 	m	()Lnet/minecraft/unmapped/C_0336319;	m_4256689	getCloudColor	
 	m	()Lnet/minecraft/unmapped/C_0336319;	m_2510182	getFogColor	
 	m	()V	m_5250554		m_5250554
-	m	(III[B[B)V	m_2817546		loadWorld
+	m	(III[B[B)V	m_2817546		assemble
 		p	1			sizeX
 		p	2			sizeZ
 		p	3			sizeY
@@ -779,18 +779,18 @@ c	net/minecraft/unmapped/C_3906126
 		p	2			y
 		p	3			z
 	m	()V	m_6536802		tickEntities
-	m	()V	m_4237443		m_4237443
+	m	()V	m_4237443		updateLight
 	m	(F)F	m_2705875		m_2705875
 		p	1			p_1
-	m	(F)Lnet/minecraft/unmapped/C_0336319;	m_4256689		getCloudColor
-		p	1			p_1
-	m	(F)F	m_2724250		m_2724250
-		p	1			p_1
-	m	(F)Lnet/minecraft/unmapped/C_0336319;	m_0577956		m_0577956
-		p	1			p_1
-	m	(F)Lnet/minecraft/unmapped/C_0336319;	m_2613927		getSkyColor
-		p	1			p_1
-	m	()I	m_1560346		m_1560346
+	m	(F)Lnet/minecraft/unmapped/C_0336319;	m_4256689		getSkyColor
+		p	1			tickDelta
+	m	(F)F	m_2724250		getTimeOfDay
+		p	1			tickDelta
+	m	(F)Lnet/minecraft/unmapped/C_0336319;	m_0577956		getFogColor
+		p	1			tickDelta
+	m	(F)Lnet/minecraft/unmapped/C_0336319;	m_2613927		getCloudColor
+		p	1			tickDelta
+	m	()I	m_1560346		getSunLight
 	m	()V	m_8605860		tick
 	m	(Ljava/lang/Class;)I	m_7058473		m_7058473
 		p	1			p_1
@@ -813,7 +813,7 @@ c	net/minecraft/unmapped/C_3906126
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(FFF)Z	m_6056620		isSolidRender
+	m	(FFF)Z	m_6056620		isSolidBlock
 		p	1			x
 		p	2			y
 		p	3			z
@@ -916,13 +916,13 @@ c	net/minecraft/unmapped/C_3906126
 		p	1			centerX
 		p	2			centerY
 		p	3			centerZ
-	m	()V	m_8798715		m_8798715
+	m	()V	m_8798715		close
 	m	(I)V	m_9809636		m_9809636
 		p	1			p_1
-	m	(III)Z	m_2029997		m_2029997
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(III)Z	m_2029997		hasSkyAccess
+		p	1			x
+		p	2			y
+		p	3			z
 c	net/minecraft/unmapped/C_3911481
 	m	(Lnet/minecraft/unmapped/C_3906126;DDD)V	<init>	<init>	
 		p	1		world	
@@ -2080,19 +2080,19 @@ c	net/minecraft/unmapped/C_6372142		net/minecraft/unmapped/C_6372142
 	m	(Lnet/minecraft/unmapped/C_3906126;Ljava/lang/String;)Lnet/minecraft/unmapped/C_6385858;	m_4628500		m_4628500
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_7079324		net/minecraft/unmapped/C_7079324
+c	net/minecraft/unmapped/C_7079324		net/minecraft/world/LightEngine
 	f	I	f_1773705		f_1773705
 	f	Ljava/util/List;	f_4303376		f_4303376
-	f	Lnet/minecraft/unmapped/C_3906126;	f_5385225		f_5385225
-	f	I	f_1592440		f_1592440
-	f	I	f_8834387		f_8834387
-	f	I	f_6808223		f_6808223
-	f	[B	f_2498169		f_2498169
-	f	[B	f_4192636		f_4192636
-	f	[I	f_7568118		f_7568118
+	f	Lnet/minecraft/unmapped/C_3906126;	f_5385225		world
+	f	I	f_1592440		sizeX
+	f	I	f_8834387		sizeY
+	f	I	f_6808223		sizeZ
+	f	[B	f_2498169		blocks
+	f	[B	f_4192636		blockMetadata
+	f	[I	f_7568118		heightMap
 	f	Ljava/util/List;	f_7934904		f_7934904
-	f	Ljava/util/List;	f_8550703		f_8550703
-	f	Ljava/util/List;	f_7031750		f_7031750
+	f	Ljava/util/List;	f_8550703		blockLightUpdates
+	f	Ljava/util/List;	f_7031750		skyLightUpdates
 	f	Ljava/util/List;	f_0914494		f_0914494
 	f	[I	f_5882030		f_5882030
 	f	[B	f_6713571		f_6713571
@@ -2100,24 +2100,24 @@ c	net/minecraft/unmapped/C_7079324		net/minecraft/unmapped/C_7079324
 	f	I	f_6635454		f_6635454
 	f	I	f_6849912		f_6849912
 	m	(Lnet/minecraft/unmapped/C_3906126;)V	<init>		<init>
-		p	1			p_1
+		p	1			world
 	m	()[I	m_8109616		m_8109616
-	m	(IIII)V	m_0087345		m_0087345
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(IIII)V	m_0087345		updateSkyLight
+		p	1			x
+		p	2			z
+		p	3			rangeX
+		p	4			rangeZ
 	m	(I)V	m_4616966		m_4616966
 		p	1			p_1
 	m	(I)V	m_3452050		m_3452050
 		p	1			p_1
-	m	(IIIIII)V	m_8976691		m_8976691
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
+	m	(IIIIII)V	m_8976691		updateBlockLight
+		p	1			minX
+		p	2			minY
+		p	3			minZ
+		p	4			maxX
+		p	5			maxY
+		p	6			maxZ
 	m	(IIIIII)V	m_2928521		m_2928521
 		p	1			p_1
 		p	2			p_2
@@ -2125,7 +2125,7 @@ c	net/minecraft/unmapped/C_7079324		net/minecraft/unmapped/C_7079324
 		p	4			p_4
 		p	5			p_5
 		p	6			p_6
-	m	()V	m_4706545		m_4706545
+	m	()V	m_4706545		update
 	m	()Ljava/lang/String;	m_3359335		getDebugInfo
 c	net/minecraft/unmapped/C_7667301		net/minecraft/nbt/NbtByte
 	f	B	f_7947180		value
@@ -2147,21 +2147,21 @@ c	net/minecraft/unmapped/C_7759597		net/minecraft/unmapped/C_7759597
 		p	2			p_2
 		p	3			p_3
 	m	()V	run		run
-c	net/minecraft/unmapped/C_8401487		net/minecraft/unmapped/C_8401487
-	f	I	f_9889018		f_9889018
-	f	I	f_9201346		f_9201346
-	f	I	f_8633789		f_8633789
-	f	I	f_4863784		f_4863784
-	f	I	f_8552877		f_8552877
-	f	I	f_4086433		f_4086433
+c	net/minecraft/unmapped/C_8401487		net/minecraft/world/LightUpdate
+	f	I	f_9889018		minX
+	f	I	f_9201346		minY
+	f	I	f_8633789		minZ
+	f	I	f_4863784		maxX
+	f	I	f_8552877		maxY
+	f	I	f_4086433		maxZ
 	m	(Lnet/minecraft/unmapped/C_7079324;IIIIII)V	<init>		<init>
 		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
+		p	2			minX
+		p	3			minY
+		p	4			minZ
+		p	5			maxX
+		p	6			maxY
+		p	7			maxZ
 c	net/minecraft/unmapped/C_9005806		net/minecraft/nbt/NbtFloat
 	f	F	f_0036635		value
 	m	()V	<init>		<init>
