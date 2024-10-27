@@ -132,6 +132,18 @@ c	net/minecraft/unmapped/C_2354122	net/minecraft/network/Connection
 		p	0		p_0	
 	m	(Ljava/lang/String;)V	m_1282084	close	
 		p	1		reason	
+c	net/minecraft/unmapped/C_2354122$2512635	2512635	
+	f	Lnet/minecraft/unmapped/C_2354122;	f_8599754	f_8599754	
+	m	(Lnet/minecraft/unmapped/C_2354122;Ljava/lang/String;)V	<init>	<init>	
+		p	1		p_1	
+		p	2		p_2	
+	m	()V	run	run	
+c	net/minecraft/unmapped/C_2354122$7593858	7593858	
+	f	Lnet/minecraft/unmapped/C_2354122;	f_4007566	f_4007566	
+	m	(Lnet/minecraft/unmapped/C_2354122;Ljava/lang/String;)V	<init>	<init>	
+		p	1		p_1	
+		p	2		p_2	
+	m	()V	run	run	
 c	net/minecraft/unmapped/C_2616453	net/minecraft/client/world/chunk/MultiplayerChunkCache	
 	f	Lnet/minecraft/unmapped/C_6755599;	f_7773801	empty	
 	f	Ljava/util/Map;	f_5625936	chunksByPos	
@@ -165,11 +177,11 @@ c	net/minecraft/unmapped/C_2616453	net/minecraft/client/world/chunk/MultiplayerC
 c	net/minecraft/unmapped/C_3635204
 	f	Lnet/minecraft/unmapped/C_3635204;	f_1043766	SNOW	
 c	net/minecraft/unmapped/C_3837238	net/minecraft/util/Int2ObjectHashMap	
+	f	[Lnet/minecraft/unmapped/C_3837238$C_6094996;	f_1815865	nodes	
 	f	I	f_6401111	size	
 	f	I	f_8751660	threshold	
 	f	F	f_2451423	loadFactor	
 	f	I	f_6465003	modCount	
-	f	[Lnet/minecraft/unmapped/C_6094996;	f_1815865	nodes	
 	m	()V	<init>	<init>	
 	m	(I)I	m_5262587	hash	
 		p	0		key	
@@ -183,6 +195,8 @@ c	net/minecraft/unmapped/C_3837238	net/minecraft/util/Int2ObjectHashMap
 		p	2		value	
 	m	(I)V	m_8612083	resize	
 		p	1		size	
+	m	([Lnet/minecraft/unmapped/C_3837238$C_6094996;)V	m_1422658	addAll	
+		p	1		nodes	
 	m	()V	m_0933543	clear	
 	m	(IILjava/lang/Object;I)V	m_5459329	insertNode	
 		p	1		hash	
@@ -191,8 +205,22 @@ c	net/minecraft/unmapped/C_3837238	net/minecraft/util/Int2ObjectHashMap
 		p	4		index	
 	m	(I)I	m_4115310	syntheticGetHash	
 		p	0		i	
-	m	([Lnet/minecraft/unmapped/C_6094996;)V	m_1422658	addAll	
-		p	1		nodes	
+c	net/minecraft/unmapped/C_3837238$C_6094996	Node	
+	f	I	f_2671247	key	
+	f	Ljava/lang/Object;	f_5251941	value	
+	f	Lnet/minecraft/unmapped/C_3837238$C_6094996;	f_4594041	next	
+	f	I	f_7077493	hash	
+	m	(IILjava/lang/Object;Lnet/minecraft/unmapped/C_3837238$C_6094996;)V	<init>	<init>	
+		p	1		hash	
+		p	2		key	
+		p	3		value	
+		p	4		next	
+	m	()I	m_4224545	getKey	
+	m	()Ljava/lang/Object;	m_1690012	getValue	
+	m	(Ljava/lang/Object;)Z	equals	equals	
+		p	1		p_1	
+	m	()I	hashCode	hashCode	
+	m	()Ljava/lang/String;	toString	toString	
 c	net/minecraft/unmapped/C_3906126
 	f	Z	f_2117871	isMultiplayer	
 	m	(II)I	m_0299234	getSurfaceHeight	
@@ -393,6 +421,17 @@ c	net/minecraft/unmapped/C_7662486	net/minecraft/client/gui/screen/ConnectScreen
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_7662486;)Lnet/minecraft/unmapped/C_4939758;	m_2708053	m_2708053	
 		p	0		p_0	
+c	net/minecraft/unmapped/C_7662486$0454576	0454576	
+	f	Lnet/minecraft/client/Minecraft;	f_4331332	f_4331332	
+	f	Ljava/lang/String;	f_2894502	f_2894502	
+	f	I	f_7018341	f_7018341	
+	f	Lnet/minecraft/unmapped/C_7662486;	f_5588221	f_5588221	
+	m	(Lnet/minecraft/unmapped/C_7662486;Lnet/minecraft/client/Minecraft;Ljava/lang/String;I)V	<init>	<init>	
+		p	1		p_1	
+		p	2		p_2	
+		p	3		p_3	
+		p	4		p_4	
+	m	()V	run	run	
 c	net/minecraft/unmapped/C_8817873	net/minecraft/client/world/MultiplayerWorld	
 	f	Lnet/minecraft/unmapped/C_4939758;	f_9307762	networkHandler	
 	f	Lnet/minecraft/unmapped/C_2616453;	f_4295585	chunkCache	
@@ -453,56 +492,17 @@ c	net/minecraft/unmapped/C_9614477	net/minecraft/network/packet/LoginPacket
 	m	(Lnet/minecraft/unmapped/C_4443804;)V	m_0240895	m_0240895	
 		p	1		p_1	
 	m	()I	m_3019759	m_3019759	
-c	net/minecraft/unmapped/C_0454576	net/minecraft/client/gui/screen/ConnectScreen__0454576	
-	f	Lnet/minecraft/client/Minecraft;	f_4331332	f_4331332	
-	f	Ljava/lang/String;	f_2894502	name	
-	f	I	f_7018341	port	
-	f	Lnet/minecraft/unmapped/C_7662486;	f_5588221	connectScreen	
-	m	(Lnet/minecraft/unmapped/C_7662486;Lnet/minecraft/client/Minecraft;Ljava/lang/String;I)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-	m	()V	run	run	
-c	net/minecraft/unmapped/C_2512635	net/minecraft/network/RemoteConnection__2512635	
-	f	Lnet/minecraft/unmapped/C_2354122;	f_8599754	f_8599754	
-	m	(Lnet/minecraft/unmapped/C_2354122;Ljava/lang/String;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-	m	()V	run	run	
-c	net/minecraft/unmapped/C_6094996	net/minecraft/util/Int2ObjectHashMap__Node	
-	f	I	f_2671247	key	
-	f	Ljava/lang/Object;	f_5251941	value	
-	f	Lnet/minecraft/unmapped/C_6094996;	f_4594041	next	
-	f	I	f_7077493	hash	
-	m	(IILjava/lang/Object;Lnet/minecraft/unmapped/C_6094996;)V	<init>	<init>	
-		p	1		hash	
-		p	2		key	
-		p	3		value	
-		p	4		next	
-	m	()I	m_4224545	getKey	
-	m	()Ljava/lang/Object;	m_1690012	getValue	
-	m	(Ljava/lang/Object;)Z	equals	equals	
-		p	1		p_1	
-	m	()I	hashCode	hashCode	
-	m	()Ljava/lang/String;	toString	toString	
-c	net/minecraft/unmapped/C_7593858	net/minecraft/network/RemoteConnection__7593858	
-	f	Lnet/minecraft/unmapped/C_2354122;	f_4007566	f_4007566	
-	m	(Lnet/minecraft/unmapped/C_2354122;Ljava/lang/String;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-	m	()V	run	run	
 c	net/minecraft/unmapped/C_8094787	net/minecraft/network/packet/PlayerMovePacket__PositionAndAngles	
 	f	D	f_5314337	f_5314337	
 	f	D	f_3747767	f_3747767	
 	f	D	f_9142942	f_9142942	
 	f	F	f_2816476	f_2816476	
 	f	F	f_3194936	f_3194936	
-	m	(Ljava/io/DataInputStream;)V	m_8784008	m_8784008	
-		p	1		p_1	
-	m	(Ljava/io/DataOutputStream;)V	m_4625396	m_4625396	
-		p	1		p_1	
 	m	()V	<init>	<init>	
 	m	()I	m_3019759	m_3019759	
 	m	(Lnet/minecraft/unmapped/C_4443804;)V	m_0240895	m_0240895	
+		p	1		p_1	
+	m	(Ljava/io/DataInputStream;)V	m_8784008	m_8784008	
+		p	1		p_1	
+	m	(Ljava/io/DataOutputStream;)V	m_4625396	m_4625396	
 		p	1		p_1	
