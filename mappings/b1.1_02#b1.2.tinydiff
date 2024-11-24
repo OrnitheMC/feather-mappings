@@ -454,7 +454,7 @@ c	net/minecraft/unmapped/C_6385858
 	f	Z	f_6177953	f_6177953	
 	f	Z	f_6738905	f_6738905	
 	f	Z	f_0260780	f_0260780	
-	f	Lnet/minecraft/unmapped/C_5067501;	f_1131823		dataTracker
+	f	Lnet/minecraft/unmapped/C_5067501;	f_1131823		syncedData
 	m	(IIF)Lnet/minecraft/unmapped/C_3050136;	m_4351561	dropItem	
 		p	1		p_1	
 		p	2		p_2	
@@ -463,8 +463,8 @@ c	net/minecraft/unmapped/C_6385858
 		p	1		p_1	
 		p	2		p_2	
 	m	()[I	m_9919834	getEquipmentStacks	
-	m	()V	m_5855336		initDataTracker
-	m	()Lnet/minecraft/unmapped/C_5067501;	m_4655395		getDataTracker
+	m	()V	m_5855336		registerSyncedData
+	m	()Lnet/minecraft/unmapped/C_5067501;	m_4655395		getSyncedData
 	m	(IIF)Lnet/minecraft/unmapped/C_3050136;	m_4336212		dropItem
 		p	1			id
 		p	2			amount
@@ -583,9 +583,9 @@ c	net/minecraft/unmapped/C_8752044
 	m	(Lnet/minecraft/unmapped/C_8670302;)V	m_5326655		m_5326655
 		p	1			p_1
 c	net/minecraft/unmapped/C_8754653
-	f	Lnet/minecraft/unmapped/C_5067501;	f_2939300		tracker
-	f	Ljava/util/List;	f_7324534		entries
-	m	()Ljava/util/List;	m_6217546		getEntries
+	f	Lnet/minecraft/unmapped/C_5067501;	f_2939300		syncedData
+	f	Ljava/util/List;	f_7324534		dataEntries
+	m	()Ljava/util/List;	m_6217546		getDataEntries
 c	net/minecraft/unmapped/C_8905061
 	m	()V	m_5855336		m_5855336
 c	net/minecraft/unmapped/C_8906619
@@ -881,7 +881,7 @@ c	net/minecraft/unmapped/C_2842873		net/minecraft/network/packet/EntityDataPacke
 	m	()V	<init>		<init>
 	m	(ILnet/minecraft/unmapped/C_5067501;)V	<init>		<init>
 		p	1			id
-		p	2			dataTracker
+		p	2			syncedData
 	m	(Ljava/io/DataInputStream;)V	m_8784008		m_8784008
 		p	1			p_1
 	m	(Ljava/io/DataOutputStream;)V	m_4625396		m_4625396
@@ -1068,7 +1068,7 @@ c	net/minecraft/unmapped/C_5054734		net/minecraft/network/packet/AddPaintingPack
 	m	(Lnet/minecraft/unmapped/C_4443804;)V	m_0240895		m_0240895
 		p	1			p_1
 	m	()I	m_0079091		m_0079091
-c	net/minecraft/unmapped/C_5067501		net/minecraft/entity/data/DataTracker
+c	net/minecraft/unmapped/C_5067501		net/minecraft/entity/data/SyncedData
 	f	Ljava/util/HashMap;	f_5541498		DATA_TYPES
 	f	Ljava/util/Map;	f_0885459		entries
 	f	Z	f_8601596		dirty
@@ -1098,23 +1098,21 @@ c	net/minecraft/unmapped/C_5067501		net/minecraft/entity/data/DataTracker
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_5067501$C_5041481		Entry
 	f	I	f_5039448		type
-		c		A number that encodes the type of data stored in this entry.
-	f	I	f_5982817		attribute
-		c		A number that encodes what the data in this entry represents.
+	f	I	f_5982817		id
 	f	Ljava/lang/Object;	f_4385869		value
-	f	Z	f_7830432		modified
+	f	Z	f_7830432		dirty
 	m	(IILjava/lang/Object;)V	<init>		<init>
 		p	1			type
-		p	2			attribute
+		p	2			id
 		p	3			value
-	m	()I	m_7119797		getAttribute
+	m	()I	m_7119797		getId
 	m	(Ljava/lang/Object;)V	m_2968810		setValue
 		p	1			value
 	m	()Ljava/lang/Object;	m_4466046		getValue
 	m	()I	m_7438109		getType
-	m	()Z	m_5150391		isModified
-	m	(Z)V	m_4202171		setModified
-		p	1			modified
+	m	()Z	m_5150391		isDirty
+	m	(Z)V	m_4202171		setDirty
+		p	1			dirty
 c	net/minecraft/unmapped/C_5287522		net/minecraft/item/LogItem
 	m	(I)V	<init>		<init>
 		p	1			p_1
