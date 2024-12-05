@@ -294,14 +294,14 @@ c	net/minecraft/unmapped/C_1013763	net/minecraft/entity/mob/MobEntity	net/minecr
 	f	Ljava/lang/String;	f_0526150	modelName	
 	f	F	f_2730594	f_2730594	
 	f	I	f_9406435	health	
-	f	I	f_6681712	lastHealth	
+	f	I	f_6681712	prevHealth	
 	f	I	f_5887688	ambientSoundTimer	
 		c	The number is initially set to -soundInterval, after this interval each tick the probability of making a sound will go up with 1 promille	
 	f	Z	f_8161233	dead	
 	f	I	f_7405401	f_7405401	
 	f	F	f_6162902	f_6162902	
 	f	F	f_1504584	f_1504584	
-	f	I	f_9483719	prevHealth	
+	f	I	f_9483719	prevDamageTaken	
 	f	F	f_2281696	sidewaysSpeed	
 	f	F	f_1337476	defaultPitch	
 	f	F	f_0531186	walkSpeed	
@@ -339,7 +339,7 @@ c	net/minecraft/unmapped/C_1013763	net/minecraft/entity/mob/MobEntity	net/minecr
 	f	[F	f_8275501	equipmentDropChance	
 	f	Z	f_7041576	persistenceRequired	
 	f	Lnet/minecraft/unmapped/C_9549387;	f_0217020		attributes
-	f	F	f_3084778		lastHealth
+	f	F	f_3084778		prevHealth
 	f	Z	f_9066731		dead
 	f	F	f_0196418		sidewaysSpeed
 	f	Z	f_1484892		effectsChanged
@@ -478,9 +478,9 @@ c	net/minecraft/unmapped/C_1013763	net/minecraft/entity/mob/MobEntity	net/minecr
 	m	()F	m_4971784		getHealth
 	m	(F)V	m_8195933		setHealth
 		p	1			amount
-	m	()F	m_6679960		m_6679960
-	m	(F)V	m_1971311		m_1971311
-		p	1			p_1
+	m	()F	m_6679960		getMountHealth
+	m	(F)V	m_1971311		setMountHealth
+		p	1			amount
 	m	(Lnet/minecraft/unmapped/C_6907923;F)Z	m_3238154		m_3238154
 		p	1			p_1
 		p	2			p_2
@@ -4949,22 +4949,22 @@ c	net/minecraft/unmapped/C_5801153		net/minecraft/entity/living/attribute/Modifi
 	f	D	f_4176946		value
 	m	(Lnet/minecraft/unmapped/C_3731908;)V	<init>		<init>
 		p	1			p_1
-	m	()Lnet/minecraft/unmapped/C_3731908;	m_9689010		m_9689010
-	m	()D	m_3259491		m_3259491
-	m	(D)V	m_4631477		m_4631477
-		p	1			p_1
+	m	()Lnet/minecraft/unmapped/C_3731908;	m_9689010		getAttribute
+	m	()D	m_3259491		getBaseValue
+	m	(D)V	m_4631477		setBaseValue
+		p	1			value
 	m	(I)Ljava/util/Collection;	m_3070322		getModifiers
 		p	1			operation
-	m	()Ljava/util/Collection;	m_1612387		m_1612387
-	m	(Ljava/util/UUID;)Lnet/minecraft/unmapped/C_2237759;	m_9212014		m_9212014
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_2237759;)V	m_5446298		m_5446298
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_2237759;)V	m_8429446		m_8429446
-		p	1			p_1
-	m	(Ljava/util/UUID;)V	m_5506204		m_5506204
-		p	1			p_1
-	m	()D	m_2983528		m_2983528
+	m	()Ljava/util/Collection;	m_1612387		getModifiers
+	m	(Ljava/util/UUID;)Lnet/minecraft/unmapped/C_2237759;	m_9212014		getModifier
+		p	1			uuid
+	m	(Lnet/minecraft/unmapped/C_2237759;)V	m_5446298		addModifier
+		p	1			modifier
+	m	(Lnet/minecraft/unmapped/C_2237759;)V	m_8429446		removeModifier
+		p	1			modifier
+	m	(Ljava/util/UUID;)V	m_5506204		removeModifier
+		p	1			uuid
+	m	()D	m_2983528		getValue
 	m	()D	m_7021868		computeValue
 c	net/minecraft/unmapped/C_6006943		net/minecraft/entity/decoration/LeadKnotEntity
 	m	(Lnet/minecraft/unmapped/C_3906126;)V	<init>		<init>
