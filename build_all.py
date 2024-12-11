@@ -115,6 +115,7 @@ class GradleProcess:
     def __init__(self, build_dir: str, version: str):
         self._version: str = version
         self._build_dir: str = build_dir
+        self._version_dir: str = os.path.join(self._build_dir, self._version.replace(":", " "))
         self._gradle_command: str = "gradlew" if os.name == "nt" else "./gradlew"
         self._process: Optional[subprocess.Popen] = None
         self._times_run: int = 0
@@ -125,7 +126,7 @@ class GradleProcess:
             self._times_run += 1
             print(f"Version {self._version}")
             self._delete_dir()
-            os.mkdir(os.path.join(self._build_dir, self._version))
+            os.mkdir(self._version_dir)
             self._get_ready()
             self._run_gradle_command()
             self._process_listener()
@@ -139,15 +140,15 @@ class GradleProcess:
         return self._times_run <= 2
 
     def _delete_dir(self) -> None:
-        if os.path.isdir(os.path.join(self._build_dir, self._version)):
-            shutil.rmtree(os.path.join(self._build_dir, self._version))
+        if os.path.isdir(self._version_dir):
+            shutil.rmtree(self._version_dir)
 
     def _get_ready(self) -> None:
         for element in self._TO_COPY:
             if os.path.isdir(element):
-                shutil.copytree(element, os.path.join(self._build_dir, self._version, element))
+                shutil.copytree(element, os.path.join(self._version_dir, element))
             else:
-                shutil.copy(element, os.path.join(self._build_dir, self._version, element))
+                shutil.copy(element, os.path.join(self._version_dir, element))
 
     def get_exit_code(self) -> int:
         return self._process.returncode
@@ -166,7 +167,7 @@ class GradleProcess:
             stderr=subprocess.STDOUT,
             shell=True,
             env=env,
-            cwd=os.path.join(self._build_dir, self._version)
+            cwd=self._version_dir
         )
 
     def _process_listener(self) -> None:
