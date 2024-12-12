@@ -218,7 +218,7 @@ c	net/minecraft/isom/IsomPreviewApplet	net/minecraft/isom/IsomPreviewApplet
 	m	()V	stop	stop
 c	net/minecraft/server/MinecraftServer	net/minecraft/server/MinecraftServer
 	f	Ljava/util/logging/Logger;	f_7446175	LOGGER
-	f	Ljava/util/HashMap;	f_5715141	f_5715141
+	f	Ljava/util/HashMap;	f_5715141	GIVE_COMMANDS_COOLDOWNS
 	f	Lnet/minecraft/unmapped/C_1591456;	f_4346884	connections
 	f	Lnet/minecraft/unmapped/C_0894181;	f_8663224	properties
 	f	Lnet/minecraft/unmapped/C_7366354;	f_3723005	world
@@ -247,7 +247,7 @@ c	net/minecraft/server/MinecraftServer	net/minecraft/server/MinecraftServer
 	m	()V	m_4656559	stop
 	m	()V	run	run
 	m	()V	m_9071158	tick
-	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_2182707;)V	m_3813815	queueCommands
+	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_2182707;)V	m_3813815	queueCommand
 		p	1		command
 		p	2		source
 	m	()V	m_2515286	runPendingCommands
@@ -2843,7 +2843,7 @@ c	net/minecraft/unmapped/C_2154975$7900111	net/minecraft/crafting/CraftingManage
 		p	2		p_2
 c	net/minecraft/unmapped/C_2178068	net/minecraft/inventory/CraftingInventory
 	f	[Lnet/minecraft/unmapped/C_2750078;	f_2413097	stacks
-	f	I	f_1604289	width
+	f	I	f_1604289	size
 	f	Lnet/minecraft/unmapped/C_7699185;	f_5304773	menu
 	m	(Lnet/minecraft/unmapped/C_7699185;II)V	<init>	<init>
 		p	1		menu
@@ -5885,7 +5885,7 @@ c	net/minecraft/unmapped/C_3906126	net/minecraft/world/World
 		p	3		z
 		p	4		face
 	m	(Ljava/lang/Class;)Lnet/minecraft/unmapped/C_6385858;	m_2356502	getEntityOfSubtype
-		p	1		p_1
+		p	1		type
 	m	()Ljava/lang/String;	m_9392586	getDebugInfo
 	m	(III)Lnet/minecraft/unmapped/C_2074023;	m_0209603	getBlockEntity
 		p	1		x
@@ -6725,7 +6725,7 @@ c	net/minecraft/unmapped/C_4390289	net/minecraft/inventory/Inventory
 	m	()I	m_5322905	getSize
 	m	(I)Lnet/minecraft/unmapped/C_2750078;	m_8258340	getStack
 		p	1		slot
-	m	(II)Lnet/minecraft/unmapped/C_2750078;	m_7197418	removeStack
+	m	(II)Lnet/minecraft/unmapped/C_2750078;	m_7197418	removeItems
 		p	1		slot
 		p	2		amount
 	m	(ILnet/minecraft/unmapped/C_2750078;)V	m_3820824	setStack
@@ -9928,7 +9928,7 @@ c	net/minecraft/unmapped/C_7192378	net/minecraft/inventory/slot/InventorySlot
 		p	2		id
 		p	3		x
 		p	4		y
-	m	()V	m_7573710	onStackRemovedByPlayer
+	m	()V	m_7573710	onItemsRemoved
 	m	(Lnet/minecraft/unmapped/C_2750078;)Z	m_6628482	canSetStack
 		p	1		stack
 	m	()Lnet/minecraft/unmapped/C_2750078;	m_0472919	getStack
@@ -9938,7 +9938,7 @@ c	net/minecraft/unmapped/C_7192378	net/minecraft/inventory/slot/InventorySlot
 	m	()V	m_3611799	markDirty
 	m	()I	m_9057457	getMaxStackSize
 	m	()I	m_9006711	getTexture
-	m	(I)Lnet/minecraft/unmapped/C_2750078;	m_0503342	removeStack
+	m	(I)Lnet/minecraft/unmapped/C_2750078;	m_0503342	removeItems
 		p	1		amount
 	m	(Lnet/minecraft/unmapped/C_4390289;I)Z	m_6632735	equals
 		p	1		inventory
@@ -11323,7 +11323,7 @@ c	net/minecraft/unmapped/C_8546801	net/minecraft/server/entity/EntityTracker
 	f	Lnet/minecraft/server/MinecraftServer;	f_4208397	world
 	f	I	f_5753668	viewDistance
 	m	(Lnet/minecraft/server/MinecraftServer;)V	<init>	<init>
-		p	1		p_1
+		p	1		server
 	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_3801660	onEntityAdded
 		p	1		entity
 	m	(Lnet/minecraft/unmapped/C_6385858;II)V	m_1065567	startTracking

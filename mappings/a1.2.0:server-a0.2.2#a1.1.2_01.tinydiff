@@ -1,7 +1,7 @@
 tiny	2	0
 c	net/minecraft/server/MinecraftServer	net/minecraft/server/MinecraftServer	
 	f	Ljava/util/logging/Logger;	f_7446175	LOGGER	
-	f	Ljava/util/HashMap;	f_5715141	f_5715141	
+	f	Ljava/util/HashMap;	f_5715141	GIVE_COMMANDS_COOLDOWNS	
 	f	Lnet/minecraft/unmapped/C_1591456;	f_4346884	connections	
 	f	Lnet/minecraft/unmapped/C_0894181;	f_8663224	properties	
 	f	Lnet/minecraft/unmapped/C_7366354;	f_3723005	world	
@@ -28,7 +28,7 @@ c	net/minecraft/server/MinecraftServer	net/minecraft/server/MinecraftServer
 	m	()V	m_4656559	stop	
 	m	()V	run	run	
 	m	()V	m_9071158	tick	
-	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_2182707;)V	m_3813815	queueCommands	
+	m	(Ljava/lang/String;Lnet/minecraft/unmapped/C_2182707;)V	m_3813815	queueCommand	
 		p	1		command	
 		p	2		source	
 	m	()V	m_2515286	runPendingCommands	
@@ -231,34 +231,34 @@ c	net/minecraft/unmapped/C_0559439
 		p	2		p_2	
 		p	3		p_3	
 		p	4		p_4	
-	m	(Lnet/minecraft/unmapped/C_3906126;IIII)V	m_0266274		m_0266274
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-	m	(Lnet/minecraft/unmapped/C_3906126;III)V	m_6872528		m_6872528
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_3906126;IIII)I	m_0148130		m_0148130
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+	m	(Lnet/minecraft/unmapped/C_3906126;IIII)V	m_0266274		updateNeighborLogProximity
+		p	1			world
+		p	2			neighborX
+		p	3			neighborY
+		p	4			neighborZ
+		p	5			proximity
+	m	(Lnet/minecraft/unmapped/C_3906126;III)V	m_6872528		updateLogProximity
+		p	1			world
+		p	2			x
+		p	3			y
+		p	4			z
+	m	(Lnet/minecraft/unmapped/C_3906126;IIII)I	m_0148130		getLogProximity
+		p	1			world
+		p	2			neighborX
+		p	3			neighborY
+		p	4			neighborZ
+		p	5			proximity
 	m	(Lnet/minecraft/unmapped/C_3906126;IIILjava/util/Random;)V	m_9294619		m_9294619
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	(Lnet/minecraft/unmapped/C_3906126;III)V	m_1351746		m_1351746
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(Lnet/minecraft/unmapped/C_3906126;III)V	m_1351746		breakLeaves
+		p	1			world
+		p	2			x
+		p	3			y
+		p	4			z
 c	net/minecraft/unmapped/C_0611937
 	m	(IDD)D	m_6343956	gradient	
 		p	1		hash	
@@ -350,9 +350,9 @@ c	net/minecraft/unmapped/C_0901730	net/minecraft/server/entity/EntityTrackerEntr
 		p	1		players	
 	m	()Lnet/minecraft/unmapped/C_4844124;	m_0636384	createAddEntityPacket	
 	m	(Lnet/minecraft/unmapped/C_6385858;II)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+		p	1		entity	
+		p	2		trackedDistance	
+		p	3		trackingFrequency	
 c	net/minecraft/unmapped/C_0914500	net/minecraft/world/biome/source/FixedBiomeSource	
 	f	Lnet/minecraft/unmapped/C_4636105;	f_6040254	biome	
 	f	D	f_0126498	temperature	
@@ -795,9 +795,9 @@ c	net/minecraft/unmapped/C_3906126
 	f	Ljava/io/File;	f_1707582	dir	
 	f	I	f_7370886	doLightUpdatesDepth	
 	f	I	f_0889426	updateLightDepth	
-	f	Z	f_3119731		f_3119731
-	f	J	f_7778442		f_7778442
-	f	J	f_3393854		f_3393854
+	f	Z	f_3119731		snowCovered
+	f	J	f_7778442		skyColor
+	f	J	f_3393854		fogColor
 	f	[F	f_1283049		brightnessTable
 	m	()Lnet/minecraft/unmapped/C_9143244;	m_9380668	getBiomeSource	
 	m	(Ljava/io/File;Ljava/lang/String;JLnet/minecraft/unmapped/C_9219192;)V	<init>	<init>	
@@ -831,13 +831,13 @@ c	net/minecraft/unmapped/C_3906126
 		p	2		tickDelta	
 	m	(Ljava/lang/String;)V	<init>		<init>
 		p	1			saveName
-	m	(II)Z	m_5710968		m_5710968
-		p	1			p_1
-		p	2			p_2
+	m	(II)Z	m_5710968		isValidSpawnPoint
+		p	1			x
+		p	2			z
 	m	(F)Lnet/minecraft/unmapped/C_0336319;	m_2613927		getSkyColor
 		p	1			tickDelta
 	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_3502009		updateEntity
-		p	1			p_1
+		p	1			entity
 c	net/minecraft/unmapped/C_4030632
 	f	Lnet/minecraft/unmapped/C_4030632;	f_8449599	CLOCK	
 	f	Lnet/minecraft/unmapped/C_4030632;	f_6611184	GLOWSTONE_DUST	
@@ -1315,21 +1315,21 @@ c	net/minecraft/unmapped/C_7261559
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	(Lnet/minecraft/unmapped/C_3906126;III)V	m_9335379		m_9335379
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_6365493		m_6365493
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_8056792		m_8056792
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(Lnet/minecraft/unmapped/C_3906126;III)V	m_9335379		updateShape
+		p	1			world
+		p	2			x
+		p	3			y
+		p	4			z
+	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_6365493		isSolidBlock
+		p	1			world
+		p	2			x
+		p	3			y
+		p	4			z
+	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_8056792		isStairsBlock
+		p	1			world
+		p	2			x
+		p	3			y
+		p	4			z
 c	net/minecraft/unmapped/C_7366354	net/minecraft/server/world/ServerWorld	
 	f	Lnet/minecraft/unmapped/C_3571139;	f_4355570	chunkCache	
 	f	Z	f_8250949	bypassSpawnProtection	
@@ -1446,7 +1446,7 @@ c	net/minecraft/unmapped/C_8546801	net/minecraft/server/entity/EntityTracker
 	f	Lnet/minecraft/server/MinecraftServer;	f_4208397	world	
 	f	I	f_5753668	viewDistance	
 	m	(Lnet/minecraft/server/MinecraftServer;)V	<init>	<init>	
-		p	1		p_1	
+		p	1		server	
 	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_3801660	onEntityAdded	
 		p	1		entity	
 	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_9053164	onEntityRemoved	
@@ -1456,9 +1456,9 @@ c	net/minecraft/unmapped/C_8546801	net/minecraft/server/entity/EntityTracker
 		p	1		entity	
 		p	2		packet	
 	m	(Lnet/minecraft/unmapped/C_6385858;II)V	m_4679752	startTracking	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+		p	1		entity	
+		p	2		trackedDistance	
+		p	3		trackingFrequency	
 c	net/minecraft/unmapped/C_8554894
 	f	Lnet/minecraft/unmapped/C_8554894;	f_7403697	PUMPKIN	
 	f	Lnet/minecraft/unmapped/C_8554894;	f_2460692	PORTAL	

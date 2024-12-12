@@ -45,7 +45,7 @@ c	net/minecraft/unmapped/C_4286596
 		p	1		p_1	
 		p	2		p_2	
 c	net/minecraft/unmapped/C_4390289
-	m	(II)Lnet/minecraft/unmapped/C_2750078;	m_7197418	removeStack	
+	m	(II)Lnet/minecraft/unmapped/C_2750078;	m_7197418	removeItems	
 		p	1		slot	
 		p	2		amount	
 c	net/minecraft/unmapped/C_5009044
@@ -86,8 +86,8 @@ c	net/minecraft/unmapped/C_9022523	net/minecraft/block/CraftingTableBlock
 c	net/minecraft/client/Minecraft
 	f	Lnet/minecraft/unmapped/C_8036556;	f_5367062	humanoidModel	
 c	net/minecraft/unmapped/C_0387400
-	f	Lnet/minecraft/unmapped/C_2178068;	f_6349239	f_6349239	
-	f	Lnet/minecraft/unmapped/C_0387400$C_2178068;	f_6349239		f_6349239
+	f	Lnet/minecraft/unmapped/C_2178068;	f_6349239	craftingInventory	
+	f	Lnet/minecraft/unmapped/C_0387400$C_2178068;	f_6349239		craftingInventory
 	m	(Lnet/minecraft/unmapped/C_0387400;)Lnet/minecraft/unmapped/C_0387400$C_2178068;	m_8571357		m_8571357
 		p	0			p_0
 c	net/minecraft/unmapped/C_0387400$C_2178068		CraftingInventory
@@ -126,8 +126,8 @@ c	net/minecraft/unmapped/C_0387400$C_6095546		ResultInventory
 	m	()I	m_6204563		m_6204563
 	m	(Lnet/minecraft/unmapped/C_0387400;)V	<init>		<init>
 		p	1			p_1
-c	net/minecraft/unmapped/C_0387400$C_8687811		C_8687811
-	f	Lnet/minecraft/unmapped/C_0387400;	f_6291219		f_6291219
+c	net/minecraft/unmapped/C_0387400$C_8687811		CraftingResultSlot
+	f	Lnet/minecraft/unmapped/C_0387400;	f_6291219		inventory
 	m	(Lnet/minecraft/unmapped/C_0387400;Lnet/minecraft/unmapped/C_4390289;III)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -151,7 +151,7 @@ c	net/minecraft/unmapped/C_2154975$7900111	7900111
 		p	2		p_2	
 c	net/minecraft/unmapped/C_2178068	net/minecraft/inventory/CraftingInventory	
 	f	[Lnet/minecraft/unmapped/C_2750078;	f_2413097	stacks	
-	f	I	f_1604289	width	
+	f	I	f_1604289	size	
 	f	Lnet/minecraft/unmapped/C_7542541;	f_5304773	menu	
 	m	()I	m_5322905	m_5322905	
 	m	(I)Lnet/minecraft/unmapped/C_2750078;	m_8258340	m_8258340	
@@ -165,9 +165,9 @@ c	net/minecraft/unmapped/C_2178068	net/minecraft/inventory/CraftingInventory
 		p	2		p_2	
 	m	()I	m_6204563	m_6204563	
 	m	(Lnet/minecraft/unmapped/C_7542541;II)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+		p	1		menu	
+		p	2		width	
+		p	3		height	
 c	net/minecraft/unmapped/C_2334550
 	f	I	f_0607093	nextVertexCount	
 c	net/minecraft/unmapped/C_2725397	net/minecraft/crafting/WeaponRecipes	
@@ -212,8 +212,8 @@ c	net/minecraft/unmapped/C_6851947	net/minecraft/crafting/MineralRecipes
 	m	(Lnet/minecraft/unmapped/C_2154975;)V	m_1277241	register	
 		p	1		manager	
 c	net/minecraft/unmapped/C_6923352	net/minecraft/client/gui/screen/inventory/menu/SurvivalInventoryScreen	
-	f	Lnet/minecraft/unmapped/C_2178068;	f_3917388	f_3917388	
-	f	Lnet/minecraft/unmapped/C_4390289;	f_3191802	f_3191802	
+	f	Lnet/minecraft/unmapped/C_2178068;	f_3917388	craftingInventory	
+	f	Lnet/minecraft/unmapped/C_4390289;	f_3191802	resultInventory	
 	m	()V	m_5630231	m_5630231	
 	m	(Lnet/minecraft/unmapped/C_4390289;)V	<init>	<init>	
 		p	1		p_1	
@@ -227,7 +227,7 @@ c	net/minecraft/unmapped/C_7192378	net/minecraft/inventory/slot/InventorySlot
 	f	I	f_2933466	x	
 	f	I	f_0916193	y	
 	f	Lnet/minecraft/unmapped/C_7542541;	f_9748956	screen	
-	m	()V	m_7573710	onStackRemovedByPlayer	
+	m	()V	m_7573710	onItemsRemoved	
 	m	(Lnet/minecraft/unmapped/C_2750078;)V	m_6342010	setStack	
 		p	1		stack	
 	m	(Lnet/minecraft/unmapped/C_7542541;Lnet/minecraft/unmapped/C_4390289;III)V	<init>	<init>	
@@ -251,7 +251,7 @@ c	net/minecraft/unmapped/C_7542541
 	f	Lnet/minecraft/unmapped/C_4917405;	f_6686932	itemRenderer	
 	f	Lnet/minecraft/unmapped/C_3466301;	f_6686932		itemRenderer
 	m	()V	<clinit>	<clinit>	
-	m	()V	m_6838119	m_6838119	
+	m	()V	m_6838119	onInventoryModified	
 	m	(Lnet/minecraft/unmapped/C_4390289;)V	<init>		<init>
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_2750078;II)V	m_6666177		m_6666177
@@ -281,15 +281,15 @@ c	net/minecraft/unmapped/C_7542541$C_7192378		InventorySlot
 		p	1			stack
 	m	(Lnet/minecraft/unmapped/C_7542541$C_7192378;)Lnet/minecraft/unmapped/C_4390289;	m_0357715		m_0357715
 		p	0			p_0
-c	net/minecraft/unmapped/C_8687811	net/minecraft/unmapped/C_8687811	
-	f	Lnet/minecraft/unmapped/C_4390289;	f_6291219	f_6291219	
+c	net/minecraft/unmapped/C_8687811	net/minecraft/client/gui/screen/inventory/menu/CraftingResultSlot	
+	f	Lnet/minecraft/unmapped/C_4390289;	f_6291219	inventory	
 	m	(Lnet/minecraft/unmapped/C_7542541;Lnet/minecraft/unmapped/C_4390289;Lnet/minecraft/unmapped/C_4390289;III)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
+		p	1		screen	
+		p	2		inventory	
+		p	3		resultInventory	
+		p	4		id	
+		p	5		x	
+		p	6		y	
 	m	()V	m_7573710	m_7573710	
 	m	()Z	m_6628482	m_6628482	
 c	net/minecraft/unmapped/C_9302567
