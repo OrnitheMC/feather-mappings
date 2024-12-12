@@ -190,9 +190,9 @@ c	net/minecraft/unmapped/C_1414550
 		p	1		box	
 		p	2		limit	
 	m	(DDD)V	m_6640618	move	
-		p	1		p_1	
-		p	3		p_3	
-		p	5		p_5	
+		p	1		dx	
+		p	3		dy	
+		p	5		dz	
 	m	(FFFFFF)V	<init>		<init>
 		p	1			minX
 		p	2			minY
@@ -296,8 +296,8 @@ c	net/minecraft/unmapped/C_2758065	net/minecraft/world/chunk/ChunkNibbleStorage
 		p	3		z	
 		p	4		value	
 	m	(Lnet/minecraft/unmapped/C_4078372;[B)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		generator	
+		p	2		data	
 c	net/minecraft/unmapped/C_2800860
 	m	(Ljava/io/DataOutput;)V	m_7031777		m_7031777
 		p	1			p_1
@@ -489,8 +489,8 @@ c	net/minecraft/unmapped/C_3906126
 	f	F	f_6988360	spawnPointX	
 	f	F	f_9398901	spawnPointY	
 	f	F	f_7237409	spawnPointZ	
-	f	Lnet/minecraft/unmapped/C_4838406;	f_6886584	f_6886584	
-	f	Lnet/minecraft/unmapped/C_4078372;	f_7089801	f_7089801	
+	f	Lnet/minecraft/unmapped/C_4838406;	f_6886584	blockMap	
+	f	Lnet/minecraft/unmapped/C_4078372;	f_7089801	chunkGenerator	
 	f	I	f_3061106		sizeX
 	f	I	f_8212213		sizeZ
 	f	I	f_4184003		sizeY
@@ -758,26 +758,26 @@ c	net/minecraft/unmapped/C_4078372	net/minecraft/world/gen/chunk/OverworldChunkG
 	f	Lnet/minecraft/unmapped/C_6205974;	f_6281590	minLimitPerlinNoise	
 	f	Lnet/minecraft/unmapped/C_6205974;	f_7885619	maxLimitPerlinNoise	
 	f	Lnet/minecraft/unmapped/C_6205974;	f_5435487	perlinNoise1	
-	f	Ljava/util/Random;	f_3952515	f_3952515	
+	f	Ljava/util/Random;	f_3952515	random	
 	f	Lnet/minecraft/unmapped/C_6205974;	f_4682337	f_4682337	
 	f	Lnet/minecraft/unmapped/C_6205974;	f_8421429	f_8421429	
 	f	Lnet/minecraft/unmapped/C_6205974;	f_1600301	f_1600301	
-	f	Ljava/util/Map;	f_9885111	f_9885111	
-	m	(III)I	m_3243526	m_3243526	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-	m	(IIII)Z	m_8958916	m_8958916	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
+	f	Ljava/util/Map;	f_9885111	chunks	
+	m	(III)I	m_3243526	getBlock	
+		p	1		x	
+		p	2		y	
+		p	3		z	
+	m	(IIII)Z	m_8958916	setBlock	
+		p	1		x	
+		p	2		y	
+		p	3		z	
+		p	4		block	
 	m	()V	<init>	<init>	
-	m	(II)Lnet/minecraft/unmapped/C_2758065;	m_4088154	m_4088154	
-		p	1		p_1	
-		p	2		p_2	
-	m	(Lnet/minecraft/unmapped/C_9392862;)[B	m_8303908	m_8303908	
-		p	1		p_1	
+	m	(II)Lnet/minecraft/unmapped/C_2758065;	m_4088154	getChunk	
+		p	1		chunkX	
+		p	2		chunkZ	
+	m	(Lnet/minecraft/unmapped/C_9392862;)[B	m_8303908	generateChunk	
+		p	1		pos	
 c	net/minecraft/unmapped/C_4286596
 	m	()I	m_2420174		m_2420174
 	m	(Lnet/minecraft/unmapped/C_2750078;)Z	m_3664489		m_3664489
@@ -1271,11 +1271,11 @@ c	net/minecraft/unmapped/C_1044273
 		p	10		p_10	
 		p	12		p_12	
 	m	(Lnet/minecraft/unmapped/C_0336319;Lnet/minecraft/unmapped/C_6516244;F)V	m_1380727	renderEntities	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+		p	1		cameraPos	
+		p	2		culler	
+		p	3		tickDelta	
 	m	(Lnet/minecraft/unmapped/C_6516244;)V	m_4361284	cullChunks	
-		p	1		p_1	
+		p	1		culler	
 	m	()V	m_8889498		m_8889498
 	m	(Lnet/minecraft/unmapped/C_0336319;Lnet/minecraft/unmapped/C_9265122;F)V	m_1380727		renderEntities
 		p	1			p_1
@@ -1506,7 +1506,7 @@ c	net/minecraft/unmapped/C_5283200
 		p	3		z	
 	m	()Z	m_0524223	isEmpty	
 	m	(Lnet/minecraft/unmapped/C_6516244;)V	m_5092852	cull	
-		p	1		p_1	
+		p	1		culler	
 	m	(Lnet/minecraft/unmapped/C_9265122;)V	m_5092852		cull
 		p	1			p_1
 c	net/minecraft/unmapped/C_5367636
@@ -1830,11 +1830,11 @@ c	net/minecraft/unmapped/C_4838406
 		p	8			entities
 	m	()V	m_3753291		tick
 c	net/minecraft/unmapped/C_4838406$C_2072059
-	m	(DDD)Lnet/minecraft/unmapped/C_4838406$C_2072059;	m_3495049	setPosition	
-		p	1		p_1	
-		p	3		p_3	
-		p	5		p_5	
-	m	(FFF)Lnet/minecraft/unmapped/C_4838406$C_2072059;	m_3495049		setPosition
+	m	(DDD)Lnet/minecraft/unmapped/C_4838406$C_2072059;	m_3495049	init	
+		p	1		x	
+		p	3		y	
+		p	5		z	
+	m	(FFF)Lnet/minecraft/unmapped/C_4838406$C_2072059;	m_3495049		init
 		p	1			x
 		p	2			y
 		p	3			z
@@ -1842,13 +1842,13 @@ c	net/minecraft/unmapped/C_4838406$C_2072059
 		p	1			entity
 	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_7996437		removeEntity
 		p	1			entity
-c	net/minecraft/unmapped/C_9392862	net/minecraft/unmapped/C_9392862	
-	f	I	f_3598625	f_3598625	
-	f	I	f_0254690	f_0254690	
+c	net/minecraft/unmapped/C_9392862	net/minecraft/world/chunk/ChunkPos	
+	f	I	f_3598625	chunkX	
+	f	I	f_0254690	chunkZ	
 	m	(Lnet/minecraft/unmapped/C_4078372;II)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+		p	1		generator	
+		p	2		chunkX	
+		p	3		chunkZ	
 	m	(Ljava/lang/Object;)Z	equals	equals	
 		p	1		p_1	
 	m	()I	hashCode	hashCode	

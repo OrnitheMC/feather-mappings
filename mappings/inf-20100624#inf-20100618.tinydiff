@@ -4,7 +4,7 @@ c	net/minecraft/unmapped/C_0070166
 	f	I	f_2563350	cachedChunkX	
 	f	I	f_2498441	cachedChunkZ	
 	f	Lnet/minecraft/unmapped/C_6755599;	f_4622140	cachedChunk	
-	f	Ljava/io/File;	f_0536911		f_0536911
+	f	Ljava/io/File;	f_0536911		saveDir
 	f	Ljava/util/List;	f_7841025		f_7841025
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_2286002;Lnet/minecraft/unmapped/C_9484672;)V	<init>	<init>	
 		p	1		world	
@@ -16,12 +16,12 @@ c	net/minecraft/unmapped/C_0070166
 		p	1		p_1	
 		p	2		p_2	
 	m	(Lnet/minecraft/unmapped/C_3906126;Ljava/io/File;Lnet/minecraft/unmapped/C_9484672;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(II)Ljava/io/File;	m_0435515		m_0435515
-		p	1			p_1
-		p	2			p_2
+		p	1			world
+		p	2			saveDir
+		p	3			generator
+	m	(II)Ljava/io/File;	m_0435515		getChunkFile
+		p	1			chunkX
+		p	2			chunkZ
 	m	(Z)V	m_8231616		m_8231616
 		p	1			p_1
 c	net/minecraft/unmapped/C_0456473
@@ -113,8 +113,8 @@ c	net/minecraft/unmapped/C_2624096$C_6469655	RailNode
 		p	2		y	
 		p	3		z	
 	m	(II)Z	m_7748237	hasConnection	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		x	
+		p	2		z	
 	m	()V	m_1618323	m_1618323	
 c	net/minecraft/unmapped/C_2627205	net/minecraft/world/WorldView	
 	m	(III)I	m_9052708	getBlock	
@@ -204,11 +204,11 @@ c	net/minecraft/unmapped/C_3134254	net/minecraft/world/WorldRegion
 		p	3		z	
 		p	4		useNeighborLight	
 	m	(Lnet/minecraft/unmapped/C_3906126;IIII)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
+		p	1		world	
+		p	2		minX	
+		p	3		minZ	
+		p	4		maxX	
+		p	5		maxZ	
 c	net/minecraft/unmapped/C_3484604
 	m	(Lnet/minecraft/unmapped/C_2627205;III)V	m_5728949	m_5728949	
 		p	1		p_1	
@@ -411,7 +411,7 @@ c	net/minecraft/unmapped/C_6385858
 	m	(Lnet/minecraft/unmapped/C_5009044;)V	m_6033607		m_6033607
 		p	1			p_1
 c	net/minecraft/unmapped/C_6755599
-	f	Z	f_4980706		f_4980706
+	f	Z	f_4980706		savedEntities
 	m	()Z	m_6390671	shouldSave	
 	m	(Lnet/minecraft/unmapped/C_2074023;)V	m_0612835	m_0612835	
 		p	1		p_1	
@@ -431,11 +431,11 @@ c	net/minecraft/unmapped/C_6755599
 		p	3			y
 		p	4			localZ
 		p	5			light
-	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_8402936		m_8402936
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_2800860;)Lnet/minecraft/unmapped/C_6755599;	m_2208916		m_2208916
-		p	0			p_0
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_8402936		writeNbt
+		p	1			nbt
+	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_2800860;)Lnet/minecraft/unmapped/C_6755599;	m_2208916		fromNbt
+		p	0			world
+		p	1			nbt
 	m	(III)V	m_3088960		removeBlockEntity
 		p	1			localX
 		p	2			y
@@ -481,18 +481,18 @@ c	net/minecraft/unmapped/C_8125832
 		p	3		p_3	
 		p	4		p_4	
 		p	5		p_5	
-	m	(Lnet/minecraft/unmapped/C_3906126;III)V	m_9766400		m_9766400
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(Lnet/minecraft/unmapped/C_3906126;III)V	m_9766400		updateFacing
+		p	0			world
+		p	1			x
+		p	2			y
+		p	3			z
 	m	(Lnet/minecraft/unmapped/C_3906126;IIII)I	m_6954536		m_6954536
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-c	net/minecraft/unmapped/C_8135468	net/minecraft/nbt/NbtIo	
+c	net/minecraft/unmapped/C_8135468	net/minecraft/client/CrashException	
 	f	Ljava/lang/Exception;	f_8880657	cause	
 	m	()V	<init>	<init>	
 	m	(Ljava/io/InputStream;)Lnet/minecraft/unmapped/C_2800860;	m_2540889	readCompressed	
@@ -575,17 +575,17 @@ c	net/minecraft/unmapped/C_9764049
 		p	3		y	
 		p	4		z	
 	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_8454404		isFlammable
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	1			world
+		p	2			x
+		p	3			y
+		p	4			z
 c	net/minecraft/client/Minecraft
 	f	[J	f_4898713	frameTimes	
 	f	I	f_9040180	frameTimeIndex	
 	f	J	f_4786763	timeAfterLastTick	
 	m	()V	m_8779594	renderProfilerChart	
 	m	(Lnet/minecraft/unmapped/C_8135468;)V	m_8906868	handleCrash	
-		p	1		p_1	
+		p	1		exception	
 c	net/minecraft/client/MinecraftApplet
 c	net/minecraft/client/MinecraftApplet$7226165	7226165	
 	f	Lnet/minecraft/client/MinecraftApplet;	f_0922998	f_0922998	
@@ -697,11 +697,11 @@ c	net/minecraft/unmapped/C_8425960
 		p	1		title	
 	m	()V	m_5266201	m_5266201	
 	m	()V	<init>		<init>
-	m	(Ljava/io/InputStream;)Lnet/minecraft/unmapped/C_2800860;	m_1070817		m_1070817
-		p	0			p_0
-	m	(Lnet/minecraft/unmapped/C_2800860;Ljava/io/OutputStream;)V	m_5551645		m_5551645
-		p	0			p_0
-		p	1			p_1
+	m	(Ljava/io/InputStream;)Lnet/minecraft/unmapped/C_2800860;	m_1070817		readCompressed
+		p	0			is
+	m	(Lnet/minecraft/unmapped/C_2800860;Ljava/io/OutputStream;)V	m_5551645		writeCompressed
+		p	0			nbt
+		p	1			os
 	m	(Ljava/lang/String;)V	m_4655768	start	progressStart
 	m	(Ljava/lang/String;)V	m_5570081	m_5570081	progressStage
 		p	1		p_1	stage
@@ -830,11 +830,11 @@ c	net/minecraft/unmapped/C_8973030	net/minecraft/unmapped/C_8973030
 		p	1		p_1	
 		p	2		p_2	
 	m	()V	<clinit>	<clinit>	
-c	net/minecraft/unmapped/C_3586288		net/minecraft/unmapped/C_3586288
-	f	I	f_1567307		f_1567307
+c	net/minecraft/unmapped/C_3586288		net/minecraft/block/LegacyLiquidSourceBlock
+	f	I	f_1567307		flowingBlock
 	m	(II)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			id
+		p	2			flowingBlock
 	m	(Lnet/minecraft/unmapped/C_3906126;III)V	m_0767742		m_0767742
 		p	1			p_1
 		p	2			p_2

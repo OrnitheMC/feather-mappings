@@ -38,8 +38,8 @@ c	net/minecraft/unmapped/C_2758065
 	m	(I)V	<init>	<init>	
 		p	1		size	
 	m	(Lnet/minecraft/unmapped/C_4078372;[B)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
+		p	1			generator
+		p	2			data
 c	net/minecraft/unmapped/C_3635204
 	f	D	f_8954589	minX	
 	f	D	f_1532370	minY	
@@ -61,7 +61,7 @@ c	net/minecraft/unmapped/C_3906126
 	f	J	f_7778442	skyColor	
 	f	J	f_3393854	fogColor	
 	f	I	f_1618367	ticks	
-	f	Lnet/minecraft/unmapped/C_4078372;	f_7089801		f_7089801
+	f	Lnet/minecraft/unmapped/C_4078372;	f_7089801		chunkGenerator
 	m	(II)Z	m_2079321	isChunkLoadedAt	
 		p	1		chunkX	
 		p	2		chunkZ	
@@ -112,7 +112,7 @@ c	net/minecraft/unmapped/C_3906126
 	m	(II)Z	m_2296533	isChunkLoaded	
 		p	1		x	
 		p	2		z	
-	m	(IIII)V	m_3304116	setBlockWithMetadataQuietly	
+	m	(IIII)V	m_3304116	setBlockMetadataQuietly	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
@@ -134,7 +134,7 @@ c	net/minecraft/unmapped/C_3906126
 	m	()Lnet/minecraft/unmapped/C_0336319;	m_2510182		getFogColor
 c	net/minecraft/unmapped/C_4078372
 	f	Lnet/minecraft/unmapped/C_3906126;	f_5278555	world	
-	f	Ljava/util/Map;	f_9885111		f_9885111
+	f	Ljava/util/Map;	f_9885111		chunks
 	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_8303908	m_8303908	
 		p	1		p_1	
 		p	2		p_2	
@@ -142,23 +142,23 @@ c	net/minecraft/unmapped/C_4078372
 		p	1		p_1	
 		p	2		p_2	
 	m	(Lnet/minecraft/unmapped/C_3906126;)V	<init>	<init>	
-		p	1		p_1	
+		p	1		world	
 	m	()V	m_8749127	m_8749127	
-	m	(III)I	m_3243526		m_3243526
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(IIII)Z	m_8958916		m_8958916
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(III)I	m_3243526		getBlock
+		p	1			x
+		p	2			y
+		p	3			z
+	m	(IIII)Z	m_8958916		setBlock
+		p	1			x
+		p	2			y
+		p	3			z
+		p	4			block
 	m	()V	<init>		<init>
-	m	(II)Lnet/minecraft/unmapped/C_2758065;	m_4088154		m_4088154
-		p	1			p_1
-		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_9392862;)[B	m_8303908		m_8303908
-		p	1			p_1
+	m	(II)Lnet/minecraft/unmapped/C_2758065;	m_4088154		getChunk
+		p	1			chunkX
+		p	2			chunkZ
+	m	(Lnet/minecraft/unmapped/C_9392862;)[B	m_8303908		generateChunk
+		p	1			pos
 c	net/minecraft/unmapped/C_5863046	net/minecraft/world/LightType	
 	f	Lnet/minecraft/unmapped/C_5863046;	f_2303695	SKY	
 	f	Lnet/minecraft/unmapped/C_5863046;	f_0443034	BLOCK	
@@ -288,10 +288,10 @@ c	net/minecraft/unmapped/C_1044273
 		p	5		p_5	
 		p	6		p_6	
 	m	(Lnet/minecraft/unmapped/C_5009044;Lnet/minecraft/unmapped/C_5853518;IF)V	m_4049049	renderBlockOutline	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		camera	
+		p	2		hit	
 		p	3		p_3	
-		p	4		p_4	
+		p	4		tickDelta	
 	m	(ID)V	m_0907931	m_0907931	
 		p	1		p_1	
 		p	2		p_2	
@@ -469,10 +469,10 @@ c	net/minecraft/unmapped/C_6516244
 	f	D	f_1603874	offsetX	
 	f	D	f_4729980	offsetY	
 	f	D	f_9968942	offsetZ	
-	m	(DDD)V	m_5600360	m_5600360	
-		p	1		p_1	
-		p	3		p_3	
-		p	5		p_5	
+	m	(DDD)V	m_5600360	prepare	
+		p	1		offsetX	
+		p	3		offsetY	
+		p	5		offsetZ	
 	m	(DDDDDD)Z	m_4009563	intersectsFrustum	
 		p	1		minX	
 		p	3		minY	
@@ -495,13 +495,13 @@ c	net/minecraft/unmapped/C_9232749
 		p	4		maxX	
 		p	5		maxY	
 		p	6		maxZ	
-c	net/minecraft/unmapped/C_9392862		net/minecraft/unmapped/C_9392862
-	f	I	f_3598625		f_3598625
-	f	I	f_0254690		f_0254690
+c	net/minecraft/unmapped/C_9392862		net/minecraft/world/chunk/ChunkPos
+	f	I	f_3598625		chunkX
+	f	I	f_0254690		chunkZ
 	m	(Lnet/minecraft/unmapped/C_4078372;II)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			generator
+		p	2			chunkX
+		p	3			chunkZ
 	m	(Ljava/lang/Object;)Z	equals		equals
 		p	1			p_1
 	m	()I	hashCode		hashCode

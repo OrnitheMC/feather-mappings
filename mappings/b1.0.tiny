@@ -1573,7 +1573,7 @@ c	net/minecraft/unmapped/C_1013763	net/minecraft/entity/mob/MobEntity
 	f	F	f_8877986	lastBodyYaw
 	f	F	f_7904404	lastWalkProgress
 	f	F	f_2059924	walkProgress
-	f	F	f_7427983	f_7427983
+	f	F	f_7427983	totalWalkDistance
 	f	F	f_2675121	f_2675121
 	f	Z	f_8232145	f_8232145
 	f	Ljava/lang/String;	f_3689196	texture
@@ -3016,7 +3016,7 @@ c	net/minecraft/unmapped/C_2334550	net/minecraft/client/render/vertex/Tesselator
 		p	3		offsetZ
 	m	()V	<clinit>	<clinit>
 c	net/minecraft/unmapped/C_2339776	net/minecraft/entity/mob/animal/SheepEntity
-	f	Z	f_7682653	f_7682653
+	f	Z	f_7682653	sheared
 	m	(Lnet/minecraft/unmapped/C_3906126;)V	<init>	<init>
 		p	1		world
 	m	(Lnet/minecraft/unmapped/C_6385858;I)Z	m_3238154	m_3238154
@@ -3648,7 +3648,7 @@ c	net/minecraft/unmapped/C_2750078	net/minecraft/item/ItemStack
 	m	()I	m_0308377	getMaxSize
 	m	()I	m_7267649	getMaxDamage
 	m	(I)V	m_7305709	damageAndBreak
-		p	1		p_1
+		p	1		damage
 	m	(Lnet/minecraft/unmapped/C_1013763;)V	m_3149288	attackEntity
 		p	1		entity
 	m	(IIII)V	m_3316715	mineBlock
@@ -4552,7 +4552,7 @@ c	net/minecraft/unmapped/C_3484604	net/minecraft/block/DoorBlock
 		p	4		p_4
 		p	5		p_5
 		p	6		p_6
-	m	(I)I	m_8094268	setOpen
+	m	(I)I	m_8094268	getFacing
 		p	1		metadata
 	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_0351269	m_0351269
 		p	1		p_1
@@ -6610,23 +6610,23 @@ c	net/minecraft/unmapped/C_4286596	net/minecraft/entity/mob/player/PlayerInvento
 	m	(Lnet/minecraft/unmapped/C_5009044;)V	<init>	<init>
 		p	1		player
 	m	()Lnet/minecraft/unmapped/C_2750078;	m_1328672	getSelectedStack
-	m	(I)I	m_9683374	indexOfItem
-		p	1		itemId
-	m	(I)I	m_7123133	indexOfItemStack
-		p	1		p_1
+	m	(I)I	m_9683374	getSlot
+		p	1		item
+	m	(I)I	m_7123133	getSlotWithSpace
+		p	1		item
 	m	()I	m_5702576	getEmptySlot
-	m	(IZ)V	m_8632037	pickBlock
+	m	(IZ)V	m_8632037	selectSlot
 		p	1		block
 		p	2		creative
 	m	(I)V	m_5576257	scrollInHotbar
 		p	1		scroll
-	m	(II)I	m_4972139	putStackInInventory
-		p	1		p_1
-		p	2		p_2
-	m	()V	m_9549002	tickItems
-	m	(I)Z	m_7237595	consumeOne
-		p	1		itemId
-	m	(Lnet/minecraft/unmapped/C_2750078;)Z	m_1691146	insertStack
+	m	(II)I	m_4972139	addItem
+		p	1		item
+		p	2		amount
+	m	()V	m_9549002	tick
+	m	(I)Z	m_7237595	removeOne
+		p	1		item
+	m	(Lnet/minecraft/unmapped/C_2750078;)Z	m_1691146	addStack
 		p	1		stack
 	m	(II)Lnet/minecraft/unmapped/C_2750078;	m_7197418	m_7197418
 		p	1		p_1
@@ -7187,10 +7187,10 @@ c	net/minecraft/unmapped/C_4643161	net/minecraft/client/gui/screen/FatalErrorScr
 		p	1		p_1
 		p	2		p_2
 c	net/minecraft/unmapped/C_4658369	net/minecraft/world/gen/feature/VeinFeature
-	f	I	f_5395758	blockId
+	f	I	f_5395758	block
 	f	I	f_6619249	size
 	m	(II)V	<init>	<init>
-		p	1		blockId
+		p	1		block
 		p	2		size
 	m	(Lnet/minecraft/unmapped/C_3906126;Ljava/util/Random;III)Z	m_2665009	m_2665009
 		p	1		p_1
@@ -9060,9 +9060,9 @@ c	net/minecraft/unmapped/C_6385858	net/minecraft/entity/Entity
 		p	1		id
 		p	2		amount
 	m	(IIF)Lnet/minecraft/unmapped/C_3050136;	m_4351561	dropItem
-		p	1		p_1
-		p	2		p_2
-		p	3		p_3
+		p	1		item
+		p	2		amount
+		p	3		dy
 	m	()Z	m_4184737	isAlive
 	m	()Z	m_9320812	isInWall
 	m	(Lnet/minecraft/unmapped/C_5009044;)Z	m_7287105	interact

@@ -180,8 +180,8 @@ c	net/minecraft/unmapped/C_5102005	net/minecraft/entity/Entities
 		p	0		entity	
 	m	()V	<clinit>	<clinit>	
 	m	(Ljava/lang/Class;Ljava/lang/String;)V	m_3413972	register	
-		p	0		p_0	
-		p	1		p_1	
+		p	0		type	
+		p	1		key	
 c	net/minecraft/unmapped/C_5584362
 	m	()Ljava/lang/String;	m_1061793		m_1061793
 c	net/minecraft/unmapped/C_6385858
@@ -189,15 +189,15 @@ c	net/minecraft/unmapped/C_6385858
 	m	(Lnet/minecraft/unmapped/C_2800860;)Z	m_6188111	writeNbt	
 		p	1		nbt	
 	m	()V	m_8944389		remove
-	m	()Ljava/lang/String;	m_1061793		m_1061793
+	m	()Ljava/lang/String;	m_1061793		getId
 c	net/minecraft/unmapped/C_6618366
-	m	(DDD)V	m_2048573	m_2048573	
-		p	1		p_1	
-		p	3		p_3	
-		p	5		p_5	
+	m	(DDD)V	m_2048573	prepare	
+		p	1		d	
+		p	3		e	
+		p	5		f	
 c	net/minecraft/unmapped/C_6755599
 	f	[Ljava/util/List;	f_9897581	entities	
-	f	Z	f_4980706	f_4980706	
+	f	Z	f_4980706	savedEntities	
 	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_4542745	addEntity	
 		p	1		entity	
 	m	(Lnet/minecraft/unmapped/C_6385858;I)V	m_3851565	removeEntity	
@@ -302,29 +302,37 @@ c	net/minecraft/unmapped/C_6923352$8749673		8749673
 c	net/minecraft/unmapped/C_8905061
 	m	()Ljava/lang/String;	m_1061793		m_1061793
 c	net/minecraft/unmapped/C_5902900	net/minecraft/util/ProgressListener	
-c	net/minecraft/unmapped/C_0678370	net/minecraft/unmapped/C_0678370	
-	f	[B	f_3684639	f_3684639	
-	f	Ljava/util/Random;	f_2053469	f_2053469	
-	f	Lnet/minecraft/unmapped/C_3906126;	f_2495597	f_2495597	
-	f	[I	f_4553159	f_4553159	
-	f	I	f_4172635	f_4172635	
-	f	I	f_4413532	f_4413532	
-	f	D	f_8932722	f_8932722	
-	f	D	f_5531920	f_5531920	
-	f	D	f_1393292	f_1393292	
-	f	D	f_0445573	f_0445573	
-	f	I	f_6979990	f_6979990	
-	f	I	f_0951401	f_0951401	
-	f	I	f_1841026	f_1841026	
-	f	[[I	f_3401457	f_3401457	
+c	net/minecraft/unmapped/C_0678370	net/minecraft/world/gen/feature/TreeFeature	
+	f	[B	f_3684639	MINOR_AXES	
+		c	Given a branch's major axis {@code a} this array stores that branch's minor\naxes at indices {@code a} and {@code a + 3}.\n\n<p>\nA branch's major axis is the axis along which it has the greatest length.\n\n<p>\nThe axes are as follows:\n<br> 0: x\n<br> 1: y\n<br> 2: z	
+	f	Ljava/util/Random;	f_2053469	random	
+	f	Lnet/minecraft/unmapped/C_3906126;	f_2495597	world	
+	f	[I	f_4553159	origin	
+		c	The position of the base of the tree.	
+	f	I	f_4172635	height	
+		c	Total height of the tree, including the canopy.	
+	f	I	f_4413532	trunkHeight	
+		c	Height of just the trunk of the tree.	
+	f	D	f_8932722	trunkScale	
+		c	The portion of the total height of the tree that is taken up by the trunk.	
+	f	D	f_5531920	branchSlope	
+	f	D	f_1393292	branchLengthScale	
+	f	D	f_0445573	foliageDensity	
+	f	I	f_6979990	trunkWidth	
+		c	The width of the trunk, can be 1 or 2.	
+	f	I	f_0951401	maxTrunkHeight	
+	f	I	f_1841026	foliageClusterHeight	
+	f	[[I	f_3401457	branches	
+		c	Base and tip coordinates for each branch in the tree. The base of a branch is\nplaced at some height on the trunk, so the base x- and z-coordinates match\nthose of the trunk, and do not need to be stored. The remaining coordinates\nare stored in int arrays of length 4:\n\n<br> {\n<br> &nbsp; tip x-coordinate,\n<br> &nbsp; tip y-coordinate,\n<br> &nbsp; tip z-coordinate,\n<br> &nbsp; base y-coordinate\n<br> }	
 	m	()V	<init>	<init>	
-	m	([I[II)V	m_4372363	m_4372363	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-	m	([I[I)I	m_8729351	m_8729351	
-		p	1		p_1	
-		p	2		p_2	
+	m	([I[II)V	m_4372363	placeBranch	
+		p	1		from	
+		p	2		to	
+		p	3		log	
+	m	([I[I)I	m_8729351	tryBranch	
+		c	Check if a branch can be placed between the two given positions.\n\n@return -1 if the branch can be placed, or the maximum possible length of the\n        branch along its major axis.	
+		p	1		from	
+		p	2		to	
 	m	(DDD)V	m_2048573	m_2048573	
 		p	1		p_1	
 		p	3		p_3	

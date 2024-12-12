@@ -1,7 +1,7 @@
 tiny	2	0
 c	net/minecraft/unmapped/C_0070166
 	f	Lnet/minecraft/unmapped/C_3906126;	f_2043372	world	
-	f	Ljava/io/File;	f_0536911	f_0536911	
+	f	Ljava/io/File;	f_0536911	saveDir	
 	m	(II)Lnet/minecraft/unmapped/C_6755599;	m_4452120	loadChunkFromStorage	
 		c	Loads the world chunk at the given chunk coordinates from storage.	
 		p	1		chunkX	
@@ -9,12 +9,12 @@ c	net/minecraft/unmapped/C_0070166
 	m	(Lnet/minecraft/unmapped/C_6755599;)V	m_2119518	saveChunk	
 		p	1		chunk	
 	m	(Lnet/minecraft/unmapped/C_3906126;Ljava/io/File;Lnet/minecraft/unmapped/C_9484672;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-	m	(II)Ljava/io/File;	m_0435515	m_0435515	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		world	
+		p	2		saveDir	
+		p	3		generator	
+	m	(II)Ljava/io/File;	m_0435515	getChunkFile	
+		p	1		chunkX	
+		p	2		chunkZ	
 	m	(Z)V	m_8231616	m_8231616	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_9484672;)V	<init>		<init>
@@ -52,7 +52,7 @@ c	net/minecraft/unmapped/C_1196485
 	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_4175205	m_4175205	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_2750078;)I	m_4423171	getFuelTime	
-		p	0		p_0	
+		p	0		fuel	
 c	net/minecraft/unmapped/C_1233611
 	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_0576365	m_0576365	
 		p	1		p_1	
@@ -189,13 +189,13 @@ c	net/minecraft/unmapped/C_2800860
 		p	1		key	
 	m	(Ljava/lang/String;)Z	m_3284014	getBoolean	
 		p	1		key	
-	m	(Ljava/lang/String;F)V	m_2391638	m_2391638	
-		p	1		p_1	
-		p	2		p_2	
-	m	(Ljava/lang/String;)Z	m_0016466	m_0016466	
-		p	1		p_1	
-	m	(Ljava/lang/String;)F	m_3941822	m_3941822	
-		p	1		p_1	
+	m	(Ljava/lang/String;F)V	m_2391638	putFloat	
+		p	1		key	
+		p	2		value	
+	m	(Ljava/lang/String;)Z	m_0016466	contains	
+		p	1		key	
+	m	(Ljava/lang/String;)F	m_3941822	getFloat	
+		p	1		key	
 c	net/minecraft/unmapped/C_2923961
 	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_4059289	m_4059289	
 		p	1		p_1	
@@ -272,10 +272,10 @@ c	net/minecraft/unmapped/C_3984704	net/minecraft/nbt/NbtElement
 		p	1		output	
 	m	(B)Lnet/minecraft/unmapped/C_3984704;	m_0319258	create	
 		p	0		type	
-	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_3984704;	m_4457344	m_4457344	
-		p	1		p_1	
+	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_3984704;	m_4457344	setName	
+		p	1		name	
 c	net/minecraft/unmapped/C_4078372
-	f	Ljava/util/Random;	f_3952515		f_3952515
+	f	Ljava/util/Random;	f_3952515		random
 	f	Lnet/minecraft/unmapped/C_6205974;	f_4682337		f_4682337
 	f	Lnet/minecraft/unmapped/C_6205974;	f_8421429		f_8421429
 	f	Lnet/minecraft/unmapped/C_6205974;	f_1600301		f_1600301
@@ -289,9 +289,9 @@ c	net/minecraft/unmapped/C_4078372
 		p	3		p_3	
 		p	5		p_5	
 	m	(Lnet/minecraft/unmapped/C_3906126;)V	<init>		<init>
-		p	1			p_1
+		p	1			world
 c	net/minecraft/unmapped/C_4286596
-	m	()V	m_2515885	m_2515885	
+	m	()V	m_2515885	dropAll	
 c	net/minecraft/unmapped/C_4718187
 	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_4059289	m_4059289	
 		p	1		p_1	
@@ -334,8 +334,8 @@ c	net/minecraft/unmapped/C_6385858
 	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_4059289	writeCustomNbt	
 		p	1		nbt	
 	m	([D)Lnet/minecraft/unmapped/C_1011144;	m_2466537	toNbtList	
-		p	0		p_0	
-	m	()Ljava/lang/String;	m_1061793	m_1061793	
+		p	0		values	
+	m	()Ljava/lang/String;	m_1061793	getId	
 c	net/minecraft/unmapped/C_6481566	net/minecraft/nbt/NbtEnd	
 	m	()V	<init>	<init>	
 	m	(Ljava/io/DataInput;)V	m_5222382	m_5222382	
@@ -347,11 +347,11 @@ c	net/minecraft/unmapped/C_6481566	net/minecraft/nbt/NbtEnd
 c	net/minecraft/unmapped/C_6755599
 	f	Z	f_6943970	dirty	
 		c	Used to check if this chunk has changes that need to be saved to disk.	
-	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_8402936	m_8402936	
-		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_2800860;)Lnet/minecraft/unmapped/C_6755599;	m_2208916	m_2208916	
-		p	0		p_0	
-		p	1		p_1	
+	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_8402936	writeNbt	
+		p	1		nbt	
+	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_2800860;)Lnet/minecraft/unmapped/C_6755599;	m_2208916	fromNbt	
+		p	0		world	
+		p	1		nbt	
 	m	(II)Z	m_7184090		m_7184090
 		p	1			p_1
 		p	2			p_2
@@ -468,11 +468,11 @@ c	net/minecraft/unmapped/C_8425960
 	m	(I)V	m_3915830	progressPercentage	
 		p	1		percentage	
 	m	()V	<init>	<init>	
-	m	(Ljava/io/InputStream;)Lnet/minecraft/unmapped/C_2800860;	m_1070817	m_1070817	
-		p	0		p_0	
-	m	(Lnet/minecraft/unmapped/C_2800860;Ljava/io/OutputStream;)V	m_5551645	m_5551645	
-		p	0		p_0	
-		p	1		p_1	
+	m	(Ljava/io/InputStream;)Lnet/minecraft/unmapped/C_2800860;	m_1070817	readCompressed	
+		p	0		is	
+	m	(Lnet/minecraft/unmapped/C_2800860;Ljava/io/OutputStream;)V	m_5551645	writeCompressed	
+		p	0		nbt	
+		p	1		os	
 	m	(Ljava/lang/String;)V	m_3915830		m_3915830
 		p	1			p_1
 	m	(Ljava/lang/String;)V	m_4655768	progressStart	m_4655768

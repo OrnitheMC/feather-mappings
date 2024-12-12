@@ -124,10 +124,10 @@ c	net/minecraft/unmapped/C_1196485
 	m	()V	m_5125947	finishCooking	
 	m	(I)I	m_1389344
 		p	1		input	
-		p	0			p_0
+		p	0			input
 	m	(Lnet/minecraft/unmapped/C_2750078;)I	m_4423171
 		p	1		stack	
-		p	0			p_0
+		p	0			fuel
 	m	(I)I	m_2842854	getCookProgress	
 		p	1		range	
 	m	(I)I	m_5904879	getLitProgress	
@@ -135,7 +135,7 @@ c	net/minecraft/unmapped/C_1196485
 c	net/minecraft/unmapped/C_1693934
 	m	(I)F	m_8066915
 		p	1		length	
-		p	0			p_0
+		p	0			length
 c	net/minecraft/unmapped/C_2286002
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_6755599;)V	m_6549910	saveEntities	
 		p	1		world	
@@ -162,8 +162,8 @@ c	net/minecraft/unmapped/C_2624096$C_6469655
 		p	1		rail	
 	m	()V	m_1945172	updateState	
 	m	(II)Z	m_7748237		hasConnection
-		p	1			p_1
-		p	2			p_2
+		p	1			x
+		p	2			z
 c	net/minecraft/unmapped/C_2682589
 	m	(Lnet/minecraft/unmapped/C_3906126;III)V	m_7297270	convertToFlowing	
 		p	1		world	
@@ -270,17 +270,17 @@ c	net/minecraft/unmapped/C_3134254
 		p	2		y	
 		p	3		z	
 	m	(Lnet/minecraft/unmapped/C_3906126;IIII)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	1			world
+		p	2			minX
+		p	3			minZ
+		p	4			maxX
+		p	5			maxZ
 c	net/minecraft/unmapped/C_3484604
 	m	(I)V	m_0892110	updateShape	
 		p	1		metadata	
 	m	(I)I	m_8094268
 		p	1		metadata	
-		p	0			p_0
+		p	0			metadata
 c	net/minecraft/unmapped/C_3632207	net/minecraft/world/explosion/Explosion	
 	m	()V	<init>	<init>	
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_6385858;DDDF)V	m_2400494	damageEntities	
@@ -373,14 +373,14 @@ c	net/minecraft/unmapped/C_3906126
 		p	7		p_7	
 		p	8		p_8	
 	m	(ZLnet/minecraft/unmapped/C_8425960;)V	m_4418114		save
-		p	1			p_1
-		p	2			p_2
+		p	1			saveEntities
+		p	2			listener
 	m	(Lnet/minecraft/unmapped/C_1044273;)V	m_1367228		addEventListener
-		p	1			p_1
+		p	1			listener
 	m	(Lnet/minecraft/unmapped/C_1044273;)V	m_1985242		removeEventListener
-		p	1			p_1
+		p	1			listener
 	m	(Lnet/minecraft/unmapped/C_8425960;)V	m_5794371		forceSave
-		p	1			p_1
+		p	1			listener
 c	net/minecraft/unmapped/C_3984704
 	m	(Ljava/lang/String;)Lnet/minecraft/unmapped/C_3984704;	m_5347843	setName	
 		p	1		name	
@@ -445,14 +445,14 @@ c	net/minecraft/unmapped/C_4078372
 		p	1			p_1
 		p	2			p_2
 c	net/minecraft/unmapped/C_4286596
-	m	(I)I	m_7123133	indexOfItemStack	
-		p	1		p_1	
-	m	(II)I	m_4972139	putStackInInventory	
-		p	1		p_1	
-		p	2		p_2	
-	m	()V	m_9549002	tickItems	
-	m	(I)Z	m_7237595	consumeOne	
-		p	1		itemId	
+	m	(I)I	m_7123133	getSlotWithSpace	
+		p	1		item	
+	m	(II)I	m_4972139	addItem	
+		p	1		item	
+		p	2		amount	
+	m	()V	m_9549002	tick	
+	m	(I)Z	m_7237595	removeOne	
+		p	1		item	
 	m	(Lnet/minecraft/unmapped/C_3635204;)F	m_6877993	getMiningSpeed	
 		p	1		block	
 	m	(Lnet/minecraft/unmapped/C_1011144;)Lnet/minecraft/unmapped/C_1011144;	m_7670852	writeNbt	
@@ -466,7 +466,7 @@ c	net/minecraft/unmapped/C_4286596
 	m	(I)V	m_8132622	damageArmor	
 		p	1		damage	
 	m	()V	m_2480464	dropAll	
-	m	(IZ)V	m_8632037	pickBlock	
+	m	(IZ)V	m_8632037	selectSlot	
 		p	1		block	
 		p	2		creative	
 	m	(I)V	m_5576257	scrollInHotbar	
@@ -539,7 +539,7 @@ c	net/minecraft/unmapped/C_6385858
 	m	()Ljava/lang/String;	m_6011557	getTypeId	
 	m	([D)Lnet/minecraft/unmapped/C_1011144;	m_2466537
 		p	1		values	
-		p	0			p_0
+		p	0			values
 	m	([F)Lnet/minecraft/unmapped/C_1011144;	m_5720743	toNbtList	
 		p	1		values	
 	m	(FF)V	m_9598325	updateLocalPlayerCamera	
@@ -645,7 +645,7 @@ c	net/minecraft/unmapped/C_8125832
 		p	2		x	
 		p	3		y	
 		p	4		z	
-c	net/minecraft/unmapped/C_8135468
+c	net/minecraft/unmapped/C_8135468	net/minecraft/nbt/NbtIo	net/minecraft/client/CrashException
 	f	Ljava/lang/Exception;	f_8880657		cause
 	m	(Ljava/io/DataInput;)Lnet/minecraft/unmapped/C_2800860;	m_9475633	read	
 		p	0		input	
@@ -715,8 +715,8 @@ c	net/minecraft/unmapped/C_9484672
 		p	2		listener	
 	m	()Z	m_1591842	tick	
 	m	(ZLnet/minecraft/unmapped/C_8425960;)Z	m_8231616		save
-		p	1			p_1
-		p	2			p_2
+		p	1			saveEntities
+		p	2			listener
 c	net/minecraft/unmapped/C_9764049
 	m	(Lnet/minecraft/unmapped/C_3906126;III)I	m_0816774	getSpreadChance	
 		p	1		world	
@@ -748,7 +748,7 @@ c	net/minecraft/client/Minecraft
 		p	0		name	
 	m	(Ljava/lang/String;)V	m_3969990
 		p	1		message	
-		p	0			p_0
+		p	0			error
 	m	(IZ)V	m_6983965	handleMouseDown	
 		p	1		button	
 		p	2		holdingAttack	
@@ -757,13 +757,13 @@ c	net/minecraft/client/Minecraft
 	m	()Lnet/minecraft/unmapped/C_4076851;	m_9264421	getOpenGlCapabilities	
 	m	()Lnet/minecraft/client/Minecraft$C_1774538;	m_3910209	getOs	
 	m	(Ljava/awt/Canvas;Lnet/minecraft/client/MinecraftApplet;IIZ)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	1			canvas
+		p	2			applet
+		p	3			width
+		p	4			height
+		p	5			fullscreen
 	m	(Lnet/minecraft/unmapped/C_8135468;)V	m_8906868		handleCrash
-		p	1			p_1
+		p	1			exception
 c	net/minecraft/client/MinecraftApplet
 	m	()V	m_6279050	startThread	
 	m	()V	m_5175249	clearMemory	
@@ -857,24 +857,51 @@ c	net/minecraft/unmapped/C_1044273
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_0878478	m_0878478	
 		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_0519413		m_0519413
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_3338259		m_3338259
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_0519413		notifyEntityAdded
+		p	1			entity
+	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_3338259		notifyEntityRemoved
+		p	1			entity
 	m	(Lnet/minecraft/unmapped/C_0336319;Lnet/minecraft/unmapped/C_6516244;F)V	m_1380727		renderEntities
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			cameraPos
+		p	2			culler
+		p	3			tickDelta
 	m	()V	m_6291103		renderLastChunks
-	m	(Lnet/minecraft/unmapped/C_5009044;)V	m_8580944		m_8580944
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_5009044;)V	m_8580944		compileChunks
+		p	1			camera
 	m	(Lnet/minecraft/unmapped/C_5009044;Lnet/minecraft/unmapped/C_5853518;IF)V	m_4049049		renderBlockOutline
-		p	1			p_1
-		p	2			p_2
+		p	1			camera
+		p	2			hit
 		p	3			p_3
-		p	4			p_4
+		p	4			tickDelta
 	m	(Lnet/minecraft/unmapped/C_6516244;)V	m_4361284		cullChunks
-		p	1			p_1
+		p	1			culler
+	m	(III)V	m_7307167	m_7307167	notifyBlockChanged
+		p	1		p_1	x
+		p	2		p_2	y
+		p	3		p_3	z
+	m	(IIIIII)V	m_0171092	m_0171092	notifyRegionChanged
+		p	1		p_1	minX
+		p	2		p_2	minY
+		p	3		p_3	minZ
+		p	4		p_4	maxX
+		p	5		p_5	maxY
+		p	6		p_6	maxZ
+	m	(Ljava/lang/String;DDDFF)V	m_2244237	m_2244237	playSound
+		p	1		p_1	sound
+		p	2		p_2	x
+		p	4		p_4	y
+		p	6		p_6	z
+		p	8		p_8	volume
+		p	9		p_9	pitch
+	m	(Ljava/lang/String;DDDDDD)V	m_5421083	m_5421083	addParticle
+		p	1		p_1	type
+		p	2		p_2	x
+		p	4		p_4	y
+		p	6		p_6	z
+		p	8		p_8	velocityX
+		p	10		p_10	velocityY
+		p	12		p_12	velocityZ
+	m	()V	m_2968224	m_2968224	notifyAmbientDarknessChanged
 c	net/minecraft/unmapped/C_1633510	net/minecraft/client/render/Culler	
 	m	(Lnet/minecraft/unmapped/C_1414550;)Z	m_2658685	isVisible	
 		p	1		shape	
@@ -1017,7 +1044,7 @@ c	net/minecraft/unmapped/C_3466301
 		p	2		x	
 		p	3		y	
 		p	4		z	
-	m	(Lnet/minecraft/unmapped/C_3635204;III)Z	m_8178628	tesselateRedstoneWire	
+	m	(Lnet/minecraft/unmapped/C_3635204;III)Z	m_8178628	tesselateGear	
 		p	1		block	
 		p	2		x	
 		p	3		y	
@@ -1211,8 +1238,8 @@ c	net/minecraft/unmapped/C_4824661
 		p	4		f4	
 	m	(F)V	m_3466212	m_3466212	
 		p	1		p_1	
-	m	(F)V	m_5195666		m_5195666
-		p	1			p_1
+	m	(F)V	m_5195666		render
+		p	1			tickDelta
 c	net/minecraft/unmapped/C_4917405
 	m	(Lnet/minecraft/unmapped/C_3050136;DDDFF)V	m_6248023	m_6248023	
 		p	1		p_1	
@@ -1285,7 +1312,7 @@ c	net/minecraft/unmapped/C_5283200
 		p	1		culler	
 	m	()Z	m_0330444		compile
 	m	(Lnet/minecraft/unmapped/C_6516244;)V	m_5092852		cull
-		p	1			p_1
+		p	1			culler
 c	net/minecraft/unmapped/C_5367636
 	m	()V	m_7687283	releaseAllKeys	
 	m	(IZ)V	m_0753693	handleKeyEvent	
@@ -1543,3 +1570,10 @@ c	net/minecraft/unmapped/C_8036556		net/minecraft/unmapped/C_8036556
 	m	()V	<init>		<init>
 c	net/minecraft/unmapped/C_9962991		net/minecraft/unmapped/C_9962991
 	m	()V	<init>		<init>
+c	net/minecraft/unmapped/C_6516244
+	m	(DDD)V	m_5600360	m_5600360	prepare
+		p	1		p_1	offsetX
+		p	3		p_3	offsetY
+		p	5		p_5	offsetZ
+	m	(Lnet/minecraft/unmapped/C_1414550;)Z	m_2658685	m_2658685	isVisible
+		p	1		p_1	shape
