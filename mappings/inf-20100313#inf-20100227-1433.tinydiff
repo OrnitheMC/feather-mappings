@@ -258,7 +258,7 @@ c	net/minecraft/unmapped/C_1044273
 	f	I	f_0381341	lastViewDistance	
 	f	Ljava/util/List;	f_0391517	chunksInCurrentLayer	
 	f	I	f_0437423		f_0437423
-	f	Ljava/nio/IntBuffer;	f_2125993		f_2125993
+	f	Ljava/nio/IntBuffer;	f_2125993		lastLayer
 	f	[I	f_6069347		f_6069347
 	m	()V	m_4374098	reload	
 	m	(III)V	m_9346630	sortChunks	
@@ -296,19 +296,19 @@ c	net/minecraft/unmapped/C_1044273
 		p	1		p_1	
 		p	2		p_2	
 	m	(Lnet/minecraft/unmapped/C_5009044;I)I	m_8682700		render
-		p	1			p_1
-		p	2			p_2
-	m	(III)I	m_5742929		m_5742929
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	()V	m_5654325		m_5654325
+		p	1			camera
+		p	2			layer
+	m	(III)I	m_5742929		renderChunks
+		p	1			from
+		p	2			to
+		p	3			layer
+	m	()V	m_5654325		renderLastChunks
 	m	(Lnet/minecraft/unmapped/C_5853518;ILnet/minecraft/unmapped/C_2750078;)V	m_6067428		renderMiningProgress
-		p	1			p_1
+		p	1			hit
 		p	2			p_2
-		p	3			p_3
+		p	3			mainHandStack
 	m	(Lnet/minecraft/unmapped/C_5853518;I)V	m_4049049		renderBlockOutline
-		p	1			p_1
+		p	1			hit
 		p	2			p_2
 c	net/minecraft/unmapped/C_2334550
 	f	D	f_1689112	u	
@@ -342,10 +342,10 @@ c	net/minecraft/unmapped/C_2334550
 		p	1			x
 		p	2			y
 		p	3			z
-	m	(DDD)V	m_4734176		m_4734176
-		p	1			p_1
-		p	3			p_3
-		p	5			p_5
+	m	(DDD)V	m_4734176		vertex
+		p	1			x
+		p	3			y
+		p	5			z
 c	net/minecraft/unmapped/C_2813741
 	f	Lnet/minecraft/unmapped/C_6385858;	f_6258221	camera	
 	f	Lnet/minecraft/unmapped/C_5009044;	f_6258221		camera
@@ -354,9 +354,9 @@ c	net/minecraft/unmapped/C_2813741
 	m	(Lnet/minecraft/unmapped/C_5009044;)V	<init>		<init>
 		p	1			p_1
 c	net/minecraft/unmapped/C_3466301
-	f	I	f_3741274		f_3741274
-	f	I	f_5388560		f_5388560
-	f	I	f_9250325		f_9250325
+	f	I	f_3741274		cameraX
+	f	I	f_5388560		cameraY
+	f	I	f_9250325		cameraZ
 	m	(Lnet/minecraft/unmapped/C_3635204;DDDI)V	m_1510599	tesselateBottomFace	
 		p	1		block	
 		p	2		x	
@@ -394,41 +394,41 @@ c	net/minecraft/unmapped/C_3466301
 		p	6		z	
 		p	8		sprite	
 	m	(Lnet/minecraft/unmapped/C_3635204;FFFI)V	m_1510599		tesselateBottomFace
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	1			block
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			sprite
 	m	(Lnet/minecraft/unmapped/C_3635204;FFFI)V	m_9981128		tesselateTopFace
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	1			block
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			sprite
 	m	(Lnet/minecraft/unmapped/C_3635204;IIII)V	m_9791251		tesselateNorthFace
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	1			block
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			sprite
 	m	(Lnet/minecraft/unmapped/C_3635204;IIII)V	m_7347669		tesselateSouthFace
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	1			block
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			sprite
 	m	(Lnet/minecraft/unmapped/C_3635204;IIII)V	m_4748598		tesselateWestFace
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	1			block
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			sprite
 	m	(Lnet/minecraft/unmapped/C_3635204;IIII)V	m_1674778		tesselateEastFace
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	1			block
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			sprite
 c	net/minecraft/unmapped/C_3794155
 	m	(Lnet/minecraft/unmapped/C_3906126;DDDDDDLnet/minecraft/unmapped/C_3635204;)V	<init>	<init>	
 		p	1		world	
@@ -440,14 +440,14 @@ c	net/minecraft/unmapped/C_3794155
 		p	12		velocityZ	
 		p	14		block	
 	m	(Lnet/minecraft/unmapped/C_3906126;FFFFFFLnet/minecraft/unmapped/C_3635204;)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
+		p	1			world
+		p	2			x
+		p	3			y
+		p	4			z
+		p	5			velocityX
+		p	6			velocityY
+		p	7			velocityZ
+		p	8			block
 c	net/minecraft/unmapped/C_5283200
 	f	I	f_5848480	renderX	
 	f	I	f_8981329	renderY	
@@ -460,11 +460,11 @@ c	net/minecraft/unmapped/C_5283200
 	m	(I)I	m_1829228	getGlList	
 		p	1		layer	
 	m	(Lnet/minecraft/unmapped/C_1013763;)F	m_9608130		squaredDistanceToCenter
-		p	1			p_1
-	m	([III)I	m_8783499		m_8783499
+		p	1			camera
+	m	([III)I	m_8783499		getGlList
 		p	1			p_1
 		p	2			p_2
-		p	3			p_3
+		p	3			layer
 c	net/minecraft/unmapped/C_6516244
 	f	D	f_1603874	offsetX	
 	f	D	f_4729980	offsetY	
@@ -485,8 +485,8 @@ c	net/minecraft/unmapped/C_8905061
 	f	D	f_1735994	lerpCameraY	
 	f	D	f_6449107	lerpCameraZ	
 c	net/minecraft/unmapped/C_9302567
-	m	(Lnet/minecraft/unmapped/C_1414550;)V	m_4654281		m_4654281
-		p	0			p_0
+	m	(Lnet/minecraft/unmapped/C_1414550;)V	m_4654281		renderShapeFlat
+		p	0			shape
 c	net/minecraft/unmapped/C_9232749
 	m	(IIIIII)V	m_0171092	notifyRegionChanged	
 		p	1		minX	

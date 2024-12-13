@@ -11,16 +11,16 @@ c	net/minecraft/client/Minecraft
 		p	3		width	
 		p	4		height	
 		p	5		fullscreen	
-	m	(Ljava/lang/String;I)V	m_4363926	m_4363926	
-		p	1		p_1	
-		p	2		p_2	
+	m	(Ljava/lang/String;I)V	m_4363926	setStartupServer	
+		p	1		address	
+		p	2		port	
 	m	(Ljava/awt/Canvas;IIZ)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
 c	net/minecraft/client/MinecraftApplet
-	m	()V	m_3842877	m_3842877	
+	m	()V	m_3842877	startThread	
 c	net/minecraft/unmapped/C_0139979
 	f	Lnet/minecraft/client/Minecraft;	f_3817644	minecraft	
 	m	()V	m_1418303	cancel	
@@ -83,11 +83,11 @@ c	net/minecraft/unmapped/C_1044273
 	m	()V	m_6633291	m_6633291	
 	m	()V	m_7874783	m_7874783	
 	m	(Lnet/minecraft/unmapped/C_5853518;ILnet/minecraft/unmapped/C_2750078;)V	m_6067428	renderMiningProgress	
-		p	1		p_1	
+		p	1		hit	
 		p	2		p_2	
-		p	3		p_3	
+		p	3		mainHandStack	
 	m	(Lnet/minecraft/unmapped/C_5853518;I)V	m_4049049	renderBlockOutline	
-		p	1		p_1	
+		p	1		hit	
 		p	2		p_2	
 	m	(III)V	m_7307167	m_7307167	
 		p	1		p_1	
@@ -122,7 +122,7 @@ c	net/minecraft/unmapped/C_1414550
 		p	1		from	
 		p	2		to	
 c	net/minecraft/unmapped/C_1525636
-	f	I	f_0563187	f_0563187	
+	f	I	f_0563187	slot	
 c	net/minecraft/unmapped/C_2411117	net/minecraft/client/ProgressListener	
 	m	(Ljava/lang/String;)V	m_4655768	progressStart	
 		p	1		title	
@@ -131,9 +131,9 @@ c	net/minecraft/unmapped/C_2411117	net/minecraft/client/ProgressListener
 	m	(I)V	m_1991224	progressPercentage	
 		p	1		percentage	
 c	net/minecraft/unmapped/C_2454294
-	m	(Lnet/minecraft/unmapped/C_6385858;F)V	m_2631170	m_2631170	
-		p	1		p_1	
-		p	2		p_2	
+	m	(Lnet/minecraft/unmapped/C_6385858;F)V	m_2631170	render	
+		p	1		camera	
+		p	2		tickDelta	
 	m	(Lnet/minecraft/unmapped/C_3906126;)V	m_3726648	setWorld	
 		p	1		world	
 	m	(III)V	m_5212298	handleBlockBreaking	
@@ -153,13 +153,13 @@ c	net/minecraft/unmapped/C_2621421
 		p	4		width	
 		p	5		height	
 		p	6		message	
-	m	(Lnet/minecraft/client/Minecraft;II)V	m_9498802	m_9498802	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-	m	(II)Z	m_7971956	m_7971956	
-		p	1		p_1	
-		p	2		p_2	
+	m	(Lnet/minecraft/client/Minecraft;II)V	m_9498802	render	
+		p	1		minecraft	
+		p	2		mouseX	
+		p	3		mouseY	
+	m	(II)Z	m_7971956	mouseClicked	
+		p	1		mouseX	
+		p	2		mouseY	
 	m	(IIIILjava/lang/String;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -203,8 +203,8 @@ c	net/minecraft/unmapped/C_3271339
 c	net/minecraft/unmapped/C_3385278
 	m	(Z)V	m_9982901	m_9982901	
 		p	1		p_1	
-	m	()V	m_5722730	m_5722730	
-	m	()V	m_5918414	m_5918414	
+	m	()V	m_5722730	tick	
+	m	()V	m_5918414	reload	
 c	net/minecraft/unmapped/C_3466301
 	m	(Lnet/minecraft/unmapped/C_3635204;IIII)V	m_9404472	tesselateInWorld	
 		p	1		block	
@@ -227,9 +227,9 @@ c	net/minecraft/unmapped/C_3624347	net/minecraft/client/sound/SoundEngine
 	m	(Ljava/lang/String;Ljava/io/File;)V	m_9117328	loadSound	
 		p	1		path	
 		p	2		dir	
-	m	(Ljava/lang/String;Ljava/io/File;)V	m_1848294	m_1848294	
-		p	1		p_1	
-		p	2		p_2	
+	m	(Ljava/lang/String;Ljava/io/File;)V	m_1848294	loadMusic	
+		p	1		path	
+		p	2		dir	
 	m	(Lnet/minecraft/unmapped/C_1013763;F)V	m_5882704	m_5882704	
 		p	1		p_1	
 		p	2		p_2	
@@ -244,7 +244,7 @@ c	net/minecraft/unmapped/C_3624347	net/minecraft/client/sound/SoundEngine
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	()V	m_8643571	m_8643571	
+	m	()V	m_8643571	load	
 c	net/minecraft/unmapped/C_3635204
 	f	Lnet/minecraft/unmapped/C_5846486;	f_5707007	DEFAULT_SOUND	
 	f	Lnet/minecraft/unmapped/C_5846486;	f_0459313	WOOD_SOUND	
@@ -339,12 +339,12 @@ c	net/minecraft/unmapped/C_5009044
 	f	B	f_0461191	userType	
 c	net/minecraft/unmapped/C_5283200
 	m	(Lnet/minecraft/unmapped/C_3906126;IIIII)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
+		p	1		world	
+		p	2		originX	
+		p	3		originY	
+		p	4		originZ	
+		p	5		size	
+		p	6		glList	
 	m	(Lnet/minecraft/unmapped/C_3906126;IIII)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
@@ -370,7 +370,7 @@ c	net/minecraft/unmapped/C_5422301
 	m	(I)V	<init>		<init>
 		p	1			p_1
 c	net/minecraft/unmapped/C_5540851
-	f	Z	f_3904739	f_3904739	
+	f	Z	f_3904739	done	
 c	net/minecraft/unmapped/C_5974036
 	f	I	f_1547140	ticksThisFrame	
 	f	F	f_9607039	tickDelta	
