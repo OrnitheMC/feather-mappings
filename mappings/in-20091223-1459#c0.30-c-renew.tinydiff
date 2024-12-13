@@ -318,14 +318,14 @@ c	net/minecraft/unmapped/C_1414550	net/minecraft/util/math/Box
 		p	2		dy	
 		p	3		dz	
 	m	(Lnet/minecraft/unmapped/C_1414550;F)F	m_1629908	intersectX	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		box	
+		p	2		limit	
 	m	(Lnet/minecraft/unmapped/C_1414550;F)F	m_3985442	intersectY	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		box	
+		p	2		limit	
 	m	(Lnet/minecraft/unmapped/C_1414550;F)F	m_4691507	intersectZ	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		box	
+		p	2		limit	
 	m	(Lnet/minecraft/unmapped/C_1414550;)Z	m_9840312	contains	
 		p	1		other	
 	m	(FFF)V	m_6640618	move	
@@ -844,21 +844,21 @@ c	net/minecraft/unmapped/C_3906126	net/minecraft/world/World
 	f	I	f_3926541	spawnX	
 	f	I	f_2923303	spawnY	
 	f	I	f_8500813	spawnZ	
-	f	F	f_0132843	f_0132843	
+	f	F	f_0132843	defaultYaw	
 	f	Ljava/util/ArrayList;	f_9572477	eventListeners	
 	f	Ljava/util/ArrayList;	f_1161172	scheduledTicks	
 	f	[I	f_6234407	heightMap	
 	f	Ljava/util/Random;	f_7114289	random	
 	f	I	f_5915199	f_5915199	
-	f	Lnet/minecraft/unmapped/C_4838406;	f_7148360	entityTracker	
+	f	Lnet/minecraft/unmapped/C_4838406;	f_7148360	blockMap	
 	f	I	f_8873427	surroundingWaterHeight	
 	f	I	f_3766825	skyColor	
 	f	I	f_2946178	fogColor	
 	f	I	f_1709243	cloudColor	
-	f	I	f_2476841	f_2476841	
-	f	I	f_8845673	f_8845673	
+	f	I	f_2476841	volume	
+	f	I	f_8845673	time	
 	f	Lnet/minecraft/unmapped/C_6385858;	f_2176096	player	
-	f	Z	f_6452769	f_6452769	
+	f	Z	f_6452769	entitiesTakeDamage	
 	f	Z	f_4626403	f_4626403	
 	f	[I	f_5436337	f_5436337	
 	f	[B	f_9945025	f_9945025	
@@ -1086,16 +1086,16 @@ c	net/minecraft/unmapped/C_4558465
 		p	3		p_3	
 		p	4		p_4	
 		p	5		p_5	
-	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_6220270	m_6220270	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_8268450	m_8268450	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
+	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_6220270	canSpreadTo	
+		p	1		world	
+		p	2		x	
+		p	3		y	
+		p	4		z	
+	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_8268450	spreadTo	
+		p	1		world	
+		p	2		x	
+		p	3		y	
+		p	4		z	
 	m	(Lnet/minecraft/unmapped/C_3906126;III)F	m_1598263	m_1598263	
 		p	1		p_1	
 		p	2		p_2	
@@ -1140,12 +1140,12 @@ c	net/minecraft/unmapped/C_4558465
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-	m	(Lcom/mojang/minecraft/level/Level;III)Z	m_6220270		m_6220270
+	m	(Lcom/mojang/minecraft/level/Level;III)Z	m_6220270		canSpreadTo
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 		p	4			p_4
-	m	(Lcom/mojang/minecraft/level/Level;III)Z	m_8268450		m_8268450
+	m	(Lcom/mojang/minecraft/level/Level;III)Z	m_8268450		spreadTo
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
@@ -1262,8 +1262,8 @@ c	net/minecraft/unmapped/C_4838406	net/minecraft/world/BlockMap
 	f	I	f_8277311	depth	
 	f	I	f_7001699	height	
 	f	[Ljava/util/List;	f_3779159	entityGrid	
-	f	Ljava/util/List;	f_6899876	entities	
-	f	Ljava/util/List;	f_7897603	all	
+	f	Ljava/util/List;	f_6899876	all	
+	f	Ljava/util/List;	f_7897603	tmp	
 	f	Lnet/minecraft/unmapped/C_4838406$C_2072059;	f_2657781	slot	
 	f	Lnet/minecraft/unmapped/C_4838406$C_2072059;	f_1292325	slot2	
 	m	(III)V	<init>	<init>	
@@ -1479,18 +1479,18 @@ c	net/minecraft/unmapped/C_6385858	net/minecraft/entity/Entity
 		p	1		width	
 		p	2		height	
 	m	(FFF)V	m_2141747	setPosition	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+		p	1		x	
+		p	2		y	
+		p	3		z	
 	m	()V	m_0718337	tick	
 	m	(FFF)Z	m_3552814	canMove	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+		p	1		dx	
+		p	2		dy	
+		p	3		dz	
 	m	(FFF)V	m_2801634	move	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+		p	1		dx	
+		p	2		dy	
+		p	3		dz	
 	m	(F)V	m_8092679	takeFallDamage	
 		p	1		distance	
 	m	()Z	m_0439182	checkWaterCollisions	
@@ -1505,8 +1505,8 @@ c	net/minecraft/unmapped/C_6385858	net/minecraft/entity/Entity
 		p	1		p_1	
 		p	2		p_2	
 	m	()Z	m_7828889	hasCollision	
-	m	()Z	m_9345466	m_9345466	
-	m	(FF)V	m_1428765	m_1428765	
+	m	()Z	m_9345466	isPushable	
+	m	(FF)V	m_1428765	addVelocity	
 		p	1		p_1	
 		p	2		p_2	
 c	net/minecraft/unmapped/C_6542415	net/minecraft/client/gui/ChatMessage	
