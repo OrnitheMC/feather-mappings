@@ -15,7 +15,7 @@ c	net/minecraft/client/Minecraft
 	f	Lnet/minecraft/unmapped/C_8534347;	f_1501934		f_1501934
 	f	Lcom/mojang/minecraft/MinecraftApplet;	f_0976645		f_0976645
 	f	I	f_0132506		f_0132506
-	m	(Lnet/minecraft/unmapped/C_3906126;)V	m_6427459	m_6427459	
+	m	(Lnet/minecraft/unmapped/C_3906126;)V	m_6427459	setWorld	
 		p	1		world	
 	m	(Ljava/awt/Canvas;IIZ)V	<init>	<init>	
 		p	1		p_1	
@@ -32,7 +32,7 @@ c	net/minecraft/client/Minecraft
 	m	(Ljava/lang/String;I)Z	m_8752834		m_8752834
 		p	1			p_1
 		p	2			p_2
-	m	(Lcom/mojang/minecraft/level/Level;)V	m_6427459		m_6427459
+	m	(Lcom/mojang/minecraft/level/Level;)V	m_6427459		setWorld
 		p	1			p_1
 c	net/minecraft/client/Minecraft$7968884
 	m	()V	<init>	<init>	
@@ -844,7 +844,7 @@ c	net/minecraft/unmapped/C_3906126	net/minecraft/world/World
 	f	I	f_3926541	spawnX	
 	f	I	f_2923303	spawnY	
 	f	I	f_8500813	spawnZ	
-	f	F	f_0132843	defaultYaw	
+	f	F	f_0132843	spawnYaw	
 	f	Ljava/util/ArrayList;	f_9572477	eventListeners	
 	f	Ljava/util/ArrayList;	f_1161172	scheduledTicks	
 	f	[I	f_6234407	heightMap	
@@ -865,7 +865,7 @@ c	net/minecraft/unmapped/C_3906126	net/minecraft/world/World
 	f	[I	f_7863453	f_7863453	
 	f	I	f_4134665	f_4134665	
 	m	()V	<init>	<init>	
-	m	()V	m_5250554	m_5250554	
+	m	()V	m_5250554	initialized	
 	m	(III[B)V	m_2817546	assemble	
 		p	1		sizeX	
 		p	2		sizeZ	
@@ -932,8 +932,8 @@ c	net/minecraft/unmapped/C_3906126	net/minecraft/world/World
 		p	3		z	
 	m	()V	m_6536802	tickEntities	
 	m	()V	m_8605860	tick	
-	m	(Ljava/lang/Class;)I	m_7058473	m_7058473	
-		p	1		p_1	
+	m	(Ljava/lang/Class;)I	m_7058473	getEntityCount	
+		p	1		type	
 	m	(Lnet/minecraft/unmapped/C_1414550;)Z	m_9156319	containsLiquid	
 		p	1		bounds	
 	m	(Lnet/minecraft/unmapped/C_1414550;Lnet/minecraft/unmapped/C_8554894;)Z	m_4199410	containsMaterial	
@@ -949,10 +949,10 @@ c	net/minecraft/unmapped/C_3906126	net/minecraft/world/World
 	m	(Lnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_1414550;)Ljava/util/List;	m_7403447	getEntities	
 		p	1		exclude	
 		p	2		bounds	
-	m	(FFFF)Z	m_9113962	m_9113962	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+	m	(FFFF)Z	m_9113962	isSolidAround	
+		p	1		x	
+		p	2		y	
+		p	3		z	
 		p	4		p_4	
 	m	(FFF)Z	m_6056620	isSolidBlock	
 		p	1		x	
@@ -961,11 +961,11 @@ c	net/minecraft/unmapped/C_3906126	net/minecraft/world/World
 	m	(II)I	m_6057855	getSurfaceBlock	
 		p	1		x	
 		p	2		z	
-	m	(IIIF)V	m_2142003	m_2142003	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
+	m	(IIIF)V	m_2142003	setSpawnPoint	
+		p	1		spawnX	
+		p	2		spawnY	
+		p	3		spawnZ	
+		p	4		spawnYaw	
 	m	(III)F	m_6019688	getBrightness	
 		p	1		x	
 		p	2		y	
@@ -981,24 +981,24 @@ c	net/minecraft/unmapped/C_3906126	net/minecraft/world/World
 	m	(Lnet/minecraft/unmapped/C_0336319;Lnet/minecraft/unmapped/C_0336319;)Lnet/minecraft/unmapped/C_5853518;	m_1107910	rayTrace	
 		p	1		from	
 		p	2		to	
-	m	(III)Z	m_0220816	m_0220816	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+	m	(III)Z	m_0220816	placeTree	
+		p	1		x	
+		p	2		y	
+		p	3		z	
 	m	()Lnet/minecraft/unmapped/C_6385858;	m_0519267	getPlayers	
 	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_4490365	addEntity	
 		p	1		entity	
 	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_6415398	removeEntity	
 		p	1		entity	
-	m	(Ljava/lang/Class;)Lnet/minecraft/unmapped/C_6385858;	m_9603080	m_9603080	
+	m	(Ljava/lang/Class;)Lnet/minecraft/unmapped/C_6385858;	m_9603080	getEntityOfSubtype	
 		p	1		p_1	
 	m	(II)I	m_2328495	m_2328495	
 		p	1		p_1	
 		p	2		p_2	
 	m	()V	<clinit>	<clinit>	
 	m	()V	m_5638724	m_5638724	
-	m	()F	m_6307946	m_6307946	
-	m	()F	m_6053275	m_6053275	
+	m	()F	m_6307946	getSurroundingGroundHeight	
+	m	()F	m_6053275	getSurroundingWaterHeight	
 	m	(Lnet/minecraft/unmapped/C_1044273;)V	m_1367228	addEventListener	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_1044273;)V	m_1985242	removeEventListener	
@@ -1359,17 +1359,17 @@ c	net/minecraft/unmapped/C_5283200
 c	net/minecraft/unmapped/C_5346059	net/minecraft/unmapped/C_5346059	
 	m	()V	<init>	<init>	
 c	net/minecraft/unmapped/C_5376418
-	f	I	f_3656430	f_3656430	
-	f	I	f_0729654	f_0729654	
-	f	I	f_3160490	f_3160490	
-	f	[B	f_5268170	f_5268170	
-	f	I	f_9811652	f_9811652	
+	f	I	f_3656430	sizeX	
+	f	I	f_0729654	sizeY	
+	f	I	f_3160490	sizeZ	
+	f	[B	f_5268170	blocks	
+	f	I	f_9811652	surroundingWaterHeight	
 	f	I	f_7275613		f_7275613
 	f	I	f_8175346		f_8175346
 	f	I	f_2316345		f_2316345
 	f	[B	f_8316515		f_8316515
 	f	I	f_2661209		f_2661209
-	m	(IIII)V	m_8354142	m_8354142	
+	m	(IIII)V	m_8354142	placeOre	
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	

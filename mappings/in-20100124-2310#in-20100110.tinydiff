@@ -103,8 +103,8 @@ c	net/minecraft/unmapped/C_3050136
 c	net/minecraft/unmapped/C_3635204
 	f	Lnet/minecraft/unmapped/C_3635204;	f_4430665	CHEST	
 	f	F	f_0979704	blastResistance	
-	f	Lnet/minecraft/unmapped/C_3635204;	f_4604991	f_4604991	
-	f	Lnet/minecraft/unmapped/C_3635204;	f_2912279	f_2912279	
+	f	Lnet/minecraft/unmapped/C_3635204;	f_4604991	WATER_LEGACY	
+	f	Lnet/minecraft/unmapped/C_3635204;	f_2912279	LAVA_LEGACY	
 	f	Z	f_7639747		canExplode
 	m	(F)Lnet/minecraft/unmapped/C_3635204;	m_8795806	setBlastResistance	
 		c	Sets this block's resistance.\n\n<p>\nNOTE: this method should only be used during the block's creation before it is registered.	
@@ -187,11 +187,11 @@ c	net/minecraft/unmapped/C_3906126
 		p	2		y	
 		p	3		z	
 	m	(IIIII)I	m_9956589	m_9956589	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
+		p	1		x	
+		p	2		y	
+		p	3		z	
+		p	4		liquid	
+		p	5		adjacentSources	
 	m	(IIILnet/minecraft/unmapped/C_2074023;)V	m_6600484	setBlockEntity	
 		p	1		x	
 		p	2		y	
@@ -669,8 +669,8 @@ c	net/minecraft/unmapped/C_8191584	net/minecraft/client/render/entity/MobRendere
 	m	()V	<init>	<init>	
 c	net/minecraft/unmapped/C_8425960
 	m	()V	<init>	<init>	
-	m	(Ljava/io/InputStream;)Lnet/minecraft/unmapped/C_2800860;	m_3357503	m_3357503	
-		p	0		p_0	
+	m	(Ljava/io/InputStream;)Lnet/minecraft/unmapped/C_2800860;	m_3357503	readCompressed	
+		p	0		is	
 c	net/minecraft/unmapped/C_8905061
 	m	(Lnet/minecraft/unmapped/C_2800860;)V	m_0758434	m_0758434	
 		p	1		p_1	
@@ -756,18 +756,18 @@ c	net/minecraft/unmapped/C_5540851$9233105	9233105
 	m	(Lnet/minecraft/unmapped/C_5540851;)V	<init>	<init>	
 		p	1		p_1	
 	m	()V	run	run	
-c	net/minecraft/unmapped/C_5612112	net/minecraft/unmapped/C_5612112	
+c	net/minecraft/unmapped/C_5612112	net/minecraft/world/WorldStorage	
 	f	Lnet/minecraft/unmapped/C_2411117;	f_1154694	listener	
 	m	(Lnet/minecraft/unmapped/C_2411117;)V	<init>	<init>	
 		p	1		listener	
-	m	(Ljava/io/InputStream;)Lnet/minecraft/unmapped/C_3906126;	m_1463851	m_1463851	
-		p	1		p_1	
-	m	(Lnet/minecraft/unmapped/C_3906126;Ljava/lang/String;)Lnet/minecraft/unmapped/C_6385858;	m_4628500	m_4628500	
-		p	1		p_1	
-		p	2		p_2	
-	m	(Lnet/minecraft/unmapped/C_3906126;Ljava/io/OutputStream;)V	m_1170247	m_1170247	
-		p	1		p_1	
-		p	2		p_2	
+	m	(Ljava/io/InputStream;)Lnet/minecraft/unmapped/C_3906126;	m_1463851	load	
+		p	1		is	
+	m	(Lnet/minecraft/unmapped/C_3906126;Ljava/lang/String;)Lnet/minecraft/unmapped/C_6385858;	m_4628500	createEntity	
+		p	1		world	
+		p	2		id	
+	m	(Lnet/minecraft/unmapped/C_3906126;Ljava/io/OutputStream;)V	m_1170247	save	
+		p	1		world	
+		p	2		os	
 c	net/minecraft/unmapped/C_9811916	net/minecraft/nbt/NbtElement	
 	f	Ljava/lang/String;	f_2921434	name	
 	m	()V	<init>	<init>	
@@ -890,11 +890,11 @@ c	net/minecraft/unmapped/C_6369636	net/minecraft/nbt/NbtDouble
 		p	1		p_1	
 	m	()B	m_7876673	m_7876673	
 	m	()Ljava/lang/String;	toString	toString	
-c	net/minecraft/unmapped/C_6372142	net/minecraft/unmapped/C_6372142	
-	f	Lnet/minecraft/client/Minecraft;	f_3249342	f_3249342	
+c	net/minecraft/unmapped/C_6372142	net/minecraft/client/ClientWorldStorage	
+	f	Lnet/minecraft/client/Minecraft;	f_3249342	minecraft	
 	m	(Lnet/minecraft/client/Minecraft;Lnet/minecraft/unmapped/C_2411117;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		minecraft	
+		p	2		listener	
 	m	(Lnet/minecraft/unmapped/C_3906126;Ljava/lang/String;)Lnet/minecraft/unmapped/C_6385858;	m_4628500	m_4628500	
 		p	1		p_1	
 		p	2		p_2	
@@ -920,11 +920,11 @@ c	net/minecraft/unmapped/C_9005806	net/minecraft/nbt/NbtFloat
 		p	1		p_1	
 	m	()B	m_7876673	m_7876673	
 	m	()Ljava/lang/String;	toString	toString	
-c	net/minecraft/unmapped/C_9837937	net/minecraft/unmapped/C_9837937	
-	f	I	f_6511886	f_6511886	
+c	net/minecraft/unmapped/C_9837937	net/minecraft/block/LegacyLiquidSourceBlock	
+	f	I	f_6511886	flowingBlock	
 	m	(II)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
+		p	1		id	
+		p	2		flowingBlock	
 	m	(Lnet/minecraft/unmapped/C_3906126;III)V	m_1556953	m_1556953	
 		p	1		p_1	
 		p	2		p_2	
