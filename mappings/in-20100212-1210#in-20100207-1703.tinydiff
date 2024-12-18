@@ -108,8 +108,8 @@ c	net/minecraft/unmapped/C_3906126
 		p	1		tickDelta	
 	m	()I	m_1560346	getSunLight	
 	m	()V	m_8798715	close	
-	m	(I)V	m_9809636	m_9809636	
-		p	1		p_1	
+	m	(I)V	m_9809636	notifySunLightChanged	
+		p	1		sunLight	
 	m	(III)Z	m_2029997	hasSkyAccess	
 		p	1		x	
 		p	2		y	
@@ -336,7 +336,7 @@ c	net/minecraft/unmapped/C_9232749
 		p	1		entity	
 	m	(Lnet/minecraft/unmapped/C_6385858;)V	m_5011830	notifyEntityRemoved	
 		p	1		entity	
-	m	()V	m_5371592	m_5371592	
+	m	()V	m_5371592	notifySunLightChanged	
 c	net/minecraft/unmapped/C_1051907
 	m	(ILnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_2411117;)I	m_6963744		m_6963744
 		p	1			p_1
@@ -409,46 +409,53 @@ c	net/minecraft/unmapped/C_5376418
 		p	1			p_1
 	m	()V	m_9060872		m_9060872
 c	net/minecraft/unmapped/C_7079324	net/minecraft/world/LightEngine	
-	f	I	f_1773705	f_1773705	
-	f	Ljava/util/List;	f_4303376	f_4303376	
+	f	I	f_1773705	dirtyPositionsRemaining	
+	f	Ljava/util/List;	f_4303376	pendingPositions	
+		c	A queue of position arrays, where each position is marked dirty.\nThese arrays are used to limit the number of light changes that can happen at once.	
 	f	Lnet/minecraft/unmapped/C_3906126;	f_5385225	world	
 	f	I	f_1592440	sizeX	
-	f	I	f_8834387	sizeY	
-	f	I	f_6808223	sizeZ	
+	f	I	f_8834387	sizeZ	
+	f	I	f_6808223	sizeY	
 	f	[B	f_2498169	blocks	
-	f	[B	f_4192636	blockMetadata	
+	f	[B	f_4192636	blockData	
+		c	Contains light in the 4 least significant bits and block metadata in the next 4 least significant bits.	
 	f	[I	f_7568118	heightMap	
-	f	[I	f_5882030	f_5882030	
-	f	Lnet/minecraft/unmapped/C_8401487;	f_4421655	f_4421655	
-	f	I	f_6849912	f_6849912	
+	f	[I	f_5882030	dirtyPositions	
+		c	Array of ositions that are marked dirty, i.e. needing a re-calculation of the light value.\n<p>\nThis array is limited to 2^15 (~32k) positions. If any more needed, this array is added\nto the {@link pendingPositions} queue, and a new array is created. This limits the number\nof light calculations that can happen at once.	
+	f	Lnet/minecraft/unmapped/C_8401487;	f_4421655	sunLightUpdate	
+		c	The remaining region that requires light updates after a change in sun light.	
+	f	I	f_6849912	prevSunLightChange	
+		c	The change in the sun light value due to the last change in sun light.	
 	f	Ljava/util/List;	f_6458992	f_6458992	
 	f	Ljava/util/List;	f_8250784	f_8250784	
 	f	Ljava/util/List;	f_7800333	f_7800333	
 	f	I	f_9134686	f_9134686	
 	m	(Lnet/minecraft/unmapped/C_3906126;)V	<init>	<init>	
 		p	1		world	
-	m	(IIII)V	m_0087345	updateSkyLight	
+	m	(IIII)V	m_0087345	updateHeightMap	
 		p	1		x	
 		p	2		z	
 		p	3		rangeX	
 		p	4		rangeZ	
-	m	(I)V	m_4616966	m_4616966	
-		p	1		p_1	
-	m	(IIIIII)V	m_8976691	updateBlockLight	
+	m	(I)V	m_4616966	onSunLightChanged	
+		p	1		sunLight	
+	m	(IIIIII)V	m_8976691	updateLight	
 		p	1		minX	
 		p	2		minY	
 		p	3		minZ	
 		p	4		maxX	
 		p	5		maxY	
 		p	6		maxZ	
-	m	(IIIIII)V	m_2928521	m_2928521	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-		p	6		p_6	
+	m	(IIIIII)V	m_2928521	markDirty	
+		c	Mark all positions in the given region as dirty, i.e. requiring a re-calculation of the light value.	
+		p	1		minX	
+		p	2		minY	
+		p	3		minZ	
+		p	4		maxX	
+		p	5		maxY	
+		p	6		maxZ	
 	m	()V	m_4706545	update	
+		c	Work through the next batch of light calculations.\n<p>\nFirst, the light engine handles any pending regionChanged updates. These are queued\nafter light values have changed.\n<p>\nIf there is a pending sun light update, that will be handled next. Otherwise, the\nnext pending light update region is marked as dirty. The positions in this region will\nbe queued for light calculations later on in the method.\n<br> Then, the height map will be re-calculated for the next pending height map update\nregion. If the height for any column changes, the entire column will be marked dirty.\n<p>\nThen, the light engine will work through up to 1024 passes over the {@link dirtyPositions}\nand {@link pendingPositions} queues. If the {@link dirtyPositions} queue is empty,\nit will be replaced by the next queue in {@link pendingPositions}.\n<br> For each position in the {@link dirtyPositions} queue, the light value at that\nposition is recalculated based on the sun light, neighboring light values, and the\nopacity and light emission of the block at the position.\n<br> If the light value at the position changed, each of the 6 neighboring positions\nchecks if its light value needs updating, and if so, is marked dirty.\n<p>\nLastly, the region containing all positions where the light value changed is added\nto the {@link regionChangedUpdates} queue.	
 	m	()Ljava/lang/String;	m_3359335	getDebugInfo	
 c	net/minecraft/unmapped/C_8401487	net/minecraft/world/LightUpdate	
 	f	I	f_9889018	minX	
