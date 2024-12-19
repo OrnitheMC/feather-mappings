@@ -176,22 +176,27 @@ c	net/minecraft/unmapped/C_3906126
 	f	Ljava/lang/String;	f_1523144	author	
 	f	J	f_6464955	timeOfCreation	
 	f	Ljava/util/Map;	f_0625697	blockEntitiesByPos	
-	f	S	f_8692135	f_8692135	
-	f	[S	f_6243074	f_6243074	
-	f	[I	f_1752025	f_1752025	
-	f	[I	f_9254905	f_9254905	
+	f	S	f_8692135	initialLiquidCheckIndex	
+		c	The index in the {@link liquidCheckColumns} array for the XZ-column that had the\ninitial liquid check.	
+	f	[S	f_6243074	liquidCheckIndices	
+		c	The index in the {@link liquidCheckColumns} array for each XZ-column.	
+	f	[I	f_1752025	liquidCheckColumns	
+		c	All XZ-columns that that have pending liquid checks.	
+	f	[I	f_9254905	pendingLiquidUpdateColumns	
+		c	All XZ-columns in the next Y-layer that that have pending liquid checks.	
 	m	(Lnet/minecraft/unmapped/C_1414550;)Z	m_7579370	canPlaceBlocks	
 		p	1		bounds	
 	m	(III)B	m_6630394	getBlockMetadata	
 		p	1		x	
 		p	2		y	
 		p	3		z	
-	m	(IIIII)I	m_9956589	m_9956589	
+	m	(IIIII)I	m_9956589	findLiquidBodyEdge	
+		c	Searches through the body of connected liquid blocks around the given position at and\nabove the given height, and returns the position of the liquid block furthest horizontal\ndistance to the given position.	
 		p	1		x	
 		p	2		y	
 		p	3		z	
-		p	4		liquid	
-		p	5		adjacentSources	
+		p	4		flowingLiquid	
+		p	5		sourceLiquid	
 	m	(IIILnet/minecraft/unmapped/C_2074023;)V	m_6600484	setBlockEntity	
 		p	1		x	
 		p	2		y	
@@ -213,12 +218,13 @@ c	net/minecraft/unmapped/C_3906126
 		p	5		velocityX	
 		p	6		velocityY	
 		p	7		velocityZ	
-	m	(IIIII)Z	m_2945921	m_2945921	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
+	m	(IIIII)Z	m_2945921	findLiquidLayerBoundaryType	
+		c	Searches through the layer of connected liquid blocks around the given position at the\ngiven height, and checks what kind of blocks are present in the boundary surrounding\nit.\n@return whether the boundary contains air or is outside the world	
+		p	1		x	
+		p	2		y	
+		p	3		z	
+		p	4		flowingLiquid	
+		p	5		sourceLiquid	
 c	net/minecraft/unmapped/C_4030632
 	f	Ljava/util/Random;	f_2237872	random	
 	f	I	f_9247003	maxStackSize	
@@ -351,8 +357,7 @@ c	net/minecraft/unmapped/C_7185906
 	m	(D)I	m_8269116	floor	
 		p	0		x	
 c	net/minecraft/unmapped/C_7693268	net/minecraft/block/FlowingLiquidBlock	
-	f	I	f_9279837	adjacentSources	
-		c	The number of adjacent source liquids.	
+	f	I	f_9279837	sourceBlock	
 	f	I	f_2995398	flowingBlock	
 	f	Ljava/util/Random;	f_6985556	random	
 	f	[I	f_0004623	f_0004623	
@@ -395,11 +400,11 @@ c	net/minecraft/unmapped/C_7693268	net/minecraft/block/FlowingLiquidBlock
 		p	5		x	
 		p	6		y	
 		p	7		z	
-	m	(Lnet/minecraft/unmapped/C_3906126;IIIIII)Z	m_3542998	m_3542998	
+	m	(Lnet/minecraft/unmapped/C_3906126;IIIIII)Z	m_3542998	spreadFromLiquidBody	
 		p	1		world	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
+		p	2		fromX	
+		p	3		fromY	
+		p	4		fromZ	
 		p	5		x	
 		p	6		y	
 		p	7		z	
@@ -410,12 +415,12 @@ c	net/minecraft/unmapped/C_7693268	net/minecraft/block/FlowingLiquidBlock
 		p	4		p_4	
 		p	5		p_5	
 	m	()I	m_9474325	m_9474325	
-	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_2767602	spreadWaterTo	
+	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_2767602	handleWaterCollisions	
 		p	0		world	
 		p	1		x	
 		p	2		y	
 		p	3		z	
-	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_2525033	lightOnFire	
+	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_2525033	handleLavaCollisions	
 		p	0		world	
 		p	1		x	
 		p	2		y	

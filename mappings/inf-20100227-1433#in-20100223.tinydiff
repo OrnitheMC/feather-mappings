@@ -511,7 +511,7 @@ c	net/minecraft/unmapped/C_3906126
 	f	Ljava/util/List;	f_4235072		blockEntities
 	f	[I	f_6234407		heightMap
 	f	Ljava/util/Random;	f_3522738		randomTickRandom
-	f	I	f_5915199		f_5915199
+	f	I	f_5915199		randomTickLCG
 	f	Lnet/minecraft/unmapped/C_4838406;	f_7148360		blockMap
 	f	I	f_8873427		surroundingWaterHeight
 	f	I	f_0183464		surroundingGroundHeight
@@ -527,10 +527,14 @@ c	net/minecraft/unmapped/C_3906126
 	f	I	f_5627840		sunLight
 	f	Lnet/minecraft/unmapped/C_7079324;	f_4330482		lightEngine
 	f	I	f_6512025		timeOfDay
-	f	S	f_8692135		f_8692135
-	f	[S	f_6243074		f_6243074
-	f	[I	f_1752025		f_1752025
-	f	[I	f_9254905		f_9254905
+	f	S	f_8692135		initialLiquidCheckIndex
+		c		The index in the {@link liquidCheckColumns} array for the XZ-column that had the\ninitial liquid check.
+	f	[S	f_6243074		liquidCheckIndices
+		c		The index in the {@link liquidCheckColumns} array for each XZ-column.
+	f	[I	f_1752025		liquidCheckColumns
+		c		All XZ-columns that that have pending liquid checks.
+	f	[I	f_9254905		pendingLiquidUpdateColumns
+		c		All XZ-columns in the next Y-layer that that have pending liquid checks.
 	m	(III)I	m_9052708	getBlock	
 		p	1		x	
 		p	2		y	
@@ -690,19 +694,21 @@ c	net/minecraft/unmapped/C_3906126
 		p	1			pos
 		p	2			bounds
 	m	(Ljava/lang/Class;)Lnet/minecraft/unmapped/C_6385858;	m_9603080		getEntityOfSubtype
-		p	1			p_1
-	m	(IIIII)I	m_9956589		m_9956589
+		p	1			type
+	m	(IIIII)I	m_9956589		findLiquidBodyEdge
+		c		Searches through the body of connected liquid blocks around the given position at and\nabove the given height, and returns the position of the liquid block furthest horizontal\ndistance to the given position.
 		p	1			x
 		p	2			y
 		p	3			z
-		p	4			liquid
-		p	5			adjacentSources
-	m	(IIIII)I	m_2945921		m_2945921
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
+		p	4			flowingLiquid
+		p	5			sourceLiquid
+	m	(IIIII)I	m_2945921		findLiquidLayerBoundaryType
+		c		Searches through the layer of connected liquid blocks around the given position at the\ngiven height, and checks what kind of blocks are present in the boundary surrounding\nit. Based on that, it returns a boundary type:\n<br> 0: boundary contains air or given position is outside the world\n<br> 1: boundary contains only non-air blocks\n<br> 2: boundary is outside the world
+		p	1			x
+		p	2			y
+		p	3			z
+		p	4			flowingLiquid
+		p	5			sourceLiquid
 	m	(FFFLjava/lang/String;F)V	m_0699887		playMusic
 		p	1			x
 		p	2			y
@@ -806,8 +812,8 @@ c	net/minecraft/unmapped/C_4558465
 		p	2			x
 		p	3			y
 		p	4			z
-	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_9828053		lightOnFire
-		p	0			wrorld
+	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_9828053		handleLavaCollisions
+		p	0			world
 		p	1			x
 		p	2			y
 		p	3			z
@@ -1073,11 +1079,11 @@ c	net/minecraft/unmapped/C_7693268
 		p	5			x
 		p	6			y
 		p	7			z
-	m	(Lnet/minecraft/unmapped/C_3906126;IIIIII)Z	m_3542998		m_3542998
+	m	(Lnet/minecraft/unmapped/C_3906126;IIIIII)Z	m_3542998		spreadFromLiquidBody
 		p	1			world
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	2			fromX
+		p	3			fromY
+		p	4			fromZ
 		p	5			x
 		p	6			y
 		p	7			z
@@ -1088,12 +1094,12 @@ c	net/minecraft/unmapped/C_7693268
 		p	4			p_4
 		p	5			p_5
 	m	()I	m_9474325		m_9474325
-	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_2767602		spreadWaterTo
+	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_2767602		handleWaterCollisions
 		p	0			world
 		p	1			x
 		p	2			y
 		p	3			z
-	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_2525033		lightOnFire
+	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_2525033		handleLavaCollisions
 		p	0			world
 		p	1			x
 		p	2			y
