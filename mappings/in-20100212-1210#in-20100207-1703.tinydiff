@@ -114,26 +114,26 @@ c	net/minecraft/unmapped/C_3906126
 		p	1		x	
 		p	2		y	
 		p	3		z	
-	m	(IIII)V	m_8815383		m_8815383
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(IIIIII)V	m_7893255		m_7893255
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-	m	(III)Z	m_8512276		m_8512276
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(III)Z	m_5677809		m_5677809
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(IIII)V	m_8815383		updateHeightMap
+		p	1			x
+		p	2			z
+		p	3			rangeX
+		p	4			rangeZ
+	m	(IIIIII)V	m_7893255		updateLight
+		p	1			minX
+		p	2			minY
+		p	3			minZ
+		p	4			maxX
+		p	5			maxY
+		p	6			maxZ
+	m	(III)Z	m_8512276		isBrightEnoughForPassiveMobs
+		p	1			x
+		p	2			y
+		p	3			z
+	m	(III)Z	m_5677809		isDarkEnoughForMushrooms
+		p	1			x
+		p	2			y
+		p	3			z
 c	net/minecraft/unmapped/C_4030632
 	f	Lnet/minecraft/unmapped/C_4030632;	f_7020203	LEATHER_HELMET	
 	f	Lnet/minecraft/unmapped/C_4030632;	f_6171387	LEATHER_CHESTPLATE	
@@ -207,8 +207,8 @@ c	net/minecraft/unmapped/C_6385858
 		p	2		amount	
 		p	3		dy	
 	m	()Ljava/lang/String;	m_4351874	getTexture	
-	m	(II)V	m_3280004		m_3280004
-		p	1			p_1
+	m	(II)V	m_3280004		dropItems
+		p	1			item
 		p	2			p_2
 c	net/minecraft/unmapped/C_6644571
 	m	(Lnet/minecraft/unmapped/C_3906126;III)Z	m_6532724	m_6532724	
@@ -271,8 +271,8 @@ c	net/minecraft/unmapped/C_3385278
 		p	2		processor	
 	m	(Ljava/lang/String;)V	m_0137573	removeHttpTexture	
 		p	1		url	
-	m	(Z)V	m_9982901		m_9982901
-		p	1			p_1
+	m	(Z)V	m_9982901		setBlur
+		p	1			blur
 c	net/minecraft/unmapped/C_3454805
 	m	(Lnet/minecraft/unmapped/C_1013763;)F	m_5642976	m_5642976	
 		p	1		p_1	
@@ -338,10 +338,10 @@ c	net/minecraft/unmapped/C_9232749
 		p	1		entity	
 	m	()V	m_5371592	notifySunLightChanged	
 c	net/minecraft/unmapped/C_1051907
-	m	(ILnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_2411117;)I	m_6963744		m_6963744
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(ILnet/minecraft/unmapped/C_6385858;Lnet/minecraft/unmapped/C_2411117;)I	m_6963744		run
+		p	1			attempts
+		p	2			center
+		p	3			listener
 c	net/minecraft/unmapped/C_1812290	net/minecraft/client/render/texture/HttpTexture	
 	f	Ljava/awt/image/BufferedImage;	f_0926982	image	
 	f	I	f_0708736	requestCount	
@@ -392,22 +392,22 @@ c	net/minecraft/unmapped/C_5376418
 	m	()V	m_1407652	nextPhase	
 	m	(F)V	m_8611747	phaseProgress	
 		p	1		progress	
-	m	([I)V	m_7857109		m_7857109
-		p	1			p_1
-	m	([I)V	m_6681430		m_6681430
-		p	1			p_1
-	m	([I)V	m_9961605		m_9961605
-		p	1			p_1
+	m	([I)V	m_7857109		placeSurface
+		p	1			heightMap
+	m	([I)V	m_6681430		placeFlowers
+		p	1			heightMap
+	m	([I)V	m_9961605		placeMushrooms
+		p	1			heightMap
 	m	(IIIIII)I	m_8354142		placeOre
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			ore
+		p	2			chance
+		p	3			minY
 		p	4			p_4
 		p	5			p_5
-		p	6			p_6
+		p	6			maxY
 	m	(I)V	m_8611747		phaseProgress
-		p	1			p_1
-	m	()V	m_9060872		m_9060872
+		p	1			percentage
+	m	()V	m_9060872		placeUndergroundLakes
 c	net/minecraft/unmapped/C_7079324	net/minecraft/world/LightEngine	
 	f	I	f_1773705	dirtyPositionsRemaining	
 	f	Ljava/util/List;	f_4303376	pendingPositions	

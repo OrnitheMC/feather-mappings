@@ -86,7 +86,7 @@ c	net/minecraft/unmapped/C_1013763
 	f	F	f_5907752	forwardSpeed	
 	f	F	f_2472007	rotationSpeed	
 	f	Z	f_1638648	jumping	
-	f	Lnet/minecraft/unmapped/C_7181464;	f_3086914		f_3086914
+	f	Lnet/minecraft/unmapped/C_7181464;	f_3086914		ai
 	m	(I)V	m_6031420	heal	
 		p	1		amount	
 	m	(Lnet/minecraft/unmapped/C_6385858;I)Z	m_3238154	m_3238154	
@@ -291,13 +291,13 @@ c	net/minecraft/unmapped/C_3906126
 		p	2		y	
 		p	3		z	
 		p	4		metadata	
-	m	(III[B[B)V	m_3920572	m_3920572	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-	m	()V	m_3287315	m_3287315	
+	m	(III[B[B)V	m_3920572	load	
+		p	1		sizeX	
+		p	2		sizeY	
+		p	3		sizeZ	
+		p	4		blocks	
+		p	5		blockData	
+	m	()V	m_3287315	populateHeightMap	
 	m	()Ljava/lang/String;	m_6248674		m_6248674
 c	net/minecraft/unmapped/C_4030632
 	f	Lnet/minecraft/unmapped/C_4030632;	f_8662003	WOODEN_HOE	
@@ -604,15 +604,15 @@ c	net/minecraft/unmapped/C_1044273
 		p	2		to	
 		p	3		layer	
 	m	(Lnet/minecraft/unmapped/C_0336319;Lnet/minecraft/unmapped/C_9265122;F)V	m_1380727	renderEntities	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+		p	1		cameraPos	
+		p	2		culler	
+		p	3		tickDelta	
 	m	(Lnet/minecraft/unmapped/C_9265122;)V	m_4361284	cullChunks	
 		p	1		p_1	
 	m	(Lnet/minecraft/unmapped/C_0336319;Lnet/minecraft/unmapped/C_0669153;F)V	m_1380727		renderEntities
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			cameraPos
+		p	2			frustum
+		p	3			tickDelta
 	m	(Lnet/minecraft/unmapped/C_0669153;)V	m_4361284		cullChunks
 		p	1			p_1
 c	net/minecraft/unmapped/C_2334550
@@ -726,9 +726,9 @@ c	net/minecraft/unmapped/C_5283200
 	f	I	f_7656535	occlusionQuery	
 	m	()V	m_7170652	glCallList	
 	m	(Lnet/minecraft/unmapped/C_9265122;)V	m_5092852	cull	
-		p	1		p_1	
+		p	1		culler	
 	m	(Lnet/minecraft/unmapped/C_0669153;)V	m_5092852		cull
-		p	1			p_1
+		p	1			frustum
 c	net/minecraft/unmapped/C_5367636
 	m	()V	m_6773208	m_6773208	
 c	net/minecraft/unmapped/C_5367636$5094890		5094890
@@ -741,9 +741,9 @@ c	net/minecraft/unmapped/C_6516244	net/minecraft/client/render/FrustumCuller
 	m	(Lnet/minecraft/unmapped/C_1414550;)Z	m_2658685	isVisible	
 		p	1		shape	
 	m	(Lnet/minecraft/unmapped/C_1013763;FF)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+		p	1		camera	
+		p	2		renderDistance	
+		p	3		tickDelta	
 c	net/minecraft/unmapped/C_6923352
 	f	F	f_2259564	mouseX	
 	f	F	f_9996971	mouseY	
@@ -846,60 +846,60 @@ c	net/minecraft/unmapped/C_2283777	net/minecraft/unmapped/C_2283777
 		p	4		p_4	
 		p	5		p_5	
 		p	6		p_6	
-c	net/minecraft/unmapped/C_0669153		net/minecraft/unmapped/C_0669153
+c	net/minecraft/unmapped/C_0669153		net/minecraft/client/render/FrustumData
 	f	Z	f_6319059		f_6319059
-	f	[[F	f_1324188		f_1324188
-	f	[F	f_1762360		f_1762360
-	f	[F	f_5195035		f_5195035
-	f	[F	f_2265740		f_2265740
+	f	[[F	f_1324188		frustum
+	f	[F	f_1762360		projectionMatrix
+	f	[F	f_5195035		modelMatrix
+	f	[F	f_2265740		clipMatrix
 	m	()V	<init>		<init>
-	m	(FFFFFF)Z	m_9682143		m_9682143
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-	m	(FFFFFF)Z	m_9733536		m_9733536
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	6			p_6
-	m	(Lnet/minecraft/unmapped/C_1414550;)Z	m_2062140		m_2062140
-		p	1			p_1
+	m	(FFFFFF)Z	m_9682143		isWhollyVisible
+		p	1			minX
+		p	2			minY
+		p	3			minZ
+		p	4			maxX
+		p	5			maxY
+		p	6			maxZ
+	m	(FFFFFF)Z	m_9733536		isVisible
+		p	1			minX
+		p	2			minY
+		p	3			minZ
+		p	4			maxX
+		p	5			maxY
+		p	6			maxZ
+	m	(Lnet/minecraft/unmapped/C_1414550;)Z	m_2062140		isVisible
+		p	1			shape
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_0998176		net/minecraft/unmapped/C_0998176
-	f	Ljava/util/Random;	f_9850268		f_9850268
-	f	F	f_7459712		f_7459712
-	f	F	f_3261139		f_3261139
-	f	F	f_3913922		f_3913922
-	f	Lnet/minecraft/unmapped/C_1013763;	f_8725827		f_8725827
-	f	Z	f_6998416		f_6998416
+c	net/minecraft/unmapped/C_0998176		net/minecraft/entity/mob/ai/BasicMobAi
+	f	Ljava/util/Random;	f_9850268		random
+	f	F	f_7459712		sidewaysSpeed
+	f	F	f_3261139		forwardSpeed
+	f	F	f_3913922		rotationSpeed
+	f	Lnet/minecraft/unmapped/C_1013763;	f_8725827		mob
+	f	Z	f_6998416		jumping
 	f	I	f_1432240		f_1432240
-	f	F	f_4141406		f_4141406
-	f	I	f_5157830		f_5157830
+	f	F	f_4141406		walkSpeed
+	f	I	f_5157830		farFromPlayerTicks
 	f	Lnet/minecraft/unmapped/C_6385858;	f_5377924		f_5377924
 	m	()V	<init>		<init>
 	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_1013763;)V	m_1710270		m_1710270
 		p	1			p_1
 		p	2			p_2
-	m	()V	m_9434000		m_9434000
-c	net/minecraft/unmapped/C_7181464		net/minecraft/unmapped/C_7181464
+	m	()V	m_9434000		aiTick
+c	net/minecraft/unmapped/C_7181464		net/minecraft/entity/mob/ai/MobAi
 	f	I	f_1741213		f_1741213
 	m	()V	<init>		<init>
-	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_1013763;)V	m_1710270		m_1710270
-		p	1			p_1
-		p	2			p_2
-c	net/minecraft/unmapped/C_8199124		net/minecraft/unmapped/C_8199124
-	f	Lnet/minecraft/unmapped/C_8199124;	f_3284628		f_3284628
-	f	Ljava/nio/FloatBuffer;	f_7388569		f_7388569
-	f	Ljava/nio/FloatBuffer;	f_6924582		f_6924582
-	f	Ljava/nio/FloatBuffer;	f_9644453		f_9644453
+	m	(Lnet/minecraft/unmapped/C_3906126;Lnet/minecraft/unmapped/C_1013763;)V	m_1710270		tick
+		p	1			world
+		p	2			mob
+c	net/minecraft/unmapped/C_8199124		net/minecraft/client/render/Frustum
+	f	Lnet/minecraft/unmapped/C_8199124;	f_3284628		INSTANCE
+	f	Ljava/nio/FloatBuffer;	f_7388569		projectionBuffer
+	f	Ljava/nio/FloatBuffer;	f_6924582		modelBuffer
+	f	Ljava/nio/FloatBuffer;	f_9644453		clipBuffer
 	m	()V	<init>		<init>
-	m	()Lnet/minecraft/unmapped/C_0669153;	m_4703353		m_4703353
-	m	([[FI)V	m_5256054		m_5256054
+	m	()Lnet/minecraft/unmapped/C_0669153;	m_4703353		compute
+	m	([[FI)V	m_5256054		normalize
 		p	0			p_0
-		p	1			p_1
+		p	1			frustum
 	m	()V	<clinit>		<clinit>
