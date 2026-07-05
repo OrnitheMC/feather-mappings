@@ -2,9 +2,9 @@ tiny	2	0
 c	com/mojang/minecraft/Entity
 	f	Z	horizontalCollision	horizontalCollision	
 	m	(FFF)Z	isFree	isFree	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
+		p	1		dx	
+		p	2		dy	
+		p	3		dz	
 c	com/mojang/minecraft/Minecraft
 	f	Lcom/mojang/minecraft/unmapped/C_87604186;	f_69329575	session	
 	f	Ljava/lang/String;	f_56220406	hostAddress	
@@ -90,7 +90,7 @@ c	com/mojang/minecraft/unmapped/C_01953097	com/mojang/minecraft/level/storage/Le
 	m	(Lcom/mojang/minecraft/level/Level;Ljava/io/InputStream;)Z	m_47137514	load	
 		p	1		p_1	
 		p	2		p_2	
-	m	(Lcom/mojang/minecraft/level/Level;Ljava/io/InputStream;)Z	m_32100412	m_32100412	
+	m	(Lcom/mojang/minecraft/level/Level;Ljava/io/InputStream;)Z	m_32100412	loadOldLevel	
 		p	1		p_1	
 		p	2		p_2	
 c	com/mojang/minecraft/unmapped/C_11443481	com/mojang/minecraft/client/gui/screen/level/LoadLevelScreen	
@@ -130,9 +130,9 @@ c	com/mojang/minecraft/unmapped/C_13709197
 c	com/mojang/minecraft/unmapped/C_24384787
 	f	Ljava/nio/IntBuffer;	f_01226149	lastLayer	
 	m	()V	m_10428002	reload	
-	m	(Lcom/mojang/minecraft/unmapped/C_24654288;I)V	m_41930172	m_41930172	
-		p	0		p_0	
-		p	1		p_1	
+	m	(Lcom/mojang/minecraft/unmapped/C_24654288;I)V	m_41930172	renderTileOutline	
+		p	0		hit	
+		p	1		mode	
 	m	()V	m_00274507		m_00274507
 	m	()V	m_64828041		m_64828041
 	m	()V	m_32256754		m_32256754
@@ -193,7 +193,7 @@ c	com/mojang/minecraft/unmapped/C_49004282
 		p	3		y	
 		p	4		maxY	
 		p	5		liquid	
-	m	()V	m_57991341	m_57991341	
+	m	()V	m_57991341	melt	
 	m	(Lcom/mojang/minecraft/Minecraft;)V	<init>	<init>	
 		p	1		p_1	
 	m	(Lcom/mojang/minecraft/level/Level;Ljava/lang/String;III)Z	m_45923732	generate	
@@ -298,12 +298,12 @@ c	com/mojang/minecraft/unmapped/C_85125467	com/mojang/minecraft/client/gui/widge
 	f	Z	f_89460239	active	
 	f	Z	f_59331544	visible	
 	m	(IIIIILjava/lang/String;)V	<init>	<init>	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
+		p	1		id	
+		p	2		x	
+		p	3		y	
+		p	4		width	
 		p	5		height	
-		p	6		p_6	
+		p	6		message	
 c	com/mojang/minecraft/unmapped/C_85740840	com/mojang/minecraft/client/gui/screen/Screen	
 	f	Lcom/mojang/minecraft/Minecraft;	f_78495264	minecraft	
 	f	I	f_05230747	width	
@@ -326,29 +326,29 @@ c	com/mojang/minecraft/unmapped/C_85740840	com/mojang/minecraft/client/gui/scree
 	m	()V	m_29921564	handleMouse	
 	m	()V	m_53520780	tick	
 	m	()V	m_47002234	removed	
-	m	(IIIII)V	m_35762623	m_35762623	
-		p	0		p_0	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-	m	(IIIIII)V	m_17759997	m_17759997	
-		p	0		p_0	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-		p	5		p_5	
-	m	(Ljava/lang/String;III)V	m_93329111	m_93329111	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
-	m	(Ljava/lang/String;III)V	m_75918571	m_75918571	
-		p	1		p_1	
-		p	2		p_2	
-		p	3		p_3	
-		p	4		p_4	
+	m	(IIIII)V	m_35762623	fill	
+		p	0		x0	
+		p	1		y0	
+		p	2		x1	
+		p	3		y1	
+		p	4		color	
+	m	(IIIIII)V	m_17759997	fillGradient	
+		p	0		x0	
+		p	1		y0	
+		p	2		x1	
+		p	3		y1	
+		p	4		color0	
+		p	5		color1	
+	m	(Ljava/lang/String;III)V	m_93329111	drawCenteredStringWithShadow	
+		p	1		text	
+		p	2		x	
+		p	3		y	
+		p	4		color	
+	m	(Ljava/lang/String;III)V	m_75918571	drawStringWithShadow	
+		p	1		text	
+		p	2		x	
+		p	3		y	
+		p	4		color	
 c	com/mojang/minecraft/unmapped/C_87604186	com/mojang/minecraft/Session	
 	f	Ljava/lang/String;	f_18340302	username	
 	f	Ljava/lang/String;	f_50716989	id	

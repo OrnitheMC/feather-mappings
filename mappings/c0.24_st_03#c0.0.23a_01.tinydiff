@@ -47,7 +47,7 @@ c	com/mojang/minecraft/Minecraft
 	f	I	f_25998330		targetMode
 		c		0 = break, 1 = place
 	f	Lcom/mojang/minecraft/unmapped/C_49004282;	f_87010853		levelGenerator
-	f	Lcom/mojang/minecraft/unmapped/C_82280655;	f_64887911		f_64887911
+	f	Lcom/mojang/minecraft/unmapped/C_82280655;	f_64887911		zombieModel
 	m	(Ljava/awt/Canvas;Lcom/mojang/minecraft/MinecraftApplet;IIZ)V	<init>	<init>	
 		p	1		canvas	
 		p	2		applet	
@@ -399,8 +399,8 @@ c	com/mojang/minecraft/player/Inventory
 	f	[I	popTime	popTime	
 	m	(I)Z	removeResource	removeResource	
 		p	1		p_1	
-	m	(Lcom/mojang/minecraft/unmapped/C_81592558;)V	m_33794684		m_33794684
-		p	1			p_1
+	m	(Lcom/mojang/minecraft/unmapped/C_81592558;)V	m_33794684		selectTile
+		p	1			tile
 c	com/mojang/minecraft/player/Player
 	f	I	MAX_HEALTH	MAX_HEALTH	
 	f	F	oBob	oBob	
@@ -429,8 +429,8 @@ c	com/mojang/minecraft/player/Player$1	1
 		p	1		p_1	
 		p	2		p_2	
 c	com/mojang/minecraft/unmapped/C_01953097
-	m	(Ljava/io/InputStream;)Lcom/mojang/minecraft/level/Level;	m_32100412		m_32100412
-		p	1			p_1
+	m	(Ljava/io/InputStream;)Lcom/mojang/minecraft/level/Level;	m_32100412		loadOldLevel
+		p	1			is
 c	com/mojang/minecraft/unmapped/C_03140863
 	f	Lcom/mojang/minecraft/unmapped/C_35412243;	f_75697535	itemInHandRenderer	
 	m	(F)V	m_51533744	applyHurtCam	
@@ -473,18 +473,18 @@ c	com/mojang/minecraft/unmapped/C_24384787
 		p	2		p_2	
 		p	3		p_3	
 	m	(Lcom/mojang/minecraft/unmapped/C_82920792;)V	<init>		<init>
-		p	1			p_1
-	m	(Lcom/mojang/minecraft/unmapped/C_59676445;F)V	m_72386130		m_72386130
-		p	1			p_1
-		p	2			p_2
+		p	1			textureManager
+	m	(Lcom/mojang/minecraft/unmapped/C_59676445;F)V	m_72386130		renderEntities
+		p	1			frustum
+		p	2			tickDelta
 	m	(Lcom/mojang/minecraft/player/Player;Lcom/mojang/minecraft/unmapped/C_24654288;II)V	m_85117450		renderTileOutline
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(Lcom/mojang/minecraft/unmapped/C_24654288;I)V	m_41930172		m_41930172
-		p	0			p_0
-		p	1			p_1
+		p	1			player
+		p	2			hit
+		p	3			mode
+		p	4			tile
+	m	(Lcom/mojang/minecraft/unmapped/C_24654288;I)V	m_41930172		renderTileOutline
+		p	0			hit
+		p	1			mode
 c	com/mojang/minecraft/unmapped/C_24654288
 	f	I	f_92820457	type	
 	f	Lcom/mojang/minecraft/unmapped/C_94584382;	f_94083482	facePos	
@@ -731,9 +731,9 @@ c	com/mojang/minecraft/unmapped/C_81592558
 		p	4		z	
 		p	5		chance	
 	m	(Lcom/mojang/minecraft/unmapped/C_81592558$C_01306377;FF)Lcom/mojang/minecraft/unmapped/C_81592558;	m_58783454		setProperties
-		p	1			p_1
+		p	1			sounds
 		p	2			p_2
-		p	3			p_3
+		p	3			weight
 	m	(Lcom/mojang/minecraft/Entity;Lcom/mojang/minecraft/unmapped/C_96603444;IIII)V	m_05450957		renderOutlineFace
 		p	0			camera
 		p	1			tesselator
@@ -764,7 +764,7 @@ c	com/mojang/minecraft/unmapped/C_82920792
 		p	2		id	
 	m	()V	<init>		<init>
 	m	(Ljava/awt/image/BufferedImage;)I	m_34657781		load
-		p	1			p_1
+		p	1			image
 c	com/mojang/minecraft/unmapped/C_85416300	com/mojang/minecraft/client/render/model/TileModel	
 	f	Lcom/mojang/minecraft/unmapped/C_94760802;	f_85656531	part	
 	m	(I)V	<init>	<init>	
@@ -900,20 +900,20 @@ c	com/mojang/minecraft/character/Zombie		com/mojang/minecraft/character/Zombie
 	f	F	speed		speed
 	f	F	rotA		rotA
 	m	(Lcom/mojang/minecraft/level/Level;FFF)V	<init>		<init>
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+		p	1			level
+		p	2			x
+		p	3			y
+		p	4			z
 	m	()V	tick		tick
 	m	(Lcom/mojang/minecraft/unmapped/C_82920792;F)V	render$2a8c5a		render$2a8c5a
 		p	1			p_1
 		p	2			p_2
 	m	()V	<clinit>		<clinit>
-c	com/mojang/minecraft/unmapped/C_16904621		com/mojang/minecraft/unmapped/C_16904621
+c	com/mojang/minecraft/unmapped/C_16904621		com/mojang/minecraft/client/gui/screen/CreativeInventoryScreen
 	m	()V	<init>		<init>
-	m	(II)I	m_73346342		m_73346342
-		p	1			p_1
-		p	2			p_2
+	m	(II)I	m_73346342		getSlot
+		p	1			mouseX
+		p	2			mouseY
 	m	(II)V	m_93956703		m_93956703
 		p	1			p_1
 		p	2			p_2
