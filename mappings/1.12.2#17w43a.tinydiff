@@ -139,25 +139,25 @@ c	net/minecraft/unmapped/C_03140863
 		p	8		cameraZ	
 	m	()V	close		close
 	m	(FZ)D	m_68068742		getFov
-		p	1			p_1
-		p	2			p_2
+		p	1			tickDelta
+		p	2			usePlayerFov
 	m	(F)V	m_93047407		setupCamera
-		p	1			p_1
+		p	1			tickDelta
 	m	(F)V	m_38540407		renderItemInHand
-		p	1			p_1
+		p	1			tickDelta
 	m	(FJZ)V	m_08357947		render
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
+		p	1			tickDelta
+		p	2			preRenderNanosecondsTime
+		p	4			renderWorld
 	m	(FJ)V	m_63866511		render
-		p	1			p_1
-		p	2			p_2
+		p	1			tickDelta
+		p	2			renderTimeLimit
 	m	(Lnet/minecraft/unmapped/C_24384787;FDDD)V	m_83399315		renderClouds
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	5			p_5
-		p	7			p_7
+		p	1			world
+		p	2			tickDelta
+		p	3			cameraX
+		p	5			cameraY
+		p	7			cameraZ
 c	net/minecraft/unmapped/C_10350466
 	f	Lnet/minecraft/unmapped/C_85125467;	f_57492814		f_57492814
 	m	(Lnet/minecraft/unmapped/C_85125467;)V	m_30778170	m_30778170	
@@ -373,24 +373,24 @@ c	net/minecraft/unmapped/C_24384787
 		p	7		cameraZ	
 	m	()V	close		close
 	m	(Lnet/minecraft/unmapped/C_42232651;D)Lnet/minecraft/unmapped/C_27904672;	m_88366935		getLookVector
-		p	1			p_1
-		p	2			p_2
+		p	1			camera
+		p	2			tickDelta
 	m	(Lnet/minecraft/unmapped/C_77523700;DLnet/minecraft/unmapped/C_42232651;)I	m_32240019		render
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
+		p	1			layer
+		p	2			tickDelta
+		p	4			camera
 	m	(F)V	m_19779050		renderSky
 		p	1			tickDelta
 	m	(FDDD)V	m_46414448		renderClouds
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
-		p	6			p_6
+		p	1			tickDelta
+		p	2			cameraX
+		p	4			cameraY
+		p	6			cameraZ
 	m	(FDDD)V	m_26560538		renderFancyClouds
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
-		p	6			p_6
+		p	1			tickDelta
+		p	2			cameraX
+		p	4			cameraY
+		p	6			cameraZ
 c	net/minecraft/unmapped/C_28000924
 	f	Lnet/minecraft/unmapped/C_02713691;	f_01163371	recipeBookButton	
 	m	(IIIIII)Z	m_03793141	m_03793141	
@@ -2565,8 +2565,8 @@ c	net/minecraft/unmapped/C_16155876
 	m	(Ljava/io/File;)V	m_62728384	openFolder	
 		p	0		folder	
 	m	(ILjava/lang/CharSequence;)V	m_85724239		shaderSource
-		p	0			p_0
-		p	1			p_1
+		p	0			shader
+		p	1			source
 	m	(I)Ljava/lang/String;	m_17255296		getError
 		p	0			code
 c	net/minecraft/unmapped/C_88375837
@@ -3432,7 +3432,7 @@ c	net/minecraft/unmapped/C_74688326
 	f	[I	f_78645770		framesX
 	f	[I	f_90441470		framesY
 	f	[Lnet/minecraft/unmapped/C_19308569;	f_55965936		activeImage
-	f	[I	f_05176976		f_05176976
+	f	[I	f_05176976		MIPMAP_BUFFER
 	f	[F	f_52676814		f_52676814
 	m	(Ljava/lang/String;)V	<init>	<init>	
 		p	1		name	
@@ -3468,26 +3468,26 @@ c	net/minecraft/unmapped/C_74688326
 		p	1			name
 		p	2			pngInfo
 		p	3			animation
-	m	(I)V	m_02433110		m_02433110
-		p	1			p_1
-	m	(IIIIZ)I	m_81782382		m_81782382
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(IIIII)I	m_48241586		m_48241586
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(I)V	m_02433110		generateMipmaps
+		p	1			mipmaps
+	m	(IIIIZ)I	m_81782382		blendPixels
+		p	0			colorTopLeft
+		p	1			colorTopRight
+		p	2			colorBottomLeft
+		p	3			colorBottomRight
+		p	4			transparent
+	m	(IIIII)I	m_48241586		blendPixelComponents
+		p	0			colorTopLeft
+		p	1			colorTopRight
+		p	2			colorBottomLeft
+		p	3			colorBottomRight
+		p	4			componentShift
 	m	(I)F	m_48935667		m_48935667
 		p	0			p_0
-	m	(II[Lnet/minecraft/unmapped/C_19308569;)V	m_56683117		m_56683117
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(II[Lnet/minecraft/unmapped/C_19308569;)V	m_56683117		upload
+		p	1			width
+		p	2			height
+		p	3			images
 	m	()Lnet/minecraft/unmapped/C_22168528;	m_27627210		getName
 	m	()V	m_79750120		clear
 	m	(IIII)I	m_01311548		getPixel
@@ -3736,8 +3736,8 @@ c	net/minecraft/unmapped/C_88095733
 		p	0		color	
 	m	(I)F	m_24609868	m_24609868	
 		p	0		p_0	
-	m	(Lnet/minecraft/unmapped/C_52500310;Lnet/minecraft/unmapped/C_22168528;)[I	m_20280302		m_20280302
-		p	0			p_0
+	m	(Lnet/minecraft/unmapped/C_52500310;Lnet/minecraft/unmapped/C_22168528;)[I	m_20280302		getPixels
+		p	0			resourceManager
 		p	1			p_1
 	m	(Ljava/io/InputStream;)Ljava/nio/ByteBuffer;	m_21306410		readResource
 		p	0			is
@@ -5465,10 +5465,10 @@ c	net/minecraft/unmapped/C_37925375$C_76818071		Viewport
 	m	(Ljava/lang/String;I)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
-	m	()I	m_99296737		m_99296737
-	m	()I	m_02192288		m_02192288
-	m	()I	m_87017292		m_87017292
-	m	()I	m_33262363		m_33262363
+	m	()I	m_99296737		getX
+	m	()I	m_02192288		getY
+	m	()I	m_87017292		getWidth
+	m	()I	m_33262363		getHeight
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_41814532
 	f	Ljava/util/Map;	f_10338543	sprites	
@@ -6273,7 +6273,7 @@ c	net/minecraft/unmapped/C_15233309$C_45725191		StbReaderBufferedChannel
 	m	(Ljava/nio/channels/ReadableByteChannel;)V	<init>		<init>
 		p	1			channel
 	m	(I)V	m_33976970		fillReadBuffer
-		p	1			p_1
+		p	1			byteCount
 	m	(JI)I	m_49254039		m_49254039
 		p	1			p_1
 		p	3			p_3
@@ -6287,19 +6287,19 @@ c	net/minecraft/unmapped/C_15233309$C_59110512		StbReader
 	f	Z	f_28799919		closed
 	m	()V	<init>		<init>
 	m	(JJI)I	m_84236298		read
-		p	1			p_1
-		p	3			p_3
-		p	5			p_5
+		p	1			user
+		p	3			data
+		p	5			size
 	m	(JI)V	m_03821260		skip
-		p	1			p_1
-		p	3			p_3
+		p	1			user
+		p	3			n
 	m	(J)I	m_87276088		eof
-		p	1			p_1
+		p	1			user
 	m	(JI)I	m_49254039		read
-		p	1			p_1
-		p	3			p_3
+		p	1			destinationAddress
+		p	3			byteCount
 	m	(I)V	m_35508556		skip
-		p	1			p_1
+		p	1			byteCount
 	m	()V	close		close
 	m	(Lnet/minecraft/unmapped/C_15233309$53098111;)V	<init>		<init>
 		p	1			p_1
@@ -7269,14 +7269,14 @@ c	net/minecraft/unmapped/C_19308569		net/minecraft/client/render/platform/Native
 		p	4			p_4
 	m	()Ljava/lang/String;	toString		toString
 	m	(Ljava/io/InputStream;)Lnet/minecraft/unmapped/C_19308569;	m_83981309		read
-		p	0			p_0
+		p	0			stream
 	m	(Ljava/nio/ByteBuffer;)Lnet/minecraft/unmapped/C_19308569;	m_39877390		read
-		p	0			p_0
+		p	0			buffer
 	m	(Z)V	m_38694588		setClamp
 		p	0			clamp
 	m	(ZZ)V	m_17679746		setFilter
-		p	0			p_0
-		p	1			p_1
+		p	0			linear
+		p	1			mipmaps
 	m	()V	m_76657216		checkAllocated
 	m	()V	close		close
 	m	()I	m_78918704		getWidth
@@ -7320,11 +7320,11 @@ c	net/minecraft/unmapped/C_19308569		net/minecraft/client/render/platform/Native
 		p	10			p_10
 	m	(IZ)V	m_28709176		downloadTexture
 		p	1			p_1
-		p	2			p_2
+		p	2			forceOpaque
 	m	(Z)V	m_29683673		downloadFrameBuffer
-		p	1			p_1
+		p	1			forceOpaque
 	m	(Ljava/lang/String;)V	m_31189234		write
-		p	1			p_1
+		p	1			path
 	m	(Lnet/minecraft/unmapped/C_19308569;)V	m_97171330		copyFrom
 		p	1			other
 	m	(IIIII)V	m_04096195		fillRect
@@ -7334,14 +7334,14 @@ c	net/minecraft/unmapped/C_19308569		net/minecraft/client/render/platform/Native
 		p	4			dz
 		p	5			color
 	m	(IIIIIIZZ)V	m_26489947		copyRect
-		p	1			x
-		p	2			dx
-		p	3			y
-		p	4			dy
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
+		p	1			srcX
+		p	2			srcY
+		p	3			dstOffsetX
+		p	4			dstOffsetY
+		p	5			width
+		p	6			height
+		p	7			flipX
+		p	8			flipY
 	m	()V	m_63078071		flipY
 	m	(IIIILnet/minecraft/unmapped/C_19308569;)V	m_06592137		resizeSubRectTo
 		p	1			x
@@ -7708,13 +7708,13 @@ c	net/minecraft/unmapped/C_46221269		net/minecraft/client/render/math/Matrix4f
 		p	1			buffer
 	m	(Ljava/nio/FloatBuffer;Z)V	m_11897521		load
 		p	1			buffer
-		p	2			p_2
+		p	2			transpose
 	m	()Ljava/lang/String;	toString		toString
 	m	(Ljava/nio/FloatBuffer;)V	m_07991975		store
 		p	1			buffer
 	m	(Ljava/nio/FloatBuffer;Z)V	m_16458396		store
 		p	1			buffer
-		p	2			p_2
+		p	2			transpose
 	m	(II)F	m_99088561		get
 		p	1			x
 		p	2			y
