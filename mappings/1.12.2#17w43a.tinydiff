@@ -64,7 +64,7 @@ c	net/minecraft/client/Minecraft
 	m	(Z)V	m_79405552		m_79405552
 		p	1			p_1
 	m	()Lnet/minecraft/unmapped/C_06846120;	m_25412530		getPackRepository
-	m	()Ljava/io/File;	m_48041393		m_48041393
+	m	()Ljava/io/File;	m_48041393		getResourcePacksDir
 	m	()V	m_74327660		m_74327660
 	m	(Ljava/util/List;Lnet/minecraft/unmapped/C_03555173;)V	m_48173027		m_48173027
 		p	0			p_0
@@ -139,27 +139,27 @@ c	net/minecraft/unmapped/C_03140863
 		p	8		cameraZ	
 	m	()V	close		close
 	m	(FZ)D	m_68068742		getFov
-		p	1			p_1
-		p	2			p_2
+		p	1			tickDelta
+		p	2			usePlayerFov
 	m	(F)V	m_93047407		setupCamera
-		p	1			p_1
+		p	1			tickDelta
 	m	(F)V	m_38540407		renderItemInHand
-		p	1			p_1
+		p	1			tickDelta
 	m	(FJZ)V	m_08357947		render
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
+		p	1			tickDelta
+		p	2			preRenderNanosecondsTime
+		p	4			renderWorld
 	m	(FJ)V	m_63866511		render
-		p	1			p_1
-		p	2			p_2
+		p	1			tickDelta
+		p	2			renderTimeLimit
 	m	(Lnet/minecraft/unmapped/C_24384787;FDDD)V	m_83399315		renderClouds
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	5			p_5
-		p	7			p_7
+		p	1			world
+		p	2			tickDelta
+		p	3			cameraX
+		p	5			cameraY
+		p	7			cameraZ
 c	net/minecraft/unmapped/C_10350466
-	f	Lnet/minecraft/unmapped/C_85125467;	f_57492814		f_57492814
+	f	Lnet/minecraft/unmapped/C_85125467;	f_57492814		joinButton
 	m	(Lnet/minecraft/unmapped/C_85125467;)V	m_30778170	m_30778170	
 		p	1		p_1	
 	m	(CI)V	m_29116903	m_29116903	
@@ -169,7 +169,7 @@ c	net/minecraft/unmapped/C_10350466
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	()V	m_93307596		m_93307596
+	m	()V	m_93307596		saveAndClose
 	m	(CI)Z	m_98491981		m_98491981
 		p	1			p_1
 		p	2			p_2
@@ -373,24 +373,24 @@ c	net/minecraft/unmapped/C_24384787
 		p	7		cameraZ	
 	m	()V	close		close
 	m	(Lnet/minecraft/unmapped/C_42232651;D)Lnet/minecraft/unmapped/C_27904672;	m_88366935		getLookVector
-		p	1			p_1
-		p	2			p_2
+		p	1			camera
+		p	2			tickDelta
 	m	(Lnet/minecraft/unmapped/C_77523700;DLnet/minecraft/unmapped/C_42232651;)I	m_32240019		render
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
+		p	1			layer
+		p	2			tickDelta
+		p	4			camera
 	m	(F)V	m_19779050		renderSky
 		p	1			tickDelta
 	m	(FDDD)V	m_46414448		renderClouds
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
-		p	6			p_6
+		p	1			tickDelta
+		p	2			cameraX
+		p	4			cameraY
+		p	6			cameraZ
 	m	(FDDD)V	m_26560538		renderFancyClouds
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
-		p	6			p_6
+		p	1			tickDelta
+		p	2			cameraX
+		p	4			cameraY
+		p	6			cameraZ
 c	net/minecraft/unmapped/C_28000924
 	f	Lnet/minecraft/unmapped/C_02713691;	f_01163371	recipeBookButton	
 	m	(IIIIII)Z	m_03793141	m_03793141	
@@ -882,7 +882,7 @@ c	net/minecraft/unmapped/C_72410450
 	m	(CI)V	m_29116903	m_29116903	
 		p	1		p_1	
 		p	2		p_2	
-	m	()V	m_76942676		m_76942676
+	m	()V	m_76942676		saveAndClose
 	m	(CI)Z	m_98491981		m_98491981
 		p	1			p_1
 		p	2			p_2
@@ -1004,7 +1004,7 @@ c	net/minecraft/unmapped/C_80955943
 	f	Ljava/util/List;	f_32006177	availablePacks	
 	f	Ljava/util/List;	f_45146303	selectedPacks	
 	f	Lnet/minecraft/unmapped/C_02188442;	f_62225587	availablePacksWidget	
-	f	Lnet/minecraft/unmapped/C_02188442;	f_43461157		f_43461157
+	f	Lnet/minecraft/unmapped/C_02188442;	f_43461157		availablePacksWidget
 	m	(Lnet/minecraft/unmapped/C_85125467;)V	m_30778170	m_30778170	
 		p	1		p_1	
 	m	(III)V	m_23755539	m_23755539	
@@ -1020,10 +1020,10 @@ c	net/minecraft/unmapped/C_80955943
 	m	()Ljava/util/List;	m_58993800	getAvailablePacks	
 	m	()Ljava/util/List;	m_29464347	getSelectedPacks	
 	m	()V	m_29921564	m_29921564	
-	m	(Lnet/minecraft/unmapped/C_81076805;)V	m_50682501		m_50682501
-		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_81076805;)V	m_10605340		m_10605340
-		p	1			p_1
+	m	(Lnet/minecraft/unmapped/C_81076805;)V	m_50682501		moveToSelected
+		p	1			entry
+	m	(Lnet/minecraft/unmapped/C_81076805;)V	m_10605340		moveToAvailable
+		p	1			entry
 	m	(Lnet/minecraft/unmapped/C_80955943;)Lnet/minecraft/client/Minecraft;	m_04134614		m_04134614
 		p	0			p_0
 	m	(Lnet/minecraft/unmapped/C_80955943;)Z	m_33215496		m_33215496
@@ -1235,9 +1235,9 @@ c	net/minecraft/unmapped/C_85740840
 	m	()Z	m_13451306		shouldCloseOnEsc
 	m	()V	m_82149882		close
 	m	()Ljava/util/List;	m_71332503		m_71332503
-	m	(Ljava/lang/Runnable;Ljava/lang/String;)V	m_02817502		wrapScreenError
-		p	1			p_1
-		p	2			p_2
+	m	(Ljava/lang/Runnable;Ljava/lang/String;)V	m_02817502		tryExecuteOrReport
+		p	1			action
+		p	2			reportTitle
 	m	()Ljava/lang/String;	m_39469014		m_39469014
 c	net/minecraft/unmapped/C_87542771
 	m	(I)V	m_49669981	scrollInHotbar	
@@ -1291,11 +1291,11 @@ c	net/minecraft/unmapped/C_87711245
 		p	3			p_3
 		p	5			p_5
 	m	(DDIII)Z	m_63960957		hasClickedOutside
-		p	1			p_1
-		p	3			p_3
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
+		p	1			mouseX
+		p	3			mouseY
+		p	5			screenX
+		p	6			screenY
+		p	7			button
 	m	(DDIDD)Z	m_52921597		m_52921597
 		p	1			p_1
 		p	3			p_3
@@ -1307,24 +1307,24 @@ c	net/minecraft/unmapped/C_87711245
 		p	3			p_3
 		p	5			p_5
 	m	(Lnet/minecraft/unmapped/C_12356698;DD)Z	m_42710124		isMouseOverSlot
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
+		p	1			slot
+		p	2			mouseX
+		p	4			mouseY
 	m	(IIIIDD)Z	m_03793141		isMouseInRegion
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	5			p_5
-		p	7			p_7
+		p	1			x
+		p	2			y
+		p	3			width
+		p	4			height
+		p	5			mouseX
+		p	7			mouseY
 	m	()Z	m_13451306		m_13451306
 	m	(III)Z	m_40016007		m_40016007
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 	m	(II)Z	m_52675179		moveHoveredSlotToHotbar
-		p	1			p_1
-		p	2			p_2
+		p	1			key
+		p	2			scancode
 c	net/minecraft/unmapped/C_88528069
 	m	(Lnet/minecraft/unmapped/C_85125467;)V	m_30778170	m_30778170	
 		p	1		p_1	
@@ -1507,7 +1507,7 @@ c	net/minecraft/unmapped/C_90849090
 		p	1			image
 c	net/minecraft/unmapped/C_95462098
 	f	Lorg/apache/logging/log4j/Logger;	f_29700712	LOGGER	
-	f	Lnet/minecraft/unmapped/C_85125467;	f_19177554		f_19177554
+	f	Lnet/minecraft/unmapped/C_85125467;	f_19177554		optionsButton
 	m	(CI)V	m_29116903	m_29116903	
 		p	1		p_1	
 		p	2		p_2	
@@ -1616,7 +1616,7 @@ c	net/minecraft/unmapped/C_95462098$98430944		98430944
 		p	1			p_1
 		p	3			p_3
 c	net/minecraft/unmapped/C_10696192
-	f	Lnet/minecraft/unmapped/C_85125467;	f_70498418		f_70498418
+	f	Lnet/minecraft/unmapped/C_85125467;	f_70498418		saveButton
 	m	(Lnet/minecraft/unmapped/C_85125467;)V	m_30778170	m_30778170	
 		p	1		p_1	
 	m	(CI)V	m_29116903	m_29116903	
@@ -1626,7 +1626,7 @@ c	net/minecraft/unmapped/C_10696192
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	()V	m_48983206		m_48983206
+	m	()V	m_48983206		saveAndClose
 	m	(CI)Z	m_98491981		m_98491981
 		p	1			p_1
 		p	2			p_2
@@ -1782,8 +1782,8 @@ c	net/minecraft/unmapped/C_54930763
 		p	1		original	
 		p	2		smoother	
 	m	(DD)D	m_81031038		smooth
-		p	1			p_1
-		p	3			p_3
+		p	1			accumulator
+		p	3			t
 c	net/minecraft/unmapped/C_64676926
 	f	Ljava/util/Set;	f_14410354		disabledDataPacks
 	f	Ljava/util/Set;	f_71938070		enabledDataPacks
@@ -1841,8 +1841,8 @@ c	net/minecraft/unmapped/C_76575783
 	m	(IIDD)Z	m_07503748		entryClicked
 		p	1			index
 		p	2			button
-		p	3			d
-		p	5			e
+		p	3			mouseX
+		p	5			mouseY
 	m	(DD)I	m_34161034		getEntryAt
 		p	1			x
 		p	3			y
@@ -1882,7 +1882,7 @@ c	net/minecraft/unmapped/C_76575783
 		p	4			p_4
 		p	5			c
 c	net/minecraft/unmapped/C_90716798
-	f	Lnet/minecraft/unmapped/C_85125467;	f_20344201		f_20344201
+	f	Lnet/minecraft/unmapped/C_85125467;	f_20344201		createButton
 	m	(Lnet/minecraft/unmapped/C_85125467;)V	m_30778170	m_30778170	
 		p	1		p_1	
 	m	(CI)V	m_29116903	m_29116903	
@@ -1892,7 +1892,7 @@ c	net/minecraft/unmapped/C_90716798
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	()V	m_24676922		m_24676922
+	m	()V	m_24676922		createWorld
 	m	(CI)Z	m_98491981		m_98491981
 		p	1			p_1
 		p	2			p_2
@@ -2286,7 +2286,7 @@ c	net/minecraft/unmapped/C_70699216
 		p	1		p_1	
 		p	2		p_2	
 		p	3		p_3	
-	m	(Lnet/minecraft/unmapped/C_87042217;II)Z	m_69587411	isInRow	
+	m	(Lnet/minecraft/unmapped/C_87042217;II)Z	m_69587411	isMouseOverTab	
 		p	1		tab	
 		p	2		x	
 		p	3		z	
@@ -2311,10 +2311,10 @@ c	net/minecraft/unmapped/C_70699216
 		p	5			p_5
 	m	(D)Z	m_12950098		m_12950098
 		p	1			p_1
-	m	(Lnet/minecraft/unmapped/C_87042217;DD)Z	m_69587411		isInRow
-		p	1			p_1
-		p	2			p_2
-		p	4			p_4
+	m	(Lnet/minecraft/unmapped/C_87042217;DD)Z	m_69587411		isMouseOverTab
+		p	1			tab
+		p	2			mouseX
+		p	4			mouseY
 c	net/minecraft/unmapped/C_81721916
 	f	F	f_89703445	flySpeed	
 	f	D	f_89703445		flySpeed
@@ -2323,7 +2323,7 @@ c	net/minecraft/unmapped/C_81721916
 	m	(D)V	m_54011512		setFlySpeed
 		p	1			flySpeed
 c	net/minecraft/unmapped/C_82860087
-	f	Lnet/minecraft/unmapped/C_85125467;	f_67403220		f_67403220
+	f	Lnet/minecraft/unmapped/C_85125467;	f_67403220		doneButton
 	m	(Lnet/minecraft/unmapped/C_85125467;)V	m_30778170	m_30778170	
 		p	1		p_1	
 	m	(CI)V	m_29116903	m_29116903	
@@ -2334,10 +2334,10 @@ c	net/minecraft/unmapped/C_82860087
 		p	2		p_2	
 		p	3		p_3	
 	m	()Lnet/minecraft/unmapped/C_04864323;	m_47978329		m_47978329
-	m	(ILjava/lang/String;)V	m_61281782		m_61281782
-		p	1			p_1
-		p	2			p_2
-	m	()V	m_75145233		m_75145233
+	m	(ILjava/lang/String;)V	m_61281782		handleTextFieldResponse
+		p	1			id
+		p	2			text
+	m	()V	m_75145233		saveAndClose
 	m	()V	m_82149882		m_82149882
 	m	(III)Z	m_40016007		m_40016007
 		p	1			p_1
@@ -2565,8 +2565,8 @@ c	net/minecraft/unmapped/C_16155876
 	m	(Ljava/io/File;)V	m_62728384	openFolder	
 		p	0		folder	
 	m	(ILjava/lang/CharSequence;)V	m_85724239		shaderSource
-		p	0			p_0
-		p	1			p_1
+		p	0			shader
+		p	1			source
 	m	(I)Ljava/lang/String;	m_17255296		getError
 		p	0			code
 c	net/minecraft/unmapped/C_88375837
@@ -2589,7 +2589,7 @@ c	net/minecraft/unmapped/C_79360482
 		p	1		p_1	
 	m	()V	m_29921564	m_29921564	
 	m	()Lnet/minecraft/unmapped/C_04864323;	m_47978329		m_47978329
-	m	()V	m_42796362		m_42796362
+	m	()V	m_42796362		reinit
 	m	(Lnet/minecraft/unmapped/C_79360482;)V	m_35981428		m_35981428
 		p	0			p_0
 c	net/minecraft/unmapped/C_79360482$C_06566467
@@ -2754,15 +2754,15 @@ c	net/minecraft/unmapped/C_51094326
 		p	1		x	
 		p	2		y	
 	m	(D)V	m_43105399		scroll
-		p	1			p_1
+		p	1			amount
 	m	(DD)Lnet/minecraft/unmapped/C_95231345;	m_84042449		getMessageAt
-		p	1			p_1
-		p	3			p_3
+		p	1			mouseX
+		p	3			mouseY
 	m	()D	m_22474860		getChatScale
 	m	(D)I	m_36950039		getWidth
-		p	0			p_0
+		p	0			chatWidth
 	m	(D)I	m_58267544		getHeight
-		p	0			p_0
+		p	0			chatHeight
 c	net/minecraft/unmapped/C_88380901
 	m	(Lnet/minecraft/unmapped/C_85125467;)V	m_30778170	m_30778170	
 		p	1		p_1	
@@ -2791,19 +2791,19 @@ c	net/minecraft/unmapped/C_88380901
 		p	2			p_2
 	m	(III)Z	m_13192004		keyPressedInBook
 		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	2			scancode
+		p	3			mods
 	m	(III)Z	m_36657332		keyPressedOnTitlePage
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			key
+		p	2			scancode
+		p	3			mods
 	m	(DDI)Z	m_29843171		m_29843171
 		p	1			p_1
 		p	3			p_3
 		p	5			p_5
 	m	(DD)Lnet/minecraft/unmapped/C_95231345;	m_86712637		getHoveredText
-		p	1			p_1
-		p	3			p_3
+		p	1			mouseX
+		p	3			mouseY
 	m	(Lnet/minecraft/unmapped/C_88380901;Z)Z	m_65321030		m_65321030
 		p	0			p_0
 		p	1			p_1
@@ -2935,7 +2935,7 @@ c	net/minecraft/unmapped/C_29144146
 c	net/minecraft/unmapped/C_86826670
 	m	(Lnet/minecraft/unmapped/C_85125467;)V	m_30778170	m_30778170	
 		p	1		p_1	
-	m	()V	m_05451574		m_05451574
+	m	()V	m_05451574		sendSelectionUpdate
 	m	(Lnet/minecraft/unmapped/C_86826670;)I	m_92480619		m_92480619
 		p	0			p_0
 	m	(Lnet/minecraft/unmapped/C_86826670;)Lnet/minecraft/client/Minecraft;	m_10207772		m_10207772
@@ -3416,9 +3416,9 @@ c	net/minecraft/unmapped/C_44132200
 		p	2		p_2	
 		p	3		p_3	
 	m	()Lnet/minecraft/unmapped/C_04864323;	m_47978329		m_47978329
-	m	(ILjava/lang/String;)V	m_00929504		m_00929504
-		p	1			p_1
-		p	2			p_2
+	m	(ILjava/lang/String;)V	m_00929504		handleRenameResponse
+		p	1			id
+		p	2			text
 c	net/minecraft/unmapped/C_74688326
 	f	Ljava/lang/String;	f_54546022	name	
 	f	Ljava/util/List;	f_32808128	frames	
@@ -3432,7 +3432,7 @@ c	net/minecraft/unmapped/C_74688326
 	f	[I	f_78645770		framesX
 	f	[I	f_90441470		framesY
 	f	[Lnet/minecraft/unmapped/C_19308569;	f_55965936		activeImage
-	f	[I	f_05176976		f_05176976
+	f	[I	f_05176976		MIPMAP_BUFFER
 	f	[F	f_52676814		f_52676814
 	m	(Ljava/lang/String;)V	<init>	<init>	
 		p	1		name	
@@ -3468,26 +3468,26 @@ c	net/minecraft/unmapped/C_74688326
 		p	1			name
 		p	2			pngInfo
 		p	3			animation
-	m	(I)V	m_02433110		m_02433110
-		p	1			p_1
-	m	(IIIIZ)I	m_81782382		m_81782382
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-	m	(IIIII)I	m_48241586		m_48241586
-		p	0			p_0
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
+	m	(I)V	m_02433110		generateMipmaps
+		p	1			mipmaps
+	m	(IIIIZ)I	m_81782382		blendPixels
+		p	0			colorTopLeft
+		p	1			colorTopRight
+		p	2			colorBottomLeft
+		p	3			colorBottomRight
+		p	4			transparent
+	m	(IIIII)I	m_48241586		blendPixelComponents
+		p	0			colorTopLeft
+		p	1			colorTopRight
+		p	2			colorBottomLeft
+		p	3			colorBottomRight
+		p	4			componentShift
 	m	(I)F	m_48935667		m_48935667
 		p	0			p_0
-	m	(II[Lnet/minecraft/unmapped/C_19308569;)V	m_56683117		m_56683117
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+	m	(II[Lnet/minecraft/unmapped/C_19308569;)V	m_56683117		upload
+		p	1			width
+		p	2			height
+		p	3			images
 	m	()Lnet/minecraft/unmapped/C_22168528;	m_27627210		getName
 	m	()V	m_79750120		clear
 	m	(IIII)I	m_01311548		getPixel
@@ -3736,8 +3736,8 @@ c	net/minecraft/unmapped/C_88095733
 		p	0		color	
 	m	(I)F	m_24609868	m_24609868	
 		p	0		p_0	
-	m	(Lnet/minecraft/unmapped/C_52500310;Lnet/minecraft/unmapped/C_22168528;)[I	m_20280302		m_20280302
-		p	0			p_0
+	m	(Lnet/minecraft/unmapped/C_52500310;Lnet/minecraft/unmapped/C_22168528;)[I	m_20280302		getPixels
+		p	0			resourceManager
 		p	1			p_1
 	m	(Ljava/io/InputStream;)Ljava/nio/ByteBuffer;	m_21306410		readResource
 		p	0			is
@@ -4164,7 +4164,7 @@ c	net/minecraft/unmapped/C_25172763
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
-	m	(Lnet/minecraft/unmapped/C_81076805;)V	m_37843945		m_37843945
+	m	(Lnet/minecraft/unmapped/C_81076805;)V	m_37843945		include
 		p	1			p_1
 c	net/minecraft/unmapped/C_36550219
 	f	[Lnet/minecraft/unmapped/C_90932323$C_14718929;	f_55584428	entries	
@@ -4287,7 +4287,7 @@ c	net/minecraft/unmapped/C_36550219$C_91085921
 		p	4			p_4
 		p	5			p_5
 		p	6			p_6
-c	net/minecraft/unmapped/C_36550219$C_73990869		C_73990869
+c	net/minecraft/unmapped/C_36550219$C_73990869		ControlEntry
 	m	()V	<init>		<init>
 c	net/minecraft/unmapped/C_56472601	net/minecraft/client/gui/screen/menu/resourcepacks/DefaultResourcePackEntry	
 	m	(Lnet/minecraft/unmapped/C_80955943;)V	<init>	<init>	
@@ -4344,7 +4344,7 @@ c	net/minecraft/unmapped/C_66909242$92308499		92308499
 		p	3			p_3
 c	net/minecraft/unmapped/C_81076805
 	f	Lnet/minecraft/unmapped/C_95231345;	f_53588979	INCOMPATIBLE_TOO_NEW	
-	f	Lnet/minecraft/unmapped/C_03555173;	f_22857334		f_22857334
+	f	Lnet/minecraft/unmapped/C_03555173;	f_22857334		resourcePack
 	m	(Lnet/minecraft/unmapped/C_80955943;)V	<init>	<init>	
 		p	1		parent	
 	m	()Z	m_89062010	canMove	
@@ -4382,10 +4382,10 @@ c	net/minecraft/unmapped/C_81076805
 	m	(Lnet/minecraft/unmapped/C_80955943;Lnet/minecraft/unmapped/C_03555173;)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
-	m	(Lnet/minecraft/unmapped/C_84456216;)V	m_01132539		m_01132539
-		p	1			p_1
-	m	()Lnet/minecraft/unmapped/C_61238980;	m_54928400		m_54928400
-	m	()Lnet/minecraft/unmapped/C_03555173;	m_56391725		m_56391725
+	m	(Lnet/minecraft/unmapped/C_84456216;)V	m_01132539		select
+		p	1			selectedPacksWidget
+	m	()Lnet/minecraft/unmapped/C_61238980;	m_54928400		getCompatability
+	m	()Lnet/minecraft/unmapped/C_03555173;	m_56391725		getResourcePack
 	m	(IIIIZF)V	m_79286027		m_79286027
 		p	1			p_1
 		p	2			p_2
@@ -4393,12 +4393,12 @@ c	net/minecraft/unmapped/C_81076805
 		p	4			p_4
 		p	5			p_5
 		p	6			p_6
-	m	()Z	m_94246781		m_94246781
+	m	()Z	m_94246781		canMove
 	m	(DDI)Z	m_29843171		m_29843171
 		p	1			p_1
 		p	3			p_3
 		p	5			p_5
-	m	()Lnet/minecraft/unmapped/C_80955943;	m_38990825		m_38990825
+	m	()Lnet/minecraft/unmapped/C_80955943;	m_38990825		getParent
 c	net/minecraft/unmapped/C_81076805$42556276
 	f	I	f_65370330	f_65370330	
 	m	(Lnet/minecraft/unmapped/C_81076805;I)V	<init>	<init>	
@@ -4738,13 +4738,13 @@ c	net/minecraft/unmapped/C_92687793
 		p	2		mouseX	
 		p	3		mouseY	
 	m	(IIF)V	m_32686018		render
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			mouseX
+		p	2			mouseY
+		p	3			tickDelta
 	m	(IIF)V	m_83213849		renderBorder
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			mouseX
+		p	2			mouseY
+		p	3			tickDelta
 c	net/minecraft/unmapped/C_11317765
 	f	Lnet/minecraft/unmapped/C_90932323$C_14718929;	f_38737470	scanningWidget	
 		c	The widget you see that is scanning for LAN servers when there are no servers in the server list.	
@@ -4752,8 +4752,8 @@ c	net/minecraft/unmapped/C_11317765
 	m	(I)Lnet/minecraft/unmapped/C_90932323$C_14718929;	m_35436980	m_35436980	
 		p	1		p_1	
 	m	()I	m_87897431	m_87897431	
-	m	()V	m_47047687		m_47047687
-c	net/minecraft/unmapped/C_11317765$C_41899503		C_41899503
+	m	()V	m_47047687		init
+c	net/minecraft/unmapped/C_11317765$C_41899503		ServerEntry
 	m	()V	<init>		<init>
 c	net/minecraft/unmapped/C_16782368
 	m	(IIIIII)Z	m_33696468	m_33696468	
@@ -4911,11 +4911,11 @@ c	net/minecraft/realms/RealmsButton
 		p	1		mouseX	
 		p	2		mouseY	
 	m	(DD)V	m_94709929		mouseClicked
-		p	1			p_1
-		p	3			p_3
+		p	1			mouseX
+		p	3			mouseY
 	m	(DD)V	m_76422311		mouseReleased
-		p	1			p_1
-		p	3			p_3
+		p	1			mouseX
+		p	3			mouseY
 c	net/minecraft/realms/RealmsButton$33862568		33862568
 	f	Lnet/minecraft/realms/RealmsButton;	f_70901643		f_70901643
 	m	(Lnet/minecraft/realms/RealmsButton;Lnet/minecraft/realms/RealmsButton;IIILjava/lang/String;)V	<init>		<init>
@@ -4962,10 +4962,10 @@ c	net/minecraft/realms/RealmsClickableScrolledSelectionList
 		p	4		p_4	
 		p	5		p_5	
 	m	(IIDD)Z	m_28887948		entrySelected
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	5			p_5
+		p	1			index
+		p	2			button
+		p	3			mouseX
+		p	5			mouseY
 	m	(D)Z	m_02564084		m_02564084
 		p	1			p_1
 	m	(DDI)Z	m_10802945		m_10802945
@@ -4988,10 +4988,10 @@ c	net/minecraft/realms/RealmsClickableScrolledSelectionList
 		p	3			p_3
 		p	5			p_5
 		p	7			p_7
-	m	()I	m_75431053		m_75431053
+	m	()I	m_75431053		getHeaderHeight
 	m	()D	m_74114446		m_74114446
-	m	()I	m_79852584		m_79852584
-	m	()Z	m_90514375		m_90514375
+	m	()I	m_79852584		getEntryHeight
+	m	()Z	m_90514375		isVisible
 c	net/minecraft/realms/RealmsEditBox
 	m	(CI)V	m_56852870	keyPressed	
 		p	1		chr	
@@ -5063,8 +5063,8 @@ c	net/minecraft/realms/RealmsScreen
 	m	(CI)V	m_09152170	keyPressed	
 		p	1		chr	
 		p	2		code	
-	m	(Lnet/minecraft/realms/RealmsGuiEventListener;)V	m_60450708		m_60450708
-		p	1			p_1
+	m	(Lnet/minecraft/realms/RealmsGuiEventListener;)V	m_60450708		addChild
+		p	1			child
 c	net/minecraft/realms/RealmsScrolledSelectionList
 	m	()I	m_33930542	getMouseY	
 	m	()I	m_38420662	getMouseX	
@@ -5075,10 +5075,10 @@ c	net/minecraft/realms/RealmsScrolledSelectionList
 		p	4		mouseY	
 	m	()V	m_35805597	handleMouse	
 	m	(IIDD)Z	m_81140931		entryClicked
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	5			p_5
+		p	1			index
+		p	2			button
+		p	3			mouseX
+		p	5			mouseY
 	m	(D)Z	m_02564084		m_02564084
 		p	1			p_1
 	m	(DDI)Z	m_10802945		m_10802945
@@ -5105,10 +5105,10 @@ c	net/minecraft/realms/RealmsSimpleScrolledSelectionList
 		p	4		mouseY	
 	m	()V	m_62648055	handleMouse	
 	m	(IIDD)Z	m_21219236		entryClicked
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	5			p_5
+		p	1			index
+		p	2			button
+		p	3			mouseX
+		p	5			mouseY
 	m	(D)Z	m_02564084		m_02564084
 		p	1			p_1
 	m	(DDI)Z	m_10802945		m_10802945
@@ -5163,13 +5163,13 @@ c	net/minecraft/realms/RealmsSliderButton
 		p	3			p_3
 		p	4			p_4
 		p	5			p_5
-		p	6			p_6
+		p	6			value
 		p	7			p_7
 		p	9			p_9
 	m	(D)D	m_31998620		normalize
-		p	1			p_1
+		p	1			value
 	m	(D)D	m_78350052		denormalize
-		p	1			p_1
+		p	1			value
 	m	(D)D	m_62135529		m_62135529
 		p	1			p_1
 	m	(D)D	m_76977555		m_76977555
@@ -5178,7 +5178,7 @@ c	net/minecraft/realms/RealmsSliderButton
 		p	1			p_1
 		p	3			p_3
 	m	(D)V	m_10556519		onChanged
-		p	1			p_1
+		p	1			newValue
 	m	(DD)V	m_76422311		m_76422311
 		p	1			p_1
 		p	3			p_3
@@ -5200,7 +5200,7 @@ c	net/minecraft/unmapped/C_05206503
 	m	(I)V	m_19994174	mouseScrolled	
 		p	1		scroll	
 	m	(D)V	m_19994174		mouseScrolled
-		p	1			p_1
+		p	1			amount
 c	net/minecraft/unmapped/C_10553137
 c	net/minecraft/unmapped/C_10553137$C_63455388
 	f	Ljava/util/Optional;	f_36259780		fullscreenWidth
@@ -5465,10 +5465,10 @@ c	net/minecraft/unmapped/C_37925375$C_76818071		Viewport
 	m	(Ljava/lang/String;I)V	<init>		<init>
 		p	1			p_1
 		p	2			p_2
-	m	()I	m_99296737		m_99296737
-	m	()I	m_02192288		m_02192288
-	m	()I	m_87017292		m_87017292
-	m	()I	m_33262363		m_33262363
+	m	()I	m_99296737		getX
+	m	()I	m_02192288		getY
+	m	()I	m_87017292		getWidth
+	m	()I	m_33262363		getHeight
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_41814532
 	f	Ljava/util/Map;	f_10338543	sprites	
@@ -5510,7 +5510,7 @@ c	net/minecraft/unmapped/C_43457881
 		p	2			p_2
 		p	3			p_3
 	m	(Lnet/minecraft/realms/RealmsGuiEventListener;)V	m_25036850		addButton
-		p	1			p_1
+		p	1			child
 	m	(DDI)Z	m_29843171		m_29843171
 		p	1			p_1
 		p	3			p_3
@@ -5641,11 +5641,11 @@ c	net/minecraft/unmapped/C_63401380
 	m	(I)Lnet/minecraft/unmapped/C_04864323;	m_41121934		getElement
 		p	1			p_1
 	m	(Lnet/minecraft/unmapped/C_04864323;Z)V	m_56833342		setVisible
-		p	1			p_1
+		p	1			child
 		p	2			p_2
 	m	(Lnet/minecraft/unmapped/C_63401380$C_47061926;IZ)Lnet/minecraft/unmapped/C_04864323;	m_73309008		createElement
-		p	1			p_1
-		p	2			p_2
+		p	1			option
+		p	2			index
 		p	3			p_3
 	m	(DDI)Z	m_29843171		m_29843171
 		p	1			p_1
@@ -5658,15 +5658,13 @@ c	net/minecraft/unmapped/C_63401380
 	m	(CI)Z	m_98491981		m_98491981
 		p	1			p_1
 		p	2			p_2
-	m	(Z)V	m_46820690	setActive	m_46820690
-		p	1		active	p_1
 c	net/minecraft/unmapped/C_63401380$C_46965160
 	m	(IF)V	m_46743616	setValue	
 		p	1		id	
 		p	2		value	
 	m	(ID)V	m_46743616		setValue
-		p	1			p_1
-		p	2			p_2
+		p	1			id
+		p	2			value
 c	net/minecraft/unmapped/C_63401380$C_63563575
 	f	Lnet/minecraft/client/Minecraft;	f_27033779	minecraft	
 	f	Lnet/minecraft/unmapped/C_29058632;	f_92862103	left	
@@ -5848,14 +5846,14 @@ c	net/minecraft/unmapped/C_66111194
 		p	2		p_2	
 		p	3		p_3	
 	m	()Lnet/minecraft/unmapped/C_04864323;	m_47978329		m_47978329
-	m	()V	m_17254699		m_17254699
+	m	()V	m_17254699		saveAndClose
 	m	(ILjava/lang/String;D)Ljava/lang/String;	m_62119329		m_62119329
 		p	1			p_1
 		p	2			p_2
 		p	3			p_3
 	m	(ID)Ljava/lang/String;	m_98671514		formatValue
-		p	1			p_1
-		p	2			p_2
+		p	1			id
+		p	2			value
 	m	(ID)V	m_46743616		m_46743616
 		p	1			p_1
 		p	2			p_2
@@ -6219,16 +6217,16 @@ c	net/minecraft/unmapped/C_98399068
 		p	5			p_5
 		p	6			p_6
 		p	8			p_8
-		p	10			p_10
+		p	10			value
 		p	12			p_12
 	m	()D	m_64730538		getValue
 	m	(DZ)V	m_61932817		setValue
-		p	1			p_1
-		p	3			p_3
+		p	1			value
+		p	3			notify
 	m	()D	m_08104214		getAmount
-	m	(DD)V	m_37279642		m_37279642
-		p	1			p_1
-		p	3			p_3
+	m	(DD)V	m_37279642		updateValue
+		p	1			mouseX
+		p	3			mouseY
 	m	(D)V	m_05003089		setAmount
 		p	1			p_1
 	m	(DD)V	m_83430595		m_83430595
@@ -6245,15 +6243,15 @@ c	net/minecraft/unmapped/C_98399068$C_71697550
 		p	2		message	
 		p	3		value	
 	m	(ILjava/lang/String;D)Ljava/lang/String;	m_62119329		formatValue
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
+		p	1			id
+		p	2			name
+		p	3			value
 c	net/minecraft/unmapped/C_01657493
 	f	Lorg/apache/logging/log4j/Logger;	f_95489110		LOGGER
 	m	()Ljava/util/Set;	m_12373583	all	
 	m	()Z	m_23663261	validate	
 	m	(Lnet/minecraft/unmapped/C_67935091;)Z	m_23663261		validate
-		p	0			p_0
+		p	0			resourceManager
 c	net/minecraft/unmapped/C_15233309
 	m	(Ljava/io/InputStream;)V	<init>	<init>	
 		p	1		inputStream	
@@ -6273,7 +6271,7 @@ c	net/minecraft/unmapped/C_15233309$C_45725191		StbReaderBufferedChannel
 	m	(Ljava/nio/channels/ReadableByteChannel;)V	<init>		<init>
 		p	1			channel
 	m	(I)V	m_33976970		fillReadBuffer
-		p	1			p_1
+		p	1			byteCount
 	m	(JI)I	m_49254039		m_49254039
 		p	1			p_1
 		p	3			p_3
@@ -6287,19 +6285,19 @@ c	net/minecraft/unmapped/C_15233309$C_59110512		StbReader
 	f	Z	f_28799919		closed
 	m	()V	<init>		<init>
 	m	(JJI)I	m_84236298		read
-		p	1			p_1
-		p	3			p_3
-		p	5			p_5
+		p	1			user
+		p	3			data
+		p	5			size
 	m	(JI)V	m_03821260		skip
-		p	1			p_1
-		p	3			p_3
+		p	1			user
+		p	3			n
 	m	(J)I	m_87276088		eof
-		p	1			p_1
+		p	1			user
 	m	(JI)I	m_49254039		read
-		p	1			p_1
-		p	3			p_3
+		p	1			destinationAddress
+		p	3			byteCount
 	m	(I)V	m_35508556		skip
-		p	1			p_1
+		p	1			byteCount
 	m	()V	close		close
 	m	(Lnet/minecraft/unmapped/C_15233309$53098111;)V	<init>		<init>
 		p	1			p_1
@@ -6339,7 +6337,7 @@ c	net/minecraft/unmapped/C_41540958
 		p	0		p_0	
 	m	()Lcom/google/gson/Gson;	m_38797652	m_38797652	
 	m	(Lnet/minecraft/unmapped/C_67935091;)V	<init>		<init>
-		p	1			p_1
+		p	1			resourceManager
 	m	(Lnet/minecraft/unmapped/C_52500310;)V	m_94505059		m_94505059
 		p	1			p_1
 c	net/minecraft/unmapped/C_41540958$95982984	95982984	
@@ -6381,9 +6379,9 @@ c	net/minecraft/unmapped/C_56940968
 		p	1			p_1
 		p	2			p_2
 	m	(Lnet/minecraft/unmapped/C_72641285;Lnet/minecraft/unmapped/C_04635774;)V	m_76258314		syncSettingsToServer
-		p	1			p_1
-		p	2			p_2
-	m	()V	m_16214988		m_16214988
+		p	1			executor
+		p	2			data
+	m	()V	m_16214988		saveAndClose
 	m	()V	m_82149882		m_82149882
 	m	(III)Z	m_40016007		m_40016007
 		p	1			p_1
@@ -6842,13 +6840,13 @@ c	net/minecraft/unmapped/C_07068064
 		p	1		x	
 		p	2		y	
 	m	(IIDD)Z	m_67690904		isHovered
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	5			p_5
+		p	1			x
+		p	2			y
+		p	3			mouseX
+		p	5			mouseY
 	m	(DD)V	m_48593154		scroll
-		p	1			p_1
-		p	3			p_3
+		p	1			dx
+		p	3			dy
 c	net/minecraft/unmapped/C_28113927
 	m	(Lnet/minecraft/client/Minecraft;IIF)V	m_43811351	m_43811351	
 		p	1		p_1	
@@ -6867,11 +6865,11 @@ c	net/minecraft/unmapped/C_44863772
 		p	4		mouseX	
 		p	5		mouseY	
 	m	(IIIDD)Z	m_95714319		isHovered
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-		p	4			p_4
-		p	6			p_6
+		p	1			x
+		p	2			y
+		p	3			index
+		p	4			mouseX
+		p	6			mouseY
 c	net/minecraft/unmapped/C_60503015
 	f	Ljava/io/File;	f_34645364	dir	
 	f	I	f_70024471		PATH_PREFIX_LENGTH
@@ -6994,13 +6992,13 @@ c	net/minecraft/unmapped/C_21602943
 		p	6		p_6	
 		p	7		p_7	
 	m	(DDIIIII)Z	m_31541839		mouseClicked
-		p	1			p_1
-		p	3			p_3
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
-		p	9			p_9
+		p	1			mouseX
+		p	3			mouseY
+		p	5			button
+		p	6			bookX
+		p	7			bookY
+		p	8			bookWidth
+		p	9			bookHeight
 c	net/minecraft/unmapped/C_39865197
 	m	(IIIIII)Z	m_35800215	hasClickedOutside	
 		p	1		mouseX	
@@ -7021,13 +7019,13 @@ c	net/minecraft/unmapped/C_39865197
 		p	3			p_3
 		p	5			p_5
 	m	(DDIIIII)Z	m_35800215		hasClickedOutside
-		p	1			p_1
-		p	3			p_3
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
-		p	9			p_9
+		p	1			mouseX
+		p	3			mouseY
+		p	5			screenX
+		p	6			screenY
+		p	7			screenWidth
+		p	8			screenHeight
+		p	9			button
 	m	(III)Z	m_40016007		m_40016007
 		p	1			p_1
 		p	2			p_2
@@ -7035,34 +7033,34 @@ c	net/minecraft/unmapped/C_39865197
 	m	(CI)Z	m_98491981		m_98491981
 		p	1			p_1
 		p	2			p_2
-	m	()V	m_07291786		m_07291786
+	m	()V	m_07291786		searchChanged
 c	net/minecraft/realms/RealmsGuiEventListener		net/minecraft/realms/RealmsGuiEventListener
-	f	Lnet/minecraft/unmapped/C_30610634;	f_10698585		f_10698585
+	f	Lnet/minecraft/unmapped/C_30610634;	f_10698585		proxy
 	m	()V	<init>		<init>
-	m	(DDI)Z	m_10802945		m_10802945
-		p	1			p_1
-		p	3			p_3
-		p	5			p_5
-	m	(DDI)Z	m_73025846		m_73025846
-		p	1			p_1
-		p	3			p_3
-		p	5			p_5
-	m	(DDIDD)Z	m_00867218		m_00867218
-		p	1			p_1
-		p	3			p_3
-		p	5			p_5
-		p	6			p_6
-		p	8			p_8
-	m	(D)Z	m_02564084		m_02564084
-		p	1			p_1
-	m	(III)Z	m_56852870		m_56852870
-		p	1			p_1
-		p	2			p_2
-		p	3			p_3
-	m	(CI)Z	m_19448828		m_19448828
-		p	1			p_1
-		p	2			p_2
-	m	()Lnet/minecraft/unmapped/C_30610634;	m_87241611		m_87241611
+	m	(DDI)Z	m_10802945		mouseClicked
+		p	1			mouseX
+		p	3			mouseY
+		p	5			button
+	m	(DDI)Z	m_73025846		mouseReleased
+		p	1			mouseX
+		p	3			mouseY
+		p	5			button
+	m	(DDIDD)Z	m_00867218		mouseDragged
+		p	1			mouseX
+		p	3			mouseY
+		p	5			button
+		p	6			dx
+		p	8			dy
+	m	(D)Z	m_02564084		mouseScrolled
+		p	1			amount
+	m	(III)Z	m_56852870		keyPressed
+		p	1			key
+		p	2			scancode
+		p	3			mods
+	m	(CI)Z	m_19448828		charTyped
+		p	1			chr
+		p	2			mods
+	m	()Lnet/minecraft/unmapped/C_30610634;	m_87241611		getProxy
 c	net/minecraft/unmapped/C_03555173		net/minecraft/client/resource/pack/UnopenedResourcePack
 	f	Lnet/minecraft/unmapped/C_19308569;	f_95683640		icon
 	f	Lnet/minecraft/unmapped/C_22168528;	f_42716954		iconLocation
@@ -7269,14 +7267,14 @@ c	net/minecraft/unmapped/C_19308569		net/minecraft/client/render/platform/Native
 		p	4			p_4
 	m	()Ljava/lang/String;	toString		toString
 	m	(Ljava/io/InputStream;)Lnet/minecraft/unmapped/C_19308569;	m_83981309		read
-		p	0			p_0
+		p	0			stream
 	m	(Ljava/nio/ByteBuffer;)Lnet/minecraft/unmapped/C_19308569;	m_39877390		read
-		p	0			p_0
+		p	0			buffer
 	m	(Z)V	m_38694588		setClamp
 		p	0			clamp
 	m	(ZZ)V	m_17679746		setFilter
-		p	0			p_0
-		p	1			p_1
+		p	0			linear
+		p	1			mipmaps
 	m	()V	m_76657216		checkAllocated
 	m	()V	close		close
 	m	()I	m_78918704		getWidth
@@ -7320,11 +7318,11 @@ c	net/minecraft/unmapped/C_19308569		net/minecraft/client/render/platform/Native
 		p	10			p_10
 	m	(IZ)V	m_28709176		downloadTexture
 		p	1			p_1
-		p	2			p_2
+		p	2			forceOpaque
 	m	(Z)V	m_29683673		downloadFrameBuffer
-		p	1			p_1
+		p	1			forceOpaque
 	m	(Ljava/lang/String;)V	m_31189234		write
-		p	1			p_1
+		p	1			path
 	m	(Lnet/minecraft/unmapped/C_19308569;)V	m_97171330		copyFrom
 		p	1			other
 	m	(IIIII)V	m_04096195		fillRect
@@ -7334,14 +7332,14 @@ c	net/minecraft/unmapped/C_19308569		net/minecraft/client/render/platform/Native
 		p	4			dz
 		p	5			color
 	m	(IIIIIIZZ)V	m_26489947		copyRect
-		p	1			x
-		p	2			dx
-		p	3			y
-		p	4			dy
-		p	5			p_5
-		p	6			p_6
-		p	7			p_7
-		p	8			p_8
+		p	1			srcX
+		p	2			srcY
+		p	3			dstOffsetX
+		p	4			dstOffsetY
+		p	5			width
+		p	6			height
+		p	7			flipX
+		p	8			flipY
 	m	()V	m_63078071		flipY
 	m	(IIIILnet/minecraft/unmapped/C_19308569;)V	m_06592137		resizeSubRectTo
 		p	1			x
@@ -7567,8 +7565,8 @@ c	net/minecraft/unmapped/C_29734585		net/minecraft/client/render/platform/DebugM
 	m	(J)V	m_64311530		untrack
 		p	0			address
 	m	()V	<clinit>		<clinit>
-c	net/minecraft/unmapped/C_30610634		net/minecraft/unmapped/C_30610634
-	f	Lnet/minecraft/realms/RealmsGuiEventListener;	f_91348245		f_91348245
+c	net/minecraft/unmapped/C_30610634		net/minecraft/realms/RealmsGuiEventListenerProxy
+	f	Lnet/minecraft/realms/RealmsGuiEventListener;	f_91348245		delegate
 	m	(Lnet/minecraft/realms/RealmsGuiEventListener;)V	<init>		<init>
 		p	1			p_1
 	m	(DDI)Z	m_29843171		m_29843171
@@ -7708,13 +7706,13 @@ c	net/minecraft/unmapped/C_46221269		net/minecraft/client/render/math/Matrix4f
 		p	1			buffer
 	m	(Ljava/nio/FloatBuffer;Z)V	m_11897521		load
 		p	1			buffer
-		p	2			p_2
+		p	2			transpose
 	m	()Ljava/lang/String;	toString		toString
 	m	(Ljava/nio/FloatBuffer;)V	m_07991975		store
 		p	1			buffer
 	m	(Ljava/nio/FloatBuffer;Z)V	m_16458396		store
 		p	1			buffer
-		p	2			p_2
+		p	2			transpose
 	m	(II)F	m_99088561		get
 		p	1			x
 		p	2			y
@@ -7961,8 +7959,9 @@ c	net/minecraft/unmapped/C_66640318		net/minecraft/client/gui/ContainerEventHand
 	m	(CI)Z	m_98491981		m_98491981
 		p	1			p_1
 		p	2			p_2
-c	net/minecraft/unmapped/C_70518450		net/minecraft/unmapped/C_70518450
-	f	Lnet/minecraft/unmapped/C_31402669;	f_52810482		f_52810482
+c	net/minecraft/unmapped/C_70518450		net/minecraft/util/datafix/fixes/LegacyKeyBindingFix
+	c		Replaces LWJGL2 keyboard/mouse numeric values with named constants
+	f	Lnet/minecraft/unmapped/C_31402669;	f_52810482		NAME_BY_CONSTANT
 	m	()V	<init>		<init>
 	m	()I	m_53300188		m_53300188
 	m	(Lnet/minecraft/unmapped/C_74087615;)Lnet/minecraft/unmapped/C_74087615;	m_81986728		m_81986728
