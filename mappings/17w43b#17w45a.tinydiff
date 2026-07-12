@@ -2,13 +2,13 @@ tiny	2	0
 c	net/minecraft/client/Minecraft
 	f	Lnet/minecraft/unmapped/C_22168528;	f_60134500	MOJANG_LOGO_LOCATION	
 	f	Lnet/minecraft/unmapped/C_22168528;	f_54210029	logoLocation	
-	f	Lnet/minecraft/unmapped/C_22168528;	f_67578271		f_67578271
-	f	Lnet/minecraft/unmapped/C_66554568;	f_92689964		f_92689964
+	f	Lnet/minecraft/unmapped/C_22168528;	f_67578271		backgroundLocation
+	f	Lnet/minecraft/unmapped/C_66554568;	f_92689964		backgroundTexture
 	m	(Lnet/minecraft/unmapped/C_82920792;)V	m_13054060	renderLoadingScreen	
 		p	1		textureManager	
-	m	()V	m_37524083		m_37524083
+	m	()V	m_37524083		renderGuiFrame
 	m	()Lnet/minecraft/unmapped/C_04864323;	m_47978329		m_47978329
-	m	()Lnet/minecraft/unmapped/C_22168528;	m_12295563		m_12295563
+	m	()Lnet/minecraft/unmapped/C_22168528;	m_12295563		getBackgroundLocation
 c	net/minecraft/server/MinecraftServer
 	f	Lnet/minecraft/unmapped/C_79915627;	f_64434672	commandHandler	
 	f	Lnet/minecraft/unmapped/C_55781718;	f_64434672		commandHandler
@@ -3962,11 +3962,11 @@ c	net/minecraft/unmapped/C_03735476
 		p	2			objective
 	m	(Lnet/minecraft/unmapped/C_30485881;Ljava/util/Collection;Lnet/minecraft/unmapped/C_30593188;Lnet/minecraft/unmapped/C_62693840$C_70886838;Ljava/util/Collection;Lnet/minecraft/unmapped/C_30593188;)I	m_85570120		operation
 		p	0			source
-		p	1			owners1
-		p	2			objective1
+		p	1			targets
+		p	2			targetObjective
 		p	3			operation
-		p	4			owners2
-		p	5			objective2
+		p	4			sources
+		p	5			sourceObjective
 	m	(Lnet/minecraft/unmapped/C_30485881;Ljava/util/Collection;Lnet/minecraft/unmapped/C_30593188;)I	m_26427855		enableTrigger
 		p	0			source
 		p	1			owners
@@ -6815,8 +6815,8 @@ c	net/minecraft/unmapped/C_02977438		net/minecraft/command/argument/ParticleArgu
 	m	(Lcom/mojang/brigadier/StringReader;)Lnet/minecraft/unmapped/C_82419528;	m_56343067		parseParticle
 		p	0			reader
 	m	(Lcom/mojang/brigadier/StringReader;Lcom/mojang/brigadier/context/CommandContextBuilder;)Ljava/lang/Object;	parse		parse
-		p	1			p_1
-		p	2			p_2
+		p	1			reader
+		p	2			context
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_06305467		net/minecraft/command/argument/Vec2fArgument
 	f	Lcom/mojang/brigadier/exceptions/SimpleCommandExceptionType;	f_04448347		INCOMPLETE_EXCEPTION
@@ -6842,8 +6842,8 @@ c	net/minecraft/unmapped/C_12233361		net/minecraft/command/argument/StatusEffect
 		p	1			p_1
 		p	2			p_2
 	m	(Lcom/mojang/brigadier/StringReader;Lcom/mojang/brigadier/context/CommandContextBuilder;)Ljava/lang/Object;	parse		parse
-		p	1			p_1
-		p	2			p_2
+		p	1			reader
+		p	2			context
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_13868912		net/minecraft/server/command/TeamCommand
 	f	Lcom/mojang/brigadier/exceptions/SimpleCommandExceptionType;	f_07070917		TEAM_ALREADY_EXISTS_EXCEPTION
@@ -7009,8 +7009,8 @@ c	net/minecraft/unmapped/C_20242125		net/minecraft/command/argument/ObjectiveArg
 		p	1			p_1
 		p	2			p_2
 	m	(Lcom/mojang/brigadier/StringReader;Lcom/mojang/brigadier/context/CommandContextBuilder;)Ljava/lang/Object;	parse		parse
-		p	1			p_1
-		p	2			p_2
+		p	1			reader
+		p	2			context
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_22430773		net/minecraft/command/argument/BlockArgument
 	m	()V	<init>		<init>
@@ -7286,8 +7286,8 @@ c	net/minecraft/unmapped/C_45722518		net/minecraft/command/argument/ScoreboardCr
 		p	1			p_1
 		p	2			p_2
 	m	(Lcom/mojang/brigadier/StringReader;Lcom/mojang/brigadier/context/CommandContextBuilder;)Ljava/lang/Object;	parse		parse
-		p	1			p_1
-		p	2			p_2
+		p	1			reader
+		p	2			context
 	m	()V	<clinit>		<clinit>
 c	net/minecraft/unmapped/C_47034372		net/minecraft/command/argument/MessageArgument
 	m	()V	<init>		<init>
@@ -7531,10 +7531,10 @@ c	net/minecraft/unmapped/C_65570678		net/minecraft/command/SuggestionProvider
 	m	()Ljava/util/Collection;	m_38022272		getTeams
 	m	(Ljava/lang/Iterable;Ljava/lang/String;)Ljava/util/concurrent/CompletableFuture;	m_38362563		suggestMatching
 		p	0			options
-		p	1			prefix
+		p	1			input
 	m	([Ljava/lang/String;Ljava/lang/String;)Ljava/util/concurrent/CompletableFuture;	m_94195202		suggestMatching
 		p	0			options
-		p	1			prefix
+		p	1			input
 c	net/minecraft/unmapped/C_66491259		net/minecraft/command/argument/EntitySelectorParser
 	f	Lcom/mojang/brigadier/exceptions/SimpleCommandExceptionType;	f_60377581		INVALID_EXCEPTION
 	f	Lcom/mojang/brigadier/exceptions/ParameterizedCommandExceptionType;	f_71907757		UNKNOWN_SELECTOR_EXCEPTION
